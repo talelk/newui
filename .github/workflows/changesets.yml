@@ -31,7 +31,12 @@ jobs:
       - name: Create or update the Version Packages PR
         uses: changesets/action@v1
         with:
-          version: pnpm version
-          publish: pnpm release
+          # `pnpm run`, not `pnpm`: `pnpm version` is pnpm's own command and
+          # wants a semver argument, so it shadowed this repo's script and the
+          # job failed with ERR_PNPM_INVALID_VERSION_BUMP. Same trap AGENTS.md
+          # documents for `pnpm ci`. `release` has no pnpm built-in, but the
+          # explicit form is what keeps the pair honest.
+          version: pnpm run version
+          publish: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
