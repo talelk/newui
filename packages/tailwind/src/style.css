@@ -30,3 +30,4 @@
 @source not "../../ui/src/lib/tw-merge.config.ts";
 @source not "../../ui/src/**/*.test.{ts,tsx}";
 @source "../../icons/src/**/*.{ts,tsx}";
+@source "../../blocks/src/**/*.{ts,tsx}";

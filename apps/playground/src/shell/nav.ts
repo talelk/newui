@@ -92,7 +92,7 @@ export const NAV: NavSection[] = [
       {
         title: 'All blocks',
         href: '/blocks',
-        description: 'Composed sections, one card per shape.',
+        description: 'Composed sections built from the components.',
       },
     ],
   },

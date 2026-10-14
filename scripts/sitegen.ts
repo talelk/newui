@@ -180,6 +180,13 @@ const GROUPS: Record<string, string> = {
   Tooltip: 'Overlays',
   ScrollArea: 'Overlays',
   SettingsDialog: 'Patterns',
+  // Blocks — composed sections rather than single controls.
+  AppSidebar: 'Layout',
+  PageToolbar: 'Layout',
+  DetailHeader: 'Layout',
+  FilterBar: 'Data',
+  StatGrid: 'Data',
+  AuthCard: 'Patterns',
   Alert: 'Feedback',
   Progress: 'Feedback',
   ProgressCircle: 'Feedback',
@@ -190,6 +197,7 @@ const GROUPS: Record<string, string> = {
 
 const GROUP_ORDER = [
   'Actions',
+  'Data',
   'Disclosure',
   'Display',
   'Feedback',
@@ -208,15 +216,18 @@ function kebab(value: string): string {
     .toLowerCase()
 }
 
-/** part name → the component it belongs to. */
+/** part name → the component it belongs to, and the package it came from. */
 const partsByComponent = new Map<string, string[]>()
-for (const parts of Object.values(api)) {
+const packageOf = new Map<string, 'component' | 'block'>()
+for (const [file, parts] of Object.entries(api)) {
+  const kind = file.includes('/blocks/') ? 'block' : 'component'
   for (const part of Object.keys(parts)) {
     const component = componentOf(part)
     if (!component) continue
     const list = partsByComponent.get(component) ?? []
     list.push(part)
     partsByComponent.set(component, list)
+    packageOf.set(component, kind)
   }
 }
 
@@ -228,13 +239,17 @@ const specSlugs = new Set(
     .map((file) => file.replace(/\.md$/, '')),
 )
 
-/** Exported names the barrel actually ships, so a stray interface cannot invent one. */
-const barrel = readFileSync(path.join(root, 'packages/ui/src/index.ts'), 'utf8')
-const exported = new Set(
-  [...barrel.matchAll(/^export \* from '\.\/components\/([^']+)'/gm)].map(
-    (match) => match[1] ?? '',
-  ),
-)
+/** Exported names the barrels actually ship, so a stray interface cannot invent one. */
+function barrelExports(file: string): Set<string> {
+  const source = readFileSync(path.join(root, file), 'utf8')
+  return new Set(
+    [
+      ...source.matchAll(/^export \* from '\.\/(?:components\/)?([^']+)'/gm),
+    ].map((match) => match[1] ?? ''),
+  )
+}
+const exported = barrelExports('packages/ui/src/index.ts')
+const exportedBlocks = barrelExports('packages/blocks/src/index.ts')
 
 const entries = [...partsByComponent.keys()]
   .filter((component) => GROUPS[component])
@@ -242,10 +257,15 @@ const entries = [...partsByComponent.keys()]
     name: component,
     slug: kebab(component),
     group: GROUPS[component] as string,
+    /** `component` (an atom or molecule) or `block` (a composed section). */
+    kind: packageOf.get(component) ?? 'component',
     parts: (partsByComponent.get(component) ?? []).sort(),
     spec: specSlugs.has(kebab(component)) ? kebab(component) : null,
-    /** A page exists only for something the barrel exports. */
-    shipped: exported.has(component),
+    /** A page exists only for something a barrel exports. */
+    shipped:
+      packageOf.get(component) === 'block'
+        ? exportedBlocks.has(component)
+        : exported.has(component),
   }))
   .sort((a, b) => {
     const byGroup = GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group)
@@ -263,6 +283,8 @@ export interface ComponentEntry {
   name: string
   slug: string
   group: string
+  /** \`component\` for a single control, \`block\` for a composed section. */
+  kind: 'component' | 'block'
   parts: string[]
   /** Kebab name of the file in \`spec/\`, when the component has a contract. */
   spec: string | null
@@ -279,6 +301,12 @@ export const GROUPS = ${JSON.stringify(
 export function componentBySlug(slug: string): ComponentEntry | undefined {
   return COMPONENTS.find((entry) => entry.slug === slug)
 }
+
+/** Only the blocks: what \`/blocks\` lists and pages through. */
+export const BLOCKS: ComponentEntry[] = COMPONENTS.filter(
+  (entry) => entry.kind === 'block',
+)
+
 `
 
 const apiFiles = new Map<string, string>()

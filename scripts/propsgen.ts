@@ -16,7 +16,12 @@ import { Project } from 'ts-morph'
 const root = process.cwd()
 const isCheck = process.argv.includes('--check')
 const outFile = path.join(root, 'packages/ui/api.json')
-const uiSrc = path.join(root, 'packages/ui/src')
+/** Every package that ships props worth documenting: the components and the
+ * blocks composed from them. `api.json` is keyed by source path, so the two are
+ * told apart later by that path, not by a second table. */
+const SOURCES = ['packages/ui', 'packages/blocks'].map((pkg) =>
+  path.join(root, pkg, 'src'),
+)
 
 interface ApiMember {
   name: string
@@ -28,12 +33,18 @@ interface ApiMember {
 const project = new Project({
   tsConfigFilePath: path.join(root, 'packages/ui/tsconfig.json'),
 })
+// The tsconfig's `include` is `packages/ui/src`, so a project built from it
+// holds only that package's files. The blocks are added explicitly — they are
+// documented in the same table, told apart by their path.
+project.addSourceFilesAtPaths(
+  SOURCES.map((dir) => path.join(dir, '**/*.{ts,tsx}')),
+)
 
 const table: Record<string, Record<string, ApiMember[]>> = {}
 
 for (const sourceFile of project.getSourceFiles()) {
   const filePath = sourceFile.getFilePath()
-  if (!filePath.startsWith(uiSrc)) continue
+  if (!SOURCES.some((dir) => filePath.startsWith(dir))) continue
 
   const entries: Record<string, ApiMember[]> = {}
 

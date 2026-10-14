@@ -9,6 +9,8 @@ export interface ComponentEntry {
   name: string
   slug: string
   group: string
+  /** `component` for a single control, `block` for a composed section. */
+  kind: 'component' | 'block'
   parts: string[]
   /** Kebab name of the file in `spec/`, when the component has a contract. */
   spec: string | null
@@ -21,6 +23,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Button",
     "slug": "button",
     "group": "Actions",
+    "kind": "component",
     "parts": [
       "ButtonProps"
     ],
@@ -31,6 +34,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "ContextMenu",
     "slug": "context-menu",
     "group": "Actions",
+    "kind": "component",
     "parts": [
       "ContextMenuItemProps",
       "ContextMenuRootProps"
@@ -42,6 +46,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Dropdown",
     "slug": "dropdown",
     "group": "Actions",
+    "kind": "component",
     "parts": [
       "DropdownProps"
     ],
@@ -52,6 +57,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "KeyboardShortcut",
     "slug": "keyboard-shortcut",
     "group": "Actions",
+    "kind": "component",
     "parts": [
       "KeyboardShortcutProps"
     ],
@@ -62,6 +68,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "KeyboardShortcutsDialog",
     "slug": "keyboard-shortcuts-dialog",
     "group": "Actions",
+    "kind": "component",
     "parts": [
       "KeyboardShortcutsDialogProps"
     ],
@@ -69,9 +76,32 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "FilterBar",
+    "slug": "filter-bar",
+    "group": "Data",
+    "kind": "block",
+    "parts": [
+      "FilterBarProps"
+    ],
+    "spec": "filter-bar",
+    "shipped": true
+  },
+  {
+    "name": "StatGrid",
+    "slug": "stat-grid",
+    "group": "Data",
+    "kind": "block",
+    "parts": [
+      "StatGridProps"
+    ],
+    "spec": "stat-grid",
+    "shipped": true
+  },
+  {
     "name": "Accordion",
     "slug": "accordion",
     "group": "Disclosure",
+    "kind": "component",
     "parts": [
       "AccordionContentProps",
       "AccordionItemProps",
@@ -85,6 +115,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Collapsible",
     "slug": "collapsible",
     "group": "Disclosure",
+    "kind": "component",
     "parts": [
       "CollapsibleContentProps",
       "CollapsibleProps",
@@ -97,6 +128,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "TabButtons",
     "slug": "tab-buttons",
     "group": "Disclosure",
+    "kind": "component",
     "parts": [
       "TabButtonsProps"
     ],
@@ -107,6 +139,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Tabs",
     "slug": "tabs",
     "group": "Disclosure",
+    "kind": "component",
     "parts": [
       "TabsContentProps",
       "TabsRootProps",
@@ -119,6 +152,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Avatar",
     "slug": "avatar",
     "group": "Display",
+    "kind": "component",
     "parts": [
       "AvatarProps"
     ],
@@ -129,6 +163,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Badge",
     "slug": "badge",
     "group": "Display",
+    "kind": "component",
     "parts": [
       "BadgeProps"
     ],
@@ -139,6 +174,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Card",
     "slug": "card",
     "group": "Display",
+    "kind": "component",
     "parts": [
       "CardProps"
     ],
@@ -149,6 +185,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Divider",
     "slug": "divider",
     "group": "Display",
+    "kind": "component",
     "parts": [
       "DividerProps"
     ],
@@ -159,6 +196,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "EmptyState",
     "slug": "empty-state",
     "group": "Display",
+    "kind": "component",
     "parts": [
       "EmptyStateProps"
     ],
@@ -169,6 +207,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Icon",
     "slug": "icon",
     "group": "Display",
+    "kind": "component",
     "parts": [
       "IconProps"
     ],
@@ -179,6 +218,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "ItemListRow",
     "slug": "item-list-row",
     "group": "Display",
+    "kind": "component",
     "parts": [
       "ItemListRowProps"
     ],
@@ -189,6 +229,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "List",
     "slug": "list",
     "group": "Display",
+    "kind": "component",
     "parts": [
       "ListCellProps",
       "ListProps",
@@ -201,6 +242,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Timeline",
     "slug": "timeline",
     "group": "Display",
+    "kind": "component",
     "parts": [
       "TimelineProps"
     ],
@@ -211,6 +253,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Tree",
     "slug": "tree",
     "group": "Display",
+    "kind": "component",
     "parts": [
       "TreeRootProps"
     ],
@@ -221,6 +264,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Alert",
     "slug": "alert",
     "group": "Feedback",
+    "kind": "component",
     "parts": [
       "AlertProps"
     ],
@@ -231,6 +275,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Progress",
     "slug": "progress",
     "group": "Feedback",
+    "kind": "component",
     "parts": [
       "ProgressProps"
     ],
@@ -241,6 +286,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "ProgressCircle",
     "slug": "progress-circle",
     "group": "Feedback",
+    "kind": "component",
     "parts": [
       "ProgressCircleProps"
     ],
@@ -251,6 +297,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Skeleton",
     "slug": "skeleton",
     "group": "Feedback",
+    "kind": "component",
     "parts": [
       "SkeletonProps"
     ],
@@ -261,6 +308,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Spinner",
     "slug": "spinner",
     "group": "Feedback",
+    "kind": "component",
     "parts": [
       "SpinnerProps"
     ],
@@ -271,6 +319,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Checkbox",
     "slug": "checkbox",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "CheckboxProps"
     ],
@@ -281,6 +330,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Duration",
     "slug": "duration",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "DurationProps"
     ],
@@ -291,6 +341,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "ErrorMessage",
     "slug": "error-message",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "ErrorMessageProps"
     ],
@@ -301,6 +352,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "FormControl",
     "slug": "form-control",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "FormControlTextProps"
     ],
@@ -311,6 +363,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "FormLabel",
     "slug": "form-label",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "FormLabelProps"
     ],
@@ -321,6 +374,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "NumberInput",
     "slug": "number-input",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "NumberInputProps"
     ],
@@ -331,6 +385,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Password",
     "slug": "password",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "PasswordProps"
     ],
@@ -341,6 +396,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "RadioGroup",
     "slug": "radio-group",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "RadioGroupProps"
     ],
@@ -351,6 +407,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Rating",
     "slug": "rating",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "RatingProps"
     ],
@@ -361,6 +418,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Slider",
     "slug": "slider",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "SliderProps"
     ],
@@ -371,6 +429,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Switch",
     "slug": "switch",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "SwitchProps"
     ],
@@ -381,6 +440,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Textarea",
     "slug": "textarea",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "TextareaProps"
     ],
@@ -391,6 +451,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "TextInput",
     "slug": "text-input",
     "group": "Inputs",
+    "kind": "component",
     "parts": [
       "TextInputProps"
     ],
@@ -401,6 +462,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "AppShell",
     "slug": "app-shell",
     "group": "Layout",
+    "kind": "component",
     "parts": [
       "AppShellProps",
       "PageBodyProps",
@@ -410,9 +472,21 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "AppSidebar",
+    "slug": "app-sidebar",
+    "group": "Layout",
+    "kind": "block",
+    "parts": [
+      "AppSidebarProps"
+    ],
+    "spec": "app-sidebar",
+    "shipped": true
+  },
+  {
     "name": "DesktopShell",
     "slug": "desktop-shell",
     "group": "Layout",
+    "kind": "component",
     "parts": [
       "DesktopShellProps"
     ],
@@ -420,9 +494,21 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "DetailHeader",
+    "slug": "detail-header",
+    "group": "Layout",
+    "kind": "block",
+    "parts": [
+      "DetailHeaderProps"
+    ],
+    "spec": "detail-header",
+    "shipped": true
+  },
+  {
     "name": "MobileShell",
     "slug": "mobile-shell",
     "group": "Layout",
+    "kind": "component",
     "parts": [
       "MobileShellProps",
       "PageHeaderMobileProps"
@@ -431,9 +517,21 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "PageToolbar",
+    "slug": "page-toolbar",
+    "group": "Layout",
+    "kind": "block",
+    "parts": [
+      "PageToolbarProps"
+    ],
+    "spec": "page-toolbar",
+    "shipped": true
+  },
+  {
     "name": "Breadcrumbs",
     "slug": "breadcrumbs",
     "group": "Navigation",
+    "kind": "component",
     "parts": [
       "BreadcrumbsProps"
     ],
@@ -444,6 +542,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "MobileNav",
     "slug": "mobile-nav",
     "group": "Navigation",
+    "kind": "component",
     "parts": [
       "MobileNavItemProps",
       "MobileNavProps"
@@ -455,6 +554,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Pagination",
     "slug": "pagination",
     "group": "Navigation",
+    "kind": "component",
     "parts": [
       "PaginationProps"
     ],
@@ -465,6 +565,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Sidebar",
     "slug": "sidebar",
     "group": "Navigation",
+    "kind": "component",
     "parts": [
       "SidebarCardProps",
       "SidebarCollapseToggleProps",
@@ -483,6 +584,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "BottomSheet",
     "slug": "bottom-sheet",
     "group": "Overlays",
+    "kind": "component",
     "parts": [
       "BottomSheetProps"
     ],
@@ -493,6 +595,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Dialog",
     "slug": "dialog",
     "group": "Overlays",
+    "kind": "component",
     "parts": [
       "DialogContentProps",
       "DialogFooterProps",
@@ -506,6 +609,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Tooltip",
     "slug": "tooltip",
     "group": "Overlays",
+    "kind": "component",
     "parts": [
       "TooltipProps"
     ],
@@ -513,9 +617,21 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "AuthCard",
+    "slug": "auth-card",
+    "group": "Patterns",
+    "kind": "block",
+    "parts": [
+      "AuthCardProps"
+    ],
+    "spec": "auth-card",
+    "shipped": true
+  },
+  {
     "name": "SettingsDialog",
     "slug": "settings-dialog",
     "group": "Patterns",
+    "kind": "component",
     "parts": [
       "SettingsBodyProps",
       "SettingsContentProps",
@@ -534,6 +650,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Combobox",
     "slug": "combobox",
     "group": "Selection",
+    "kind": "component",
     "parts": [
       "ComboboxProps"
     ],
@@ -544,6 +661,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "DatePicker",
     "slug": "date-picker",
     "group": "Selection",
+    "kind": "component",
     "parts": [
       "CalendarViewProps",
       "DatePickerProps"
@@ -555,6 +673,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "DateRangePicker",
     "slug": "date-range-picker",
     "group": "Selection",
+    "kind": "component",
     "parts": [
       "DateRangePickerProps"
     ],
@@ -565,6 +684,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "DateTimePicker",
     "slug": "date-time-picker",
     "group": "Selection",
+    "kind": "component",
     "parts": [
       "DateTimePickerProps"
     ],
@@ -575,6 +695,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "FileUploader",
     "slug": "file-uploader",
     "group": "Selection",
+    "kind": "component",
     "parts": [
       "FileUploaderProps"
     ],
@@ -585,6 +706,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "MultiSelect",
     "slug": "multi-select",
     "group": "Selection",
+    "kind": "component",
     "parts": [
       "MultiSelectProps"
     ],
@@ -595,6 +717,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "Select",
     "slug": "select",
     "group": "Selection",
+    "kind": "component",
     "parts": [
       "SelectProps"
     ],
@@ -605,6 +728,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "name": "TimePicker",
     "slug": "time-picker",
     "group": "Selection",
+    "kind": "component",
     "parts": [
       "TimePickerProps"
     ],
@@ -613,8 +737,14 @@ export const COMPONENTS: ComponentEntry[] = [
   }
 ]
 
-export const GROUPS = ["Actions","Disclosure","Display","Feedback","Inputs","Layout","Navigation","Overlays","Patterns","Selection"] as const
+export const GROUPS = ["Actions","Data","Disclosure","Display","Feedback","Inputs","Layout","Navigation","Overlays","Patterns","Selection"] as const
 
 export function componentBySlug(slug: string): ComponentEntry | undefined {
   return COMPONENTS.find((entry) => entry.slug === slug)
 }
+
+/** Only the blocks: what `/blocks` lists and pages through. */
+export const BLOCKS: ComponentEntry[] = COMPONENTS.filter(
+  (entry) => entry.kind === 'block',
+)
+

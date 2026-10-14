@@ -7,26 +7,30 @@ import {
   GROUPS,
 } from '../generated/components'
 
-/**
- * The section sidebar for `/components/*`: every documented component, grouped,
- * with a filter.
- *
- * It lives inside the components routes rather than in the site shell, because
- * the shell is on every route and this index is ~4 kB gzipped that only a
- * component page can use. That is the same rule that keeps the home page at
- * 48 kB: a page pays for its own furniture.
- */
+export type NavKind = 'component' | 'block'
 
 /**
- * The pages in this section that are not generated: the index, and the two
- * hand-written reference pages. Listed first, because they are what to read
- * before browsing a single component.
+ * The section sidebar for the reference pages: every entry of one kind,
+ * grouped, with a filter.
+ *
+ * It lives inside those routes rather than in the site shell, because the shell
+ * is on every route and this index is ~4 kB gzipped that only a reference page
+ * can use. That is the same rule that keeps the home page at 52 kB: a page pays
+ * for its own furniture.
+ *
+ * `kind` is the only difference between the components sidebar and the blocks
+ * one — same filter, same grouping, same active state.
  */
-export const OVERVIEW = [
-  { title: 'All components', href: '/components' },
-  { title: 'Anatomy & variants', href: '/components/atoms' },
-  { title: 'Feedback & state', href: '/components/feedback' },
-]
+
+/** The pages in each section that are not generated. */
+export const OVERVIEW: Record<NavKind, { title: string; href: string }[]> = {
+  component: [
+    { title: 'All components', href: '/components' },
+    { title: 'Anatomy & variants', href: '/components/atoms' },
+    { title: 'Feedback & state', href: '/components/feedback' },
+  ],
+  block: [{ title: 'All blocks', href: '/blocks' }],
+}
 
 /** Name, group and part names are all fair game for the filter. */
 function matches(entry: ComponentEntry, query: string): boolean {
@@ -39,14 +43,15 @@ function matches(entry: ComponentEntry, query: string): boolean {
   )
 }
 
-export function ComponentNav(): JSX.Element {
+export function ComponentNav(props: { kind: NavKind }): JSX.Element {
   const location = useLocation()
   const [query, setQuery] = createSignal('')
 
   const visible = createMemo(() =>
-    COMPONENTS.filter((entry) => entry.shipped).filter((entry) =>
-      matches(entry, query().trim()),
-    ),
+    COMPONENTS.filter((entry) => entry.shipped && entry.kind === props.kind)
+      .filter((entry) => matches(entry, query().trim()))
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name)),
   )
 
   const grouped = createMemo(() =>
@@ -56,12 +61,17 @@ export function ComponentNav(): JSX.Element {
     })).filter((section) => section.entries.length > 0),
   )
 
+  const base = () => (props.kind === 'block' ? '/blocks' : '/components')
   const current = () => location.pathname.split('/')[2] ?? ''
+  const overview = () => OVERVIEW[props.kind]
 
   return (
-    <nav aria-label="Components" class="flex flex-col gap-4">
+    <nav
+      aria-label={props.kind === 'block' ? 'Blocks' : 'Components'}
+      class="flex flex-col gap-4"
+    >
       <label class="relative flex items-center">
-        <span class="sr-only">Filter components</span>
+        <span class="sr-only">Filter</span>
         <Icon
           icon="lucide-search"
           class="pointer-events-none absolute start-2 size-3.5 text-ink-gray-5"
@@ -76,7 +86,7 @@ export function ComponentNav(): JSX.Element {
       </label>
 
       <ul class="flex flex-col gap-0.5">
-        <For each={OVERVIEW}>
+        <For each={overview()}>
           {(item) => (
             <li>
               <A
@@ -112,7 +122,7 @@ export function ComponentNav(): JSX.Element {
                   {(entry) => (
                     <li>
                       <A
-                        href={`/components/${entry.slug}`}
+                        href={`${base()}/${entry.slug}`}
                         aria-current={
                           current() === entry.slug ? 'page' : undefined
                         }

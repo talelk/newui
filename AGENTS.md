@@ -25,6 +25,7 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 | tailwind | `@newui/tailwind` | v4 `@theme`/`@utility`/plugins, `style.css` |
 | icons | `@newui/icons` | Frappe's glyphs as Solid components |
 | components | `@newui/ui` | Solid compounds over Zag; `tv()` recipes |
+| blocks | `@newui/blocks` | composed sections built on `@newui/ui` |
 | code editor | `@newui/code-editor` | CodeMirror 6 Solid component |
 | rich text | `@newui/editor` | TipTap 3 Solid editor + toolbar |
 | charts | `@newui/charts` | echarts Solid wrappers (SVG renderer) |
@@ -52,6 +53,7 @@ had, and stays the surface the design work is reviewed on.
 | --- | --- |
 | `/` `/docs` `/foundations` `/blocks` `/examples/*` | the site, inside `SiteLayout` (masthead · sidebar · content · prev/next) |
 | `/components` · `/components/<name>` | the component reference, inside `ComponentsLayout` — same chrome, but the sidebar is the filterable index |
+| `/blocks` · `/blocks/<name>` | the same, for `@newui/blocks` |
 | `/spec` | the deterministic page the browser harness drives — no chrome, no network |
 | `/play?c=<Name>` | one component's demo; the docs embed it, and it is the screenshot unit |
 | `/examples/discussions/mobile` | the full-screen mobile recipe (`MobileShell` is `fixed inset-0`) |
@@ -75,9 +77,10 @@ and the contract all come from something that already exists, so adding a
 component to the library and running `pnpm api` + `pnpm site` produces its page.
 
 - **`pnpm site`** generates `apps/playground/src/generated/` (committed, like
-  `theme.css`): the component registry from `api.json`, and one prop-table module
-  per component so a page fetches ~1 kB of tables instead of the 111 kB
-  `api.json`. **`pnpm site:check`** fails on drift, in CI with the other gates.
+  `theme.css`): the registry from `api.json` — components *and* blocks, told
+  apart by the source path — and one prop-table module per entry so a page
+  fetches ~1 kB of tables instead of the 111 kB `api.json`. **`pnpm site:check`**
+  fails on drift, in CI with the other gates.
 - **Specs are not copied.** `lib/specs.ts` reads `spec/*.md` with
   `import.meta.glob(..., '?raw')`, so `spec/` stays the single source of truth
   and each page downloads its own contract. The glob crosses the app root, which
@@ -86,8 +89,20 @@ component to the library and running `pnpm api` + `pnpm site` produces its page.
   single module the demos imported every component in the library, so one
   component page cost 231 kB gzip in 29 chunks; split, `/components/<name>` is
   66 kB.
-- The shell imports no component; only the components routes import the index.
+- The shell imports no component; only the reference routes import the index.
   That is what keeps the home page at 52 kB.
+
+### Blocks
+
+`@newui/blocks` is the composed layer: a component answers *what is this
+control*, a block answers *how does a page open*. Six so far — `AppSidebar`,
+`PageToolbar`, `FilterBar`, `DetailHeader`, `StatGrid`, `AuthCard` — each with a
+demo, a contract in `spec/`, a generated page and a budget entry
+(`scripts/size.ts`, "Blocks barrel").
+
+A block may only import `@newui/ui`. If one needs a chart or an editor it belongs
+in that package's surface, not here — which is also why `pnpm size` asserts the
+blocks entry cannot reach the slider, the toast or the date picker.
 
 `pnpm shots` writes screenshots for every route × theme × width into
 `test-results/shots/` (gitignored, nothing asserts on them) — it is the loop the
@@ -185,7 +200,8 @@ design work runs on, not a regression suite.
   round trip) and code-splits every route with dynamic imports. A library must
   not do either — consumers own their asset pipeline.
 - **Current**: `cn()` 7.3 kB · `Button` 9.5 kB · `Button + Dialog` 31.7 kB ·
-  full barrel 239.4 kB (all gzip, `solid-js` external). Site routes:
+  full barrel 240.0 kB · blocks barrel 73.3 kB (all gzip, `solid-js` external).
+  Site routes:
   **home 48 kB · docs 48 · foundations 73 · feedback 65 · examples 71 ·
   mobile recipe 78 · desktop recipe 123 · blocks 146 · atoms 196**
   (gzip, every chunk the route fetches — `pnpm budget`).

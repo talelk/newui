@@ -6,7 +6,12 @@ import {
   useLocation,
 } from '@solidjs/router'
 import { type Component, createEffect, type JSX, lazy } from 'solid-js'
-import { BareLayout, ComponentsLayout, SiteLayout } from './shell/SiteLayout'
+import {
+  BareLayout,
+  BlocksLayout,
+  ComponentsLayout,
+  SiteLayout,
+} from './shell/SiteLayout'
 
 /**
  * The route table.
@@ -42,7 +47,7 @@ const Docs = page(() => import('./pages/Docs'), 'Docs')
 const Foundations = page(() => import('./pages/Foundations'), 'Foundations')
 const Atoms = page(() => import('./pages/Atoms'), 'Atoms')
 const Feedback = page(() => import('./pages/Feedback'), 'Feedback')
-const Blocks = page(() => import('./pages/Blocks'), 'Blocks')
+const BlocksIndex = page(() => import('./pages/BlocksIndex'), 'BlocksIndex')
 const ComponentsIndex = page(
   () => import('./pages/ComponentsIndex'),
   'ComponentsIndex',
@@ -93,6 +98,7 @@ export const ROUTES: { path: string; title: string }[] = [
   { path: '/components/feedback', title: 'Feedback & state' },
   { path: '/components/:name', title: 'Component' },
   { path: '/blocks', title: 'All blocks' },
+  { path: '/blocks/:name', title: 'Block' },
   { path: '/examples', title: 'Examples' },
   { path: '/examples/discussions/desktop', title: 'Discussions · desktop' },
   { path: '/examples/discussions/mobile', title: 'Discussions · mobile' },
@@ -131,7 +137,7 @@ export function AppRoutes(): JSX.Element {
             segment outranks a parameter, so these win for their own paths. */}
         <Route path="/components/atoms" component={Atoms} />
         <Route path="/components/feedback" component={Feedback} />
-        <Route path="/blocks" component={Blocks} />
+
         <Route path="/examples" component={Examples} />
         <Route
           path="/examples/discussions/desktop"
@@ -150,6 +156,13 @@ export function AppRoutes(): JSX.Element {
             `/:name` is one component — writing the parent's own path again
             would nest it (`/components/components/:name`). */}
         <Route path="/" component={ComponentsIndex} />
+        <Route path="/:name" component={ComponentPage} />
+      </Route>
+
+      {/* The blocks are a reference section too: their own index, their own
+          sidebar, and the same generated page. */}
+      <Route path="/blocks" component={BlocksLayout}>
+        <Route path="/" component={BlocksIndex} />
         <Route path="/:name" component={ComponentPage} />
       </Route>
 

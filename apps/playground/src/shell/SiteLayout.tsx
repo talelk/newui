@@ -94,19 +94,46 @@ export function SiteLayout(props: RouteSectionProps): JSX.Element {
   return <Chrome {...props} sidebar={<SidebarNav />} />
 }
 
-/** The components frame: the component index in the sidebar. */
-export function ComponentsLayout(props: RouteSectionProps): JSX.Element {
-  // The reference web walks the component list, so prev/next stay inside the
-  // section instead of dropping the reader back into the site tree.
+/**
+ * A reference section's frame: its own index in the sidebar, and a prev/next
+ * that walks that section's list rather than dropping the reader back into the
+ * site tree.
+ */
+function ReferenceLayout(
+  props: RouteSectionProps & { kind: 'component' | 'block' },
+): JSX.Element {
+  const base = () => (props.kind === 'block' ? '/blocks' : '/components')
   const siblings = (): NavItem[] => [
-    ...OVERVIEW.map((item) => ({ title: item.title, href: item.href })),
-    ...COMPONENTS.filter((entry) => entry.shipped).map((entry) => ({
-      title: entry.name,
-      href: `/components/${entry.slug}`,
+    ...OVERVIEW[props.kind].map((item) => ({
+      title: item.title,
+      href: item.href,
     })),
+    ...COMPONENTS.filter((entry) => entry.shipped && entry.kind === props.kind)
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((entry) => ({
+        title: entry.name,
+        href: `${base()}/${entry.slug}`,
+      })),
   ]
 
-  return <Chrome {...props} sidebar={<ComponentNav />} siblings={siblings()} />
+  return (
+    <Chrome
+      {...props}
+      sidebar={<ComponentNav kind={props.kind} />}
+      siblings={siblings()}
+    />
+  )
+}
+
+/** The components frame. */
+export function ComponentsLayout(props: RouteSectionProps): JSX.Element {
+  return <ReferenceLayout {...props} kind="component" />
+}
+
+/** The blocks frame. */
+export function BlocksLayout(props: RouteSectionProps): JSX.Element {
+  return <ReferenceLayout {...props} kind="block" />
 }
 
 /**

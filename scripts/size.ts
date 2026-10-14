@@ -63,6 +63,17 @@ const ENTRIES: Entry[] = [
     forbid: ['"slider"', '"toast"'],
   },
   {
+    name: 'Blocks barrel',
+    file: 'scripts/fixtures/blocks.ts',
+    // All six blocks: ~73 kB, because a composed section drags the components
+    // it composes — the sidebar brings `ScrollArea` and the tooltip, the
+    // toolbar brings the menu, the filter bar brings `Select`. The `forbid` list
+    // is the assertion that matters: a block may not carry a machine it never
+    // reaches for, and nothing here may pull the charts or the editor in.
+    budget: 80,
+    forbid: ['"slider"', '"toast"', '"tree-view"', '"date-picker"'],
+  },
+  {
     name: 'Full barrel',
     file: 'scripts/fixtures/all.ts',
     // Raised 132 → 140 (Combobox), 140 → 172 (DatePicker's

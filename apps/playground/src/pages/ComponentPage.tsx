@@ -200,7 +200,12 @@ export function ComponentPage(): JSX.Element {
                 <h1 class="text-2xl-semibold text-ink-gray-9">
                   {component().name}
                 </h1>
-                <Badge size="sm">{component().group}</Badge>
+                <Badge
+                  size="sm"
+                  theme={component().kind === 'block' ? 'violet' : 'gray'}
+                >
+                  {component().kind === 'block' ? 'block' : component().group}
+                </Badge>
                 <Show when={component().spec}>
                   <Badge size="sm" theme="blue" label="contract" />
                 </Show>

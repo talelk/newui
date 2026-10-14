@@ -76,6 +76,223 @@
       }
     ]
   },
+  "packages/blocks/src/AppSidebar/AppSidebar.tsx": {
+    "AppSidebarProps": [
+      {
+        "name": "title",
+        "type": "JSX.Element",
+        "optional": false
+      },
+      {
+        "name": "subtitle",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "logo",
+        "type": "IconProp",
+        "optional": true
+      },
+      {
+        "name": "showLogo",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "headerActions",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Rendered on the trailing edge of the header — a menu, usually."
+      },
+      {
+        "name": "groups",
+        "type": "AppSidebarGroup[]",
+        "optional": false
+      },
+      {
+        "name": "width",
+        "type": "SidebarProps['width']",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
+  "packages/blocks/src/AuthCard/AuthCard.tsx": {
+    "AuthCardProps": [
+      {
+        "name": "title",
+        "type": "JSX.Element",
+        "optional": false
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false,
+        "description": "The form itself — fields and the submit button."
+      },
+      {
+        "name": "providers",
+        "type": "AuthProvider[]",
+        "optional": true,
+        "description": "Social sign-in buttons, in order."
+      },
+      {
+        "name": "footer",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The line under the form: \"Don't have an account? Sign up\"."
+      },
+      {
+        "name": "logo",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Brand mark above the title."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
+  "packages/blocks/src/DetailHeader/DetailHeader.tsx": {
+    "DetailHeaderProps": [
+      {
+        "name": "breadcrumbs",
+        "type": "BreadcrumbItem[]",
+        "optional": true,
+        "description": "The trail above the title. Omitted → no breadcrumbs."
+      },
+      {
+        "name": "title",
+        "type": "JSX.Element",
+        "optional": false
+      },
+      {
+        "name": "subtitle",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Muted line under the title — a record id, an owner, a timestamp."
+      },
+      {
+        "name": "status",
+        "type": "{ label: string; theme?: ButtonTheme }",
+        "optional": true,
+        "description": "Status pill beside the title."
+      },
+      {
+        "name": "actions",
+        "type": "DetailAction[]",
+        "optional": true,
+        "description": "Trailing actions in order. Everything but the last renders as an outline\nbutton; the last is the primary one."
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Anything else on the trailing edge, before the actions."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
+  "packages/blocks/src/FilterBar/FilterBar.tsx": {
+    "FilterBarProps": [
+      {
+        "name": "query",
+        "type": "{\n    value?: string\n    placeholder?: string\n    onInput?: (value: string) => void\n    width?: string\n  }",
+        "optional": true,
+        "description": "Rendered as a search input. Omit for a bar with no query box."
+      },
+      {
+        "name": "selects",
+        "type": "FilterSelect[]",
+        "optional": true,
+        "description": "One or more selects, in order."
+      },
+      {
+        "name": "tabs",
+        "type": "{\n    options: FilterOption[]\n    value?: string\n    onValueChange?: (value: string) => void\n  }",
+        "optional": true,
+        "description": "A segmented control on the trailing edge — the view switcher."
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Anything else on the trailing edge, after the tabs."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
+  "packages/blocks/src/PageToolbar/PageToolbar.tsx": {
+    "PageToolbarProps": [
+      {
+        "name": "title",
+        "type": "JSX.Element",
+        "optional": false
+      },
+      {
+        "name": "menu",
+        "type": "PageToolbarAction[]",
+        "optional": true,
+        "description": "Options for the ellipsis menu beside the title. Omitted → no menu."
+      },
+      {
+        "name": "action",
+        "type": "PageToolbarAction",
+        "optional": true,
+        "description": "The primary action — the one thing this screen is for."
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Anything else on the trailing edge, after the primary action."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
+  "packages/blocks/src/StatGrid/StatGrid.tsx": {
+    "StatGridProps": [
+      {
+        "name": "stats",
+        "type": "Stat[]",
+        "optional": false
+      },
+      {
+        "name": "columns",
+        "type": "2 | 3 | 4",
+        "optional": true,
+        "description": "Columns at the widest breakpoint. Defaults to the number of stats, capped."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
   "packages/ui/src/components/Accordion/Accordion.tsx": {
     "AccordionProps": [
       {
@@ -2513,6 +2730,66 @@
       }
     ],
     "ListCellProps": [
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
+      }
+    ],
+    "ListHeaderCellSortProps": [
+      {
+        "name": "direction",
+        "type": "ListSortDirection",
+        "optional": true,
+        "description": "`asc` / `desc` when this column is the sort key, `null` when it is not."
+      },
+      {
+        "name": "align",
+        "type": "'start' | 'end'",
+        "optional": true,
+        "description": "Align the cell (and its glyph) to the end of the column."
+      },
+      {
+        "name": "tooltip",
+        "type": "string",
+        "optional": true,
+        "description": "Tooltip copy. Falls back to a hint derived from `direction`."
+      },
+      {
+        "name": "onClick",
+        "type": "(event: MouseEvent) => void",
+        "optional": true,
+        "description": "A plain handler: this button is not a form control, and the union form is\nnot callable without the array-shape check."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
+      }
+    ],
+    "ListGroupProps": [
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Section label; the label row is omitted when this is absent."
+      },
+      {
+        "name": "sticky",
+        "type": "boolean",
+        "optional": true,
+        "description": "Pin the label to the top of the scroll container while the rows scroll."
+      },
       {
         "name": "class",
         "type": "string",

@@ -84,6 +84,7 @@ export function Divider(props: DividerProps): JSX.Element {
     const fixed = side === 'before' ? align() === 'start' : align() === 'end'
     return (
       <hr
+        data-slot="divider"
         aria-orientation={orientation()}
         class={cn(
           'm-0 border-0 border-outline-gray-2',
@@ -102,6 +103,7 @@ export function Divider(props: DividerProps): JSX.Element {
           when={local.label}
           fallback={
             <hr
+              data-slot="divider"
               aria-orientation={orientation()}
               class={cn(
                 'm-0 border-0 border-outline-gray-2',
@@ -113,6 +115,7 @@ export function Divider(props: DividerProps): JSX.Element {
           }
         >
           <div
+            data-slot="divider"
             class={cn(
               'flex items-center gap-2',
               isHorizontal() ? 'w-full' : 'h-full flex-col',

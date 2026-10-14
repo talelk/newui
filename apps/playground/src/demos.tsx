@@ -10,6 +10,12 @@ import type { Component } from 'solid-js'
  */
 export const DEMOS: Record<string, () => Promise<{ default: Component }>> = {
   Accordion: () => import('./demos/accordion'),
+  AppSidebar: () => import('./demos/app-sidebar'),
+  AuthCard: () => import('./demos/auth-card'),
+  DetailHeader: () => import('./demos/detail-header'),
+  FilterBar: () => import('./demos/filter-bar'),
+  PageToolbar: () => import('./demos/page-toolbar'),
+  StatGrid: () => import('./demos/stat-grid'),
   Collapsible: () => import('./demos/collapsible'),
   EmptyState: () => import('./demos/empty-state'),
   Pagination: () => import('./demos/pagination'),

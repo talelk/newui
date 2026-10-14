@@ -16,6 +16,8 @@ import { twMergeConfig } from '../packages/ui/src/lib/tw-merge.config'
 
 const REPO = process.cwd()
 const UI_SRC = path.join(REPO, 'packages/ui/src')
+const BLOCKS_SRC = path.join(REPO, 'packages/blocks/src')
+const APP_SRC = path.join(REPO, 'apps/playground/src')
 const DIST = path.join(REPO, 'apps/playground/dist')
 
 const cssFiles = (() => {
@@ -77,6 +79,33 @@ function isUtility(token: string): boolean {
   return false
 }
 
+/**
+ * Every `lucide-*` class the app writes, checked against the emitted sheet.
+ *
+ * The icon utilities are generated from `lucide-static` by scanning the source,
+ * so a name that does not exist — `lucide-github`, which lucide dropped along
+ * with its other brand glyphs — produces no rule at all and the icon renders as
+ * nothing. Silently: the element is there, the class is there, the glyph is not.
+ * This has shipped twice.
+ */
+function missingIcons(): string[] {
+  const used = new Map<string, string>()
+  // Comments are stripped first: a comment explaining *why* an icon was
+  // replaced tends to name the icon that was removed, and that is not a usage.
+  const withoutComments = (source: string) =>
+    source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '')
+
+  for (const file of walk(APP_SRC)) {
+    const source = withoutComments(readFileSync(file, 'utf8'))
+    for (const match of source.matchAll(/lucide-[a-z0-9-]+/g)) {
+      used.set(match[0], path.relative(REPO, file))
+    }
+  }
+  return [...used]
+    .filter(([name]) => !css.includes(`.${name}`))
+    .map(([name, file]) => `${name} (in ${file})`)
+}
+
 function walk(dir: string, out: string[] = []): string[] {
   for (const entry of readdirSync(dir)) {
     const full = path.join(dir, entry)
@@ -95,7 +124,10 @@ function escapeClass(token: string): string {
 const TOKEN_RE = /^[a-z][a-z0-9./-]*$/
 const missing = new Map<string, string>()
 
-for (const file of walk(UI_SRC)) {
+// Both packages that ship class names: the components and the blocks composed
+// from them. A block's classes are scanned by `style.css`'s `@source`, so a
+// missing rule there is a real defect — the block renders unstyled.
+for (const file of [...walk(UI_SRC), ...walk(BLOCKS_SRC)]) {
   // Not component markup: the config is vocabulary, and its own literals are
   // excluded from the Tailwind scan by `@source not`.
   if (file.endsWith('tw-merge.config.ts')) continue
@@ -127,4 +159,13 @@ if (missing.size > 0) {
   process.exit(1)
 }
 
-console.warn('[css:check] every referenced utility is emitted.')
+const gone = missingIcons()
+if (gone.length > 0) {
+  console.error(
+    `\n[css:check] ${gone.length} icon class(es) do not exist and would render as nothing:\n`,
+  )
+  for (const entry of gone) console.error(`  ${entry}`)
+  process.exit(1)
+}
+
+console.warn('[css:check] every referenced utility and icon is emitted.')
