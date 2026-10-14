@@ -162,8 +162,8 @@ design work runs on, not a regression suite.
   (`inlineCss` in `apps/playground/vite.config.ts`, removing a render-blocking
   round trip) and code-splits every route with dynamic imports. A library must
   not do either — consumers own their asset pipeline.
-- **Current**: `cn()` 6.9 kB · `Button` 9.2 kB · `Button + Dialog` 31.1 kB ·
-  full barrel 224.2 kB (all gzip, `solid-js` external). Site routes:
+- **Current**: `cn()` 7.3 kB · `Button` 9.5 kB · `Button + Dialog` 31.7 kB ·
+  full barrel 239.4 kB (all gzip, `solid-js` external). Site routes:
   **home 48 kB · docs 48 · foundations 73 · feedback 65 · examples 71 ·
   mobile recipe 78 · desktop recipe 123 · blocks 146 · atoms 196**
   (gzip, every chunk the route fetches — `pnpm budget`).
