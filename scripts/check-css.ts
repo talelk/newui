@@ -43,7 +43,18 @@ const css = cssFiles.map((file) => readFileSync(file, 'utf8')).join('\n')
 // Mirrors tailwind-merge's resolution: an exact literal, or a known prefix whose
 // validator accepts the remainder. This is what separates `bottom-0` (a class)
 // from `bottom-end` (a placement value).
-type Validator = (value: string) => boolean
+//
+// A validator is either a predicate or a bare string, and both forms are in the
+// config: `{ tracking: ['wide', 'tight'] }` comes straight from the stock
+// configuration, where tailwind-merge turns each string into an exact-value
+// match. Reading only the function form made this script throw on a valid
+// config (`validator is not a function`), which is the sort of thing a checker
+// should not do.
+type Validator = ((value: string) => boolean) | string
+
+function accepts(validator: Validator, value: string): boolean {
+  return typeof validator === 'string' ? validator === value : validator(value)
+}
 
 function isUtility(token: string): boolean {
   for (const group of Object.values(twMergeConfig.classGroups)) {
@@ -58,7 +69,8 @@ function isUtility(token: string): boolean {
       )) {
         if (!token.startsWith(`${key}-`)) continue
         const value = token.slice(key.length + 1)
-        if (validators.some((validator) => validator(value))) return true
+        if (validators.some((validator) => accepts(validator, value)))
+          return true
       }
     }
   }

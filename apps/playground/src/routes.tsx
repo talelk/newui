@@ -6,7 +6,7 @@ import {
   useLocation,
 } from '@solidjs/router'
 import { type Component, createEffect, type JSX, lazy } from 'solid-js'
-import { BareLayout, SiteLayout } from './shell/SiteLayout'
+import { BareLayout, ComponentsLayout, SiteLayout } from './shell/SiteLayout'
 
 /**
  * The route table.
@@ -43,6 +43,14 @@ const Foundations = page(() => import('./pages/Foundations'), 'Foundations')
 const Atoms = page(() => import('./pages/Atoms'), 'Atoms')
 const Feedback = page(() => import('./pages/Feedback'), 'Feedback')
 const Blocks = page(() => import('./pages/Blocks'), 'Blocks')
+const ComponentsIndex = page(
+  () => import('./pages/ComponentsIndex'),
+  'ComponentsIndex',
+)
+const ComponentPage = page(
+  () => import('./pages/ComponentPage'),
+  'ComponentPage',
+)
 const Examples = page(() => import('./pages/Examples'), 'Examples')
 const NotFound = page(() => import('./pages/NotFound'), 'NotFound')
 const DiscussionsDesktop = page(
@@ -80,8 +88,10 @@ export const ROUTES: { path: string; title: string }[] = [
   { path: '/', title: 'Introduction' },
   { path: '/docs', title: 'Installation' },
   { path: '/foundations', title: 'Design tokens' },
+  { path: '/components', title: 'Components' },
   { path: '/components/atoms', title: 'Anatomy & variants' },
   { path: '/components/feedback', title: 'Feedback & state' },
+  { path: '/components/:name', title: 'Component' },
   { path: '/blocks', title: 'All blocks' },
   { path: '/examples', title: 'Examples' },
   { path: '/examples/discussions/desktop', title: 'Discussions · desktop' },
@@ -116,6 +126,9 @@ export function AppRoutes(): JSX.Element {
         <Route path="/" component={Home} />
         <Route path="/docs" component={Docs} />
         <Route path="/foundations" component={Foundations} />
+        {/* The two hand-written reference pages sit in the site group; the
+            generated `:name` pages sit in their own group below. A static
+            segment outranks a parameter, so these win for their own paths. */}
         <Route path="/components/atoms" component={Atoms} />
         <Route path="/components/feedback" component={Feedback} />
         <Route path="/blocks" component={Blocks} />
@@ -124,6 +137,20 @@ export function AppRoutes(): JSX.Element {
           path="/examples/discussions/desktop"
           component={DiscussionsDesktop}
         />
+      </Route>
+
+      {/*
+        The components section brings its own sidebar (the full index), so it is
+        its own layout group. Only these routes import the index — which is the
+        point: the shell stays at 48 kB because a page pays for its own
+        furniture.
+      */}
+      <Route path="/components" component={ComponentsLayout}>
+        {/* Child paths are relative to the parent, so `/` is the index and
+            `/:name` is one component — writing the parent's own path again
+            would nest it (`/components/components/:name`). */}
+        <Route path="/" component={ComponentsIndex} />
+        <Route path="/:name" component={ComponentPage} />
       </Route>
 
       <Route component={BareLayout}>

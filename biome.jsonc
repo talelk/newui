@@ -9,7 +9,8 @@
       "!**/test-results",
       "!**/playwright-report",
       "!**/references",
-      "!**/packages/tailwind/src/generated"
+      "!**/packages/tailwind/src/generated",
+      "!**/playground/src/generated"
     ]
   },
   "formatter": {

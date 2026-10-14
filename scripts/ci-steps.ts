@@ -38,6 +38,11 @@ export const CI_STEPS: CiStep[] = [
   },
   { name: 'Type-check', command: 'pnpm typecheck', group: 'checks' },
   { name: 'API table is current', command: 'pnpm api:check', group: 'checks' },
+  {
+    name: 'Site data is current',
+    command: 'pnpm site:check',
+    group: 'checks',
+  },
   { name: 'Docs site builds', command: 'pnpm docs:build', group: 'checks' },
   { name: 'Tests', command: 'pnpm test', group: 'checks' },
   { name: 'SSR smoke tests', command: 'pnpm test:ssr', group: 'checks' },

@@ -55,6 +55,10 @@ jobs:
         if: ${{ !cancelled() }}
         run: pnpm api:check
 
+      - name: Site data is current
+        if: ${{ !cancelled() }}
+        run: pnpm site:check
+
       - name: Docs site builds
         if: ${{ !cancelled() }}
         run: pnpm docs:build

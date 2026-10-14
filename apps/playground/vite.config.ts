@@ -1,3 +1,4 @@
+import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig, type Plugin } from 'vite'
 import solid from 'vite-plugin-solid'
@@ -51,5 +52,14 @@ export default defineConfig({
   plugins: [solid(), tailwindcss(), inlineCss()],
   optimizeDeps: {
     exclude: ['@newui/ui', '@newui/tailwind', '@newui/tokens'],
+  },
+  server: {
+    fs: {
+      // The component contracts live in `spec/`, outside this app's root, and
+      // `lib/specs.ts` reads them with `import.meta.glob(..., '?raw')`. The dev
+      // server refuses to serve files above the root by default; the parent
+      // directory is exactly what needs to be allowed, and nothing wider.
+      allow: [path.resolve(import.meta.dirname, '../..')],
+    },
   },
 })

@@ -50,7 +50,8 @@ had, and stays the surface the design work is reviewed on.
 
 | path | what it is |
 | --- | --- |
-| `/` `/docs` `/foundations` `/components/*` `/blocks` `/examples/*` | the site, inside `SiteLayout` (masthead · sidebar · content · prev/next) |
+| `/` `/docs` `/foundations` `/blocks` `/examples/*` | the site, inside `SiteLayout` (masthead · sidebar · content · prev/next) |
+| `/components` · `/components/<name>` | the component reference, inside `ComponentsLayout` — same chrome, but the sidebar is the filterable index |
 | `/spec` | the deterministic page the browser harness drives — no chrome, no network |
 | `/play?c=<Name>` | one component's demo; the docs embed it, and it is the screenshot unit |
 | `/examples/discussions/mobile` | the full-screen mobile recipe (`MobileShell` is `fixed inset-0`) |
@@ -66,6 +67,27 @@ Three rules keep it fast, and each has a guardrail:
 - **A route pays for itself, measured.** `pnpm budget` loads the built site per
   route and sums the gzip of every chunk that route fetched. The old playground
   mounted all six sections on `/` and cost 219 kB gzip; the home page is 48.
+
+### The component reference
+
+`/components/<name>` is assembled, not written: the live demo, the prop tables
+and the contract all come from something that already exists, so adding a
+component to the library and running `pnpm api` + `pnpm site` produces its page.
+
+- **`pnpm site`** generates `apps/playground/src/generated/` (committed, like
+  `theme.css`): the component registry from `api.json`, and one prop-table module
+  per component so a page fetches ~1 kB of tables instead of the 111 kB
+  `api.json`. **`pnpm site:check`** fails on drift, in CI with the other gates.
+- **Specs are not copied.** `lib/specs.ts` reads `spec/*.md` with
+  `import.meta.glob(..., '?raw')`, so `spec/` stays the single source of truth
+  and each page downloads its own contract. The glob crosses the app root, which
+  is why `vite.config.ts` allows exactly that one directory.
+- **One demo per file** (`demos/<name>.tsx`, lazily imported by `demos.ts`). As a
+  single module the demos imported every component in the library, so one
+  component page cost 231 kB gzip in 29 chunks; split, `/components/<name>` is
+  66 kB.
+- The shell imports no component; only the components routes import the index.
+  That is what keeps the home page at 52 kB.
 
 `pnpm shots` writes screenshots for every route × theme × width into
 `test-results/shots/` (gitignored, nothing asserts on them) — it is the loop the
@@ -209,6 +231,7 @@ design work runs on, not a regression suite.
 pnpm dev            # site (dev server)
 pnpm build          # build all packages
 pnpm shots          # screenshots: every route × theme × width (test-results/shots)
+pnpm site           # regenerate the component registry + per-component API slices
 pnpm budget         # per-route gzip budget, measured in a real browser
 pnpm test           # vitest (unit + a11y + manifest)
 pnpm test:ssr       # Solid SSR smoke tests

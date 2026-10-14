@@ -25,10 +25,70 @@ const ROUTES_FILE = readFileSync(
   'utf8',
 )
 
-/** `path="/x"` literals the router actually renders, in file order. */
-const jsxPaths = [...ROUTES_FILE.matchAll(/\spath="([^"]+)"/g)].map(
-  (match) => match[1] ?? '',
-)
+/**
+ * The routes the router actually resolves, in file order.
+ *
+ * Child paths in a nested `<Route>` are **relative to their parent** — that is
+ * how @solidjs/router v1 composes a layout — so `path="/"` under
+ * `path="/components"` is `/components`, and `path="/:name"` under the same
+ * parent is `/components/:name`. Reading the literals without resolving them
+ * misses that: writing the parent's own path a second time (`/components/:name`
+ * under `/components`) silently produced `/components/components/:name` and a
+ * 404 on every generated component page. Hence a scanner rather than a regex.
+ */
+function resolvedRoutes(source: string): string[] {
+  const stack: string[] = []
+  const found: string[] = []
+  // A `<Route>` may be written across several lines, so tags are accumulated
+  // until they close rather than matched line by line.
+  let buffer = ''
+
+  for (const raw of source.split('\n')) {
+    const trimmed = raw.trim()
+
+    if (buffer === '') {
+      if (trimmed === '</Route>') {
+        stack.pop()
+        continue
+      }
+      if (!trimmed.startsWith('<Route')) continue
+      buffer = trimmed
+    } else {
+      buffer = `${buffer} ${trimmed}`
+    }
+
+    if (!buffer.endsWith('>')) continue
+    const tag = buffer
+    buffer = ''
+
+    const opening = /^<Route\b([^>]*?)(\/?)>$/.exec(tag)
+    if (!opening) continue
+
+    const selfClosing = opening[2] === '/'
+    const pathMatch = /\spath="([^"]+)"/.exec(opening[1] ?? '')
+    const parent = stack.at(-1) ?? ''
+
+    // A pathless route is a layout for its children only: it adds no segment.
+    if (!pathMatch) {
+      if (!selfClosing) stack.push(parent)
+      continue
+    }
+
+    const child = pathMatch[1] ?? ''
+    const full =
+      parent === '' || parent === '/'
+        ? child
+        : child === '/'
+          ? parent
+          : `${parent}${child}`
+    found.push(full)
+    if (!selfClosing) stack.push(full)
+  }
+
+  return found
+}
+
+const jsxPaths = resolvedRoutes(ROUTES_FILE)
 
 /** The exported `ROUTES` table's paths, in order. */
 const tablePaths = [...ROUTES_FILE.matchAll(/\{\s*path:\s*'([^']+)'/g)].map(
@@ -72,9 +132,15 @@ describe('site structure', () => {
     // The two harness routes are reached by URL and by test, deliberately not
     // by a nav entry, but they are still listed so they cannot 404.
     const harness = new Set(['/spec', '/play'])
-    const unreachable = tablePaths.filter(
-      (p) => !linked.has(p) && !harness.has(p),
-    )
+    /** A parameterised route is reachable through its parent: `/components/:name`
+     * is linked from `/components`, which the nav lists. */
+    const parentOf = (path: string) =>
+      path.includes(':') ? path.slice(0, path.lastIndexOf('/')) : path
+    const unreachable = tablePaths.filter((path) => {
+      if (linked.has(path) || harness.has(path)) return false
+      const parent = parentOf(path)
+      return parent === path ? true : !linked.has(parent)
+    })
     expect(unreachable).toEqual([])
   })
 

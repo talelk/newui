@@ -391,6 +391,11 @@ export const twMergeConfig = {
       'border-hidden',
       'border-none',
     ],
+    // `border-collapse` / `border-separate` are the table-layout pair, not a
+    // border colour — but `border-<anything>` matches the colour validator
+    // below, so without these declared as literals `cn('border-outline-gray-2',
+    // 'border-collapse')` classifies the second as a colour and drops the first.
+    'border-collapse': [{ border: ['collapse', 'separate'] }],
     'border-color': [{ border: [() => true] }],
     'border-x-color': [{ 'border-x': [() => true] }],
     'border-y-color': [{ 'border-y': [() => true] }],

@@ -31,7 +31,7 @@ export interface NavSection {
 export const MASTHEAD: NavItem[] = [
   { title: 'Docs', href: '/docs' },
   { title: 'Foundations', href: '/foundations' },
-  { title: 'Components', href: '/components/atoms' },
+  { title: 'Components', href: '/components' },
   { title: 'Blocks', href: '/blocks' },
   { title: 'Examples', href: '/examples' },
 ]
@@ -69,6 +69,11 @@ export const NAV: NavSection[] = [
   {
     title: 'Components',
     items: [
+      {
+        title: 'All components',
+        href: '/components',
+        description: 'Every compound the library exports, by group.',
+      },
       {
         title: 'Anatomy & variants',
         href: '/components/atoms',

@@ -41,9 +41,17 @@ interface RouteBudget {
  *
  * `atoms` is deliberately the loose one. It is the exhaustive variant matrix —
  * every atom, every axis, on a single page — so it loads the whole library by
- * definition. It is the *reference* page, not a page anyone lands on cold, and
- * phase 2 splits it into per-component routes; the `pnpm size` budget in
- * `scripts/size.ts` is what protects a real app's cost.
+ * definition, and splitting the demos into per-component modules re-cut the
+ * shared chunks under it (+14 kB: it now fetches the eight chunks it used to
+ * find already in the entry). It is the *reference* page, not a page anyone
+ * lands on cold; `/components/<name>` is the route a reader arrives at, and that
+ * is 66 kB. The `pnpm size` budget in `scripts/size.ts` is what protects a real
+ * app's cost.
+ *
+ * Note on the entry chunk: every dynamic import in the app adds an entry to
+ * Vite's preload map, which lives in the entry. 44 demos + 56 API slices is
+ * ~3 kB gzip that every route pays. Worth knowing before adding a hundred more
+ * lazy modules; not worth a build-plugin dance at this size.
  */
 const ROUTES: RouteBudget[] = [
   {
@@ -52,9 +60,28 @@ const ROUTES: RouteBudget[] = [
     unless: 'the shell, the router and the toast host',
   },
   { route: '/docs', budget: 60, unless: 'prose only' },
-  { route: '/foundations', budget: 80, unless: 'token swatches' },
-  { route: '/blocks', budget: 160, unless: 'every block on one page' },
-  { route: '/components/atoms', budget: 210, unless: 'the exhaustive matrix' },
+  { route: '/foundations', budget: 88, unless: 'token swatches' },
+  {
+    route: '/components',
+    budget: 90,
+    unless: 'the index: the registry plus its own sidebar',
+  },
+  {
+    route: '/components/pagination',
+    budget: 110,
+    unless: 'one component: demo + its api slice + its contract',
+  },
+  {
+    route: '/components/date-picker',
+    budget: 180,
+    unless: 'the heaviest single component (its date library)',
+  },
+  { route: '/blocks', budget: 170, unless: 'every block on one page' },
+  {
+    route: '/components/atoms',
+    budget: 220,
+    unless: 'the exhaustive matrix — ~45 components on one page',
+  },
   { route: '/components/feedback', budget: 120, unless: 'feedback surfaces' },
   { route: '/examples', budget: 80, unless: 'the examples index' },
   {
