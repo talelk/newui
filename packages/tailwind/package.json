@@ -1,6 +1,6 @@
 {
   "name": "@newui/tailwind",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "description": "Tailwind CSS v4 layer: the newui design tokens as @theme, @utility and plugins.",
   "exports": {
