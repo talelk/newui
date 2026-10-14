@@ -7,6 +7,9 @@ name: Changesets
 on:
   push:
     branches: [main]
+  # On demand too: the release path should be re-runnable after a token or
+  # repository-permission change without waiting for the next push.
+  workflow_dispatch:
 
 permissions:
   contents: write

@@ -139,7 +139,7 @@ export const PaginationRoot: ParentComponent<PaginationProps> = (props) => {
           aria-label={local['aria-label'] ?? 'Pagination'}
           data-slot="pagination"
           data-size={size().size}
-          class={cn('flex items-center gap-1', local.class)}
+          class={cn('flex flex-wrap items-center gap-1', local.class)}
         >
           {props.children}
         </nav>
