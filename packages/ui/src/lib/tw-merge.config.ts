@@ -263,7 +263,16 @@ export const twMergeConfig = {
     'font-weight': [{ font: [isFontWeight] }],
     'font-family': [{ font: [() => true] }],
     leading: [{ leading: [isLeading] }],
-    tracking: [{ tracking: [isLength] }],
+    // `tracking-<length>` is our vocabulary, but Tailwind's *named* steps
+    // (`tracking-wide`, …) are what a consumer writes. Without them here the
+    // config does not recognise the class at all, so `cn('tracking-wide',
+    // 'tracking-[0.02em]')` keeps both and the recipe's value loses.
+    tracking: [
+      { tracking: [isLength] },
+      {
+        tracking: ['tighter', 'tight', 'normal', 'wide', 'wider', 'widest'],
+      },
+    ],
     'text-align': [
       'text-left',
       'text-center',

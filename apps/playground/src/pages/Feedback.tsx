@@ -12,6 +12,7 @@ import {
   toast,
 } from '@newui/ui'
 import { For, type JSX } from 'solid-js'
+import { PageIntro } from '../shell/PageIntro'
 
 function Section(props: { title: string; children: JSX.Element }) {
   return (
@@ -38,7 +39,11 @@ const CHART_SWATCHES = [
 
 export function Feedback() {
   return (
-    <div class="flex flex-col gap-12 border-t border-outline-gray-1 pt-10">
+    <div class="flex flex-col gap-12">
+      <PageIntro
+        title="Feedback & state"
+        description="The surfaces that report what just happened: alerts, tabs, scroll areas and the categorical chart ramp."
+      />
       <Section title="Card">
         <div class="grid gap-4 sm:grid-cols-2">
           <Card>

@@ -31,6 +31,8 @@
     "version": "changeset version",
     "release": "changeset publish",
     "lighthouse": "tsx scripts/lighthouse.ts",
+    "budget": "tsx scripts/budget.ts",
+    "shots": "tsx scripts/shots.ts",
     "docs:build": "tsx scripts/docs.ts",
     "css:check": "tsx scripts/check-css.ts"
   },

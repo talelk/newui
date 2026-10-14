@@ -29,7 +29,7 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 | rich text | `@newui/editor` | TipTap 3 Solid editor + toolbar |
 | charts | `@newui/charts` | echarts Solid wrappers (SVG renderer) |
 | vite | `@newui/vite` | Frappe dev proxy · lucide auto-import · DocType types |
-| playground | `apps/playground` | the visual acceptance surface |
+| site | `apps/playground` | the docs site *and* the visual acceptance surface |
 
 - **Primitives:** raw `@zag-js/*` via `useMachine` + `normalizeProps`
   (`packages/ui/src/lib/zag.ts`). Zag supplies keyboard, ARIA and focus.
@@ -42,6 +42,34 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
   `prefix`/`suffix`/`icon` props on atoms.
 - **Styling hooks:** `data-slot` / `data-state` attributes, never class props
   (P10). No class-injection props.
+
+## The site (`apps/playground`)
+
+The playground became the documentation site; it keeps every harness route it
+had, and stays the surface the design work is reviewed on.
+
+| path | what it is |
+| --- | --- |
+| `/` `/docs` `/foundations` `/components/*` `/blocks` `/examples/*` | the site, inside `SiteLayout` (masthead · sidebar · content · prev/next) |
+| `/spec` | the deterministic page the browser harness drives — no chrome, no network |
+| `/play?c=<Name>` | one component's demo; the docs embed it, and it is the screenshot unit |
+| `/examples/discussions/mobile` | the full-screen mobile recipe (`MobileShell` is `fixed inset-0`) |
+
+Three rules keep it fast, and each has a guardrail:
+
+- **Every route is a lazy chunk.** Pages are reached only through `import()` in
+  `routes.tsx`; a static import there would ship that page on every route.
+  `dependency-cruiser` (`site-shell-stays-lean`) and `routes.test.ts` enforce it.
+- **The shell imports no component.** Masthead, sidebar and layout are plain
+  markup over semantic tokens; `createColorScheme` is the one runtime import
+  (a singleton in `shell/theme.ts`, so two consumers cannot drift).
+- **A route pays for itself, measured.** `pnpm budget` loads the built site per
+  route and sums the gzip of every chunk that route fetched. The old playground
+  mounted all six sections on `/` and cost 219 kB gzip; the home page is 48.
+
+`pnpm shots` writes screenshots for every route × theme × width into
+`test-results/shots/` (gitignored, nothing asserts on them) — it is the loop the
+design work runs on, not a regression suite.
 
 ## Guardrails (enforced by tests, not convention)
 
@@ -95,6 +123,13 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 - **Bundle budget & tree-shaking** (`scripts/size.ts`, `pnpm size`): each entry
   has a gzip budget and a tree-shaking assertion (importing `Button` must not
   drag in the Dialog machine).
+- **Route budget** (`scripts/budget.ts`, `pnpm budget`): loads the built site per
+  route and sums the gzip of every chunk that route actually fetched. A route
+  that quietly starts pulling another page's chunk fails here, not in production.
+- **Site structure** (`apps/playground/src/routes.test.ts`): the nav tree and the
+  route table must describe the same paths in both directions, and every page
+  import in `routes.tsx` must be lazy. A sidebar link with no route and a route
+  nobody can reach are both caught.
 - **Disposal** (`packages/ui/src/lib/disposal.test.tsx`): mount/unmount 100
   overlays and assert `document.body` is unchanged — no node or listener leak.
 - **Browser harness** (`e2e/`, `pnpm test:e2e`, Chrome via Playwright): axe on
@@ -123,12 +158,15 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
   SEO / CLS / console-errors / render-blocking must be perfect, the performance
   *score* only has a floor (it is noisy under throttling). The library's real
   cost is the bundle budget below, not this score.
-- **App-level, not library**: the playground inlines its single CSS file
+- **App-level, not library**: the site inlines its single CSS file
   (`inlineCss` in `apps/playground/vite.config.ts`, removing a render-blocking
-  round trip) and code-splits the two pages with dynamic imports. A library must
+  round trip) and code-splits every route with dynamic imports. A library must
   not do either — consumers own their asset pipeline.
 - **Current**: `cn()` 6.9 kB · `Button` 9.2 kB · `Button + Dialog` 31.1 kB ·
-  full barrel 224.2 kB (all gzip, `solid-js` external).
+  full barrel 224.2 kB (all gzip, `solid-js` external). Site routes:
+  **home 48 kB · docs 48 · foundations 73 · feedback 65 · examples 71 ·
+  mobile recipe 78 · desktop recipe 123 · blocks 146 · atoms 196**
+  (gzip, every chunk the route fetches — `pnpm budget`).
 - **Removed `tailwind-variants`** (it bundled its own merge integration) in
   favour of an in-house `tv`/`cn`/`cx` in `lib/tv.ts`: `Button` went 34.3 →
   16.3 kB. The resolver is typed (`VariantProps<typeof recipe>` recovers the
@@ -168,8 +206,10 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 ## Commands
 
 ```
-pnpm dev            # playground
+pnpm dev            # site (dev server)
 pnpm build          # build all packages
+pnpm shots          # screenshots: every route × theme × width (test-results/shots)
+pnpm budget         # per-route gzip budget, measured in a real browser
 pnpm test           # vitest (unit + a11y + manifest)
 pnpm test:ssr       # Solid SSR smoke tests
 pnpm typecheck      # tsc, every package

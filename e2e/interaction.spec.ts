@@ -160,9 +160,9 @@ test('the per-component demo route renders a component', async ({ page }) => {
 })
 
 test('the mobile-shell route renders full-screen', async ({ page }) => {
-  await page.goto('/mobile')
+  await page.goto('/examples/discussions/mobile')
   // `MobileShell` is `fixed inset-0`, so it lives on its own route rather than
-  // inline in the scrolling showcase.
+  // inline in the scrolling site.
   await expect(page.getByRole('heading', { name: 'Home' })).toBeVisible()
   await expect(page.getByRole('navigation', { name: 'Primary' })).toBeVisible()
   await expect(

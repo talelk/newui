@@ -58,6 +58,11 @@ export const CI_STEPS: CiStep[] = [
     group: 'checks',
   },
   {
+    name: 'Route JS budget (every route, gzip)',
+    command: 'pnpm budget',
+    group: 'checks',
+  },
+  {
     name: 'Lighthouse budgets',
     command: 'pnpm lighthouse',
     group: 'checks',

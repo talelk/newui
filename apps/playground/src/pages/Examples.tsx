@@ -7,6 +7,7 @@ import {
   TextInput,
 } from '@newui/ui'
 import { createSignal, type JSX, Show } from 'solid-js'
+import { PageIntro } from '../shell/PageIntro'
 
 function Section(props: {
   title: string
@@ -26,12 +27,16 @@ function Section(props: {
   )
 }
 
-export function Recipes() {
+export function Examples() {
   const [settingsOpen, setSettingsOpen] = createSignal(false)
   const [tab, setTab] = createSignal('profile')
 
   return (
-    <div class="flex flex-col gap-12 border-t border-outline-gray-1 pt-10">
+    <div class="flex flex-col gap-12">
+      <PageIntro
+        title="Examples"
+        description="Whole screens, rebuilt from the products they ship in — read them as a reference, not as a component."
+      />
       <Section
         title="Mobile shell recipe"
         description="A pinned header, a scrolling body and a bottom nav — a full-screen app frame."
@@ -43,8 +48,18 @@ export function Recipes() {
             by design, so it takes over the viewport rather than sitting inline
             in this scrolling page. Open the recipe on its own route:
           </p>
+          <p class="text-base text-ink-gray-7">
+            The desktop half of the same recipe is{' '}
+            <a
+              href="/examples/discussions/desktop"
+              class="text-ink-blue-6 underline decoration-dotted"
+            >
+              Discussions, desktop
+            </a>
+            .
+          </p>
           <a
-            href="/mobile"
+            href="/examples/discussions/mobile"
             class="w-fit rounded-4 bg-surface-gray-10 px-3 py-1.5 text-base text-ink-base transition-colors hover:bg-surface-gray-9"
           >
             Open the mobile shell →

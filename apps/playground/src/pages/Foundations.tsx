@@ -1,6 +1,7 @@
 import { radius, semanticColors } from '@newui/tokens'
 import { Button, Dialog, Switch } from '@newui/ui'
 import { For, type JSX } from 'solid-js'
+import { PageIntro } from '../shell/PageIntro'
 
 function Section(props: { title: string; children: JSX.Element }) {
   return (
@@ -26,6 +27,10 @@ function Swatch(props: { label: string; cssVar: string }) {
 export function Foundations() {
   return (
     <div class="flex flex-col gap-12">
+      <PageIntro
+        title="Design tokens"
+        description="The vocabulary every component is built from. Colours are semantic — surface-*, ink-*, outline-* — so light and dark come from one document attribute rather than a second set of classes."
+      />
       <Section title="Semantic colors">
         <For each={Object.entries(semanticColors.light)}>
           {([category, entries]) => (

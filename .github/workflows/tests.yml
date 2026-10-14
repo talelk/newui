@@ -83,6 +83,10 @@ jobs:
         if: ${{ !cancelled() }}
         run: pnpm css:check
 
+      - name: Route JS budget (every route, gzip)
+        if: ${{ !cancelled() }}
+        run: pnpm budget
+
       - name: Lighthouse budgets
         if: ${{ !cancelled() }}
         run: pnpm lighthouse

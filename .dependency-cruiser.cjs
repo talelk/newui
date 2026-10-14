@@ -38,6 +38,17 @@ module.exports = {
       to: { path: '^apps/' },
     },
     {
+      name: 'site-shell-stays-lean',
+      severity: 'error',
+      comment:
+        'The site shell (routes.tsx, shell/*) is on every route, so it must reach a page only through `import()` — a static import ships that page (and everything it renders) on every route. The old playground mounted all six sections on `/` and paid 219 kB gzip for it.',
+      from: { path: '^apps/playground/src/(shell/|routes)' },
+      to: {
+        path: '^apps/playground/src/(pages/|demos)',
+        dependencyTypesNot: ['dynamic-import'],
+      },
+    },
+    {
       name: 'no-build-output-imports',
       severity: 'error',
       comment: 'Import the source, never a build artifact.',

@@ -159,7 +159,7 @@ function DiscussionRow(props: {
   )
 }
 
-export function MobileApp(): JSX.Element {
+export function DiscussionsMobile(): JSX.Element {
   const [tab, setTab] = createSignal('home')
   const [showSpaces, setShowSpaces] = createSignal(false)
   const [activeSpace, setActiveSpace] = createSignal('Design System')

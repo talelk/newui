@@ -32,6 +32,7 @@ import {
   toast,
 } from '@newui/ui'
 import { createSignal, For, type JSX } from 'solid-js'
+import { PageIntro } from '../shell/PageIntro'
 
 const TREE_ITEMS: TreeItem[] = [
   {
@@ -62,19 +63,17 @@ function Tile(props: { title: string; hint?: string; children: JSX.Element }) {
  * surface, one tile per example. Only stable components are used here; the
  * showcase page (`Atoms`) carries the exhaustive variant matrix.
  */
-export function Gallery() {
+export function Blocks() {
   const [settingsOpen, setSettingsOpen] = createSignal(false)
   const [tab, setTab] = createSignal('profile')
   const [shortcutsOpen, setShortcutsOpen] = createSignal(false)
 
   return (
     <div class="flex flex-col gap-6">
-      <header class="flex flex-col gap-1">
-        <h2 class="text-2xl-semibold text-ink-gray-9">Examples</h2>
-        <p class="text-base text-ink-gray-6">
-          Real, self-contained examples of the library's components.
-        </p>
-      </header>
+      <PageIntro
+        title="Blocks"
+        description="Self-contained sections, composed from the library's components — the shapes a page is actually assembled from."
+      />
 
       <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <Tile title="Breadcrumbs" hint="navigation">

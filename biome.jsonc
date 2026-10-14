@@ -8,9 +8,7 @@
       "!**/coverage",
       "!**/test-results",
       "!**/playwright-report",
-      "!**/reference",
-      "!**/frappe-ui-main",
-      "!**/zag-main",
+      "!**/references",
       "!**/packages/tailwind/src/generated"
     ]
   },

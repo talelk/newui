@@ -44,6 +44,7 @@ import {
   toast,
 } from '@newui/ui'
 import { createSignal, For, type JSX } from 'solid-js'
+import { PageIntro } from '../shell/PageIntro'
 
 function Section(props: { title: string; children: JSX.Element }) {
   return (
@@ -75,7 +76,11 @@ export function Atoms() {
   const [sheet, setSheet] = createSignal(false)
 
   return (
-    <div class="flex flex-col gap-12 border-t border-outline-gray-1 pt-10">
+    <div class="flex flex-col gap-12">
+      <PageIntro
+        title="Anatomy & variants"
+        description="Every axis of every atom on one page — the exhaustive matrix, next to the shape it is meant to be used in."
+      />
       <Section title="Icons & spinners">
         <div class="flex flex-wrap items-center gap-4 text-ink-gray-7">
           <Icon icon="lucide-search" class="size-5" />

@@ -20,8 +20,10 @@ export default [
       '**/playwright-report/**',
       'packages/tailwind/src/generated/**',
       'e2e/**',
-      'frappe-ui-main/**',
-      'zag-main/**',
+      // The reference checkouts (frappe-ui, solid-ui, zag). They carry their own
+      // eslint configs, which resolve packages this repo does not install — so
+      // scanning them is not merely slow, it crashes the linter.
+      'references/**',
     ],
   },
   {
