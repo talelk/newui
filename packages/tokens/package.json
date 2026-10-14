@@ -1,0 +1,23 @@
+{
+  "name": "@newui/tokens",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Framework-neutral design tokens (colors, radius, typography, spacing, elevation, focus).",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./css": {
+      "types": "./src/css.d.ts",
+      "default": "./src/css.js"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "sideEffects": false
+}

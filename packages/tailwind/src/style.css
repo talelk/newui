@@ -1,0 +1,32 @@
+/* The single stylesheet an app imports.
+ *
+ *   @import '@newui/tailwind/style.css';
+ *
+ * Everything below is generated or framework-neutral; nothing here is
+ * app-specific. The consuming app adds its own `@source` globs. */
+@import "./fonts/Inter/inter.css";
+@import "tailwindcss";
+@import "./generated/tokens.css";
+@import "./generated/theme.css";
+@import "./utilities.css";
+
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+@plugin "./plugins/theme.js";
+@plugin "./plugins/lucide.js";
+
+/* Dark mode is the document switch, not a per-component variant. Color
+ * utilities already flip through the runtime tokens; this variant exists for
+ * the occasional `dark:` edge case. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Scan the library's own source so a component's classes always emit.
+ *
+ * `not` excludes two things that are not component markup:
+ *  - the merge config, whose ~500 utility literals are vocabulary, not usage
+ *    (scanning it would emit every class it names into every app's CSS);
+ *  - test files, whose fixtures are strings too. */
+@source "../../ui/src/**/*.{ts,tsx}";
+@source not "../../ui/src/lib/tw-merge.config.ts";
+@source not "../../ui/src/**/*.test.{ts,tsx}";
+@source "../../icons/src/**/*.{ts,tsx}";

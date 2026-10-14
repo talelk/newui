@@ -1,0 +1,43 @@
+import { render } from '@solidjs/testing-library'
+import { describe, expect, it } from 'vitest'
+import { TextInput } from './TextInput'
+
+describe('TextInput', () => {
+  it('renders a bare input without labelling props', () => {
+    const { getByRole } = render(() => <TextInput placeholder="Name" />)
+    const input = getByRole('textbox')
+    expect(input.getAttribute('aria-invalid')).toBeNull()
+  })
+
+  it('wires the shared labelling contract', () => {
+    const { getByRole, getByText } = render(() => (
+      <TextInput
+        label="Email"
+        description="We never share it"
+        error="Required"
+        required
+      />
+    ))
+    const input = getByRole('textbox')
+    expect(input.getAttribute('aria-invalid')).toBe('true')
+    expect(input.getAttribute('aria-required')).toBe('true')
+
+    const describedBy = input.getAttribute('aria-describedby') ?? ''
+    expect(describedBy.split(' ').length).toBe(2)
+
+    const errormessage = input.getAttribute('aria-errormessage')
+    expect(errormessage).toBeTruthy()
+    const errorEl = errormessage ? document.getElementById(errormessage) : null
+    expect(errorEl?.textContent).toContain('Required')
+
+    // Label is associated by `for`.
+    expect(document.querySelector(`label[for="${input.id}"]`)).not.toBeNull()
+    expect(getByText('Email')).toBeTruthy()
+  })
+
+  it('links label and input by a generated id', () => {
+    const { getByRole } = render(() => <TextInput label="Name" />)
+    const input = getByRole('textbox')
+    expect(input.id).toBeTruthy()
+  })
+})

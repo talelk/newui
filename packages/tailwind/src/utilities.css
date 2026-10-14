@@ -1,0 +1,56 @@
+/* Focus rings are drawn with `outline`, not `box-shadow`, so they never
+ * collide with a `shadow-*` utility and survive forced-colors mode. The ring
+ * color comes from the `--focus-outline-*` runtime token, which flips theme. */
+@utility focus-ring {
+  outline: var(--focus-outline-default);
+  outline-offset: 0px;
+}
+@utility focus-ring-gray {
+  outline: var(--focus-outline-default);
+  outline-offset: 0px;
+}
+@utility focus-ring-blue {
+  outline: var(--focus-outline-blue);
+  outline-offset: 0px;
+}
+@utility focus-ring-green {
+  outline: var(--focus-outline-green);
+  outline-offset: 0px;
+}
+@utility focus-ring-amber {
+  outline: var(--focus-outline-amber);
+  outline-offset: 0px;
+}
+@utility focus-ring-red {
+  outline: var(--focus-outline-red);
+  outline-offset: 0px;
+}
+@utility focus-ring-violet {
+  outline: var(--focus-outline-violet);
+  outline-offset: 0px;
+}
+
+/* Indeterminate progress: the bar slides across the track. Referenced by
+ * `animate-[progress_1.4s_ease-in-out_infinite]` in the Progress component. */
+@keyframes progress {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(410%);
+  }
+}
+
+/* Respect the OS "reduce motion" setting everywhere, once. Animations collapse
+ * to a single near-instant frame instead of being removed, so nothing that
+ * depends on an `animationend` (Zag's presence, our exit transitions) stalls. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

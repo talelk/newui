@@ -1,0 +1,118 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # The step names and commands below are mirrored by `scripts/ci-steps.ts`;
+      # `ci.test.ts` fails if the two drift. Run the same pipeline locally with
+      # `pnpm verify` (`pnpm ci` is pnpm's own clean-install command).
+      - name: Lint & format (Biome)
+        if: ${{ !cancelled() }}
+        run: pnpm lint
+
+      - name: Lint Solid (ESLint)
+        if: ${{ !cancelled() }}
+        run: pnpm lint:solid
+
+      - name: Architecture (dependency-cruiser)
+        if: ${{ !cancelled() }}
+        run: pnpm arch
+
+      - name: Package manifest (publint)
+        if: ${{ !cancelled() }}
+        run: pnpm packages:check
+
+      - name: Dead code & unused deps (Knip)
+        if: ${{ !cancelled() }}
+        run: pnpm knip
+
+      - name: Type-check
+        if: ${{ !cancelled() }}
+        run: pnpm typecheck
+
+      - name: API table is current
+        if: ${{ !cancelled() }}
+        run: pnpm api:check
+
+      - name: Docs site builds
+        if: ${{ !cancelled() }}
+        run: pnpm docs:build
+
+      - name: Tests
+        if: ${{ !cancelled() }}
+        run: pnpm test
+
+      - name: SSR smoke tests
+        if: ${{ !cancelled() }}
+        run: pnpm test:ssr
+
+      - name: Bundle budget & tree-shaking
+        if: ${{ !cancelled() }}
+        run: pnpm size
+
+      - name: Build packages
+        if: ${{ !cancelled() }}
+        run: pnpm build
+
+      - name: Build playground
+        if: ${{ !cancelled() }}
+        run: pnpm build:playground
+
+      - name: CSS emission (every referenced utility is emitted)
+        if: ${{ !cancelled() }}
+        run: pnpm css:check
+
+      - name: Lighthouse budgets
+        if: ${{ !cancelled() }}
+        run: pnpm lighthouse
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # Chrome is preinstalled on the runner; the config uses `channel: 'chrome'`.
+      - name: Component browser tests (real CSS)
+        run: pnpm test:browser
+
+      - name: Browser harness (a11y · interaction · responsive · perf)
+        run: pnpm test:e2e
+
+      - name: Upload Playwright traces on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: test-results
+          if-no-files-found: ignore

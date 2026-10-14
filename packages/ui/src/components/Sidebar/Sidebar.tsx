@@ -1,0 +1,641 @@
+import {
+  type Accessor,
+  type Component,
+  createContext,
+  createSignal,
+  type JSX,
+  onCleanup,
+  type ParentComponent,
+  Show,
+  splitProps,
+  useContext,
+} from 'solid-js'
+import { Dynamic } from 'solid-js/web'
+import { createId } from '../../lib/id'
+import { cn } from '../../lib/tv'
+import { Badge } from '../Badge'
+import { Icon, type IconProp } from '../Icon'
+import { TooltipContent, TooltipRoot, TooltipTrigger } from '../Tooltip'
+
+/** Width below which an uncontrolled sidebar collapses on its own. */
+const COLLAPSE_QUERY = '(max-width: 639px)'
+
+function createMediaQuery(query: string): Accessor<boolean> {
+  const supported =
+    typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+  const media = supported ? window.matchMedia(query) : undefined
+  const [matches, setMatches] = createSignal(media?.matches ?? false)
+  if (media) {
+    const onChange = () => setMatches(media.matches)
+    media.addEventListener('change', onChange)
+    onCleanup(() => media.removeEventListener('change', onChange))
+  }
+  return matches
+}
+
+interface SidebarContextValue {
+  collapsed: Accessor<boolean>
+  toggle: () => void
+}
+
+const SidebarContext = createContext<SidebarContextValue>({
+  collapsed: () => false,
+  toggle: () => {},
+})
+
+/** Collapsed state + toggle, shared with every part inside a `Sidebar`. */
+export function useSidebar(): SidebarContextValue {
+  return useContext(SidebarContext)
+}
+
+export interface SidebarProps {
+  /** Allows the sidebar to collapse. Default `true`. */
+  collapsible?: boolean
+  /** Expanded width as a CSS length. */
+  width?: string
+  /** Collapsed width as a CSS length. */
+  collapsedWidth?: string
+  /** Controlled collapsed state. Unset: collapses below the `sm` breakpoint. */
+  collapsed?: boolean
+  /** Fired on every user toggle, controlled or not. */
+  onCollapsedChange?: (collapsed: boolean) => void
+  /** Accessible name of the `<nav>` landmark. Default `Main`. */
+  ariaLabel?: string
+  class?: string
+  children?: JSX.Element
+}
+
+export const Sidebar: ParentComponent<SidebarProps> = (props) => {
+  const [local] = splitProps(props, [
+    'collapsible',
+    'width',
+    'collapsedWidth',
+    'collapsed',
+    'onCollapsedChange',
+    'ariaLabel',
+    'class',
+    'children',
+  ])
+  const isMobile = createMediaQuery(COLLAPSE_QUERY)
+  const [internal, setInternal] = createSignal<boolean | null>(null)
+
+  const collapsible = () => local.collapsible ?? true
+  const shouldCollapse = () =>
+    collapsible() &&
+    (local.collapsed !== undefined
+      ? local.collapsed
+      : (internal() ?? isMobile()))
+
+  const toggle = () => {
+    const next = !shouldCollapse()
+    if (local.collapsed === undefined) setInternal(next)
+    local.onCollapsedChange?.(next)
+  }
+
+  return (
+    <SidebarContext.Provider value={{ collapsed: shouldCollapse, toggle }}>
+      <nav
+        data-slot="sidebar"
+        data-state={shouldCollapse() ? 'collapsed' : 'expanded'}
+        aria-label={local.ariaLabel ?? 'Main'}
+        style={{
+          width: shouldCollapse()
+            ? (local.collapsedWidth ?? '3rem')
+            : (local.width ?? '15rem'),
+        }}
+        class={cn(
+          'flex h-full shrink-0 flex-col overflow-x-hidden bg-surface-sidebar transition-[width] duration-300 ease-in-out',
+          local.class,
+        )}
+      >
+        {local.children}
+      </nav>
+    </SidebarContext.Provider>
+  )
+}
+
+export interface SidebarHeaderProps {
+  title?: JSX.Element
+  subtitle?: JSX.Element
+  /** Leading logo: an image URL or a component. */
+  logo?: IconProp
+  /** Render the leading logo/initial box. Default `true`. */
+  showLogo?: boolean
+  actions?: JSX.Element
+  class?: string
+}
+
+function initialOf(title: JSX.Element): string {
+  return typeof title === 'string' && title.length > 0
+    ? title.charAt(0).toUpperCase()
+    : ''
+}
+
+export const SidebarHeader: ParentComponent<SidebarHeaderProps> = (props) => {
+  const [local] = splitProps(props, [
+    'title',
+    'subtitle',
+    'logo',
+    'showLogo',
+    'actions',
+    'class',
+  ])
+  const { collapsed } = useSidebar()
+  const showLogo = () => local.showLogo !== false
+
+  return (
+    <div
+      data-slot="sidebar-header"
+      class={cn(
+        'flex h-12 shrink-0 items-center justify-between gap-2 px-1',
+        local.class,
+      )}
+    >
+      <div class="flex min-w-0 flex-1 items-center">
+        <Show when={showLogo()}>
+          <div class="size-7 shrink-0 overflow-hidden rounded-[6px]">
+            <Show
+              when={local.logo}
+              fallback={
+                <div class="flex h-full w-full items-center justify-center bg-surface-gray-4 text-ink-gray-7">
+                  {initialOf(local.title)}
+                </div>
+              }
+            >
+              {(logo) => (
+                <Show
+                  when={typeof logo() === 'string'}
+                  fallback={
+                    <Dynamic
+                      component={logo() as Component<{ class?: string }>}
+                      class="h-full w-full"
+                    />
+                  }
+                >
+                  <img
+                    src={logo() as string}
+                    alt="Logo"
+                    class="h-full w-full object-cover"
+                  />
+                </Show>
+              )}
+            </Show>
+          </div>
+        </Show>
+        <Show when={!collapsed()}>
+          <div class="flex min-w-0 flex-1 flex-col">
+            <Show when={local.title}>
+              <span class="truncate text-base-medium leading-tighter text-ink-gray-8">
+                {local.title}
+              </span>
+            </Show>
+            <Show when={local.subtitle}>
+              <span class="mt-0.5 truncate text-sm leading-tighter text-ink-gray-6">
+                {local.subtitle}
+              </span>
+            </Show>
+          </div>
+        </Show>
+      </div>
+      {local.actions}
+    </div>
+  )
+}
+
+export interface SidebarLabelProps {
+  /**
+   * While collapsed, swap the label for a horizontal divider so groups stay
+   * visually separated.
+   */
+  divider?: boolean
+  class?: string
+  children?: JSX.Element
+}
+
+export const SidebarLabel: ParentComponent<SidebarLabelProps> = (props) => {
+  const [local] = splitProps(props, ['divider', 'class', 'children'])
+  const { collapsed } = useSidebar()
+  return (
+    <div
+      data-slot="sidebar-label"
+      class={cn('relative flex h-7 items-center pl-2', local.class)}
+    >
+      <h3
+        class={cn(
+          'text-base leading-tighter text-ink-gray-5 transition-all duration-300 ease-in-out',
+          collapsed() ? 'w-0 overflow-hidden opacity-0' : 'w-auto opacity-100',
+        )}
+      >
+        {local.children}
+      </h3>
+      <Show when={local.divider && collapsed()}>
+        <div aria-hidden="true" class="absolute inset-0 flex items-center">
+          <hr class="w-full border-t border-ink-gray-3" />
+        </div>
+      </Show>
+    </div>
+  )
+}
+
+export interface SidebarItemProps {
+  active?: boolean
+  /** Accessible name and native tooltip while collapsed. */
+  label?: string
+  class?: string
+  prefix?: JSX.Element
+  suffix?: JSX.Element
+  children?: JSX.Element
+  onClick?: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>
+}
+
+export const SidebarItem: ParentComponent<SidebarItemProps> = (props) => {
+  const [local, rest] = splitProps(props, [
+    'active',
+    'label',
+    'class',
+    'prefix',
+    'suffix',
+    'children',
+  ])
+  const { collapsed } = useSidebar()
+  return (
+    <button
+      {...rest}
+      type="button"
+      data-slot="sidebar-item"
+      data-active={local.active ? '' : undefined}
+      data-collapsed={collapsed() ? '' : undefined}
+      {...(collapsed() && local.label
+        ? { title: local.label, 'aria-label': local.label }
+        : {})}
+      class={cn(
+        'flex h-7 w-full items-center gap-2 rounded-4 px-2 text-start text-sm text-ink-gray-6',
+        'transition-colors hover:bg-surface-gray-2',
+        'data-[active]:bg-surface-elevation-3 data-[active]:text-ink-gray-8 data-[active]:shadow-sm',
+        collapsed() && 'justify-center px-0',
+        local.class,
+      )}
+    >
+      <Show when={local.prefix}>
+        <span class="shrink-0 text-ink-gray-6">{local.prefix}</span>
+      </Show>
+      <span class={cn('flex-1 truncate', collapsed() && 'sr-only')}>
+        {local.children}
+      </span>
+      <Show when={!collapsed()}>{local.suffix}</Show>
+    </button>
+  )
+}
+
+export interface SidebarRailProps {
+  class?: string
+  children?: JSX.Element
+}
+
+export const SidebarRail: ParentComponent<SidebarRailProps> = (props) => (
+  <div
+    data-slot="sidebar-rail"
+    class={cn(
+      'flex h-full w-[50px] shrink-0 flex-col items-center bg-surface-sidebar px-[11px] pb-3 pt-2.5',
+      props.class,
+    )}
+  >
+    {props.children}
+  </div>
+)
+
+export type SidebarRailItemVariant = 'subtle' | 'ghost'
+export type SidebarRailItemBadgeStyle = 'count' | 'dot'
+
+export interface SidebarRailItemProps {
+  active?: boolean
+  /** Tooltip text and the base of the accessible label. */
+  label?: string
+  /** Second tooltip line, e.g. "12 members". */
+  description?: string
+  /** Icon class or component; ignored when `children` is set. */
+  icon?: IconProp
+  /** Visual treatment. `subtle` fills the cell; `ghost` is transparent. */
+  variant?: SidebarRailItemVariant
+  /** Unread count. Drives the badge and folds into the accessible label. */
+  badge?: number
+  /** How the badge renders: a count pill or a small dot. */
+  badgeStyle?: SidebarRailItemBadgeStyle
+  class?: string
+  children?: JSX.Element
+  onClick?: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>
+}
+
+export const SidebarRailItem: ParentComponent<SidebarRailItemProps> = (
+  props,
+) => {
+  const [local, rest] = splitProps(props, [
+    'active',
+    'label',
+    'description',
+    'icon',
+    'variant',
+    'badge',
+    'badgeStyle',
+    'class',
+    'children',
+  ])
+  const variant = () => local.variant ?? 'subtle'
+  const badge = () => local.badge ?? 0
+  const showIndicator = () => variant() === 'subtle' && Boolean(local.active)
+
+  const ariaLabel = () =>
+    badge() > 0 ? `${local.label ?? ''}, ${badge()} unread` : local.label
+  const tooltipDescription = () => {
+    if (local.description !== undefined) return local.description
+    if ((local.badgeStyle ?? 'count') === 'dot' && badge() > 0)
+      return `${badge()} unread`
+    return undefined
+  }
+  const formattedCount = () => (badge() > 99 ? '99+' : String(badge()))
+
+  return (
+    <TooltipRoot placement="right" openDelay={0}>
+      <TooltipTrigger
+        {...rest}
+        as="button"
+        type="button"
+        data-slot="sidebar-rail-item"
+        data-variant={variant()}
+        data-active={local.active ? '' : undefined}
+        aria-label={ariaLabel()}
+        class={cn(
+          'relative grid size-7 shrink-0 place-items-center text-base transition',
+          'focus-visible:ring-0 focus-visible:focus-ring',
+          variant() === 'subtle'
+            ? 'rounded-[7px]'
+            : 'rounded-4 text-ink-gray-8',
+          variant() === 'subtle'
+            ? local.active
+              ? 'bg-surface-gray-4 has-[img]:bg-transparent'
+              : 'bg-surface-gray-3 has-[img]:bg-transparent'
+            : local.active
+              ? 'bg-surface-elevation-3 text-ink-gray-8 shadow-sm'
+              : 'bg-transparent text-ink-gray-8 hover:bg-surface-gray-3',
+          local.class,
+        )}
+      >
+        <Show when={showIndicator()}>
+          <span
+            data-slot="sidebar-rail-item-indicator"
+            aria-hidden="true"
+            class="absolute -start-[11px] top-[50%] h-7 w-1 -translate-y-[50%] rounded-e-4 bg-surface-gray-8"
+          />
+        </Show>
+        <Show
+          when={local.children}
+          fallback={<Icon icon={local.icon} class="size-4" />}
+        >
+          {local.children}
+        </Show>
+        <Show when={badge() > 0 && (local.badgeStyle ?? 'count') === 'count'}>
+          <span class="pointer-events-none absolute -end-0.5 -top-0.5 inline-flex rounded-full border border-surface-base">
+            <Badge variant="solid" theme="red" size="sm" aria-hidden="true">
+              {formattedCount()}
+            </Badge>
+          </span>
+        </Show>
+        <Show when={badge() > 0 && local.badgeStyle === 'dot'}>
+          <span
+            data-slot="sidebar-rail-item-badge-dot"
+            aria-hidden="true"
+            class="pointer-events-none absolute -end-0.5 -top-0.5 block size-2 rounded-full border border-surface-base bg-surface-red-6"
+          />
+        </Show>
+      </TooltipTrigger>
+      <TooltipContent>
+        <div class="leading-relaxed">
+          <div>{local.label}</div>
+          <Show when={tooltipDescription()}>
+            <div class="text-xs text-ink-gray-5">{tooltipDescription()}</div>
+          </Show>
+        </div>
+      </TooltipContent>
+    </TooltipRoot>
+  )
+}
+
+export interface SidebarCollapseToggleProps {
+  class?: string
+  /** Label while collapsed (default `Expand`). */
+  expandLabel?: string
+  /** Label while expanded (default `Collapse`). */
+  collapseLabel?: string
+}
+
+/** A `SidebarItem` that toggles the sidebar's collapsed state. */
+export function SidebarCollapseToggle(
+  props: SidebarCollapseToggleProps,
+): JSX.Element {
+  const { collapsed, toggle } = useSidebar()
+  const text = () =>
+    collapsed()
+      ? (props.expandLabel ?? 'Expand')
+      : (props.collapseLabel ?? 'Collapse')
+
+  return (
+    <SidebarItem
+      label={text()}
+      class={props.class}
+      onClick={toggle}
+      prefix={
+        <span
+          class={cn(
+            'lucide-panel-right-open size-4 transition-transform duration-300',
+            collapsed() && 'rotate-180',
+          )}
+          aria-hidden="true"
+        />
+      }
+    >
+      {text()}
+    </SidebarItem>
+  )
+}
+
+export interface SidebarSectionProps {
+  /** Group heading. Omit for a heading-less group. */
+  label?: JSX.Element
+  /** Makes the heading a disclosure that collapses the body. */
+  collapsible?: boolean
+  /** Uncontrolled initial collapsed state. */
+  defaultCollapsed?: boolean
+  class?: string
+  children?: JSX.Element
+}
+
+/**
+ * A labelled, optionally collapsible group. It owns the heading + collapse
+ * chrome only; compose `SidebarItem`s (or anything else) as children.
+ */
+export function SidebarSection(props: SidebarSectionProps): JSX.Element {
+  const [local] = splitProps(props, [
+    'label',
+    'collapsible',
+    'defaultCollapsed',
+    'class',
+    'children',
+  ])
+  const [collapsed, setCollapsed] = createSignal(
+    local.defaultCollapsed ?? false,
+  )
+  const { collapsed: sidebarCollapsed } = useSidebar()
+  const headingId = createId('sidebar-section')
+  const bodyId = createId('sidebar-section-body')
+
+  return (
+    <div
+      data-slot="sidebar-section"
+      data-state={collapsed() ? 'collapsed' : 'expanded'}
+      class={cn('mt-2 flex flex-col', local.class)}
+    >
+      <Show when={local.label}>
+        <div class="relative flex items-center gap-1 px-2 py-1.5">
+          <h3
+            id={headingId}
+            class={cn(
+              'text-sm leading-tighter text-ink-gray-6 transition-all duration-300',
+              sidebarCollapsed()
+                ? 'w-0 overflow-hidden opacity-0'
+                : 'w-auto opacity-100',
+            )}
+          >
+            <Show when={local.collapsible} fallback={<>{local.label}</>}>
+              <button
+                type="button"
+                class="flex items-center gap-1 rounded-4 focus-visible:focus-ring"
+                aria-expanded={!collapsed()}
+                aria-controls={bodyId}
+                onClick={() => setCollapsed((value) => !value)}
+              >
+                {local.label}
+                <span
+                  class={cn(
+                    'lucide-chevron-right size-4 text-ink-gray-6 transition-transform duration-300',
+                    !collapsed() && 'rotate-90',
+                  )}
+                  aria-hidden="true"
+                />
+              </button>
+            </Show>
+          </h3>
+          <Show when={sidebarCollapsed()}>
+            <div aria-hidden="true" class="absolute inset-0 flex items-center">
+              <hr class="w-full border-t border-outline-gray-2" />
+            </div>
+          </Show>
+        </div>
+      </Show>
+      <Show when={!collapsed()}>
+        <div id={bodyId} class="flex flex-col">
+          {local.children}
+        </div>
+      </Show>
+    </div>
+  )
+}
+
+export interface SidebarCardAction {
+  label: string
+  onClick?: () => void
+}
+
+export interface SidebarCardProps {
+  theme?: 'gray' | 'blue' | 'green' | 'amber' | 'red'
+  title?: JSX.Element
+  description?: JSX.Element
+  /** A `lucide-*` string; falls back to a theme default. */
+  icon?: string
+  action?: SidebarCardAction
+  dismissible?: boolean
+  onDismiss?: () => void
+  class?: string
+  children?: JSX.Element
+}
+
+const CARD_ICON: Record<NonNullable<SidebarCardProps['theme']>, string> = {
+  gray: 'lucide-info',
+  blue: 'lucide-info',
+  green: 'lucide-circle-check',
+  amber: 'lucide-triangle-alert',
+  red: 'lucide-circle-alert',
+}
+
+const CARD_ICON_INK: Record<NonNullable<SidebarCardProps['theme']>, string> = {
+  gray: 'text-ink-gray-8',
+  blue: 'text-ink-blue-7',
+  green: 'text-ink-green-7',
+  amber: 'text-ink-amber-7',
+  red: 'text-ink-red-7',
+}
+
+/** A compact status card for the sidebar: icon, copy and an optional action. */
+export function SidebarCard(props: SidebarCardProps): JSX.Element {
+  const [local] = splitProps(props, [
+    'theme',
+    'title',
+    'description',
+    'icon',
+    'action',
+    'dismissible',
+    'onDismiss',
+    'class',
+    'children',
+  ])
+  const theme = () => local.theme ?? 'gray'
+
+  return (
+    <div
+      data-slot="sidebar-card"
+      data-theme={theme()}
+      class={cn(
+        'flex flex-col gap-1 rounded-5 border border-outline-gray-2 bg-surface-base p-3 text-ink-gray-8',
+        local.class,
+      )}
+    >
+      <div class="flex items-start gap-2">
+        <Icon
+          icon={local.icon ?? CARD_ICON[theme()]}
+          class={cn('mt-0.5 size-4 shrink-0', CARD_ICON_INK[theme()])}
+        />
+        <div class="flex flex-1 flex-col gap-0.5">
+          <Show when={local.title}>
+            <span class="text-sm-medium leading-tighter">{local.title}</span>
+          </Show>
+          <Show when={local.description}>
+            <span class="text-p-sm text-ink-gray-6">{local.description}</span>
+          </Show>
+          <Show when={local.children}>
+            <div class="text-p-sm text-ink-gray-6">{local.children}</div>
+          </Show>
+        </div>
+        <Show when={local.dismissible}>
+          <button
+            type="button"
+            aria-label="Dismiss"
+            onClick={() => local.onDismiss?.()}
+            class="-m-1 shrink-0 rounded-3 p-1 text-ink-gray-5 transition-colors hover:text-ink-gray-8"
+          >
+            <span class="lucide-x size-3.5" aria-hidden="true" />
+          </button>
+        </Show>
+      </div>
+      <Show when={local.action}>
+        {(action) => (
+          <button
+            type="button"
+            onClick={action().onClick}
+            class="w-fit rounded-3 px-1.5 py-0.5 text-sm-medium text-ink-blue-6 transition-colors hover:bg-surface-gray-2"
+          >
+            {action().label}
+          </button>
+        )}
+      </Show>
+    </div>
+  )
+}

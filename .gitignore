@@ -1,0 +1,22 @@
+node_modules/
+dist/
+coverage/
+.vite/
+test-results/
+playwright-report/
+docs/
+*.log
+.DS_Store
+
+# Reference checkouts, kept read-only for porting. Never committed: 64 MB of
+# vendored source across three checkouts.
+references/
+# Kept for the record: the pre-`references/` names, so a stray copy at the root
+# still never enters history.
+frappe-ui-main/
+zag-main/
+
+# vitest browser-mode screenshot captures. Nothing asserts against them (the
+# suite has no screenshot matcher), so they are regenerated output, not
+# baselines.
+__screenshots__/

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": [
+        "scripts/*.{js,ts,mjs}",
+        "scripts/fixtures/*.ts",
+        "e2e/*.spec.ts"
+      ],
+      "project": ["scripts/**/*.{js,ts,mjs}", "e2e/**/*.ts"]
+    },
+    "packages/tailwind": {
+      "entry": ["src/plugins/*.js"],
+      "project": "src/**/*.{ts,js}",
+      "ignoreDependencies": ["lucide-static"]
+    },
+    "packages/*": {
+      "project": "src/**/*.{ts,tsx}"
+    },
+    "apps/playground": {
+      "entry": ["index.html"],
+      "project": "src/**/*.{ts,tsx}",
+      "ignoreDependencies": ["@newui/tailwind", "tailwindcss"]
+    }
+  },
+  "ignoreDependencies": ["lighthouse"],
+  "ignoreExportsUsedInFile": true,
+  "rules": {
+    "files": "error",
+    "dependencies": "error",
+    "unlisted": "error",
+    "exports": "error",
+    "types": "error",
+    "duplicates": "error"
+  }
+}

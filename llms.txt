@@ -1,0 +1,60 @@
+# newui
+
+A SolidJS component library — the equivalent of frappe-ui rebuilt on **SolidJS +
+Zag + Tailwind CSS v4**, themed with Frappe's design tokens. Ship tier: prod.
+
+## Packages
+
+- `@newui/tokens` — framework-neutral token data + CSS-variable generator (leaf).
+- `@newui/tailwind` — v4 `@theme`/`@utility`/plugins + `style.css`.
+- `@newui/icons` — Frappe's glyphs as Solid components.
+- `@newui/ui` — components over Zag, `tv()` recipes, and the `lib/` shims.
+
+## Conventions (short)
+
+- **Two colour axes only**: `variant` (`solid | subtle | outline | ghost`) and
+  `theme` (`gray | blue | green | amber | red`; Badge adds `violet`). State
+  (error/disabled/loading) is a state prop, never a theme.
+- **No `v-model`.** Overlays take `open` + `onOpenChange`; inputs take `value` +
+  `onValueChange` (or `checked` + `onCheckedChange`). Uncontrolled via
+  `default*`.
+- **Every input shares the labelling contract** (P5): `label`, `description`,
+  `error`, `required` — implemented by `Field`.
+- **Styling hooks are `data-slot` / `data-state`**, never class-injection props.
+  Root `class` fallthrough is merged last with `cn()`.
+- **Semantic tokens only** — `surface-*`, `ink-*`, `outline-*`. Never raw colours.
+- Light/dark is the `colorScheme` axis (`createColorScheme`), not `theme`.
+
+## Components
+
+Alert · AppShell (+PageHeader/PageBody) · Avatar · Badge · BottomSheet ·
+Breadcrumbs · Button · Card · Checkbox · Combobox · ContextMenu · DatePicker ·
+DesktopShell · Dialog · Divider · Dropdown · Duration · ErrorMessage ·
+FileUploader · FormControl · FormLabel · HoverCard · Icon · ItemListRow ·
+KeyboardShortcut · KeyboardShortcutsDialog · List · Menu · MobileShell
+(+MobileNav/PageHeaderMobile) · MultiSelect · NumberInput · Password · Popover ·
+Progress · RadioGroup (alias `Radio`) · Rating · ScrollArea · Select ·
+SettingsDialog · Sidebar · Skeleton · Slider · Spinner · Switch · TabButtons ·
+Tabs · Textarea · TextInput · TimePicker · Toast · Tooltip · Tree.
+
+Per-component contracts live in [`spec/`](./spec). API tables are generated into
+`packages/ui/api.json`. The data layer lives in `@newui/ui`'s `lib/resource/`:
+`request`/`setConfig`, `createResource`/`createListResource`/
+`createDocumentResource`, `useCall`/`useDoc`/`useList`/`useDoctype`/`useNewDoc`,
+plus `createLocalStore`/`createIdbStore`/`createRealtime`. Imperative dialogs:
+`dialog.confirm`/`dialog.danger`/`dialog.prompt` + `<DialogHost />`.
+
+## Commands
+
+```
+pnpm dev             # playground
+pnpm build           # build all packages
+pnpm test            # vitest (unit + a11y + manifest)
+pnpm test:ssr        # Solid SSR smoke tests
+pnpm verify          # the whole CI pipeline locally (15 steps)
+pnpm verify:checks   # fast gates only
+pnpm verify:e2e      # browser harness only
+pnpm css             # regenerate @theme + tokens CSS after token changes
+pnpm api             # regenerate packages/ui/api.json
+pnpm docs:build      # render spec/*.md + api.json into a static docs/ site
+```

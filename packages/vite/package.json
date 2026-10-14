@@ -1,0 +1,25 @@
+{
+  "name": "@newui/vite",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Vite plugins for newui apps: Frappe dev-server proxy, optional lucide icon auto-import, and DocType TypeScript generation.",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "peerDependencies": {
+    "vite": "^6.0.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

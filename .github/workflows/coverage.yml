@@ -1,0 +1,38 @@
+name: Coverage
+
+# Coverage on pull requests. It runs the instrumented suite and uploads the
+# report as an artifact, so a reviewer can diff the delta against `main`
+# (and a follow-up can wire a comment service without adding a third-party
+# action). Local equivalent: `pnpm test:coverage`.
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Coverage
+        run: pnpm test:coverage
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage
+          if-no-files-found: warn

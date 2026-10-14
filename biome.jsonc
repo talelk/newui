@@ -1,0 +1,76 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": {
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/coverage",
+      "!**/test-results",
+      "!**/playwright-report",
+      "!**/reference",
+      "!**/frappe-ui-main",
+      "!**/zag-main",
+      "!**/packages/tailwind/src/generated"
+    ]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "javascript": {
+    "formatter": { "quoteStyle": "single", "semicolons": "asNeeded" }
+  },
+  "css": {
+    "parser": { "tailwindDirectives": true }
+  },
+  "linter": {
+    "enabled": true,
+    "domains": { "solid": "recommended", "test": "recommended" },
+    "rules": {
+      "preset": "recommended",
+      // Conflicts with `noPropertyAccessFromIndexSignature` (tsconfig): Biome
+      // wants `obj.id`, TypeScript requires `obj['id']` on an index signature.
+      // The type-level rule is the stricter one, so Biome yields.
+      "complexity": { "useLiteralKeys": "off" },
+      "suspicious": {
+        "noConsole": {
+          "level": "error",
+          "options": { "allow": ["warn", "error"] }
+        }
+      },
+      "style": { "noRestrictedImports": "error" }
+    }
+  },
+  "assist": {
+    "actions": { "source": { "organizeImports": "on" } }
+  },
+  "overrides": [
+    {
+      "includes": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.browser.test.tsx",
+        "**/*.ssr.test.tsx",
+        "**/mocks/**"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": {
+              "level": "off",
+              "options": { "allow": ["warn", "error"] }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/tailwind/src/utilities.css"],
+      "linter": {
+        "rules": { "complexity": { "noImportantStyles": "off" } }
+      }
+    }
+  ]
+}
