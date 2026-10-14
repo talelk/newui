@@ -1,6 +1,6 @@
 {
   "name": "@newui/ui",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "SolidJS component library built on Zag and tailwind-variants, themed with the newui design tokens.",
   "exports": {
