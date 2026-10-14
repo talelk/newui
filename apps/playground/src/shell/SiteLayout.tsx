@@ -1,8 +1,10 @@
 import { Icon } from '@newui/ui'
 import { A, type RouteSectionProps, useLocation } from '@solidjs/router'
 import { type JSX, Show } from 'solid-js'
-import { ComponentNav } from './ComponentNav'
+import { COMPONENTS } from '../generated/components'
+import { ComponentNav, OVERVIEW } from './ComponentNav'
 import { Masthead } from './Masthead'
+import type { NavItem } from './nav'
 import { siblingsFor } from './nav'
 import { SidebarNav } from './SidebarNav'
 
@@ -20,7 +22,7 @@ import { SidebarNav } from './SidebarNav'
  * one it sticks.
  */
 export function Chrome(
-  props: RouteSectionProps & { sidebar: JSX.Element },
+  props: RouteSectionProps & { sidebar: JSX.Element; siblings?: NavItem[] },
 ): JSX.Element {
   return (
     <div class="min-h-screen bg-surface-base text-ink-gray-9">
@@ -31,7 +33,7 @@ export function Chrome(
         </aside>
         <main class="min-w-0 flex-1">
           {props.children}
-          <PrevNext />
+          <PrevNext items={props.siblings} />
         </main>
       </div>
     </div>
@@ -43,45 +45,47 @@ function Arrow(props: { icon: string }): JSX.Element {
   return <Icon icon={props.icon} class="size-3" />
 }
 
-function PrevNext(): JSX.Element {
+function PrevNext(props: { items?: NavItem[] }): JSX.Element {
   const location = useLocation()
-  const siblings = () => siblingsFor(location.pathname)
+  const siblings = () => siblingsFor(location.pathname, props.items)
 
   return (
-    <div class="mt-16 grid gap-3 border-t border-outline-gray-1 pt-6 sm:grid-cols-2">
-      <Show when={siblings().previous}>
-        {(previous) => (
-          <A
-            href={previous().href}
-            class="group flex min-w-0 flex-col gap-0.5 rounded-5 border border-outline-gray-2 px-4 py-3 transition-colors hover:border-outline-gray-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
-          >
-            <span class="flex items-center gap-1 text-xs text-ink-gray-5">
-              <Arrow icon="lucide-arrow-left" />
-              Previous
-            </span>
-            <span class="truncate text-base-medium text-ink-gray-9">
-              {previous().title}
-            </span>
-          </A>
-        )}
-      </Show>
-      <Show when={siblings().next}>
-        {(next) => (
-          <A
-            href={next().href}
-            class="group flex min-w-0 flex-col items-end gap-0.5 rounded-5 border border-outline-gray-2 px-4 py-3 text-end transition-colors hover:border-outline-gray-3 hover:bg-surface-gray-2 focus-visible:focus-ring sm:col-start-2"
-          >
-            <span class="flex items-center gap-1 text-xs text-ink-gray-5">
-              Next
-              <Arrow icon="lucide-arrow-right" />
-            </span>
-            <span class="truncate text-base-medium text-ink-gray-9">
-              {next().title}
-            </span>
-          </A>
-        )}
-      </Show>
-    </div>
+    <Show when={siblings().previous || siblings().next}>
+      <div class="mt-16 grid gap-3 border-t border-outline-gray-1 pt-6 sm:grid-cols-2">
+        <Show when={siblings().previous}>
+          {(previous) => (
+            <A
+              href={previous().href}
+              class="group flex min-w-0 flex-col gap-0.5 rounded-5 border border-outline-gray-2 px-4 py-3 transition-colors hover:border-outline-gray-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
+            >
+              <span class="flex items-center gap-1 text-xs text-ink-gray-5">
+                <Arrow icon="lucide-arrow-left" />
+                Previous
+              </span>
+              <span class="truncate text-base-medium text-ink-gray-9">
+                {previous().title}
+              </span>
+            </A>
+          )}
+        </Show>
+        <Show when={siblings().next}>
+          {(next) => (
+            <A
+              href={next().href}
+              class="group flex min-w-0 flex-col items-end gap-0.5 rounded-5 border border-outline-gray-2 px-4 py-3 text-end transition-colors hover:border-outline-gray-3 hover:bg-surface-gray-2 focus-visible:focus-ring sm:col-start-2"
+            >
+              <span class="flex items-center gap-1 text-xs text-ink-gray-5">
+                Next
+                <Arrow icon="lucide-arrow-right" />
+              </span>
+              <span class="truncate text-base-medium text-ink-gray-9">
+                {next().title}
+              </span>
+            </A>
+          )}
+        </Show>
+      </div>
+    </Show>
   )
 }
 
@@ -92,7 +96,17 @@ export function SiteLayout(props: RouteSectionProps): JSX.Element {
 
 /** The components frame: the component index in the sidebar. */
 export function ComponentsLayout(props: RouteSectionProps): JSX.Element {
-  return <Chrome {...props} sidebar={<ComponentNav />} />
+  // The reference web walks the component list, so prev/next stay inside the
+  // section instead of dropping the reader back into the site tree.
+  const siblings = (): NavItem[] => [
+    ...OVERVIEW.map((item) => ({ title: item.title, href: item.href })),
+    ...COMPONENTS.filter((entry) => entry.shipped).map((entry) => ({
+      title: entry.name,
+      href: `/components/${entry.slug}`,
+    })),
+  ]
+
+  return <Chrome {...props} sidebar={<ComponentNav />} siblings={siblings()} />
 }
 
 /**

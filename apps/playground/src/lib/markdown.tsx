@@ -226,7 +226,7 @@ export function Markdown(props: {
             <Match when={block.kind === 'table' && block}>
               {(table) => (
                 <div class="overflow-x-auto">
-                  <table class="w-full border-collapse text-base">
+                  <table class="w-full min-w-[32rem] border-collapse text-base">
                     <thead>
                       <tr>
                         <For each={table().head}>

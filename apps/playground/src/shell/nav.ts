@@ -144,19 +144,21 @@ export function sectionFor(pathname: string): NavSection | undefined {
 }
 
 /**
- * Prev/next within the flat reading order. Both are `NavItem`s so the footer
- * can render the title and the description without a second lookup.
+ * Prev/next within one ordered list. Both are `NavItem`s so the footer can
+ * render a title without a second lookup.
+ *
+ * `items` exists because a section has its own order: the component reference
+ * walks the component list, not the site tree — and a page with no place in the
+ * order it was given gets no footer rather than an empty strip.
  */
-export function siblingsFor(pathname: string): {
-  previous?: NavItem
-  next?: NavItem
-} {
-  const index = NAV_ORDER.findIndex(
-    (item) => item.href.split('?')[0] === pathname,
-  )
+export function siblingsFor(
+  pathname: string,
+  items: NavItem[] = NAV_ORDER,
+): { previous?: NavItem; next?: NavItem } {
+  const index = items.findIndex((item) => item.href.split('?')[0] === pathname)
   if (index === -1) return {}
   return {
-    previous: index > 0 ? NAV_ORDER[index - 1] : undefined,
-    next: index < NAV_ORDER.length - 1 ? NAV_ORDER[index + 1] : undefined,
+    previous: index > 0 ? items[index - 1] : undefined,
+    next: index < items.length - 1 ? items[index + 1] : undefined,
   }
 }

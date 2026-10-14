@@ -50,8 +50,10 @@ function ApiTable(props: { part: string; members: ApiMember[] }): JSX.Element {
   return (
     <div class="flex flex-col gap-2">
       <h3 class="text-base-medium text-ink-gray-8">{props.part}</h3>
+      {/* The table keeps its shape and the *container* scrolls: a `w-full`
+          table on a phone squeezes the notes column to four words a line. */}
       <div class="overflow-x-auto rounded-5 border border-outline-gray-1">
-        <table class="w-full border-collapse text-base">
+        <table class="w-full min-w-[38rem] border-collapse text-base">
           <thead>
             <tr class="bg-surface-gray-1">
               <th class="border-b border-outline-gray-1 px-3 py-2 text-start text-sm-medium text-ink-gray-8">

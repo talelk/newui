@@ -22,7 +22,7 @@ import {
  * hand-written reference pages. Listed first, because they are what to read
  * before browsing a single component.
  */
-const OVERVIEW = [
+export const OVERVIEW = [
   { title: 'All components', href: '/components' },
   { title: 'Anatomy & variants', href: '/components/atoms' },
   { title: 'Feedback & state', href: '/components/feedback' },
