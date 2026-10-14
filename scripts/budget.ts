@@ -58,6 +58,11 @@ const ROUTES: RouteBudget[] = [
   { route: '/components/feedback', budget: 120, unless: 'feedback surfaces' },
   { route: '/examples', budget: 80, unless: 'the examples index' },
   {
+    route: '/spec',
+    budget: 260,
+    unless: 'the determinism harness renders ~45 components on purpose',
+  },
+  {
     route: '/examples/discussions/desktop',
     budget: 140,
     unless: 'a full desktop app screen',

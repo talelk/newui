@@ -7,6 +7,13 @@ import * as ui from './index'
 
 const PUBLIC = [
   // components
+  'Accordion',
+  'Collapsible',
+  'EmptyState',
+  'Pagination',
+  'ProgressCircle',
+  'Timeline',
+  'ToggleGroup',
   'Button',
   'Icon',
   'Spinner',

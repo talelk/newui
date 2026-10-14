@@ -90,4 +90,43 @@ describe('contrast contract (WCAG AA)', () => {
       })
     }
   }
+
+  /**
+   * Why the muted step is `ink-gray-6` and not `ink-gray-5`.
+   *
+   * The contract above only covers the pairings the recipes ship, so a *new*
+   * recipe can introduce a pairing nobody listed — which is exactly how
+   * `text-ink-gray-5` reached the pagination range, the empty-state description
+   * and the timeline in one pass, caught by Lighthouse rather than here.
+   *
+   * So the boundary is pinned instead: the step above the muted one fails AA on
+   * the base surface, and the muted one passes. Change a token and this tells
+   * you which side of the line it moved to.
+   */
+  for (const mode of ['light', 'dark'] as Mode[]) {
+    it(`${mode}: ink-gray-5 on base is below AA — that is why muted text is ink-gray-6`, () => {
+      const failing = contrast(
+        resolve(mode, 'ink-gray-5'),
+        resolve(mode, 'surface-base'),
+      )
+      const passing = contrast(
+        resolve(mode, 'ink-gray-6'),
+        resolve(mode, 'surface-base'),
+      )
+      expect(failing).toBeLessThan(AA)
+      expect(passing).toBeGreaterThanOrEqual(AA)
+    })
+  }
+
+  for (const mode of ['light', 'dark'] as Mode[]) {
+    it(`${mode}: a decorative glyph may use ink-gray-5 (3:1 non-text)`, () => {
+      // Chevrons and leading icons are non-text: WCAG 1.4.11 asks for 3:1, not
+      // 4.5:1. That is the one place the step is allowed.
+      const ratio = contrast(
+        resolve(mode, 'ink-gray-5'),
+        resolve(mode, 'surface-base'),
+      )
+      expect(ratio).toBeGreaterThanOrEqual(3)
+    })
+  }
 })

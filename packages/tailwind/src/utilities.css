@@ -30,6 +30,44 @@
   outline-offset: 0px;
 }
 
+/* A disclosure panel — the body of an `Accordion` item or a `Collapsible`.
+ *
+ * The panel animates its own height, which a `height: auto` element cannot do.
+ * `grid-template-rows: 0fr → 1fr` is the one height animation that needs no
+ * measurement: the wrapper clips, the inner box holds the padding, and the row
+ * collapses to exactly zero. `visibility` is the accessibility half — a
+ * collapsed panel leaves the tab order and the accessibility tree — and it is
+ * delayed by the transition's duration so the close is still visible before the
+ * panel disappears. (Zag marks the panel `hidden`, which would win over all of
+ * this and snap; the components drop that one prop for this reason.)
+ *
+ * Reduced motion collapses the transition rather than the panel: the panel must
+ * still reach its end states. */
+@utility disclosure-panel {
+  display: grid;
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows 200ms cubic-bezier(0.23, 1, 0.32, 1),
+    visibility 0s 0s;
+
+  &[data-state="closed"] {
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition:
+      grid-template-rows 200ms cubic-bezier(0.23, 1, 0.32, 1),
+      visibility 0s 200ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &[data-state="closed"] {
+      transition: none;
+    }
+  }
+}
+
 /* Indeterminate progress: the bar slides across the track. Referenced by
  * `animate-[progress_1.4s_ease-in-out_infinite]` in the Progress component. */
 @keyframes progress {

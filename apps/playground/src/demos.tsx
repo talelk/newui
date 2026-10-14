@@ -1,15 +1,18 @@
 import {
+  Accordion,
   Alert,
   Avatar,
   Badge,
   Breadcrumbs,
   Button,
   Checkbox,
+  Collapsible,
   Combobox,
   DatePicker,
   Dialog,
   Divider,
   Duration,
+  EmptyState,
   FileUploader,
   FormControl,
   Icon,
@@ -21,9 +24,11 @@ import {
   Menu,
   MultiSelect,
   NumberInput,
+  Pagination,
   Password,
   Popover,
   Progress,
+  ProgressCircle,
   RadioGroup,
   Rating,
   ScrollArea,
@@ -36,7 +41,9 @@ import {
   Tabs,
   Textarea,
   TextInput,
+  Timeline,
   TimePicker,
+  ToggleGroup,
   Tooltip,
   Tree,
   type TreeItem,
@@ -61,6 +68,152 @@ const TREE_ITEMS: TreeItem[] = [
  * is written once.
  */
 export const DEMOS: Record<string, () => JSX.Element> = {
+  Accordion: () => (
+    <div class="max-w-md">
+      <Accordion.Root defaultValue={['tokens']}>
+        <Accordion.Item value="tokens">
+          <Accordion.Trigger icon="lucide-palette">Tokens</Accordion.Trigger>
+          <Accordion.Content>
+            Semantic colour, type, radius and elevation. The whole system
+            retunes by overriding three custom-property families.
+          </Accordion.Content>
+        </Accordion.Item>
+        <Accordion.Item value="components">
+          <Accordion.Trigger icon="lucide-box">Components</Accordion.Trigger>
+          <Accordion.Content>
+            Atoms over Zag primitives — keyboard, focus and ARIA come from the
+            machine, never from hand-written handlers.
+          </Accordion.Content>
+        </Accordion.Item>
+        <Accordion.Item value="legacy" disabled>
+          <Accordion.Trigger icon="lucide-archive">Legacy</Accordion.Trigger>
+          <Accordion.Content>Not available.</Accordion.Content>
+        </Accordion.Item>
+      </Accordion.Root>
+    </div>
+  ),
+  Collapsible: () => (
+    <div class="max-w-md rounded-5 border border-outline-gray-1">
+      <Collapsible.Root>
+        <Collapsible.Trigger>Advanced settings</Collapsible.Trigger>
+        <Collapsible.Content>
+          Rate limits, retry policy and the webhook secret live here.
+        </Collapsible.Content>
+      </Collapsible.Root>
+    </div>
+  ),
+  EmptyState: () => (
+    <div class="max-w-lg rounded-6 border border-outline-gray-2">
+      <EmptyState
+        icon="lucide-inbox"
+        title="No invoices yet"
+        description="Once a customer pays, the invoice lands here with its PDF and receipt."
+        action={<Button variant="solid">Create an invoice</Button>}
+        secondaryAction={<Button variant="ghost">Import from CSV</Button>}
+      />
+    </div>
+  ),
+  Pagination: () => (
+    <div class="flex flex-col gap-4">
+      <Pagination.Root count={348} pageSize={20} defaultPage={2}>
+        <Pagination.PrevTrigger />
+        <Pagination.Pages />
+        <Pagination.NextTrigger />
+        <Pagination.Range class="ms-2" />
+      </Pagination.Root>
+      <Pagination.Root count={348} pageSize={20} defaultPage={9} size="md">
+        <Pagination.PrevTrigger />
+        <Pagination.Pages />
+        <Pagination.NextTrigger />
+      </Pagination.Root>
+    </div>
+  ),
+  ProgressCircle: () => (
+    <div class="flex flex-wrap items-center gap-8">
+      <ProgressCircle value={72} size="sm" />
+      <ProgressCircle value={72}>
+        <span class="text-2xs">72%</span>
+      </ProgressCircle>
+      <ProgressCircle value={32} size="lg" aria-label="Storage used" />
+      <ProgressCircle indeterminate size="lg" aria-label="Loading" />
+      <ProgressCircle value={100} size="xl" />
+    </div>
+  ),
+  Timeline: () => (
+    <div class="max-w-md">
+      <Timeline
+        items={[
+          {
+            title: 'Deployed to production',
+            description: 'v2.4.1 · 3 minutes',
+            timestamp: '2h ago',
+            icon: 'lucide-rocket',
+            tone: 'green',
+          },
+          {
+            title: 'Reviewed by Ana Costa',
+            description: 'Approved with two comments.',
+            timestamp: '5h ago',
+            icon: 'lucide-check',
+            tone: 'blue',
+          },
+          {
+            title: 'Opened by Sam Rivera',
+            description: 'Fixes the empty state on the invoices list.',
+            timestamp: '1d ago',
+          },
+        ]}
+      />
+    </div>
+  ),
+  ToggleGroup: () => (
+    <div class="flex flex-wrap items-center gap-8">
+      <ToggleGroup.Root
+        variant="subtle"
+        aria-label="Text alignment"
+        defaultValue={['start']}
+      >
+        <ToggleGroup.Item
+          value="start"
+          icon="lucide-align-left"
+          aria-label="Left"
+        />
+        <ToggleGroup.Item
+          value="center"
+          icon="lucide-align-center"
+          aria-label="Centre"
+        />
+        <ToggleGroup.Item
+          value="end"
+          icon="lucide-align-right"
+          aria-label="Right"
+        />
+      </ToggleGroup.Root>
+      <ToggleGroup.Root
+        variant="outline"
+        size="md"
+        aria-label="Density"
+        defaultValue={['comfortable']}
+      >
+        <ToggleGroup.Item value="compact">Compact</ToggleGroup.Item>
+        <ToggleGroup.Item value="comfortable">Comfortable</ToggleGroup.Item>
+        <ToggleGroup.Item value="spacious">Spacious</ToggleGroup.Item>
+      </ToggleGroup.Root>
+      <ToggleGroup.Root variant="ghost" multiple aria-label="Filters">
+        <ToggleGroup.Item value="mine" icon="lucide-user" aria-label="Mine" />
+        <ToggleGroup.Item
+          value="unread"
+          icon="lucide-mail"
+          aria-label="Unread"
+        />
+        <ToggleGroup.Item
+          value="flagged"
+          icon="lucide-flag"
+          aria-label="Flagged"
+        />
+      </ToggleGroup.Root>
+    </div>
+  ),
   Alert: () => (
     <div class="flex max-w-md flex-col gap-2">
       <Alert theme="green" title="Saved" description="All changes stored." />

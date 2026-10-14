@@ -76,6 +76,117 @@
       }
     ]
   },
+  "packages/ui/src/components/Accordion/Accordion.tsx": {
+    "AccordionProps": [
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "optional": true,
+        "description": "Allow more than one panel open at a time."
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean",
+        "optional": true,
+        "description": "With `multiple={false}`, allow closing the open panel. Default `true`."
+      },
+      {
+        "name": "value",
+        "type": "string[]",
+        "optional": true,
+        "description": "Controlled open panels."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[]",
+        "optional": true,
+        "description": "Initial open panels (uncontrolled)."
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string[]) => void",
+        "optional": true
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "orientation",
+        "type": "'horizontal' | 'vertical'",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ],
+    "AccordionItemProps": [
+      {
+        "name": "value",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "headingLevel",
+        "type": "'h2' | 'h3' | 'h4' | 'h5' | 'h6'",
+        "optional": true,
+        "description": "Heading level for the trigger, so the outline stays a valid tree."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ],
+    "AccordionTriggerProps": [
+      {
+        "name": "icon",
+        "type": "IconProp",
+        "optional": true,
+        "description": "A `lucide-*` string or a component, shown before the label (P11)."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
+      }
+    ],
+    "AccordionContentProps": [
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
+      }
+    ]
+  },
   "packages/ui/src/components/Alert/Alert.tsx": {
     "AlertProps": [
       {
@@ -500,6 +611,77 @@
       {
         "name": "class",
         "type": "string",
+        "optional": true
+      }
+    ]
+  },
+  "packages/ui/src/components/Collapsible/Collapsible.tsx": {
+    "CollapsibleProps": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "optional": true,
+        "description": "Controlled open state."
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "optional": true
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ],
+    "CollapsibleTriggerProps": [
+      {
+        "name": "icon",
+        "type": "IconProp",
+        "optional": true,
+        "description": "A `lucide-*` string or a component, shown before the label (P11)."
+      },
+      {
+        "name": "hideIndicator",
+        "type": "boolean",
+        "optional": true,
+        "description": "Hide the built-in chevron when the trigger draws its own affordance."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
+      }
+    ],
+    "CollapsibleContentProps": [
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
         "optional": true
       }
     ]
@@ -1468,6 +1650,54 @@
       },
       {
         "name": "'aria-label'",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
+  "packages/ui/src/components/EmptyState/EmptyState.tsx": {
+    "EmptyStateProps": [
+      {
+        "name": "icon",
+        "type": "IconProp",
+        "optional": true,
+        "description": "A `lucide-*` string or a component (P11)."
+      },
+      {
+        "name": "title",
+        "type": "JSX.Element",
+        "optional": false
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "action",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The one thing to do from here — a Button, usually."
+      },
+      {
+        "name": "secondaryAction",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "A second, quieter escape hatch."
+      },
+      {
+        "name": "size",
+        "type": "EmptyStateSize",
+        "optional": true
+      },
+      {
+        "name": "bordered",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draw a dashed frame, for a drop zone or a blank panel."
+      },
+      {
+        "name": "class",
         "type": "string",
         "optional": true
       }
@@ -2669,6 +2899,76 @@
       }
     ]
   },
+  "packages/ui/src/components/Pagination/Pagination.tsx": {
+    "PaginationProps": [
+      {
+        "name": "size",
+        "type": "PaginationSize",
+        "optional": true
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "optional": true,
+        "description": "Current page, 1-based."
+      },
+      {
+        "name": "defaultPage",
+        "type": "number",
+        "optional": true
+      },
+      {
+        "name": "onPageChange",
+        "type": "(page: number) => void",
+        "optional": true
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "optional": true,
+        "description": "The number of **rows**, not pages — Zag derives the page count from this and\n`pageSize`. Naming it after the rows is what keeps a caller from passing a\npage count here and getting half the pagination they expected."
+      },
+      {
+        "name": "pageSize",
+        "type": "number",
+        "optional": true,
+        "description": "Rows per page."
+      },
+      {
+        "name": "siblingCount",
+        "type": "number",
+        "optional": true,
+        "description": "Page buttons either side of the current one. Default `1`."
+      },
+      {
+        "name": "boundaryCount",
+        "type": "number",
+        "optional": true,
+        "description": "Page buttons pinned at each end. Default `1`."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the `<nav>`."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
+      }
+    ]
+  },
   "packages/ui/src/components/Password/Password.tsx": {
     "PasswordProps": [
       {
@@ -2761,6 +3061,43 @@
         "type": "string",
         "optional": true,
         "description": "Accessible name. A progressbar is unlabelled without one."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
+  "packages/ui/src/components/ProgressCircle/ProgressCircle.tsx": {
+    "ProgressCircleProps": [
+      {
+        "name": "value",
+        "type": "number",
+        "optional": true,
+        "description": "0–100. `null` (with `indeterminate`) for a spinning ring."
+      },
+      {
+        "name": "indeterminate",
+        "type": "boolean",
+        "optional": true,
+        "description": "A ring with no known end — spins instead of filling."
+      },
+      {
+        "name": "size",
+        "type": "ProgressCircleSize",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Content in the middle: a percentage, a count, an icon."
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true
       },
       {
         "name": "class",
@@ -4129,6 +4466,20 @@
       }
     ]
   },
+  "packages/ui/src/components/Timeline/Timeline.tsx": {
+    "TimelineProps": [
+      {
+        "name": "items",
+        "type": "TimelineItem[]",
+        "optional": false
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
   "packages/ui/src/components/TimePicker/TimePicker.tsx": {
     "TimePickerProps": [
       {
@@ -4277,6 +4628,97 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
+      }
+    ]
+  },
+  "packages/ui/src/components/ToggleGroup/ToggleGroup.tsx": {
+    "ToggleGroupProps": [
+      {
+        "name": "variant",
+        "type": "ToggleGroupVariant",
+        "optional": true
+      },
+      {
+        "name": "size",
+        "type": "ToggleGroupSize",
+        "optional": true
+      },
+      {
+        "name": "value",
+        "type": "string[]",
+        "optional": true,
+        "description": "Controlled selection. `multiple` decides whether it is a list or one value."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[]",
+        "optional": true
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string[]) => void",
+        "optional": true
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "optional": true,
+        "description": "Allow more than one cell on at once."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the group — it is a toolbar of related controls."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ],
+    "ToggleGroupItemProps": [
+      {
+        "name": "value",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "icon",
+        "type": "IconProp",
+        "optional": true,
+        "description": "A `lucide-*` string or a component (P11). Alone, it makes the cell square."
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when the cell has only an icon."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
       }
     ]
   },

@@ -1,4 +1,5 @@
 import {
+  Accordion,
   Alert,
   Avatar,
   Badge,
@@ -8,18 +9,22 @@ import {
   CardHeader,
   CardTitle,
   Checkbox,
+  Collapsible,
   Combobox,
   DatePicker,
   Dialog,
   Divider,
+  EmptyState,
   FormControl,
   List,
   ListCell,
   ListRow,
   MultiSelect,
+  Pagination,
   Password,
   Popover,
   Progress,
+  ProgressCircle,
   RadioGroup,
   Select,
   Sidebar,
@@ -31,7 +36,9 @@ import {
   Tabs,
   Textarea,
   TextInput,
+  Timeline,
   Toaster,
+  ToggleGroup,
   Tooltip,
   toast,
 } from '@newui/ui'
@@ -222,6 +229,51 @@ export function Spec(): JSX.Element {
             )}
           </For>
         </List>
+      </section>
+
+      <section class="flex flex-col gap-4">
+        <Accordion.Root defaultValue={['one']}>
+          <Accordion.Item value="one">
+            <Accordion.Trigger>First section</Accordion.Trigger>
+            <Accordion.Content>First body</Accordion.Content>
+          </Accordion.Item>
+          <Accordion.Item value="two" disabled>
+            <Accordion.Trigger>Second section</Accordion.Trigger>
+            <Accordion.Content>Second body</Accordion.Content>
+          </Accordion.Item>
+        </Accordion.Root>
+
+        <Collapsible.Root>
+          <Collapsible.Trigger>More options</Collapsible.Trigger>
+          <Collapsible.Content>Hidden by default.</Collapsible.Content>
+        </Collapsible.Root>
+
+        <ToggleGroup.Root aria-label="Density" defaultValue={['comfortable']}>
+          <ToggleGroup.Item value="compact">Compact</ToggleGroup.Item>
+          <ToggleGroup.Item value="comfortable">Comfortable</ToggleGroup.Item>
+        </ToggleGroup.Root>
+
+        <Pagination.Root count={120} pageSize={10} defaultPage={3}>
+          <Pagination.PrevTrigger />
+          <Pagination.Pages />
+          <Pagination.NextTrigger />
+          <Pagination.Range class="ms-2" />
+        </Pagination.Root>
+
+        <ProgressCircle value={64} aria-label="Storage used" />
+
+        <EmptyState
+          icon="lucide-inbox"
+          title="Nothing here"
+          description="No records yet."
+        />
+
+        <Timeline
+          items={[
+            { title: 'Created', timestamp: '2h ago', icon: 'lucide-plus' },
+            { title: 'Published', description: 'Went live.', tone: 'green' },
+          ]}
+        />
       </section>
 
       <Sidebar

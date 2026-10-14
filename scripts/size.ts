@@ -37,7 +37,15 @@ const ENTRIES: Entry[] = [
     name: 'Button only',
     file: 'scripts/fixtures/button.ts',
     budget: 11,
-    forbid: ['"dialog"', '"slider"', '"toast"', '"combobox"'],
+    forbid: [
+      '"dialog"',
+      '"slider"',
+      '"toast"',
+      '"combobox"',
+      '"accordion"',
+      '"toggle-group"',
+      '"pagination"',
+    ],
   },
   {
     name: 'Button + Dialog',
@@ -60,10 +68,13 @@ const ENTRIES: Entry[] = [
     // Raised 132 → 140 (Combobox), 140 → 172 (DatePicker's
     // `@internationalized/date`), 172 → 210 (the mobile/settings/tree/
     // file-upload/time-picker/context-menu batch), 210 → 225 (the frappe-ui
-    // surface-parity pass: toggle/selection/display/overlay props). The barrel
-    // is every component by definition; that `Button`-only stays under 11 kB is
+    // surface-parity pass: toggle/selection/display/overlay props), 225 → 245
+    // (the disclosure/pagination/empty-state/timeline/toggle-group/
+    // progress-circle batch: seven components, ~14 kB of recipe and machine
+    // wiring). The barrel is every component by definition; that `Button`-only
+    // stays under 11 kB — with the new machines named in its `forbid` list — is
     // the tree-shaking guard for all of them.
-    budget: 225,
+    budget: 245,
   },
 ]
 

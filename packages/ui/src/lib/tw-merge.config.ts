@@ -545,7 +545,11 @@ export const twMergeConfig = {
       'bottom',
       'left',
     ],
-    'inset-x': ['right', 'left'],
+    // `inset-x` sets both inline edges, so it subsumes the logical `start`/`end`
+    // as well as the physical `left`/`right` — a `start-4` after it must win.
+    // The stock config keeps them in one group; this one lists them per-property
+    // for the bundle, so the relation has to be stated.
+    'inset-x': ['right', 'left', 'start', 'end'],
     'inset-y': ['top', 'bottom'],
     p: ['px', 'py', 'ps', 'pe', 'pt', 'pr', 'pb', 'pl'],
     px: ['ps', 'pe', 'pr', 'pl'],

@@ -50,6 +50,13 @@ const ROUTES = [
   '/play?c=Combobox',
   '/play?c=DatePicker',
   '/play?c=Tree',
+  '/play?c=Accordion',
+  '/play?c=Collapsible',
+  '/play?c=EmptyState',
+  '/play?c=Pagination',
+  '/play?c=ProgressCircle',
+  '/play?c=Timeline',
+  '/play?c=ToggleGroup',
 ]
 
 const THEMES = themeFilter ? [themeFilter] : ['light', 'dark']
