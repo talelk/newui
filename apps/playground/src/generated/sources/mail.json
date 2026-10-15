@@ -1,0 +1,14 @@
+{
+  "files": [
+    "pages/Mail.tsx",
+    "examples/ExampleFrame.tsx",
+    "shell/ThemeMenu.tsx",
+    "shell/theme.ts",
+    "examples/mail-data.ts"
+  ],
+  "packages": [
+    "@newui/ui",
+    "@solidjs/router",
+    "solid-js"
+  ]
+}

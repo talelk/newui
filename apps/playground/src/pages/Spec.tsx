@@ -84,6 +84,28 @@ export function Spec(): JSX.Element {
         <Avatar label="Talel" />
       </section>
 
+      <section
+        data-slot="visual-form-states"
+        class="grid gap-4 rounded-5 border border-outline-gray-1 p-4 sm:grid-cols-2"
+        aria-label="Text entry states"
+      >
+        <TextInput
+          label="Invoice amount"
+          value="1,240"
+          prefix={<span>$</span>}
+          suffix={<span>USD</span>}
+        />
+        <TextInput
+          label="Invalid email"
+          value="alex@"
+          error="Enter a valid email address"
+        />
+        <TextInput label="Disabled field" value="Read only report" disabled />
+        <Textarea
+          label="Report notes"
+          placeholder="Add context for your team"
+        />
+      </section>
       <section class="flex flex-col gap-4">
         <Switch data-testid="switch" label="Notifications" />
         <Checkbox data-testid="checkbox" label="Subscribe" />

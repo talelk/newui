@@ -14,11 +14,12 @@
  *
  * Needs `pnpm build:playground` first; it starts its own `vite preview`.
  */
-import { spawn } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { gzipSync } from 'node:zlib'
 import { chromium } from 'playwright'
+
+import { startPreview } from './preview-server'
 
 const PORT = 4181
 const BASE = `http://localhost:${PORT}`
@@ -30,6 +31,7 @@ interface RouteBudget {
   /** gzip budget in kB. */
   budget: number
   unless?: string
+  viewport?: { width: number; height: number }
 }
 
 /**
@@ -55,6 +57,132 @@ interface RouteBudget {
  */
 const ROUTES: RouteBudget[] = [
   {
+    route: '/examples/discussions/fullscreen',
+    budget: 100,
+    viewport: { width: 390, height: 844 },
+    unless: 'mobile composition; retained mobile budget',
+  },
+  ...[
+    ['tasks', 260],
+    ['mail', 210],
+    ['files', 230],
+    ['deals', 240],
+    ['tickets', 230],
+    ['accounting', 390],
+    ['compose', 380],
+    ['discussions', 200],
+    ['analytics', 390],
+    ['authentication', 200],
+    ['cards', 210],
+    ['settings', 160],
+  ].map(([slug, budget]) => ({
+    route: `/examples/${slug}`,
+    budget: Number(budget),
+    unless: 'responsive preview with documentation chrome',
+  })),
+  { route: '/charts', budget: 90 },
+  { route: '/editors', budget: 90 },
+  { route: '/charts/bar-chart', budget: 280 },
+  { route: '/editors/code-editor', budget: 280 },
+  { route: '/blocks/page-toolbar', budget: 190 },
+  {
+    route: '/examples/patterns',
+    budget: 80,
+    unless: 'lightweight reference example directory',
+  },
+  {
+    route: '/examples/patterns/carousel',
+    budget: 120,
+    unless: 'isolated carousel composition',
+  },
+  {
+    route: '/examples/patterns/command',
+    budget: 140,
+    unless: 'Zag command search and dialog',
+  },
+  {
+    route: '/examples/patterns/layout',
+    budget: 100,
+    unless: 'native resizable layouts',
+  },
+  {
+    route: '/examples/patterns/navigation',
+    budget: 150,
+    unless: 'menus and responsive editors',
+  },
+  {
+    route: '/examples/patterns/verification',
+    budget: 100,
+    unless: 'validated verification example',
+  },
+  {
+    route: '/examples/patterns/analytics-widgets',
+    budget: 110,
+    unless: 'analytical status and list compositions',
+  },
+  {
+    route: '/examples/accounting/fullscreen',
+    budget: 330,
+    unless: 'interactive accounting workspace',
+  },
+
+  {
+    route: '/examples/files/fullscreen',
+    budget: 170,
+    unless: 'interactive files workspace',
+  },
+
+  {
+    route: '/examples/tickets/fullscreen',
+    budget: 170,
+    unless: 'interactive tickets workspace',
+  },
+
+  {
+    route: '/examples/deals/fullscreen',
+    budget: 180,
+    unless: 'interactive deals workspace',
+  },
+
+  {
+    route: '/examples/mail/fullscreen',
+    budget: 150,
+    unless: 'interactive inbox and local composer',
+  },
+
+  {
+    route: '/examples/compose/fullscreen',
+    budget: 320,
+    unless: 'rich-text editor and publication workflow',
+  },
+
+  {
+    route: '/examples/settings/fullscreen',
+    budget: 100,
+    unless: 'isolated settings dialog composition',
+  },
+  {
+    route: '/examples/cards/fullscreen',
+    budget: 150,
+    unless: 'eight interactive business cards',
+  },
+  {
+    route: '/examples/authentication/fullscreen',
+    budget: 140,
+    unless: 'validated authentication flow',
+  },
+  {
+    route: '/examples/tasks/fullscreen',
+    budget: 200,
+    unless: 'TanStack task workspace with typed table, forms and virtual feed',
+  },
+
+  {
+    route: '/examples/analytics/fullscreen',
+    budget: 330,
+    unless: 'full analytics workspace with SVG charts',
+  },
+  {
     route: '/',
     budget: 60,
     unless: 'the shell, the router and the toast host',
@@ -78,11 +206,11 @@ const ROUTES: RouteBudget[] = [
   },
   { route: '/blocks', budget: 170, unless: 'every block on one page' },
   {
-    route: '/components/atoms',
+    route: '/components/button',
     budget: 220,
     unless: 'the exhaustive matrix — ~45 components on one page',
   },
-  { route: '/components/feedback', budget: 120, unless: 'feedback surfaces' },
+  { route: '/components/toast', budget: 120, unless: 'feedback surfaces' },
   { route: '/examples', budget: 80, unless: 'the examples index' },
   {
     route: '/spec',
@@ -90,46 +218,16 @@ const ROUTES: RouteBudget[] = [
     unless: 'the determinism harness renders ~45 components on purpose',
   },
   {
-    route: '/examples/discussions/desktop',
+    route: '/examples/discussions/fullscreen',
     budget: 140,
     unless: 'a full desktop app screen',
   },
-  {
-    route: '/examples/discussions/mobile',
-    budget: 100,
-    unless: 'the mobile recipe',
-  },
 ]
 
-const server = spawn(
-  'pnpm',
-  ['--filter', 'playground', 'preview', '--port', String(PORT), '--strictPort'],
-  { stdio: 'ignore', detached: true },
-)
-
-function stopServer() {
-  try {
-    process.kill(-server.pid)
-  } catch {
-    server.kill()
-  }
-}
-
-async function waitForServer() {
-  for (let attempt = 0; attempt < 60; attempt += 1) {
-    try {
-      const response = await fetch(BASE)
-      if (response.ok) return
-    } catch {
-      // not up yet
-    }
-    await new Promise((resolve) => setTimeout(resolve, 500))
-  }
-  throw new Error(`preview did not come up at ${BASE}`)
-}
+const preview = startPreview(PORT)
 
 try {
-  await waitForServer()
+  await preview.ready
   const browser = await chromium.launch({ channel: 'chrome' })
   const failures: string[] = []
 
@@ -137,9 +235,9 @@ try {
     '\nRoute JavaScript budget (gzip, every chunk the route fetches)\n',
   )
 
-  for (const { route, budget, unless } of ROUTES) {
+  for (const { route, budget, unless, viewport } of ROUTES) {
     const page = await browser.newPage({
-      viewport: { width: 1440, height: 900 },
+      viewport: viewport ?? { width: 1440, height: 900 },
     })
     const files = new Set<string>()
 
@@ -188,5 +286,5 @@ try {
     console.warn('\nEvery route is within budget.\n')
   }
 } finally {
-  stopServer()
+  preview.stop()
 }

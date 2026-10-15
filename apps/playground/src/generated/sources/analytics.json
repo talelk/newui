@@ -1,0 +1,16 @@
+{
+  "files": [
+    "pages/Analytics.tsx",
+    "shell/ThemeMenu.tsx",
+    "shell/theme.ts",
+    "pages/analytics/data.ts",
+    "pages/analytics/ReceiptDialog.tsx"
+  ],
+  "packages": [
+    "@newui/blocks",
+    "@newui/charts",
+    "@newui/ui",
+    "@solidjs/router",
+    "solid-js"
+  ]
+}

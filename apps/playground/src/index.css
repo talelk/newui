@@ -2,3 +2,64 @@
 
 @source "../index.html";
 @source "./**/*.{ts,tsx}";
+
+/* Native modal navigation owns focus containment, Escape and background inertness. */
+:where(.site-drawer nav) a {
+  display: flex;
+  min-height: 2.5rem;
+  align-items: center;
+}
+.site-drawer::backdrop {
+  background: color-mix(in srgb, var(--surface-gray-7) 50%, transparent);
+}
+
+/* A composed editor surface uses the editor's public data hooks. */
+.compose-editor [data-slot="editor-content"] {
+  min-height: 24rem;
+  padding: 1rem;
+  color: var(--ink-gray-8);
+  outline: none;
+  line-height: 1.6;
+}
+.compose-editor [data-slot="editor-content"]:focus-visible {
+  outline: var(--focus-outline-blue);
+  outline-offset: -2px;
+  border-radius: 6px;
+}
+.compose-editor [data-slot="editor-content"] h1 {
+  font-size: var(--text-heading);
+  line-height: var(--text-heading--line-height);
+  font-weight: 600;
+}
+.compose-editor [data-slot="editor-content"] h2 {
+  font-size: var(--text-section);
+  line-height: var(--text-section--line-height);
+  font-weight: 600;
+}
+.compose-editor [data-slot="editor-content"] h3 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+.compose-editor [data-slot="editor-content"] > * + * {
+  margin-top: 0.75rem;
+}
+.compose-editor [data-slot="editor-content"] ul {
+  list-style: disc;
+  padding-inline-start: 1.5rem;
+}
+.compose-editor [data-slot="editor-content"] ol {
+  list-style: decimal;
+  padding-inline-start: 1.5rem;
+}
+.compose-editor [data-slot="editor-content"] a {
+  color: var(--ink-blue-link);
+  text-decoration: underline;
+}
+.compose-editor [data-slot="editor-content"] table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.compose-editor [data-slot="editor-content"] :is(td, th) {
+  border: 1px solid var(--outline-gray-2);
+  padding: 0.5rem;
+}

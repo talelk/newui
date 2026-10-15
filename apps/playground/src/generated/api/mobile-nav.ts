@@ -57,6 +57,12 @@ export const API = {
       "type": "(event: MouseEvent) => void",
       "optional": true,
       "description": "Click handler. Set it on button items, and on links to navigate in-app."
+    },
+    {
+      "name": "aria-current",
+      "type": "| 'page'\n    | 'step'\n    | 'location'\n    | 'date'\n    | 'time'\n    | 'true'\n    | 'false'",
+      "optional": true,
+      "description": "Marks the item as the current page for assistive tech."
     }
   ],
   "MobileNavProps": [
@@ -77,6 +83,12 @@ export const API = {
       "type": "JSX.Element",
       "optional": true,
       "description": "One or more `MobileNavItem`s, each becoming an equal-width tab."
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name for the `<nav>` landmark."
     }
   ]
 } as const

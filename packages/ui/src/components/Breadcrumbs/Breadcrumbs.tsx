@@ -97,7 +97,7 @@ function Crumb(props: CrumbProps): JSX.Element {
         'flex items-center rounded-4 px-0.5 py-1 text-lg-medium leading-tighter',
         local.current
           ? 'min-w-0 text-ink-gray-9'
-          : 'text-ink-gray-5 hover:text-ink-gray-7',
+          : 'text-ink-gray-6 hover:text-ink-gray-7',
       )}
     >
       <Show when={local.item.icon}>

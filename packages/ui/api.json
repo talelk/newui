@@ -1,4 +1,1790 @@
 {
+  "packages/charts/src/ChartBase.tsx": {
+    "ChartBaseProps": [
+      {
+        "name": "option",
+        "type": "Accessor<EChartsCoreOption>",
+        "optional": false,
+        "description": "The echarts option to draw. A getter, so it re-applies reactively."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "optional": false,
+        "description": "Accessible name for the plot."
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "optional": true,
+        "description": "Plot height. A number is px; a string is used verbatim. Defaults to 240px."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the chart."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "optional": true,
+        "description": "A second line under the title."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the reading."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Switches the chart into its error state."
+      },
+      {
+        "name": "fallback",
+        "type": "ChartFallback",
+        "optional": true,
+        "description": "A visually-hidden table carrying the data to a screen reader."
+      },
+      {
+        "name": "overlay",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Content layered over the plot, e.g. a donut's center readout."
+      },
+      {
+        "name": "onInit",
+        "type": "(chart: ECharts) => void",
+        "optional": true,
+        "description": "Called once the echarts instance exists."
+      }
+    ]
+  },
+  "packages/charts/src/types.ts": {
+    "AxisChartProps": [
+      {
+        "name": "data",
+        "type": "Record<string, unknown>[]",
+        "optional": false,
+        "description": "The rows to plot. One row is one position on the category axis."
+      },
+      {
+        "name": "x",
+        "type": "string",
+        "optional": false,
+        "description": "Column holding the category or time each point sits at."
+      },
+      {
+        "name": "y",
+        "type": "string | string[]",
+        "optional": false,
+        "description": "Value column(s) measured against the primary value axis."
+      },
+      {
+        "name": "y2",
+        "type": "string | string[]",
+        "optional": true,
+        "description": "Value column(s) measured against the second value axis."
+      },
+      {
+        "name": "seriesConfig",
+        "type": "Record<string, SeriesStyle>",
+        "optional": true,
+        "description": "Keyed by series identity: a `y` or `y2` column."
+      },
+      {
+        "name": "showDataLabels",
+        "type": "boolean",
+        "optional": true,
+        "description": "Prints every series' value beside its marks."
+      },
+      {
+        "name": "smooth",
+        "type": "boolean",
+        "optional": true,
+        "description": "Rounds the corners of every line. Line and area series."
+      },
+      {
+        "name": "showDataPoints",
+        "type": "boolean",
+        "optional": true,
+        "description": "Marks every datapoint with a dot. Line and area series."
+      },
+      {
+        "name": "dashed",
+        "type": "boolean",
+        "optional": true,
+        "description": "Breaks every series' line into a dash. Line and area series."
+      },
+      {
+        "name": "connectNulls",
+        "type": "boolean",
+        "optional": true,
+        "description": "Bridges gaps left by nulls. Line and area series."
+      },
+      {
+        "name": "hiddenSeries",
+        "type": "string[]",
+        "optional": true,
+        "description": "Series the legend has switched off, by name."
+      },
+      {
+        "name": "stacked",
+        "type": "boolean | 'normalized'",
+        "optional": true,
+        "description": "Series sum on top of each other. `'normalized'` is the 100% stack."
+      },
+      {
+        "name": "palette",
+        "type": "ChartPalette",
+        "optional": true,
+        "description": "Ramp series colors are drawn from. Defaults to `'sequential'`."
+      },
+      {
+        "name": "xAxis",
+        "type": "ChartXAxisOptions",
+        "optional": true,
+        "description": "The category axis: its title, how `x` reads, and label format."
+      },
+      {
+        "name": "yAxis",
+        "type": "ChartValueAxisOptions",
+        "optional": true,
+        "description": "The primary value axis: its title, its range, and how a value prints."
+      },
+      {
+        "name": "y2Axis",
+        "type": "ChartValueAxisOptions",
+        "optional": true,
+        "description": "The second value axis. Only drawn when `y2` names a column."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the chart."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "optional": true,
+        "description": "A second line under the title."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the reading."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Puts the chart in its error state and prints this message."
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "optional": true,
+        "description": "Plot height. A number is px; a string is used verbatim."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the plot."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "echartOptions",
+        "type": "EchartOptionsOverride",
+        "optional": true,
+        "description": "Escape hatch: deep-merged into the echarts option the props built."
+      }
+    ],
+    "BarChartProps": [
+      {
+        "name": "data",
+        "type": "Record<string, unknown>[]",
+        "optional": false,
+        "description": "The rows to plot. One row is one position on the category axis."
+      },
+      {
+        "name": "x",
+        "type": "string",
+        "optional": false,
+        "description": "Column holding the category or time each point sits at."
+      },
+      {
+        "name": "y",
+        "type": "string | string[]",
+        "optional": false,
+        "description": "Value column(s) measured against the primary value axis."
+      },
+      {
+        "name": "y2",
+        "type": "string | string[]",
+        "optional": true,
+        "description": "Value column(s) measured against the second value axis."
+      },
+      {
+        "name": "seriesConfig",
+        "type": "Record<string, SeriesStyle>",
+        "optional": true,
+        "description": "Keyed by series identity: a `y` or `y2` column."
+      },
+      {
+        "name": "showDataLabels",
+        "type": "boolean",
+        "optional": true,
+        "description": "Prints every series' value beside its marks."
+      },
+      {
+        "name": "smooth",
+        "type": "boolean",
+        "optional": true,
+        "description": "Rounds the corners of every line. Line and area series."
+      },
+      {
+        "name": "showDataPoints",
+        "type": "boolean",
+        "optional": true,
+        "description": "Marks every datapoint with a dot. Line and area series."
+      },
+      {
+        "name": "dashed",
+        "type": "boolean",
+        "optional": true,
+        "description": "Breaks every series' line into a dash. Line and area series."
+      },
+      {
+        "name": "connectNulls",
+        "type": "boolean",
+        "optional": true,
+        "description": "Bridges gaps left by nulls. Line and area series."
+      },
+      {
+        "name": "hiddenSeries",
+        "type": "string[]",
+        "optional": true,
+        "description": "Series the legend has switched off, by name."
+      },
+      {
+        "name": "stacked",
+        "type": "boolean | 'normalized'",
+        "optional": true,
+        "description": "Series sum on top of each other. `'normalized'` is the 100% stack."
+      },
+      {
+        "name": "palette",
+        "type": "ChartPalette",
+        "optional": true,
+        "description": "Ramp series colors are drawn from. Defaults to `'sequential'`."
+      },
+      {
+        "name": "xAxis",
+        "type": "ChartXAxisOptions",
+        "optional": true,
+        "description": "The category axis: its title, how `x` reads, and label format."
+      },
+      {
+        "name": "yAxis",
+        "type": "ChartValueAxisOptions",
+        "optional": true,
+        "description": "The primary value axis: its title, its range, and how a value prints."
+      },
+      {
+        "name": "y2Axis",
+        "type": "ChartValueAxisOptions",
+        "optional": true,
+        "description": "The second value axis. Only drawn when `y2` names a column."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the chart."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "optional": true,
+        "description": "A second line under the title."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the reading."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Puts the chart in its error state and prints this message."
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "optional": true,
+        "description": "Plot height. A number is px; a string is used verbatim."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the plot."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "echartOptions",
+        "type": "EchartOptionsOverride",
+        "optional": true,
+        "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "horizontal",
+        "type": "boolean",
+        "optional": true,
+        "description": "Bars run left-to-right; the category axis moves to Y. Bars only."
+      }
+    ],
+    "LineChartProps": [
+      {
+        "name": "data",
+        "type": "Record<string, unknown>[]",
+        "optional": false,
+        "description": "The rows to plot. One row is one position on the category axis."
+      },
+      {
+        "name": "x",
+        "type": "string",
+        "optional": false,
+        "description": "Column holding the category or time each point sits at."
+      },
+      {
+        "name": "y",
+        "type": "string | string[]",
+        "optional": false,
+        "description": "Value column(s) measured against the primary value axis."
+      },
+      {
+        "name": "y2",
+        "type": "string | string[]",
+        "optional": true,
+        "description": "Value column(s) measured against the second value axis."
+      },
+      {
+        "name": "seriesConfig",
+        "type": "Record<string, SeriesStyle>",
+        "optional": true,
+        "description": "Keyed by series identity: a `y` or `y2` column."
+      },
+      {
+        "name": "showDataLabels",
+        "type": "boolean",
+        "optional": true,
+        "description": "Prints every series' value beside its marks."
+      },
+      {
+        "name": "smooth",
+        "type": "boolean",
+        "optional": true,
+        "description": "Rounds the corners of every line. Line and area series."
+      },
+      {
+        "name": "showDataPoints",
+        "type": "boolean",
+        "optional": true,
+        "description": "Marks every datapoint with a dot. Line and area series."
+      },
+      {
+        "name": "dashed",
+        "type": "boolean",
+        "optional": true,
+        "description": "Breaks every series' line into a dash. Line and area series."
+      },
+      {
+        "name": "connectNulls",
+        "type": "boolean",
+        "optional": true,
+        "description": "Bridges gaps left by nulls. Line and area series."
+      },
+      {
+        "name": "hiddenSeries",
+        "type": "string[]",
+        "optional": true,
+        "description": "Series the legend has switched off, by name."
+      },
+      {
+        "name": "stacked",
+        "type": "boolean | 'normalized'",
+        "optional": true,
+        "description": "Series sum on top of each other. `'normalized'` is the 100% stack."
+      },
+      {
+        "name": "palette",
+        "type": "ChartPalette",
+        "optional": true,
+        "description": "Ramp series colors are drawn from. Defaults to `'sequential'`."
+      },
+      {
+        "name": "xAxis",
+        "type": "ChartXAxisOptions",
+        "optional": true,
+        "description": "The category axis: its title, how `x` reads, and label format."
+      },
+      {
+        "name": "yAxis",
+        "type": "ChartValueAxisOptions",
+        "optional": true,
+        "description": "The primary value axis: its title, its range, and how a value prints."
+      },
+      {
+        "name": "y2Axis",
+        "type": "ChartValueAxisOptions",
+        "optional": true,
+        "description": "The second value axis. Only drawn when `y2` names a column."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the chart."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "optional": true,
+        "description": "A second line under the title."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the reading."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Puts the chart in its error state and prints this message."
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "optional": true,
+        "description": "Plot height. A number is px; a string is used verbatim."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the plot."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "echartOptions",
+        "type": "EchartOptionsOverride",
+        "optional": true,
+        "description": "Escape hatch: deep-merged into the echarts option the props built."
+      }
+    ],
+    "AreaChartProps": [
+      {
+        "name": "data",
+        "type": "Record<string, unknown>[]",
+        "optional": false,
+        "description": "The rows to plot. One row is one position on the category axis."
+      },
+      {
+        "name": "x",
+        "type": "string",
+        "optional": false,
+        "description": "Column holding the category or time each point sits at."
+      },
+      {
+        "name": "y",
+        "type": "string | string[]",
+        "optional": false,
+        "description": "Value column(s) measured against the primary value axis."
+      },
+      {
+        "name": "y2",
+        "type": "string | string[]",
+        "optional": true,
+        "description": "Value column(s) measured against the second value axis."
+      },
+      {
+        "name": "seriesConfig",
+        "type": "Record<string, SeriesStyle>",
+        "optional": true,
+        "description": "Keyed by series identity: a `y` or `y2` column."
+      },
+      {
+        "name": "showDataLabels",
+        "type": "boolean",
+        "optional": true,
+        "description": "Prints every series' value beside its marks."
+      },
+      {
+        "name": "smooth",
+        "type": "boolean",
+        "optional": true,
+        "description": "Rounds the corners of every line. Line and area series."
+      },
+      {
+        "name": "showDataPoints",
+        "type": "boolean",
+        "optional": true,
+        "description": "Marks every datapoint with a dot. Line and area series."
+      },
+      {
+        "name": "dashed",
+        "type": "boolean",
+        "optional": true,
+        "description": "Breaks every series' line into a dash. Line and area series."
+      },
+      {
+        "name": "connectNulls",
+        "type": "boolean",
+        "optional": true,
+        "description": "Bridges gaps left by nulls. Line and area series."
+      },
+      {
+        "name": "hiddenSeries",
+        "type": "string[]",
+        "optional": true,
+        "description": "Series the legend has switched off, by name."
+      },
+      {
+        "name": "stacked",
+        "type": "boolean | 'normalized'",
+        "optional": true,
+        "description": "Series sum on top of each other. `'normalized'` is the 100% stack."
+      },
+      {
+        "name": "palette",
+        "type": "ChartPalette",
+        "optional": true,
+        "description": "Ramp series colors are drawn from. Defaults to `'sequential'`."
+      },
+      {
+        "name": "xAxis",
+        "type": "ChartXAxisOptions",
+        "optional": true,
+        "description": "The category axis: its title, how `x` reads, and label format."
+      },
+      {
+        "name": "yAxis",
+        "type": "ChartValueAxisOptions",
+        "optional": true,
+        "description": "The primary value axis: its title, its range, and how a value prints."
+      },
+      {
+        "name": "y2Axis",
+        "type": "ChartValueAxisOptions",
+        "optional": true,
+        "description": "The second value axis. Only drawn when `y2` names a column."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the chart."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "optional": true,
+        "description": "A second line under the title."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the reading."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Puts the chart in its error state and prints this message."
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "optional": true,
+        "description": "Plot height. A number is px; a string is used verbatim."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the plot."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "echartOptions",
+        "type": "EchartOptionsOverride",
+        "optional": true,
+        "description": "Escape hatch: deep-merged into the echarts option the props built."
+      }
+    ],
+    "DonutChartProps": [
+      {
+        "name": "data",
+        "type": "Record<string, unknown>[]",
+        "optional": false,
+        "description": "The rows to plot. One row is one slice, before the \"Others\" grouping."
+      },
+      {
+        "name": "category",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding the slice name."
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding the slice size."
+      },
+      {
+        "name": "maxSlices",
+        "type": "number",
+        "optional": true,
+        "description": "How many slices the ring holds, \"Others\" included. Past that it keeps the\nlargest `maxSlices - 1` and sums the tail into \"Others\". Defaults to 9."
+      },
+      {
+        "name": "hiddenSlices",
+        "type": "string[]",
+        "optional": true,
+        "description": "Slices the legend has switched off, by name."
+      },
+      {
+        "name": "showDataLabels",
+        "type": "boolean",
+        "optional": true,
+        "description": "Prints each slice's name and share beside the ring."
+      },
+      {
+        "name": "centerLabel",
+        "type": "string",
+        "optional": true,
+        "description": "Caption under the total in the middle. Defaults to the `value` key."
+      },
+      {
+        "name": "variant",
+        "type": "DonutVariant",
+        "optional": true,
+        "description": "`'half'` draws the ring as a semicircle; only the geometry changes."
+      },
+      {
+        "name": "format",
+        "type": "ChartValueFormatter",
+        "optional": true,
+        "description": "Prints the readout and the tooltip."
+      },
+      {
+        "name": "palette",
+        "type": "ChartPalette",
+        "optional": true,
+        "description": "Defaults to `'categorical'`: slices are unrelated categories."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the chart."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "optional": true,
+        "description": "A second line under the title."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the reading."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Puts the chart in its error state and prints this message."
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "optional": true,
+        "description": "Plot height. A number is px; a string is used verbatim."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the plot."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "echartOptions",
+        "type": "EchartOptionsOverride",
+        "optional": true,
+        "description": "Escape hatch: deep-merged into the echarts option the props built."
+      }
+    ],
+    "NumberCardProps": [
+      {
+        "name": "title",
+        "type": "string",
+        "optional": false,
+        "description": "What the reading is, printed above the number."
+      },
+      {
+        "name": "value",
+        "type": "number | string | null",
+        "optional": false,
+        "description": "A string renders as given: the formatting props only apply to a number."
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "optional": true,
+        "description": "Ink the reading is printed in."
+      },
+      {
+        "name": "prefix",
+        "type": "string",
+        "optional": true,
+        "description": "Printed before the number, e.g. a currency sign."
+      },
+      {
+        "name": "suffix",
+        "type": "string",
+        "optional": true,
+        "description": "Printed after the number, e.g. a unit."
+      },
+      {
+        "name": "target",
+        "type": "number | string",
+        "optional": true,
+        "description": "What the reading is measured against, printed as a muted ` / target`."
+      },
+      {
+        "name": "delta",
+        "type": "number | null",
+        "optional": true,
+        "description": "Change against the comparison period. Sign drives the arrow."
+      },
+      {
+        "name": "deltaPrefix",
+        "type": "string",
+        "optional": true,
+        "description": "Unit printed before the delta, e.g. `'$'`."
+      },
+      {
+        "name": "deltaSuffix",
+        "type": "string",
+        "optional": true,
+        "description": "Unit printed after the delta, e.g. `'%'`."
+      },
+      {
+        "name": "deltaCaption",
+        "type": "string",
+        "optional": true,
+        "description": "What the delta is measured against, e.g. `'vs last month'`."
+      },
+      {
+        "name": "negativeIsBetter",
+        "type": "boolean",
+        "optional": true,
+        "description": "Flips the delta colors, for metrics like churn or cost."
+      },
+      {
+        "name": "format",
+        "type": "ChartValueFormatter",
+        "optional": true,
+        "description": "Prints the reading and the target."
+      },
+      {
+        "name": "deltaFormat",
+        "type": "ChartValueFormatter",
+        "optional": true,
+        "description": "Prints the delta. It takes the absolute value."
+      },
+      {
+        "name": "sparkline",
+        "type": "NumberCardSparkline",
+        "optional": true,
+        "description": "A trend across the bottom of the card: shape only."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the reading."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Switches the card into its error state and prints this message."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the card."
+      }
+    ],
+    "ChartCardProps": [
+      {
+        "name": "card",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the bordered surface. `false` leaves only the clipping box."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The card's contents. The card supplies the surface and clips them."
+      }
+    ],
+    "ChartLegendProps": [
+      {
+        "name": "items",
+        "type": "ChartLegendItem[]",
+        "optional": false,
+        "description": "One entry per series, in the order they are drawn."
+      },
+      {
+        "name": "onToggle",
+        "type": "(name: string) => void",
+        "optional": true,
+        "description": "An entry was pressed: the named series' visibility flipped."
+      },
+      {
+        "name": "onHighlight",
+        "type": "(name: string | null) => void",
+        "optional": true,
+        "description": "The highlighted series, or null when the highlight clears."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      }
+    ],
+    "DashboardProps": [
+      {
+        "name": "columns",
+        "type": "number",
+        "optional": true,
+        "description": "Fixed column count. Omitted, the grid fits as many tiles as the width allows."
+      },
+      {
+        "name": "gap",
+        "type": "number | string",
+        "optional": true,
+        "description": "Gap between tiles, as a number of px or a CSS length. Defaults to `1rem`."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The tiles: chart components, each drawing its own chrome."
+      }
+    ],
+    "ChartContainerProps": [
+      {
+        "name": "title",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the card. Left out, the container draws no header row at all."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "optional": true,
+        "description": "A second line under the title, e.g. the period the numbers cover."
+      },
+      {
+        "name": "yAxisTitle",
+        "type": "string",
+        "optional": true,
+        "description": "Title of the primary value axis. The container draws it over the plot\nrather than along the axis, where it would have to be turned sideways."
+      },
+      {
+        "name": "y2AxisTitle",
+        "type": "string",
+        "optional": true,
+        "description": "Title of the second value axis, drawn over the edge that axis sits on."
+      },
+      {
+        "name": "axisTitlePlacement",
+        "type": "AxisTitlePlacement",
+        "optional": true,
+        "description": "Edge of the plot the value-axis titles head. Defaults to the top."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the plot, for data still on its way."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Non-empty switches the container into its error state."
+      },
+      {
+        "name": "empty",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the empty state: there is data, and it plots to nothing."
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "optional": true,
+        "description": "Pins the container's height. A number is px; a string is used verbatim."
+      },
+      {
+        "name": "actions",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Draws the header row's trailing controls, e.g. a period picker."
+      },
+      {
+        "name": "loadingContent",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Replaces the default loading placeholder, e.g. with a skeleton of its own."
+      },
+      {
+        "name": "errorContent",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Replaces the default error message, e.g. to put a retry button beside it."
+      },
+      {
+        "name": "emptyContent",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Replaces the default empty message."
+      },
+      {
+        "name": "legend",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The row under the plot, e.g. a `ChartLegend` or a ramp scale."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The plot itself, drawn into a box the container sizes and states."
+      }
+    ],
+    "ChartTooltipSlotProps": [
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the readings, e.g. the category the pointer is over."
+      },
+      {
+        "name": "items",
+        "type": "ChartTooltipItem[]",
+        "optional": false,
+        "description": "One entry per reading, in the order they should be read."
+      },
+      {
+        "name": "rows",
+        "type": "Record<string, unknown>[]",
+        "optional": false,
+        "description": "The rows behind the reading, so a body can read a column the plot never drew."
+      }
+    ],
+    "ChartTooltipProps": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "optional": false,
+        "description": "Draws the tooltip. It is measured before it is placed, so it flips at the\nviewport edge rather than running off it."
+      },
+      {
+        "name": "x",
+        "type": "number",
+        "optional": false,
+        "description": "Viewport x of the point the tooltip hangs off, i.e. the pointer."
+      },
+      {
+        "name": "y",
+        "type": "number",
+        "optional": false,
+        "description": "Viewport y of the point the tooltip hangs off, i.e. the pointer."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the tooltip, e.g. the category the readings below it belong to."
+      },
+      {
+        "name": "items",
+        "type": "ChartTooltipItem[]",
+        "optional": false,
+        "description": "One row per reading, in the order they should be read."
+      },
+      {
+        "name": "rows",
+        "type": "Record<string, unknown>[]",
+        "optional": true,
+        "description": "The rows behind the reading, handed to a custom body so it can read a column\nthe plot never drew. Empty when the pointer is over an aggregate that stands\nfor no single row."
+      },
+      {
+        "name": "children",
+        "type": "(slot: ChartTooltipSlotProps) => JSX.Element",
+        "optional": true,
+        "description": "Replaces the whole tooltip body, headline row included."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      }
+    ],
+    "FunnelChartProps": [
+      {
+        "name": "data",
+        "type": "Record<string, unknown>[]",
+        "optional": false,
+        "description": "One row per stage, in process order. Rows are drawn as they arrive."
+      },
+      {
+        "name": "category",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding the stage name."
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding how many reached the stage."
+      },
+      {
+        "name": "format",
+        "type": "ChartValueFormatter",
+        "optional": true,
+        "description": "Prints every number the funnel shows: the labels and the readout."
+      },
+      {
+        "name": "palette",
+        "type": "ChartPalette",
+        "optional": true,
+        "description": "Defaults to `'sequential'`, deepest last, so color darkens as it narrows."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the chart."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "optional": true,
+        "description": "A second line under the title."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the reading."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Puts the chart in its error state and prints this message."
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "optional": true,
+        "description": "Plot height. A number is px; a string is used verbatim."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the plot."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "echartOptions",
+        "type": "EchartOptionsOverride",
+        "optional": true,
+        "description": "Escape hatch: deep-merged into the echarts option the props built."
+      }
+    ],
+    "HeatmapChartProps": [
+      {
+        "name": "data",
+        "type": "Record<string, unknown>[]",
+        "optional": false,
+        "description": "One row per cell. Rows with no numeric value leave their cell undrawn."
+      },
+      {
+        "name": "x",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding the column a cell sits in."
+      },
+      {
+        "name": "y",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding the row a cell sits in."
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding the magnitude the cell is colored by."
+      },
+      {
+        "name": "min",
+        "type": "number",
+        "optional": true,
+        "description": "Bottom of the color scale. Defaults to the smallest value in the data."
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "optional": true,
+        "description": "Top of the color scale. Defaults to the largest value in the data."
+      },
+      {
+        "name": "xAxis",
+        "type": "HeatmapAxisOptions",
+        "optional": true,
+        "description": "The columns of the grid: the axis under it."
+      },
+      {
+        "name": "yAxis",
+        "type": "HeatmapAxisOptions",
+        "optional": true,
+        "description": "The rows of the grid: the axis beside it."
+      },
+      {
+        "name": "showDataLabels",
+        "type": "boolean",
+        "optional": true,
+        "description": "Prints each cell's value inside it. Labels with no room are dropped."
+      },
+      {
+        "name": "format",
+        "type": "ChartValueFormatter",
+        "optional": true,
+        "description": "Prints every number the grid shows: the cells and the scale ends."
+      },
+      {
+        "name": "palette",
+        "type": "HeatmapPalette",
+        "optional": true,
+        "description": "Defaults to `'sequential'`; `'diverging'` centers the scale on zero."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the chart."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "optional": true,
+        "description": "A second line under the title."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the reading."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Puts the chart in its error state and prints this message."
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "optional": true,
+        "description": "Plot height. A number is px; a string is used verbatim."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the plot."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "echartOptions",
+        "type": "EchartOptionsOverride",
+        "optional": true,
+        "description": "Escape hatch: deep-merged into the echarts option the props built."
+      }
+    ],
+    "ScatterChartProps": [
+      {
+        "name": "data",
+        "type": "Record<string, unknown>[]",
+        "optional": false,
+        "description": "One row per point. A row missing either coordinate draws nothing."
+      },
+      {
+        "name": "x",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding the horizontal measure."
+      },
+      {
+        "name": "y",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding the vertical measure."
+      },
+      {
+        "name": "size",
+        "type": "string",
+        "optional": true,
+        "description": "Row key holding the magnitude each point is sized by."
+      },
+      {
+        "name": "splitBy",
+        "type": "string",
+        "optional": true,
+        "description": "Splits the points into one series per distinct value."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Row key holding the point's own name, which heads its readout."
+      },
+      {
+        "name": "hiddenSeries",
+        "type": "string[]",
+        "optional": true,
+        "description": "Groups the legend has switched off, by name."
+      },
+      {
+        "name": "showDataLabels",
+        "type": "boolean",
+        "optional": true,
+        "description": "Prints the point's own name beside it. Needs `label` to have one."
+      },
+      {
+        "name": "xAxis",
+        "type": "ChartValueAxisOptions",
+        "optional": true,
+        "description": "The horizontal scale. Both axes are value axes."
+      },
+      {
+        "name": "yAxis",
+        "type": "ChartValueAxisOptions",
+        "optional": true,
+        "description": "The vertical scale."
+      },
+      {
+        "name": "palette",
+        "type": "ChartPalette",
+        "optional": true,
+        "description": "Defaults to `'categorical'`: the groups are unrelated categories."
+      },
+      {
+        "name": "format",
+        "type": "ChartValueFormatter",
+        "optional": true,
+        "description": "Prints every number the chart shows."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the chart."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "optional": true,
+        "description": "A second line under the title."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the reading."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Puts the chart in its error state and prints this message."
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "optional": true,
+        "description": "Plot height. A number is px; a string is used verbatim."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the plot."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "echartOptions",
+        "type": "EchartOptionsOverride",
+        "optional": true,
+        "description": "Escape hatch: deep-merged into the echarts option the props built."
+      }
+    ],
+    "SankeyChartProps": [
+      {
+        "name": "data",
+        "type": "Record<string, unknown>[]",
+        "optional": false,
+        "description": "One row per flow, i.e. one band from a source node to a target node."
+      },
+      {
+        "name": "source",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding the node a flow leaves."
+      },
+      {
+        "name": "target",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding the node a flow arrives at."
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "optional": false,
+        "description": "Row key holding how much flows along the link."
+      },
+      {
+        "name": "vertical",
+        "type": "boolean",
+        "optional": true,
+        "description": "Flow runs top to bottom, in rows of nodes. Defaults to left to right."
+      },
+      {
+        "name": "nodeAlign",
+        "type": "SankeyNodeAlign",
+        "optional": true,
+        "description": "Where a node sits along the flow. Defaults to `'justify'`."
+      },
+      {
+        "name": "format",
+        "type": "ChartValueFormatter",
+        "optional": true,
+        "description": "Prints every number the flow shows, i.e. what a band or node carries."
+      },
+      {
+        "name": "palette",
+        "type": "ChartPalette",
+        "optional": true,
+        "description": "Defaults to `'categorical'`: nodes are unrelated categories."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "optional": true,
+        "description": "Heads the chart."
+      },
+      {
+        "name": "subtitle",
+        "type": "string",
+        "optional": true,
+        "description": "A second line under the title."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws the placeholder in place of the reading."
+      },
+      {
+        "name": "error",
+        "type": "string | null",
+        "optional": true,
+        "description": "Puts the chart in its error state and prints this message."
+      },
+      {
+        "name": "height",
+        "type": "number | string",
+        "optional": true,
+        "description": "Plot height. A number is px; a string is used verbatim."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the plot."
+      },
+      {
+        "name": "dir",
+        "type": "ChartDir",
+        "optional": true,
+        "description": "Forces layout direction; defaults to document direction."
+      },
+      {
+        "name": "echartOptions",
+        "type": "EchartOptionsOverride",
+        "optional": true,
+        "description": "Escape hatch: deep-merged into the echarts option the props built."
+      }
+    ]
+  },
+  "packages/code-editor/src/CodeEditor.tsx": {
+    "CodeEditorProps": [
+      {
+        "name": "value",
+        "type": "string",
+        "optional": true,
+        "description": "Controlled document text. Pair with `onValueChange` (P2)."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string",
+        "optional": true,
+        "description": "Uncontrolled initial text. Ignored once `value` is provided."
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string) => void",
+        "optional": true,
+        "description": "Called on every document change, controlled or not."
+      },
+      {
+        "name": "language",
+        "type": "CodeEditorLanguage",
+        "optional": true,
+        "description": "Syntax grammar to load. Defaults to plain text."
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "optional": true,
+        "description": "Render read-only. Reactive."
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true,
+        "description": "Placeholder shown while the document is empty."
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the editable surface."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the editable surface."
+      }
+    ]
+  },
+  "packages/editor/src/Editor.tsx": {
+    "EditorProps": [
+      {
+        "name": "value",
+        "type": "EditorValue",
+        "optional": true,
+        "description": "Controlled document. The shape follows `format`. Pair with\n`onValueChange` (P2)."
+      },
+      {
+        "name": "defaultValue",
+        "type": "EditorValue",
+        "optional": true,
+        "description": "Uncontrolled initial document. Ignored once `value` is provided."
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: EditorValue) => void",
+        "optional": true,
+        "description": "Called on every document change, controlled or not."
+      },
+      {
+        "name": "format",
+        "type": "EditorFormat",
+        "optional": true,
+        "description": "The content shape `value`/`onValueChange` speak. Read once, at mount.",
+        "default": "'html'"
+      },
+      {
+        "name": "extensions",
+        "type": "Extensions",
+        "optional": true,
+        "description": "Consumer extensions, merged after the built-in set by name (a same-named\nextension replaces the built-in)."
+      },
+      {
+        "name": "mentionChar",
+        "type": "string",
+        "optional": true,
+        "description": "Prefix rendered before a mention label. Read once, at mount.",
+        "default": "'@'"
+      },
+      {
+        "name": "mentionItems",
+        "type": "MentionItem[]",
+        "optional": true,
+        "description": "Candidates for the mention trigger popup. Providing this turns on the\n`mentionChar` suggestion menu (read once, at mount; the list itself stays\nreactive). Omit it for a suggestion-less mention node."
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true,
+        "description": "Placeholder shown while the document is empty. Reactive."
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "optional": true,
+        "description": "Render read-only. Reactive."
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the editable surface."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Chrome rendered above the editable surface, e.g. `<EditorToolbar />`."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the editable surface."
+      }
+    ]
+  },
+  "packages/editor/src/EditorToolbar.tsx": {
+    "EditorToolbarProps": [
+      {
+        "name": "editor",
+        "type": "TiptapEditor | null",
+        "optional": true,
+        "description": "Explicit editor instance. Defaults to the nearest `<Editor>` (context), so\nthe common case is just `<EditorToolbar />` inside an `<Editor>`."
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the toolbar."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Root class fallthrough, merged last (P10)."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the toolbar."
+      }
+    ]
+  },
   "packages/ui/src/lib/field.tsx": {
     "FieldProps": [
       {
@@ -30,6 +1816,12 @@
         "name": "disabled",
         "type": "boolean",
         "optional": true
+      },
+      {
+        "name": "inlineLabel",
+        "type": "boolean",
+        "optional": true,
+        "description": "Internal composition: the control renders its own native inline label."
       },
       {
         "name": "class",
@@ -75,6 +1867,9 @@
         "optional": false
       }
     ]
+  },
+  "packages/ui/src/lib/tv.ts": {
+    "VariantProps": []
   },
   "packages/blocks/src/AppSidebar/AppSidebar.tsx": {
     "AppSidebarProps": [
@@ -460,6 +2255,21 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": true
+      },
+      {
+        "name": "variant",
+        "type": "\"subtle\" | \"outline\" | null | undefined",
+        "optional": true
+      },
+      {
+        "name": "theme",
+        "type": "\"gray\" | \"blue\" | \"green\" | \"amber\" | \"red\" | null | undefined",
+        "optional": true
+      },
+      {
+        "name": "layout",
+        "type": "\"row\" | \"banner\" | null | undefined",
+        "optional": true
       }
     ]
   },
@@ -591,6 +2401,21 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": true
+      },
+      {
+        "name": "variant",
+        "type": "\"subtle\" | \"outline\" | \"solid\" | \"ghost\" | null | undefined",
+        "optional": true
+      },
+      {
+        "name": "theme",
+        "type": "\"gray\" | \"blue\" | \"green\" | \"amber\" | \"red\" | \"violet\" | null | undefined",
+        "optional": true
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\" | null | undefined",
+        "optional": true
       }
     ]
   },
@@ -623,7 +2448,7 @@
         "name": "dismissible",
         "type": "boolean",
         "optional": true,
-        "description": "Allow outside-click and Escape to close. Default `true`."
+        "description": "Allow outside-click, Escape and drag gestures to close. Default `true`."
       },
       {
         "name": "children",
@@ -658,6 +2483,12 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root `<nav>`."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the landmark. Defaults to `\"Breadcrumb\"`."
       }
     ]
   },
@@ -676,7 +2507,8 @@
       {
         "name": "size",
         "type": "ButtonSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "label",
@@ -768,6 +2600,16 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": true
+      },
+      {
+        "name": "elevation",
+        "type": "\"sm\" | \"md\" | \"lg\" | \"none\" | \"base\" | null | undefined",
+        "optional": true
+      },
+      {
+        "name": "padding",
+        "type": "\"sm\" | \"md\" | \"lg\" | \"none\" | null | undefined",
+        "optional": true
       }
     ]
   },
@@ -823,6 +2665,21 @@
       {
         "name": "name",
         "type": "string",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
         "optional": true
       },
       {
@@ -967,7 +2824,8 @@
       {
         "name": "size",
         "type": "ComboboxSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
@@ -1030,6 +2888,12 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -1243,7 +3107,8 @@
       {
         "name": "size",
         "type": "DatePickerSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
@@ -1282,6 +3147,12 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -1416,7 +3287,8 @@
       {
         "name": "size",
         "type": "DateRangePickerSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
@@ -1455,6 +3327,12 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -1589,7 +3467,8 @@
       {
         "name": "size",
         "type": "DateTimePickerSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
@@ -1628,6 +3507,12 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -1638,6 +3523,28 @@
         "type": "boolean",
         "optional": true,
         "description": "Whether the shell owns the page scroller. Defaults to `true`.\n\n`true` wraps the content in one scrolling region, so the shell owns the\npage scroll. Pass `false` for a multi-pane layout where the panes own their\noverflow — a list-and-detail split, or a board whose columns scroll\nseparately — or when the page composes `PageBody`, which is already its own\nscroller."
+      },
+      {
+        "name": "rail",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Narrow icon rail on the far left."
+      },
+      {
+        "name": "sidebar",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Navigation sidebar."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
       }
     ]
   },
@@ -1687,6 +3594,16 @@
         "type": "DialogTheme",
         "optional": true,
         "description": "Tone of the icon badge."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
       }
     ],
     "DialogFooterProps": [
@@ -1695,6 +3612,16 @@
         "type": "DialogAction[]",
         "optional": true,
         "description": "Footer buttons, rendered as a row. Each takes `Button` props plus an\n`onClick({ close })`; with no handler the button closes the dialog.\nOverrides `children` when non-empty."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
       }
     ],
     "DialogContentProps": [
@@ -1715,6 +3642,16 @@
         "type": "boolean",
         "optional": true,
         "description": "Drop the default padding so content fills the card."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
       }
     ]
   },
@@ -1818,7 +3755,8 @@
       {
         "name": "size",
         "type": "InputSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
@@ -1867,6 +3805,11 @@
       },
       {
         "name": "'aria-label'",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
         "type": "string",
         "optional": true
       }
@@ -2032,6 +3975,12 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -2087,7 +4036,8 @@
       {
         "name": "size",
         "type": "InputSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
@@ -2103,6 +4053,41 @@
         "name": "suffix",
         "type": "JSX.Element",
         "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true,
+        "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Label drawn by the rendered control. Honoured by every type."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true,
+        "description": "Form field name."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the rendered control's root."
       }
     ],
     "FormControlTextareaProps": [
@@ -2154,12 +4139,48 @@
       {
         "name": "size",
         "type": "InputSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
         "type": "InputVariant",
         "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true,
+        "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Label drawn by the rendered control. Honoured by every type."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true,
+        "description": "Form field name."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the rendered control's root."
       }
     ],
     "FormControlSelectProps": [
@@ -2193,6 +4214,41 @@
         "name": "multiple",
         "type": "boolean",
         "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true,
+        "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Label drawn by the rendered control. Honoured by every type."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true,
+        "description": "Form field name."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the rendered control's root."
       }
     ],
     "FormControlCheckboxProps": [
@@ -2221,6 +4277,41 @@
         "type": "JSX.Element",
         "optional": true,
         "description": "Helper text; `Checkbox` draws it."
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true,
+        "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Label drawn by the rendered control. Honoured by every type."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true,
+        "description": "Form field name."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the rendered control's root."
       }
     ],
     "FormControlComboboxProps": [
@@ -2270,12 +4361,48 @@
       {
         "name": "size",
         "type": "InputSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
         "type": "InputVariant",
         "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true,
+        "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Label drawn by the rendered control. Honoured by every type."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true,
+        "description": "Form field name."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the rendered control's root."
       }
     ],
     "FormControlMultiSelectProps": [
@@ -2325,12 +4452,48 @@
       {
         "name": "size",
         "type": "InputSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
         "type": "InputVariant",
         "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true,
+        "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Label drawn by the rendered control. Honoured by every type."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true,
+        "description": "Form field name."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the rendered control's root."
       }
     ],
     "FormControlDateProps": [
@@ -2399,12 +4562,90 @@
       {
         "name": "size",
         "type": "InputSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
         "type": "InputVariant",
         "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true,
+        "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Label drawn by the rendered control. Honoured by every type."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true,
+        "description": "Form field name."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the rendered control's root."
+      }
+    ],
+    "FormControlProps": [
+      {
+        "name": "type",
+        "type": "FormControlTextType",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true,
+        "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Label drawn by the rendered control. Honoured by every type."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true,
+        "description": "Form field name."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the rendered control's root."
       }
     ]
   },
@@ -2637,6 +4878,11 @@
         "type": "JSX.Element",
         "optional": true,
         "description": "Fallback shown when no `combo` is given."
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\" | null | undefined",
+        "optional": true
       }
     ]
   },
@@ -2878,6 +5124,12 @@
         "type": "JSX.Element",
         "optional": true,
         "description": "One or more `MobileNavItem`s, each becoming an equal-width tab."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the `<nav>` landmark."
       }
     ],
     "MobileNavItemProps": [
@@ -2934,6 +5186,12 @@
         "type": "(event: MouseEvent) => void",
         "optional": true,
         "description": "Click handler. Set it on button items, and on links to navigate in-app."
+      },
+      {
+        "name": "aria-current",
+        "type": "| 'page'\n    | 'step'\n    | 'location'\n    | 'date'\n    | 'time'\n    | 'true'\n    | 'false'",
+        "optional": true,
+        "description": "Marks the item as the current page for assistive tech."
       }
     ]
   },
@@ -3061,7 +5319,8 @@
       {
         "name": "size",
         "type": "MultiSelectSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
@@ -3124,6 +5383,12 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -3170,7 +5435,42 @@
         "optional": true
       },
       {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true
+      },
+      {
         "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
         "type": "string",
         "optional": true
       }
@@ -3181,7 +5481,8 @@
       {
         "name": "size",
         "type": "PaginationSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "page",
@@ -3243,6 +5544,12 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the `<nav>`."
       }
     ]
   },
@@ -3265,6 +5572,82 @@
         "type": "(value: string) => void",
         "optional": true,
         "description": "Called on every user-initiated change (controlled or not)."
+      },
+      {
+        "name": "variant",
+        "type": "InputVariant",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "size",
+        "type": "InputSize",
+        "optional": true,
+        "default": "sm"
+      },
+      {
+        "name": "prefix",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "onChange",
+        "type": "JSX.EventHandlerUnion<HTMLInputElement, Event>",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true
       }
     ]
   },
@@ -3343,6 +5726,12 @@
         "name": "class",
         "type": "string",
         "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name. A progressbar is unlabelled without one."
       }
     ]
   },
@@ -3378,6 +5767,11 @@
       },
       {
         "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
         "type": "string",
         "optional": true
       }
@@ -3451,7 +5845,32 @@
         "description": "Error text shown under the group; `role=\"alert\"`."
       },
       {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true
+      },
+      {
         "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
         "type": "string",
         "optional": true
       }
@@ -3517,6 +5936,31 @@
       {
         "name": "label",
         "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
         "optional": true
       },
       {
@@ -3593,6 +6037,26 @@
         "optional": true
       },
       {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
         "name": "'aria-label'",
         "type": "string",
         "optional": true,
@@ -3617,18 +6081,25 @@
         "name": "size",
         "type": "SelectSize",
         "optional": true,
-        "description": "Trigger height/typography. Matches the input scale."
+        "description": "Trigger height/typography. Matches the input scale.",
+        "default": "sm"
       },
       {
         "name": "variant",
         "type": "SelectVariant",
         "optional": true,
-        "description": "Trigger surface. `subtle` (the default) is the filled look."
+        "description": "Trigger surface. `outline` is the default; `subtle` is filled."
       },
       {
         "name": "class",
         "type": "string",
         "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the trigger when no visible `label` is rendered."
       }
     ]
   },
@@ -4260,9 +6731,40 @@
         "description": "Accessible name for the thumb(s). Required when there is no visible label."
       },
       {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
         "name": "class",
         "type": "string",
         "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the thumb(s). Required when there is no visible label."
       }
     ]
   },
@@ -4354,6 +6856,21 @@
         "optional": true
       },
       {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
         "name": "class",
         "type": "string",
         "optional": true
@@ -4391,7 +6908,8 @@
       {
         "name": "size",
         "type": "TabsSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "vertical",
@@ -4456,7 +6974,8 @@
         "name": "size",
         "type": "TabsSize",
         "optional": true,
-        "description": "Default size for the list."
+        "description": "Default size for the list.",
+        "default": "sm"
       },
       {
         "name": "edge",
@@ -4484,7 +7003,8 @@
       {
         "name": "size",
         "type": "TabsSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "edge",
@@ -4595,7 +7115,8 @@
       {
         "name": "size",
         "type": "InputSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
@@ -4635,6 +7156,11 @@
       {
         "name": "onInput",
         "type": "JSX.EventHandlerUnion<HTMLTextAreaElement, InputEvent>",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
         "optional": true
       }
     ]
@@ -4679,7 +7205,8 @@
       {
         "name": "size",
         "type": "InputSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "variant",
@@ -4739,6 +7266,11 @@
       {
         "name": "onKeyDown",
         "type": "JSX.EventHandlerUnion<HTMLInputElement, KeyboardEvent>",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
         "optional": true
       }
     ]
@@ -4813,7 +7345,8 @@
       {
         "name": "size",
         "type": "TimePickerSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "typeable",
@@ -4905,6 +7438,12 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -4918,7 +7457,8 @@
       {
         "name": "size",
         "type": "ToggleGroupSize",
-        "optional": true
+        "optional": true,
+        "default": "sm"
       },
       {
         "name": "value",
@@ -4962,6 +7502,12 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": false
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the group — it is a toolbar of related controls."
       }
     ],
     "ToggleGroupItemProps": [
@@ -4996,6 +7542,12 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when the cell has only an icon."
       }
     ]
   },

@@ -5,13 +5,16 @@ import {
   type RouteSectionProps,
   useLocation,
 } from '@solidjs/router'
-import { type Component, createEffect, type JSX, lazy } from 'solid-js'
 import {
-  BareLayout,
-  BlocksLayout,
-  ComponentsLayout,
-  SiteLayout,
-} from './shell/SiteLayout'
+  type Component,
+  createEffect,
+  createSignal,
+  type JSX,
+  lazy,
+  onCleanup,
+  onMount,
+} from 'solid-js'
+import { BareLayout, SiteLayout } from './shell/SiteLayout'
 
 /**
  * The route table.
@@ -42,11 +45,39 @@ function page<T extends Record<string, Component>>(
   )
 }
 
+const ComponentsLayout = lazy(() =>
+  import('./shell/ReferenceLayout').then((module) => ({
+    default: module.ComponentsLayout,
+  })),
+)
+const BlocksLayout = lazy(() =>
+  import('./shell/ReferenceLayout').then((module) => ({
+    default: module.BlocksLayout,
+  })),
+)
+
+const RegistryExamplePage = page(
+  () => import('./pages/RegistryExamplePage'),
+  'RegistryExamplePage',
+)
+const Patterns = page(() => import('./pages/Patterns'), 'Patterns')
+const Deals = page(() => import('./pages/Deals'), 'Deals')
+const Tickets = page(() => import('./pages/Tickets'), 'Tickets')
+const Files = page(() => import('./pages/Files'), 'Files')
+const Accounting = page(() => import('./pages/Accounting'), 'Accounting')
+const Mail = page(() => import('./pages/Mail'), 'Mail')
+const Compose = page(() => import('./pages/Compose'), 'Compose')
+const Settings = page(() => import('./pages/Settings'), 'Settings')
+const Cards = page(() => import('./pages/Cards'), 'Cards')
+const Authentication = page(
+  () => import('./pages/Authentication'),
+  'Authentication',
+)
+const Tasks = page(() => import('./pages/Tasks'), 'Tasks')
+const Analytics = page(() => import('./pages/Analytics'), 'Analytics')
 const Home = page(() => import('./pages/Home'), 'Home')
 const Docs = page(() => import('./pages/Docs'), 'Docs')
 const Foundations = page(() => import('./pages/Foundations'), 'Foundations')
-const Atoms = page(() => import('./pages/Atoms'), 'Atoms')
-const Feedback = page(() => import('./pages/Feedback'), 'Feedback')
 const BlocksIndex = page(() => import('./pages/BlocksIndex'), 'BlocksIndex')
 const ComponentsIndex = page(
   () => import('./pages/ComponentsIndex'),
@@ -56,16 +87,17 @@ const ComponentPage = page(
   () => import('./pages/ComponentPage'),
   'ComponentPage',
 )
+const ApplicationPage = page(
+  () => import('./pages/ApplicationPage'),
+  'ApplicationPage',
+)
+const CompositionPage = page(
+  () => import('./pages/CompositionPage'),
+  'CompositionPage',
+)
 const Examples = page(() => import('./pages/Examples'), 'Examples')
 const NotFound = page(() => import('./pages/NotFound'), 'NotFound')
-const DiscussionsDesktop = page(
-  () => import('./pages/DiscussionsDesktop'),
-  'DiscussionsDesktop',
-)
-const DiscussionsMobile = page(
-  () => import('./pages/DiscussionsMobile'),
-  'DiscussionsMobile',
-)
+const Discussions = page(() => import('./pages/Discussions'), 'Discussions')
 const Spec = page(() => import('./pages/Spec'), 'Spec')
 const Play = page(() => import('./pages/Play'), 'Play')
 
@@ -74,8 +106,20 @@ const Play = page(() => import('./pages/Play'), 'Play')
  * toast host (so a page may call `toast.success()` without mounting its own).
  */
 function Root(props: RouteSectionProps): JSX.Element {
+  const [direction, setDirection] = createSignal<'ltr' | 'rtl'>('ltr')
+  onMount(() => {
+    const sync = () =>
+      setDirection(document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr')
+    sync()
+    const observer = new MutationObserver(sync)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['dir'],
+    })
+    onCleanup(() => observer.disconnect())
+  })
   return (
-    <UIProvider dir="ltr">
+    <UIProvider dir={direction()}>
       <RouteTitle />
       {props.children}
       <Toaster />
@@ -94,14 +138,50 @@ export const ROUTES: { path: string; title: string }[] = [
   { path: '/docs', title: 'Installation' },
   { path: '/foundations', title: 'Design tokens' },
   { path: '/components', title: 'Components' },
-  { path: '/components/atoms', title: 'Anatomy & variants' },
-  { path: '/components/feedback', title: 'Feedback & state' },
   { path: '/components/:name', title: 'Component' },
+  { path: '/charts', title: 'Charts' },
+  { path: '/charts/:name', title: 'Chart' },
+  { path: '/editors', title: 'Editors' },
+  { path: '/editors/:name', title: 'Editor' },
   { path: '/blocks', title: 'All blocks' },
+  { path: '/blocks/compositions/:name', title: 'Site composition' },
   { path: '/blocks/:name', title: 'Block' },
   { path: '/examples', title: 'Examples' },
-  { path: '/examples/discussions/desktop', title: 'Discussions · desktop' },
-  { path: '/examples/discussions/mobile', title: 'Discussions · mobile' },
+  { path: '/examples/registry/:name', title: 'Registry example' },
+  { path: '/examples/patterns', title: 'Component recipes' },
+  { path: '/examples/patterns/:name', title: 'Reference pattern' },
+  { path: '/examples/analytics/fullscreen', title: 'Analytics' },
+  { path: '/examples/analytics', title: 'Analytics dashboard' },
+  { path: '/examples/authentication/fullscreen', title: 'Authentication' },
+  { path: '/examples/authentication', title: 'Authentication' },
+  { path: '/examples/cards/fullscreen', title: 'Cards' },
+  { path: '/examples/cards', title: 'Cards' },
+  { path: '/examples/settings/fullscreen', title: 'Settings' },
+  { path: '/examples/settings', title: 'Settings' },
+  { path: '/examples/deals', title: 'Deals' },
+  { path: '/examples/deals/fullscreen', title: 'Deals' },
+
+  { path: '/examples/tickets', title: 'Tickets' },
+  { path: '/examples/tickets/fullscreen', title: 'Tickets' },
+
+  { path: '/examples/files', title: 'Files' },
+  { path: '/examples/files/fullscreen', title: 'Files' },
+
+  { path: '/examples/accounting', title: 'Accounting' },
+  { path: '/examples/accounting/fullscreen', title: 'Accounting' },
+
+  { path: '/examples/mail', title: 'Mail' },
+  { path: '/examples/mail/fullscreen', title: 'Mail' },
+
+  { path: '/examples/compose', title: 'Compose' },
+  { path: '/examples/compose/fullscreen', title: 'Compose' },
+
+  { path: '/examples/tasks', title: 'Tasks' },
+  { path: '/examples/tasks/fullscreen', title: 'Tasks' },
+
+  { path: '/examples/discussions', title: 'Discussions' },
+  { path: '/examples/discussions/fullscreen', title: 'Discussions' },
+
   { path: '/spec', title: 'Component spec' },
   { path: '/play', title: 'Single demo' },
 ]
@@ -119,8 +199,19 @@ const TITLES = new Map(ROUTES.map((route) => [route.path, route.title]))
 function RouteTitle(): JSX.Element {
   const location = useLocation()
   createEffect(() => {
-    const title = TITLES.get(location.pathname)
+    const pathname = location.pathname
+    const title = TITLES.get(pathname)
     if (title) document.title = `${title} · newui`
+    else if (/^\/(components|blocks|charts|editors)\/[^/]+$/.test(pathname)) {
+      let current = true
+      onCleanup(() => {
+        current = false
+      })
+      void import('./generated/components').then(({ componentBySlug }) => {
+        if (current)
+          document.title = `${componentBySlug(pathname.split('/').at(-1) ?? '')?.name ?? 'Unknown component'} · newui`
+      })
+    }
   })
   return null
 }
@@ -135,14 +226,26 @@ export function AppRoutes(): JSX.Element {
         {/* The two hand-written reference pages sit in the site group; the
             generated `:name` pages sit in their own group below. A static
             segment outranks a parameter, so these win for their own paths. */}
-        <Route path="/components/atoms" component={Atoms} />
-        <Route path="/components/feedback" component={Feedback} />
 
         <Route path="/examples" component={Examples} />
+        <Route path="/examples/analytics" component={ApplicationPage} />
+        <Route path="/examples/authentication" component={ApplicationPage} />
+        <Route path="/examples/cards" component={ApplicationPage} />
+        <Route path="/examples/settings" component={ApplicationPage} />
+        <Route path="/examples/deals" component={ApplicationPage} />
+        <Route path="/examples/tickets" component={ApplicationPage} />
+        <Route path="/examples/files" component={ApplicationPage} />
+        <Route path="/examples/accounting" component={ApplicationPage} />
+        <Route path="/examples/mail" component={ApplicationPage} />
+        <Route path="/examples/compose" component={ApplicationPage} />
+        <Route path="/examples/tasks" component={ApplicationPage} />
+        <Route path="/examples/discussions" component={ApplicationPage} />
         <Route
-          path="/examples/discussions/desktop"
-          component={DiscussionsDesktop}
+          path="/examples/registry/:name"
+          component={RegistryExamplePage}
         />
+        <Route path="/examples/patterns" component={Patterns} />
+        <Route path="/examples/patterns/:name" component={Patterns} />
       </Route>
 
       {/*
@@ -161,15 +264,45 @@ export function AppRoutes(): JSX.Element {
 
       {/* The blocks are a reference section too: their own index, their own
           sidebar, and the same generated page. */}
+      <Route path="/charts" component={ComponentsLayout}>
+        <Route path="/" component={ComponentsIndex} />
+        <Route path="/:name" component={ComponentPage} />
+      </Route>
+      <Route path="/editors" component={ComponentsLayout}>
+        <Route path="/" component={ComponentsIndex} />
+        <Route path="/:name" component={ComponentPage} />
+      </Route>
       <Route path="/blocks" component={BlocksLayout}>
+        <Route path="/compositions/:name" component={CompositionPage} />
         <Route path="/" component={BlocksIndex} />
         <Route path="/:name" component={ComponentPage} />
       </Route>
 
       <Route component={BareLayout}>
+        <Route path="/examples/settings/fullscreen" component={Settings} />
+        <Route path="/examples/analytics/fullscreen" component={Analytics} />
         <Route
-          path="/examples/discussions/mobile"
-          component={DiscussionsMobile}
+          path="/examples/authentication/fullscreen"
+          component={Authentication}
+        />
+        <Route path="/examples/cards/fullscreen" component={Cards} />
+        <Route path="/examples/deals/fullscreen" component={Deals} />
+
+        <Route path="/examples/tickets/fullscreen" component={Tickets} />
+
+        <Route path="/examples/files/fullscreen" component={Files} />
+
+        <Route path="/examples/accounting/fullscreen" component={Accounting} />
+
+        <Route path="/examples/mail/fullscreen" component={Mail} />
+
+        <Route path="/examples/compose/fullscreen" component={Compose} />
+
+        <Route path="/examples/tasks/fullscreen" component={Tasks} />
+
+        <Route
+          path="/examples/discussions/fullscreen"
+          component={Discussions}
         />
         <Route path="/spec" component={Spec} />
         <Route path="/play" component={Play} />

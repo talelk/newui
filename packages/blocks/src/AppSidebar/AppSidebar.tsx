@@ -85,9 +85,7 @@ export function AppSidebar(props: AppSidebarProps): JSX.Element {
                         }
                         suffix={
                           <Show when={item.count}>
-                            <span class="text-xs text-ink-gray-5">
-                              {item.count}
-                            </span>
+                            <span class="text-caption">{item.count}</span>
                           </Show>
                         }
                       >

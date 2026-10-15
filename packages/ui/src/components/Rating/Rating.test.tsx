@@ -4,6 +4,25 @@ import { describe, expect, it, vi } from 'vitest'
 import { Rating } from './Rating'
 
 describe('Rating', () => {
+  it('connects the shared label, supporting text and invalid state', () => {
+    const { getByRole, getByText } = render(() => (
+      <Rating
+        label="Preference"
+        description="Choose your preference."
+        error="A preference is required."
+        required
+      />
+    ))
+    const control = getByRole('radiogroup', { name: /Preference/ })
+    expect(control).toHaveAttribute('aria-invalid', 'true')
+    expect(control.getAttribute('aria-describedby')).toContain(
+      getByText('Choose your preference.').id,
+    )
+    expect(control.getAttribute('aria-describedby')).toContain(
+      getByRole('alert').id,
+    )
+  })
+
   it('exposes a radiogroup whose checked star matches the value', () => {
     const { container } = render(() => <Rating defaultValue={3} />)
     const group = container.querySelector('[data-slot="rating-control"]')

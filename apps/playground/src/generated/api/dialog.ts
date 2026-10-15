@@ -21,6 +21,16 @@ export const API = {
       "type": "boolean",
       "optional": true,
       "description": "Drop the default padding so content fills the card."
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "children",
+      "type": "JSX.Element",
+      "optional": true
     }
   ],
   "DialogFooterProps": [
@@ -29,6 +39,16 @@ export const API = {
       "type": "DialogAction[]",
       "optional": true,
       "description": "Footer buttons, rendered as a row. Each takes `Button` props plus an\n`onClick({ close })`; with no handler the button closes the dialog.\nOverrides `children` when non-empty."
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "children",
+      "type": "JSX.Element",
+      "optional": true
     }
   ],
   "DialogHeaderProps": [
@@ -43,6 +63,16 @@ export const API = {
       "type": "DialogTheme",
       "optional": true,
       "description": "Tone of the icon badge."
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "children",
+      "type": "JSX.Element",
+      "optional": true
     }
   ],
   "DialogRootProps": [

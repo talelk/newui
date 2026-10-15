@@ -1,0 +1,20 @@
+{
+  "files": [
+    "pages/Accounting.tsx",
+    "examples/accounting-data.ts",
+    "examples/DataTable.tsx",
+    "examples/ExampleFrame.tsx",
+    "shell/ThemeMenu.tsx",
+    "shell/theme.ts",
+    "pages/accounting/AccountingDialogs.tsx",
+    "pages/accounting/ExpenseChart.tsx"
+  ],
+  "packages": [
+    "@newui/blocks",
+    "@newui/charts",
+    "@newui/ui",
+    "@solidjs/router",
+    "@tanstack/solid-table",
+    "solid-js"
+  ]
+}

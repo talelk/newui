@@ -36,6 +36,11 @@ export const API = {
       "name": "class",
       "type": "string",
       "optional": true
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "optional": true
     }
   ]
 } as const

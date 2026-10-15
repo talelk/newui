@@ -40,11 +40,11 @@ export function AuthCard(props: AuthCardProps): JSX.Element {
       data-slot="auth-card"
       class={`flex min-h-screen items-center justify-center bg-surface-base px-4 py-12 ${props.class ?? ''}`}
     >
-      <div class="flex w-full max-w-sm flex-col gap-6">
+      <div class="flex w-full max-w-sm flex-col gap-4">
         <div class="flex flex-col items-center gap-3 text-center">
           <Show when={props.logo}>{props.logo}</Show>
           <div class="flex flex-col gap-1">
-            <h1 class="text-2xl-semibold text-ink-gray-9">{props.title}</h1>
+            <h1 class="text-metric text-ink-gray-9">{props.title}</h1>
             <Show when={props.description}>
               <p class="text-base text-ink-gray-6">{props.description}</p>
             </Show>

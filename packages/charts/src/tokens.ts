@@ -14,7 +14,7 @@ export const EMPTY_TOKENS: ChartTokens = {
 
 /**
  * Reads the plot-area colors back as concrete values. echarts parses colors
- * itself, so `var(--ink-gray-5)` would reach the SVG as a literal attribute with
+ * itself, so `var(--ink-gray-6)` would reach the SVG as a literal attribute with
  * no substitution — every token has to be read through `getComputedStyle` first.
  *
  * `--chart-grid` / `--chart-axis` are the semantic names; the runtime
@@ -39,10 +39,13 @@ export function readChartTokens(el?: Element | null): ChartTokens {
   }
 
   return {
+    fontScale:
+      Number.parseFloat(getComputedStyle(document.documentElement).fontSize) /
+        16 || 1,
     series,
     grid: read('--chart-grid') || read('--outline-gray-1'),
     axis: read('--chart-axis') || read('--outline-gray-3'),
-    label: read('--ink-gray-5') || read('--outline-gray-3'),
+    label: read('--ink-gray-6') || read('--outline-gray-3'),
   }
 }
 
@@ -68,7 +71,7 @@ export function useChartTokens(): Accessor<ChartTokens> {
       const observer = new MutationObserver(() => setTokens(readChartTokens()))
       observer.observe(document.documentElement, {
         attributes: true,
-        attributeFilter: ['data-theme'],
+        attributeFilter: ['data-theme', 'style', 'class'],
       })
       onCleanup(() => observer.disconnect())
     }

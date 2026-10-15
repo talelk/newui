@@ -53,6 +53,22 @@ const PAIRS: Pair[] = [
     what: 'muted on a popover/menu surface',
   },
 
+  {
+    fg: 'ink-gray-6',
+    bg: 'surface-elevation-1',
+    what: 'chart subtitle and card caption',
+  },
+
+  { fg: 'ink-blue-link', bg: 'surface-base', what: 'blue link on base' },
+  { fg: 'ink-blue-link', bg: 'surface-elevation-1', what: 'blue link on card' },
+  { fg: 'ink-blue-link', bg: 'surface-gray-1', what: 'blue link on canvas' },
+
+  {
+    fg: 'ink-blue-8',
+    bg: 'surface-blue-1',
+    what: 'selected navigation and its count',
+  },
+
   // subtle / outline / ghost text — ink-{theme}-8 on the pale surface
   ...THEMES.map((theme) => ({
     fg: `ink-${theme}-8`,
@@ -130,3 +146,11 @@ describe('contrast contract (WCAG AA)', () => {
     })
   }
 })
+
+for (const mode of ['light', 'dark'] as Mode[]) {
+  it(`${mode}: invalid field boundary meets non-text contrast`, () => {
+    expect(
+      contrast(resolve(mode, 'outline-red-6'), resolve(mode, 'surface-base')),
+    ).toBeGreaterThanOrEqual(3)
+  })
+}

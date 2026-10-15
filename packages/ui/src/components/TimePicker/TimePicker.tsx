@@ -7,6 +7,7 @@ import {
   Show,
   splitProps,
 } from 'solid-js'
+import { fieldSizes, popupFieldVariants } from '../../lib/control-styles'
 import { createControllableSignal } from '../../lib/controllable'
 import { createDisclosure } from '../../lib/disclosure'
 import { Field, useField } from '../../lib/field'
@@ -53,6 +54,7 @@ export interface TimePickerProps {
   max?: string
   placeholder?: string
   variant?: TimePickerVariant
+  /** @default sm */
   size?: TimePickerSize
   /** Whether the input accepts typed times. Default: `true`. */
   typeable?: boolean
@@ -81,21 +83,6 @@ export interface TimePickerProps {
   'aria-label'?: string
   /** Merged into the root. */
   class?: string
-}
-
-const SIZE: Record<TimePickerSize, string> = {
-  xs: 'h-6 rounded-3 text-xs',
-  sm: 'h-7 rounded-4 text-base',
-  md: 'h-8 rounded-4 text-base',
-  lg: 'h-10 rounded-5 text-lg',
-}
-
-const VARIANT: Record<TimePickerVariant, string> = {
-  subtle:
-    'border border-surface-gray-2 bg-surface-gray-2 hover:border-outline-gray-3 hover:bg-surface-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:bg-surface-base data-[state=open]:shadow-sm',
-  outline:
-    'border border-outline-gray-2 bg-surface-base hover:border-outline-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:shadow-sm',
-  ghost: 'border-0 bg-transparent',
 }
 
 const OPTION =
@@ -311,8 +298,9 @@ function TimePickerControl(props: ControlProps): JSX.Element {
     }
   }
 
+  const machineId = createId('time-picker')
   const { api } = createZagApi<TimePickerApi>(zag.machine, zag.connect, () => ({
-    id: createId('time-picker'),
+    id: machineId,
     open: open(),
     autoFocus: false,
     ids: { content: panelId },
@@ -347,10 +335,10 @@ function TimePickerControl(props: ControlProps): JSX.Element {
         data-state={open() ? 'open' : 'closed'}
         class={cn(
           'relative flex w-full items-center transition-colors',
-          SIZE[size()],
-          VARIANT[local.variant ?? 'subtle'],
+          fieldSizes[size()],
+          popupFieldVariants[local.variant ?? 'outline'],
           'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:opacity-60',
-          'focus-within:focus-ring',
+          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
         )}
         data-disabled={local.disabled ? '' : undefined}
       >
@@ -370,7 +358,7 @@ function TimePickerControl(props: ControlProps): JSX.Element {
           aria-activedescendant={
             open() && highlight() > -1 ? optionId(highlight()) : undefined
           }
-          aria-label={field ? undefined : bareName()}
+          aria-label={field?.hasLabel() ? undefined : bareName()}
           aria-invalid={field?.hasError() ? 'true' : undefined}
           aria-required={field?.required() ? 'true' : undefined}
           aria-describedby={field?.describedBy()}
@@ -471,21 +459,16 @@ export function TimePicker(props: TimePickerProps): JSX.Element {
     'error',
     'required',
   ])
-  const hasLabeling = () =>
-    Boolean(local.label || local.description || local.error || local.required)
-
   return (
-    <Show when={hasLabeling()} fallback={<TimePickerControl {...props} />}>
-      <Field
-        id={props.id}
-        label={local.label}
-        description={local.description}
-        error={local.error}
-        required={local.required}
-        disabled={props.disabled}
-      >
-        <TimePickerControl {...props} />
-      </Field>
-    </Show>
+    <Field
+      id={props.id}
+      label={local.label}
+      description={local.description}
+      error={local.error}
+      required={local.required}
+      disabled={props.disabled}
+    >
+      <TimePickerControl {...props} />
+    </Field>
   )
 }

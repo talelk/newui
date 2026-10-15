@@ -191,7 +191,7 @@ export function buildSankeyOption(
           // its neighbour instead of next to it.
           position: isVertical ? 'top' : 'right',
           color: tokens.label,
-          fontSize: DATA_LABEL_FONT_SIZE,
+          fontSize: DATA_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
           formatter: (params: { name?: string; value?: unknown }) =>
             `${params.name ?? ''} · ${printValue(Number(params.value ?? 0), format)}`,
         },

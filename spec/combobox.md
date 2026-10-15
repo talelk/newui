@@ -19,7 +19,7 @@ types into; the option list filters client-side by substring. Built on Zag's
 | `disabled` | `boolean` | `false` | |
 | `name` | `string` | — | form field name |
 | `size` | `xs \| sm \| md \| lg` | `sm` | |
-| `variant` | `subtle \| outline \| ghost` | `subtle` | |
+| `variant` | `subtle \| outline \| ghost` | `outline` | |
 | `label` / `description` / `error` / `required` | — | — | shared labelling contract (P5) |
 | `aria-label` | `string` | — | accessible name when no visible `label` |
 | `class` | `string` | — | merged into the root |

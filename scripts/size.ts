@@ -29,6 +29,21 @@ interface Entry {
 
 const ENTRIES: Entry[] = [
   {
+    name: 'Analytics charts',
+    file: 'scripts/fixtures/analytics.ts',
+    // SVG runtime plus only the marks rendered by the dashboard (~241 kB).
+    budget: 250,
+    forbid: [
+      '"date-picker"',
+      '"dialog"',
+      '"slider"',
+      'series.sankey',
+      'series.heatmap',
+      'series.scatter',
+      'series.funnel',
+    ],
+  },
+  {
     name: 'cn() only',
     file: 'scripts/fixtures/cn.ts',
     budget: 8,
@@ -96,13 +111,13 @@ async function measure(entry: Entry) {
     plugins: [solid()],
     build: {
       write: false,
-      minify: 'esbuild',
+      minify: 'oxc',
       lib: {
         entry: path.join(root, entry.file),
         formats: ['es'],
         fileName: 'out',
       },
-      rollupOptions: { external: ['solid-js', 'solid-js/web'] },
+      rolldownOptions: { external: ['solid-js', 'solid-js/web'] },
     },
   })
 

@@ -1,0 +1,61 @@
+import { createResource, createSignal, For, Show, Suspense } from 'solid-js'
+import { Markdown } from './markdown'
+
+const sources = import.meta.glob<string>('../../../../packages/*/README.md', {
+  query: '?raw',
+  import: 'default',
+})
+const packages = [
+  'ui',
+  'blocks',
+  'charts',
+  'editor',
+  'code-editor',
+  'icons',
+  'tokens',
+  'tailwind',
+  'vite',
+]
+function Guide(props: { name: string }) {
+  const [markdown] = createResource(
+    () => props.name,
+    async (name) =>
+      (await sources[`../../../../packages/${name}/README.md`]?.()) ?? '',
+  )
+  return (
+    <Suspense fallback={<p>Loading package guide…</p>}>
+      <Markdown markdown={markdown() ?? ''} />
+    </Suspense>
+  )
+}
+
+/** Package source guides are loaded on demand, never copied into generated data. */
+export function PackageGuides() {
+  const [open, setOpen] = createSignal<string>()
+  return (
+    <section class="flex flex-col gap-4" aria-label="Package guides">
+      <h2 class="text-section">Package guides and public helpers</h2>
+      <For each={packages}>
+        {(name) => (
+          <details
+            id={name}
+            open={open() === name}
+            onToggle={(event) => {
+              if (event.currentTarget.open) setOpen(name)
+            }}
+            class="rounded-5 border border-outline-gray-1 p-4"
+          >
+            <summary class="cursor-pointer rounded-3 font-medium focus-visible:focus-ring">
+              @newui/{name}
+            </summary>
+            <Show when={open() === name}>
+              <div class="mt-4">
+                <Guide name={name} />
+              </div>
+            </Show>
+          </details>
+        )}
+      </For>
+    </section>
+  )
+}

@@ -50,9 +50,14 @@ test('the open date-picker calendar has no serious violations', async ({
   await page.getByRole('textbox', { name: 'Due date' }).click()
   await expect(page.getByRole('grid')).toBeVisible()
 
-  const results = await new AxeBuilder({ page }).analyze()
-  const serious = results.violations
-    .filter((v) => v.impact === 'serious' || v.impact === 'critical')
-    .map((v) => `${v.id} (${v.nodes.length})`)
-  expect(serious).toEqual([])
+  for (const view of ['day', 'month', 'year']) {
+    const results = await new AxeBuilder({ page }).analyze()
+    const serious = results.violations
+      .filter((v) => v.impact === 'serious' || v.impact === 'critical')
+      .map((v) => `${v.id} (${v.nodes.length})`)
+    expect(serious, view).toEqual([])
+    if (view !== 'year') {
+      await page.locator('[data-part="view-trigger"]').click()
+    }
+  }
 })

@@ -37,5 +37,4 @@
 
 ## Styling hooks
 
-`data-slot` is not set (single root). State is read from `:disabled` and
-`[data-state]`.
+`data-slot="button"`, `data-size`, `data-variant`, `data-color` and `data-disabled` expose the root. State is read from `:disabled` and `[data-state]`.

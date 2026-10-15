@@ -9,6 +9,28 @@ export const API = {
       "type": "boolean",
       "optional": true,
       "description": "Whether the shell owns the page scroller. Defaults to `true`.\n\n`true` wraps the content in one scrolling region, so the shell owns the\npage scroll. Pass `false` for a multi-pane layout where the panes own their\noverflow — a list-and-detail split, or a board whose columns scroll\nseparately — or when the page composes `PageBody`, which is already its own\nscroller."
+    },
+    {
+      "name": "rail",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Narrow icon rail on the far left."
+    },
+    {
+      "name": "sidebar",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Navigation sidebar."
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "children",
+      "type": "JSX.Element",
+      "optional": true
     }
   ]
 } as const

@@ -220,14 +220,14 @@ export const SidebarLabel: ParentComponent<SidebarLabelProps> = (props) => {
       data-slot="sidebar-label"
       class={cn('relative flex h-7 items-center pl-2', local.class)}
     >
-      <h3
+      <div
         class={cn(
-          'text-base leading-tighter text-ink-gray-5 transition-all duration-300 ease-in-out',
+          'text-base leading-tighter text-ink-gray-6 transition-all duration-300 ease-in-out',
           collapsed() ? 'w-0 overflow-hidden opacity-0' : 'w-auto opacity-100',
         )}
       >
         {local.children}
-      </h3>
+      </div>
       <Show when={local.divider && collapsed()}>
         <div aria-hidden="true" class="absolute inset-0 flex items-center">
           <hr class="w-full border-t border-ink-gray-3" />
@@ -269,15 +269,15 @@ export const SidebarItem: ParentComponent<SidebarItemProps> = (props) => {
         ? { title: local.label, 'aria-label': local.label }
         : {})}
       class={cn(
-        'flex h-7 w-full items-center gap-2 rounded-4 px-2 text-start text-sm text-ink-gray-6',
-        'transition-colors hover:bg-surface-gray-2',
-        'data-[active]:bg-surface-elevation-3 data-[active]:text-ink-gray-8 data-[active]:shadow-sm',
+        'flex h-8 w-full items-center gap-2 rounded-3 px-2 text-start text-interface text-ink-gray-6',
+        'transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring-blue motion-reduce:transition-none',
+        'data-[active]:bg-surface-blue-1 data-[active]:text-ink-blue-8',
         collapsed() && 'justify-center px-0',
         local.class,
       )}
     >
       <Show when={local.prefix}>
-        <span class="shrink-0 text-ink-gray-6">{local.prefix}</span>
+        <span class="shrink-0">{local.prefix}</span>
       </Show>
       <span class={cn('flex-1 truncate', collapsed() && 'sr-only')}>
         {local.children}
@@ -391,7 +391,9 @@ export const SidebarRailItem: ParentComponent<SidebarRailItemProps> = (
           when={local.children}
           fallback={<Icon icon={local.icon} class="size-4" />}
         >
-          {local.children}
+          <span aria-hidden={local.label ? true : undefined} class="contents">
+            {local.children}
+          </span>
         </Show>
         <Show when={badge() > 0 && (local.badgeStyle ?? 'count') === 'count'}>
           <span class="pointer-events-none absolute -end-0.5 -top-0.5 inline-flex rounded-full border border-surface-base">
@@ -412,7 +414,7 @@ export const SidebarRailItem: ParentComponent<SidebarRailItemProps> = (
         <div class="leading-relaxed">
           <div>{local.label}</div>
           <Show when={tooltipDescription()}>
-            <div class="text-xs text-ink-gray-5">{tooltipDescription()}</div>
+            <div class="text-xs text-ink-gray-6">{tooltipDescription()}</div>
           </Show>
         </div>
       </TooltipContent>
@@ -505,7 +507,7 @@ export function SidebarSection(props: SidebarSectionProps): JSX.Element {
                 : 'w-auto opacity-100',
             )}
           >
-            <Show when={local.collapsible} fallback={<>{local.label}</>}>
+            <Show when={local.collapsible} fallback={local.label}>
               <button
                 type="button"
                 class="flex items-center gap-1 rounded-4 focus-visible:focus-ring"
@@ -630,7 +632,7 @@ export function SidebarCard(props: SidebarCardProps): JSX.Element {
           <button
             type="button"
             onClick={action().onClick}
-            class="w-fit rounded-3 px-1.5 py-0.5 text-sm-medium text-ink-blue-6 transition-colors hover:bg-surface-gray-2"
+            class="w-fit rounded-3 px-1.5 py-0.5 text-sm-medium text-ink-blue-6 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring-blue motion-reduce:transition-none"
           >
             {action().label}
           </button>

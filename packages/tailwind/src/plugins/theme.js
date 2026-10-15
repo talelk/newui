@@ -37,6 +37,10 @@ export default plugin(({ addBase }) => {
       {
         'box-shadow': 'none',
       },
+    body: {
+      'font-size': 'var(--text-interface)',
+      'line-height': 'var(--text-interface--line-height)',
+    },
     html: {
       'font-family': 'InterVar, ui-sans-serif, system-ui, sans-serif',
       'font-optical-sizing': 'auto',

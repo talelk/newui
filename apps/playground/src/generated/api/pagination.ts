@@ -7,7 +7,8 @@ export const API = {
     {
       "name": "size",
       "type": "PaginationSize",
-      "optional": true
+      "optional": true,
+      "default": "sm"
     },
     {
       "name": "page",
@@ -69,6 +70,12 @@ export const API = {
       "name": "children",
       "type": "JSX.Element",
       "optional": true
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name for the `<nav>`."
     }
   ]
 } as const

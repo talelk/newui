@@ -21,6 +21,12 @@ export const API = {
       "type": "string",
       "optional": true,
       "description": "Merged into the root `<nav>`."
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name for the landmark. Defaults to `\"Breadcrumb\"`."
     }
   ]
 } as const

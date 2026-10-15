@@ -117,21 +117,21 @@ const VARIANTS: ButtonVariant[] = ['solid', 'subtle', 'outline', 'ghost']
 const SIZES: ButtonSize[] = ['xs', 'sm', 'md', 'lg']
 
 const TEXT_SIZE: Record<ButtonSize, string> = {
-  xs: 'h-6 text-xs px-1.5 rounded-3',
-  sm: 'h-7 text-base px-2 rounded-4',
-  md: 'h-8 text-base-medium px-2.5 rounded-4',
-  lg: 'h-10 text-lg-medium px-3 rounded-5',
+  xs: 'h-auto min-h-6 text-xs px-1.5 py-0.5 rounded-3',
+  sm: 'h-auto min-h-7 text-base px-2 py-0.5 rounded-3',
+  md: 'h-auto min-h-8 text-base-medium px-2.5 py-1 rounded-3',
+  lg: 'h-auto min-h-10 text-lg-medium px-3 py-1.5 rounded-3',
 }
 
 const ICON_SIZE: Record<ButtonSize, string> = {
-  xs: 'h-6 w-6 rounded-3',
-  sm: 'h-7 w-7 rounded-4',
-  md: 'h-8 w-8 rounded-4',
-  lg: 'h-10 w-10 rounded-5',
+  xs: 'h-6 w-6 px-0 py-0 rounded-3',
+  sm: 'h-7 w-7 px-0 py-0 rounded-3',
+  md: 'h-8 w-8 px-0 py-0 rounded-3',
+  lg: 'h-10 w-10 px-0 py-0 rounded-3',
 }
 
 export const button = tv({
-  base: 'inline-flex items-center justify-center gap-2 shrink-0 cursor-pointer transition-colors disabled:cursor-not-allowed',
+  base: 'inline-flex max-w-full items-center justify-center gap-2 shrink-0 cursor-pointer transition-colors disabled:cursor-not-allowed',
   variants: {
     variant: {
       solid: '',

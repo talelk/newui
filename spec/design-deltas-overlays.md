@@ -1,5 +1,10 @@
 # Design deltas — action & overlay components
 
+> Historical Frappe comparison from before the analytics redesign. The current
+> [visual-system contract](visual-system.md) and component contracts supersede
+> the old density, radius and colour targets below. The original comparison is
+> retained as reference evidence.
+
 A visual/design parity audit of the action/overlay family: **Button, Dropdown,
 Menu, ContextMenu, Dialog, BottomSheet, Popover, HoverCard, Tooltip, Toast,
 Breadcrumbs, KeyboardShortcut, KeyboardShortcutsDialog, SettingsDialog, Tree**.

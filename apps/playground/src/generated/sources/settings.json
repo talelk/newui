@@ -1,0 +1,10 @@
+{
+  "files": [
+    "pages/Settings.tsx",
+    "shell/PageIntro.tsx"
+  ],
+  "packages": [
+    "@newui/ui",
+    "solid-js"
+  ]
+}

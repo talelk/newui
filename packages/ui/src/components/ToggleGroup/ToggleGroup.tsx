@@ -56,16 +56,16 @@ export const toggleGroupItem = tv({
   variants: {
     variant: {
       subtle:
-        'rounded-4 hover:text-ink-gray-9 data-[state=on]:bg-surface-base data-[state=on]:text-ink-gray-9 data-[state=on]:shadow-sm',
+        'rounded-3 hover:text-ink-gray-9 data-[state=on]:bg-surface-base data-[state=on]:text-ink-gray-9 data-[state=on]:shadow-sm',
       outline:
         'rounded-none border border-outline-gray-2 not-first:-ms-px hover:bg-surface-gray-2 data-[state=on]:bg-surface-gray-3 data-[state=on]:text-ink-gray-9 first:rounded-s-4 last:rounded-e-4',
       ghost:
-        'rounded-4 hover:bg-surface-gray-2 data-[state=on]:bg-surface-gray-3 data-[state=on]:text-ink-gray-9',
+        'rounded-3 hover:bg-surface-gray-2 data-[state=on]:bg-surface-gray-3 data-[state=on]:text-ink-gray-9',
     },
     size: {
-      sm: 'h-6 min-w-6 px-2 text-base',
-      md: 'h-7 min-w-7 px-2.5 text-base',
-      lg: 'h-8 min-w-8 px-3 text-base',
+      sm: 'h-7 min-w-6 px-2 text-base',
+      md: 'h-8 min-w-7 px-2.5 text-base',
+      lg: 'h-10 min-w-8 px-3 text-base',
     },
   },
   defaultVariants: { variant: 'subtle', size: 'sm' },
@@ -73,6 +73,7 @@ export const toggleGroupItem = tv({
 
 export interface ToggleGroupProps {
   variant?: ToggleGroupVariant
+  /** @default sm */
   size?: ToggleGroupSize
   /** Controlled selection. `multiple` decides whether it is a list or one value. */
   value?: string[]
@@ -114,11 +115,12 @@ export const ToggleGroupRoot: ParentComponent<ToggleGroupProps> = (props) => {
     size: local.size ?? 'sm',
   })
 
+  const machineId = createId('toggle-group')
   const { api } = createZagApi<ToggleGroupApi>(
     zag.machine,
     zag.connect,
     () => ({
-      id: createId('toggle-group'),
+      id: machineId,
       value: local.value,
       defaultValue: local.defaultValue,
       multiple: local.multiple,

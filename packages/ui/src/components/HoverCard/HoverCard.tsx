@@ -27,8 +27,9 @@ const Root: ParentComponent<HoverCardRootProps> = (props) => {
     onChange: (value) => props.onOpenChange?.(value),
   })
 
+  const machineId = createId('hover-card')
   const { api } = createZagApi<HoverCardApi>(zag.machine, zag.connect, () => ({
-    id: createId('hover-card'),
+    id: machineId,
     open: open(),
     openDelay: props.openDelay ?? 300,
     closeDelay: props.closeDelay ?? 300,

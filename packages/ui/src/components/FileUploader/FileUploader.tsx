@@ -110,8 +110,9 @@ function FileUploaderControl(props: ControlProps): JSX.Element {
     local.onValueChange?.(local.multiple ? files : (files[0] ?? null))
   }
 
+  const machineId = createId('file-uploader')
   const { api } = createZagApi<FileUploadApi>(zag.machine, zag.connect, () => ({
-    id: createId('file-uploader'),
+    id: machineId,
     accept: local.accept,
     acceptedFiles: valueAsFiles(),
     maxFiles: maxFiles(),
@@ -165,7 +166,7 @@ function FileUploaderControl(props: ControlProps): JSX.Element {
             : 'Drag and drop a file here, or click to browse'}
         </span>
         <Show when={hint()}>
-          <span class="text-p-sm text-ink-gray-5">{hint()}</span>
+          <span class="text-p-sm text-ink-gray-6">{hint()}</span>
         </Show>
       </div>
 
@@ -202,7 +203,7 @@ function FileUploaderControl(props: ControlProps): JSX.Element {
                 <span
                   {...api().getItemSizeTextProps({ file })}
                   data-slot="file-uploader-item-size"
-                  class="shrink-0 text-p-sm text-ink-gray-5"
+                  class="shrink-0 text-p-sm text-ink-gray-6"
                 >
                   {api().getFileSize(file)}
                 </span>

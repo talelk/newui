@@ -52,5 +52,60 @@ export const API = {
       "type": "TooltipPlacement",
       "optional": true
     }
+  ],
+  "TooltipRootProps": [
+    {
+      "name": "open",
+      "type": "boolean",
+      "optional": true
+    },
+    {
+      "name": "defaultOpen",
+      "type": "boolean",
+      "optional": true
+    },
+    {
+      "name": "onOpenChange",
+      "type": "(open: boolean) => void",
+      "optional": true
+    },
+    {
+      "name": "openDelay",
+      "type": "number",
+      "optional": true
+    },
+    {
+      "name": "closeDelay",
+      "type": "number",
+      "optional": true
+    },
+    {
+      "name": "placement",
+      "type": "TooltipPlacement",
+      "optional": true
+    },
+    {
+      "name": "children",
+      "type": "JSX.Element",
+      "optional": false
+    }
+  ],
+  "TooltipTriggerProps": [
+    {
+      "name": "as",
+      "type": "string | Component<Record<string, unknown>>",
+      "optional": true,
+      "description": "Element or component to render the trigger as. Defaults to `button`."
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "children",
+      "type": "JSX.Element",
+      "optional": true
+    }
   ]
 } as const

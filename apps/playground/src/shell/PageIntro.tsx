@@ -16,10 +16,12 @@ export function PageIntro(props: {
 }): JSX.Element {
   return (
     <header
-      class={`mb-8 flex flex-wrap items-end justify-between gap-4 ${props.class ?? ''}`}
+      class={`mb-4 flex flex-wrap items-end justify-between gap-4 ${props.class ?? ''}`}
     >
       <div class="flex min-w-0 flex-col gap-1">
-        <h1 class="text-2xl-semibold text-ink-gray-9">{props.title}</h1>
+        <h1 class="break-words [overflow-wrap:anywhere] text-heading text-ink-gray-9">
+          {props.title}
+        </h1>
         <Show when={props.description}>
           <p class="max-w-2xl text-base text-ink-gray-6">{props.description}</p>
         </Show>

@@ -9,7 +9,7 @@ import { Button } from './Button'
  */
 describe('Button (browser, real CSS)', () => {
   it('keeps horizontal padding and height at every size', () => {
-    for (const size of ['xs', 'sm', 'md', 'lg'] as const) {
+    for (const size of [undefined, 'xs', 'sm', 'md', 'lg'] as const) {
       const { getByRole, unmount } = render(() => (
         <Button size={size}>Save</Button>
       ))
@@ -19,10 +19,9 @@ describe('Button (browser, real CSS)', () => {
         Number.parseFloat(style.paddingLeft),
         `${size} padding-left`,
       ).toBeGreaterThan(0)
-      expect(
-        el.getBoundingClientRect().height,
-        `${size} height`,
-      ).toBeGreaterThanOrEqual(24)
+      expect(el.getBoundingClientRect().height, `${size} height`).toBe(
+        size === 'xs' ? 24 : size === 'md' ? 32 : size === 'lg' ? 40 : 28,
+      )
       unmount()
     }
   })

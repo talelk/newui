@@ -50,7 +50,7 @@ const THEMES = Object.keys(THEME) as BadgeTheme[]
 const VARIANTS: BadgeVariant[] = ['solid', 'subtle', 'outline', 'ghost']
 
 export const badge = tv({
-  base: 'inline-flex select-none items-center gap-1 overflow-clip whitespace-nowrap rounded-full leading-tighter',
+  base: 'inline-flex max-w-full select-none items-center gap-1 whitespace-normal break-words rounded-full leading-tighter',
   variants: {
     variant: { solid: '', subtle: '', outline: '', ghost: '' },
     theme: {
@@ -62,9 +62,9 @@ export const badge = tv({
       violet: '',
     },
     size: {
-      sm: 'h-4 px-1.5 text-xs',
-      md: 'h-5 px-1.5 text-xs',
-      lg: 'h-6 px-2 text-sm tracking-[0.02em]',
+      sm: 'min-h-4 px-1.5 text-xs',
+      md: 'min-h-5 px-1.5 text-xs',
+      lg: 'min-h-6 px-2 text-sm tracking-[0.02em]',
     },
   },
   compoundVariants: THEMES.flatMap((theme) =>
@@ -101,6 +101,7 @@ export function Badge(props: BadgeProps): JSX.Element {
 
   return (
     <div
+      data-slot="badge"
       class={cn(
         badge({
           theme: local.theme,
@@ -120,7 +121,7 @@ export function Badge(props: BadgeProps): JSX.Element {
           {local.prefix}
         </div>
       </Show>
-      {local.children ?? local.label}
+      <span class="min-w-0">{local.children ?? local.label}</span>
       <Show when={local.suffix}>
         <div
           class={cn(

@@ -2,7 +2,7 @@ import { type JSX, type ParentComponent, splitProps } from 'solid-js'
 import { cn, tv, type VariantProps } from '../../lib/tv'
 
 export const card = tv({
-  base: 'flex flex-col rounded-6 border border-outline-gray-1 bg-surface-elevation-1 text-ink-gray-9',
+  base: 'flex flex-col rounded-5 border border-outline-gray-1 bg-surface-elevation-1 text-ink-gray-9',
   variants: {
     elevation: {
       none: '',
@@ -18,7 +18,7 @@ export const card = tv({
       lg: 'p-5',
     },
   },
-  defaultVariants: { elevation: 'base', padding: 'md' },
+  defaultVariants: { elevation: 'none', padding: 'sm' },
 })
 
 export interface CardProps extends VariantProps<typeof card> {
@@ -60,7 +60,7 @@ export const CardHeader: ParentComponent<PartProps> = (props) => (
 export const CardTitle: ParentComponent<PartProps> = (props) => (
   <h3
     data-slot="card-title"
-    class={cn('text-lg-medium text-ink-gray-9', props.class)}
+    class={cn('text-section text-ink-gray-9', props.class)}
   >
     {props.children}
   </h3>

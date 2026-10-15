@@ -19,7 +19,7 @@ is what `aria-pressed` (Zag's `data-state`) communicates.
 | prop | type | default | notes |
 | --- | --- | --- | --- |
 | `variant` | `'subtle' \| 'outline' \| 'ghost'` | `'subtle'` | the track's shape; set once, not per cell |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'sm'` | |
+| `size` | `'sm' \| 'md' \| 'lg'` | `sm` | |
 | `value` | `string[]` | — | controlled |
 | `defaultValue` | `string[]` | — | uncontrolled |
 | `onValueChange` | `(value: string[]) => void` | — | |

@@ -9,6 +9,26 @@ const ITEMS = [
 ]
 
 describe('RadioGroup', () => {
+  it('connects the shared label, supporting text and invalid state', () => {
+    const { getByRole, getByText } = render(() => (
+      <RadioGroup
+        items={ITEMS}
+        label="Preference"
+        description="Choose your preference."
+        error="A preference is required."
+        required
+      />
+    ))
+    const control = getByRole('radiogroup', { name: /Preference/ })
+    expect(control).toHaveAttribute('aria-invalid', 'true')
+    expect(control.getAttribute('aria-describedby')).toContain(
+      getByText('Choose your preference.').id,
+    )
+    expect(control.getAttribute('aria-describedby')).toContain(
+      getByRole('alert').id,
+    )
+  })
+
   it('renders one radio per item and checks the default', () => {
     const { getAllByRole } = render(() => (
       <RadioGroup items={ITEMS} defaultValue="b" />

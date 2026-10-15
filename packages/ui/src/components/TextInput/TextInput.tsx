@@ -1,4 +1,5 @@
 import { type JSX, Show, splitProps } from 'solid-js'
+import { fieldSizes } from '../../lib/control-styles'
 import { Field, useField } from '../../lib/field'
 import { cn } from '../../lib/tv'
 
@@ -13,6 +14,7 @@ export interface TextInputProps {
   id?: string
   disabled?: boolean
   readonly?: boolean
+  /** @default sm */
   size?: InputSize
   variant?: InputVariant
   class?: string
@@ -26,13 +28,6 @@ export interface TextInputProps {
   onInput?: JSX.EventHandlerUnion<HTMLInputElement, InputEvent>
   onChange?: JSX.EventHandlerUnion<HTMLInputElement, Event>
   onKeyDown?: JSX.EventHandlerUnion<HTMLInputElement, KeyboardEvent>
-}
-
-const SIZE: Record<InputSize, string> = {
-  xs: 'h-6 rounded-3 text-xs',
-  sm: 'h-7 rounded-4 text-base',
-  md: 'h-8 rounded-4 text-base',
-  lg: 'h-10 rounded-5 text-lg',
 }
 
 const PAD: Record<InputSize, [string, string, string]> = {
@@ -84,20 +79,28 @@ function TextInputControl(props: ControlProps): JSX.Element {
   ])
   const field = useField()
   const size = () => local.size ?? 'sm'
-  const pad = () => PAD[size()][local.prefix ? 1 : local.suffix ? 2 : 0]
+  const pad = () =>
+    cn(
+      PAD[size()][local.prefix ? 1 : 0],
+      local.suffix && PAD[size()][2].split(' ')[1],
+    )
 
   const input = (
     <input
       {...rest}
+      data-slot="text-input"
+      data-size={size()}
+      data-variant={local.variant ?? 'outline'}
+      data-disabled={local.disabled ? '' : undefined}
       id={local.id ?? field?.controlId()}
       type={local.type ?? 'text'}
       value={local.value}
       disabled={local.disabled}
       class={cn(
-        'w-full leading-tighter transition-colors outline-none focus:ring-0',
-        SIZE[size()],
+        'w-full leading-tighter transition-colors outline-none focus-visible:focus-ring-blue aria-[invalid=true]:border-outline-red-6',
+        fieldSizes[size()],
         pad(),
-        VARIANT[local.variant ?? 'subtle'],
+        VARIANT[local.variant ?? 'outline'],
         local.disabled ? 'text-ink-gray-6' : 'text-ink-gray-8',
         local.disabled &&
           'border bg-surface-gray-1 placeholder:text-ink-gray-3 hover:shadow-none',
@@ -142,8 +145,7 @@ function TextInputControl(props: ControlProps): JSX.Element {
 }
 
 /**
- * A single-line text input. `subtle` (the default) is the filled look; switch
- * to `outline` for a bordered input on a busy surface. When any labelling prop
+ * A single-line text input. `outline` is the default bordered surface; `subtle` is the filled look. When any labelling prop
  * is present it renders the shared `Field`, so `label`/`description`/`error`/
  * `required` wire themselves (P5).
  */
@@ -154,21 +156,16 @@ export function TextInput(props: TextInputProps): JSX.Element {
     'error',
     'required',
   ])
-  const hasLabeling = () =>
-    Boolean(local.label || local.description || local.error || local.required)
-
   return (
-    <Show when={hasLabeling()} fallback={<TextInputControl {...props} />}>
-      <Field
-        id={props.id}
-        label={local.label}
-        description={local.description}
-        error={local.error}
-        required={local.required}
-        disabled={props.disabled}
-      >
-        <TextInputControl {...props} />
-      </Field>
-    </Show>
+    <Field
+      id={props.id}
+      label={local.label}
+      description={local.description}
+      error={local.error}
+      required={local.required}
+      disabled={props.disabled}
+    >
+      <TextInputControl {...props} />
+    </Field>
   )
 }

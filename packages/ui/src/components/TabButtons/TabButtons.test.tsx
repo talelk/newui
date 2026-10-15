@@ -36,6 +36,27 @@ describe('TabButtons', () => {
     expect(tabs[1]?.getAttribute('data-state')).toBe('active')
   })
 
+  it('uses one tab stop and skips disabled options with keyboard navigation', async () => {
+    const { getByRole } = render(() => (
+      <TabButtons
+        options={[
+          ...OPTIONS,
+          { label: 'Disabled', value: 'disabled', disabled: true },
+          { label: 'Calendar', value: 'calendar' },
+        ]}
+      />
+    ))
+    const list = getByRole('tab', { name: 'List' })
+    list.focus()
+    await userEvent.keyboard('{End}')
+    expect(getByRole('tab', { name: 'Calendar' })).toHaveFocus()
+    await userEvent.keyboard('{ArrowLeft}')
+    expect(getByRole('tab', { name: 'Board' })).toHaveFocus()
+    expect(list.tabIndex).toBe(-1)
+    await userEvent.keyboard('{Home}')
+    expect(list).toHaveFocus()
+  })
+
   it('sets a vertical orientation', () => {
     const { getByRole } = render(() => (
       <TabButtons options={OPTIONS} vertical />

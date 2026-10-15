@@ -4,6 +4,29 @@ import { describe, expect, it, vi } from 'vitest'
 import { NumberInput } from './NumberInput'
 
 describe('NumberInput', () => {
+  it('connects its Field label, help and error to the spinbutton', () => {
+    const { getByRole, getByText } = render(() => (
+      <NumberInput
+        label="Seats"
+        description="Seats in this workspace."
+        error="Choose at least one seat."
+        required
+        defaultValue="0"
+      />
+    ))
+    const input = getByRole('spinbutton', { name: /Seats/ })
+    expect(input).toHaveAttribute('aria-invalid', 'true')
+    expect(getByRole('button', { name: 'Increment' })).toHaveAttribute(
+      'aria-controls',
+      input.id,
+    )
+    expect(input.getAttribute('aria-describedby')).toContain(
+      getByText('Seats in this workspace.').id,
+    )
+    expect(input.getAttribute('aria-describedby')).toContain(
+      getByRole('alert').id,
+    )
+  })
   it('renders a spinbutton with the value', () => {
     const { getByRole } = render(() => <NumberInput defaultValue="5" />)
     expect((getByRole('spinbutton') as HTMLInputElement).value).toBe('5')

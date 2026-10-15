@@ -85,12 +85,13 @@ describe('MobileNav', () => {
     render(() => (
       <MobileNav aria-label="Primary">
         <MobileNavItem label="You">
-          <span data-testid="avatar" />
+          <span data-testid="avatar">RK</span>
         </MobileNavItem>
       </MobileNav>
     ))
 
     expect(screen.getByTestId('avatar')).toBeTruthy()
+    expect(screen.getByRole('button', { name: 'You' })).toBeTruthy()
   })
 
   it('exposes aria-current when set', () => {

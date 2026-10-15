@@ -9,6 +9,9 @@ export default function Demo(): JSX.Element {
         <Button variant="solid" theme="gray">
           Solid
         </Button>
+        <Button variant="solid" theme="blue">
+          Primary
+        </Button>
         <Button variant="subtle">Subtle</Button>
         <Button variant="outline">Outline</Button>
         <Button variant="ghost">Ghost</Button>

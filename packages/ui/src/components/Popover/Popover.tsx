@@ -1,10 +1,10 @@
 import * as zag from '@zag-js/popover'
-import { type JSX, type ParentComponent, Show } from 'solid-js'
+import { type JSX, type ParentComponent, Show, splitProps } from 'solid-js'
 import { createDisclosure } from '../../lib/disclosure'
 import { createId } from '../../lib/id'
 import { Portal } from '../../lib/portal'
 import { cn } from '../../lib/tv'
-import { createZagApi, createZagContext } from '../../lib/zag'
+import { createZagApi, createZagContext, mergeProps } from '../../lib/zag'
 
 type PopoverApi = ReturnType<typeof zag.connect>
 
@@ -25,8 +25,9 @@ const Root: ParentComponent<PopoverRootProps> = (props) => {
     onChange: (value) => props.onOpenChange?.(value),
   })
 
+  const machineId = createId('popover')
   const { api } = createZagApi<PopoverApi>(zag.machine, zag.connect, () => ({
-    id: createId('popover'),
+    id: machineId,
     open: open(),
     modal: props.modal,
     onOpenChange: (details: { open: boolean }) => setOpen(details.open),
@@ -40,15 +41,18 @@ interface PartProps {
   children?: JSX.Element
 }
 
-const Trigger: ParentComponent<PartProps> = (props) => {
+const Trigger: ParentComponent<
+  Omit<JSX.ButtonHTMLAttributes<HTMLButtonElement>, 'style'>
+> = (props) => {
+  const [local, rest] = splitProps(props, ['class', 'children'])
   const api = useApi()
   return (
     <button
-      {...api().getTriggerProps()}
+      {...mergeProps(api().getTriggerProps(), rest)}
       data-slot="popover-trigger"
-      class={props.class}
+      class={local.class}
     >
-      {props.children}
+      {local.children}
     </button>
   )
 }

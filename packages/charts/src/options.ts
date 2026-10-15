@@ -31,8 +31,8 @@ import { CHART_MARKS } from './types'
 export const OTHERS_KEY = '__others__'
 export const OTHERS_LABEL = 'Others'
 
-export const AXIS_LABEL_FONT_SIZE = 11
-export const DATA_LABEL_FONT_SIZE = 11
+export const AXIS_LABEL_FONT_SIZE = 12
+export const DATA_LABEL_FONT_SIZE = 12
 export const AXIS_LABEL_MARGIN = 8
 
 export const DEFAULT_LINE_WIDTH = 2
@@ -396,7 +396,10 @@ export function buildXAxis(
     name: config.xAxis.title ? formatLabel(config.xAxis.title) : undefined,
     nameLocation: 'end',
     nameGap: 8,
-    nameTextStyle: { color: tokens.label, fontSize: AXIS_LABEL_FONT_SIZE },
+    nameTextStyle: {
+      color: tokens.label,
+      fontSize: AXIS_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
+    },
     splitLine: { show: false },
     axisLine: { show: true, lineStyle: { color: tokens.grid, ...DOTTED_LINE } },
     axisTick: { show: false },
@@ -406,7 +409,7 @@ export function buildXAxis(
       ...(type === 'category' ? { showMaxLabel: true } : {}),
       margin: AXIS_LABEL_MARGIN,
       color: tokens.label,
-      fontSize: AXIS_LABEL_FONT_SIZE,
+      fontSize: AXIS_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
       formatter: xAxisLabelFormat(type, config.xAxis.format, timeGrain),
     },
   }
@@ -449,7 +452,10 @@ export function buildValueAxis(
     name: axisConfig?.title ? formatLabel(axisConfig.title) : undefined,
     nameLocation: 'end',
     nameGap: 8,
-    nameTextStyle: { color: tokens.label, fontSize: AXIS_LABEL_FONT_SIZE },
+    nameTextStyle: {
+      color: tokens.label,
+      fontSize: AXIS_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
+    },
     splitLine: {
       show: !secondary,
       lineStyle: { color: tokens.grid, ...DOTTED_LINE },
@@ -462,7 +468,7 @@ export function buildValueAxis(
       showMaxLabel: true,
       margin: AXIS_LABEL_MARGIN,
       color: tokens.label,
-      fontSize: AXIS_LABEL_FONT_SIZE,
+      fontSize: AXIS_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
       formatter: pinned
         ? (value: number) => formatPercent(value)
         : (axisConfig?.format ??
@@ -635,7 +641,7 @@ function buildBarSeries(entry: PlottedSeries, ctx: SeriesContext) {
       show: Boolean(series.showDataLabels),
       position,
       color: tokens.label,
-      fontSize: DATA_LABEL_FONT_SIZE,
+      fontSize: DATA_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
       formatter: (params: EchartsLabelParams) =>
         plottedLabel(pairValue(params.value, horizontal), ctx),
     },
@@ -680,7 +686,7 @@ function buildLineSeries(entry: PlottedSeries, ctx: SeriesContext) {
       show: Boolean(series.showDataLabels),
       position: 'top',
       color: tokens.label,
-      fontSize: DATA_LABEL_FONT_SIZE,
+      fontSize: DATA_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
       formatter: (params: EchartsLabelParams) =>
         plottedLabel(pairValue(params.value, false), ctx),
     },
@@ -958,7 +964,9 @@ export function buildDonutChartOption(
         label: {
           show: Boolean(config.showDataLabels),
           color: tokens.label,
-          fontSize: DATA_LABEL_FONT_SIZE,
+          fontSize: DATA_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
+          lineHeight: 16 * (tokens.fontScale ?? 1),
+          overflow: 'break',
           formatter: (params: { name?: string; percent?: number }) =>
             `${labels.get(params.name ?? '') ?? params.name} ${formatPercent(
               params.percent ?? 0,

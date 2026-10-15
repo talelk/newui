@@ -1,4 +1,4 @@
-import { type JSX, Show, splitProps } from 'solid-js'
+import { type JSX, splitProps } from 'solid-js'
 import { Field, useField } from '../../lib/field'
 import { cn } from '../../lib/tv'
 import type { InputSize, InputVariant } from '../TextInput'
@@ -11,6 +11,7 @@ export interface TextareaProps {
   id?: string
   disabled?: boolean
   readonly?: boolean
+  /** @default sm */
   size?: InputSize
   variant?: InputVariant
   class?: string
@@ -24,9 +25,9 @@ export interface TextareaProps {
 
 const SIZE: Record<InputSize, string> = {
   xs: 'rounded-3 text-xs',
-  sm: 'rounded-4 text-base',
-  md: 'rounded-4 text-base',
-  lg: 'rounded-5 text-lg',
+  sm: 'rounded-3 text-base',
+  md: 'rounded-3 text-base',
+  lg: 'rounded-3 text-lg',
 }
 
 const VARIANT: Record<InputVariant, string> = {
@@ -53,14 +54,17 @@ function TextareaControl(props: ControlProps): JSX.Element {
   const field = useField()
   return (
     <textarea
+      data-slot="textarea"
+      data-size={local.size ?? 'sm'}
+      data-variant={local.variant ?? 'outline'}
       {...rest}
       id={local.id ?? field?.controlId()}
       rows={props.rows ?? 3}
       disabled={local.disabled}
       class={cn(
-        'w-full resize-y px-2 py-1.5 leading-tighter transition-colors outline-none focus:ring-0',
+        'w-full resize-y px-2 py-1.5 leading-tighter transition-colors outline-none focus-visible:focus-ring-blue aria-[invalid=true]:border-outline-red-6',
         SIZE[local.size ?? 'sm'],
-        VARIANT[local.variant ?? 'subtle'],
+        VARIANT[local.variant ?? 'outline'],
         local.disabled ? 'text-ink-gray-6' : 'text-ink-gray-8',
         local.disabled && 'border bg-surface-gray-1 hover:shadow-none',
         local.class,
@@ -80,21 +84,16 @@ export function Textarea(props: TextareaProps): JSX.Element {
     'error',
     'required',
   ])
-  const hasLabeling = () =>
-    Boolean(local.label || local.description || local.error || local.required)
-
   return (
-    <Show when={hasLabeling()} fallback={<TextareaControl {...props} />}>
-      <Field
-        id={props.id}
-        label={local.label}
-        description={local.description}
-        error={local.error}
-        required={local.required}
-        disabled={props.disabled}
-      >
-        <TextareaControl {...props} />
-      </Field>
-    </Show>
+    <Field
+      id={props.id}
+      label={local.label}
+      description={local.description}
+      error={local.error}
+      required={local.required}
+      disabled={props.disabled}
+    >
+      <TextareaControl {...props} />
+    </Field>
   )
 }

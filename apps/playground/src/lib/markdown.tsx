@@ -183,13 +183,13 @@ export function Markdown(props: {
   return (
     <div class={cn('flex flex-col gap-4', props.class)}>
       <For each={blocks()}>
-        {(block) => (
+        {(block, index) => (
           <Switch>
             <Match when={block.kind === 'heading' && block}>
               {(heading) => (
                 <Switch>
                   <Match when={heading().level === 2}>
-                    <h2 class="mt-2 text-xl-medium text-ink-gray-9">
+                    <h2 class="mt-2 text-section text-ink-gray-9">
                       {renderInline(heading().text)}
                     </h2>
                   </Match>
@@ -225,13 +225,20 @@ export function Markdown(props: {
 
             <Match when={block.kind === 'table' && block}>
               {(table) => (
-                <div class="overflow-x-auto">
+                <section
+                  tabindex="0"
+                  aria-label={`Contract table ${index() + 1}`}
+                  class="overflow-x-auto"
+                >
                   <table class="w-full min-w-[32rem] border-collapse text-base">
                     <thead>
                       <tr>
                         <For each={table().head}>
                           {(cell) => (
-                            <th class="border-b border-outline-gray-2 px-3 py-2 text-start text-sm-medium text-ink-gray-8">
+                            <th
+                              scope="col"
+                              class="border-b border-outline-gray-2 px-3 py-2 text-start text-sm-medium text-ink-gray-8"
+                            >
                               {renderInline(cell)}
                             </th>
                           )}
@@ -254,7 +261,7 @@ export function Markdown(props: {
                       </For>
                     </tbody>
                   </table>
-                </div>
+                </section>
               )}
             </Match>
 

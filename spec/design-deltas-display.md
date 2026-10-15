@@ -1,5 +1,10 @@
 # Design deltas — display & layout
 
+> Historical Frappe comparison from before the analytics redesign. The current
+> [visual-system contract](visual-system.md) and component contracts supersede
+> the old density, radius and colour targets below. The original comparison is
+> retained as reference evidence.
+
 A visual/design parity audit of the **display and layout** components in
 `@newui/ui` against the frappe-ui reference (`frappe-ui-main/src/components/`).
 This is an analysis document: no component code was changed to produce it.

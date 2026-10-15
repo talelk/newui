@@ -1,0 +1,2998 @@
+[
+  {
+    "source": "references/solid-ui-main/apps/docs/src/components/dashboard/index.tsx",
+    "implementation": "apps/playground/src/pages/Analytics.tsx",
+    "documentation": "/examples/analytics",
+    "tests": [
+      "e2e/analytics.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "dbbffe8b9567c5fb662a43f2bdd118a1069a42118c4a1d395d13e63c4a8c0a2e",
+    "controls": [
+      {
+        "line": 46,
+        "element": "Button",
+        "source": "<Button>"
+      },
+      {
+        "line": 54,
+        "element": "TabsTrigger",
+        "source": "<TabsTrigger value=\"overview\">"
+      },
+      {
+        "line": 55,
+        "element": "TabsTrigger",
+        "source": "<TabsTrigger value=\"analytics\" disabled>"
+      },
+      {
+        "line": 58,
+        "element": "TabsTrigger",
+        "source": "<TabsTrigger value=\"reports\" disabled>"
+      },
+      {
+        "line": 61,
+        "element": "TabsTrigger",
+        "source": "<TabsTrigger value=\"notifications\" disabled>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/components/authentication/index.tsx",
+    "implementation": "apps/playground/src/pages/Authentication.tsx",
+    "documentation": "/examples/authentication",
+    "tests": [
+      "e2e/example-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "3d16bd498473b9810a0b7620b6b5e16fecaa88333fecba81101f5c6c7589db6d",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/components/cards/index.tsx",
+    "implementation": "apps/playground/src/pages/Cards.tsx",
+    "documentation": "/examples/cards",
+    "tests": [
+      "e2e/example-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "af38aaac46bfd51f9eb7c57e71383bddd1e558304d27873d8caf247a0950fbfe",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/components/mail/index.tsx",
+    "implementation": "apps/playground/src/pages/Mail.tsx",
+    "documentation": "/examples/mail",
+    "tests": [
+      "e2e/mail.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "7cd69fde5eb4726dc3e5a5c74157ce350ae1c198de9e94315731c266855de66a",
+    "controls": [
+      {
+        "line": 133,
+        "element": "TabsTrigger",
+        "source": "<TabsTrigger value=\"all\" class=\"text-zinc-600 dark:text-zinc-200\">"
+      },
+      {
+        "line": 136,
+        "element": "TabsTrigger",
+        "source": "<TabsTrigger value=\"unread\" class=\"text-zinc-600 dark:text-zinc-200\">"
+      },
+      {
+        "line": 158,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput class=\"pl-8\" placeholder=\"Search\" type=\"text\" />"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/components/tasks/index.tsx",
+    "implementation": "apps/playground/src/pages/Tasks.tsx",
+    "documentation": "/examples/tasks",
+    "tests": [
+      "e2e/tasks.spec.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/TasksDesktop.vue",
+    "implementation": "apps/playground/src/pages/Tasks.tsx",
+    "documentation": "/examples/tasks",
+    "tests": [
+      "e2e/tasks.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "f2376711cb214a6019eeae4dcf1021c043c28f6cb5712303f01057df5647e6a2",
+    "controls": [
+      {
+        "line": 838,
+        "element": "SidebarItem",
+        "source": "<SidebarItem>"
+      },
+      {
+        "line": 847,
+        "element": "SidebarItem",
+        "source": "<SidebarItem\n                :active=\"activeView === MY_TASKS\"\n                @click=\"openView(MY_TASKS)\"\n              >"
+      },
+      {
+        "line": 856,
+        "element": "SidebarItem",
+        "source": "<SidebarItem>"
+      },
+      {
+        "line": 866,
+        "element": "Button",
+        "source": "<Button\n                variant=\"ghost\"\n                size=\"sm\"\n                icon=\"lucide-plus text-ink-gray-5\"\n                label=\"New project\"\n              />"
+      },
+      {
+        "line": 874,
+        "element": "SidebarItem",
+        "source": "<SidebarItem\n                v-for=\"project in projects\"\n                :key=\"project.name\"\n                :active=\"activeView === project.name\"\n                @click=\"openView(project.name)\"\n              >"
+      },
+      {
+        "line": 906,
+        "element": "Button",
+        "source": "<Button variant=\"solid\" label=\"Add task\" icon-left=\"lucide-plus\" />"
+      },
+      {
+        "line": 984,
+        "element": "Button",
+        "source": "<Button\n              v-if=\"activeFilterCount\"\n              variant=\"ghost\"\n              label=\"Clear\"\n              icon-left=\"lucide-x\"\n              @click=\"clearFilters\"\n            />"
+      },
+      {
+        "line": 997,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon-left=\"lucide-layers\">"
+      },
+      {
+        "line": 1002,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon-left=\"lucide-arrow-up-down\">"
+      },
+      {
+        "line": 1011,
+        "element": "button",
+        "source": "<button\n                class=\"group flex w-full items-baseline rounded-1 bg-surface-sidebar px-2.5 py-2 text-base transition hover:bg-surface-gray-2\"\n                @click=\"toggleGroup(group.key)\"\n              >"
+      },
+      {
+        "line": 1049,
+        "element": "button",
+        "source": "<button\n                      type=\"button\"\n                      class=\"absolute inset-0 sm:rounded-[10px]\"\n                      :aria-label=\"`Open ${task.title}`\"\n                      @click=\"selectedTaskId = task.id\"\n                    />"
+      },
+      {
+        "line": 1058,
+        "element": "button",
+        "source": "<button\n                            class=\"flex rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-outline-gray-3\"\n                          >"
+      },
+      {
+        "line": 1232,
+        "element": "Button",
+        "source": "<Button\n                        variant=\"solid\"\n                        label=\"Comment\"\n                        :disabled=\"!newComment.trim()\"\n                        @click=\"addComment\"\n                      />"
+      },
+      {
+        "line": 1265,
+        "element": "MultiSelect",
+        "source": "<MultiSelect\n                v-model=\"selectedTask.assignees\"\n                :options=\"assigneeOptions\"\n                placeholder=\"Assign users\"\n              >"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/TasksMobile.vue",
+    "implementation": "apps/playground/src/pages/Tasks.tsx",
+    "documentation": "/examples/tasks",
+    "tests": [
+      "e2e/tasks.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "c210a4f466be9b00a78fe2266955485b9d465814e635cbb0f2ceb92c5f44d954",
+    "controls": [
+      {
+        "line": 314,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-plus\" label=\"New task\" />"
+      },
+      {
+        "line": 413,
+        "element": "Button",
+        "source": "<Button\n            variant=\"ghost\"\n            icon=\"lucide-chevron-left\"\n            label=\"Back to tasks\"\n            @click=\"selectedTaskId = null\"\n          />"
+      },
+      {
+        "line": 434,
+        "element": "Button",
+        "source": "<Button>"
+      },
+      {
+        "line": 445,
+        "element": "Button",
+        "source": "<Button>"
+      },
+      {
+        "line": 458,
+        "element": "Button",
+        "source": "<Button v-if=\"selectedTask.due\" icon-left=\"lucide-calendar\">"
+      },
+      {
+        "line": 461,
+        "element": "Button",
+        "source": "<Button :icon-left=\"projectIcon[selectedTask.project]\">"
+      },
+      {
+        "line": 464,
+        "element": "Button",
+        "source": "<Button>"
+      },
+      {
+        "line": 537,
+        "element": "Button",
+        "source": "<Button\n                variant=\"solid\"\n                label=\"Comment\"\n                :disabled=\"!newComment.trim()\"\n                @click=\"addComment\"\n              />"
+      },
+      {
+        "line": 551,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Inbox\"\n          icon=\"lucide-inbox\"\n          :active=\"tab === 'inbox'\"\n          @click=\"tab = 'inbox'\"\n        />"
+      },
+      {
+        "line": 557,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Tasks\"\n          icon=\"lucide-list-todo\"\n          :active=\"tab === 'tasks'\"\n          @click=\"tab = 'tasks'\"\n        />"
+      },
+      {
+        "line": 563,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Projects\"\n          icon=\"lucide-folder-kanban\"\n          :active=\"tab === 'projects'\"\n          @click=\"tab = 'projects'\"\n        />"
+      },
+      {
+        "line": 569,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem label=\"You\" :active=\"tab === 'you'\" @click=\"tab = 'you'\">"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/MailDesktop.vue",
+    "implementation": "apps/playground/src/pages/Mail.tsx",
+    "documentation": "/examples/mail",
+    "tests": [
+      "e2e/mail.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "e11f5916331f7f7111fb46b15c306814a3d82ed64e9565315943700cb9b2b78a",
+    "controls": [
+      {
+        "line": 489,
+        "element": "SidebarItem",
+        "source": "<SidebarItem>"
+      },
+      {
+        "line": 499,
+        "element": "SidebarItem",
+        "source": "<SidebarItem\n                v-for=\"box in mailboxes\"\n                :key=\"box.label\"\n                :active=\"activeMailbox === box.label\"\n                @click=\"activeMailbox = box.label\"\n              >"
+      },
+      {
+        "line": 523,
+        "element": "SidebarItem",
+        "source": "<SidebarItem v-for=\"label in labels\" :key=\"label\">"
+      },
+      {
+        "line": 557,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-pen-line\" label=\"Compose\" />"
+      },
+      {
+        "line": 565,
+        "element": "Button",
+        "source": "<Button\n              variant=\"ghost\"\n              :icon=\"showList ? 'lucide-panel-left-close' : 'lucide-panel-left'\"\n              label=\"Toggle list\"\n              @click=\"showList = !showList\"\n            />"
+      },
+      {
+        "line": 576,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-archive\" label=\"Archive\" />"
+      },
+      {
+        "line": 577,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-alarm-clock\" label=\"Snooze\" />"
+      },
+      {
+        "line": 578,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-trash-2\" label=\"Delete\" />"
+      },
+      {
+        "line": 579,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-mail\" label=\"Mark as unread\" />"
+      },
+      {
+        "line": 581,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-ellipsis\" label=\"More\" />"
+      },
+      {
+        "line": 718,
+        "element": "Button",
+        "source": "<Button variant=\"solid\" label=\"Reply\" icon-left=\"lucide-reply\" />"
+      },
+      {
+        "line": 719,
+        "element": "Button",
+        "source": "<Button\n              variant=\"ghost\"\n              label=\"Reply all\"\n              icon-left=\"lucide-reply-all\"\n            />"
+      },
+      {
+        "line": 724,
+        "element": "Button",
+        "source": "<Button\n              variant=\"ghost\"\n              label=\"Forward\"\n              icon-left=\"lucide-forward\"\n            />"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/MailMobile.vue",
+    "implementation": "apps/playground/src/pages/Mail.tsx",
+    "documentation": "/examples/mail",
+    "tests": [
+      "e2e/mail.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "8f7ceac3b4b75118c135d0600369cbb3e5e9ba616aa694c0387967c777665f4d",
+    "controls": [
+      {
+        "line": 499,
+        "element": "Button",
+        "source": "<Button\n            variant=\"ghost\"\n            icon=\"lucide-panel-left\"\n            label=\"Mailboxes\"\n            @click=\"showMailboxes = true\"\n          />"
+      },
+      {
+        "line": 507,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-pen-line\" label=\"Compose\" />"
+      },
+      {
+        "line": 571,
+        "element": "Button",
+        "source": "<Button\n            variant=\"ghost\"\n            icon=\"lucide-chevron-left\"\n            :label=\"activeMailbox\"\n            @click=\"screen = 'list'\"\n          />"
+      },
+      {
+        "line": 580,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-ellipsis\" label=\"More\" />"
+      },
+      {
+        "line": 628,
+        "element": "button",
+        "source": "<button\n          v-for=\"box in mailboxes\"\n          :key=\"box.label\"\n          class=\"flex w-full items-center gap-2 rounded-6 px-3 py-2.5 text-left transition\"\n          :class=\"\n            box.label === activeMailbox\n              ? 'bg-surface-gray-3'\n              : 'hover:bg-surface-gray-2'\n          \"\n          @click=\"openMailbox(box.label)\"\n        >"
+      },
+      {
+        "line": 653,
+        "element": "button",
+        "source": "<button\n          v-for=\"label in labels\"\n          :key=\"label\"\n          class=\"flex w-full items-center gap-2 rounded-6 px-3 py-2.5 text-left transition\"\n          :class=\"\n            label === activeMailbox\n              ? 'bg-surface-gray-3'\n              : 'hover:bg-surface-gray-2'\n          \"\n          @click=\"openMailbox(label)\"\n        >"
+      },
+      {
+        "line": 685,
+        "element": "Button",
+        "source": "<Button variant=\"solid\" label=\"Reply\" icon-left=\"lucide-reply\" />"
+      },
+      {
+        "line": 686,
+        "element": "Button",
+        "source": "<Button\n          variant=\"ghost\"\n          label=\"Reply all\"\n          icon-left=\"lucide-reply-all\"\n        />"
+      },
+      {
+        "line": 691,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" label=\"Forward\" icon-left=\"lucide-forward\" />"
+      },
+      {
+        "line": 695,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Mail\"\n          icon=\"lucide-inbox\"\n          :active=\"navTab === 'mail'\"\n          @click=\"goToMail\"\n        />"
+      },
+      {
+        "line": 701,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Search\"\n          icon=\"lucide-search\"\n          :active=\"navTab === 'search'\"\n          @click=\"navTab = 'search'\"\n        />"
+      },
+      {
+        "line": 707,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Starred\"\n          icon=\"lucide-star\"\n          :active=\"navTab === 'starred'\"\n          @click=\"navTab = 'starred'\"\n        />"
+      },
+      {
+        "line": 713,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"You\"\n          :active=\"navTab === 'you'\"\n          @click=\"navTab = 'you'\"\n        >"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/FilesDesktop.vue",
+    "implementation": "apps/playground/src/pages/Files.tsx",
+    "documentation": "/examples/files",
+    "tests": [
+      "e2e/business-recipes.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "1326f0339545af174b3acbca16ca6a2b66fbbfc6db11f3fa302886c47cef555e",
+    "controls": [
+      {
+        "line": 550,
+        "element": "SidebarItem",
+        "source": "<SidebarItem\n                v-for=\"item in nav\"\n                :key=\"item.label\"\n                :active=\"activeNav === item.label\"\n                @click=\"activeNav = item.label\"\n              >"
+      },
+      {
+        "line": 576,
+        "element": "Button",
+        "source": "<Button label=\"New folder\" icon-left=\"lucide-folder-plus\" />"
+      },
+      {
+        "line": 577,
+        "element": "Button",
+        "source": "<Button variant=\"solid\" label=\"Upload\" icon-left=\"lucide-upload\" />"
+      },
+      {
+        "line": 583,
+        "element": "TextInput",
+        "source": "<TextInput\n            v-model=\"searchQuery\"\n            type=\"text\"\n            placeholder=\"Search files\"\n            class=\"w-64\"\n          >"
+      },
+      {
+        "line": 664,
+        "element": "button",
+        "source": "<button\n                  type=\"button\"\n                  class=\"absolute inset-0 sm:rounded-[10px]\"\n                  :aria-label=\"`Open ${item.name}`\"\n                  @click=\"onRowClick(item)\"\n                />"
+      },
+      {
+        "line": 711,
+        "element": "Button",
+        "source": "<Button\n                    class=\"relative\"\n                    variant=\"ghost\"\n                    icon=\"lucide-ellipsis\"\n                    :label=\"\n                      item.type === 'folder' ? 'Folder actions' : 'File actions'\n                    \"\n                  />"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/FilesMobile.vue",
+    "implementation": "apps/playground/src/pages/Files.tsx",
+    "documentation": "/examples/files",
+    "tests": [
+      "e2e/business-recipes.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "364f1f99b7a1fb002e7ef1b83356918ac5656afc2079c0adeb34b81efd396f55",
+    "controls": [
+      {
+        "line": 546,
+        "element": "Button",
+        "source": "<Button\n          v-if=\"currentFolder\"\n          variant=\"ghost\"\n          icon=\"lucide-chevron-left\"\n          :label=\"backLabel\"\n          @click=\"goBack\"\n        />"
+      },
+      {
+        "line": 553,
+        "element": "Button",
+        "source": "<Button\n          v-else\n          variant=\"ghost\"\n          icon=\"lucide-panel-left\"\n          label=\"Menu\"\n          @click=\"showNav = true\"\n        />"
+      },
+      {
+        "line": 563,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-plus\" label=\"New\" />"
+      },
+      {
+        "line": 572,
+        "element": "TextInput",
+        "source": "<TextInput\n        v-model=\"searchQuery\"\n        type=\"text\"\n        placeholder=\"Search files\"\n        class=\"flex-1\"\n      >"
+      },
+      {
+        "line": 618,
+        "element": "button",
+        "source": "<button\n              type=\"button\"\n              class=\"absolute inset-0\"\n              :aria-label=\"`Open ${item.name}`\"\n              @click=\"onRowClick(item)\"\n            />"
+      },
+      {
+        "line": 642,
+        "element": "Button",
+        "source": "<Button\n              class=\"relative\"\n              variant=\"ghost\"\n              icon=\"lucide-ellipsis\"\n              :label=\"\n                item.type === 'folder' ? 'Folder actions' : 'File actions'\n              \"\n              @click=\"openActions(item)\"\n            />"
+      },
+      {
+        "line": 681,
+        "element": "button",
+        "source": "<button\n          v-for=\"item in nav\"\n          :key=\"item.label\"\n          class=\"flex w-full items-center gap-2 rounded-6 px-3 py-2.5 text-left transition\"\n          :class=\"\n            item.label === activeNav\n              ? 'bg-surface-gray-3'\n              : 'hover:bg-surface-gray-2'\n          \"\n          @click=\"selectNav(item.label)\"\n        >"
+      },
+      {
+        "line": 713,
+        "element": "button",
+        "source": "<button\n          v-for=\"action in activeItemActions\"\n          :key=\"action.label\"\n          class=\"flex w-full items-center gap-2 rounded-6 px-3 py-2.5 text-left transition hover:bg-surface-gray-2\"\n          @click=\"runAction(action)\"\n        >"
+      },
+      {
+        "line": 733,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Files\"\n          icon=\"lucide-folder\"\n          :active=\"navTab === 'files'\"\n          @click=\"goHome\"\n        />"
+      },
+      {
+        "line": 739,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Shared\"\n          icon=\"lucide-users\"\n          :active=\"navTab === 'shared'\"\n          @click=\"navTab = 'shared'\"\n        />"
+      },
+      {
+        "line": 745,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Search\"\n          icon=\"lucide-search\"\n          :active=\"navTab === 'search'\"\n          @click=\"navTab = 'search'\"\n        />"
+      },
+      {
+        "line": 751,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"You\"\n          :active=\"navTab === 'you'\"\n          @click=\"navTab = 'you'\"\n        >"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/DealsDesktop.vue",
+    "implementation": "apps/playground/src/pages/Deals.tsx",
+    "documentation": "/examples/deals",
+    "tests": [
+      "e2e/business-recipes.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "8a88f94fdd645ebbbd05f261507c16a275eb70ce0f3d44826233d8bd82c50357",
+    "controls": [
+      {
+        "line": 455,
+        "element": "SidebarItem",
+        "source": "<SidebarItem\n                v-for=\"item in nav\"\n                :key=\"item.label\"\n                :active=\"activeNav === item.label\"\n                @click=\"activeNav = item.label\"\n              >"
+      },
+      {
+        "line": 479,
+        "element": "SidebarItem",
+        "source": "<SidebarItem>"
+      },
+      {
+        "line": 485,
+        "element": "SidebarItem",
+        "source": "<SidebarItem>"
+      },
+      {
+        "line": 510,
+        "element": "Button",
+        "source": "<Button label=\"Filter\" icon-left=\"lucide-list-filter\" />"
+      },
+      {
+        "line": 511,
+        "element": "Button",
+        "source": "<Button label=\"Sort\" icon-left=\"lucide-arrow-down-up\" />"
+      },
+      {
+        "line": 512,
+        "element": "Button",
+        "source": "<Button variant=\"solid\" label=\"New deal\" icon-left=\"lucide-plus\" />"
+      },
+      {
+        "line": 543,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-plus\" label=\"Add deal\" />"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/DealsMobile.vue",
+    "implementation": "apps/playground/src/pages/Deals.tsx",
+    "documentation": "/examples/deals",
+    "tests": [
+      "e2e/business-recipes.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "9ffa918c32452bee85d4452d00d9df3c109af17a4d67accfbc2e1c442055b7d1",
+    "controls": [
+      {
+        "line": 84,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-plus\" label=\"New deal\" />"
+      },
+      {
+        "line": 99,
+        "element": "Button",
+        "source": "<Button icon=\"lucide-list-filter\" label=\"Filter\" />"
+      },
+      {
+        "line": 100,
+        "element": "Button",
+        "source": "<Button icon=\"lucide-arrow-down-up\" label=\"Sort\" />"
+      },
+      {
+        "line": 127,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-plus\" label=\"Add deal\" />"
+      },
+      {
+        "line": 183,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Notifications\"\n          icon=\"lucide-inbox\"\n          :active=\"tab === 'notifications'\"\n          @click=\"tab = 'notifications'\"\n        />"
+      },
+      {
+        "line": 189,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Leads\"\n          icon=\"lucide-users\"\n          :active=\"tab === 'leads'\"\n          @click=\"tab = 'leads'\"\n        />"
+      },
+      {
+        "line": 195,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Deals\"\n          icon=\"lucide-handshake\"\n          :active=\"tab === 'deals'\"\n          @click=\"tab = 'deals'\"\n        />"
+      },
+      {
+        "line": 201,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Contacts\"\n          icon=\"lucide-contact\"\n          :active=\"tab === 'contacts'\"\n          @click=\"tab = 'contacts'\"\n        />"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/TicketsDesktop.vue",
+    "implementation": "apps/playground/src/pages/Tickets.tsx",
+    "documentation": "/examples/tickets",
+    "tests": [
+      "e2e/business-recipes.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "36d56bdd0e94cb49aa5af2d9bee2cea4310a08411a50ad9711e6333457baa0b4",
+    "controls": [
+      {
+        "line": 331,
+        "element": "SidebarItem",
+        "source": "<SidebarItem\n                v-for=\"item in nav\"\n                :key=\"item.label\"\n                :active=\"activeNav === item.label\"\n                @click=\"activeNav = item.label\"\n              >"
+      },
+      {
+        "line": 355,
+        "element": "SidebarItem",
+        "source": "<SidebarItem v-for=\"view in views\" :key=\"view\">"
+      },
+      {
+        "line": 379,
+        "element": "Button",
+        "source": "<Button label=\"Assign\" icon-left=\"lucide-user-plus\" />"
+      },
+      {
+        "line": 380,
+        "element": "Button",
+        "source": "<Button label=\"Close tickets\" icon-left=\"lucide-check\" />"
+      },
+      {
+        "line": 390,
+        "element": "Button",
+        "source": "<Button label=\"Filter\" icon-left=\"lucide-list-filter\" />"
+      },
+      {
+        "line": 391,
+        "element": "Button",
+        "source": "<Button\n              variant=\"solid\"\n              label=\"New ticket\"\n              icon-left=\"lucide-plus\"\n            />"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/TicketsMobile.vue",
+    "implementation": "apps/playground/src/pages/Tickets.tsx",
+    "documentation": "/examples/tickets",
+    "tests": [
+      "e2e/business-recipes.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "b0c064d8c015c273ba3f0bdc1c9e7ea69c5ab401a0a69492221c99bd1c0e98df",
+    "controls": [
+      {
+        "line": 211,
+        "element": "Button",
+        "source": "<Button\n          variant=\"ghost\"\n          icon=\"lucide-list-filter\"\n          label=\"Filter tickets\"\n        />"
+      },
+      {
+        "line": 310,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Tickets\"\n          icon=\"lucide-ticket\"\n          :active=\"tab === 'tickets'\"\n          @click=\"tab = 'tickets'\"\n        />"
+      },
+      {
+        "line": 316,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Knowledge base\"\n          icon=\"lucide-book-open\"\n          :active=\"tab === 'kb'\"\n          @click=\"tab = 'kb'\"\n        />"
+      },
+      {
+        "line": 322,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Notifications\"\n          icon=\"lucide-bell\"\n          :active=\"tab === 'notifications'\"\n          @click=\"tab = 'notifications'\"\n        />"
+      },
+      {
+        "line": 328,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem label=\"You\" :active=\"tab === 'you'\" @click=\"tab = 'you'\">"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/AccountingDesktop.vue",
+    "implementation": "apps/playground/src/pages/Accounting.tsx",
+    "documentation": "/examples/accounting",
+    "tests": [
+      "e2e/business-recipes.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "416366a94b6d32b7b3a0150e58f8812a8a79d5b286af971a94d309183b87d101",
+    "controls": [
+      {
+        "line": 386,
+        "element": "SidebarItem",
+        "source": "<SidebarItem\n                  v-for=\"item in group.items\"\n                  :key=\"item.key\"\n                  :active=\"item.key === activePage\"\n                  @click=\"activePage = item.key\"\n                >"
+      },
+      {
+        "line": 426,
+        "element": "Button",
+        "source": "<Button\n              variant=\"solid\"\n              label=\"Add transaction\"\n              icon-left=\"lucide-plus\"\n            />"
+      },
+      {
+        "line": 433,
+        "element": "Button",
+        "source": "<Button\n            v-else-if=\"activePage === 'expenses'\"\n            variant=\"solid\"\n            label=\"Add transaction\"\n            icon-left=\"lucide-plus\"\n          />"
+      },
+      {
+        "line": 447,
+        "element": "Button",
+        "source": "<Button\n              :label=\"selectMode ? 'Done' : 'Select'\"\n              :icon-left=\"selectMode ? 'lucide-check' : 'lucide-list-checks'\"\n              @click=\"toggleSelectMode\"\n            />"
+      },
+      {
+        "line": 452,
+        "element": "Button",
+        "source": "<Button\n              variant=\"solid\"\n              label=\"Add employee\"\n              icon-left=\"lucide-plus\"\n            />"
+      },
+      {
+        "line": 460,
+        "element": "Button",
+        "source": "<Button\n              variant=\"ghost\"\n              label=\"Compare\"\n              icon-left=\"lucide-git-compare\"\n            />"
+      },
+      {
+        "line": 465,
+        "element": "Button",
+        "source": "<Button\n              variant=\"solid\"\n              label=\"Export\"\n              icon-left=\"lucide-download\"\n            />"
+      },
+      {
+        "line": 514,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" label=\"View all\" />"
+      },
+      {
+        "line": 745,
+        "element": "Button",
+        "source": "<Button\n                v-for=\"preset in rangePresets\"\n                :key=\"preset.label\"\n                variant=\"ghost\"\n                size=\"sm\"\n                class=\"w-full !justify-start\"\n                :label=\"preset.label\"\n                @click=\"\n                  () =>"
+      },
+      {
+        "line": 768,
+        "element": "Button",
+        "source": "<Button\n            variant=\"ghost\"\n            label=\"Add filter\"\n            icon-left=\"lucide-filter\"\n          />"
+      },
+      {
+        "line": 839,
+        "element": "Button",
+        "source": "<Button\n          class=\"mt-4\"\n          variant=\"subtle\"\n          :label=\"`New ${activeMeta.label.toLowerCase()}`\"\n          icon-left=\"lucide-plus\"\n        />"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/AccountingMobile.vue",
+    "implementation": "apps/playground/src/pages/Accounting.tsx",
+    "documentation": "/examples/accounting",
+    "tests": [
+      "e2e/business-recipes.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "12cfdb3efe946e057e9cc0bd3d1b22a53de18e859e5c8fa993c0fcc41d24c036",
+    "controls": [
+      {
+        "line": 159,
+        "element": "Button",
+        "source": "<Button\n          v-if=\"section === 'payroll'\"\n          variant=\"ghost\"\n          :icon=\"selectMode ? 'lucide-check' : 'lucide-list-checks'\"\n          :label=\"selectMode ? 'Done' : 'Select'\"\n          @click=\"toggleSelectMode\"\n        />"
+      },
+      {
+        "line": 166,
+        "element": "Button",
+        "source": "<Button\n          v-else-if=\"section === 'reports'\"\n          variant=\"ghost\"\n          icon=\"lucide-git-compare\"\n          label=\"Compare\"\n        />"
+      },
+      {
+        "line": 172,
+        "element": "Button",
+        "source": "<Button v-else variant=\"ghost\" icon=\"lucide-plus\" label=\"Add\" />"
+      },
+      {
+        "line": 345,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          v-for=\"s in sections\"\n          :key=\"s.key\"\n          :label=\"s.label\"\n          :icon=\"s.icon\"\n          :active=\"section === s.key\"\n          @click=\"section = s.key\"\n        />"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/ComposeDesktop.vue",
+    "implementation": "apps/playground/src/pages/Compose.tsx",
+    "documentation": "/examples/compose",
+    "tests": [
+      "e2e/compose.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "29ccbda09d79424c477f8b5f463332dc28c791cb31e60cbde23cedcab4fd23bf",
+    "controls": [
+      {
+        "line": 173,
+        "element": "Button",
+        "source": "<Button\n                variant=\"ghost\"\n                icon=\"lucide-trash-2\"\n                label=\"Delete draft\"\n              />"
+      },
+      {
+        "line": 178,
+        "element": "Button",
+        "source": "<Button variant=\"solid\">"
+      },
+      {
+        "line": 186,
+        "element": "EditorFixedMenu",
+        "source": "<EditorFixedMenu :editor=\"editor\" :items=\"toolbar\" />"
+      },
+      {
+        "line": 192,
+        "element": "textarea",
+        "source": "<textarea\n              ref=\"titleTextarea\"\n              class=\"mt-1 w-full resize-none border-0 bg-transparent px-0 py-0.5 text-4xl-semibold text-ink-gray-8 placeholder-ink-gray-3 focus:ring-0\"\n              v-model=\"title\"\n              placeholder=\"Title\"\n              rows=\"1\"\n              wrap=\"soft\"\n              maxlength=\"140\"\n              @keydown.enter.prevent=\"editor.commands.focus()\"\n              @keydown.down.prevent=\"editor.commands.focus()\"\n            />"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/ComposeMobile.vue",
+    "implementation": "apps/playground/src/pages/Compose.tsx",
+    "documentation": "/examples/compose",
+    "tests": [
+      "e2e/compose.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "bb6a12430c68159e0c17a13fcfd7c9dddd4038e260d97065e07143eec7fe9068",
+    "controls": [
+      {
+        "line": 168,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\" icon=\"lucide-chevron-left\" label=\"Back\" />"
+      },
+      {
+        "line": 171,
+        "element": "Button",
+        "source": "<Button variant=\"solid\">"
+      },
+      {
+        "line": 179,
+        "element": "EditorFixedMenu",
+        "source": "<EditorFixedMenu :editor=\"editor\" :items=\"toolbar\" />"
+      },
+      {
+        "line": 184,
+        "element": "textarea",
+        "source": "<textarea\n            ref=\"titleTextarea\"\n            class=\"w-full resize-none border-0 bg-transparent px-0 py-0.5 text-3xl-semibold text-ink-gray-8 placeholder-ink-gray-3 focus:ring-0\"\n            v-model=\"title\"\n            placeholder=\"Title\"\n            rows=\"1\"\n            wrap=\"soft\"\n            maxlength=\"140\"\n            @keydown.enter.prevent=\"editor.commands.focus()\"\n            @keydown.down.prevent=\"editor.commands.focus()\"\n          />"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/DiscussionsDesktop.vue",
+    "implementation": "apps/playground/src/pages/Discussions.tsx",
+    "documentation": "/examples/discussions",
+    "tests": [
+      "e2e/discussions-settings.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "079cedede0b8da7185b53954af4cfd00ba74081b93a84ba865732413b97e4eb5",
+    "controls": [
+      {
+        "line": 510,
+        "element": "button",
+        "source": "<button\n            type=\"button\"\n            class=\"flex size-7 items-center justify-center rounded-[7px] transition hover:opacity-90 focus-visible:ring-0 focus-visible:focus-ring\"\n            aria-label=\"Home\"\n          >"
+      },
+      {
+        "line": 519,
+        "element": "SidebarRailItem",
+        "source": "<SidebarRailItem\n              v-for=\"c in communities\"\n              :key=\"c.id\"\n              :label=\"c.name\"\n              :active=\"activeCommunity === c.id\"\n              :badge=\"c.unread\"\n              badge-style=\"count\"\n              @click=\"activeCommunity = c.id\"\n            >"
+      },
+      {
+        "line": 541,
+        "element": "SidebarRailItem",
+        "source": "<SidebarRailItem label=\"Search\" variant=\"ghost\" icon=\"lucide-search\" />"
+      },
+      {
+        "line": 542,
+        "element": "SidebarRailItem",
+        "source": "<SidebarRailItem\n              label=\"Settings\"\n              variant=\"ghost\"\n              icon=\"lucide-settings\"\n              @click=\"showSettings = true\"\n            />"
+      },
+      {
+        "line": 553,
+        "element": "button",
+        "source": "<button\n                  type=\"button\"\n                  class=\"flex size-7 items-center justify-center rounded-full transition focus-visible:ring-0 focus-visible:focus-ring\"\n                  :class=\"open ? '' : 'hover:opacity-90'\"\n                  aria-label=\"Account\"\n                >"
+      },
+      {
+        "line": 598,
+        "element": "SidebarItem",
+        "source": "<SidebarItem>"
+      },
+      {
+        "line": 604,
+        "element": "SidebarItem",
+        "source": "<SidebarItem>"
+      },
+      {
+        "line": 615,
+        "element": "Button",
+        "source": "<Button\n                  variant=\"ghost\"\n                  size=\"sm\"\n                  icon=\"lucide-arrow-up-down text-ink-gray-5\"\n                  label=\"Sort spaces\"\n                />"
+      },
+      {
+        "line": 625,
+        "element": "SidebarItem",
+        "source": "<SidebarItem\n                v-for=\"space in spaces\"\n                :key=\"space.name\"\n                :active=\"space.name === activeSpace\"\n                @click=\"activeSpace = space.name\"\n              >"
+      },
+      {
+        "line": 654,
+        "element": "Button",
+        "source": "<Button\n              variant=\"ghost\"\n              icon=\"lucide-ellipsis\"\n              label=\"Space actions\"\n            />"
+      },
+      {
+        "line": 661,
+        "element": "Button",
+        "source": "<Button label=\"Add new\" icon-left=\"lucide-plus\" />"
+      },
+      {
+        "line": 750,
+        "element": "SettingsNavItem",
+        "source": "<SettingsNavItem value=\"profile\">"
+      },
+      {
+        "line": 761,
+        "element": "SettingsNavItem",
+        "source": "<SettingsNavItem value=\"preferences\">"
+      },
+      {
+        "line": 769,
+        "element": "SettingsNavItem",
+        "source": "<SettingsNavItem value=\"notifications\">"
+      },
+      {
+        "line": 777,
+        "element": "SettingsNavItem",
+        "source": "<SettingsNavItem value=\"communities\">"
+      },
+      {
+        "line": 783,
+        "element": "SettingsNavItem",
+        "source": "<SettingsNavItem value=\"emojis\">"
+      },
+      {
+        "line": 791,
+        "element": "SettingsNavItem",
+        "source": "<SettingsNavItem value=\"users\">"
+      },
+      {
+        "line": 823,
+        "element": "TextInput",
+        "source": "<TextInput\n                    label=\"First name\"\n                    class=\"w-full\"\n                    v-model=\"firstName\"\n                  />"
+      },
+      {
+        "line": 828,
+        "element": "TextInput",
+        "source": "<TextInput\n                    label=\"Last name\"\n                    class=\"w-full\"\n                    v-model=\"lastName\"\n                  />"
+      },
+      {
+        "line": 851,
+        "element": "Button",
+        "source": "<Button icon-left=\"lucide-user\">"
+      },
+      {
+        "line": 852,
+        "element": "Button",
+        "source": "<Button icon-left=\"lucide-layout-dashboard\"\n                        >"
+      },
+      {
+        "line": 861,
+        "element": "Button",
+        "source": "<Button>"
+      },
+      {
+        "line": 938,
+        "element": "Button",
+        "source": "<Button>"
+      },
+      {
+        "line": 1008,
+        "element": "Button",
+        "source": "<Button icon-left=\"lucide-plus\">"
+      },
+      {
+        "line": 1037,
+        "element": "Button",
+        "source": "<Button\n                    variant=\"ghost\"\n                    icon=\"lucide-ellipsis\"\n                    label=\"Community options\"\n                  />"
+      },
+      {
+        "line": 1054,
+        "element": "Button",
+        "source": "<Button icon-left=\"lucide-plus\">"
+      },
+      {
+        "line": 1073,
+        "element": "Button",
+        "source": "<Button icon-left=\"lucide-user-plus\">"
+      },
+      {
+        "line": 1110,
+        "element": "Button",
+        "source": "<Button\n                      variant=\"ghost\"\n                      icon=\"lucide-ellipsis\"\n                      label=\"Member options\"\n                    />"
+      }
+    ]
+  },
+  {
+    "source": "references/frappe-ui-main/docs/components/recipes/DiscussionsMobile.vue",
+    "implementation": "apps/playground/src/pages/Discussions.tsx",
+    "documentation": "/examples/discussions",
+    "tests": [
+      "e2e/discussions-settings.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "4bbb355889520a80cf68fa64f7b7058ad56de87735900d0a12ac0434dc14f127",
+    "controls": [
+      {
+        "line": 100,
+        "element": "Button",
+        "source": "<Button\n          variant=\"ghost\"\n          icon=\"lucide-panel-left\"\n          label=\"Spaces\"\n          @click=\"showSpaces = true\"\n        />"
+      },
+      {
+        "line": 108,
+        "element": "Button",
+        "source": "<Button\n          variant=\"ghost\"\n          icon=\"lucide-square-pen\"\n          label=\"New discussion\"\n        />"
+      },
+      {
+        "line": 262,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Home\"\n          icon=\"lucide-house\"\n          :active=\"tab === 'home'\"\n          @click=\"tab = 'home'\"\n        />"
+      },
+      {
+        "line": 268,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Notifications\"\n          icon=\"lucide-bell\"\n          :active=\"tab === 'notifications'\"\n          @click=\"tab = 'notifications'\"\n        />"
+      },
+      {
+        "line": 274,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem\n          label=\"Search\"\n          icon=\"lucide-search\"\n          :active=\"tab === 'search'\"\n          @click=\"tab = 'search'\"\n        />"
+      },
+      {
+        "line": 280,
+        "element": "MobileNavItem",
+        "source": "<MobileNavItem label=\"You\" :active=\"tab === 'you'\" @click=\"tab = 'you'\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/accordion-demo.tsx",
+    "implementation": "/components/accordion",
+    "documentation": "/examples/registry/accordion-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "b5e8a764c3f19cd3c81ebcf38573eb97b4c30cb260e84b4b9db11a0b1b671d03",
+    "controls": [
+      {
+        "line": 11,
+        "element": "AccordionItem",
+        "source": "<AccordionItem value=\"item-1\">"
+      },
+      {
+        "line": 12,
+        "element": "AccordionTrigger",
+        "source": "<AccordionTrigger>"
+      },
+      {
+        "line": 15,
+        "element": "AccordionItem",
+        "source": "<AccordionItem value=\"item-2\">"
+      },
+      {
+        "line": 16,
+        "element": "AccordionTrigger",
+        "source": "<AccordionTrigger>"
+      },
+      {
+        "line": 21,
+        "element": "AccordionItem",
+        "source": "<AccordionItem value=\"item-3\">"
+      },
+      {
+        "line": 22,
+        "element": "AccordionTrigger",
+        "source": "<AccordionTrigger>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/alert-demo.tsx",
+    "implementation": "/components/alert",
+    "documentation": "/examples/registry/alert-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "fc3aad786690386d4752805cbc3b2f4dd2a782aac870150cd26fbbb749478a1e",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/alert-dialog-demo.tsx",
+    "implementation": "/components/dialog",
+    "documentation": "/examples/registry/alert-dialog-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "e94e08e7843ecb88d4c9a7a9f2b2cee38593dc860df13394ac7cbb1d44cb1f6b",
+    "controls": [
+      {
+        "line": 13,
+        "element": "AlertDialogTrigger",
+        "source": "<AlertDialogTrigger as={Button} variant=\"outline\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/area-chart-demo.tsx",
+    "implementation": "/charts/area-chart",
+    "documentation": "/examples/registry/area-chart-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "13011665733e89d223f4a86928ccd3b6309b253f173897b5502209da7702b236",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/aspect-ratio-demo.tsx",
+    "implementation": "/examples/patterns/layout",
+    "documentation": "/examples/registry/aspect-ratio-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "c2dd7f6961f03094d8e3fecb57a69da3829c2255fef7069ab34f6dd6ca02d1ad",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/avatar-demo.tsx",
+    "implementation": "/components/avatar",
+    "documentation": "/examples/registry/avatar-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "2b7bafe05b9927df26cf310cd0d288dd28fd45f5990ef460bf06c7e0af89d84f",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/badge-delta-demo.tsx",
+    "implementation": "/examples/patterns/analytics-widgets",
+    "documentation": "/examples/registry/badge-delta-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "1ffc7fd1cb425a5e8d1a14ea9fa9c57def449f73d9e35aa8dddf6f68495a5860",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/badge-demo.tsx",
+    "implementation": "/components/badge",
+    "documentation": "/examples/registry/badge-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "efa90646ac1e2325657aeee4c91dc28aa6ca07e8f11a8c8b8e4077f81c3fb6ff",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/bar-chart-demo.tsx",
+    "implementation": "/charts/bar-chart",
+    "documentation": "/examples/registry/bar-chart-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "8b475b0fdcb9d48058aa25b741e9b10b0a49c405e32b9c54afb749fc2dec598c",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/bar-list-demo.tsx",
+    "implementation": "/examples/patterns/analytics-widgets",
+    "documentation": "/examples/registry/bar-list-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "c17f2a35dfcf4effdf1c3de6a93bedd178d766cab12763291b0d9d23e1ff84c2",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/breadcrumb-demo.tsx",
+    "implementation": "/components/breadcrumbs",
+    "documentation": "/examples/registry/breadcrumb-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "16351bbe341bb7bbd83673b87a53ab0da250183396a61772818349375156ad66",
+    "controls": [
+      {
+        "line": 14,
+        "element": "BreadcrumbItem",
+        "source": "<BreadcrumbItem>"
+      },
+      {
+        "line": 18,
+        "element": "BreadcrumbItem",
+        "source": "<BreadcrumbItem>"
+      },
+      {
+        "line": 22,
+        "element": "BreadcrumbItem",
+        "source": "<BreadcrumbItem>"
+      },
+      {
+        "line": 26,
+        "element": "BreadcrumbItem",
+        "source": "<BreadcrumbItem>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/button-demo.tsx",
+    "implementation": "/components/button",
+    "documentation": "/examples/registry/button-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "6b7686c2603b5d23d8c37776b1b3472b46f3db91d1283eda561ef37d35c68d99",
+    "controls": [
+      {
+        "line": 6,
+        "element": "Button",
+        "source": "<Button>"
+      },
+      {
+        "line": 7,
+        "element": "Button",
+        "source": "<Button variant=\"secondary\">"
+      },
+      {
+        "line": 8,
+        "element": "Button",
+        "source": "<Button variant=\"destructive\">"
+      },
+      {
+        "line": 9,
+        "element": "Button",
+        "source": "<Button variant=\"outline\">"
+      },
+      {
+        "line": 10,
+        "element": "Button",
+        "source": "<Button variant=\"ghost\">"
+      },
+      {
+        "line": 11,
+        "element": "Button",
+        "source": "<Button variant=\"link\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/calendar-demo.tsx",
+    "implementation": "/components/date-picker",
+    "documentation": "/examples/registry/calendar-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "3b20dd4654516733e265fb21842e191b35894e37a45c39a344f786c4736d0477",
+    "controls": [
+      {
+        "line": 31,
+        "element": "DatePickerPrevTrigger",
+        "source": "<DatePickerPrevTrigger />"
+      },
+      {
+        "line": 32,
+        "element": "DatePickerViewTrigger",
+        "source": "<DatePickerViewTrigger>"
+      },
+      {
+        "line": 35,
+        "element": "DatePickerNextTrigger",
+        "source": "<DatePickerNextTrigger />"
+      },
+      {
+        "line": 54,
+        "element": "DatePickerTableCellTrigger",
+        "source": "<DatePickerTableCellTrigger>"
+      },
+      {
+        "line": 72,
+        "element": "DatePickerPrevTrigger",
+        "source": "<DatePickerPrevTrigger />"
+      },
+      {
+        "line": 73,
+        "element": "DatePickerViewTrigger",
+        "source": "<DatePickerViewTrigger>"
+      },
+      {
+        "line": 76,
+        "element": "DatePickerNextTrigger",
+        "source": "<DatePickerNextTrigger />"
+      },
+      {
+        "line": 86,
+        "element": "DatePickerTableCellTrigger",
+        "source": "<DatePickerTableCellTrigger>"
+      },
+      {
+        "line": 106,
+        "element": "DatePickerPrevTrigger",
+        "source": "<DatePickerPrevTrigger />"
+      },
+      {
+        "line": 107,
+        "element": "DatePickerViewTrigger",
+        "source": "<DatePickerViewTrigger>"
+      },
+      {
+        "line": 110,
+        "element": "DatePickerNextTrigger",
+        "source": "<DatePickerNextTrigger />"
+      },
+      {
+        "line": 120,
+        "element": "DatePickerTableCellTrigger",
+        "source": "<DatePickerTableCellTrigger>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/callout-demo.tsx",
+    "implementation": "/examples/patterns/analytics-widgets",
+    "documentation": "/examples/registry/callout-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "946abe6514dd893dd7e1606f308b0f3b64eac8144f2d32fa2b2ee67034c12918",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/card-demo.tsx",
+    "implementation": "/components/card",
+    "documentation": "/examples/registry/card-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "c65dff2dff509834db4a70e51a59b189f33e0b22eb8f7e6d6884f5f2145c6db9",
+    "controls": [
+      {
+        "line": 65,
+        "element": "Button",
+        "source": "<Button class=\"w-full\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-api-demo.tsx",
+    "implementation": "/examples/patterns/carousel",
+    "documentation": "/examples/registry/carousel-api-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "2bfdb41b7a244ba39e7866603016e477dc2fb6bec1218c8e1e9379c4f3b75656",
+    "controls": [
+      {
+        "line": 39,
+        "element": "CarouselItem",
+        "source": "<CarouselItem>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-demo.tsx",
+    "implementation": "/examples/patterns/carousel",
+    "documentation": "/examples/registry/carousel-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "5eed91974a6a435b6d67d617519f8dcb483725fd2cdd8527f02cf365bdee6872",
+    "controls": [
+      {
+        "line": 18,
+        "element": "CarouselItem",
+        "source": "<CarouselItem>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-orientation-demo.tsx",
+    "implementation": "/examples/patterns/carousel",
+    "documentation": "/examples/registry/carousel-orientation-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "c733d9b589780c5d5b55b14e9f078886153e5f768e3b9953f692054c41d4cc49",
+    "controls": [
+      {
+        "line": 24,
+        "element": "CarouselItem",
+        "source": "<CarouselItem class=\"pt-1 md:basis-1/2\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-plugin-demo.tsx",
+    "implementation": "/examples/patterns/carousel",
+    "documentation": "/examples/registry/carousel-plugin-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "33c4dee98384520692d217628cb082ad37eb2fa149b21d11579a4315d1632c0d",
+    "controls": [
+      {
+        "line": 27,
+        "element": "CarouselItem",
+        "source": "<CarouselItem>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-size-demo.tsx",
+    "implementation": "/examples/patterns/carousel",
+    "documentation": "/examples/registry/carousel-size-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "8f31e1930e285e782cd33bc5c140f3a8d174b5d4ba0be391f066b1056d9f1dd6",
+    "controls": [
+      {
+        "line": 23,
+        "element": "CarouselItem",
+        "source": "<CarouselItem class=\"md:basis-1/2 lg:basis-1/3\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-spacing-demo.tsx",
+    "implementation": "/examples/patterns/carousel",
+    "documentation": "/examples/registry/carousel-spacing-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "55bb72778e447e119a96d148f3968d94d5b821dcb67d03b58307347af9f421b8",
+    "controls": [
+      {
+        "line": 18,
+        "element": "CarouselItem",
+        "source": "<CarouselItem class=\"pl-1 md:basis-1/2 lg:basis-1/3\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/checkbox-demo.tsx",
+    "implementation": "/components/checkbox",
+    "documentation": "/examples/registry/checkbox-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "19722f93e7dff8b5d262c5bb934a8125cd02850debc4ef2ce53ba016f5a46146",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/checkbox-indeterminate-demo.tsx",
+    "implementation": "/components/checkbox",
+    "documentation": "/examples/registry/checkbox-indeterminate-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "33d319cb5f5d1fbed4293dce0233c74292b2fb927fa38051e0ce6ebb570f8c4f",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/collapsible-demo.tsx",
+    "implementation": "/components/collapsible",
+    "documentation": "/examples/registry/collapsible-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "bc588a7532d7c47af77ca8c316626e08592da3daa196aa3ae54739c42afacee0",
+    "controls": [
+      {
+        "line": 7,
+        "element": "CollapsibleTrigger",
+        "source": "<CollapsibleTrigger class=\"flex w-full items-center justify-between rounded-md border p-3\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/combobox-demo.tsx",
+    "implementation": "/components/combobox",
+    "documentation": "/examples/registry/combobox-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "0faeae94f71fa7407965e8abffeaaaf80b61cdcc9b349bf5677207b892a4fc99",
+    "controls": [
+      {
+        "line": 55,
+        "element": "ComboboxItem",
+        "source": "<ComboboxItem item={props.item}>"
+      },
+      {
+        "line": 65,
+        "element": "ComboboxInput",
+        "source": "<ComboboxInput />"
+      },
+      {
+        "line": 66,
+        "element": "ComboboxTrigger",
+        "source": "<ComboboxTrigger />"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/command-demo.tsx",
+    "implementation": "/examples/patterns/command",
+    "documentation": "/examples/registry/command-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "317b95435972050107fa308de8607e07d771f83a7fd064a84f396a9395dc9aed",
+    "controls": [
+      {
+        "line": 23,
+        "element": "CommandInput",
+        "source": "<CommandInput placeholder=\"Type a command or search...\" />"
+      },
+      {
+        "line": 27,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      },
+      {
+        "line": 31,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      },
+      {
+        "line": 35,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      },
+      {
+        "line": 42,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      },
+      {
+        "line": 47,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      },
+      {
+        "line": 52,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/command-dialog-demo.tsx",
+    "implementation": "/examples/patterns/command",
+    "documentation": "/examples/registry/command-dialog-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "2d5f5ac4644322e6baf1ed094ba985deff9b914a57ed88fc918ec7573508ea17",
+    "controls": [
+      {
+        "line": 47,
+        "element": "CommandInput",
+        "source": "<CommandInput placeholder=\"Type a command or search...\" />"
+      },
+      {
+        "line": 51,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      },
+      {
+        "line": 55,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      },
+      {
+        "line": 59,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      },
+      {
+        "line": 66,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      },
+      {
+        "line": 71,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      },
+      {
+        "line": 76,
+        "element": "CommandItem",
+        "source": "<CommandItem>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/context-menu-demo.tsx",
+    "implementation": "/components/context-menu",
+    "documentation": "/examples/registry/context-menu-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "7aa60782ad288ae9cb3818896e10586e25e769324177a481d7536e8cf8bfa705",
+    "controls": [
+      {
+        "line": 26,
+        "element": "ContextMenu",
+        "source": "<ContextMenu>"
+      },
+      {
+        "line": 27,
+        "element": "ContextMenuTrigger",
+        "source": "<ContextMenuTrigger class=\"flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm\">"
+      },
+      {
+        "line": 32,
+        "element": "ContextMenuItem",
+        "source": "<ContextMenuItem>"
+      },
+      {
+        "line": 36,
+        "element": "ContextMenuItem",
+        "source": "<ContextMenuItem>"
+      },
+      {
+        "line": 40,
+        "element": "ContextMenuItem",
+        "source": "<ContextMenuItem disabled>"
+      },
+      {
+        "line": 45,
+        "element": "ContextMenuSubTrigger",
+        "source": "<ContextMenuSubTrigger>"
+      },
+      {
+        "line": 48,
+        "element": "ContextMenuItem",
+        "source": "<ContextMenuItem>"
+      },
+      {
+        "line": 49,
+        "element": "ContextMenuItem",
+        "source": "<ContextMenuItem>"
+      },
+      {
+        "line": 50,
+        "element": "ContextMenuItem",
+        "source": "<ContextMenuItem>"
+      },
+      {
+        "line": 52,
+        "element": "ContextMenuItem",
+        "source": "<ContextMenuItem>"
+      },
+      {
+        "line": 57,
+        "element": "ContextMenuCheckboxItem",
+        "source": "<ContextMenuCheckboxItem checked={showGitLog()} onChange={setShowGitLog}>"
+      },
+      {
+        "line": 60,
+        "element": "ContextMenuCheckboxItem",
+        "source": "<ContextMenuCheckboxItem checked={showHistory()} onChange={setShowHistory}>"
+      },
+      {
+        "line": 67,
+        "element": "ContextMenuRadioItem",
+        "source": "<ContextMenuRadioItem value=\"main\">"
+      },
+      {
+        "line": 68,
+        "element": "ContextMenuRadioItem",
+        "source": "<ContextMenuRadioItem value=\"develop\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/data-table-demo.tsx",
+    "implementation": "/examples/tasks",
+    "documentation": "/examples/registry/data-table-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "e6c0a967805848787db3295ae30f14170313325b643c95f10cdc32fb0c9f4451",
+    "controls": [
+      {
+        "line": 99,
+        "element": "Button",
+        "source": "<Button\n          variant=\"ghost\"\n          onClick={() =>"
+      },
+      {
+        "line": 129,
+        "element": "DropdownMenu",
+        "source": "<DropdownMenu placement=\"bottom-end\">"
+      },
+      {
+        "line": 130,
+        "element": "DropdownMenuTrigger",
+        "source": "<DropdownMenuTrigger as={Button<\"button\">"
+      },
+      {
+        "line": 136,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem onClick={() =>"
+      },
+      {
+        "line": 140,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem>"
+      },
+      {
+        "line": 141,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem>"
+      },
+      {
+        "line": 198,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput placeholder=\"Filter emails...\" class=\"max-w-sm\" />"
+      },
+      {
+        "line": 200,
+        "element": "DropdownMenu",
+        "source": "<DropdownMenu placement=\"bottom-end\">"
+      },
+      {
+        "line": 201,
+        "element": "DropdownMenuTrigger",
+        "source": "<DropdownMenuTrigger as={Button<\"button\">"
+      },
+      {
+        "line": 208,
+        "element": "DropdownMenuCheckboxItem",
+        "source": "<DropdownMenuCheckboxItem\n                    class=\"capitalize\"\n                    checked={column.getIsVisible()}\n                    onChange={(value) =>"
+      },
+      {
+        "line": 271,
+        "element": "Button",
+        "source": "<Button\n            variant=\"outline\"\n            size=\"sm\"\n            onClick={() =>"
+      },
+      {
+        "line": 279,
+        "element": "Button",
+        "source": "<Button\n            variant=\"outline\"\n            size=\"sm\"\n            onClick={() =>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/date-picker-demo.tsx",
+    "implementation": "/components/date-picker",
+    "documentation": "/examples/registry/date-picker-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "92399f0b62a918f9a1aabb37db689c34097237996abdcc9366b62f590acd8373",
+    "controls": [
+      {
+        "line": 46,
+        "element": "DatePickerInput",
+        "source": "<DatePickerInput placeholder=\"Pick a date\" />"
+      },
+      {
+        "line": 47,
+        "element": "DatePickerTrigger",
+        "source": "<DatePickerTrigger />"
+      },
+      {
+        "line": 57,
+        "element": "DatePickerPrevTrigger",
+        "source": "<DatePickerPrevTrigger />"
+      },
+      {
+        "line": 58,
+        "element": "DatePickerViewTrigger",
+        "source": "<DatePickerViewTrigger>"
+      },
+      {
+        "line": 61,
+        "element": "DatePickerNextTrigger",
+        "source": "<DatePickerNextTrigger />"
+      },
+      {
+        "line": 80,
+        "element": "DatePickerTableCellTrigger",
+        "source": "<DatePickerTableCellTrigger>"
+      },
+      {
+        "line": 100,
+        "element": "DatePickerPrevTrigger",
+        "source": "<DatePickerPrevTrigger />"
+      },
+      {
+        "line": 101,
+        "element": "DatePickerViewTrigger",
+        "source": "<DatePickerViewTrigger>"
+      },
+      {
+        "line": 104,
+        "element": "DatePickerNextTrigger",
+        "source": "<DatePickerNextTrigger />"
+      },
+      {
+        "line": 114,
+        "element": "DatePickerTableCellTrigger",
+        "source": "<DatePickerTableCellTrigger>"
+      },
+      {
+        "line": 134,
+        "element": "DatePickerPrevTrigger",
+        "source": "<DatePickerPrevTrigger />"
+      },
+      {
+        "line": 135,
+        "element": "DatePickerViewTrigger",
+        "source": "<DatePickerViewTrigger>"
+      },
+      {
+        "line": 138,
+        "element": "DatePickerNextTrigger",
+        "source": "<DatePickerNextTrigger />"
+      },
+      {
+        "line": 148,
+        "element": "DatePickerTableCellTrigger",
+        "source": "<DatePickerTableCellTrigger>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/date-range-demo.tsx",
+    "implementation": "/components/date-range-picker",
+    "documentation": "/examples/registry/date-range-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "082db5e3285c447989e9421769e28c8c661ffd9ed1090208ad28a7b0ff5bb7f1",
+    "controls": [
+      {
+        "line": 47,
+        "element": "DatePickerInput",
+        "source": "<DatePickerInput index={0} />"
+      },
+      {
+        "line": 48,
+        "element": "DatePickerInput",
+        "source": "<DatePickerInput index={1} />"
+      },
+      {
+        "line": 49,
+        "element": "DatePickerTrigger",
+        "source": "<DatePickerTrigger />"
+      },
+      {
+        "line": 61,
+        "element": "DatePickerPrevTrigger",
+        "source": "<DatePickerPrevTrigger />"
+      },
+      {
+        "line": 62,
+        "element": "DatePickerViewTrigger",
+        "source": "<DatePickerViewTrigger>"
+      },
+      {
+        "line": 65,
+        "element": "DatePickerNextTrigger",
+        "source": "<DatePickerNextTrigger />"
+      },
+      {
+        "line": 85,
+        "element": "DatePickerTableCellTrigger",
+        "source": "<DatePickerTableCellTrigger>"
+      },
+      {
+        "line": 116,
+        "element": "DatePickerTableCellTrigger",
+        "source": "<DatePickerTableCellTrigger>"
+      },
+      {
+        "line": 138,
+        "element": "DatePickerPrevTrigger",
+        "source": "<DatePickerPrevTrigger />"
+      },
+      {
+        "line": 139,
+        "element": "DatePickerViewTrigger",
+        "source": "<DatePickerViewTrigger>"
+      },
+      {
+        "line": 142,
+        "element": "DatePickerNextTrigger",
+        "source": "<DatePickerNextTrigger />"
+      },
+      {
+        "line": 157,
+        "element": "DatePickerTableCellTrigger",
+        "source": "<DatePickerTableCellTrigger>"
+      },
+      {
+        "line": 177,
+        "element": "DatePickerPrevTrigger",
+        "source": "<DatePickerPrevTrigger />"
+      },
+      {
+        "line": 178,
+        "element": "DatePickerViewTrigger",
+        "source": "<DatePickerViewTrigger>"
+      },
+      {
+        "line": 181,
+        "element": "DatePickerNextTrigger",
+        "source": "<DatePickerNextTrigger />"
+      },
+      {
+        "line": 195,
+        "element": "DatePickerTableCellTrigger",
+        "source": "<DatePickerTableCellTrigger>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/delta-bar-demo.tsx",
+    "implementation": "/examples/patterns/analytics-widgets",
+    "documentation": "/examples/registry/delta-bar-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "f94ea57933128e37a94995da5ea74dc630fda324c9eb603dda658f86fbac8aef",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/dialog-demo.tsx",
+    "implementation": "/components/dialog",
+    "documentation": "/examples/registry/dialog-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "4e2b3b21fc6707a82ea7d91839b312e744bd57c673baf4b2810d099d3f82c90f",
+    "controls": [
+      {
+        "line": 16,
+        "element": "DialogTrigger",
+        "source": "<DialogTrigger as={Button<\"button\">"
+      },
+      {
+        "line": 27,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput value=\"Pedro Duarte\" class=\"col-span-3\" type=\"text\" />"
+      },
+      {
+        "line": 31,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput value=\"@peduarte\" class=\"col-span-3\" type=\"text\" />"
+      },
+      {
+        "line": 35,
+        "element": "Button",
+        "source": "<Button type=\"submit\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/drawer-demo.tsx",
+    "implementation": "/components/bottom-sheet",
+    "documentation": "/examples/registry/drawer-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "8fa1ebcea851c55620ca193858b2fc3883bb1b5e65c02d94ef042844c2321256",
+    "controls": [
+      {
+        "line": 25,
+        "element": "DrawerTrigger",
+        "source": "<DrawerTrigger as={Button<\"button\">"
+      },
+      {
+        "line": 36,
+        "element": "Button",
+        "source": "<Button\n                variant=\"outline\"\n                size=\"icon\"\n                class=\"size-8 shrink-0 rounded-full\"\n                onClick={() =>"
+      },
+      {
+        "line": 50,
+        "element": "Button",
+        "source": "<Button\n                variant=\"outline\"\n                size=\"icon\"\n                class=\"size-8 shrink-0 rounded-full\"\n                onClick={() =>"
+      },
+      {
+        "line": 63,
+        "element": "Button",
+        "source": "<Button>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/drawer-dialog.tsx",
+    "implementation": "/examples/patterns/navigation",
+    "documentation": "/examples/registry/drawer-dialog",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "ee9bfb34da972a68f3d3c3fa5c448557842ab0cdb2f84631d6608173703f9f18",
+    "controls": [
+      {
+        "line": 36,
+        "element": "DrawerTrigger",
+        "source": "<DrawerTrigger as={Button<\"button\">"
+      },
+      {
+        "line": 59,
+        "element": "DialogTrigger",
+        "source": "<DialogTrigger as={Button} variant=\"outline\">"
+      },
+      {
+        "line": 81,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput placeholder=\"shadcn@example.com\" type=\"email\" />"
+      },
+      {
+        "line": 85,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput placeholder=\"@shadcn\" type=\"text\" />"
+      },
+      {
+        "line": 87,
+        "element": "Button",
+        "source": "<Button type=\"submit\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/dropdown-menu-demo.tsx",
+    "implementation": "/components/dropdown",
+    "documentation": "/examples/registry/dropdown-menu-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "e297866ba028b1d494c18af01d7f1b0f8cf5f811b0593d295722e479ff9398f3",
+    "controls": [
+      {
+        "line": 29,
+        "element": "DropdownMenu",
+        "source": "<DropdownMenu>"
+      },
+      {
+        "line": 30,
+        "element": "DropdownMenuTrigger",
+        "source": "<DropdownMenuTrigger as={Button<\"button\">"
+      },
+      {
+        "line": 32,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem>"
+      },
+      {
+        "line": 36,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem>"
+      },
+      {
+        "line": 40,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem>"
+      },
+      {
+        "line": 45,
+        "element": "DropdownMenuSubTrigger",
+        "source": "<DropdownMenuSubTrigger>"
+      },
+      {
+        "line": 48,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem>"
+      },
+      {
+        "line": 49,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem>"
+      },
+      {
+        "line": 50,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem>"
+      },
+      {
+        "line": 52,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem>"
+      },
+      {
+        "line": 57,
+        "element": "DropdownMenuCheckboxItem",
+        "source": "<DropdownMenuCheckboxItem checked={showGitLog()} onChange={setShowGitLog}>"
+      },
+      {
+        "line": 60,
+        "element": "DropdownMenuCheckboxItem",
+        "source": "<DropdownMenuCheckboxItem checked={showHistory()} onChange={setShowHistory}>"
+      },
+      {
+        "line": 67,
+        "element": "DropdownMenuRadioItem",
+        "source": "<DropdownMenuRadioItem value=\"main\">"
+      },
+      {
+        "line": 68,
+        "element": "DropdownMenuRadioItem",
+        "source": "<DropdownMenuRadioItem value=\"develop\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/flex-demo.tsx",
+    "implementation": "/examples/patterns/layout",
+    "documentation": "/examples/registry/flex-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "b879f406a5fa6476d9985c61fdbcd274b9be9fd416f2857d5218152ce800f3ff",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/grid-demo.tsx",
+    "implementation": "/examples/patterns/layout",
+    "documentation": "/examples/registry/grid-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "d470c56a8c4173fc414f44aa81c5f73bedf44124b975a62e00c6a710515aa355",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/hover-card-demo.tsx",
+    "implementation": "/components/hover-card",
+    "documentation": "/examples/registry/hover-card-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "3eaebe2e80521c58bf7d2e4854b91d1734feb06e0e2476215345d3608ae156fa",
+    "controls": [
+      {
+        "line": 9,
+        "element": "HoverCardTrigger",
+        "source": "<HoverCardTrigger as={Button<\"button\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/menubar-demo.tsx",
+    "implementation": "/examples/patterns/navigation",
+    "documentation": "/examples/registry/menubar-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "5eca0e45c3aff08301bf070809aa7d558d1f160cdbfd800dd6b6c48d0336ae6a",
+    "controls": [
+      {
+        "line": 20,
+        "element": "MenubarMenu",
+        "source": "<MenubarMenu>"
+      },
+      {
+        "line": 21,
+        "element": "MenubarTrigger",
+        "source": "<MenubarTrigger>"
+      },
+      {
+        "line": 23,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 26,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 29,
+        "element": "MenubarItem",
+        "source": "<MenubarItem disabled>"
+      },
+      {
+        "line": 32,
+        "element": "MenubarSubTrigger",
+        "source": "<MenubarSubTrigger>"
+      },
+      {
+        "line": 34,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 35,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 36,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 40,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 45,
+        "element": "MenubarMenu",
+        "source": "<MenubarMenu>"
+      },
+      {
+        "line": 46,
+        "element": "MenubarTrigger",
+        "source": "<MenubarTrigger>"
+      },
+      {
+        "line": 48,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 51,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 56,
+        "element": "MenubarSubTrigger",
+        "source": "<MenubarSubTrigger>"
+      },
+      {
+        "line": 58,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 60,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 61,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 62,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 66,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 67,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 68,
+        "element": "MenubarItem",
+        "source": "<MenubarItem>"
+      },
+      {
+        "line": 71,
+        "element": "MenubarMenu",
+        "source": "<MenubarMenu>"
+      },
+      {
+        "line": 72,
+        "element": "MenubarTrigger",
+        "source": "<MenubarTrigger>"
+      },
+      {
+        "line": 74,
+        "element": "MenubarCheckboxItem",
+        "source": "<MenubarCheckboxItem>"
+      },
+      {
+        "line": 75,
+        "element": "MenubarCheckboxItem",
+        "source": "<MenubarCheckboxItem checked>"
+      },
+      {
+        "line": 77,
+        "element": "MenubarItem",
+        "source": "<MenubarItem inset>"
+      },
+      {
+        "line": 80,
+        "element": "MenubarItem",
+        "source": "<MenubarItem disabled inset>"
+      },
+      {
+        "line": 84,
+        "element": "MenubarItem",
+        "source": "<MenubarItem inset>"
+      },
+      {
+        "line": 86,
+        "element": "MenubarItem",
+        "source": "<MenubarItem inset>"
+      },
+      {
+        "line": 89,
+        "element": "MenubarMenu",
+        "source": "<MenubarMenu>"
+      },
+      {
+        "line": 90,
+        "element": "MenubarTrigger",
+        "source": "<MenubarTrigger>"
+      },
+      {
+        "line": 93,
+        "element": "MenubarRadioItem",
+        "source": "<MenubarRadioItem value=\"andy\">"
+      },
+      {
+        "line": 94,
+        "element": "MenubarRadioItem",
+        "source": "<MenubarRadioItem value=\"benoit\">"
+      },
+      {
+        "line": 95,
+        "element": "MenubarRadioItem",
+        "source": "<MenubarRadioItem value=\"Luis\">"
+      },
+      {
+        "line": 98,
+        "element": "MenubarItem",
+        "source": "<MenubarItem inset>"
+      },
+      {
+        "line": 100,
+        "element": "MenubarItem",
+        "source": "<MenubarItem inset>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/mode-toggle.tsx",
+    "implementation": "/foundations",
+    "documentation": "/examples/registry/mode-toggle",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "0edb5241eebca08de78846e54a24a507771807b6b777e02dd8eab067ce979745",
+    "controls": [
+      {
+        "line": 16,
+        "element": "DropdownMenu",
+        "source": "<DropdownMenu>"
+      },
+      {
+        "line": 17,
+        "element": "DropdownMenuTrigger",
+        "source": "<DropdownMenuTrigger as={Button<\"button\">"
+      },
+      {
+        "line": 23,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem onSelect={() =>"
+      },
+      {
+        "line": 27,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem onSelect={() =>"
+      },
+      {
+        "line": 31,
+        "element": "DropdownMenuItem",
+        "source": "<DropdownMenuItem onSelect={() =>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/navigation-menu-demo.tsx",
+    "implementation": "/examples/patterns/navigation",
+    "documentation": "/examples/registry/navigation-menu-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "91a33d9df1ea3c2a65bf5675e67fd8427e0f1eaf1c3fea9ca4c0ab7fd32ee958",
+    "controls": [
+      {
+        "line": 22,
+        "element": "NavigationMenu",
+        "source": "<NavigationMenu orientation={orientation()}>"
+      },
+      {
+        "line": 23,
+        "element": "NavigationMenuItem",
+        "source": "<NavigationMenuItem>"
+      },
+      {
+        "line": 24,
+        "element": "NavigationMenuTrigger",
+        "source": "<NavigationMenuTrigger>"
+      },
+      {
+        "line": 65,
+        "element": "NavigationMenuItem",
+        "source": "<NavigationMenuItem>"
+      },
+      {
+        "line": 66,
+        "element": "NavigationMenuTrigger",
+        "source": "<NavigationMenuTrigger>"
+      },
+      {
+        "line": 112,
+        "element": "NavigationMenuTrigger",
+        "source": "<NavigationMenuTrigger as=\"a\" href=\"https://github.com/kobaltedev/kobalte\" target=\"_blank\">"
+      },
+      {
+        "line": 124,
+        "element": "RadioGroupItem",
+        "source": "<RadioGroupItem value={orientation}>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/number-field-demo.tsx",
+    "implementation": "/components/number-input",
+    "documentation": "/examples/registry/number-field-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "6ffb7c88c3c2eb5e1dc9bf671c64b0b087e62bf1095fe9fc650860253b275379",
+    "controls": [
+      {
+        "line": 22,
+        "element": "NumberFieldInput",
+        "source": "<NumberFieldInput />"
+      },
+      {
+        "line": 23,
+        "element": "NumberFieldIncrementTrigger",
+        "source": "<NumberFieldIncrementTrigger />"
+      },
+      {
+        "line": 24,
+        "element": "NumberFieldDecrementTrigger",
+        "source": "<NumberFieldDecrementTrigger />"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/otp-field-demo.tsx",
+    "implementation": "/examples/patterns/verification",
+    "documentation": "/examples/registry/otp-field-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "eac4ca88b813a289714bf5f173c6010d2786fc91f092ffdd56468177cd8d008c",
+    "controls": [
+      {
+        "line": 12,
+        "element": "OTPFieldInput",
+        "source": "<OTPFieldInput />"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/pagination-demo.tsx",
+    "implementation": "/components/pagination",
+    "documentation": "/examples/registry/pagination-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "5369c02f26833f232f9a2bed48e1f2e5430dead30d61deb4e19c613dc737c6df",
+    "controls": [
+      {
+        "line": 15,
+        "element": "PaginationItem",
+        "source": "<PaginationItem page={props.page}>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/pie-chart-demo.tsx",
+    "implementation": "/charts/donut-chart",
+    "documentation": "/examples/registry/pie-chart-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "05bb402cf0c44b248bb76899049c32dbf6acb7e35b69dace4bbf2f9d9d574f79",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/popover-demo.tsx",
+    "implementation": "/components/popover",
+    "documentation": "/examples/registry/popover-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "915805f7fa693661b22df7350f6cfad317777b683fadb114721b503f3c4f2a41",
+    "controls": [
+      {
+        "line": 7,
+        "element": "PopoverTrigger",
+        "source": "<PopoverTrigger as={Button<\"button\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/progress-circle-demo.tsx",
+    "implementation": "/components/progress-circle",
+    "documentation": "/examples/registry/progress-circle-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "0478cae5e7c7ee612125488b087b7a693ef8ae3c58ff52ab2ab94a9914a73b35",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/progress-demo.tsx",
+    "implementation": "/components/progress",
+    "documentation": "/examples/registry/progress-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "7a597f7e996787600f8637ecfbc22ef7a3814f25cb217dfdb53b3fbb8e6c567f",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/radio-group-demo.tsx",
+    "implementation": "/components/radio-group",
+    "documentation": "/examples/registry/radio-group-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "9feaac414e9bb01133ba56871abfb24b8e637b1870caf31d57f625bba81999bd",
+    "controls": [
+      {
+        "line": 10,
+        "element": "RadioGroupItem",
+        "source": "<RadioGroupItem value={fruit}>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/resizable-demo.tsx",
+    "implementation": "/examples/patterns/layout",
+    "documentation": "/examples/registry/resizable-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "c6f05d36057256c4754502b76787b65c288eaf942dc8cfc24bdad756ddadd08b",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/select-demo.tsx",
+    "implementation": "/components/select",
+    "documentation": "/examples/registry/select-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "da996ff2d9ae84ebe4a4e7915c7f2f340d91150f16c0f29f1d2febdab036c9db",
+    "controls": [
+      {
+        "line": 14,
+        "element": "SelectItem",
+        "source": "<SelectItem item={props.item}>"
+      },
+      {
+        "line": 16,
+        "element": "SelectTrigger",
+        "source": "<SelectTrigger aria-label=\"Fruit\" class=\"w-[180px]\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/separator-demo.tsx",
+    "implementation": "/components/divider",
+    "documentation": "/examples/registry/separator-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "78fb37bbf9798f94c31f1c1c0ea72dddd37fb901afb28137775f0855066fc141",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/sheet-demo.tsx",
+    "implementation": "/components/bottom-sheet",
+    "documentation": "/examples/registry/sheet-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "56007da4e127efd406c0418b7820c784fa1857d92569ea8220cfacb1a9935f20",
+    "controls": [
+      {
+        "line": 23,
+        "element": "SheetTrigger",
+        "source": "<SheetTrigger as={Button<\"button\">"
+      },
+      {
+        "line": 36,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput value=\"Pedro Duarte\" class=\"col-span-3\" type=\"text\" />"
+      },
+      {
+        "line": 40,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput value=\"@peduarte\" class=\"col-span-3\" type=\"text\" />"
+      },
+      {
+        "line": 44,
+        "element": "Button",
+        "source": "<Button type=\"submit\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/skeleton-demo.tsx",
+    "implementation": "/components/skeleton",
+    "documentation": "/examples/registry/skeleton-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "f96a7eca76867ba12b154b69d399ae33ef5b1b16dc06a63ad3be97ae3a7750c9",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/slider-demo.tsx",
+    "implementation": "/components/slider",
+    "documentation": "/examples/registry/slider-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "a351f02f6341f8c098cb232b57361b8029c27a5b66ade6d3c9815b65a8e7113d",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/sonner-demo.tsx",
+    "implementation": "/components/toast",
+    "documentation": "/examples/registry/sonner-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "6f287e9d82e5352bd2d4fbcb4b89329f57fcb3c430437ac007448c9b221febc7",
+    "controls": [
+      {
+        "line": 9,
+        "element": "Button",
+        "source": "<Button\n        variant=\"outline\"\n        onClick={() =>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/switch-demo.tsx",
+    "implementation": "/components/switch",
+    "documentation": "/examples/registry/switch-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "b35dd4f9cba01cf2e763ec79859406df944d30e5da9222781a1f38af4e02ac74",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/table-demo.tsx",
+    "implementation": "/examples/tasks",
+    "documentation": "/examples/registry/table-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "980d4a0184aadb56b5d0eadbacdcbe3acb82516684e7af668c9301072ff0509c",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/tabs-demo.tsx",
+    "implementation": "/components/tabs",
+    "documentation": "/examples/registry/tabs-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "e0261aa6ba505fa1fe09d37682bab96d5190383c25a8ea0dca40afc923ebf175",
+    "controls": [
+      {
+        "line": 17,
+        "element": "TabsTrigger",
+        "source": "<TabsTrigger value=\"account\">"
+      },
+      {
+        "line": 18,
+        "element": "TabsTrigger",
+        "source": "<TabsTrigger value=\"password\">"
+      },
+      {
+        "line": 31,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput value=\"Pedro Duarte\" type=\"text\" />"
+      },
+      {
+        "line": 35,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput value=\"@peduarte\" type=\"text\" />"
+      },
+      {
+        "line": 39,
+        "element": "Button",
+        "source": "<Button>"
+      },
+      {
+        "line": 54,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput type=\"password\" />"
+      },
+      {
+        "line": 58,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput type=\"password\" />"
+      },
+      {
+        "line": 62,
+        "element": "Button",
+        "source": "<Button>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/text-field-demo.tsx",
+    "implementation": "/components/text-input",
+    "documentation": "/examples/registry/text-field-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "0e49fbc2cc4efdbce3ec6acacd99f4d36444ace2a43b5ea9b4be9a37cc35336b",
+    "controls": [
+      {
+        "line": 7,
+        "element": "TextFieldInput",
+        "source": "<TextFieldInput type=\"email\" id=\"email\" placeholder=\"Email\" />"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/text-field-error-demo.tsx",
+    "implementation": "/components/text-input",
+    "documentation": "/examples/registry/text-field-error-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "cbe7532ca8b226157becfa4cd9714f01e8a017c21058b64f5ef645fee43eb3a5",
+    "controls": [
+      {
+        "line": 29,
+        "element": "TooltipTrigger",
+        "source": "<TooltipTrigger as={TextFieldInput} required />"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/text-field-textarea-demo.tsx",
+    "implementation": "/components/textarea",
+    "documentation": "/examples/registry/text-field-textarea-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "08621094c67a7e388ee4fcc3522cf6e61a4dcbcaf4d47b33dd17268dde2103dd",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/timeline-demo.tsx",
+    "implementation": "/components/timeline",
+    "documentation": "/examples/registry/timeline-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "7794d6944e5958130aa07474a3c15550e558eded5f01e49171bab1be64497877",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/toast-demo.tsx",
+    "implementation": "/components/toast",
+    "documentation": "/examples/registry/toast-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "a6cbd4b535e4ff4a4e0c7da6710aa3d86078830a363f0b568e2f72fbb63e055d",
+    "controls": [
+      {
+        "line": 7,
+        "element": "Button",
+        "source": "<Button\n        onClick={() =>"
+      },
+      {
+        "line": 17,
+        "element": "Button",
+        "source": "<Button\n        variant=\"destructive\"\n        onClick={() =>"
+      },
+      {
+        "line": 29,
+        "element": "Button",
+        "source": "<Button\n        variant=\"outline\"\n        onClick={() =>"
+      },
+      {
+        "line": 41,
+        "element": "Button",
+        "source": "<Button\n        variant=\"outline\"\n        onClick={() =>"
+      },
+      {
+        "line": 53,
+        "element": "Button",
+        "source": "<Button\n        variant=\"outline\"\n        onClick={() =>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/toggle-demo.tsx",
+    "implementation": "/components/toggle-group",
+    "documentation": "/examples/registry/toggle-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "4973dce539f32fa7ea43877ec4528dee778ce53b0715490cffe36391ae2dea15",
+    "controls": []
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/toggle-group-demo.tsx",
+    "implementation": "/components/toggle-group",
+    "documentation": "/examples/registry/toggle-group-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "c492fe8bdb0b1954416f4bf2f6f06acb20bc7954bcea7f6d93e9835bda61c9d2",
+    "controls": [
+      {
+        "line": 7,
+        "element": "ToggleGroupItem",
+        "source": "<ToggleGroupItem value=\"bold\" aria-label=\"Bold\">"
+      },
+      {
+        "line": 10,
+        "element": "ToggleGroupItem",
+        "source": "<ToggleGroupItem value=\"italic\" aria-label=\"Italic\">"
+      },
+      {
+        "line": 13,
+        "element": "ToggleGroupItem",
+        "source": "<ToggleGroupItem value=\"underline\" aria-label=\"Underline\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/example/tooltip-demo.tsx",
+    "implementation": "/components/tooltip",
+    "documentation": "/examples/registry/tooltip-demo",
+    "tests": [
+      "e2e/reference-patterns.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "bf53635b882181de2459b21ce04bb1f7a3f7a0ba1e4795ebc007bf5b195b9964",
+    "controls": [
+      {
+        "line": 7,
+        "element": "TooltipTrigger",
+        "source": "<TooltipTrigger as={Button<\"button\">"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/block/sidebar-01/index.tsx",
+    "implementation": "apps/playground/src/demos/sidebar-01.tsx",
+    "documentation": "/blocks/compositions/sidebar-01",
+    "tests": [
+      "e2e/responsive-preview.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "80a38f76939ee02d62ac3616bdc0e9c2e22fdba56a5fd58ba91d3f2077424151",
+    "controls": [
+      {
+        "line": 19,
+        "element": "SidebarTrigger",
+        "source": "<SidebarTrigger class=\"-ml-1\" />"
+      },
+      {
+        "line": 23,
+        "element": "BreadcrumbItem",
+        "source": "<BreadcrumbItem class=\"hidden md:block\">"
+      },
+      {
+        "line": 27,
+        "element": "BreadcrumbItem",
+        "source": "<BreadcrumbItem>"
+      }
+    ]
+  },
+  {
+    "source": "references/solid-ui-main/apps/docs/src/registry/block/demo-sidebar.tsx",
+    "implementation": "apps/playground/src/demos/demo-sidebar.tsx",
+    "documentation": "/blocks/compositions/demo-sidebar",
+    "tests": [
+      "e2e/responsive-preview.spec.ts"
+    ],
+    "acceptance": "pending",
+    "digest": "1df51592421125fe909e99ec7da3bf538640e40f2347722b92de7e2928045edf",
+    "controls": [
+      {
+        "line": 55,
+        "element": "SidebarMenu",
+        "source": "<SidebarMenu>"
+      },
+      {
+        "line": 58,
+        "element": "SidebarMenuItem",
+        "source": "<SidebarMenuItem>"
+      },
+      {
+        "line": 73,
+        "element": "SidebarTrigger",
+        "source": "<SidebarTrigger />"
+      }
+    ]
+  }
+]

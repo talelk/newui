@@ -27,11 +27,12 @@ const Root: ParentComponent<ContextMenuRootProps> = (props) => {
     onChange: (value) => props.onOpenChange?.(value),
   })
 
+  const machineId = createId('context-menu')
   const { api } = createZagApi<ContextMenuApi>(
     zag.machine,
     zag.connect,
     () => ({
-      id: createId('context-menu'),
+      id: machineId,
       open: open(),
       onOpenChange: (details: { open: boolean }) => setOpen(details.open),
       onSelect: (details: { value: string }) => props.onSelect?.(details.value),

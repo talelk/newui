@@ -1,0 +1,15 @@
+{
+  "files": [
+    "pages/Discussions.tsx",
+    "examples/discussion-fixtures.ts",
+    "examples/discussions.tsx",
+    "pages/DiscussionsDesktop.tsx",
+    "pages/DiscussionsMobile.tsx",
+    "examples/DiscussionSettings.tsx",
+    "shell/theme.ts"
+  ],
+  "packages": [
+    "@newui/ui",
+    "solid-js"
+  ]
+}

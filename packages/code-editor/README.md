@@ -59,3 +59,11 @@ destroyed in `onCleanup`, so nothing outlives the component.
 The editor is styled with the runtime custom properties (`--surface-*`,
 `--ink-*`, `--outline-*`). Override them on the editor or any ancestor to retune
 it; no component change is needed and dark mode flips automatically.
+
+## Grammar loading
+
+Language grammars load on demand. The editor initially accepts plain text while
+its selected grammar arrives. Changing language reconfigures a compartment and
+preserves the document, selection and undo history. A later language selection
+supersedes an earlier pending import; unmounting prevents delayed writes. A
+failed grammar download leaves plain-text editing available.

@@ -1,5 +1,6 @@
 import * as zag from '@zag-js/radio-group'
 import { For, type JSX, Show, splitProps } from 'solid-js'
+import { Field, FieldLabelContent, useField } from '../../lib/field'
 import { createId } from '../../lib/id'
 import { cn } from '../../lib/tv'
 import { createZagApi } from '../../lib/zag'
@@ -39,10 +40,16 @@ export interface RadioGroupProps {
   description?: JSX.Element
   /** Error text shown under the group; `role="alert"`. */
   error?: JSX.Element | false
+  required?: boolean
+  id?: string
+  name?: string
+  'aria-label'?: string
   class?: string
 }
 
-export function RadioGroup(props: RadioGroupProps): JSX.Element {
+function RadioGroupControl(props: RadioGroupProps): JSX.Element {
+  const field = useField()
+  const machineId = createId('radio')
   const [local] = splitProps(props, [
     'value',
     'defaultValue',
@@ -60,7 +67,11 @@ export function RadioGroup(props: RadioGroupProps): JSX.Element {
   ])
 
   const { api } = createZagApi<RadioGroupApi>(zag.machine, zag.connect, () => ({
-    id: createId('radio'),
+    id: machineId,
+    ids: { root: props.id ?? field?.controlId(), label: field?.labelId() },
+    name: props.name,
+    required: field?.required(),
+    invalid: field?.hasError(),
     value: local.value,
     defaultValue: local.defaultValue,
     disabled: local.disabled,
@@ -73,15 +84,16 @@ export function RadioGroup(props: RadioGroupProps): JSX.Element {
   const stacked = () => (local.orientation ?? 'vertical') === 'vertical'
   const isItemDisabled = (item: RadioGroupItem) =>
     Boolean(local.disabled || item.disabled)
-  const hasError = () => local.error !== undefined && local.error !== false
 
   // Zag's radio group relies on the native radio-group keyboard behaviour, which
   // always wraps. `loop={false}` is honoured by cancelling the default action
   // when focus is already on the first/last enabled option.
   const onKeyDown = (event: KeyboardEvent) => {
     if (local.loop !== false) return
-    const nextKey = stacked() ? 'ArrowDown' : 'ArrowRight'
-    const prevKey = stacked() ? 'ArrowUp' : 'ArrowLeft'
+    const rtl =
+      getComputedStyle(event.currentTarget as HTMLElement).direction === 'rtl'
+    const nextKey = stacked() ? 'ArrowDown' : rtl ? 'ArrowLeft' : 'ArrowRight'
+    const prevKey = stacked() ? 'ArrowUp' : rtl ? 'ArrowRight' : 'ArrowLeft'
     if (event.key !== nextKey && event.key !== prevKey) return
     const enabled = local.items.filter((item) => !isItemDisabled(item))
     const first = enabled[0]?.value
@@ -144,24 +156,35 @@ export function RadioGroup(props: RadioGroupProps): JSX.Element {
       'data-[state=checked]:border-surface-gray-10',
       'group-[[data-state=checked]:hover]:border-surface-gray-9',
       'group-[[data-state=checked]:active]:border-surface-gray-8',
-      'data-[focus-visible]:focus-ring',
+      'data-[focus-visible]:focus-ring-blue',
+      field?.hasError() && 'border-outline-red-6',
     )
   }
 
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions: `role="radiogroup"` is supplied by Zag's getRootProps spread; the keydown only cancels the native wrap when `loop` is false.
     <div
       {...api().getRootProps()}
       onKeyDown={onKeyDown}
       data-slot="radio-group"
-      class={cn('flex flex-col', local.label && 'gap-1.5', local.class)}
+      role="radiogroup"
+      aria-label={props['aria-label']}
+      aria-describedby={field?.describedBy()}
+      aria-invalid={field?.hasError() ? 'true' : undefined}
+      aria-required={field?.required() ? 'true' : undefined}
+      class={cn(
+        'relative flex flex-col',
+        local.label && 'gap-1.5',
+        local.class,
+      )}
     >
       <Show when={local.label}>
         <span
           {...api().getLabelProps()}
-          class="text-base font-medium text-ink-gray-8"
+          class="text-caption font-medium text-ink-gray-6"
         >
-          {local.label}
+          <FieldLabelContent required={field?.required()}>
+            {local.label}
+          </FieldLabelContent>
         </span>
       </Show>
       <div
@@ -217,20 +240,22 @@ export function RadioGroup(props: RadioGroupProps): JSX.Element {
           )}
         </For>
       </div>
-      <Show when={local.description || hasError()}>
-        <div class="mt-1 flex flex-col gap-0.5">
-          <Show when={local.description}>
-            <span data-slot="description" class="text-p-sm text-ink-gray-6">
-              {local.description}
-            </span>
-          </Show>
-          <Show when={hasError()}>
-            <span role="alert" class="text-p-sm text-ink-red-7">
-              {local.error}
-            </span>
-          </Show>
-        </div>
-      </Show>
     </div>
+  )
+}
+
+export function RadioGroup(props: RadioGroupProps): JSX.Element {
+  return (
+    <Field
+      id={props.id}
+      label={props.label}
+      inlineLabel
+      description={props.description}
+      error={props.error}
+      required={props.required}
+      disabled={props.disabled}
+    >
+      <RadioGroupControl {...props} />
+    </Field>
   )
 }

@@ -1,4 +1,5 @@
-import { createSignal, type JSX, Show, splitProps } from 'solid-js'
+import { createSignal, type JSX, splitProps } from 'solid-js'
+import { fieldSizes } from '../../lib/control-styles'
 import { createControllableSignal } from '../../lib/controllable'
 import { Field, useField } from '../../lib/field'
 import { cn } from '../../lib/tv'
@@ -23,6 +24,7 @@ export interface DurationProps {
    * notation so typed text round-trips through `parseDuration`.
    */
   format?: DurationFormat
+  /** @default sm */
   size?: InputSize
   variant?: InputVariant
   disabled?: boolean
@@ -34,13 +36,6 @@ export interface DurationProps {
   error?: JSX.Element | false
   required?: boolean
   'aria-label'?: string
-}
-
-const SIZE: Record<InputSize, string> = {
-  xs: 'h-6 rounded-3 text-xs',
-  sm: 'h-7 rounded-4 text-base',
-  md: 'h-8 rounded-4 text-base',
-  lg: 'h-10 rounded-5 text-lg',
 }
 
 const PAD: Record<InputSize, string> = {
@@ -66,6 +61,7 @@ interface DurationControlProps {
   name?: string
   value: string
   placeholder?: string
+  /** @default sm */
   size?: InputSize
   variant?: InputVariant
   disabled?: boolean
@@ -102,10 +98,10 @@ function DurationControl(props: DurationControlProps): JSX.Element {
       disabled={local.disabled}
       data-slot="duration"
       class={cn(
-        'w-full leading-tighter transition-colors outline-none focus:ring-0',
-        SIZE[size()],
+        'w-full leading-tighter transition-colors outline-none focus-visible:focus-ring-blue aria-[invalid=true]:border-outline-red-6',
+        fieldSizes[size()],
         PAD[size()],
-        VARIANT[local.variant ?? 'subtle'],
+        VARIANT[local.variant ?? 'outline'],
         local.disabled ? 'text-ink-gray-6' : 'text-ink-gray-8',
         local.disabled &&
           'border bg-surface-gray-1 placeholder:text-ink-gray-3 hover:shadow-none',
@@ -166,15 +162,6 @@ export function Duration(props: DurationProps): JSX.Element {
       : formatDuration(value(), local.format ?? 'short')
 
   const fieldError = () => local.error || internalError() || undefined
-  const hasLabeling = () =>
-    Boolean(
-      local.label ||
-        local.description ||
-        local.error ||
-        local.required ||
-        internalError(),
-    )
-
   function commit() {
     const raw = editValue().trim()
 
@@ -262,17 +249,15 @@ export function Duration(props: DurationProps): JSX.Element {
   )
 
   return (
-    <Show when={hasLabeling()} fallback={renderControl()}>
-      <Field
-        id={props.id}
-        label={local.label}
-        description={local.description}
-        error={fieldError()}
-        required={local.required}
-        disabled={local.disabled}
-      >
-        {renderControl()}
-      </Field>
-    </Show>
+    <Field
+      id={props.id}
+      label={local.label}
+      description={local.description}
+      error={fieldError()}
+      required={local.required}
+      disabled={local.disabled}
+    >
+      {renderControl()}
+    </Field>
   )
 }

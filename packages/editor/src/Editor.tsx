@@ -33,6 +33,7 @@ import { PluginKey } from '@tiptap/pm/state'
 import { Suggestion } from '@tiptap/suggestion'
 import {
   createEffect,
+  createMemo,
   createSignal,
   type JSX,
   onCleanup,
@@ -40,7 +41,7 @@ import {
   splitProps,
   untrack,
 } from 'solid-js'
-import { EditorContext } from './context'
+import { EditorContext, EditorEditableContext } from './context'
 import {
   createMentionRenderer,
   filterMentionItems,
@@ -491,17 +492,20 @@ export function Editor(props: EditorProps): JSX.Element {
     )
   })
 
+  const editable = createMemo(() => local.readonly !== true)
   return (
     <EditorContext.Provider value={editor}>
-      <div {...rest} class={local.class} data-slot="editor">
-        {local.children}
-        <div
-          ref={(el) => {
-            container = el
-          }}
-          data-slot="editor-surface"
-        />
-      </div>
+      <EditorEditableContext.Provider value={editable}>
+        <div {...rest} class={local.class} data-slot="editor">
+          {local.children}
+          <div
+            ref={(el) => {
+              container = el
+            }}
+            data-slot="editor-surface"
+          />
+        </div>
+      </EditorEditableContext.Provider>
     </EditorContext.Provider>
   )
 }

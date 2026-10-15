@@ -57,6 +57,7 @@ export interface MultiSelectProps {
   disabled?: boolean
   name?: string
   id?: string
+  /** @default sm */
   size?: MultiSelectSize
   variant?: MultiSelectVariant
   /** Replaces the results with a loading row while a fetch is in flight. */
@@ -83,9 +84,9 @@ export interface MultiSelectProps {
 
 const SIZE: Record<MultiSelectSize, string> = {
   xs: 'min-h-6 rounded-3 text-xs',
-  sm: 'min-h-7 rounded-4 text-base',
-  md: 'min-h-8 rounded-4 text-base',
-  lg: 'min-h-10 rounded-5 text-lg',
+  sm: 'min-h-7 rounded-3 text-base',
+  md: 'min-h-8 rounded-3 text-base',
+  lg: 'min-h-10 rounded-3 text-lg',
 }
 
 const VARIANT: Record<MultiSelectVariant, string> = {
@@ -219,11 +220,12 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
     }),
   )
 
+  const machineId = createId('multiselect')
   const { api } = createZagApi<MultiSelectApi>(
     zag.machine,
     zag.connect,
     () => ({
-      id: createId('multiselect'),
+      id: machineId,
       collection: collection(),
       value: local.value,
       multiple: true,
@@ -306,14 +308,15 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
       <div
         {...api().getControlProps()}
         data-slot="multiselect-control"
+        data-invalid={field?.hasError() ? '' : undefined}
         data-size={size()}
-        data-variant={local.variant ?? 'subtle'}
+        data-variant={local.variant ?? 'outline'}
         class={cn(
-          'flex w-full flex-wrap items-center gap-1 px-1.5 py-1 transition-colors',
+          'flex w-full flex-wrap items-center gap-1 px-1.5 py-0.5 transition-colors',
           SIZE[size()],
-          VARIANT[local.variant ?? 'subtle'],
+          VARIANT[local.variant ?? 'outline'],
           'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:opacity-60',
-          'focus-within:focus-ring',
+          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
         )}
       >
         <For each={selected()}>
@@ -342,7 +345,7 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
         <input
           {...api().getInputProps()}
           data-slot="multiselect-input"
-          aria-label={field ? undefined : bareName()}
+          aria-label={field?.hasLabel() ? undefined : bareName()}
           aria-describedby={field?.describedBy()}
           aria-errormessage={field?.hasError() ? field?.errorId() : undefined}
           class="min-w-8 flex-1 bg-transparent text-inherit outline-none placeholder:text-ink-gray-6 disabled:cursor-not-allowed"
@@ -352,7 +355,10 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
           {...api().getTriggerProps()}
           data-slot="multiselect-trigger"
           aria-label="Show options"
-          class="ms-auto grid size-6 shrink-0 place-items-center text-ink-gray-6 outline-none disabled:cursor-not-allowed"
+          class={cn(
+            'ms-auto grid shrink-0 place-items-center text-ink-gray-6 outline-none disabled:cursor-not-allowed',
+            { xs: 'size-4', sm: 'size-5', md: 'size-6', lg: 'size-7' }[size()],
+          )}
         >
           <span
             class="lucide-chevron-down size-4 transition-transform data-[state=open]:rotate-180"
@@ -371,7 +377,7 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
             <div
               {...api().getContentProps()}
               data-slot="multiselect-content"
-              class="max-h-60 min-w-40 overflow-y-auto rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-1 text-ink-gray-9 shadow-lg focus-visible:outline-none"
+              class="max-h-60 min-w-40 overflow-y-auto rounded-6 border border-outline-gray-1 bg-surface-elevation-1 p-1 text-ink-gray-9 shadow-lg focus-visible:outline-none"
             >
               <Show
                 when={!local.loading}
@@ -514,21 +520,16 @@ export function MultiSelect(props: MultiSelectProps): JSX.Element {
     'error',
     'required',
   ])
-  const hasLabeling = () =>
-    Boolean(local.label || local.description || local.error || local.required)
-
   return (
-    <Show when={hasLabeling()} fallback={<MultiSelectControl {...props} />}>
-      <Field
-        id={props.id}
-        label={local.label}
-        description={local.description}
-        error={local.error}
-        required={local.required}
-        disabled={props.disabled}
-      >
-        <MultiSelectControl {...props} />
-      </Field>
-    </Show>
+    <Field
+      id={props.id}
+      label={local.label}
+      description={local.description}
+      error={local.error}
+      required={local.required}
+      disabled={props.disabled}
+    >
+      <MultiSelectControl {...props} />
+    </Field>
   )
 }

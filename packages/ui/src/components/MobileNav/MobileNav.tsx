@@ -98,7 +98,6 @@ export function MobileNavItem(props: MobileNavItemProps): JSX.Element {
       {...rest}
       data-slot="mobile-nav-item"
       data-state={isActive() ? 'active' : 'inactive'}
-      aria-label={local.label}
       onClick={local.onClick}
       class={cn(
         'flex min-h-14 flex-col items-center justify-center gap-1 py-2 text-ink-gray-6 transition',
@@ -111,7 +110,9 @@ export function MobileNavItem(props: MobileNavItemProps): JSX.Element {
         when={local.children}
         fallback={<Icon icon={local.icon} class="size-6" />}
       >
-        {local.children}
+        <span aria-hidden="true" class="contents">
+          {local.children}
+        </span>
       </Show>
       <span class="text-xs-medium leading-tighter">{local.label}</span>
     </Dynamic>

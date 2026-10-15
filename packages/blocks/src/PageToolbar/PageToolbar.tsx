@@ -67,6 +67,7 @@ export function PageToolbar(props: PageToolbarProps): JSX.Element {
           {(action) => (
             <Button
               variant="solid"
+              theme="blue"
               iconLeft={action().icon ?? 'lucide-plus'}
               onClick={action().onClick}
             >

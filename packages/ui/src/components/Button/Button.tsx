@@ -15,6 +15,7 @@ export interface ButtonProps
   extends Omit<JSX.ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'prefix'> {
   variant?: ButtonVariant
   theme?: ButtonTheme
+  /** @default sm */
   size?: ButtonSize
   label?: string
   icon?: IconProp
@@ -123,7 +124,7 @@ export function Button(props: ButtonProps) {
         >
           <Spinner size={size()} />
         </Show>
-        <span class="truncate leading-tighter">
+        <span class="min-w-0 whitespace-normal break-words leading-tighter">
           {local.children ?? local.label}
         </span>
         {local.suffix ?? renderIcon(local.iconRight)}
@@ -147,6 +148,11 @@ export function Button(props: ButtonProps) {
 
   const triggerProps = () => ({
     ...rootProps(),
+    'data-slot': 'button',
+    'data-size': size(),
+    'data-variant': local.variant ?? 'subtle',
+    'data-color': local.theme ?? 'gray',
+    'data-disabled': isDisabled() ? '' : undefined,
     class: classes(),
     'aria-label':
       local['aria-label'] ?? (isIconButton() ? undefined : local.label),

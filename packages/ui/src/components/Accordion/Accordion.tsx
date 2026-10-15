@@ -83,8 +83,9 @@ export const AccordionRoot: ParentComponent<AccordionProps> = (props) => {
     'class',
   ])
 
+  const machineId = createId('accordion')
   const { api } = createZagApi<AccordionApi>(zag.machine, zag.connect, () => ({
-    id: createId('accordion'),
+    id: machineId,
     multiple: local.multiple,
     // Zag only honours `collapsible` for a single-select accordion.
     collapsible: local.multiple ? undefined : (local.collapsible ?? true),

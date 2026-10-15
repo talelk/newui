@@ -13,6 +13,30 @@ export default {
     black: 800,
   },
   fontSize: {
+    interface: [
+      '14px',
+      { lineHeight: '20px', letterSpacing: '0em', fontWeight: 420 },
+    ],
+    caption: [
+      '12px',
+      { lineHeight: '16px', letterSpacing: '0em', fontWeight: 420 },
+    ],
+    heading: [
+      '24px',
+      { lineHeight: '30px', letterSpacing: '-0.025em', fontWeight: 600 },
+    ],
+    section: [
+      '18px',
+      { lineHeight: '24px', letterSpacing: '-0.015em', fontWeight: 600 },
+    ],
+    metric: [
+      '28px',
+      { lineHeight: '32px', letterSpacing: '-0.025em', fontWeight: 600 },
+    ],
+    hero: [
+      '36px',
+      { lineHeight: '40px', letterSpacing: '-0.035em', fontWeight: 600 },
+    ],
     '2xs': [
       '11px',
       {
@@ -40,8 +64,8 @@ export default {
     base: [
       '14px',
       {
-        lineHeight: '1.35',
-        letterSpacing: '0.02em',
+        lineHeight: '20px',
+        letterSpacing: '0em',
         fontWeight: 420,
       },
     ],

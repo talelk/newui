@@ -5,7 +5,7 @@ import { Badge } from './Badge'
 describe('Badge', () => {
   it('is subtle gray by default', () => {
     const { getByText } = render(() => <Badge label="Draft" />)
-    const el = getByText('Draft')
+    const el = getByText('Draft').closest('[data-slot=badge]') as HTMLElement
     expect(el.className).toContain('bg-surface-gray-2')
     expect(el.className).toContain('rounded-full')
   })
@@ -14,13 +14,17 @@ describe('Badge', () => {
     const { getByText } = render(() => (
       <Badge theme="green" variant="solid" label="Paid" />
     ))
-    expect(getByText('Paid').className).toContain('bg-surface-green-8')
+    expect(getByText('Paid').closest('[data-slot=badge]')?.className).toContain(
+      'bg-surface-green-8',
+    )
   })
 
   it('supports the amber warning tone', () => {
     const { getByText } = render(() => (
       <Badge theme="amber" variant="subtle" label="Pending" />
     ))
-    expect(getByText('Pending').className).toContain('text-ink-amber-8')
+    expect(
+      getByText('Pending').closest('[data-slot=badge]')?.className,
+    ).toContain('text-ink-amber-8')
   })
 })

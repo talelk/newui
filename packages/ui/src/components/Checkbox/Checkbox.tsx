@@ -1,5 +1,5 @@
 import { createSignal, type JSX, Show, splitProps } from 'solid-js'
-import { useField } from '../../lib/field'
+import { Field, FieldLabelContent, useField } from '../../lib/field'
 import { cn } from '../../lib/tv'
 
 type CheckboxSize = 'xs' | 'sm' | 'md'
@@ -21,6 +21,9 @@ export interface CheckboxProps {
   label?: JSX.Element
   description?: JSX.Element
   name?: string
+  id?: string
+  error?: JSX.Element | false
+  required?: boolean
   class?: string
 }
 
@@ -38,7 +41,7 @@ const SIZE: Record<CheckboxSize, string> = {
  * a styled input is what makes the control read the same as the rest of the
  * grayscale system (`text-*` drives the checked fill, per the forms plugin).
  */
-export function Checkbox(props: CheckboxProps): JSX.Element {
+function CheckboxControl(props: CheckboxProps): JSX.Element {
   const [local, rest] = splitProps(props, [
     'checked',
     'defaultChecked',
@@ -51,6 +54,9 @@ export function Checkbox(props: CheckboxProps): JSX.Element {
     'description',
     'name',
     'class',
+    'id',
+    'error',
+    'required',
   ])
   const [internal, setInternal] = createSignal(local.defaultChecked ?? false)
   const field = useField()
@@ -110,7 +116,7 @@ export function Checkbox(props: CheckboxProps): JSX.Element {
       local.padded
         ? 'group-hover:border-outline-gray-5'
         : 'hover:border-outline-gray-5 active:border-outline-gray-6',
-      'focus:ring-0 focus:ring-offset-0 focus-visible:focus-ring',
+      'focus:ring-0 focus:ring-offset-0 focus-visible:focus-ring-blue aria-[invalid=true]:border-outline-red-6',
     )
   }
 
@@ -118,8 +124,9 @@ export function Checkbox(props: CheckboxProps): JSX.Element {
     // biome-ignore lint/a11y/noStaticElementInteractions: the padded surface forwards clicks from its padding to the control; the row label is the real interactive element.
     // biome-ignore lint/a11y/useKeyWithClickEvents: the control stays keyboard-reachable through the hidden input.
     <div
+      data-slot="checkbox-root"
       class={cn(
-        'flex-col gap-1',
+        'relative flex-col gap-1',
         local.padded ? 'flex' : 'inline-flex',
         containerClasses(),
         local.class,
@@ -145,7 +152,8 @@ export function Checkbox(props: CheckboxProps): JSX.Element {
           ref={(el) => {
             el.indeterminate = Boolean(local.indeterminate)
           }}
-          id={field?.controlId()}
+          id={local.id ?? field?.controlId()}
+          required={field?.required() ?? local.required}
           name={local.name}
           type="checkbox"
           checked={checked()}
@@ -164,20 +172,39 @@ export function Checkbox(props: CheckboxProps): JSX.Element {
         <Show when={local.label}>
           <span
             data-slot="label"
+            id={field?.labelId()}
             class={cn(
               'select-none text-base leading-tighter',
               local.disabled ? 'text-ink-gray-4' : 'text-ink-gray-8',
             )}
           >
-            {local.label}
+            <FieldLabelContent required={field?.required()}>
+              {local.label}
+            </FieldLabelContent>
           </span>
         </Show>
       </label>
-      <Show when={local.description}>
+      <Show when={local.description && !field}>
         <span class="ps-[1.35rem] text-p-sm text-ink-gray-6">
           {local.description}
         </span>
       </Show>
     </div>
+  )
+}
+
+export function Checkbox(props: CheckboxProps): JSX.Element {
+  return (
+    <Field
+      id={props.id}
+      label={props.label}
+      inlineLabel
+      description={props.description}
+      error={props.error}
+      required={props.required}
+      disabled={props.disabled}
+    >
+      <CheckboxControl {...props} />
+    </Field>
   )
 }

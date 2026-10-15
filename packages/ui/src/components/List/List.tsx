@@ -204,7 +204,7 @@ export function ListHeaderCellSort(
           // Wrapped: an event handler read straight off props is captured once.
           onClick={(event: MouseEvent) => props.onClick?.(event)}
           class={cn(
-            'group inline-flex h-7 min-w-0 cursor-pointer items-center gap-1 rounded-4 text-sm-medium leading-tighter text-ink-gray-5 transition-colors',
+            'group inline-flex h-7 min-w-0 cursor-pointer items-center gap-1 rounded-4 text-sm-medium leading-tighter text-ink-gray-6 transition-colors',
             'hover:text-ink-gray-8',
             'focus-visible:focus-ring',
           )}
@@ -250,7 +250,7 @@ export const ListGroup: ParentComponent<ListGroupProps> = (props) => {
         <div
           data-slot="list-group-header"
           class={cn(
-            'flex h-8 items-center text-sm-medium leading-tighter text-ink-gray-5',
+            'flex h-8 items-center text-sm-medium leading-tighter text-ink-gray-6',
             local.sticky && 'sticky top-0 z-10 bg-surface-base',
           )}
         >

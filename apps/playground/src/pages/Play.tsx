@@ -23,7 +23,10 @@ export function Play() {
   })
 
   return (
-    <div class="min-h-screen bg-surface-base p-8 text-ink-gray-9">
+    <main
+      aria-label="Component demo"
+      class="min-h-screen bg-surface-base p-8 text-ink-gray-9"
+    >
       <Show
         when={demo()}
         fallback={
@@ -34,12 +37,12 @@ export function Play() {
       >
         {(entry) => (
           <Suspense
-            fallback={<p class="text-base text-ink-gray-5">Loading demo…</p>}
+            fallback={<p class="text-base text-ink-gray-6">Loading demo…</p>}
           >
             <Dynamic component={entry().Component} />
           </Suspense>
         )}
       </Show>
-    </div>
+    </main>
   )
 }

@@ -42,7 +42,8 @@ export const API = {
     {
       "name": "size",
       "type": "InputSize",
-      "optional": true
+      "optional": true,
+      "default": "sm"
     },
     {
       "name": "variant",
@@ -102,6 +103,11 @@ export const API = {
     {
       "name": "onKeyDown",
       "type": "JSX.EventHandlerUnion<HTMLInputElement, KeyboardEvent>",
+      "optional": true
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
       "optional": true
     }
   ]

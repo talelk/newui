@@ -1,0 +1,21 @@
+{
+  "files": [
+    "pages/Tasks.tsx",
+    "examples/ActivityList.tsx",
+    "examples/DataTable.tsx",
+    "examples/ExampleFrame.tsx",
+    "shell/ThemeMenu.tsx",
+    "shell/theme.ts",
+    "examples/tasks-data.ts"
+  ],
+  "packages": [
+    "@newui/blocks",
+    "@newui/ui",
+    "@solidjs/router",
+    "@tanstack/solid-form",
+    "@tanstack/solid-query",
+    "@tanstack/solid-table",
+    "@tanstack/solid-virtual",
+    "solid-js"
+  ]
+}

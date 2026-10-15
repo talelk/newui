@@ -71,8 +71,9 @@ export function ProgressCircle(props: ProgressCircleProps): JSX.Element {
   const stroke = () => (size().strokePx * 32) / size().boxPx
   const clamped = () => Math.min(100, Math.max(0, local.value ?? 0))
 
+  const machineId = createId('progress-circle')
   const { api } = createZagApi<ProgressApi>(zag.machine, zag.connect, () => ({
-    id: createId('progress-circle'),
+    id: machineId,
     value: local.indeterminate ? null : clamped(),
     'aria-label': local['aria-label'],
   }))

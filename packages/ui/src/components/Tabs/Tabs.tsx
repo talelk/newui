@@ -78,6 +78,7 @@ export interface TabsRootProps {
   /** Default variant for the list; `Tabs.List` can override it. */
   variant?: TabsVariant
   /** Default size for the list. */
+  /** @default sm */
   size?: TabsSize
   /** Default browser-tab attach edge. */
   edge?: TabsEdge
@@ -92,8 +93,9 @@ const Root: ParentComponent<TabsRootProps> = (props) => {
     onChange: (next) => props.onValueChange?.(next),
   })
 
+  const machineId = createId('tabs')
   const { api } = createZagApi<TabsApi>(zag.machine, zag.connect, () => ({
-    id: createId('tabs'),
+    id: machineId,
     value: value(),
     orientation: props.orientation ?? 'horizontal',
     activationMode: props.activationMode ?? 'automatic',
@@ -128,6 +130,7 @@ const Root: ParentComponent<TabsRootProps> = (props) => {
 
 export interface TabsListProps {
   variant?: TabsVariant
+  /** @default sm */
   size?: TabsSize
   /** browser-tab + vertical only: the edge the tabs attach to. */
   edge?: TabsEdge
@@ -215,12 +218,7 @@ const List: ParentComponent<TabsListProps> = (props) => {
           />
         </Show>
         <Show when={isPill()}>
-          <div
-            aria-hidden="true"
-            class={cn(
-              ...tabIndicatorClipClasses(config().variant, config().size),
-            )}
-          >
+          <div aria-hidden="true" class={cn(...tabIndicatorClipClasses())}>
             <div
               data-slot="tab-indicator"
               aria-hidden="true"

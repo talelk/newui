@@ -45,7 +45,42 @@ export const API = {
       "optional": true
     },
     {
+      "name": "description",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "error",
+      "type": "JSX.Element | false",
+      "optional": true
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "optional": true
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "'aria-label'",
+      "type": "string",
+      "optional": true
+    },
+    {
       "name": "class",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "aria-label",
       "type": "string",
       "optional": true
     }

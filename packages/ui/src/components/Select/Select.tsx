@@ -1,6 +1,7 @@
 import { ListCollection } from '@zag-js/collection'
 import * as zag from '@zag-js/select'
 import { createMemo, For, type JSX, Show, splitProps } from 'solid-js'
+import { Field, useField } from '../../lib/field'
 import { createId } from '../../lib/id'
 import { Portal } from '../../lib/portal'
 import { cn } from '../../lib/tv'
@@ -30,23 +31,28 @@ export interface SelectProps {
   onValueChange?: (value: string[]) => void
   placeholder?: string
   label?: JSX.Element
+  description?: JSX.Element
+  error?: JSX.Element | false
+  required?: boolean
+  id?: string
   /** Accessible name for the trigger when no visible `label` is rendered. */
   'aria-label'?: string
   disabled?: boolean
   multiple?: boolean
   name?: string
   /** Trigger height/typography. Matches the input scale. */
+  /** @default sm */
   size?: SelectSize
-  /** Trigger surface. `subtle` (the default) is the filled look. */
+  /** Trigger surface. `outline` is the default; `subtle` is filled. */
   variant?: SelectVariant
   class?: string
 }
 
 const SIZE: Record<SelectSize, string> = {
   xs: 'min-h-6 rounded-3',
-  sm: 'min-h-7 rounded-4',
-  md: 'min-h-8 rounded-4',
-  lg: 'min-h-10 rounded-5',
+  sm: 'min-h-7 rounded-3',
+  md: 'min-h-8 rounded-3',
+  lg: 'min-h-10 rounded-3',
 }
 
 const PAD: Record<SelectSize, string> = {
@@ -84,7 +90,7 @@ function Chevron() {
  * trigger (`role="combobox"`); a visually-hidden native `<select>` carries the
  * form value.
  */
-export function Select(props: SelectProps): JSX.Element {
+function SelectControl(props: SelectProps): JSX.Element {
   const [local] = splitProps(props, [
     'options',
     'value',
@@ -100,6 +106,7 @@ export function Select(props: SelectProps): JSX.Element {
     'class',
   ])
 
+  const field = useField()
   const size = () => local.size ?? 'sm'
 
   const collection = createMemo(
@@ -111,8 +118,15 @@ export function Select(props: SelectProps): JSX.Element {
       }),
   )
 
+  const machineId = createId('select')
   const { api } = createZagApi<SelectApi>(zag.machine, zag.connect, () => ({
-    id: createId('select'),
+    id: machineId,
+    ids:
+      props.id || field
+        ? { trigger: props.id ?? field?.controlId() }
+        : undefined,
+    invalid: field?.hasError(),
+    required: field?.required(),
     collection: collection(),
     value: local.value,
     disabled: local.disabled,
@@ -133,36 +147,31 @@ export function Select(props: SelectProps): JSX.Element {
     <div
       {...api().getRootProps()}
       data-slot="select"
-      class={cn('flex w-full flex-col gap-1', local.class)}
+      class={cn('relative flex w-full flex-col gap-1', local.class)}
     >
       <select {...api().getHiddenSelectProps()} />
-
-      <Show when={local.label}>
-        <label
-          {...api().getLabelProps()}
-          for={api().getHiddenSelectProps()['id']}
-          class="text-base font-medium text-ink-gray-8"
-        >
-          {local.label}
-        </label>
-      </Show>
 
       <div
         {...api().getControlProps()}
         data-slot="select-control"
         data-size={size()}
-        data-variant={local.variant ?? 'subtle'}
+        data-invalid={field?.hasError() ? '' : undefined}
+        data-variant={local.variant ?? 'outline'}
         class={cn(
           'flex w-full items-stretch transition-colors',
           SIZE[size()],
-          VARIANT[local.variant ?? 'subtle'],
-          'focus-within:focus-ring',
+          VARIANT[local.variant ?? 'outline'],
+          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
           'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-1 data-[disabled]:opacity-60',
         )}
       >
         <button
           {...api().getTriggerProps()}
           data-slot="select-trigger"
+          aria-labelledby={props.label ? field?.labelId() : undefined}
+          aria-invalid={field?.hasError() ? 'true' : undefined}
+          aria-describedby={field?.describedBy()}
+          aria-errormessage={field?.hasError() ? field.errorId() : undefined}
           aria-label={
             local['aria-label'] ??
             (local.label
@@ -205,7 +214,7 @@ export function Select(props: SelectProps): JSX.Element {
             <div
               {...api().getContentProps()}
               data-slot="select-content"
-              class="min-w-40 w-[var(--reference-width)] rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-1 text-ink-gray-9 shadow-lg focus-visible:outline-none"
+              class="min-w-40 w-[var(--reference-width)] rounded-6 border border-outline-gray-1 bg-surface-elevation-1 p-1 text-ink-gray-9 shadow-lg focus-visible:outline-none"
             >
               <For each={local.options}>
                 {(option) => (
@@ -267,5 +276,21 @@ export function Select(props: SelectProps): JSX.Element {
         </Portal>
       </Show>
     </div>
+  )
+}
+
+/** A value selector with the shared Field labelling and error contract. */
+export function Select(props: SelectProps): JSX.Element {
+  return (
+    <Field
+      id={props.id}
+      label={props.label}
+      description={props.description}
+      error={props.error}
+      required={props.required}
+      disabled={props.disabled}
+    >
+      <SelectControl {...props} />
+    </Field>
   )
 }

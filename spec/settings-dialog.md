@@ -173,7 +173,10 @@ label at another element's id.
 The dialog is a tab set: the sidebar is the `tablist`
 (`aria-orientation="vertical"`), each nav item is a `tab` with `aria-selected`
 and `aria-controls`, and each panel is a `tabpanel` with `aria-labelledby`. The
-inactive tab is not tabbable (`tabindex="-1"`). The dialog has a visually hidden
+inactive tab is not tabbable (`tabindex="-1"`). Arrow Up/Down move and select
+the previous/next enabled tab, wrapping through the full sidebar; Home/End
+select the first/last enabled tab. Settings controls use the 32px density,
+section headings and responsive 16/24px panel padding. The dialog has a visually hidden
 title (`"Settings"`) and description; replace them with the `title` /
 `description` props.
 

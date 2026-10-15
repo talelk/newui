@@ -6,8 +6,9 @@ import {
   type JSX,
   onCleanup,
   splitProps,
+  useContext,
 } from 'solid-js'
-import { useEditorAccessor } from './context'
+import { EditorEditableContext, useEditorAccessor } from './context'
 
 interface ToolbarAction {
   /** Stable id, also the `data-action` hook. */
@@ -22,6 +23,8 @@ interface ToolbarAction {
   toggle?: boolean
   /** Whether the action currently applies at the selection. */
   active: (editor: TiptapEditor) => boolean
+  /** Whether the command is available in the current document/history. */
+  enabled?: (editor: TiptapEditor) => boolean
   /** Apply the action to the editor. */
   run: (editor: TiptapEditor) => void
 }
@@ -31,12 +34,12 @@ interface ToolbarAction {
  * server and throws "not implemented" under jsdom, so both are caught and treated
  * as "cancelled". Consumers wanting a file picker compose their own toolbar.
  */
-function promptForImageUrl(): string | null {
+function promptForUrl(label: string, initial = 'https://'): string | null {
   try {
     if (typeof window === 'undefined' || typeof window.prompt !== 'function') {
       return null
     }
-    return window.prompt('Image URL', 'https://')
+    return window.prompt(label, initial)
   } catch {
     return null
   }
@@ -47,6 +50,15 @@ function promptForImageUrl(): string | null {
  * stays a dumb renderer and the set is testable on its own.
  */
 const ACTIONS: ToolbarAction[] = [
+  {
+    id: 'paragraph',
+    label: 'Paragraph',
+    toggle: true,
+    active: (editor) => editor.isActive('paragraph'),
+    run: (editor) => {
+      editor.chain().focus().setParagraph().run()
+    },
+  },
   {
     id: 'bold',
     label: 'Bold',
@@ -111,6 +123,23 @@ const ACTIONS: ToolbarAction[] = [
     },
   },
   {
+    id: 'link',
+    label: 'Link',
+    toggle: true,
+    active: (editor) => editor.isActive('link'),
+    run: (editor) => {
+      const current = editor.getAttributes('link')['href'] as string | undefined
+      const url = promptForUrl(
+        'Link URL (leave empty to remove)',
+        current ?? 'https://',
+      )
+      if (url === null) return
+      const chain = editor.chain().focus().extendMarkRange('link')
+      if (url.trim()) chain.setLink({ href: url.trim() }).run()
+      else chain.unsetLink().run()
+    },
+  },
+  {
     id: 'table',
     label: 'Table',
     active: () => false,
@@ -127,8 +156,26 @@ const ACTIONS: ToolbarAction[] = [
     label: 'Image',
     active: () => false,
     run: (editor) => {
-      const url = promptForImageUrl()
+      const url = promptForUrl('Image URL')
       if (url) editor.chain().focus().setImage({ src: url }).run()
+    },
+  },
+  {
+    id: 'undo',
+    label: 'Undo',
+    active: () => false,
+    enabled: (editor) => editor.can().undo(),
+    run: (editor) => {
+      editor.chain().focus().undo().run()
+    },
+  },
+  {
+    id: 'redo',
+    label: 'Redo',
+    active: () => false,
+    enabled: (editor) => editor.can().redo(),
+    run: (editor) => {
+      editor.chain().focus().redo().run()
     },
   },
 ]
@@ -156,6 +203,7 @@ export function EditorToolbar(props: EditorToolbarProps): JSX.Element {
   // Resolve the context accessor once, at setup, then read it lazily so the
   // toolbar stays reactive to the editor being created and destroyed.
   const contextAccessor = useEditorAccessor()
+  const contextEditable = useContext(EditorEditableContext)
   const editor = () => local.editor ?? contextAccessor?.() ?? null
 
   // TipTap is not a Solid store, so its `transaction` events are bridged into a
@@ -167,7 +215,11 @@ export function EditorToolbar(props: EditorToolbarProps): JSX.Element {
     if (!instance) return
     const onTransaction = () => setVersion((value) => value + 1)
     instance.on('transaction', onTransaction)
-    onCleanup(() => instance.off('transaction', onTransaction))
+    instance.on('update', onTransaction)
+    onCleanup(() => {
+      instance.off('transaction', onTransaction)
+      instance.off('update', onTransaction)
+    })
   })
 
   const isActive = (action: ToolbarAction) => {
@@ -175,13 +227,25 @@ export function EditorToolbar(props: EditorToolbarProps): JSX.Element {
     const instance = editor()
     return instance ? action.active(instance) : false
   }
+  const isDisabled = (action: ToolbarAction) => {
+    version()
+    const instance = editor()
+    const editable = local.editor
+      ? instance?.isEditable
+      : (contextEditable?.() ?? instance?.isEditable)
+    return (
+      !editable ||
+      !instance ||
+      (action.enabled ? !action.enabled(instance) : false)
+    )
+  }
 
   return (
     <div
       {...rest}
       role="toolbar"
       aria-label={local['aria-label'] ?? 'Formatting'}
-      class={local.class}
+      class={`flex flex-wrap gap-1 rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-2 ${local.class ?? ''}`}
       data-slot="editor-toolbar"
     >
       <For each={ACTIONS}>
@@ -193,11 +257,11 @@ export function EditorToolbar(props: EditorToolbarProps): JSX.Element {
             data-active={action.toggle && isActive(action) ? '' : undefined}
             aria-pressed={action.toggle ? isActive(action) : undefined}
             aria-label={action.label}
-            disabled={editor() === null}
-            class="rounded border border-outline-gray-3 px-2 py-1 text-xs font-medium text-ink-gray-7 hover:bg-surface-gray-2 data-[active]:bg-surface-gray-3 data-[active]:text-ink-gray-9 disabled:opacity-50"
+            disabled={isDisabled(action)}
+            class="h-7 rounded-3 border border-outline-gray-2 bg-surface-elevation-1 px-2 text-base font-medium text-ink-gray-7 hover:bg-surface-gray-2 data-[active]:bg-surface-gray-3 data-[active]:text-ink-gray-9 focus-visible:focus-ring-blue disabled:opacity-50"
             onClick={() => {
               const instance = editor()
-              if (instance) action.run(instance)
+              if (instance && !isDisabled(action)) action.run(instance)
             }}
           >
             {action.label}

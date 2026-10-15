@@ -37,13 +37,13 @@ export function tabTrackClasses(opts: {
       return [
         'bg-surface-gray-2',
         isSm ? 'gap-1 p-px' : 'gap-1.5 p-px',
-        tabTrackRadiusClasses(variant, size),
+        tabTrackRadiusClasses(),
       ]
     case 'ghost':
       return [
         'bg-surface-base',
-        isSm ? 'gap-1 p-px' : 'gap-1.5 p-0.5',
-        tabTrackRadiusClasses(variant, size),
+        isSm ? 'gap-1 p-px' : 'gap-1.5 p-px',
+        tabTrackRadiusClasses(),
       ]
     case 'underline':
       return vertical
@@ -74,22 +74,15 @@ export function tabIndicatorSurfaceClasses(
 }
 
 /** Track radius, one step outside the trigger radius. */
-export function tabTrackRadiusClasses(
-  variant: TabsVariant,
-  size: TabsSize,
-): string {
-  if (size === 'sm') return 'rounded-4'
-  return variant === 'ghost' ? 'rounded-5' : 'rounded-[10px]'
+function tabTrackRadiusClasses(): string {
+  return 'rounded-3'
 }
 
 /** Clip layer for the sliding pill indicator (subtle/ghost). */
-export function tabIndicatorClipClasses(
-  variant: TabsVariant,
-  size: TabsSize,
-): string[] {
+export function tabIndicatorClipClasses(): string[] {
   return [
     'pointer-events-none absolute inset-0 overflow-hidden',
-    tabTrackRadiusClasses(variant, size),
+    tabTrackRadiusClasses(),
   ]
 }
 
@@ -127,8 +120,9 @@ export function tabRadiusClasses(
 ): string {
   if (variant === 'underline') return ''
   if (variant === 'subtle') {
-    return size === 'sm' ? 'rounded-[7px]' : 'rounded-[9px]'
+    return 'rounded-2'
   }
+  if (variant === 'ghost') return 'rounded-2'
   if (variant === 'browser-tab') {
     if (browserTabBase === 'start') return 'rounded-e-4'
     if (browserTabBase === 'end') return 'rounded-s-4'
@@ -154,35 +148,42 @@ export function tabPillClasses(opts: {
   const isSm = size === 'sm'
   const vertical = orientation === 'vertical'
 
+  const padded = !vertical && (variant === 'subtle' || variant === 'ghost')
   const sizeClasses = iconOnly
-    ? isSm
-      ? 'size-6.5 p-[5px]'
-      : 'size-7 p-[5px]'
+    ? padded
+      ? isSm
+        ? 'size-6.5 p-[5px]'
+        : 'size-7.5 p-[5px]'
+      : isSm
+        ? 'size-7 p-[5px]'
+        : 'size-8 p-[5px]'
     : variant === 'underline'
       ? vertical
         ? isSm
-          ? 'h-6.5 gap-2 px-2'
-          : 'h-7 gap-2 px-2'
+          ? 'h-7 gap-2 px-2'
+          : 'h-8 gap-2 px-2'
         : isSm
           ? 'h-7 gap-2'
           : 'h-8 gap-2'
       : variant === 'browser-tab'
         ? vertical
           ? isSm
-            ? 'h-6.5 gap-2 px-2'
-            : 'h-7 gap-2 px-2.5'
+            ? 'h-7 gap-2 px-2'
+            : 'h-8 gap-2 px-2.5'
           : isSm
             ? 'h-7 gap-2 px-2 py-[5px]'
             : 'h-8 gap-2 px-2.5 py-[7px]'
-        : isSm
-          ? 'h-6.5 gap-2 px-2 py-[5px]'
-          : 'h-7 gap-2 px-2.5 py-1.5'
+        : padded
+          ? isSm
+            ? 'h-6.5 gap-2 px-2 py-[5px]'
+            : 'h-7.5 gap-2 px-2.5 py-1.5'
+          : isSm
+            ? 'h-7 gap-2 px-2 py-[5px]'
+            : 'h-8 gap-2 px-2.5 py-1.5'
 
   return [
     'inline-flex box-border shrink-0 select-none items-center justify-center whitespace-nowrap outline-none transition-[background-color,color,box-shadow] duration-150 ease-out motion-reduce:transition-none',
-    variant === 'subtle'
-      ? 'text-sm leading-[16.1px]'
-      : 'text-base leading-tighter',
+    'text-base leading-tighter',
     active ? 'text-ink-gray-8' : 'text-ink-gray-6',
     size === 'md' && variant !== 'underline' && variant !== 'subtle'
       ? 'font-medium tracking-[0.015em]'
@@ -247,8 +248,8 @@ export function createTabIndicator(opts: TabIndicatorOptions) {
     const borderBottom = Number.parseFloat(style.borderBottomWidth) || 0
     const borderLeft = Number.parseFloat(style.borderLeftWidth) || 0
     const borderRight = Number.parseFloat(style.borderRightWidth) || 0
-    const x = activeRect.left - trackRect.left - borderLeft
-    const y = activeRect.top - trackRect.top - borderTop
+    const x = activeRect.left - trackRect.left - borderLeft + track.scrollLeft
+    const y = activeRect.top - trackRect.top - borderTop + track.scrollTop
 
     if (opts.variant() === 'underline') {
       if (opts.orientation() === 'vertical') {

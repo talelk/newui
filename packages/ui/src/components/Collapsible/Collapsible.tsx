@@ -37,11 +37,12 @@ export const CollapsibleRoot: ParentComponent<CollapsibleProps> = (props) => {
     'class',
   ])
 
+  const machineId = createId('collapsible')
   const { api } = createZagApi<CollapsibleApi>(
     zag.machine,
     zag.connect,
     () => ({
-      id: createId('collapsible'),
+      id: machineId,
       open: local.open,
       defaultOpen: local.defaultOpen,
       disabled: local.disabled,

@@ -119,7 +119,7 @@ function TooltipBody(props: ChartTooltipSlotProps): JSX.Element {
           style={{
             'margin-bottom': '0.5rem',
             'font-size': '0.75rem',
-            color: 'var(--ink-gray-5)',
+            color: 'var(--ink-gray-6)',
           }}
         >
           {props.label}
@@ -208,7 +208,7 @@ function SeriesRow(props: { item: ChartTooltipItem }): JSX.Element {
       >
         {props.item.formattedValue}
         <Show when={props.item.percent !== undefined}>
-          <span style={{ color: 'var(--ink-gray-5)', 'font-weight': '400' }}>
+          <span style={{ color: 'var(--ink-gray-6)', 'font-weight': '400' }}>
             {' '}
             {formatPercent(props.item.percent ?? 0)}
           </span>
@@ -221,7 +221,7 @@ function SeriesRow(props: { item: ChartTooltipItem }): JSX.Element {
 function ContextRow(props: { item: ChartTooltipItem }): JSX.Element {
   return (
     <div data-slot="chart-tooltip-item" style={ROW}>
-      <span style={{ ...TRUNCATE, color: 'var(--ink-gray-5)' }}>
+      <span style={{ ...TRUNCATE, color: 'var(--ink-gray-6)' }}>
         {props.item.label}
       </span>
       <span

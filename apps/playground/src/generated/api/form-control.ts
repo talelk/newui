@@ -3,6 +3,48 @@
  * Prop tables for FormControl, one entry per part.
  */
 export const API = {
+  "FormControlProps": [
+    {
+      "name": "type",
+      "type": "FormControlTextType",
+      "optional": true
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "optional": true,
+      "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+    },
+    {
+      "name": "label",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Label drawn by the rendered control. Honoured by every type."
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name when no visible `label` is rendered."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "optional": true
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "optional": true,
+      "description": "Form field name."
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "optional": true,
+      "description": "Merged into the rendered control's root."
+    }
+  ],
   "FormControlTextProps": [
     {
       "name": "type",
@@ -54,7 +96,8 @@ export const API = {
     {
       "name": "size",
       "type": "InputSize",
-      "optional": true
+      "optional": true,
+      "default": "sm"
     },
     {
       "name": "variant",
@@ -70,6 +113,41 @@ export const API = {
       "name": "suffix",
       "type": "JSX.Element",
       "optional": true
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "optional": true,
+      "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+    },
+    {
+      "name": "label",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Label drawn by the rendered control. Honoured by every type."
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name when no visible `label` is rendered."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "optional": true
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "optional": true,
+      "description": "Form field name."
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "optional": true,
+      "description": "Merged into the rendered control's root."
     }
   ]
 } as const

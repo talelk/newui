@@ -11,7 +11,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
-import { Project } from 'ts-morph'
+import { Node, Project, type PropertySignature } from 'ts-morph'
 
 const root = process.cwd()
 const isCheck = process.argv.includes('--check')
@@ -19,15 +19,20 @@ const outFile = path.join(root, 'packages/ui/api.json')
 /** Every package that ships props worth documenting: the components and the
  * blocks composed from them. `api.json` is keyed by source path, so the two are
  * told apart later by that path, not by a second table. */
-const SOURCES = ['packages/ui', 'packages/blocks'].map((pkg) =>
-  path.join(root, pkg, 'src'),
-)
+const SOURCES = [
+  'packages/ui',
+  'packages/blocks',
+  'packages/charts',
+  'packages/editor',
+  'packages/code-editor',
+].map((pkg) => path.join(root, pkg, 'src'))
 
 interface ApiMember {
   name: string
   type: string
   optional: boolean
   description?: string
+  default?: string
 }
 
 const project = new Project({
@@ -39,6 +44,14 @@ const project = new Project({
 project.addSourceFilesAtPaths(
   SOURCES.map((dir) => path.join(dir, '**/*.{ts,tsx}')),
 )
+
+function defaultFor(property: PropertySignature): string | undefined {
+  return property
+    .getJsDocs()
+    .flatMap((doc) => doc.getTags())
+    .find((tag) => ['default', 'defaultValue'].includes(tag.getTagName()))
+    ?.getCommentText()
+}
 
 const table: Record<string, Record<string, ApiMember[]>> = {}
 
@@ -53,13 +66,68 @@ for (const sourceFile of project.getSourceFiles()) {
     if (!iface.isExported() || !name.endsWith('Props')) continue
     entries[name] = iface.getProperties().map((property) => {
       const description = property.getJsDocs()[0]?.getDescription().trim()
+      const defaultValue = defaultFor(property)
       return {
         name: property.getName(),
         type: property.getTypeNode()?.getText() ?? 'unknown',
         optional: property.hasQuestionToken(),
         ...(description ? { description } : {}),
+        ...(defaultValue ? { default: defaultValue } : {}),
       }
     })
+    // Include inherited Field and recipe axes while leaving Solid's native DOM
+    // attributes to its standard contract. Their source signatures stay intact.
+    const own = new Set(entries[name]?.map((member) => member.name))
+    for (const symbol of iface.getType().getProperties()) {
+      if (own.has(symbol.getName())) continue
+      const declaration = symbol.getDeclarations()[0]
+      if (
+        !declaration
+          ?.getSourceFile()
+          .getFilePath()
+          .startsWith(path.join(root, 'packages'))
+      )
+        continue
+      const description = Node.isPropertySignature(declaration)
+        ? declaration.getJsDocs()[0]?.getDescription().trim()
+        : undefined
+      const defaultValue = Node.isPropertySignature(declaration)
+        ? defaultFor(declaration)
+        : undefined
+      entries[name]?.push({
+        name: symbol.getName(),
+        type: Node.isPropertySignature(declaration)
+          ? (declaration.getTypeNode()?.getText() ?? 'unknown')
+          : symbol.getTypeAtLocation(iface).getText(iface),
+        optional: symbol.isOptional(),
+        ...(description ? { description } : {}),
+        ...(defaultValue ? { default: defaultValue } : {}),
+      })
+    }
+  }
+
+  for (const alias of sourceFile.getTypeAliases()) {
+    const name = alias.getName()
+    if (!alias.isExported() || !name.endsWith('Props')) continue
+    entries[name] = alias
+      .getType()
+      .getProperties()
+      .flatMap((symbol) => {
+        const declaration = symbol.getDeclarations()[0]
+        if (!declaration || !('getTypeNode' in declaration)) return []
+        const property = declaration as PropertySignature
+        const description = property.getJsDocs()[0]?.getDescription().trim()
+        const defaultValue = defaultFor(property)
+        return [
+          {
+            name: symbol.getName(),
+            type: property.getTypeNode()?.getText() ?? 'unknown',
+            optional: symbol.isOptional(),
+            ...(description ? { description } : {}),
+            ...(defaultValue ? { default: defaultValue } : {}),
+          },
+        ]
+      })
   }
 
   if (Object.keys(entries).length > 0) {

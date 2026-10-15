@@ -59,3 +59,28 @@ describe('TextInput (browser, real CSS)', () => {
     expect(withPrefix).toBeGreaterThan(plain)
   })
 })
+
+it('reserves both adornments, defaults to 28px and paints an invalid border', () => {
+  const { container } = render(() => (
+    <TextInput
+      label="Amount"
+      error="Enter a positive amount"
+      prefix={<span>$</span>}
+      suffix={<span>USD</span>}
+    />
+  ))
+  const input = container.querySelector('input') as HTMLInputElement
+  const style = getComputedStyle(input)
+  expect(input.getBoundingClientRect().height).toBe(28)
+  expect(Number.parseFloat(style.paddingInlineStart)).toBeGreaterThanOrEqual(32)
+  expect(Number.parseFloat(style.paddingInlineEnd)).toBeGreaterThanOrEqual(32)
+  expect(input.getAttribute('aria-invalid')).toBe('true')
+  expect(style.borderColor).not.toBe('transparent')
+})
+
+it('preserves explicit md geometry beside the compact default', () => {
+  const { getByRole } = render(() => (
+    <TextInput size="md" label="Standard input" />
+  ))
+  expect(getByRole('textbox').getBoundingClientRect().height).toBe(32)
+})

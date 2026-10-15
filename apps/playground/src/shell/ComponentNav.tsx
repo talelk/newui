@@ -1,4 +1,3 @@
-import { Icon } from '@newui/ui'
 import { A, useLocation } from '@solidjs/router'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import {
@@ -24,11 +23,7 @@ export type NavKind = 'component' | 'block'
 
 /** The pages in each section that are not generated. */
 export const OVERVIEW: Record<NavKind, { title: string; href: string }[]> = {
-  component: [
-    { title: 'All components', href: '/components' },
-    { title: 'Anatomy & variants', href: '/components/atoms' },
-    { title: 'Feedback & state', href: '/components/feedback' },
-  ],
+  component: [{ title: 'All components', href: '/components' }],
   block: [{ title: 'All blocks', href: '/blocks' }],
 }
 
@@ -45,10 +40,21 @@ function matches(entry: ComponentEntry, query: string): boolean {
 
 export function ComponentNav(props: { kind: NavKind }): JSX.Element {
   const location = useLocation()
+  const base = () => `/${location.pathname.split('/')[1] ?? 'components'}`
   const [query, setQuery] = createSignal('')
 
   const visible = createMemo(() =>
-    COMPONENTS.filter((entry) => entry.shipped && entry.kind === props.kind)
+    COMPONENTS.filter(
+      (entry) =>
+        entry.shipped &&
+        entry.kind === props.kind &&
+        (base() === '/charts'
+          ? entry.group === 'Charts'
+          : base() === '/editors'
+            ? entry.group === 'Editors'
+            : entry.package ===
+              (props.kind === 'block' ? '@newui/blocks' : '@newui/ui')),
+    )
       .filter((entry) => matches(entry, query().trim()))
       .slice()
       .sort((a, b) => a.name.localeCompare(b.name)),
@@ -61,9 +67,16 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
     })).filter((section) => section.entries.length > 0),
   )
 
-  const base = () => (props.kind === 'block' ? '/blocks' : '/components')
   const current = () => location.pathname.split('/')[2] ?? ''
-  const overview = () => OVERVIEW[props.kind]
+  const overview = () =>
+    base() === '/charts' || base() === '/editors'
+      ? [
+          {
+            title: base() === '/charts' ? 'All charts' : 'All editors',
+            href: base(),
+          },
+        ]
+      : OVERVIEW[props.kind]
 
   return (
     <nav
@@ -72,16 +85,16 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
     >
       <label class="relative flex items-center">
         <span class="sr-only">Filter</span>
-        <Icon
-          icon="lucide-search"
-          class="pointer-events-none absolute start-2 size-3.5 text-ink-gray-5"
+        <span
+          aria-hidden="true"
+          class="lucide-search pointer-events-none absolute start-2.5 size-4 text-ink-gray-6"
         />
         <input
           type="search"
           value={query()}
           onInput={(event) => setQuery(event.currentTarget.value)}
           placeholder="Filter…"
-          class="h-7 w-full rounded-4 border border-outline-gray-2 bg-surface-base ps-7 pe-2 text-sm text-ink-gray-8 placeholder:text-ink-gray-5 focus-visible:focus-ring"
+          class="h-7 w-full rounded-3 border border-outline-gray-2 bg-surface-base ps-8 pe-2 text-base text-ink-gray-8 placeholder:text-ink-gray-6 focus-visible:focus-ring"
         />
       </label>
 
@@ -106,7 +119,7 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
       <Show
         when={grouped().length > 0}
         fallback={
-          <p class="px-2 text-sm text-ink-gray-5">
+          <p class="px-2 text-sm text-ink-gray-6">
             Nothing matches “{query()}”.
           </p>
         }
@@ -114,7 +127,7 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
         <For each={grouped()}>
           {(section) => (
             <div class="flex flex-col gap-0.5">
-              <h2 class="px-2 text-xs font-medium tracking-wide text-ink-gray-5 uppercase">
+              <h2 class="px-2 text-xs font-medium tracking-wide text-ink-gray-6 uppercase">
                 {section.group}
               </h2>
               <ul class="flex flex-col gap-0.5">
@@ -132,7 +145,7 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
                           {entry.name}
                         </span>
                         <Show when={!entry.spec}>
-                          <span class="shrink-0 text-xs text-ink-gray-5">
+                          <span class="shrink-0 text-xs text-ink-gray-6">
                             api
                           </span>
                         </Show>

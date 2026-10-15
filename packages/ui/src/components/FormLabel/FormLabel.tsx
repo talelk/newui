@@ -16,7 +16,7 @@ export interface FormLabelProps {
 }
 
 /**
- * A form label on the fixed label typography: 13px (`text-sm`), `leading-tighter`,
+ * A form label on the fixed label typography: 12px/16px (`text-caption`),
  * `ink-gray-6` (or `ink-gray-4` when disabled). It does not follow the control's
  * `size` — a label reads the same whatever box sits under it.
  *
@@ -41,7 +41,7 @@ export function FormLabel(props: FormLabelProps): JSX.Element {
       for={local.id}
       data-slot="label"
       class={cn(
-        'block text-sm leading-tighter',
+        'block text-caption font-medium',
         local.disabled ? 'text-ink-gray-4' : 'text-ink-gray-6',
         local.class,
       )}

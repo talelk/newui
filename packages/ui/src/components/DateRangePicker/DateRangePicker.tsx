@@ -1,6 +1,7 @@
 import { DateFormatter, type DateValue } from '@internationalized/date'
 import * as zag from '@zag-js/date-picker'
 import { type JSX, Show, splitProps } from 'solid-js'
+import { fieldSizes, popupFieldVariants } from '../../lib/control-styles'
 import {
   type DateRangeValue,
   toDate,
@@ -71,6 +72,7 @@ export interface DateRangePickerProps {
   offset?: number
   /** Shows a clear control when a range is selected. */
   clearable?: boolean
+  /** @default sm */
   size?: DateRangePickerSize
   variant?: DateRangePickerVariant
   /** Shared labelling contract (P5). */
@@ -82,21 +84,6 @@ export interface DateRangePickerProps {
   'aria-label'?: string
   /** Merged into the root. */
   class?: string
-}
-
-const SIZE: Record<DateRangePickerSize, string> = {
-  xs: 'h-6 rounded-3 text-xs',
-  sm: 'h-7 rounded-4 text-base',
-  md: 'h-8 rounded-4 text-base',
-  lg: 'h-10 rounded-5 text-lg',
-}
-
-const VARIANT: Record<DateRangePickerVariant, string> = {
-  subtle:
-    'border border-surface-gray-2 bg-surface-gray-2 hover:border-outline-gray-3 hover:bg-surface-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:bg-surface-base data-[state=open]:shadow-sm',
-  outline:
-    'border border-outline-gray-2 bg-surface-base hover:border-outline-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:shadow-sm',
-  ghost: 'border-0 bg-transparent',
 }
 
 const navButton =
@@ -146,11 +133,12 @@ function DateRangePickerControl(props: ControlProps): JSX.Element {
 
   const readOnly = () => Boolean(local.readonly) || local.typeable === false
 
+  const machineId = createId('date-range-picker')
   const { api } = createZagApi<DateRangePickerApi>(
     zag.machine,
     zag.connect,
     () => ({
-      id: createId('date-range-picker'),
+      id: machineId,
       locale: local.locale ?? 'en-US',
       selectionMode: 'range',
       numOfMonths: local.dualPane ? 2 : 1,
@@ -221,18 +209,19 @@ function DateRangePickerControl(props: ControlProps): JSX.Element {
       <div
         {...api().getControlProps()}
         data-slot="date-range-picker-control"
+        data-invalid={field?.hasError() ? '' : undefined}
         class={cn(
           'flex w-full items-center transition-colors',
-          SIZE[size()],
-          VARIANT[local.variant ?? 'subtle'],
+          fieldSizes[size()],
+          popupFieldVariants[local.variant ?? 'outline'],
           'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:opacity-60',
-          'focus-within:focus-ring',
+          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
         )}
       >
         <input
           {...api().getInputProps({ index: 0 })}
           data-slot="date-range-picker-input"
-          aria-label={field ? undefined : bareName()}
+          aria-label={field?.hasLabel() ? undefined : bareName()}
           aria-describedby={field?.describedBy()}
           aria-errormessage={field?.hasError() ? field?.errorId() : undefined}
           class={cn(inputClass, local.readonly && 'cursor-pointer')}
@@ -281,7 +270,7 @@ function DateRangePickerControl(props: ControlProps): JSX.Element {
             <div
               {...api().getContentProps()}
               data-slot="date-range-picker-content"
-              class="w-fit rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-ink-gray-9 shadow-lg focus-visible:outline-none"
+              class="w-fit rounded-6 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-ink-gray-9 shadow-lg focus-visible:outline-none"
             >
               <CalendarView
                 api={api()}
@@ -316,21 +305,16 @@ export function DateRangePicker(props: DateRangePickerProps): JSX.Element {
     'error',
     'required',
   ])
-  const hasLabeling = () =>
-    Boolean(local.label || local.description || local.error || local.required)
-
   return (
-    <Show when={hasLabeling()} fallback={<DateRangePickerControl {...props} />}>
-      <Field
-        id={props.id}
-        label={local.label}
-        description={local.description}
-        error={local.error}
-        required={local.required}
-        disabled={props.disabled}
-      >
-        <DateRangePickerControl {...props} />
-      </Field>
-    </Show>
+    <Field
+      id={props.id}
+      label={local.label}
+      description={local.description}
+      error={local.error}
+      required={local.required}
+      disabled={props.disabled}
+    >
+      <DateRangePickerControl {...props} />
+    </Field>
   )
 }

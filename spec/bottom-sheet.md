@@ -13,13 +13,13 @@ come from the primitive.
 | `defaultOpen` | `boolean` | `false` | uncontrolled |
 | `onOpenChange` | `(open: boolean) => void` | — | |
 | `title` | `JSX.Element` | — | centered in the handle area; names the sheet |
-| `dismissible` | `boolean` | `true` | outside-click + Escape |
+| `dismissible` | `boolean` | `true` | outside-click + Escape + downward drag |
 | `class` | `string` | — | merged into the sheet content |
 
 ## Behavior
 
 - Modal (`role="dialog"`), focus-trapped, portalled to the body.
-- `dismissible={false}` disables both outside-click and Escape dismissal.
+- `dismissible={false}` disables outside-click, Escape and gesture dismissal.
 - With no `title`, the sheet takes `aria-label="Bottom sheet"`.
 
 ## Styling hooks
@@ -27,8 +27,14 @@ come from the primitive.
 `data-slot` (`bottom-sheet-backdrop` / `-positioner` / `-content` / `-handle` /
 `-title` / `-body`), plus Zag's `data-state`.
 
-## Not yet
+The sheet uses the shared 12px overlay radius on its top corners, an opaque
+elevated surface, a semantic border, and a 20px section title.
 
-Swipe-down-to-close is not implemented; the handle is presentational. The
-component uses the `dialog` machine rather than `@zag-js/drawer`, whose stacked
-drawer registry is a different model from frappe-ui's sheet.
+## Gestures
+
+Drag the handle down by at least 96 CSS pixels to dismiss. A shorter drag snaps
+back; cancellation never dismisses. Horizontal gestures do not dismiss. A body
+gesture can begin dismissal only at scrollTop zero. Scrolling within content
+keeps the sheet open. Snap-back motion is disabled with reduced motion.
+Keyboard users can dismiss with Escape when dismissible; provide an explicit
+close action for a non-dismissible sheet.

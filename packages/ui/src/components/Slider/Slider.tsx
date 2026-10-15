@@ -1,5 +1,6 @@
 import * as zag from '@zag-js/slider'
 import { For, type JSX, splitProps } from 'solid-js'
+import { Field, useField } from '../../lib/field'
 import { createId } from '../../lib/id'
 import { cn } from '../../lib/tv'
 import { createZagApi } from '../../lib/zag'
@@ -20,10 +21,17 @@ export interface SliderProps {
   disabled?: boolean
   /** Accessible name for the thumb(s). Required when there is no visible label. */
   'aria-label'?: string
+  id?: string
+  label?: JSX.Element
+  description?: JSX.Element
+  error?: JSX.Element | false
+  required?: boolean
   class?: string
 }
 
-export function Slider(props: SliderProps): JSX.Element {
+function SliderControl(props: SliderProps): JSX.Element {
+  const field = useField()
+  const machineId = createId('slider')
   const [local] = splitProps(props, [
     'value',
     'defaultValue',
@@ -39,7 +47,14 @@ export function Slider(props: SliderProps): JSX.Element {
   const size = () => local.size ?? 'sm'
 
   const { api } = createZagApi<SliderApi>(zag.machine, zag.connect, () => ({
-    id: createId('slider'),
+    id: machineId,
+    ids: {
+      thumb: (index: number) =>
+        index === 0
+          ? (props.id ?? field?.controlId() ?? `${machineId}-thumb-${index}`)
+          : `${machineId}-thumb-${index}`,
+      label: field?.labelId(),
+    },
     value: local.value,
     defaultValue: local.defaultValue ?? [0],
     min: local.min ?? 0,
@@ -54,6 +69,7 @@ export function Slider(props: SliderProps): JSX.Element {
     <div
       {...api().getRootProps()}
       data-slot="slider"
+      data-invalid={field?.hasError() ? '' : undefined}
       class={cn(
         'relative flex w-full touch-none select-none items-center',
         size() === 'md' ? 'h-5' : 'h-4',
@@ -84,12 +100,17 @@ export function Slider(props: SliderProps): JSX.Element {
             <div
               {...api().getThumbProps({ index: index() })}
               data-slot="slider-thumb"
+              id={api().getThumbProps({ index: index() })['id']}
+              aria-labelledby={props.label ? field?.labelId() : undefined}
+              aria-describedby={field?.describedBy()}
+              aria-invalid={field?.hasError() ? 'true' : undefined}
               aria-label={local['aria-label']}
               class={cn(
                 'rounded-full bg-surface-base shadow-md transition-shadow duration-200 ease-out',
                 size() === 'md' ? 'size-5' : 'size-4',
                 'hover:ring-[6px] hover:ring-outline-gray-3/40',
-                'focus:outline-none focus-visible:focus-ring',
+                'focus:outline-none focus-visible:focus-ring-blue motion-reduce:transition-none',
+                field?.hasError() && 'ring-1 ring-outline-red-6',
                 'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-60',
               )}
             />
@@ -102,5 +123,21 @@ export function Slider(props: SliderProps): JSX.Element {
         </For>
       </div>
     </div>
+  )
+}
+
+/** The same label, supporting text and invalid-state contract as text entry. */
+export function Slider(props: SliderProps): JSX.Element {
+  return (
+    <Field
+      id={props.id}
+      label={props.label}
+      description={props.description}
+      error={props.error}
+      required={props.required}
+      disabled={props.disabled}
+    >
+      <SliderControl {...props} />
+    </Field>
   )
 }

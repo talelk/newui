@@ -10,6 +10,9 @@ import { createContext, useContext } from 'solid-js'
 export type EditorAccessor = () => TiptapEditor | null
 
 const EditorContext = createContext<EditorAccessor>()
+// setEditable(..., false) intentionally emits no document update. Keep the
+// reactive prop available to toolbars without manufacturing a TipTap edit event.
+export const EditorEditableContext = createContext<() => boolean>()
 
 export { EditorContext }
 

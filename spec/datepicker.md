@@ -29,7 +29,7 @@ and focus come from the primitive.
 | `clearable` | `boolean` | `false` | shows a clear control when a date is selected |
 | `name` | `string` | — | form field name |
 | `size` | `xs \| sm \| md \| lg` | `sm` | |
-| `variant` | `subtle \| outline \| ghost` | `subtle` | |
+| `variant` | `subtle \| outline \| ghost` | `outline` | |
 | `label` / `description` / `error` / `required` | — | — | shared labelling contract (P5) |
 | `aria-label` | `string` | — | accessible name when no visible `label` |
 | `class` | `string` | — | merged into the root |
@@ -68,3 +68,7 @@ Zag's `data-selected`, `data-today`, `data-outside-range`, `data-disabled`,
 
 `DateRangePicker` and `DateTimePicker` are separate components, not flags on this
 one (P8).
+
+Calendar view-switch buttons include the displayed month/year in their
+accessible names, followed by the action to choose a month or year. This also
+applies to the shared DateRangePicker and DateTimePicker calendar renderer.

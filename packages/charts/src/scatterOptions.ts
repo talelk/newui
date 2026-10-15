@@ -238,7 +238,7 @@ function buildSeries(
             // towards.
             position: isRTL ? 'left' : 'right',
             color: tokens.label,
-            fontSize: DATA_LABEL_FONT_SIZE,
+            fontSize: DATA_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
             // Stated rather than left to echarts, whose default for a cartesian
             // series prints the value: what the axes already say.
             formatter: (params: { name?: string }) => String(params.name ?? ''),
@@ -283,7 +283,7 @@ function scatterAxis(
             nameGap: 8,
             nameTextStyle: {
               color: tokens.label,
-              fontSize: AXIS_LABEL_FONT_SIZE,
+              fontSize: AXIS_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
             },
           }
         : {}),

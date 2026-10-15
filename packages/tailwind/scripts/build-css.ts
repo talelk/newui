@@ -95,10 +95,18 @@ for (const [key] of Object.entries(shadows)) {
   else decl(`--shadow-${key}`, `var(--elevation-${key})`)
 }
 
+/** Keep the documented pixel scale at a 16px root while respecting text zoom. */
+function relativeType(value: string | number): string {
+  const text = String(value)
+  return /^\d+(?:\.\d+)?px$/.test(text)
+    ? `${Number.parseFloat(text) / 16}rem`
+    : text
+}
+
 comment('typography — text-<size> and text-<size>-<weight>, text + paragraph')
 for (const [key, style] of Object.entries(fontSize)) {
-  decl(`--text-${key}`, style.fontSize)
-  decl(`--text-${key}--line-height`, style.lineHeight)
+  decl(`--text-${key}`, relativeType(style.fontSize))
+  decl(`--text-${key}--line-height`, relativeType(style.lineHeight))
   decl(`--text-${key}--letter-spacing`, style.letterSpacing)
   decl(`--text-${key}--font-weight`, String(style.fontWeight))
 
@@ -111,8 +119,8 @@ for (const [key, style] of Object.entries(fontSize)) {
   for (const weight of WEIGHTS) {
     const letterSpacing = byWeight[weight]
     if (letterSpacing === undefined) continue
-    decl(`--text-${key}-${weight}`, style.fontSize)
-    decl(`--text-${key}-${weight}--line-height`, style.lineHeight)
+    decl(`--text-${key}-${weight}`, relativeType(style.fontSize))
+    decl(`--text-${key}-${weight}--line-height`, relativeType(style.lineHeight))
     decl(`--text-${key}-${weight}--letter-spacing`, letterSpacing)
     decl(`--text-${key}-${weight}--font-weight`, String(fontWeight[weight]))
   }

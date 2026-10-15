@@ -4,15 +4,17 @@ Per-component API contracts. Source-of-truth order:
 
 1. `spec/*.md` — current contracts.
 2. [`adr/`](./adr/README.md) — decision history.
-3. `../CONTEXT.md` — vocabulary.
-4. `../PHILOSOPHY.md` — design rules.
+3. `../PHILOSOPHY.md` — design rules.
+4. `../CONTEXT.md` — vocabulary.
 
 A contract accepted later supersedes older text. Shipped code is evidence of
 what a contract says, never the contract itself.
 
 ## Foundations
 
-- `foundations.md` — typography, focus, radius, color (pending).
+- [Visual system](visual-system.md) — typography, control sizing, surfaces, states and motion.
+- [Reference examples](reference-examples.md) — application and component example inventory.
+- [TanStack integration](tanstack-integration.md) — example-layer ownership and budgets.
 
 ## Components
 
@@ -35,7 +37,9 @@ what a contract says, never the contract itself.
 - `timepicker.md` — TimePicker (time list).
 - `dialog.md` — Dialog parts, `dismissible`, imperative `dialog.*` (pending).
 - `dialog-imperative.md` — `dialog.confirm` / `dialog.danger` / `dialog.prompt` + `DialogHost`.
-- `selection.md` — Select (pending).
+- `select.md` — Select with the shared Field contract.
+- `number-input.md`, `slider.md` — numeric entry and range selection.
+- `card.md`, `tabs.md`, `tab-buttons.md` — card and tab-family visual contracts.
 - `switch.md` — Switch (Zag-backed).
 - `button.md` — Button variants, sizes, icon form.
 

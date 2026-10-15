@@ -5,12 +5,13 @@ import {
   type JSX,
   type ParentComponent,
   Show,
+  splitProps,
 } from 'solid-js'
 import { createDisclosure } from '../../lib/disclosure'
 import { createId } from '../../lib/id'
 import { Portal } from '../../lib/portal'
 import { cn } from '../../lib/tv'
-import { createZagApi, createZagContext } from '../../lib/zag'
+import { createZagApi, createZagContext, mergeProps } from '../../lib/zag'
 import {
   Button,
   type ButtonSize,
@@ -74,8 +75,9 @@ const Root: ParentComponent<DialogRootProps> = (props) => {
     onChange: (value) => props.onOpenChange?.(value),
   })
 
+  const machineId = createId('dialog')
   const { api } = createZagApi<DialogApi>(zag.machine, zag.connect, () => ({
-    id: createId('dialog'),
+    id: machineId,
     open: open(),
     modal: props.modal ?? true,
     closeOnEscape: dismissible(),
@@ -91,15 +93,18 @@ interface PartProps {
   children?: JSX.Element
 }
 
-const Trigger: ParentComponent<PartProps> = (props) => {
+const Trigger: ParentComponent<
+  Omit<JSX.ButtonHTMLAttributes<HTMLButtonElement>, 'style'>
+> = (props) => {
+  const [local, rest] = splitProps(props, ['class', 'children'])
   const api = useApi()
   return (
     <button
-      {...api().getTriggerProps()}
+      {...mergeProps(api().getTriggerProps(), rest)}
       data-slot="dialog-trigger"
-      class={props.class}
+      class={local.class}
     >
-      {props.children}
+      {local.children}
     </button>
   )
 }
@@ -309,7 +314,7 @@ const Content: ParentComponent<DialogContentProps> = (props) => {
             data-slot="dialog-content"
             data-size={size()}
             class={cn(
-              'relative z-50 w-full overflow-hidden rounded-7 bg-surface-elevation-1 text-ink-gray-9 shadow-xl',
+              'relative z-50 w-full overflow-hidden rounded-6 border border-outline-gray-1 bg-surface-elevation-1 text-ink-gray-9 shadow-xl',
               'focus-visible:outline-none',
               SIZE[size()],
               props.bare ? '' : 'p-4',

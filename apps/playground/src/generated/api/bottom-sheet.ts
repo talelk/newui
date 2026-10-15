@@ -31,7 +31,7 @@ export const API = {
       "name": "dismissible",
       "type": "boolean",
       "optional": true,
-      "description": "Allow outside-click and Escape to close. Default `true`."
+      "description": "Allow outside-click, Escape and drag gestures to close. Default `true`."
     },
     {
       "name": "children",

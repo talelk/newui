@@ -1,4 +1,3 @@
-import { Icon } from '@newui/ui'
 import { For, type JSX } from 'solid-js'
 import { colorScheme, setColorScheme } from './theme'
 
@@ -21,7 +20,7 @@ const ICON: Record<(typeof SCHEMES)[number], string> = {
  */
 export function ThemeMenu(): JSX.Element {
   return (
-    <fieldset class="flex shrink-0 items-center gap-0.5 rounded-4 bg-surface-gray-2 p-0.5 m-0 border-0">
+    <fieldset class="flex shrink-0 items-center gap-0.5 rounded-3 bg-surface-gray-2 p-0.5 m-0 border-0">
       <legend class="sr-only">Colour scheme</legend>
       <For each={SCHEMES}>
         {(scheme) => (
@@ -31,9 +30,9 @@ export function ThemeMenu(): JSX.Element {
             aria-pressed={colorScheme() === scheme}
             aria-label={scheme}
             title={scheme}
-            class="grid size-6 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:text-ink-gray-9 aria-pressed:bg-surface-base aria-pressed:text-ink-gray-9 aria-pressed:shadow-sm"
+            class="grid size-10 sm:size-7 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:text-ink-gray-9 aria-pressed:bg-surface-base aria-pressed:text-ink-gray-9 aria-pressed:shadow-sm focus-visible:focus-ring-blue"
           >
-            <Icon icon={ICON[scheme]} class="size-3.5" />
+            <span aria-hidden="true" class={`${ICON[scheme]} size-3.5`} />
           </button>
         )}
       </For>

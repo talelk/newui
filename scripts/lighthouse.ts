@@ -12,9 +12,11 @@
  *    floor rather than a target; the library's real cost is the bundle budget
  *    in `scripts/size.ts`, not this number.
  */
-import { spawn, spawnSync } from 'node:child_process'
+import { spawnSync } from 'node:child_process'
 import { mkdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
+
+import { startPreview } from './preview-server'
 
 const PORT = 4180
 const URL = `http://localhost:${PORT}/spec`
@@ -35,35 +37,10 @@ const BUDGETS: { id: string; min: number; why: string }[] = [
   { id: 'render-blocking-insight', min: 1, why: 'no render-blocking resource' },
 ]
 
-const server = spawn(
-  'pnpm',
-  ['--filter', 'playground', 'preview', '--port', String(PORT), '--strictPort'],
-  { stdio: 'ignore', detached: true },
-)
-
-function stopServer() {
-  try {
-    process.kill(-server.pid)
-  } catch {
-    server.kill()
-  }
-}
-
-async function waitForServer() {
-  for (let attempt = 0; attempt < 60; attempt += 1) {
-    try {
-      const response = await fetch(URL)
-      if (response.ok) return
-    } catch {
-      // not up yet
-    }
-    await new Promise((resolve) => setTimeout(resolve, 500))
-  }
-  throw new Error(`preview did not come up at ${URL}`)
-}
+const preview = startPreview(PORT)
 
 try {
-  await waitForServer()
+  await preview.ready
   mkdirSync(path.dirname(REPORT), { recursive: true })
 
   const run = spawnSync(
@@ -120,5 +97,5 @@ try {
     console.warn('\nAll Lighthouse budgets pass.\n')
   }
 } finally {
-  stopServer()
+  preview.stop()
 }

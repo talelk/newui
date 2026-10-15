@@ -1,5 +1,6 @@
 import * as zag from '@zag-js/switch'
 import { type JSX, Show, splitProps } from 'solid-js'
+import { Field, FieldLabelContent, useField } from '../../lib/field'
 import { createId } from '../../lib/id'
 import { cn } from '../../lib/tv'
 import { createZagApi } from '../../lib/zag'
@@ -34,6 +35,9 @@ export interface SwitchProps {
   label?: JSX.Element
   description?: JSX.Element
   name?: string
+  id?: string
+  error?: JSX.Element | false
+  required?: boolean
   class?: string
 }
 
@@ -42,7 +46,9 @@ export interface SwitchProps {
  * axis is intentionally absent — a switch reads as a state, not a colour, so it
  * stays on the gray scale (P4's "components without a tone axis").
  */
-export function Switch(props: SwitchProps): JSX.Element {
+function SwitchControl(props: SwitchProps): JSX.Element {
+  const field = useField()
+  const machineId = createId('switch')
   const [local, rest] = splitProps(props, [
     'checked',
     'defaultChecked',
@@ -56,10 +62,19 @@ export function Switch(props: SwitchProps): JSX.Element {
     'description',
     'name',
     'class',
+    'id',
+    'error',
+    'required',
   ])
 
   const { api } = createZagApi<SwitchApi>(zag.machine, zag.connect, () => ({
-    id: createId('switch'),
+    id: machineId,
+    ids: {
+      label: field?.labelId(),
+      hiddenInput: local.id ?? field?.controlId(),
+    },
+    required: field?.required() ?? local.required,
+    invalid: field?.hasError(),
     checked: local.checked,
     defaultChecked: local.defaultChecked,
     disabled: local.disabled,
@@ -83,7 +98,7 @@ export function Switch(props: SwitchProps): JSX.Element {
       'relative inline-flex shrink-0 items-center rounded-full border-transparent transition-colors duration-100 ease-in-out',
       // Padded rows show the ring on the surface (`[&:has(:focus-visible)]`),
       // so the control's own ring is suppressed there.
-      !local.padded && 'data-[focus-visible]:focus-ring',
+      !local.padded && 'data-[focus-visible]:focus-ring-blue',
       api().checked ? 'bg-surface-gray-10' : 'bg-surface-gray-4',
       api().disabled
         ? 'cursor-not-allowed bg-surface-gray-3'
@@ -91,12 +106,14 @@ export function Switch(props: SwitchProps): JSX.Element {
           ? 'hover:bg-surface-gray-9 active:bg-surface-gray-8 group-hover:bg-surface-gray-9'
           : 'hover:bg-surface-gray-5 active:bg-surface-gray-6 group-hover:bg-surface-gray-5',
       sizeClass,
+      field?.hasError() && 'ring-1 ring-outline-red-6',
+      'motion-reduce:transition-none',
     )
   }
 
   const thumbClasses = () =>
     cn(
-      'pointer-events-none inline-block rounded-full bg-surface-base shadow ring-0 transition duration-100 ease-in-out',
+      'pointer-events-none inline-block rounded-full bg-surface-base shadow ring-0 transition duration-100 ease-in-out motion-reduce:transition-none',
       size() === 'md'
         ? 'size-3.5 data-[state=checked]:translate-x-3'
         : size() === 'sm'
@@ -166,7 +183,8 @@ export function Switch(props: SwitchProps): JSX.Element {
     // biome-ignore lint/a11y/noStaticElementInteractions: the padded surface forwards clicks from its padding to the control; the row label is the real interactive element.
     // biome-ignore lint/a11y/useKeyWithClickEvents: the control stays keyboard-reachable through the hidden input.
     <div
-      class={cn('flex flex-col', containerClasses(), local.class)}
+      data-slot="switch-root"
+      class={cn('relative flex flex-col', containerClasses(), local.class)}
       onClick={(event) => {
         if (!local.padded || local.disabled) return
         if ((event.target as HTMLElement).closest('[data-slot="switch"]'))
@@ -194,7 +212,9 @@ export function Switch(props: SwitchProps): JSX.Element {
                 data-slot="label"
                 class={labelClasses()}
               >
-                {local.label}
+                <FieldLabelContent required={field?.required()}>
+                  {local.label}
+                </FieldLabelContent>
               </span>
             </Show>
           </div>
@@ -214,9 +234,12 @@ export function Switch(props: SwitchProps): JSX.Element {
           {...api().getHiddenInputProps()}
           role="switch"
           aria-checked={api().checked ? 'true' : 'false'}
+          aria-describedby={field?.describedBy()}
+          aria-invalid={field?.hasError() ? 'true' : undefined}
+          aria-errormessage={field?.hasError() ? field.errorId() : undefined}
         />
       </label>
-      <Show when={local.description}>
+      <Show when={local.description && !field}>
         <span
           class={cn(
             'text-p-sm text-ink-gray-6',
@@ -234,5 +257,21 @@ export function Switch(props: SwitchProps): JSX.Element {
         </span>
       </Show>
     </div>
+  )
+}
+
+export function Switch(props: SwitchProps): JSX.Element {
+  return (
+    <Field
+      id={props.id}
+      label={props.label}
+      inlineLabel
+      description={props.description}
+      error={props.error}
+      required={props.required}
+      disabled={props.disabled}
+    >
+      <SwitchControl {...props} />
+    </Field>
   )
 }

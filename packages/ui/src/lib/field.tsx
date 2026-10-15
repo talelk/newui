@@ -11,15 +11,15 @@ import { cn } from './tv'
 /**
  * The shared labelling contract every input control exposes (frappe-ui's P5).
  *
- * The rendered classes are frappe-ui's, so an input looks the same here as it
- * does there: a 13px label pinned to `leading-tighter`, `text-p-sm` helper and
- * error text, a `space-y-1.5` stack, and an error region that is `role="alert"`.
+ * Labels and supporting copy use the shared 12px/16px caption role.
+ * A `space-y-1.5` stack separates the control from its help and alert region.
  */
 export interface FieldContextValue {
   controlId: () => string
   labelId: () => string
   descriptionId: () => string
   errorId: () => string
+  hasLabel: () => boolean
   hasError: () => boolean
   required: () => boolean
   describedBy: () => string | undefined
@@ -38,9 +38,26 @@ export interface FieldProps {
   error?: JSX.Element | false
   required?: boolean
   disabled?: boolean
+  /** Internal composition: the control renders its own native inline label. */
+  inlineLabel?: boolean
   class?: string
   children: JSX.Element
 }
+
+/** Shared required marker for native inline labels and the standard label. */
+export const FieldLabelContent: ParentComponent<{ required?: boolean }> = (
+  props,
+) => (
+  <>
+    {props.children}
+    <Show when={props.required}>
+      <span class="text-ink-red-5" aria-hidden="true">
+        {' *'}
+      </span>
+      <span class="sr-only">{' (required)'}</span>
+    </Show>
+  </>
+)
 
 export const Field: ParentComponent<FieldProps> = (props) => {
   // The generated half of the id never changes; the caller's `id` may.
@@ -50,7 +67,7 @@ export const Field: ParentComponent<FieldProps> = (props) => {
   const descriptionId = () => `${base()}-description`
   const errorId = () => `${base()}-error`
 
-  const hasError = () => props.error !== undefined && props.error !== false
+  const hasError = () => Boolean(props.error)
 
   const describedBy = () => {
     const ids: string[] = []
@@ -65,30 +82,31 @@ export const Field: ParentComponent<FieldProps> = (props) => {
     descriptionId,
     errorId,
     hasError,
+    hasLabel: () => Boolean(props.label),
     required: () => Boolean(props.required),
     describedBy,
   }
 
   return (
     <FieldContext.Provider value={value}>
-      <div class={cn('space-y-1.5', props.class)}>
-        <Show when={props.label}>
+      <div
+        data-slot="field"
+        data-invalid={hasError() ? '' : undefined}
+        class={cn('relative space-y-1.5', props.class)}
+      >
+        <Show when={props.label && !props.inlineLabel}>
           <label
             id={labelId()}
             for={base()}
             data-slot="label"
             class={cn(
-              'block text-sm leading-tighter',
+              'block text-caption font-medium',
               props.disabled ? 'text-ink-gray-4' : 'text-ink-gray-6',
             )}
           >
-            {props.label}
-            <Show when={props.required}>
-              <span class="text-ink-red-5" aria-hidden="true">
-                {' *'}
-              </span>
-              <span class="sr-only">(required)</span>
-            </Show>
+            <FieldLabelContent required={props.required}>
+              {props.label}
+            </FieldLabelContent>
           </label>
         </Show>
 
@@ -98,10 +116,7 @@ export const Field: ParentComponent<FieldProps> = (props) => {
           <p
             id={descriptionId()}
             data-slot="description"
-            class={cn(
-              'text-p-sm',
-              props.disabled ? 'text-ink-gray-4' : 'text-ink-gray-6',
-            )}
+            class="text-caption text-ink-gray-6"
           >
             {props.description}
           </p>
@@ -112,7 +127,7 @@ export const Field: ParentComponent<FieldProps> = (props) => {
             id={errorId()}
             data-slot="error"
             role="alert"
-            class="whitespace-pre-line text-p-sm text-ink-red-7"
+            class="whitespace-pre-line text-caption text-ink-red-7"
           >
             {props.error}
           </div>

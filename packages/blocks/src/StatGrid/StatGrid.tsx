@@ -58,7 +58,7 @@ export function StatGrid(props: StatGridProps): JSX.Element {
             data-slot="stat"
             onClick={stat.onClick}
             class={cn(
-              'flex flex-col gap-1 rounded-6 border border-outline-gray-1 bg-surface-elevation-1 p-4 text-start',
+              'flex flex-col gap-1 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-start',
               stat.onClick &&
                 'cursor-pointer transition-colors hover:border-outline-gray-3 hover:bg-surface-gray-1 focus-visible:focus-ring',
             )}
@@ -66,12 +66,14 @@ export function StatGrid(props: StatGridProps): JSX.Element {
             <div class="flex items-center gap-2">
               <Show when={stat.icon}>
                 {(icon) => (
-                  <Icon icon={icon()} class="size-4 text-ink-gray-5" />
+                  <Icon icon={icon()} class="size-4 text-ink-gray-6" />
                 )}
               </Show>
               <span class="text-sm text-ink-gray-6">{stat.label}</span>
             </div>
-            <span class="text-2xl-semibold text-ink-gray-9">{stat.value}</span>
+            <span class="text-metric [overflow-wrap:anywhere] text-ink-gray-9">
+              {stat.value}
+            </span>
             <div class="flex items-center gap-2">
               <Show when={stat.delta}>
                 {(delta) => (
@@ -80,7 +82,7 @@ export function StatGrid(props: StatGridProps): JSX.Element {
                     classList={{
                       'text-ink-green-7': isGood(delta()),
                       'text-ink-red-7': !isGood(delta()),
-                      'text-ink-gray-5': delta().direction === 'flat',
+                      'text-ink-gray-6': delta().direction === 'flat',
                     }}
                   >
                     <Icon
@@ -98,7 +100,7 @@ export function StatGrid(props: StatGridProps): JSX.Element {
                 )}
               </Show>
               <Show when={stat.hint}>
-                <span class="truncate text-xs text-ink-gray-5">
+                <span class="truncate text-xs text-ink-gray-6">
                   {stat.hint}
                 </span>
               </Show>

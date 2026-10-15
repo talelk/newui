@@ -259,7 +259,7 @@ export function buildHeatmapOption(
         hideOverlap: true,
         margin: AXIS_LABEL_MARGIN,
         color: tokens.label,
-        fontSize: AXIS_LABEL_FONT_SIZE,
+        fontSize: AXIS_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
         ...categoryLabelFormatter(xFormat, matrix.xValues),
       },
     },
@@ -278,7 +278,7 @@ export function buildHeatmapOption(
         hideOverlap: true,
         margin: AXIS_LABEL_MARGIN,
         color: tokens.label,
-        fontSize: AXIS_LABEL_FONT_SIZE,
+        fontSize: AXIS_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
         ...categoryLabelFormatter(yFormat, matrix.yValues),
       },
     },
@@ -318,7 +318,7 @@ export function buildHeatmapOption(
         label: {
           show: showDataLabels,
           color: tokens.label,
-          fontSize: DATA_LABEL_FONT_SIZE,
+          fontSize: DATA_LABEL_FONT_SIZE * (tokens.fontScale ?? 1),
           formatter: (params: { value?: unknown }) => {
             const value = cellValue(params)
             return format ? format(value) : formatValue(value, 1, true)

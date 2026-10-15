@@ -44,7 +44,7 @@ export function Dropdown(props: DropdownProps): JSX.Element {
         class={cn(
           // frappe's default trigger is a subtle gray `Button` (size `sm`):
           // `h-7 text-base px-2 rounded-4`, not a bordered input-like box.
-          'inline-flex h-7 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-4 bg-surface-gray-2 px-2 text-base text-ink-gray-8 transition-colors',
+          'inline-flex h-8 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-3 bg-surface-gray-2 px-2 text-base text-ink-gray-8 transition-colors',
           'hover:bg-surface-gray-3 active:bg-surface-gray-4',
           'focus-visible:focus-ring',
           'data-[state=open]:bg-surface-gray-4',

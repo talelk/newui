@@ -42,13 +42,13 @@ describe('DatePicker', () => {
 
     // Day view's heading is the visible month; clicking it opens the month grid.
     await userEvent.click(
-      await screen.findByRole('button', { name: 'Switch to month view' }),
+      await screen.findByRole('button', { name: 'October 2026, choose month' }),
     )
     expect(screen.getByText('Jan')).toBeTruthy()
 
     // The month heading drills into the decade.
     await userEvent.click(
-      screen.getByRole('button', { name: 'Switch to year view' }),
+      screen.getByRole('button', { name: '2026, choose year' }),
     )
     expect(screen.getByText('2020 – 2029')).toBeTruthy()
   })

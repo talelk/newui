@@ -1,7 +1,19 @@
 import { render } from '@solidjs/testing-library'
+import type { Editor as TiptapEditor } from '@tiptap/core'
+import { createEffect, createSignal } from 'solid-js'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { useEditorAccessor } from './context'
 import { Editor } from './Editor'
 import { EditorToolbar } from './EditorToolbar'
+
+function Probe(props: { ready: (editor: TiptapEditor) => void }) {
+  const accessor = useEditorAccessor()
+  createEffect(() => {
+    const editor = accessor?.()
+    if (editor) props.ready(editor)
+  })
+  return null
+}
 
 const tick = () => new Promise((resolve) => setTimeout(resolve, 0))
 
@@ -40,7 +52,7 @@ describe('EditorToolbar', () => {
     expect(toolbar?.getAttribute('role')).toBe('toolbar')
     expect(
       container.querySelectorAll('[data-slot="editor-toolbar-item"]').length,
-    ).toBe(9)
+    ).toBe(13)
   })
 
   it('disables its buttons without an editor', () => {
@@ -154,6 +166,86 @@ describe('EditorToolbar', () => {
     } finally {
       prompt.mockRestore()
     }
+  })
+
+  it('creates, edits, cancels and removes a selected link, with undo and redo', async () => {
+    let instance: TiptapEditor | undefined
+    const prompt = vi
+      .spyOn(window, 'prompt')
+      .mockReturnValue('https://example.com/one')
+    const { container } = render(() => (
+      <Editor defaultValue="<p>Project notes</p>">
+        <Probe
+          ready={(editor) => {
+            instance = editor
+          }}
+        />
+        <EditorToolbar />
+      </Editor>
+    ))
+    const editor = instance as unknown as TiptapEditor
+    const button = (action: string) =>
+      container.querySelector(`[data-action="${action}"]`) as HTMLButtonElement
+    expect(button('undo').disabled).toBe(true)
+    expect(button('redo').disabled).toBe(true)
+    editor.commands.selectAll()
+    button('link').click()
+    await tick()
+    expect(container.querySelector('.tiptap a')?.getAttribute('href')).toBe(
+      'https://example.com/one',
+    )
+    expect(button('link').getAttribute('aria-pressed')).toBe('true')
+    prompt.mockReturnValue(null)
+    button('link').click()
+    await tick()
+    expect(container.querySelector('.tiptap a')?.getAttribute('href')).toBe(
+      'https://example.com/one',
+    )
+    prompt.mockReturnValue('https://example.com/two')
+    button('link').click()
+    await tick()
+    expect(prompt).toHaveBeenLastCalledWith(
+      'Link URL (leave empty to remove)',
+      'https://example.com/one',
+    )
+    expect(container.querySelector('.tiptap a')?.getAttribute('href')).toBe(
+      'https://example.com/two',
+    )
+    prompt.mockReturnValue('')
+    button('link').click()
+    await tick()
+    expect(container.querySelector('.tiptap a')).toBeNull()
+    expect(button('undo').disabled).toBe(false)
+    button('undo').click()
+    await tick()
+    expect(button('redo').disabled).toBe(false)
+    button('redo').click()
+    await tick()
+    expect(container.querySelector('.tiptap')?.textContent).toBe(
+      'Project notes',
+    )
+    expect(container.querySelector('.tiptap a')).toBeNull()
+  })
+
+  it('disables formatting when readonly changes and restores it when editable', async () => {
+    const [readonly, setReadonly] = createSignal(false)
+    const { container } = render(() => (
+      <Editor defaultValue="<p>Protected notes</p>" readonly={readonly()}>
+        <EditorToolbar />
+      </Editor>
+    ))
+    const bold = container.querySelector(
+      '[data-action="bold"]',
+    ) as HTMLButtonElement
+    expect(bold.disabled).toBe(false)
+    setReadonly(true)
+    await tick()
+    expect(bold.disabled).toBe(true)
+    bold.click()
+    expect(container.querySelector('.tiptap strong')).toBeNull()
+    setReadonly(false)
+    await tick()
+    expect(bold.disabled).toBe(false)
   })
 
   it('does not report a pressed state for command actions', async () => {

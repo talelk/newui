@@ -44,6 +44,11 @@ export const API = {
       "type": "JSX.Element",
       "optional": true,
       "description": "Fallback shown when no `combo` is given."
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"md\" | \"lg\" | null | undefined",
+      "optional": true
     }
   ]
 } as const

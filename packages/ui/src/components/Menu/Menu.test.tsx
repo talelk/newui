@@ -8,7 +8,9 @@ describe('Menu', () => {
     const onSelect = vi.fn()
     render(() => (
       <Menu.Root defaultOpen onSelect={onSelect}>
-        <Menu.Trigger>Actions</Menu.Trigger>
+        <Menu.Trigger aria-label="Actions">
+          <span aria-hidden="true">•••</span>
+        </Menu.Trigger>
         <Menu.Content>
           <Menu.Item value="edit">Edit</Menu.Item>
           <Menu.Separator />

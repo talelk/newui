@@ -9,13 +9,6 @@ import {
   historyKeymap,
   indentWithTab,
 } from '@codemirror/commands'
-import { css } from '@codemirror/lang-css'
-import { html } from '@codemirror/lang-html'
-import { javascript } from '@codemirror/lang-javascript'
-import { json } from '@codemirror/lang-json'
-import { markdown } from '@codemirror/lang-markdown'
-import { python } from '@codemirror/lang-python'
-import { sql } from '@codemirror/lang-sql'
 import {
   bracketMatching,
   defaultHighlightStyle,
@@ -111,24 +104,28 @@ export function diffDocument(
   return { from, to: currentEnd, insert: next.slice(from, nextEnd) }
 }
 
-function languageExtension(language?: CodeEditorLanguage): Extension {
+async function languageExtension(
+  language?: CodeEditorLanguage,
+): Promise<Extension> {
   switch (language) {
     case 'javascript':
-      return javascript()
+      return (await import('@codemirror/lang-javascript')).javascript()
     case 'typescript':
-      return javascript({ typescript: true })
+      return (await import('@codemirror/lang-javascript')).javascript({
+        typescript: true,
+      })
     case 'json':
-      return json()
+      return (await import('@codemirror/lang-json')).json()
     case 'html':
-      return html()
+      return (await import('@codemirror/lang-html')).html()
     case 'css':
-      return css()
+      return (await import('@codemirror/lang-css')).css()
     case 'python':
-      return python()
+      return (await import('@codemirror/lang-python')).python()
     case 'sql':
-      return sql()
+      return (await import('@codemirror/lang-sql')).sql()
     case 'markdown':
-      return markdown()
+      return (await import('@codemirror/lang-markdown')).markdown()
     default:
       return []
   }
@@ -140,13 +137,14 @@ const codeTheme = EditorView.theme({
   '&': {
     backgroundColor: 'var(--surface-base)',
     color: 'var(--ink-gray-8)',
-    border: '1px solid var(--outline-gray-3)',
-    borderRadius: '0.5rem',
-    fontSize: '0.8125rem',
+    border: '1px solid var(--outline-gray-2)',
+    borderRadius: '0.625rem',
+    fontSize: '0.875rem',
+    lineHeight: '1.4286',
     overflow: 'hidden',
   },
   '&.cm-focused': {
-    outline: '2px solid var(--outline-gray-4)',
+    outline: 'var(--focus-outline-blue)',
     outlineOffset: '-1px',
   },
   '.cm-content': {
@@ -257,7 +255,7 @@ export function CodeEditor(props: CodeEditorProps): JSX.Element {
           indentWithTab,
         ]),
         EditorView.lineWrapping,
-        languageCompartment.of(languageExtension(local.language)),
+        languageCompartment.of([]),
         readonlyCompartment.of(readonlyExtension()),
         placeholderCompartment.of(cmPlaceholder(local.placeholder ?? '')),
         EditorView.contentAttributes.of({
@@ -297,11 +295,24 @@ export function CodeEditor(props: CodeEditorProps): JSX.Element {
   createEffect(() => {
     const editor = view()
     if (!editor) return
-    editor.dispatch({
-      effects: languageCompartment.reconfigure(
-        languageExtension(local.language),
-      ),
+    const language = local.language
+    let current = true
+    onCleanup(() => {
+      current = false
     })
+    void languageExtension(language).then(
+      (extension) => {
+        if (current)
+          editor.dispatch({
+            effects: languageCompartment.reconfigure(extension),
+          })
+      },
+      () => {
+        // Editing remains available if a grammar chunk cannot be fetched.
+        if (current)
+          editor.dispatch({ effects: languageCompartment.reconfigure([]) })
+      },
+    )
   })
 
   createEffect(() => {

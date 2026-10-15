@@ -31,6 +31,26 @@ export const API = {
       "optional": true
     },
     {
+      "name": "description",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "error",
+      "type": "JSX.Element | false",
+      "optional": true
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "optional": true
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "optional": true
+    },
+    {
       "name": "'aria-label'",
       "type": "string",
       "optional": true,
@@ -55,18 +75,25 @@ export const API = {
       "name": "size",
       "type": "SelectSize",
       "optional": true,
-      "description": "Trigger height/typography. Matches the input scale."
+      "description": "Trigger height/typography. Matches the input scale.",
+      "default": "sm"
     },
     {
       "name": "variant",
       "type": "SelectVariant",
       "optional": true,
-      "description": "Trigger surface. `subtle` (the default) is the filled look."
+      "description": "Trigger surface. `outline` is the default; `subtle` is filled."
     },
     {
       "name": "class",
       "type": "string",
       "optional": true
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name for the trigger when no visible `label` is rendered."
     }
   ]
 } as const

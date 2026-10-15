@@ -1,9 +1,13 @@
+import { FunnelChart as FunnelSeries } from 'echarts/charts'
+import { use } from 'echarts/core'
 import { createMemo, type JSX } from 'solid-js'
 import { ChartBase } from './ChartBase'
 import { buildFunnelOption } from './funnelOptions'
 import { funnelFallback, normalizeFunnelChart } from './normalize'
 import { useChartTokens } from './tokens'
 import type { FunnelChartProps } from './types'
+
+use([FunnelSeries])
 
 /**
  * A funnel chart: one band per stage, in the order the rows arrive. The order

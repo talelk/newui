@@ -157,7 +157,7 @@ const NavGroup: ParentComponent<SettingsNavGroupProps> = (props) => (
       <div
         role="presentation"
         data-slot="settings-nav-group-label"
-        class="flex h-7 items-center px-2 text-base text-ink-gray-5"
+        class="flex h-7 items-center px-2 text-base text-ink-gray-6"
       >
         {props.label}
       </div>
@@ -237,13 +237,36 @@ const NavItem: ParentComponent<SettingsNavItemProps> = (props) => {
       data-slot="settings-nav-item"
       data-state={isActive() ? 'active' : 'inactive'}
       class={cn(
-        'flex h-7 w-full items-center gap-2 rounded-4 px-2 text-left text-base text-ink-gray-7 transition-colors',
+        'flex min-h-8 w-full items-center gap-2 rounded-3 px-2 py-1 text-start text-interface text-ink-gray-7 transition-colors motion-reduce:transition-none',
         'focus-visible:focus-ring',
         'data-[state=inactive]:hover:bg-surface-gray-2',
         'data-[state=active]:bg-surface-elevation-3 data-[state=active]:shadow-sm',
         'disabled:cursor-not-allowed disabled:text-ink-gray-4',
         local.class,
       )}
+      onKeyDown={(event) => {
+        if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return
+        const tabs = Array.from(
+          event.currentTarget
+            .closest('[role="tablist"]')
+            ?.querySelectorAll<HTMLButtonElement>(
+              '[role="tab"]:not(:disabled)',
+            ) ?? [],
+        )
+        const index = tabs.indexOf(event.currentTarget)
+        const nextIndex =
+          event.key === 'Home'
+            ? 0
+            : event.key === 'End'
+              ? tabs.length - 1
+              : (index + (event.key === 'ArrowDown' ? 1 : -1) + tabs.length) %
+                tabs.length
+        const next = tabs[nextIndex]
+        if (!next) return
+        event.preventDefault()
+        next.focus()
+        next.click()
+      }}
       onClick={(event) => {
         const next = itemValue()
         if (next !== undefined) ctx.setValue(next)
@@ -352,7 +375,7 @@ export interface SettingsHeaderProps {
 const Header: ParentComponent<SettingsHeaderProps> = (props) => (
   <div
     data-slot="settings-header"
-    class={cn('shrink-0 px-[4.4rem] pt-10', props.class)}
+    class={cn('shrink-0 px-4 pt-6 sm:px-6', props.class)}
   >
     <Show
       when={props.children}
@@ -362,7 +385,7 @@ const Header: ParentComponent<SettingsHeaderProps> = (props) => (
             <Show when={props.title}>
               <h2
                 data-slot="settings-header-title"
-                class="text-lg-semibold text-ink-gray-8"
+                class="text-section text-ink-gray-8"
               >
                 {props.title}
               </h2>
@@ -403,7 +426,7 @@ const Body: ParentComponent<SettingsBodyProps> = (props) => (
   <div
     data-slot="settings-body"
     class={cn(
-      'min-h-0 flex-1 overflow-y-auto overscroll-contain px-[4.4rem] pb-16',
+      'min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 sm:px-6',
       props.class,
     )}
   >
@@ -454,7 +477,7 @@ const Row: ParentComponent<SettingsRowProps> = (props) => {
   return (
     <div
       data-slot="settings-row"
-      class={cn('flex items-center gap-8 py-3.5', local.class)}
+      class={cn('flex flex-wrap items-center gap-3 py-3 sm:gap-6', local.class)}
     >
       <div class="min-w-0 flex-1">
         <Dynamic
@@ -482,7 +505,7 @@ const Row: ParentComponent<SettingsRowProps> = (props) => {
           control = el
         }}
         data-slot="settings-row-control"
-        class="flex shrink-0 items-start justify-end"
+        class="flex min-w-0 max-w-full items-start justify-end"
       >
         {local.children}
       </div>

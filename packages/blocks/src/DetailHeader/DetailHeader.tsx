@@ -54,9 +54,7 @@ export function DetailHeader(props: DetailHeaderProps): JSX.Element {
       <div class="flex flex-wrap items-start justify-between gap-4">
         <div class="flex min-w-0 flex-col gap-1">
           <div class="flex min-w-0 items-center gap-2">
-            <h1 class="truncate text-2xl-semibold text-ink-gray-9">
-              {props.title}
-            </h1>
+            <h1 class="truncate text-metric text-ink-gray-9">{props.title}</h1>
             <Show when={props.status}>
               {(status) => (
                 <Badge

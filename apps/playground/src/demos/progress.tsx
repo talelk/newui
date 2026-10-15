@@ -5,10 +5,10 @@ import type { JSX } from 'solid-js'
 export default function Demo(): JSX.Element {
   return (
     <div class="flex max-w-sm flex-col gap-3">
-      <Progress value={40} />
-      <Progress value={72} />
+      <Progress value={40} aria-label="Upload progress" />
+      <Progress value={72} aria-label="Storage used" />
       <Progress value={30} label="Uploading" hint />
-      <Progress indeterminate />
+      <Progress indeterminate aria-label="Loading report" />
     </div>
   )
 }

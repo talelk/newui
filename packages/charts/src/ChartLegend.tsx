@@ -60,12 +60,15 @@ function LegendEntry(props: {
         display: 'inline-flex',
         'align-items': 'center',
         gap: '0.375rem',
-        padding: '2px 6px',
+        padding: '4px 8px',
+        'min-height': '28px',
+        'font-size': '0.75rem',
+        'line-height': '1rem',
         border: 'none',
         'border-radius': '6px',
         background: 'transparent',
         cursor: 'pointer',
-        color: props.item.hidden ? 'var(--ink-gray-4)' : 'var(--ink-gray-6)',
+        color: 'var(--ink-gray-6)',
       }}
     >
       <span
@@ -78,9 +81,15 @@ function LegendEntry(props: {
           opacity: props.item.hidden ? '0.3' : '1',
         }}
       />
-      <span>{props.item.label}</span>
+      <span
+        style={{
+          'text-decoration': props.item.hidden ? 'line-through' : undefined,
+        }}
+      >
+        {props.item.label}
+      </span>
       <Show when={props.item.hint}>
-        <span style={{ color: 'var(--ink-gray-4)' }}>{props.item.hint}</span>
+        <span style={{ color: 'var(--ink-gray-6)' }}>{props.item.hint}</span>
       </Show>
     </button>
   )

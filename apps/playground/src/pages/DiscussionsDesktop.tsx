@@ -13,55 +13,54 @@ import {
   PageHeader,
   PageHeaderTitle,
   ScrollArea,
-  Select,
-  SettingsDialog,
   Sidebar,
   SidebarHeader,
   SidebarItem,
   SidebarLabel,
   SidebarRail,
   SidebarRailItem,
-  Switch,
   TabButtons,
-  Textarea,
   TextInput,
   Tooltip,
 } from '@newui/ui'
-import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
-import { PageIntro } from '../shell/PageIntro'
+import {
+  createMemo,
+  createSignal,
+  For,
+  type JSX,
+  Show,
+  untrack,
+} from 'solid-js'
+import {
+  type createDiscussions,
+  DiscussionDialogs,
+} from '../examples/discussions'
 
 /**
- * The flagship example: a desktop app screen composed from the shell, the
- * sidebar, a page header, the list family and the settings dialog — a port of
- * frappe-ui's `docs/components/recipes/DiscussionsDesktop.vue`, data included.
- *
- * Two deliberate differences from the reference, both about being a section of
- * a scrolling playground rather than a route of its own: the shell is framed at
- * a fixed height instead of `h-screen`, and the sidebar `ScrollArea` sits inside
- * that frame. Everything else — the rail badges and account menu, the space
- * list, the feed tabs, the row anatomy and all six settings panels — follows the
- * reference markup.
+ * Frappe-inspired desktop workspace: community rail, spaces, local discussion
+ * creation/search/replies and grouped settings, framed inside the docs site.
+ * Example data and edits stay in this route's memory.
  */
 
 interface Community {
   id: string
   name: string
+  icon: string
   unread?: number
-  image: string
 }
 
 const COMMUNITIES: Community[] = [
-  { id: 'design', name: 'Design', image: 'https://i.pravatar.cc/150?img=12' },
+  { id: 'design', name: 'Design', icon: 'lucide-shapes' },
   {
     id: 'engineering',
     name: 'Engineering',
+    icon: 'lucide-code',
     unread: 4,
-    image: 'https://i.pravatar.cc/150?img=33',
   },
   {
     id: 'marketing',
     name: 'Marketing',
-    image: 'https://i.pravatar.cc/150?img=47',
+    icon: 'lucide-megaphone',
   },
 ]
 
@@ -75,139 +74,6 @@ const SPACES = [
   { name: 'Archive', icon: 'lucide-archive', unread: 0 },
 ]
 
-interface Discussion {
-  title: string
-  author: string
-  image: string
-  excerpt: string
-  comments: number
-  lastActivity: string
-  unread: number
-}
-
-const DISCUSSIONS: Discussion[] = [
-  {
-    title: 'Design review: new onboarding flow',
-    author: 'Evan You',
-    image: 'https://i.pravatar.cc/150?img=5',
-    excerpt:
-      'I went through the latest prototype and left comments on the empty states…',
-    comments: 14,
-    lastActivity: '2h',
-    unread: 3,
-  },
-  {
-    title: 'Proposal: consolidate icon sizes to a 4px grid',
-    author: 'Priya Nair',
-    image: 'https://i.pravatar.cc/150?img=9',
-    excerpt:
-      'We currently ship icons in 7 sizes. I propose we standardize on 16 / 20 / 24…',
-    comments: 32,
-    lastActivity: '5h',
-    unread: 1,
-  },
-  {
-    title: 'Dark mode tokens are ready for review',
-    author: 'Sam Rivera',
-    image: 'https://i.pravatar.cc/150?img=14',
-    excerpt:
-      'All semantic tokens now have dark values. The contrast checks pass except…',
-    comments: 21,
-    lastActivity: '1d',
-    unread: 5,
-  },
-  {
-    title: 'Q3 roadmap discussion',
-    author: 'Ana Costa',
-    image: 'https://i.pravatar.cc/150?img=20',
-    excerpt:
-      'Carrying over from the planning call — here are the three themes we agreed on…',
-    comments: 8,
-    lastActivity: '2d',
-    unread: 0,
-  },
-  {
-    title: 'Weekly design crit — notes and action items',
-    author: 'Maya Iyer',
-    image: 'https://i.pravatar.cc/150?img=27',
-    excerpt:
-      'Thanks everyone for joining. Summary of the feedback on the settings redesign…',
-    comments: 5,
-    lastActivity: '3d',
-    unread: 0,
-  },
-  {
-    title: 'Rethinking the empty state illustrations',
-    author: 'Leo Martins',
-    image: 'https://i.pravatar.cc/150?img=33',
-    excerpt:
-      'The current set feels dated. I sketched a lighter, more geometric direction…',
-    comments: 17,
-    lastActivity: '4h',
-    unread: 2,
-  },
-  {
-    title: 'Naming convention for spacing tokens',
-    author: 'Nadia Haddad',
-    image: 'https://i.pravatar.cc/150?img=40',
-    excerpt:
-      'Are we going with t-shirt sizes or numeric steps? Both have tradeoffs for…',
-    comments: 26,
-    lastActivity: '6h',
-    unread: 4,
-  },
-  {
-    title: 'Accessibility audit results are in',
-    author: 'Tom Becker',
-    image: 'https://i.pravatar.cc/150?img=47',
-    excerpt:
-      'We failed 6 of the WCAG AA checks, mostly around focus visibility and…',
-    comments: 41,
-    lastActivity: '8h',
-    unread: 7,
-  },
-  {
-    title: 'Should tooltips have a max width?',
-    author: 'Yuki Tanaka',
-    image: 'https://i.pravatar.cc/150?img=53',
-    excerpt:
-      'Long labels wrap awkwardly right now. I think capping at 240px reads better…',
-    comments: 9,
-    lastActivity: '10h',
-    unread: 0,
-  },
-  {
-    title: 'Migrating buttons to the new variant API',
-    author: 'Chris Doyle',
-    image: 'https://i.pravatar.cc/150?img=60',
-    excerpt:
-      'Codemod is ready. It covers ~90% of call sites; the rest need a manual pass…',
-    comments: 18,
-    lastActivity: '12h',
-    unread: 1,
-  },
-  {
-    title: 'Feedback wanted: revised color ramp',
-    author: 'Isabel Ortiz',
-    image: 'https://i.pravatar.cc/150?img=64',
-    excerpt:
-      'Bumped the mid-tones for better contrast. Take a look at gray-5 through 7…',
-    comments: 23,
-    lastActivity: '1d',
-    unread: 0,
-  },
-  {
-    title: 'Motion guidelines — first draft',
-    author: 'Omar Farouk',
-    image: 'https://i.pravatar.cc/150?img=68',
-    excerpt:
-      'Durations, easing curves, and when not to animate. Would love a sanity check…',
-    comments: 12,
-    lastActivity: '1d',
-    unread: 3,
-  },
-]
-
 const SPACE_ACTIONS = [
   { label: 'Copy link', value: 'copy-link', icon: 'lucide-link' },
   { label: 'Mark all as read', value: 'mark-read', icon: 'lucide-check' },
@@ -215,62 +81,12 @@ const SPACE_ACTIONS = [
   { label: 'Archive', value: 'archive', icon: 'lucide-archive' },
 ]
 
-const USER_IMAGE = 'https://i.pravatar.cc/150?img=3'
-
-const MANAGED_COMMUNITIES = [
-  {
-    name: 'Design',
-    spaces: 7,
-    members: 18,
-    image: 'https://i.pravatar.cc/150?img=33',
-  },
-  {
-    name: 'Engineering',
-    spaces: 12,
-    members: 34,
-    image: 'https://i.pravatar.cc/150?img=40',
-  },
-  {
-    name: 'Marketing',
-    spaces: 5,
-    members: 11,
-    image: 'https://i.pravatar.cc/150?img=47',
-  },
-]
-
-const MEMBERS = [
-  {
-    name: 'Rhea Kapoor',
-    email: 'rhea@example.com',
-    role: 'Admin',
-    image: 'https://i.pravatar.cc/150?img=53',
-  },
-  {
-    name: 'Evan You',
-    email: 'evan@example.com',
-    role: 'Member',
-    image: 'https://i.pravatar.cc/150?img=60',
-  },
-  {
-    name: 'Priya Nair',
-    email: 'priya@example.com',
-    role: 'Member',
-    image: 'https://i.pravatar.cc/150?img=64',
-  },
-  {
-    name: 'Sam Rivera',
-    email: 'sam@example.com',
-    role: 'Guest',
-    image: 'https://i.pravatar.cc/150?img=68',
-  },
-]
-
-const CUSTOM_EMOJIS = ['🎉', '🚀', '👀', '💡', '✅', '🔥']
-
 /** Icon-only action menu for the page header — dots trigger, no chevron. */
-function SpaceActionsMenu(): JSX.Element {
+function SpaceActionsMenu(props: {
+  onSelect: (value: string) => void
+}): JSX.Element {
   return (
-    <Menu.Root>
+    <Menu.Root onSelect={props.onSelect}>
       <Menu.Trigger
         aria-label="Space actions"
         class="grid size-7 shrink-0 place-items-center rounded-4 text-ink-gray-8 transition-colors hover:bg-surface-gray-2 data-[state=open]:bg-surface-gray-3 focus-visible:ring-0 focus-visible:focus-ring"
@@ -295,23 +111,22 @@ function SpaceActionsMenu(): JSX.Element {
 }
 
 /** A plain avatar trigger for the account menu — no chevron, no pill. */
-function AccountMenu(props: { onOpenSettings: () => void }): JSX.Element {
+function AccountMenu(props: {
+  onOpenSettings: () => void
+  onLogout: () => void
+}): JSX.Element {
   return (
     <Menu.Root
       onSelect={(value) => {
-        if (value === 'settings') props.onOpenSettings()
+        if (value === 'settings' || value === 'profile') props.onOpenSettings()
+        if (value === 'logout') props.onLogout()
       }}
     >
       <Menu.Trigger
         aria-label="Account"
         class="flex size-7 items-center justify-center rounded-full transition focus-visible:ring-0 focus-visible:focus-ring hover:opacity-90"
       >
-        <Avatar
-          image={USER_IMAGE}
-          label="Rhea Kapoor"
-          size="lg"
-          class="size-7"
-        />
+        <Avatar label="Rhea Kapoor" size="lg" class="size-7" />
       </Menu.Trigger>
       <Menu.Content class="min-w-40">
         <Menu.Item value="profile">
@@ -334,41 +149,35 @@ function AccountMenu(props: { onOpenSettings: () => void }): JSX.Element {
   )
 }
 
-export function DiscussionsDesktop(): JSX.Element {
+export function DiscussionsDesktop(props: {
+  store: ReturnType<typeof createDiscussions>
+  space: () => string
+  setSpace: (value: string) => void
+  onOpenSettings: (section?: string) => void
+}): JSX.Element {
   const [community, setCommunity] = createSignal('design')
-  const [space, setSpace] = createSignal('Design System')
+  const space = () => props.space()
+  const setSpace = (value: string) => props.setSpace(value)
   const [feedTab, setFeedTab] = createSignal('All')
+  const discussions = untrack(() => props.store)
+  const [spacesReversed, setSpacesReversed] = createSignal(false)
+  const [notice, setNotice] = createSignal('')
 
-  const [settingsOpen, setSettingsOpen] = createSignal(false)
-  const [settingsTab, setSettingsTab] = createSignal('profile')
-
-  const [firstName, setFirstName] = createSignal('Rhea')
-  const [lastName, setLastName] = createSignal('Kapoor')
-  const [bio, setBio] = createSignal(
-    'Product designer. I care about type scales and empty states.',
-  )
-  const fullName = () => `${firstName()} ${lastName()}`.trim()
-
-  const [theme, setTheme] = createSignal('system')
-  const [badgeStyle, setBadgeStyle] = createSignal('Unread count')
-  const [hideInactiveSpaces, setHideInactiveSpaces] = createSignal(false)
-  const [emailDigest, setEmailDigest] = createSignal(true)
-  const [digestFrequency, setDigestFrequency] = createSignal('Weekly')
+  const setSettingsOpen = (value: boolean) => {
+    if (value) props.onOpenSettings()
+  }
 
   const visibleDiscussions = createMemo(() =>
     feedTab() === 'Unread'
-      ? DISCUSSIONS.filter((discussion) => discussion.unread > 0)
-      : DISCUSSIONS,
+      ? discussions.rows().filter((discussion) => discussion.unread > 0)
+      : discussions.rows(),
   )
 
   return (
-    <div class="flex flex-col gap-6">
-      <PageIntro
-        title="Discussions · desktop"
-        description="The full desktop recipe: a community rail, a space sidebar, a feed with an unread filter, and a six-panel settings dialog. Every value in it is real — the filter works, the dialog opens, the rail badges count."
-      />
-      <div class="h-[620px] overflow-hidden rounded-6 border border-outline-gray-1 shadow-md">
+    <div class="flex flex-col gap-4">
+      <div class="min-h-screen overflow-hidden rounded-6 border border-outline-gray-1 shadow-md">
         <AppShell
+          class="max-md:[&_[data-slot=sidebar-rail]]:hidden max-md:[&_[data-slot=sidebar]]:hidden"
           rail={
             <SidebarRail class="border-r border-outline-gray-1">
               {/* The logo fills the whole cell and carries no tooltip of its own. */}
@@ -391,19 +200,12 @@ export function DiscussionsDesktop(): JSX.Element {
                   {(item) => (
                     <SidebarRailItem
                       label={item.name}
+                      icon={item.icon}
                       active={community() === item.id}
                       badge={item.unread}
                       badgeStyle="count"
                       onClick={() => setCommunity(item.id)}
-                    >
-                      <Avatar
-                        image={item.image}
-                        label={item.name}
-                        size="lg"
-                        shape="square"
-                        class="size-7"
-                      />
-                    </SidebarRailItem>
+                    />
                   )}
                 </For>
               </div>
@@ -415,6 +217,9 @@ export function DiscussionsDesktop(): JSX.Element {
                   label="Search"
                   variant="ghost"
                   icon="lucide-search"
+                  onClick={() =>
+                    document.getElementById('discussion-search')?.focus()
+                  }
                 />
                 <SidebarRailItem
                   label="Settings"
@@ -422,7 +227,16 @@ export function DiscussionsDesktop(): JSX.Element {
                   icon="lucide-settings"
                   onClick={() => setSettingsOpen(true)}
                 />
-                <AccountMenu onOpenSettings={() => setSettingsOpen(true)} />
+                <AccountMenu
+                  onOpenSettings={() => setSettingsOpen(true)}
+                  onLogout={() => {
+                    discussions.setQuery('')
+                    discussions.setSelected(undefined)
+                    setNotice(
+                      'Local session cleared. No external account is connected.',
+                    )
+                  }}
+                />
               </div>
             </SidebarRail>
           }
@@ -431,7 +245,10 @@ export function DiscussionsDesktop(): JSX.Element {
               {/* No logo here: the rail already shows the active community's
                 avatar, so a header logo would just duplicate it. */}
               <SidebarHeader
-                title="Design"
+                title={
+                  COMMUNITIES.find((item) => item.id === community())?.name ??
+                  'Design'
+                }
                 subtitle="18 members"
                 showLogo={false}
                 actions={
@@ -476,12 +293,15 @@ export function DiscussionsDesktop(): JSX.Element {
                       variant="ghost"
                       size="sm"
                       icon="lucide-arrow-up-down"
+                      onClick={() => setSpacesReversed((value) => !value)}
                       aria-label="Sort spaces"
                     />
                   </div>
 
                   <div class="mt-0.5 flex flex-col gap-0.5">
-                    <For each={SPACES}>
+                    <For
+                      each={spacesReversed() ? [...SPACES].reverse() : SPACES}
+                    >
                       {(item) => (
                         <SidebarItem
                           active={space() === item.name}
@@ -489,7 +309,7 @@ export function DiscussionsDesktop(): JSX.Element {
                           onClick={() => setSpace(item.name)}
                           suffix={
                             <Show when={item.unread}>
-                              <span class="grid size-4 place-content-center text-xs text-ink-gray-5">
+                              <span class="grid size-4 place-content-center text-xs text-ink-gray-6">
                                 {item.unread}
                               </span>
                             </Show>
@@ -506,17 +326,66 @@ export function DiscussionsDesktop(): JSX.Element {
             </Sidebar>
           }
         >
-          <PageHeader>
-            <div class="flex items-center gap-1">
+          <PageHeader class="flex-wrap py-2">
+            <div class="flex min-w-0 flex-1 items-center gap-1">
               <PageHeaderTitle>{space()}</PageHeaderTitle>
-              <SpaceActionsMenu />
+              <SpaceActionsMenu
+                onSelect={(value) => {
+                  if (value === 'mark-read') {
+                    discussions.markRead()
+                    setNotice('All discussions in this space are read.')
+                  }
+                  if (value === 'copy-link') {
+                    void navigator.clipboard
+                      .writeText(
+                        `${location.origin}${location.pathname}#${encodeURIComponent(space())}`,
+                      )
+                      .then(
+                        () => setNotice('Space link copied.'),
+                        () =>
+                          setNotice(
+                            'Copy the current page address to share this demo.',
+                          ),
+                      )
+                  }
+                  if (value === 'manage-access') {
+                    props.onOpenSettings('users')
+                  }
+                  if (value === 'archive') {
+                    setSpace('Archive')
+                    setNotice(
+                      'Viewing the archive. Original discussions are retained.',
+                    )
+                  }
+                }}
+              />
             </div>
-            <Button variant="solid" iconLeft="lucide-plus">
+            <Button
+              variant="solid"
+              theme="blue"
+              iconLeft="lucide-plus"
+              onClick={discussions.start}
+            >
               Add new
             </Button>
           </PageHeader>
 
           <PageBody>
+            <div class="mb-4">
+              <TextInput
+                id="discussion-search"
+                label="Search discussions"
+                value={discussions.query()}
+                onInput={(event) =>
+                  discussions.setQuery(event.currentTarget.value)
+                }
+              />
+            </div>
+            <Show when={notice()}>
+              <p role="status" class="mb-3 text-caption text-ink-gray-6">
+                {notice()}
+              </p>
+            </Show>
             <div class="mb-4 flex items-center justify-between">
               <TabButtons
                 value={feedTab()}
@@ -526,7 +395,7 @@ export function DiscussionsDesktop(): JSX.Element {
                   { label: 'All', value: 'All' },
                 ]}
               />
-              <span class="text-sm text-ink-gray-5">
+              <span class="text-sm text-ink-gray-6">
                 {visibleDiscussions().length} discussions
               </span>
             </div>
@@ -538,11 +407,7 @@ export function DiscussionsDesktop(): JSX.Element {
                 {(discussion) => (
                   <ListRow height="h-15">
                     <ListCell>
-                      <Avatar
-                        image={discussion.image}
-                        label={discussion.author}
-                        size="2xl"
-                      />
+                      <Avatar label={discussion.author} size="2xl" />
                     </ListCell>
                     <ListCell>
                       <div class="min-w-0 flex-1">
@@ -557,10 +422,16 @@ export function DiscussionsDesktop(): JSX.Element {
                                 : 'text-base'
                             }
                           >
-                            {discussion.title}
+                            <button
+                              type="button"
+                              class="max-w-full truncate rounded-3 text-start focus-visible:focus-ring-blue"
+                              onClick={() => discussions.open(discussion)}
+                            >
+                              {discussion.title}
+                            </button>
                           </span>
                         </div>
-                        <div class="mt-1.5 flex min-w-0 items-center text-base text-ink-gray-5">
+                        <div class="mt-1.5 flex min-w-0 items-center text-base text-ink-gray-6">
                           <Icon
                             icon="lucide-reply"
                             class="mr-1 size-4 shrink-0"
@@ -574,7 +445,7 @@ export function DiscussionsDesktop(): JSX.Element {
                     </ListCell>
                     <ListCell class="justify-end">
                       <div>
-                        <div class="text-right text-sm whitespace-nowrap text-ink-gray-5">
+                        <div class="text-right text-sm whitespace-nowrap text-ink-gray-6">
                           {discussion.lastActivity}
                         </div>
                         <div class="mt-1.5 flex items-center justify-end">
@@ -595,375 +466,15 @@ export function DiscussionsDesktop(): JSX.Element {
                 )}
               </For>
             </List>
+            <Show when={!visibleDiscussions().length}>
+              <p class="py-8 text-center text-ink-gray-6">
+                No discussions match this space and filter.
+              </p>
+            </Show>
           </PageBody>
         </AppShell>
 
-        <SettingsDialog.Root
-          open={settingsOpen()}
-          onOpenChange={setSettingsOpen}
-          value={settingsTab()}
-          onValueChange={setSettingsTab}
-        >
-          <SettingsDialog.Sidebar>
-            <SettingsDialog.NavGroup label="User settings">
-              <SettingsDialog.NavItem
-                value="profile"
-                prefix={
-                  <Avatar
-                    size="xs"
-                    image={USER_IMAGE}
-                    label={fullName()}
-                    class="shrink-0"
-                  />
-                }
-              >
-                Profile
-              </SettingsDialog.NavItem>
-              <SettingsDialog.NavItem
-                value="preferences"
-                prefix={
-                  <Icon
-                    icon="lucide-sliders-horizontal"
-                    class="size-4 shrink-0 text-ink-gray-6"
-                  />
-                }
-              >
-                Preferences
-              </SettingsDialog.NavItem>
-              <SettingsDialog.NavItem
-                value="notifications"
-                prefix={
-                  <Icon
-                    icon="lucide-bell"
-                    class="size-4 shrink-0 text-ink-gray-6"
-                  />
-                }
-              >
-                Notifications
-              </SettingsDialog.NavItem>
-            </SettingsDialog.NavGroup>
-            <SettingsDialog.NavGroup label="App settings">
-              <SettingsDialog.NavItem
-                value="communities"
-                prefix={
-                  <Icon
-                    icon="lucide-building-2"
-                    class="size-4 shrink-0 text-ink-gray-6"
-                  />
-                }
-              >
-                Communities
-              </SettingsDialog.NavItem>
-              <SettingsDialog.NavItem
-                value="emojis"
-                prefix={
-                  <Icon
-                    icon="lucide-smile-plus"
-                    class="size-4 shrink-0 text-ink-gray-6"
-                  />
-                }
-              >
-                Emojis
-              </SettingsDialog.NavItem>
-            </SettingsDialog.NavGroup>
-            <SettingsDialog.NavGroup label="Administration">
-              <SettingsDialog.NavItem
-                value="users"
-                prefix={
-                  <Icon
-                    icon="lucide-users"
-                    class="size-4 shrink-0 text-ink-gray-6"
-                  />
-                }
-              >
-                Users
-              </SettingsDialog.NavItem>
-            </SettingsDialog.NavGroup>
-          </SettingsDialog.Sidebar>
-
-          <SettingsDialog.Content>
-            <SettingsDialog.Panel value="profile">
-              <SettingsDialog.Header title="Profile" />
-              <SettingsDialog.Body>
-                <div class="flex flex-col gap-11 pt-6">
-                  <section class="flex flex-col gap-6">
-                    <div class="flex items-center gap-4">
-                      <Avatar
-                        image={USER_IMAGE}
-                        label={fullName()}
-                        class="size-16"
-                      />
-                      <div>
-                        <div class="text-base-medium text-ink-gray-8">
-                          Profile picture
-                        </div>
-                        <p class="text-p-sm text-ink-gray-5">
-                          Helps people recognise you
-                        </p>
-                      </div>
-                    </div>
-
-                    <div class="grid gap-6 sm:grid-cols-2">
-                      <TextInput
-                        label="First name"
-                        class="w-full"
-                        value={firstName()}
-                        onInput={(event) =>
-                          setFirstName(event.currentTarget.value)
-                        }
-                      />
-                      <TextInput
-                        label="Last name"
-                        class="w-full"
-                        value={lastName()}
-                        onInput={(event) =>
-                          setLastName(event.currentTarget.value)
-                        }
-                      />
-                    </div>
-
-                    <Textarea
-                      label="Bio"
-                      class="w-full"
-                      value={bio()}
-                      onInput={(event) => setBio(event.currentTarget.value)}
-                    />
-                  </section>
-
-                  <section>
-                    <h2 class="text-lg-semibold text-ink-gray-8">Account</h2>
-                    <div class="mt-2 divide-y divide-outline-gray-1">
-                      <SettingsDialog.Row
-                        title="Public profile"
-                        description="View your public page or customize its card layout"
-                      >
-                        <div class="flex gap-2">
-                          <Button iconLeft="lucide-user">View</Button>
-                          <Button iconLeft="lucide-layout-dashboard">
-                            Customize
-                          </Button>
-                        </div>
-                      </SettingsDialog.Row>
-                      <SettingsDialog.Row
-                        title="Password"
-                        description="Manage password and account access"
-                      >
-                        <Button>Update Password</Button>
-                      </SettingsDialog.Row>
-                    </div>
-                  </section>
-                </div>
-              </SettingsDialog.Body>
-            </SettingsDialog.Panel>
-
-            <SettingsDialog.Panel value="preferences">
-              <SettingsDialog.Header title="Preferences" />
-              <SettingsDialog.Body>
-                <div class="flex flex-col gap-11 pt-6">
-                  <section>
-                    <div class="divide-y divide-outline-gray-1">
-                      <SettingsDialog.Row
-                        title="Appearance"
-                        description="Choose a light, dark, or system-matched interface"
-                      >
-                        <Select
-                          value={[theme()]}
-                          onValueChange={(value) =>
-                            setTheme(value[0] ?? 'system')
-                          }
-                          options={[
-                            { label: 'Light', value: 'light' },
-                            { label: 'Dark', value: 'dark' },
-                            { label: 'System Default', value: 'system' },
-                          ]}
-                        />
-                      </SettingsDialog.Row>
-                    </div>
-                  </section>
-
-                  <section>
-                    <h2 class="text-lg-semibold text-ink-gray-8">Sidebar</h2>
-                    <div class="mt-2 divide-y divide-outline-gray-1">
-                      <SettingsDialog.Row
-                        title="Unread badge"
-                        description="Show unread activity as a dot or a count"
-                      >
-                        <Select
-                          value={[badgeStyle()]}
-                          onValueChange={(value) =>
-                            setBadgeStyle(value[0] ?? 'Unread count')
-                          }
-                          options={[
-                            { label: 'Dot', value: 'Dot' },
-                            { label: 'Unread count', value: 'Unread count' },
-                          ]}
-                        />
-                      </SettingsDialog.Row>
-                      <SettingsDialog.Row
-                        title="Inactive spaces"
-                        description="Hide spaces with no activity for the last 2 months"
-                      >
-                        <Switch
-                          checked={hideInactiveSpaces()}
-                          onCheckedChange={setHideInactiveSpaces}
-                        />
-                      </SettingsDialog.Row>
-                    </div>
-                  </section>
-                </div>
-              </SettingsDialog.Body>
-            </SettingsDialog.Panel>
-
-            <SettingsDialog.Panel value="notifications">
-              <SettingsDialog.Header title="Notifications" />
-              <SettingsDialog.Body>
-                <div class="flex flex-col gap-11 pt-6">
-                  <section>
-                    <div class="divide-y divide-outline-gray-1">
-                      <SettingsDialog.Row
-                        title="Enable email digests"
-                        description="Send a summary of missed activity"
-                      >
-                        <Switch
-                          checked={emailDigest()}
-                          onCheckedChange={setEmailDigest}
-                        />
-                      </SettingsDialog.Row>
-                      <Show when={emailDigest()}>
-                        <SettingsDialog.Row
-                          title="Digest frequency"
-                          description="Choose how often you receive your digest"
-                        >
-                          <Select
-                            value={[digestFrequency()]}
-                            onValueChange={(value) =>
-                              setDigestFrequency(value[0] ?? 'Weekly')
-                            }
-                            options={[
-                              { label: 'Weekly', value: 'Weekly' },
-                              { label: 'Fortnightly', value: 'Fortnightly' },
-                              { label: 'Monthly', value: 'Monthly' },
-                            ]}
-                          />
-                        </SettingsDialog.Row>
-                      </Show>
-                    </div>
-                  </section>
-                </div>
-              </SettingsDialog.Body>
-            </SettingsDialog.Panel>
-
-            <SettingsDialog.Panel value="communities">
-              <SettingsDialog.Header
-                title="Communities"
-                actions={<Button iconLeft="lucide-plus">New community</Button>}
-              />
-              <SettingsDialog.Body>
-                <List class="-mx-3 pt-4">
-                  <For each={MANAGED_COMMUNITIES}>
-                    {(item) => (
-                      <ListRow height="h-14">
-                        <ListCell>
-                          <Avatar
-                            image={item.image}
-                            label={item.name}
-                            size="xl"
-                            shape="square"
-                          />
-                        </ListCell>
-                        <ListCell>
-                          <div class="min-w-0">
-                            <div class="truncate text-base text-ink-gray-8">
-                              {item.name}
-                            </div>
-                            <div class="mt-0.5 truncate text-sm text-ink-gray-5">
-                              {item.spaces} spaces · {item.members} members
-                            </div>
-                          </div>
-                        </ListCell>
-                        <ListCell class="justify-end">
-                          <Button
-                            variant="ghost"
-                            icon="lucide-ellipsis"
-                            aria-label="Community options"
-                          />
-                        </ListCell>
-                      </ListRow>
-                    )}
-                  </For>
-                </List>
-              </SettingsDialog.Body>
-            </SettingsDialog.Panel>
-
-            <SettingsDialog.Panel value="emojis">
-              <SettingsDialog.Header
-                title="Emojis"
-                description="Custom emojis are available to everyone in reactions"
-              />
-              <SettingsDialog.Body>
-                <div class="flex flex-wrap gap-2 pt-6">
-                  <For each={CUSTOM_EMOJIS}>
-                    {(emoji) => (
-                      <div class="grid size-10 place-content-center rounded-6 border border-outline-gray-2 text-xl">
-                        {emoji}
-                      </div>
-                    )}
-                  </For>
-                </div>
-              </SettingsDialog.Body>
-            </SettingsDialog.Panel>
-
-            <SettingsDialog.Panel value="users">
-              <SettingsDialog.Header title="Users" />
-              <SettingsDialog.Body>
-                <List class="-mx-3 pt-4" columns="minmax(0,1fr) 6rem 3rem">
-                  <ListRow height="h-14">
-                    <ListCell>
-                      <span class="text-sm text-ink-gray-6">Member</span>
-                    </ListCell>
-                    <ListCell>
-                      <span class="text-sm text-ink-gray-6">Role</span>
-                    </ListCell>
-                    <ListCell />
-                  </ListRow>
-                  <For each={MEMBERS}>
-                    {(member) => (
-                      <ListRow height="h-14">
-                        <ListCell>
-                          <Avatar
-                            image={member.image}
-                            label={member.name}
-                            size="xl"
-                          />
-                          <div class="ms-3 min-w-0">
-                            <div class="truncate text-base text-ink-gray-8">
-                              {member.name}
-                            </div>
-                            <div class="mt-0.5 truncate text-sm text-ink-gray-5">
-                              {member.email}
-                            </div>
-                          </div>
-                        </ListCell>
-                        <ListCell>
-                          <span class="text-base text-ink-gray-7">
-                            {member.role}
-                          </span>
-                        </ListCell>
-                        <ListCell class="justify-end">
-                          <Button
-                            variant="ghost"
-                            icon="lucide-ellipsis"
-                            aria-label="Member options"
-                          />
-                        </ListCell>
-                      </ListRow>
-                    )}
-                  </For>
-                </List>
-              </SettingsDialog.Body>
-            </SettingsDialog.Panel>
-          </SettingsDialog.Content>
-        </SettingsDialog.Root>
+        <DiscussionDialogs store={discussions} />
       </div>
     </div>
   )

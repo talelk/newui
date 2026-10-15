@@ -30,3 +30,10 @@ modes behave exactly as Zag specifies.
 
 `data-part` (`root`/`control`/`thumb`/`label`), `data-state`
 (`checked`/`unchecked`), `data-disabled`, `data-focus-visible`.
+
+## Shared Field contract
+
+`description`, `error`, `required` and `id` share the same semantics as text
+entry. The native inline label is retained. Field owns supporting/error ids,
+`aria-describedby`/`aria-invalid`, and the required marker. An invalid track has a
+semantic error boundary; focus and state transitions respect reduced motion.

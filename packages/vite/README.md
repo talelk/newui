@@ -9,6 +9,8 @@ Vite plugins for newui apps. Three concerns, each usable on its own:
 3. **DocType types** — fetch DocType metadata and emit TypeScript interfaces for
    `useDoc`/`useDoctype`.
 
+Requires Vite 8.3.4 or later in the Vite 8 release line.
+
 ## Usage
 
 ```ts

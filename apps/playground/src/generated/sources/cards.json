@@ -1,0 +1,13 @@
+{
+  "files": [
+    "pages/Cards.tsx",
+    "examples/ExampleFrame.tsx",
+    "shell/ThemeMenu.tsx",
+    "shell/theme.ts"
+  ],
+  "packages": [
+    "@newui/ui",
+    "@solidjs/router",
+    "solid-js"
+  ]
+}

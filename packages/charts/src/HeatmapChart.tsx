@@ -1,9 +1,14 @@
+import { HeatmapChart as HeatmapSeries } from 'echarts/charts'
+import { GridComponent, VisualMapContinuousComponent } from 'echarts/components'
+import { use } from 'echarts/core'
 import { createMemo, type JSX } from 'solid-js'
 import { ChartBase } from './ChartBase'
 import { buildHeatmapOption } from './heatmapOptions'
 import { heatmapFallback, normalizeHeatmapChart } from './normalize'
 import { useChartTokens } from './tokens'
 import type { HeatmapChartProps } from './types'
+
+use([HeatmapSeries, GridComponent, VisualMapContinuousComponent])
 
 /**
  * A heatmap: one cell per row, on a grid of two category axes. The cell fill

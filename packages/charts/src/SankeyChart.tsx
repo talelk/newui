@@ -1,9 +1,13 @@
+import { SankeyChart as SankeySeries } from 'echarts/charts'
+import { use } from 'echarts/core'
 import { createMemo, type JSX } from 'solid-js'
 import { ChartBase } from './ChartBase'
 import { normalizeSankeyChart, sankeyFallback } from './normalize'
 import { buildSankeyOption } from './sankeyOptions'
 import { useChartTokens } from './tokens'
 import type { SankeyChartProps } from './types'
+
+use([SankeySeries])
 
 /**
  * A sankey chart: one band per row, from a source node to a target node. The

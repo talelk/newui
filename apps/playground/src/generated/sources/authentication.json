@@ -1,0 +1,14 @@
+{
+  "files": [
+    "pages/Authentication.tsx",
+    "shell/ThemeMenu.tsx",
+    "shell/theme.ts"
+  ],
+  "packages": [
+    "@newui/blocks",
+    "@newui/ui",
+    "@solidjs/router",
+    "@tanstack/solid-form",
+    "solid-js"
+  ]
+}

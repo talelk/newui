@@ -50,13 +50,15 @@ export type DonutVariant = 'full' | 'half'
 
 /** Plot-area colors as concrete strings, read back from the CSS custom properties. */
 export type ChartTokens = {
+  /** Root font scale, relative to 16px. Defaults to 1 for explicit token objects. */
+  fontScale?: number
   /** The `--chart-1…8` categorical ramp. */
   series: string[]
   /** Gridlines: `--chart-grid`. */
   grid: string
   /** Axis lines and ticks: `--chart-axis`. */
   axis: string
-  /** Axis labels: `--ink-gray-5`. */
+  /** Axis labels: `--ink-gray-6`. */
   label: string
 }
 

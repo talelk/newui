@@ -27,8 +27,9 @@ export interface ScrollAreaRootProps {
 }
 
 const Root: ParentComponent<ScrollAreaRootProps> = (props) => {
+  const machineId = createId('scroll-area')
   const { api } = createZagApi<ScrollAreaApi>(zag.machine, zag.connect, () => ({
-    id: createId('scroll-area'),
+    id: machineId,
   }))
   return (
     <ScrollAreaContext.Provider value={api}>

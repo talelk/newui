@@ -22,7 +22,8 @@ describe('Card', () => {
 
     const card = container.querySelector('[data-slot="card"]')
     expect(card?.className).toContain('bg-surface-elevation-1')
-    expect(card?.className).toContain('shadow-base')
+    expect(card?.className).not.toContain('shadow-base')
+    expect(card?.className).toContain('rounded-5')
     expect(
       container.querySelector('[data-slot="card-title"]')?.textContent,
     ).toBe('Invoices')

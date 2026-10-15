@@ -10,17 +10,24 @@
   },
   "dependencies": {
     "@newui/blocks": "workspace:*",
+    "@newui/charts": "workspace:*",
+    "@newui/code-editor": "workspace:*",
+    "@newui/editor": "workspace:*",
     "@newui/icons": "workspace:*",
     "@newui/tailwind": "workspace:*",
     "@newui/tokens": "workspace:*",
     "@newui/ui": "workspace:*",
     "@solidjs/router": "^1.0.0",
-    "solid-js": "^1.9.0"
+    "@tanstack/solid-form": "^1.33.5",
+    "@tanstack/solid-query": "5.104.3",
+    "@tanstack/solid-table": "^9.3.1",
+    "@tanstack/solid-virtual": "3.13.47",
+    "solid-js": "^1.9.17"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.0",
-    "tailwindcss": "^4.1.0",
-    "vite": "^6.1.0",
-    "vite-plugin-solid": "^2.11.0"
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.4",
+    "vite-plugin-solid": "^2.11.14"
   }
 }

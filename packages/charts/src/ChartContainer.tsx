@@ -23,7 +23,8 @@ const SR_ONLY: JSX.CSSProperties = {
   margin: '-1px',
   overflow: 'hidden',
   clip: 'rect(0, 0, 0, 0)',
-  'white-space': 'nowrap',
+  'white-space': 'normal',
+  'overflow-wrap': 'anywhere',
   'border-width': '0',
 }
 
@@ -100,7 +101,8 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                   color: 'var(--ink-gray-8)',
                   overflow: 'hidden',
                   'text-overflow': 'ellipsis',
-                  'white-space': 'nowrap',
+                  'white-space': 'normal',
+                  'overflow-wrap': 'anywhere',
                 }}
               >
                 {props.title}
@@ -111,10 +113,11 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                 data-slot="chart-subtitle"
                 style={{
                   'font-size': '0.75rem',
-                  color: 'var(--ink-gray-5)',
+                  color: 'var(--ink-gray-6)',
                   overflow: 'hidden',
                   'text-overflow': 'ellipsis',
-                  'white-space': 'nowrap',
+                  'white-space': 'normal',
+                  'overflow-wrap': 'anywhere',
                 }}
               >
                 {props.subtitle}
@@ -223,7 +226,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                     <span
                       style={{
                         'font-size': '0.75rem',
-                        color: 'var(--ink-gray-5)',
+                        color: 'var(--ink-gray-6)',
                         'max-width': '24rem',
                       }}
                     >
@@ -257,7 +260,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                 <span
                   style={{
                     'font-size': '0.75rem',
-                    color: 'var(--ink-gray-5)',
+                    color: 'var(--ink-gray-6)',
                   }}
                 >
                   No data to show
@@ -306,7 +309,7 @@ function AxisTitles(props: {
           props.placement === 'bottom' ? 'flex-end' : 'space-between',
         gap: '0.75rem',
         'font-size': '0.6875rem',
-        color: 'var(--ink-gray-5)',
+        color: 'var(--ink-gray-6)',
         ...(props.placement === 'bottom' ? { 'margin-top': '-0.5rem' } : {}),
       }}
     >
@@ -314,7 +317,8 @@ function AxisTitles(props: {
         style={{
           overflow: 'hidden',
           'text-overflow': 'ellipsis',
-          'white-space': 'nowrap',
+          'white-space': 'normal',
+          'overflow-wrap': 'anywhere',
         }}
       >
         {props.y}
@@ -324,7 +328,8 @@ function AxisTitles(props: {
           style={{
             overflow: 'hidden',
             'text-overflow': 'ellipsis',
-            'white-space': 'nowrap',
+            'white-space': 'normal',
+            'overflow-wrap': 'anywhere',
           }}
         >
           {props.y2}

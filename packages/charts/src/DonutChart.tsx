@@ -1,9 +1,13 @@
+import { PieChart as PieSeries } from 'echarts/charts'
+import { use } from 'echarts/core'
 import { createMemo, type JSX } from 'solid-js'
 import { ChartBase } from './ChartBase'
 import { donutFallback, normalizeDonutChart } from './normalize'
 import { buildDonutChartOption } from './options'
 import { useChartTokens } from './tokens'
 import type { DonutChartProps } from './types'
+
+use([PieSeries])
 
 /**
  * A donut chart: one slice per row, biggest first, with the tail grouped into

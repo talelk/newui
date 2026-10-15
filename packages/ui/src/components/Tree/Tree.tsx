@@ -119,8 +119,9 @@ const Root: ParentComponent<TreeRootProps> = (props) => {
     return buildCollection(local.items ?? [], local.nodeKey ?? 'value')
   })
 
+  const machineId = createId('tree')
   const { api } = createZagApi<TreeApi>(zag.machine, zag.connect, () => ({
-    id: createId('tree'),
+    id: machineId,
     collection: collection(),
     selectionMode: local.selectionMode ?? 'single',
     expandedValue: local.expandedValue,

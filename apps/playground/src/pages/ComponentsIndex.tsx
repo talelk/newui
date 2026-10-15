@@ -1,7 +1,8 @@
 import { Icon } from '@newui/ui'
-import { A } from '@solidjs/router'
+import { A, useLocation } from '@solidjs/router'
 import { createMemo, createSignal, For, type JSX } from 'solid-js'
 import { COMPONENTS, GROUPS } from '../generated/components'
+import { CatalogIcon } from '../lib/CatalogIcon'
 import { PageIntro } from '../shell/PageIntro'
 
 /**
@@ -13,11 +14,27 @@ import { PageIntro } from '../shell/PageIntro'
  * "look at the props" and "there is a page of reasoning".
  */
 export function ComponentsIndex(): JSX.Element {
+  const location = useLocation()
+  const base = () => `/${location.pathname.split('/')[1] ?? 'components'}`
+  const section = () =>
+    base() === '/charts'
+      ? 'Charts'
+      : base() === '/editors'
+        ? 'Editors'
+        : 'Components'
   const [query, setQuery] = createSignal('')
 
   const visible = createMemo(() => {
     const needle = query().trim().toLowerCase()
-    return COMPONENTS.filter((entry) => entry.shipped).filter((entry) =>
+    return COMPONENTS.filter(
+      (entry) =>
+        entry.shipped &&
+        (base() === '/charts'
+          ? entry.group === 'Charts'
+          : base() === '/editors'
+            ? entry.group === 'Editors'
+            : entry.kind === 'component' && entry.package === '@newui/ui'),
+    ).filter((entry) =>
       needle === ''
         ? true
         : entry.name.toLowerCase().includes(needle) ||
@@ -35,48 +52,52 @@ export function ComponentsIndex(): JSX.Element {
   return (
     <>
       <PageIntro
-        title="Components"
-        description="Every compound the library exports, grouped by what it is for. A page per component carries its demo, its prop tables and its contract."
+        title={section()}
+        description="Controls, demos and API contracts, grouped by purpose."
       />
 
       <label class="relative mb-6 flex max-w-sm items-center">
         <span class="sr-only">Filter components</span>
         <Icon
           icon="lucide-search"
-          class="pointer-events-none absolute start-2.5 size-4 text-ink-gray-5"
+          class="pointer-events-none absolute start-2.5 size-4 text-ink-gray-6"
         />
         <input
           type="search"
           value={query()}
           onInput={(event) => setQuery(event.currentTarget.value)}
           placeholder="Filter by name or group…"
-          class="h-8 w-full rounded-4 border border-outline-gray-2 bg-surface-base ps-8 pe-2 text-base text-ink-gray-8 placeholder:text-ink-gray-5 focus-visible:focus-ring"
+          class="h-7 w-full rounded-4 border border-outline-gray-2 bg-surface-base ps-8 pe-2 text-base text-ink-gray-8 placeholder:text-ink-gray-6 focus-visible:focus-ring"
         />
       </label>
 
-      <div class="flex flex-col gap-10">
+      <div class="flex flex-col gap-4">
         <For each={grouped()}>
           {(section) => (
             <section class="flex flex-col gap-3">
-              <h2 class="text-lg-medium text-ink-gray-9">{section.group}</h2>
-              <ul class="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+              <h2 class="text-section text-ink-gray-9">{section.group}</h2>
+              <ul class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1">
                 <For each={section.entries}>
                   {(entry) => (
                     <li>
                       <A
-                        href={`/components/${entry.slug}`}
-                        class="flex h-full flex-col gap-1 rounded-5 border border-outline-gray-2 p-3 transition-colors hover:border-outline-gray-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
+                        href={`${base()}/${entry.slug}`}
+                        class="flex min-h-11 items-center gap-3 rounded-3 p-3 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring"
                       >
-                        <span class="flex items-baseline justify-between gap-2">
+                        <CatalogIcon group={section.group} />
+                        <span class="flex min-w-0 flex-1 flex-wrap items-baseline justify-between gap-2">
                           <span class="truncate text-base-medium text-ink-gray-9">
                             {entry.name}
                           </span>
-                          <span class="shrink-0 text-xs text-ink-gray-5">
+                          <span class="hidden min-w-0 flex-1 truncate text-caption text-ink-gray-6 md:block">
+                            {entry.description}
+                          </span>
+                          <span class="shrink-0 text-xs text-ink-gray-6">
                             {entry.parts.length} part
                             {entry.parts.length === 1 ? '' : 's'}
                           </span>
                         </span>
-                        <span class="text-sm text-ink-gray-5">
+                        <span class="hidden text-caption text-ink-gray-6 sm:block">
                           {entry.spec ? 'Has a contract' : 'Props only'}
                         </span>
                       </A>

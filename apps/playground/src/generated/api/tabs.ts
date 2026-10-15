@@ -57,7 +57,8 @@ export const API = {
       "name": "size",
       "type": "TabsSize",
       "optional": true,
-      "description": "Default size for the list."
+      "description": "Default size for the list.",
+      "default": "sm"
     },
     {
       "name": "edge",

@@ -52,9 +52,40 @@ export const API = {
       "description": "Accessible name for the thumb(s). Required when there is no visible label."
     },
     {
+      "name": "id",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "label",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "description",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "error",
+      "type": "JSX.Element | false",
+      "optional": true
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "optional": true
+    },
+    {
       "name": "class",
       "type": "string",
       "optional": true
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name for the thumb(s). Required when there is no visible label."
     }
   ]
 } as const

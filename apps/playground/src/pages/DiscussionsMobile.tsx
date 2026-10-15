@@ -11,9 +11,22 @@ import {
   MobileNavItem,
   MobileShell,
   PageHeaderMobile,
+  TextInput,
   Tooltip,
 } from '@newui/ui'
-import { createSignal, For, type JSX, Show } from 'solid-js'
+import {
+  createMemo,
+  createSignal,
+  For,
+  type JSX,
+  Show,
+  untrack,
+} from 'solid-js'
+
+import {
+  type createDiscussions,
+  DiscussionDialogs,
+} from '../examples/discussions'
 
 /**
  * The mobile recipe on its own full-screen route (`/mobile`) — a port of
@@ -34,90 +47,18 @@ const SPACES = [
   { name: 'Archive', icon: 'lucide-archive', unread: 0 },
 ]
 
-interface Discussion {
-  title: string
-  author: string
-  image: string
-  excerpt: string
-  comments: number
-  lastActivity: string
-  unread: number
-}
+type Discussion = import('../examples/discussions').Discussion
 
-const PINNED: Discussion[] = [
-  {
-    title: 'Welcome! Start here',
-    author: 'Rhea Kapoor',
-    image: 'https://i.pravatar.cc/150?img=1',
-    excerpt: 'House rules, useful links, and how we work asynchronously.',
-    comments: 42,
-    lastActivity: '1w',
-    unread: 0,
-  },
-]
-
-const DISCUSSIONS: Discussion[] = [
-  {
-    title: 'Design review: new onboarding flow',
-    author: 'Evan You',
-    image: 'https://i.pravatar.cc/150?img=5',
-    excerpt: 'I went through the latest prototype and left comments…',
-    comments: 14,
-    lastActivity: '2h',
-    unread: 3,
-  },
-  {
-    title: 'Proposal: consolidate icon sizes to a 4px grid',
-    author: 'Priya Nair',
-    image: 'https://i.pravatar.cc/150?img=9',
-    excerpt: 'We currently ship icons in 7 sizes. I propose we standardize…',
-    comments: 32,
-    lastActivity: '5h',
-    unread: 1,
-  },
-  {
-    title: 'Dark mode tokens are ready for review',
-    author: 'Sam Rivera',
-    image: 'https://i.pravatar.cc/150?img=14',
-    excerpt: 'All semantic tokens now have dark values. The contrast checks…',
-    comments: 21,
-    lastActivity: '1d',
-    unread: 5,
-  },
-  {
-    title: 'Q3 roadmap discussion',
-    author: 'Ana Costa',
-    image: 'https://i.pravatar.cc/150?img=20',
-    excerpt: 'Carrying over from the planning call — here are the themes…',
-    comments: 8,
-    lastActivity: '2d',
-    unread: 0,
-  },
-  {
-    title: 'Weekly design crit — notes and action items',
-    author: 'Maya Iyer',
-    image: 'https://i.pravatar.cc/150?img=27',
-    excerpt: 'Thanks everyone for joining. Summary of the feedback…',
-    comments: 5,
-    lastActivity: '3d',
-    unread: 0,
-  },
-]
-
-/** One discussion row — pinned and feed rows share the anatomy. */
 function DiscussionRow(props: {
   discussion: Discussion
   title: string
   showReplyIcon: boolean
+  onOpen: () => void
 }): JSX.Element {
   return (
     <ListRow height="h-17">
       <ListCell>
-        <Avatar
-          image={props.discussion.image}
-          label={props.discussion.author}
-          size="2xl"
-        />
+        <Avatar label={props.discussion.author} size="2xl" />
       </ListCell>
       <ListCell>
         <div class="min-w-0 flex-1">
@@ -125,9 +66,17 @@ function DiscussionRow(props: {
               line-height; `leading-none` with `truncate` would shear off
               descenders like the tail of "g". */}
           <div class="truncate leading-none text-ink-gray-8">
-            <span class={props.title}>{props.discussion.title}</span>
+            <span class={props.title}>
+              <button
+                type="button"
+                class="max-w-full truncate rounded-3 text-start focus-visible:focus-ring-blue"
+                onClick={() => props.onOpen()}
+              >
+                {props.discussion.title}
+              </button>
+            </span>
           </div>
-          <div class="mt-1.5 flex min-w-0 items-center text-md text-ink-gray-5">
+          <div class="mt-1.5 flex min-w-0 items-center text-md text-ink-gray-6">
             <Show when={props.showReplyIcon}>
               <Icon icon="lucide-reply" class="mr-1 size-4 shrink-0" />
             </Show>
@@ -138,7 +87,7 @@ function DiscussionRow(props: {
       </ListCell>
       <ListCell class="justify-end">
         <div>
-          <div class="text-right text-sm whitespace-nowrap text-ink-gray-5">
+          <div class="text-right text-sm whitespace-nowrap text-ink-gray-6">
             {props.discussion.lastActivity}
           </div>
           <div class="mt-1.5 flex items-center justify-end">
@@ -159,10 +108,22 @@ function DiscussionRow(props: {
   )
 }
 
-export function DiscussionsMobile(): JSX.Element {
+export function DiscussionsMobile(props: {
+  store: ReturnType<typeof createDiscussions>
+  space: () => string
+  setSpace: (value: string) => void
+  onOpenSettings: () => void
+}): JSX.Element {
   const [tab, setTab] = createSignal('home')
   const [showSpaces, setShowSpaces] = createSignal(false)
-  const [activeSpace, setActiveSpace] = createSignal('Design System')
+  const activeSpace = () => props.space()
+  const setActiveSpace = (value: string) => props.setSpace(value)
+  const discussions = untrack(() => props.store)
+  const rows = createMemo(() =>
+    discussions
+      .rows()
+      .filter((post) => tab() !== 'notifications' || post.unread > 0),
+  )
 
   const selectSpace = (name: string) => {
     setActiveSpace(name)
@@ -170,143 +131,192 @@ export function DiscussionsMobile(): JSX.Element {
   }
 
   return (
-    <MobileShell
-      header={
-        <PageHeaderMobile
-          title="Home"
-          prefix={
-            <Button
-              variant="ghost"
-              icon="lucide-panel-left"
-              aria-label="Spaces"
-              onClick={() => setShowSpaces(true)}
-            />
-          }
-          suffix={
-            <div class="flex items-center gap-1">
-              <Button
-                variant="ghost"
-                icon="lucide-square-pen"
-                aria-label="New discussion"
-              />
-              {/* Not part of the recipe: `/mobile` is a route of this
+    <>
+      <div
+        inert={
+          discussions.creating() ||
+          Boolean(discussions.current()) ||
+          showSpaces()
+        }
+      >
+        <MobileShell
+          header={
+            <PageHeaderMobile
+              title={
+                tab() === 'home'
+                  ? activeSpace()
+                  : tab() === 'search'
+                    ? 'Search'
+                    : tab() === 'notifications'
+                      ? 'Notifications'
+                      : 'Your profile'
+              }
+              prefix={
+                <Button
+                  variant="ghost"
+                  icon="lucide-panel-left"
+                  aria-label="Spaces"
+                  onClick={() => setShowSpaces(true)}
+                />
+              }
+              suffix={
+                <div class="flex items-center gap-1">
+                  <Button
+                    variant="ghost"
+                    icon="lucide-square-pen"
+                    aria-label="New discussion"
+                    onClick={discussions.start}
+                  />
+                  {/* Not part of the recipe: `/mobile` is a route of this
                   playground, and a `MobileShell` covers the viewport, so the
                   page needs its own way back to the showcase. */}
-              <a
-                href="/"
-                aria-label="Back to playground"
-                class="grid size-8 shrink-0 place-items-center rounded-4 text-ink-gray-7 transition-colors hover:bg-surface-gray-3"
-              >
-                <Icon icon="lucide-house" class="size-5" />
-              </a>
-            </div>
-          }
-        />
-      }
-      nav={
-        <MobileNav aria-label="Primary">
-          <MobileNavItem
-            label="Home"
-            icon="lucide-house"
-            active={tab() === 'home'}
-            onClick={() => setTab('home')}
-          />
-          <MobileNavItem
-            label="Notifications"
-            icon="lucide-bell"
-            active={tab() === 'notifications'}
-            onClick={() => setTab('notifications')}
-          />
-          <MobileNavItem
-            label="Search"
-            icon="lucide-search"
-            active={tab() === 'search'}
-            onClick={() => setTab('search')}
-          />
-          <MobileNavItem
-            label="You"
-            active={tab() === 'you'}
-            onClick={() => setTab('you')}
-          >
-            <Avatar
-              image="https://i.pravatar.cc/150?img=1"
-              label="Rhea Kapoor"
-              size="md"
-              class={tab() === 'you' ? 'ring-2 ring-outline-gray-4' : ''}
+                  <a
+                    href="/"
+                    aria-label="Back to playground"
+                    class="grid size-8 shrink-0 place-items-center rounded-4 text-ink-gray-7 transition-colors hover:bg-surface-gray-3"
+                  >
+                    <Icon icon="lucide-house" class="size-5" />
+                  </a>
+                </div>
+              }
             />
-          </MobileNavItem>
-        </MobileNav>
-      }
-    >
-      <div class="pt-3 pb-6">
-        <div class="mb-5">
-          <div class="mb-2 flex items-center gap-1 px-4">
-            <Icon icon="lucide-pin" class="size-4 text-ink-gray-4" />
-            <span class="text-base text-ink-gray-8">Pinned</span>
-          </div>
-          <List>
-            <For each={PINNED}>
-              {(discussion) => (
-                <DiscussionRow
-                  discussion={discussion}
-                  title="text-lg"
-                  showReplyIcon={false}
-                />
-              )}
-            </For>
-          </List>
-        </div>
-
-        <List>
-          <For each={DISCUSSIONS}>
-            {(discussion) => (
-              <DiscussionRow
-                discussion={discussion}
-                title={discussion.unread ? 'text-lg-semibold' : 'text-lg'}
-                showReplyIcon
+          }
+          nav={
+            <MobileNav aria-label="Primary">
+              <MobileNavItem
+                label="Home"
+                icon="lucide-house"
+                active={tab() === 'home'}
+                onClick={() => setTab('home')}
               />
-            )}
-          </For>
-        </List>
-      </div>
-
-      <BottomSheet
-        open={showSpaces()}
-        title="Spaces"
-        onOpenChange={setShowSpaces}
-      >
-        {/* The List's default `auto minmax(0,1fr) auto` columns lay out
-            icon / label / count. */}
-        <List class="px-2 pb-4">
-          <For each={SPACES}>
-            {(space) => (
-              <ListRow
-                height="h-11"
-                class="rounded-5"
-                active={activeSpace() === space.name}
-                onClick={() => selectSpace(space.name)}
+              <MobileNavItem
+                label="Notifications"
+                icon="lucide-bell"
+                active={tab() === 'notifications'}
+                onClick={() => setTab('notifications')}
+              />
+              <MobileNavItem
+                label="Search"
+                icon="lucide-search"
+                active={tab() === 'search'}
+                onClick={() => setTab('search')}
+              />
+              <MobileNavItem
+                label="You"
+                active={tab() === 'you'}
+                onClick={() => setTab('you')}
               >
-                <ListCell>
-                  <Icon
-                    icon={space.icon}
-                    class="size-5 shrink-0 text-ink-gray-5"
-                  />
-                </ListCell>
-                <ListCell>
-                  <span class="truncate text-lg text-ink-gray-8">
-                    {space.name}
-                  </span>
-                </ListCell>
-                <ListCell class="justify-end">
-                  <Show when={space.unread}>
-                    <Badge>{space.unread}</Badge>
+                <Avatar
+                  label="Rhea Kapoor"
+                  size="md"
+                  class={tab() === 'you' ? 'ring-2 ring-outline-gray-4' : ''}
+                />
+              </MobileNavItem>
+            </MobileNav>
+          }
+        >
+          <div class="px-2 pt-3 pb-6">
+            <Show
+              when={tab() === 'you'}
+              fallback={
+                <>
+                  <Show when={tab() === 'search'}>
+                    <div class="px-2 pb-4">
+                      <TextInput
+                        label="Search discussions"
+                        value={discussions.query()}
+                        onInput={(event) =>
+                          discussions.setQuery(event.currentTarget.value)
+                        }
+                      />
+                    </div>
                   </Show>
-                </ListCell>
-              </ListRow>
-            )}
-          </For>
-        </List>
-      </BottomSheet>
-    </MobileShell>
+                  <Show when={tab() === 'notifications'}>
+                    <div class="mb-3 px-2">
+                      <Button variant="outline" onClick={discussions.markRead}>
+                        Mark all as read
+                      </Button>
+                    </div>
+                  </Show>
+                  <List>
+                    <For each={rows()}>
+                      {(discussion) => (
+                        <DiscussionRow
+                          discussion={discussion}
+                          title={
+                            discussion.unread ? 'text-lg-semibold' : 'text-lg'
+                          }
+                          showReplyIcon
+                          onOpen={() => discussions.open(discussion)}
+                        />
+                      )}
+                    </For>
+                  </List>
+                  <Show when={!rows().length}>
+                    <p class="p-4 text-ink-gray-6">
+                      No discussions match this space and filter.
+                    </p>
+                  </Show>
+                </>
+              }
+            >
+              <section class="p-4">
+                <Avatar label="Rhea Kapoor" size="2xl" />
+                <h1 class="mt-4 text-section">Rhea Kapoor</h1>
+                <p class="mt-2 text-ink-gray-6">
+                  Product designer · Design workspace
+                </p>
+                <Button variant="ghost" onClick={() => props.onOpenSettings()}>
+                  Manage workspace settings{' '}
+                  <span
+                    aria-hidden="true"
+                    class="lucide-arrow-right inline-block size-4 align-middle"
+                  />
+                </Button>
+              </section>
+            </Show>
+          </div>
+
+          <BottomSheet
+            open={showSpaces()}
+            title="Spaces"
+            onOpenChange={setShowSpaces}
+          >
+            {/* The List's default `auto minmax(0,1fr) auto` columns lay out
+            icon / label / count. */}
+            <List class="px-2 pb-4">
+              <For each={SPACES}>
+                {(space) => (
+                  <ListRow
+                    height="h-11"
+                    class="rounded-5"
+                    active={activeSpace() === space.name}
+                    onClick={() => selectSpace(space.name)}
+                  >
+                    <ListCell>
+                      <Icon
+                        icon={space.icon}
+                        class="size-5 shrink-0 text-ink-gray-6"
+                      />
+                    </ListCell>
+                    <ListCell>
+                      <span class="truncate text-lg text-ink-gray-8">
+                        {space.name}
+                      </span>
+                    </ListCell>
+                    <ListCell class="justify-end">
+                      <Show when={space.unread}>
+                        <Badge>{space.unread}</Badge>
+                      </Show>
+                    </ListCell>
+                  </ListRow>
+                )}
+              </For>
+            </List>
+          </BottomSheet>
+        </MobileShell>
+      </div>
+      <DiscussionDialogs store={discussions} />
+    </>
   )
 }

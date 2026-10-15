@@ -37,7 +37,8 @@ export const API = {
     {
       "name": "size",
       "type": "InputSize",
-      "optional": true
+      "optional": true,
+      "default": "sm"
     },
     {
       "name": "variant",
@@ -86,6 +87,11 @@ export const API = {
     },
     {
       "name": "'aria-label'",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "aria-label",
       "type": "string",
       "optional": true
     }

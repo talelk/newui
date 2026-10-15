@@ -1,0 +1,16 @@
+{
+  "files": [
+    "pages/Files.tsx",
+    "examples/DataTable.tsx",
+    "examples/ExampleFrame.tsx",
+    "shell/ThemeMenu.tsx",
+    "shell/theme.ts",
+    "examples/files-data.ts"
+  ],
+  "packages": [
+    "@newui/ui",
+    "@solidjs/router",
+    "@tanstack/solid-table",
+    "solid-js"
+  ]
+}

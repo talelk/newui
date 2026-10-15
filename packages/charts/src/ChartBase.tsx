@@ -71,6 +71,7 @@ export function ChartBase(props: ChartBaseProps): JSX.Element {
       subtitle={props.subtitle}
       loading={props.loading}
       error={props.error}
+      empty={props.fallback !== undefined && props.fallback.rows.length === 0}
     >
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
         <div
@@ -85,7 +86,7 @@ export function ChartBase(props: ChartBaseProps): JSX.Element {
         {props.overlay}
       </div>
 
-      <Show when={props.fallback}>
+      <Show when={!props.loading && !props.error && props.fallback}>
         {(fallback) => <FallbackTable {...fallback()} />}
       </Show>
     </ChartContainer>

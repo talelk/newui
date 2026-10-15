@@ -1,9 +1,14 @@
+import { ScatterChart as ScatterSeries } from 'echarts/charts'
+import { GridComponent } from 'echarts/components'
+import { use } from 'echarts/core'
 import { createMemo, type JSX } from 'solid-js'
 import { ChartBase } from './ChartBase'
 import { normalizeScatterChart, scatterFallback } from './normalize'
 import { buildScatterOption } from './scatterOptions'
 import { useChartTokens } from './tokens'
 import type { ScatterChartProps } from './types'
+
+use([ScatterSeries, GridComponent])
 
 /**
  * A scatter chart: one point per row, on a pair of value axes. Points group

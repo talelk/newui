@@ -48,6 +48,12 @@ export const API = {
       "name": "class",
       "type": "string",
       "optional": true
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name. A progressbar is unlabelled without one."
     }
   ]
 } as const

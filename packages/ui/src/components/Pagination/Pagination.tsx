@@ -39,12 +39,12 @@ export type PaginationSize = 'sm' | 'md' | 'lg'
 
 /** Square hit areas, so the numbers and the arrows line up as one row. */
 export const paginationItem = tv({
-  base: 'grid shrink-0 cursor-pointer place-items-center rounded-4 text-base tabular-nums transition-colors outline-none focus-visible:focus-ring',
+  base: 'grid shrink-0 cursor-pointer place-items-center rounded-3 text-base tabular-nums transition-colors outline-none focus-visible:focus-ring',
   variants: {
     size: {
-      sm: 'size-6 min-w-6 px-1.5',
-      md: 'size-7 min-w-7 px-2',
-      lg: 'size-8 min-w-8 px-2.5',
+      sm: 'size-7 min-w-7 px-1.5',
+      md: 'size-8 min-w-8 px-2',
+      lg: 'size-10 min-w-10 px-2.5',
     },
     state: {
       idle: 'text-ink-gray-7 hover:bg-surface-gray-2 hover:text-ink-gray-9',
@@ -59,6 +59,7 @@ export const paginationItem = tv({
 })
 
 export interface PaginationProps {
+  /** @default sm */
   size?: PaginationSize
   /** Current page, 1-based. */
   page?: number
@@ -117,8 +118,9 @@ export const PaginationRoot: ParentComponent<PaginationProps> = (props) => {
    */
   const size = (): { size: PaginationSize } => ({ size: local.size ?? 'sm' })
 
+  const machineId = createId('pagination')
   const { api } = createZagApi<PaginationApi>(zag.machine, zag.connect, () => ({
-    id: createId('pagination'),
+    id: machineId,
     page: local.page,
     defaultPage: local.defaultPage,
     count: local.count,

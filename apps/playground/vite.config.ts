@@ -50,6 +50,33 @@ function inlineCss(): Plugin {
 
 export default defineConfig({
   plugins: [solid(), tailwindcss(), inlineCss()],
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [
+            {
+              // All routes already need the entry's static dependencies. Keep
+              // them together to avoid repeating long preload dependency maps.
+              name: 'shell',
+              tags: ['$initial'],
+              includeDependenciesRecursively: false,
+              priority: 10,
+            },
+            {
+              // Keep chart modules in their own groups so Rolldown cannot
+              // place shared namespace helpers inside an ECharts payload.
+              // Entry-aware groups retain tree shaking between chart families.
+              name: 'charts',
+              test: /(?:node_modules[\\/](?:echarts|zrender)|packages[\\/]charts)[\\/]/,
+              entriesAware: true,
+              includeDependenciesRecursively: false,
+            },
+          ],
+        },
+      },
+    },
+  },
   optimizeDeps: {
     exclude: ['@newui/ui', '@newui/tailwind', '@newui/tokens'],
   },

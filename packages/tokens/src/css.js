@@ -33,7 +33,8 @@ function chartVariables(mode) {
   const out = {}
   CHART_SERIES.forEach((family, index) => {
     const ramp = mode === 'dark' ? '--dark-' : '--'
-    out[`--chart-${index + 1}`] = `var(${ramp}${family}-600)`
+    out[`--chart-${index + 1}`] =
+      `var(${ramp}${family}-${mode === 'dark' ? '200' : '600'})`
   })
   return out
 }

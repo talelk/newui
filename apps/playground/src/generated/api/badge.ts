@@ -28,6 +28,21 @@ export const API = {
       "name": "children",
       "type": "JSX.Element",
       "optional": true
+    },
+    {
+      "name": "variant",
+      "type": "\"subtle\" | \"outline\" | \"solid\" | \"ghost\" | null | undefined",
+      "optional": true
+    },
+    {
+      "name": "theme",
+      "type": "\"gray\" | \"blue\" | \"green\" | \"amber\" | \"red\" | \"violet\" | null | undefined",
+      "optional": true
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"md\" | \"lg\" | null | undefined",
+      "optional": true
     }
   ]
 } as const

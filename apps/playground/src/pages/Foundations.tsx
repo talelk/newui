@@ -6,7 +6,7 @@ import { PageIntro } from '../shell/PageIntro'
 function Section(props: { title: string; children: JSX.Element }) {
   return (
     <section class="flex flex-col gap-4">
-      <h2 class="text-xl-medium text-ink-gray-9">{props.title}</h2>
+      <h2 class="text-section text-ink-gray-9">{props.title}</h2>
       {props.children}
     </section>
   )
@@ -19,14 +19,14 @@ function Swatch(props: { label: string; cssVar: string }) {
         class="h-10 rounded-3 border border-outline-gray-1"
         style={{ 'background-color': props.cssVar }}
       />
-      <span class="truncate text-2xs text-ink-gray-5">{props.label}</span>
+      <span class="truncate text-2xs text-ink-gray-6">{props.label}</span>
     </div>
   )
 }
 
 export function Foundations() {
   return (
-    <div class="flex flex-col gap-12">
+    <div class="flex flex-col gap-4">
       <PageIntro
         title="Design tokens"
         description="The vocabulary every component is built from. Colours are semantic — surface-*, ink-*, outline-* — so light and dark come from one document attribute rather than a second set of classes."
@@ -60,7 +60,7 @@ export function Foundations() {
                   class="size-14 border border-outline-gray-2 bg-surface-gray-2"
                   style={{ 'border-radius': `var(--radius-${key})` }}
                 />
-                <span class="text-2xs text-ink-gray-5">
+                <span class="text-2xs text-ink-gray-6">
                   {key} · {value}
                 </span>
               </div>
@@ -69,7 +69,33 @@ export function Foundations() {
         </div>
       </Section>
 
-      <Section title="Typography">
+      <Section title="Typography roles">
+        <div class="flex flex-col gap-4 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3">
+          <div>
+            <p class="text-caption text-ink-gray-6">Page heading · 30 / 36</p>
+            <p class="text-heading">Revenue overview</p>
+          </div>
+          <div>
+            <p class="text-caption text-ink-gray-6">
+              Section heading · 20 / 28
+            </p>
+            <p class="text-section">Recent transactions</p>
+          </div>
+          <div>
+            <p class="text-caption text-ink-gray-6">Metric · 30 / 36</p>
+            <p class="text-metric tabular-nums">$128,430</p>
+          </div>
+          <div>
+            <p class="text-interface">
+              Interface · 14 / 20 · Filters, labels and body copy
+            </p>
+            <p class="text-caption text-ink-gray-6">
+              Supporting text · 12 / 16 · Compared with last month
+            </p>
+          </div>
+        </div>
+      </Section>
+      <Section title="Numbered typography">
         <div class="flex flex-col gap-1.5">
           <span class="text-2xs">text-2xs · 11px</span>
           <span class="text-xs">text-xs · 12px</span>
@@ -86,7 +112,7 @@ export function Foundations() {
       </Section>
 
       <Section title="Elevation">
-        <div class="flex flex-wrap gap-6 py-4">
+        <div class="flex flex-wrap gap-4 py-4">
           <div class="flex size-20 items-center justify-center rounded-5 bg-surface-base shadow-sm">
             sm
           </div>
@@ -148,7 +174,7 @@ export function Foundations() {
           <For each={['solid', 'subtle', 'outline', 'ghost'] as const}>
             {(variant) => (
               <div class="flex flex-wrap items-center gap-3">
-                <span class="w-16 text-xs text-ink-gray-5">{variant}</span>
+                <span class="w-16 text-xs text-ink-gray-6">{variant}</span>
                 <Button variant={variant} theme="gray">
                   Gray
                 </Button>
@@ -182,7 +208,7 @@ export function Foundations() {
       </Section>
 
       <Section title="Switch">
-        <div class="flex flex-wrap items-center gap-6">
+        <div class="flex flex-wrap items-center gap-4">
           <Switch label="Notifications" defaultChecked />
           <Switch label="Disabled" disabled />
           <Switch label="Unchecked" />

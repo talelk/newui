@@ -1,8 +1,23 @@
 import { render } from '@solidjs/testing-library'
+import userEvent from '@testing-library/user-event'
+import { createSignal } from 'solid-js'
 import { describe, expect, it } from 'vitest'
 import { TextInput } from './TextInput'
 
 describe('TextInput', () => {
+  it('preserves the typed value and focused input when validation appears', async () => {
+    const [error, setError] = createSignal<string>()
+    const { getByRole } = render(() => (
+      <TextInput aria-label="Email" error={error()} />
+    ))
+    const input = getByRole('textbox') as HTMLInputElement
+    await userEvent.type(input, 'rhea@example.com')
+    setError('Check this address.')
+    expect(getByRole('textbox')).toBe(input)
+    expect(input.value).toBe('rhea@example.com')
+    expect(document.activeElement).toBe(input)
+  })
+
   it('renders a bare input without labelling props', () => {
     const { getByRole } = render(() => <TextInput placeholder="Name" />)
     const input = getByRole('textbox')

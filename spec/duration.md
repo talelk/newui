@@ -15,7 +15,7 @@ Enter or blur. It reuses the shared labelling contract (P5), so `label` /
 | `placeholder` | `string` | `"1h 30m 45s"` | shown when empty |
 | `format` | `short \| long \| colon \| string` | `"short"` | how the saved value renders while unfocused |
 | `size` | `xs \| sm \| md \| lg` | `sm` | |
-| `variant` | `subtle \| outline \| ghost` | `subtle` | |
+| `variant` | `subtle \| outline \| ghost` | `outline` | |
 | `disabled` | `boolean` | `false` | |
 | `name` | `string` | — | form field name |
 | `id` | `string` | auto | |

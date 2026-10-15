@@ -4,6 +4,25 @@ import { describe, expect, it, vi } from 'vitest'
 import { Switch } from './Switch'
 
 describe('Switch', () => {
+  it('connects the shared label, supporting text and invalid state', () => {
+    const { getByRole, getByText } = render(() => (
+      <Switch
+        label="Preference"
+        description="Choose your preference."
+        error="A preference is required."
+        required
+      />
+    ))
+    const control = getByRole('switch', { name: /Preference/ })
+    expect(control).toHaveAttribute('aria-invalid', 'true')
+    expect(control.getAttribute('aria-describedby')).toContain(
+      getByText('Choose your preference.').id,
+    )
+    expect(control.getAttribute('aria-describedby')).toContain(
+      getByRole('alert').id,
+    )
+  })
+
   it('exposes a switch whose checked state tracks the prop', () => {
     const { getByRole } = render(() => (
       <Switch label="Notifications" defaultChecked />
@@ -52,7 +71,9 @@ describe('Switch', () => {
     const { container } = render(() => (
       <Switch padded label="Notify" onCheckedChange={onCheckedChange} />
     ))
-    const surface = container.firstElementChild as HTMLElement
+    const surface = container.querySelector(
+      '[data-slot="switch-root"]',
+    ) as HTMLElement
     expect(surface.className).toContain('hover:bg-surface-gray-3')
     await userEvent.click(surface)
     expect(onCheckedChange).toHaveBeenCalledWith(true)

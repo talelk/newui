@@ -87,6 +87,12 @@ const [doc, setDoc] = createSignal<JSONContent>({ type: 'doc', content: [] })
 rendered as a child. It also accepts an explicit `editor` prop for a standalone
 toolbar.
 
+The toolbar provides Paragraph, Heading 1–3, Bold, Italic, Bullet list, Ordered
+list, Link, Image, Table, Undo and Redo. Link asks for a URL (the current address
+when editing a link); cancel leaves the document unchanged and an empty address
+removes the link. Undo and Redo follow the editor's available history. Readonly
+disables all toolbar actions without emitting a document change.
+
 ## Props
 
 `Editor`:
@@ -231,3 +237,5 @@ flips automatically.
 - Image resizing has no keyboard affordance: TipTap's handles are pointer-only,
   and a keyboard-resizable image is out of scope for this lean package. The
   underlying `width`/`height` attributes can still be set programmatically.
+
+Toolbar commands use compact 28px controls, matching the UI defaults.

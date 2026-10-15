@@ -1,6 +1,7 @@
 import { DateFormatter, type DateValue } from '@internationalized/date'
 import * as zag from '@zag-js/date-picker'
 import { For, type JSX, Show, splitProps } from 'solid-js'
+import { fieldSizes, popupFieldVariants } from '../../lib/control-styles'
 import { toDate, toValueArray } from '../../lib/date-value'
 import { Field, useField } from '../../lib/field'
 import { createId } from '../../lib/id'
@@ -60,6 +61,7 @@ export interface DatePickerProps {
   offset?: number
   /** Shows a clear control when a date is selected. */
   clearable?: boolean
+  /** @default sm */
   size?: DatePickerSize
   variant?: DatePickerVariant
   /** Shared labelling contract (P5). */
@@ -71,21 +73,6 @@ export interface DatePickerProps {
   'aria-label'?: string
   /** Merged into the root. */
   class?: string
-}
-
-const SIZE: Record<DatePickerSize, string> = {
-  xs: 'h-6 rounded-3 text-xs',
-  sm: 'h-7 rounded-4 text-base',
-  md: 'h-8 rounded-4 text-base',
-  lg: 'h-10 rounded-5 text-lg',
-}
-
-const VARIANT: Record<DatePickerVariant, string> = {
-  subtle:
-    'border border-surface-gray-2 bg-surface-gray-2 hover:border-outline-gray-3 hover:bg-surface-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:bg-surface-base data-[state=open]:shadow-sm',
-  outline:
-    'border border-outline-gray-2 bg-surface-base hover:border-outline-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:shadow-sm',
-  ghost: 'border-0 bg-transparent',
 }
 
 const navButton =
@@ -136,8 +123,9 @@ function DatePickerControl(props: ControlProps): JSX.Element {
   // the legacy `readonly` prop keeps working (P13).
   const readOnly = () => Boolean(local.readonly) || local.typeable === false
 
+  const machineId = createId('date-picker')
   const { api } = createZagApi<DatePickerApi>(zag.machine, zag.connect, () => ({
-    id: createId('date-picker'),
+    id: machineId,
     locale: local.locale ?? 'en-US',
     selectionMode: 'single',
     value: toValueArray(local.value),
@@ -188,18 +176,19 @@ function DatePickerControl(props: ControlProps): JSX.Element {
       <div
         {...api().getControlProps()}
         data-slot="date-picker-control"
+        data-invalid={field?.hasError() ? '' : undefined}
         class={cn(
           'flex w-full items-center transition-colors',
-          SIZE[size()],
-          VARIANT[local.variant ?? 'subtle'],
+          fieldSizes[size()],
+          popupFieldVariants[local.variant ?? 'outline'],
           'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:opacity-60',
-          'focus-within:focus-ring',
+          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
         )}
       >
         <input
           {...api().getInputProps()}
           data-slot="date-picker-input"
-          aria-label={field ? undefined : bareName()}
+          aria-label={field?.hasLabel() ? undefined : bareName()}
           aria-describedby={field?.describedBy()}
           aria-errormessage={field?.hasError() ? field?.errorId() : undefined}
           class={cn(
@@ -241,7 +230,7 @@ function DatePickerControl(props: ControlProps): JSX.Element {
             <div
               {...api().getContentProps()}
               data-slot="date-picker-content"
-              class="w-fit rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-ink-gray-9 shadow-lg focus-visible:outline-none"
+              class="w-fit rounded-6 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-ink-gray-9 shadow-lg focus-visible:outline-none"
             >
               <Show when={api().view === 'day'}>
                 <div
@@ -260,6 +249,7 @@ function DatePickerControl(props: ControlProps): JSX.Element {
                   </button>
                   <button
                     {...api().getViewTriggerProps({ view: 'day' })}
+                    aria-label={`${api().visibleRangeText.start}, choose month`}
                     type="button"
                     class="rounded-3 px-2 py-0.5 text-base-medium text-ink-gray-9 transition-colors hover:bg-surface-gray-3"
                   >
@@ -285,7 +275,7 @@ function DatePickerControl(props: ControlProps): JSX.Element {
                           <th
                             scope="col"
                             aria-label={day.long}
-                            class="size-8 text-xs font-normal text-ink-gray-5"
+                            class="size-8 text-xs font-normal text-ink-gray-6"
                           >
                             {day.narrow}
                           </th>
@@ -339,6 +329,7 @@ function DatePickerControl(props: ControlProps): JSX.Element {
                   </button>
                   <button
                     {...api().getViewTriggerProps({ view: 'month' })}
+                    aria-label={`${api().visibleRange.start.year}, choose year`}
                     type="button"
                     class="rounded-3 px-2 py-0.5 text-base-medium text-ink-gray-9 transition-colors hover:bg-surface-gray-3"
                   >
@@ -379,6 +370,7 @@ function DatePickerControl(props: ControlProps): JSX.Element {
                                     ...month,
                                     columns: 4,
                                   })}
+                                  aria-label={`${month.label}, ${api().getMonthTableCellTriggerProps({ ...month, columns: 4 })['aria-label']}`}
                                   type="button"
                                   class={cellButton}
                                 >
@@ -480,21 +472,16 @@ export function DatePicker(props: DatePickerProps): JSX.Element {
     'error',
     'required',
   ])
-  const hasLabeling = () =>
-    Boolean(local.label || local.description || local.error || local.required)
-
   return (
-    <Show when={hasLabeling()} fallback={<DatePickerControl {...props} />}>
-      <Field
-        id={props.id}
-        label={local.label}
-        description={local.description}
-        error={local.error}
-        required={local.required}
-        disabled={props.disabled}
-      >
-        <DatePickerControl {...props} />
-      </Field>
-    </Show>
+    <Field
+      id={props.id}
+      label={local.label}
+      description={local.description}
+      error={local.error}
+      required={local.required}
+      disabled={props.disabled}
+    >
+      <DatePickerControl {...props} />
+    </Field>
   )
 }

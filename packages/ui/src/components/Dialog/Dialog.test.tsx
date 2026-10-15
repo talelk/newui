@@ -1,5 +1,6 @@
 import { render, screen } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
+import { createSignal } from 'solid-js'
 import { describe, expect, it, vi } from 'vitest'
 import { Dialog } from './Dialog'
 
@@ -159,4 +160,31 @@ describe('Dialog', () => {
     expect(onOpenChange).toHaveBeenCalledTimes(1)
     second.unmount()
   })
+})
+
+it('keeps trigger and content relationships stable across controlled open changes', async () => {
+  const [open, setOpen] = createSignal(false)
+  const clicked = vi.fn()
+  render(() => (
+    <Dialog.Root open={open()} onOpenChange={setOpen}>
+      <Dialog.Trigger aria-label="Edit record" onClick={clicked}>
+        <span aria-hidden="true">✎</span>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Title>Edit record</Dialog.Title>
+        <Dialog.Close>Done editing</Dialog.Close>
+      </Dialog.Content>
+    </Dialog.Root>
+  ))
+  const trigger = screen.getByRole('button', { name: 'Edit record' })
+  const triggerId = trigger.id
+  const contentId = trigger.getAttribute('aria-controls')
+  await userEvent.click(trigger)
+  expect(clicked).toHaveBeenCalledTimes(1)
+  expect(trigger.id).toBe(triggerId)
+  expect(screen.getByRole('dialog').id).toBe(contentId)
+  await userEvent.click(screen.getByRole('button', { name: 'Done editing' }))
+  await userEvent.click(trigger)
+  expect(trigger.id).toBe(triggerId)
+  expect(screen.getByRole('dialog').id).toBe(contentId)
 })

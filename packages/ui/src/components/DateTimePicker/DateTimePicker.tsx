@@ -6,6 +6,7 @@ import {
 } from '@internationalized/date'
 import * as zag from '@zag-js/date-picker'
 import { createMemo, For, type JSX, Show, splitProps } from 'solid-js'
+import { fieldSizes, popupFieldVariants } from '../../lib/control-styles'
 import { dateTimeToIso, toDateTime } from '../../lib/date-value'
 import { Field, useField } from '../../lib/field'
 import { createId } from '../../lib/id'
@@ -71,6 +72,7 @@ export interface DateTimePickerProps {
   offset?: number
   /** Shows a clear control when a value is selected. */
   clearable?: boolean
+  /** @default sm */
   size?: DateTimePickerSize
   variant?: DateTimePickerVariant
   /** Shared labelling contract (P5). */
@@ -82,21 +84,6 @@ export interface DateTimePickerProps {
   'aria-label'?: string
   /** Merged into the root. */
   class?: string
-}
-
-const SIZE: Record<DateTimePickerSize, string> = {
-  xs: 'h-6 rounded-3 text-xs',
-  sm: 'h-7 rounded-4 text-base',
-  md: 'h-8 rounded-4 text-base',
-  lg: 'h-10 rounded-5 text-lg',
-}
-
-const VARIANT: Record<DateTimePickerVariant, string> = {
-  subtle:
-    'border border-surface-gray-2 bg-surface-gray-2 hover:border-outline-gray-3 hover:bg-surface-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:bg-surface-base data-[state=open]:shadow-sm',
-  outline:
-    'border border-outline-gray-2 bg-surface-base hover:border-outline-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:shadow-sm',
-  ghost: 'border-0 bg-transparent',
 }
 
 /** Date + time, matching the picker's ISO value shape. */
@@ -164,11 +151,12 @@ function DateTimePickerControl(props: ControlProps): JSX.Element {
 
   const readOnly = () => Boolean(local.readonly) || local.typeable === false
 
+  const machineId = createId('date-time-picker')
   const { api } = createZagApi<DateTimePickerApi>(
     zag.machine,
     zag.connect,
     () => ({
-      id: createId('date-time-picker'),
+      id: machineId,
       locale: local.locale ?? 'en-US',
       selectionMode: 'single',
       value: toValue(local.value),
@@ -270,16 +258,16 @@ function DateTimePickerControl(props: ControlProps): JSX.Element {
         data-slot="date-time-picker-control"
         class={cn(
           'flex w-full items-center transition-colors',
-          SIZE[size()],
-          VARIANT[local.variant ?? 'subtle'],
+          fieldSizes[size()],
+          popupFieldVariants[local.variant ?? 'outline'],
           'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:opacity-60',
-          'focus-within:focus-ring',
+          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
         )}
       >
         <input
           {...api().getInputProps()}
           data-slot="date-time-picker-input"
-          aria-label={field ? undefined : bareName()}
+          aria-label={field?.hasLabel() ? undefined : bareName()}
           aria-describedby={field?.describedBy()}
           aria-errormessage={field?.hasError() ? field?.errorId() : undefined}
           class={cn(
@@ -321,7 +309,7 @@ function DateTimePickerControl(props: ControlProps): JSX.Element {
             <div
               {...api().getContentProps()}
               data-slot="date-time-picker-content"
-              class="w-fit rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-ink-gray-9 shadow-lg focus-visible:outline-none"
+              class="w-fit rounded-6 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-ink-gray-9 shadow-lg focus-visible:outline-none"
             >
               <CalendarView
                 api={api()}
@@ -383,21 +371,16 @@ export function DateTimePicker(props: DateTimePickerProps): JSX.Element {
     'error',
     'required',
   ])
-  const hasLabeling = () =>
-    Boolean(local.label || local.description || local.error || local.required)
-
   return (
-    <Show when={hasLabeling()} fallback={<DateTimePickerControl {...props} />}>
-      <Field
-        id={props.id}
-        label={local.label}
-        description={local.description}
-        error={local.error}
-        required={local.required}
-        disabled={props.disabled}
-      >
-        <DateTimePickerControl {...props} />
-      </Field>
-    </Show>
+    <Field
+      id={props.id}
+      label={local.label}
+      description={local.description}
+      error={local.error}
+      required={local.required}
+      disabled={props.disabled}
+    >
+      <DateTimePickerControl {...props} />
+    </Field>
   )
 }

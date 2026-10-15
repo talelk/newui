@@ -3,10 +3,10 @@ import { describe, expect, it } from 'vitest'
 import { FormLabel } from './FormLabel'
 
 describe('FormLabel (browser, real CSS)', () => {
-  it('uses the fixed label typography', () => {
+  it('uses the shared caption typography', () => {
     const { getByText } = render(() => <FormLabel label="Name" />)
     const style = getComputedStyle(getByText('Name'))
-    expect(Number.parseFloat(style.fontSize)).toBeCloseTo(13, 0)
+    expect(Number.parseFloat(style.fontSize)).toBeCloseTo(12, 0)
     expect(Number.parseFloat(style.fontSize)).toBeGreaterThan(0)
   })
 

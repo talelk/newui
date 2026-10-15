@@ -148,7 +148,7 @@ export function Alert(props: AlertProps): JSX.Element {
           ? {
               variant: 'outline' as const,
               theme: 'gray' as const,
-              size: 'md' as const,
+              size: 'sm' as const,
             }
           : {
               variant: 'ghost' as const,
@@ -158,7 +158,7 @@ export function Alert(props: AlertProps): JSX.Element {
         : {
             variant: 'ghost' as const,
             theme: 'gray' as const,
-            size: 'md' as const,
+            size: 'sm' as const,
           }
     return {
       variant: action.variant ?? fallback.variant,

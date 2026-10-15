@@ -30,7 +30,7 @@ beside a column header, which is where it usually belongs.
 | `onPageChange` | `(page: number) => void` | — | |
 | `siblingCount` | `number` | `1` | numbers either side of the current one |
 | `boundaryCount` | `number` | `1` | numbers pinned at each end |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'sm'` | |
+| `size` | `'sm' \| 'md' \| 'lg'` | `sm` | |
 | `disabled` | `boolean` | `false` | |
 | `aria-label` | `string` | `'Pagination'` | the `<nav>`'s accessible name |
 | `class` | `string` | — | |

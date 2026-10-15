@@ -1,18 +1,4 @@
-import {
-  BarChart as BarSeries,
-  FunnelChart as FunnelSeries,
-  HeatmapChart as HeatmapSeries,
-  LineChart as LineSeries,
-  PieChart as PieSeries,
-  SankeyChart as SankeySeries,
-  ScatterChart as ScatterSeries,
-} from 'echarts/charts'
-import {
-  GridComponent,
-  LegendComponent,
-  TooltipComponent,
-  VisualMapContinuousComponent,
-} from 'echarts/components'
+import { TooltipComponent } from 'echarts/components'
 import type { ECharts, EChartsCoreOption } from 'echarts/core'
 import * as echarts from 'echarts/core'
 import { LabelLayout } from 'echarts/features'
@@ -26,27 +12,11 @@ import {
   untrack,
 } from 'solid-js'
 
-// Registered once for the whole package. Only the pieces these charts draw are
-// pulled in, which is what keeps the unused half of echarts out of a bundle.
-//
-// SVG only: it keeps text selectable and crisp at any DPI, and — unlike the
-// canvas renderer — it works under jsdom, so a component test can mount a chart.
-echarts.use([
-  BarSeries,
-  LineSeries,
-  PieSeries,
-  FunnelSeries,
-  HeatmapSeries,
-  ScatterSeries,
-  SankeySeries,
-  GridComponent,
-  TooltipComponent,
-  LegendComponent,
-  // The continuous visual map only: a heatmap has no piecewise scale to draw.
-  VisualMapContinuousComponent,
-  LabelLayout,
-  SVGRenderer,
-])
+// The lifecycle needs the SVG renderer, tooltip and label layout. Each wrapper
+// registers its own mark and coordinate system, so a revenue chart never loads
+// Sankey, heatmap, scatter or funnel engines. Raw useChart callers register any
+// custom ECharts modules before mounting, just as with ECharts core itself.
+echarts.use([TooltipComponent, LabelLayout, SVGRenderer])
 
 export type UseChartOptions = {
   /** The plot element. Set by a ref before `onMount` runs. */
@@ -66,14 +36,22 @@ export function useChart(opts: UseChartOptions): {
   chart: Accessor<ECharts | undefined>
 } {
   const [chart, setChart] = createSignal<ECharts | undefined>()
+  const [reducedMotion, setReducedMotion] = createSignal(false)
+  const option = () =>
+    reducedMotion() ? { ...opts.option(), animation: false } : opts.option()
 
   onMount(() => {
     const el = opts.element()
     if (!el) return
 
+    const motion = window.matchMedia?.('(prefers-reduced-motion: reduce)')
+    const syncMotion = () => setReducedMotion(motion?.matches ?? false)
+    syncMotion()
+    motion?.addEventListener('change', syncMotion)
+
     const instance = echarts.init(el, undefined, { renderer: 'svg' })
     setChart(instance)
-    instance.setOption(untrack(opts.option))
+    instance.setOption(untrack(option))
     opts.onInit?.(instance)
 
     const observer =
@@ -83,6 +61,7 @@ export function useChart(opts: UseChartOptions): {
     observer?.observe(el)
 
     onCleanup(() => {
+      motion?.removeEventListener('change', syncMotion)
       observer?.disconnect()
       instance.dispose()
       setChart(undefined)
@@ -92,7 +71,7 @@ export function useChart(opts: UseChartOptions): {
   createEffect(() => {
     const instance = chart()
     if (!instance) return
-    instance.setOption(opts.option(), { notMerge: true })
+    instance.setOption(option(), { notMerge: true })
   })
 
   return { chart }

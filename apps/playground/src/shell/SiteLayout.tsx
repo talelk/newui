@@ -1,9 +1,7 @@
-import { Icon } from '@newui/ui'
 import { A, type RouteSectionProps, useLocation } from '@solidjs/router'
-import { type JSX, Show } from 'solid-js'
-import { COMPONENTS } from '../generated/components'
-import { ComponentNav, OVERVIEW } from './ComponentNav'
+import { createSignal, type JSX, onCleanup, onMount, Show } from 'solid-js'
 import { Masthead } from './Masthead'
+import { modalKeyDown } from './modal'
 import type { NavItem } from './nav'
 import { siblingsFor } from './nav'
 import { SidebarNav } from './SidebarNav'
@@ -22,27 +20,105 @@ import { SidebarNav } from './SidebarNav'
  * one it sticks.
  */
 export function Chrome(
-  props: RouteSectionProps & { sidebar: JSX.Element; siblings?: NavItem[] },
+  props: RouteSectionProps & {
+    sidebar?: () => JSX.Element
+    siblings?: NavItem[]
+  },
 ): JSX.Element {
+  const location = useLocation()
+  const [collapsed, setCollapsed] = createSignal(false)
+  let drawer: HTMLDialogElement | undefined
+  let menuButton: HTMLButtonElement | undefined
+  onMount(() => {
+    try {
+      setCollapsed(localStorage.getItem('newui-sidebar-collapsed') === 'true')
+    } catch {
+      /* Storage is optional. */
+    }
+    const media = matchMedia('(min-width: 1024px)')
+    const close = () => {
+      if (media.matches) drawer?.close()
+    }
+    media.addEventListener('change', close)
+    onCleanup(() => media.removeEventListener('change', close))
+  })
+  function collapse() {
+    setCollapsed(!collapsed())
+    try {
+      localStorage.setItem('newui-sidebar-collapsed', String(collapsed()))
+    } catch {
+      /* Storage is optional. */
+    }
+  }
   return (
     <div class="min-h-screen bg-surface-base text-ink-gray-9">
-      <Masthead />
-      <div class="mx-auto flex max-w-[1400px] gap-8 px-4 py-8 sm:px-6">
-        <aside class="sticky top-12 hidden h-[calc(100dvh-3rem)] w-56 shrink-0 overflow-y-auto pb-10 lg:block">
-          {props.sidebar}
+      <a href="#site-content" class="sr-only focus:not-sr-only">
+        Skip to content
+      </a>
+      <Masthead
+        title={
+          props.siblings?.find((item) => item.href === location.pathname)?.title
+        }
+        menuRef={(element) => {
+          menuButton = element
+        }}
+        onMenu={() => drawer?.showModal()}
+      />
+      <div class="flex">
+        <aside
+          data-slot="site-sidebar"
+          data-collapsed={collapsed()}
+          class="sticky top-12 hidden h-[calc(100dvh-3rem)] shrink-0 overflow-y-auto border-e border-outline-gray-1 p-2 lg:block"
+          classList={{ 'w-56': !collapsed(), 'w-12': collapsed() }}
+        >
+          <button
+            type="button"
+            aria-label={collapsed() ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-expanded={!collapsed()}
+            onClick={collapse}
+            class="mb-2 grid size-8 place-items-center rounded-3 text-ink-gray-6 hover:bg-surface-gray-2 focus-visible:focus-ring"
+          >
+            <span aria-hidden="true" class="lucide-panel-left size-4" />
+          </button>
+          <SidebarNav collapsed={collapsed()} context={props.sidebar} />
         </aside>
-        <main class="min-w-0 flex-1">
+        <main
+          id="site-content"
+          class="mx-auto min-w-0 max-w-[1440px] flex-1 p-4 lg:p-6"
+        >
           {props.children}
           <PrevNext items={props.siblings} />
         </main>
       </div>
+      <dialog
+        onKeyDown={modalKeyDown}
+        ref={drawer}
+        aria-label="Documentation navigation"
+        onClose={() => menuButton?.focus()}
+        onClick={(event) => {
+          if (event.target === drawer || (event.target as Element).closest('a'))
+            drawer?.close()
+        }}
+        class="site-drawer fixed inset-y-0 start-0 m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-2rem)] overflow-y-auto border-e border-outline-gray-1 bg-surface-base p-3 text-ink-gray-9 backdrop:bg-surface-gray-7/50"
+      >
+        <button
+          type="button"
+          autofocus
+          onClick={() => drawer?.close()}
+          aria-label="Close navigation"
+          class="mb-3 grid size-10 place-items-center rounded-3 focus-visible:focus-ring"
+        >
+          <span aria-hidden="true" class="lucide-x size-4" />
+        </button>
+        <SidebarNav context={props.sidebar} />
+      </dialog>
     </div>
   )
 }
 
 /** A page arrow, sized so the description line wraps beside it. */
 function Arrow(props: { icon: string }): JSX.Element {
-  return <Icon icon={props.icon} class="size-3" />
+  return <span aria-hidden="true" class={`${props.icon} size-3`} />
 }
 
 function PrevNext(props: { items?: NavItem[] }): JSX.Element {
@@ -51,14 +127,14 @@ function PrevNext(props: { items?: NavItem[] }): JSX.Element {
 
   return (
     <Show when={siblings().previous || siblings().next}>
-      <div class="mt-16 grid gap-3 border-t border-outline-gray-1 pt-6 sm:grid-cols-2">
+      <div class="mt-6 flex justify-between gap-3 border-t border-outline-gray-1 pt-3">
         <Show when={siblings().previous}>
           {(previous) => (
             <A
               href={previous().href}
-              class="group flex min-w-0 flex-col gap-0.5 rounded-5 border border-outline-gray-2 px-4 py-3 transition-colors hover:border-outline-gray-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
+              class="group flex min-w-0 items-center gap-2 rounded-3 px-2 py-1 text-interface hover:bg-surface-gray-2 focus-visible:focus-ring"
             >
-              <span class="flex items-center gap-1 text-xs text-ink-gray-5">
+              <span class="flex items-center gap-1 text-xs text-ink-gray-6">
                 <Arrow icon="lucide-arrow-left" />
                 Previous
               </span>
@@ -72,9 +148,9 @@ function PrevNext(props: { items?: NavItem[] }): JSX.Element {
           {(next) => (
             <A
               href={next().href}
-              class="group flex min-w-0 flex-col items-end gap-0.5 rounded-5 border border-outline-gray-2 px-4 py-3 text-end transition-colors hover:border-outline-gray-3 hover:bg-surface-gray-2 focus-visible:focus-ring sm:col-start-2"
+              class="group ms-auto flex min-w-0 items-center gap-2 rounded-3 px-2 py-1 text-interface hover:bg-surface-gray-2 focus-visible:focus-ring"
             >
-              <span class="flex items-center gap-1 text-xs text-ink-gray-5">
+              <span class="flex items-center gap-1 text-xs text-ink-gray-6">
                 Next
                 <Arrow icon="lucide-arrow-right" />
               </span>
@@ -91,49 +167,7 @@ function PrevNext(props: { items?: NavItem[] }): JSX.Element {
 
 /** The documentation frame: the site tree in the sidebar. */
 export function SiteLayout(props: RouteSectionProps): JSX.Element {
-  return <Chrome {...props} sidebar={<SidebarNav />} />
-}
-
-/**
- * A reference section's frame: its own index in the sidebar, and a prev/next
- * that walks that section's list rather than dropping the reader back into the
- * site tree.
- */
-function ReferenceLayout(
-  props: RouteSectionProps & { kind: 'component' | 'block' },
-): JSX.Element {
-  const base = () => (props.kind === 'block' ? '/blocks' : '/components')
-  const siblings = (): NavItem[] => [
-    ...OVERVIEW[props.kind].map((item) => ({
-      title: item.title,
-      href: item.href,
-    })),
-    ...COMPONENTS.filter((entry) => entry.shipped && entry.kind === props.kind)
-      .slice()
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .map((entry) => ({
-        title: entry.name,
-        href: `${base()}/${entry.slug}`,
-      })),
-  ]
-
-  return (
-    <Chrome
-      {...props}
-      sidebar={<ComponentNav kind={props.kind} />}
-      siblings={siblings()}
-    />
-  )
-}
-
-/** The components frame. */
-export function ComponentsLayout(props: RouteSectionProps): JSX.Element {
-  return <ReferenceLayout {...props} kind="component" />
-}
-
-/** The blocks frame. */
-export function BlocksLayout(props: RouteSectionProps): JSX.Element {
-  return <ReferenceLayout {...props} kind="block" />
+  return <Chrome {...props} />
 }
 
 /**
@@ -144,7 +178,46 @@ export function BlocksLayout(props: RouteSectionProps): JSX.Element {
  * only stack a second full-height box whose background can disagree.
  */
 export function BareLayout(props: RouteSectionProps): JSX.Element {
-  // A fragment, not a bare `props.children`: returning the accessor directly
-  // reads it outside a tracked scope.
+  onMount(() => {
+    if (window.parent === window) return
+    const navigateHost = (event: MouseEvent) => {
+      if (
+        event.button !== 0 ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey ||
+        event.altKey
+      )
+        return
+      const anchor = (event.target as Element).closest<HTMLAnchorElement>(
+        'a[href]',
+      )
+      if (
+        !anchor ||
+        anchor.hasAttribute('download') ||
+        anchor.target === '_blank'
+      )
+        return
+      const href = anchor.getAttribute('href') ?? ''
+      if (href.startsWith('#')) return
+      const url = new URL(anchor.href, location.href)
+      if (
+        url.origin !== location.origin ||
+        /\/(fullscreen|play)(?:$|\?)/.test(url.pathname)
+      )
+        return
+      if (
+        !/^\/(?:$|docs(?:\/|$)|foundations(?:\/|$)|components(?:\/|$)|blocks(?:\/|$)|charts(?:\/|$)|editors(?:\/|$)|examples(?:\/|$))/.test(
+          url.pathname,
+        )
+      )
+        return
+      event.preventDefault()
+      event.stopPropagation()
+      window.parent.location.assign(url.href)
+    }
+    document.addEventListener('click', navigateHost, true)
+    onCleanup(() => document.removeEventListener('click', navigateHost, true))
+  })
   return <>{props.children}</>
 }

@@ -1,4 +1,5 @@
 import tailwindcss from '@tailwindcss/vite'
+import { playwright } from '@vitest/browser-playwright'
 import solid from 'vite-plugin-solid'
 import { defineConfig } from 'vitest/config'
 
@@ -14,7 +15,9 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   plugins: [solid(), tailwindcss()],
   resolve: {
-    conditions: ['development', 'browser'],
+    // Preserve Vite's module condition: tslib exposes its native ESM helpers
+    // there; the import-only branch wraps CommonJS and cannot run unbundled.
+    conditions: ['module', 'development', 'browser'],
     dedupe: ['solid-js', 'solid-js/web'],
   },
   optimizeDeps: {
@@ -22,13 +25,15 @@ export default defineConfig({
   },
   test: {
     globals: true,
+    // Serial files retain isolation and bound browser resource usage.
+    fileParallelism: false,
     setupFiles: ['./vitest.browser.setup.ts'],
     include: ['packages/**/src/**/*.browser.test.{ts,tsx}'],
     browser: {
       enabled: true,
-      provider: 'playwright',
+      provider: playwright({ launchOptions: { channel: 'chrome' } }),
       headless: true,
-      instances: [{ browser: 'chromium', launch: { channel: 'chrome' } }],
+      instances: [{ browser: 'chromium' }],
     },
   },
 })

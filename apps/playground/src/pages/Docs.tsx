@@ -1,4 +1,5 @@
 import type { JSX } from 'solid-js'
+import { PackageGuides } from '../lib/PackageGuides'
 
 /**
  * Installation.
@@ -12,7 +13,7 @@ import type { JSX } from 'solid-js'
 function Block(props: { title: string; children: JSX.Element }): JSX.Element {
   return (
     <section class="flex flex-col gap-3">
-      <h2 class="text-xl-medium text-ink-gray-9">{props.title}</h2>
+      <h2 class="text-section text-ink-gray-9">{props.title}</h2>
       {props.children}
     </section>
   )
@@ -20,7 +21,7 @@ function Block(props: { title: string; children: JSX.Element }): JSX.Element {
 
 function Code(props: { children: string }): JSX.Element {
   return (
-    <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-4 text-sm leading-relaxed text-ink-gray-8">
+    <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
       <code>{props.children}</code>
     </pre>
   )
@@ -28,7 +29,7 @@ function Code(props: { children: string }): JSX.Element {
 
 export function Docs(): JSX.Element {
   return (
-    <article class="flex max-w-3xl flex-col gap-10">
+    <article class="flex max-w-3xl flex-col gap-4">
       <header class="flex flex-col gap-2">
         <h1 class="text-2xl-semibold text-ink-gray-9">Installation</h1>
         <p class="text-lg text-ink-gray-6">
@@ -152,27 +153,7 @@ function DeleteProject() {
 }`}</Code>
       </Block>
 
-      <Block title="What this page does not cover yet">
-        <p class="text-base text-ink-gray-7">
-          A SolidStart/SSR recipe, the data layer (
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            createListResource
-          </code>
-          , <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">useDoc</code>
-          ), the Vite plugin and the migration notes from frappe-ui are written
-          into this site as they are verified. Until then the source is the
-          reference:{' '}
-          <a
-            href="https://github.com/talelk/newui"
-            target="_blank"
-            rel="noreferrer"
-            class="text-ink-blue-6 underline decoration-dotted"
-          >
-            talelk/newui
-          </a>
-          .
-        </p>
-      </Block>
+      <PackageGuides />
     </article>
   )
 }

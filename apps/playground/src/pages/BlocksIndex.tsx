@@ -1,6 +1,7 @@
 import { A } from '@solidjs/router'
 import { createMemo, For, type JSX } from 'solid-js'
 import { BLOCKS } from '../generated/components'
+import { CatalogIcon } from '../lib/CatalogIcon'
 import { PageIntro } from '../shell/PageIntro'
 
 /**
@@ -26,31 +27,56 @@ export function BlocksIndex(): JSX.Element {
     <>
       <PageIntro
         title="Blocks"
-        description="Composed sections, built from the components in @newui/ui. A block is opinionated about layout and can be replaced wholesale — take it, or copy the twenty lines it saves."
+        description="Composed page sections built with @newui/ui."
       />
 
-      <div class="flex flex-col gap-10">
+      <section
+        class="mb-4 flex flex-col gap-3"
+        aria-label="Copyable site compositions"
+      >
+        <h2 class="text-section">Site compositions</h2>
+        <p class="text-ink-gray-6">
+          Adapted from solid-ui. Copy the source; these are not package exports.
+        </p>
+        <A
+          href="/blocks/compositions/sidebar-01"
+          class="text-ink-blue-link underline"
+        >
+          Grouped documentation sidebar
+        </A>
+        <A
+          href="/blocks/compositions/demo-sidebar"
+          class="text-ink-blue-link underline"
+        >
+          Application sidebar
+        </A>
+      </section>
+      <div class="flex flex-col gap-4">
         <For each={grouped()}>
           {(section) => (
             <section class="flex flex-col gap-3">
-              <h2 class="text-lg-medium text-ink-gray-9">{section.group}</h2>
-              <ul class="grid gap-2 sm:grid-cols-2">
+              <h2 class="text-section text-ink-gray-9">{section.group}</h2>
+              <ul class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1">
                 <For each={section.entries}>
                   {(block) => (
                     <li>
                       <A
                         href={`/blocks/${block.slug}`}
-                        class="flex h-full flex-col gap-1 rounded-5 border border-outline-gray-2 p-3 transition-colors hover:border-outline-gray-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
+                        class="flex min-h-11 items-center gap-3 rounded-3 p-3 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring"
                       >
-                        <span class="flex items-baseline justify-between gap-2">
+                        <CatalogIcon group={section.group} />
+                        <span class="flex min-w-0 flex-1 flex-wrap items-baseline justify-between gap-2">
                           <span class="truncate text-base-medium text-ink-gray-9">
                             {block.name}
                           </span>
-                          <span class="shrink-0 text-xs text-ink-gray-5">
+                          <span class="hidden min-w-0 flex-1 truncate text-caption text-ink-gray-6 md:block">
+                            {block.description}
+                          </span>
+                          <span class="shrink-0 text-xs text-ink-gray-6">
                             {section.group}
                           </span>
                         </span>
-                        <span class="text-sm text-ink-gray-5">
+                        <span class="text-caption text-ink-gray-6">
                           {block.parts.length} prop
                           {block.parts.length === 1 ? '' : 's'} · live demo ·
                           contract

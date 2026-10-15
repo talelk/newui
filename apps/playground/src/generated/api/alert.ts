@@ -58,6 +58,21 @@ export const API = {
       "name": "children",
       "type": "JSX.Element",
       "optional": true
+    },
+    {
+      "name": "variant",
+      "type": "\"subtle\" | \"outline\" | null | undefined",
+      "optional": true
+    },
+    {
+      "name": "theme",
+      "type": "\"gray\" | \"blue\" | \"green\" | \"amber\" | \"red\" | null | undefined",
+      "optional": true
+    },
+    {
+      "name": "layout",
+      "type": "\"row\" | \"banner\" | null | undefined",
+      "optional": true
     }
   ]
 } as const

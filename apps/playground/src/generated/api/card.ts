@@ -13,6 +13,16 @@ export const API = {
       "name": "children",
       "type": "JSX.Element",
       "optional": true
+    },
+    {
+      "name": "elevation",
+      "type": "\"sm\" | \"md\" | \"lg\" | \"none\" | \"base\" | null | undefined",
+      "optional": true
+    },
+    {
+      "name": "padding",
+      "type": "\"sm\" | \"md\" | \"lg\" | \"none\" | null | undefined",
+      "optional": true
     }
   ]
 } as const

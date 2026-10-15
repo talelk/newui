@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { MASTHEAD, NAV, NAV_ORDER, sectionFor, siblingsFor } from './shell/nav'
+import { NAV, NAV_ORDER, sectionFor, siblingsFor } from './shell/nav'
 
 /**
  * The site's two structural invariants.
@@ -116,7 +116,7 @@ describe('site structure', () => {
 
   it('every sidebar and masthead entry resolves to a route', () => {
     const declared = new Set(tablePaths)
-    const entries = [...MASTHEAD, ...NAV_ORDER]
+    const entries = NAV_ORDER
     const dangling = entries
       .map((item) => item.href.split('?')[0] ?? item.href)
       .filter((href) => !declared.has(href))
@@ -125,9 +125,7 @@ describe('site structure', () => {
 
   it('every destination route is reachable from the navigation', () => {
     const linked = new Set(
-      [...MASTHEAD, ...NAV_ORDER].map(
-        (item) => item.href.split('?')[0] ?? item.href,
-      ),
+      NAV_ORDER.map((item) => item.href.split('?')[0] ?? item.href),
     )
     // The two harness routes are reached by URL and by test, deliberately not
     // by a nav entry, but they are still listed so they cannot 404.
@@ -135,10 +133,16 @@ describe('site structure', () => {
     /** A parameterised route is reachable through its parent: `/components/:name`
      * is linked from `/components`, which the nav lists. */
     const parentOf = (path: string) =>
-      path.includes(':') ? path.slice(0, path.lastIndexOf('/')) : path
+      path.includes(':') || path.endsWith('/fullscreen')
+        ? path.slice(0, path.lastIndexOf('/'))
+        : path
     const unreachable = tablePaths.filter((path) => {
       if (linked.has(path) || harness.has(path)) return false
-      const parent = parentOf(path)
+      const parent = path.startsWith('/blocks/compositions/')
+        ? '/blocks'
+        : path.startsWith('/examples/registry/')
+          ? '/examples'
+          : parentOf(path)
       return parent === path ? true : !linked.has(parent)
     })
     expect(unreachable).toEqual([])
@@ -159,6 +163,26 @@ describe('site structure', () => {
   it('has no eager import of a page module', () => {
     const eager = [...ROUTES_FILE.matchAll(/^import .*from '\.\/pages\//gm)]
     expect(eager).toEqual([])
+  })
+
+  it('keeps visual components out of the shared shell', () => {
+    for (const file of [
+      'Masthead',
+      'ComponentNav',
+      'SiteLayout',
+      'ThemeMenu',
+      'SidebarNav',
+      'PageIntro',
+      'ReferenceLayout',
+    ]) {
+      const source = readFileSync(
+        path.join(process.cwd(), `apps/playground/src/shell/${file}.tsx`),
+        'utf8',
+      )
+      expect(source, file).not.toMatch(
+        /from ['"]@newui\/(ui|blocks|charts|editor|code-editor)['"]/,
+      )
+    }
   })
 
   it('keeps the flat reading order in step with the tree', () => {
@@ -183,9 +207,7 @@ describe('site structure', () => {
   it('keeps the sorted nav free of dead anchors', () => {
     // A href that is only a fragment is a link to nowhere once the page it
     // pointed at stops being a single-page showcase.
-    const fragments = [...MASTHEAD, ...NAV_ORDER].filter((item) =>
-      item.href.startsWith('#'),
-    )
+    const fragments = NAV_ORDER.filter((item) => item.href.startsWith('#'))
     expect(fragments).toEqual([])
   })
 })

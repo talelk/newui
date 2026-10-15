@@ -34,7 +34,7 @@ a new component), not a flag on it.
 | `clearable` | `boolean` | `false` | shows a clear control when a value is set |
 | `name` | `string` | — | form field name |
 | `size` | `xs \| sm \| md \| lg` | `sm` | |
-| `variant` | `subtle \| outline \| ghost` | `subtle` | |
+| `variant` | `subtle \| outline \| ghost` | `outline` | |
 | `label` / `description` / `error` / `required` | — | — | shared labelling contract (P5) |
 | `aria-label` | `string` | — | accessible name when no visible `label` |
 | `class` | `string` | — | merged into the root |

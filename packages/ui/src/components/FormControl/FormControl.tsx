@@ -83,6 +83,7 @@ export interface FormControlTextProps extends FormControlShared {
   error?: JSX.Element | false
   required?: boolean
   readonly?: boolean
+  /** @default sm */
   size?: InputSize
   variant?: InputVariant
   prefix?: JSX.Element
@@ -99,6 +100,7 @@ export interface FormControlTextareaProps extends FormControlShared {
   required?: boolean
   readonly?: boolean
   rows?: number
+  /** @default sm */
   size?: InputSize
   variant?: InputVariant
 }
@@ -134,6 +136,7 @@ export interface FormControlComboboxProps extends FormControlShared {
   description?: JSX.Element
   error?: JSX.Element | false
   required?: boolean
+  /** @default sm */
   size?: InputSize
   variant?: InputVariant
 }
@@ -150,6 +153,7 @@ export interface FormControlMultiSelectProps extends FormControlShared {
   description?: JSX.Element
   error?: JSX.Element | false
   required?: boolean
+  /** @default sm */
   size?: InputSize
   variant?: InputVariant
 }
@@ -169,6 +173,7 @@ export interface FormControlDateProps extends FormControlShared {
   description?: JSX.Element
   error?: JSX.Element | false
   required?: boolean
+  /** @default sm */
   size?: InputSize
   variant?: InputVariant
 }

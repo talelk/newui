@@ -13,6 +13,7 @@ export default function Demo(): JSX.Element {
       </ItemListRow>
       <ItemListRow
         disabled
+        aria-disabled="true"
         prefix={<Icon icon="lucide-settings" class="size-4" />}
       >
         Settings

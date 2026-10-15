@@ -1,5 +1,10 @@
 # Design deltas — Inputs
 
+> Historical Frappe comparison from before the analytics redesign. The current
+> [visual-system contract](visual-system.md) and component contracts supersede
+> the old density, radius and colour targets below. The original comparison is
+> retained as reference evidence.
+
 A visual/design parity audit of the input components in `@newui/ui` against
 their frappe-ui originals (`frappe-ui-main/src/components/`). This is an
 analysis document only; no component code is changed by it.

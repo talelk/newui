@@ -7,8 +7,11 @@
  */
 export interface ComponentEntry {
   name: string
+  description: string
   slug: string
   group: string
+  package: string
+  source: string
   /** `component` for a single control, `block` for a composed section. */
   kind: 'component' | 'block'
   parts: string[]
@@ -21,8 +24,11 @@ export interface ComponentEntry {
 export const COMPONENTS: ComponentEntry[] = [
   {
     "name": "Button",
+    "description": "Button — an action control.",
     "slug": "button",
     "group": "Actions",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Button",
     "kind": "component",
     "parts": [
       "ButtonProps"
@@ -32,8 +38,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ContextMenu",
+    "description": "ContextMenu — a menu that opens at the pointer when the user right-clicks inside its trigger area.",
     "slug": "context-menu",
     "group": "Actions",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/ContextMenu",
     "kind": "component",
     "parts": [
       "ContextMenuItemProps",
@@ -44,8 +53,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Dropdown",
+    "description": "Dropdown — an options-based action menu.",
     "slug": "dropdown",
     "group": "Actions",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Dropdown",
     "kind": "component",
     "parts": [
       "DropdownProps"
@@ -55,8 +67,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "KeyboardShortcut",
+    "description": "KeyboardShortcut — draws a key combination as <kbd> glyphs.",
     "slug": "keyboard-shortcut",
     "group": "Actions",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/KeyboardShortcut",
     "kind": "component",
     "parts": [
       "KeyboardShortcutProps"
@@ -66,19 +81,280 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "KeyboardShortcutsDialog",
+    "description": "Shows discoverable keyboard commands in a modal reference.",
     "slug": "keyboard-shortcuts-dialog",
     "group": "Actions",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/KeyboardShortcutsDialog",
     "kind": "component",
     "parts": [
       "KeyboardShortcutsDialogProps"
     ],
-    "spec": null,
+    "spec": "keyboard-shortcuts-dialog",
+    "shipped": true
+  },
+  {
+    "name": "Menu",
+    "description": "Presents a keyboard-navigable list of actions.",
+    "slug": "menu",
+    "group": "Actions",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Menu",
+    "kind": "component",
+    "parts": [
+      "MenuItemProps",
+      "MenuRootProps"
+    ],
+    "spec": "menu",
+    "shipped": true
+  },
+  {
+    "name": "AreaChart",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "area-chart",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/AreaChart.tsx",
+    "kind": "component",
+    "parts": [
+      "AreaChartProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "BarChart",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "bar-chart",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/BarChart.tsx",
+    "kind": "component",
+    "parts": [
+      "BarChartProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "ChartBase",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "chart-base",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/ChartBase.tsx",
+    "kind": "component",
+    "parts": [
+      "ChartBaseProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "ChartCard",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "chart-card",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/ChartCard.tsx",
+    "kind": "component",
+    "parts": [
+      "ChartCardProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "ChartContainer",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "chart-container",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/ChartContainer.tsx",
+    "kind": "component",
+    "parts": [
+      "ChartContainerProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "ChartLegend",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "chart-legend",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/ChartLegend.tsx",
+    "kind": "component",
+    "parts": [
+      "ChartLegendProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "ChartTooltip",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "chart-tooltip",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/ChartTooltip.tsx",
+    "kind": "component",
+    "parts": [
+      "ChartTooltipProps",
+      "ChartTooltipSlotProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "Dashboard",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "dashboard",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/Dashboard.tsx",
+    "kind": "component",
+    "parts": [
+      "DashboardProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "DonutChart",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "donut-chart",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/DonutChart.tsx",
+    "kind": "component",
+    "parts": [
+      "DonutChartProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "FunnelChart",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "funnel-chart",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/FunnelChart.tsx",
+    "kind": "component",
+    "parts": [
+      "FunnelChartProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "HeatmapChart",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "heatmap-chart",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/HeatmapChart.tsx",
+    "kind": "component",
+    "parts": [
+      "HeatmapChartProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "LineChart",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "line-chart",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/LineChart.tsx",
+    "kind": "component",
+    "parts": [
+      "LineChartProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "NumberCard",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "number-card",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/NumberCard.tsx",
+    "kind": "component",
+    "parts": [
+      "NumberCardProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "SankeyChart",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "sankey-chart",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/SankeyChart.tsx",
+    "kind": "component",
+    "parts": [
+      "SankeyChartProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "ScatterChart",
+    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "slug": "scatter-chart",
+    "group": "Charts",
+    "package": "@newui/charts",
+    "source": "packages/charts/src/ScatterChart.tsx",
+    "kind": "component",
+    "parts": [
+      "ScatterChartProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "CodeEditor",
+    "description": "CodeMirror 6 for Solid.",
+    "slug": "code-editor",
+    "group": "Editors",
+    "package": "@newui/code-editor",
+    "source": "packages/code-editor/src",
+    "kind": "component",
+    "parts": [
+      "CodeEditorProps"
+    ],
+    "spec": "code-editor",
+    "shipped": true
+  },
+  {
+    "name": "Editor",
+    "description": "TipTap 3 rich text for Solid.",
+    "slug": "editor",
+    "group": "Editors",
+    "package": "@newui/editor",
+    "source": "packages/editor/src",
+    "kind": "component",
+    "parts": [
+      "EditorProps",
+      "EditorToolbarProps"
+    ],
+    "spec": "editor",
     "shipped": true
   },
   {
     "name": "FilterBar",
+    "description": "FilterBar — the row of controls above a list: search, one or two selects, and the view switcher.",
     "slug": "filter-bar",
     "group": "Data",
+    "package": "@newui/blocks",
+    "source": "packages/blocks/src/FilterBar",
     "kind": "block",
     "parts": [
       "FilterBarProps"
@@ -88,8 +364,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "StatGrid",
+    "description": "StatGrid — a row of KPI cards.",
     "slug": "stat-grid",
     "group": "Data",
+    "package": "@newui/blocks",
+    "source": "packages/blocks/src/StatGrid",
     "kind": "block",
     "parts": [
       "StatGridProps"
@@ -99,8 +378,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Accordion",
+    "description": "Accordion — a set of collapsible sections, over Zag's accordion machine.",
     "slug": "accordion",
     "group": "Disclosure",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Accordion",
     "kind": "component",
     "parts": [
       "AccordionContentProps",
@@ -113,8 +395,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Collapsible",
+    "description": "Collapsible — one disclosure: a trigger and the panel it shows or hides, over Zag's collapsible machine.",
     "slug": "collapsible",
     "group": "Disclosure",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Collapsible",
     "kind": "component",
     "parts": [
       "CollapsibleContentProps",
@@ -126,76 +411,97 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "TabButtons",
+    "description": "A segmented choice without panels.",
     "slug": "tab-buttons",
     "group": "Disclosure",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/TabButtons",
     "kind": "component",
     "parts": [
       "TabButtonsProps"
     ],
-    "spec": null,
+    "spec": "tab-buttons",
     "shipped": true
   },
   {
     "name": "Tabs",
+    "description": "Tabs.Root, Tabs.List, Tabs.Trigger and Tabs.Content compose a Zag tab interface.",
     "slug": "tabs",
     "group": "Disclosure",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Tabs",
     "kind": "component",
     "parts": [
       "TabsContentProps",
       "TabsRootProps",
       "TabsTriggerProps"
     ],
-    "spec": null,
+    "spec": "tabs",
     "shipped": true
   },
   {
     "name": "Avatar",
+    "description": "Identifies a person using an image, initials from label, or an icon.",
     "slug": "avatar",
     "group": "Display",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Avatar",
     "kind": "component",
     "parts": [
       "AvatarProps"
     ],
-    "spec": null,
+    "spec": "avatar",
     "shipped": true
   },
   {
     "name": "Badge",
+    "description": "Displays a short status or category.",
     "slug": "badge",
     "group": "Display",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Badge",
     "kind": "component",
     "parts": [
       "BadgeProps"
     ],
-    "spec": null,
+    "spec": "badge",
     "shipped": true
   },
   {
     "name": "Card",
+    "description": "Card composes a bordered surface with CardHeader, CardTitle, CardDescription, CardContent and CardFooter.",
     "slug": "card",
     "group": "Display",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Card",
     "kind": "component",
     "parts": [
       "CardProps"
     ],
-    "spec": null,
+    "spec": "card",
     "shipped": true
   },
   {
     "name": "Divider",
+    "description": "Separates related groups with an optional text label.",
     "slug": "divider",
     "group": "Display",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Divider",
     "kind": "component",
     "parts": [
       "DividerProps"
     ],
-    "spec": null,
+    "spec": "divider",
     "shipped": true
   },
   {
     "name": "EmptyState",
+    "description": "EmptyState — what a list, table or panel shows when it has nothing to show.",
     "slug": "empty-state",
     "group": "Display",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/EmptyState",
     "kind": "component",
     "parts": [
       "EmptyStateProps"
@@ -205,19 +511,25 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Icon",
+    "description": "Renders a named Lucide glyph or a supplied Solid component.",
     "slug": "icon",
     "group": "Display",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Icon",
     "kind": "component",
     "parts": [
       "IconProps"
     ],
-    "spec": null,
+    "spec": "icon",
     "shipped": true
   },
   {
     "name": "ItemListRow",
+    "description": "ItemListRow — a single row of a menu or list, with a prefix, a label and a suffix.",
     "slug": "item-list-row",
     "group": "Display",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/ItemListRow",
     "kind": "component",
     "parts": [
       "ItemListRowProps"
@@ -227,21 +539,27 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "List",
+    "description": "Composes aligned rows and cells for structured content.",
     "slug": "list",
     "group": "Display",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/List",
     "kind": "component",
     "parts": [
       "ListCellProps",
       "ListProps",
       "ListRowProps"
     ],
-    "spec": null,
+    "spec": "list",
     "shipped": true
   },
   {
     "name": "Timeline",
+    "description": "Timeline — a vertical run of events, oldest first, with a rail drawn between the markers rather than through them.",
     "slug": "timeline",
     "group": "Display",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Timeline",
     "kind": "component",
     "parts": [
       "TimelineProps"
@@ -251,8 +569,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Tree",
+    "description": "Tree — a hierarchical tree view with expand/collapse and selection.",
     "slug": "tree",
     "group": "Display",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Tree",
     "kind": "component",
     "parts": [
       "TreeRootProps"
@@ -262,30 +583,39 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Alert",
+    "description": "Presents contextual feedback with an optional action and dismissal.",
     "slug": "alert",
     "group": "Feedback",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Alert",
     "kind": "component",
     "parts": [
       "AlertProps"
     ],
-    "spec": null,
+    "spec": "alert",
     "shipped": true
   },
   {
     "name": "Progress",
+    "description": "Reports a determinate value or ongoing activity.",
     "slug": "progress",
     "group": "Feedback",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Progress",
     "kind": "component",
     "parts": [
       "ProgressProps"
     ],
-    "spec": null,
+    "spec": "progress",
     "shipped": true
   },
   {
     "name": "ProgressCircle",
+    "description": "ProgressCircle — a determinate ring: a full-circle track and a value drawn as a dash offset on a second circle of the same geometry, so the fill alway",
     "slug": "progress-circle",
     "group": "Feedback",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/ProgressCircle",
     "kind": "component",
     "parts": [
       "ProgressCircleProps"
@@ -295,41 +625,65 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Skeleton",
+    "description": "Reserves space while content loads.",
     "slug": "skeleton",
     "group": "Feedback",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Skeleton",
     "kind": "component",
     "parts": [
       "SkeletonProps"
     ],
-    "spec": null,
+    "spec": "skeleton",
     "shipped": true
   },
   {
     "name": "Spinner",
+    "description": "Shows ongoing activity in a compact space.",
     "slug": "spinner",
     "group": "Feedback",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Spinner",
     "kind": "component",
     "parts": [
       "SpinnerProps"
     ],
-    "spec": null,
+    "spec": "spinner",
+    "shipped": true
+  },
+  {
+    "name": "Toast",
+    "description": "Import toast and mount one Toaster inside UIProvider.",
+    "slug": "toast",
+    "group": "Feedback",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Toast",
+    "kind": "component",
+    "parts": [],
+    "spec": "toast",
     "shipped": true
   },
   {
     "name": "Checkbox",
+    "description": "A native boolean input with controlled/uncontrolled checked state and indeterminate presentation.",
     "slug": "checkbox",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Checkbox",
     "kind": "component",
     "parts": [
       "CheckboxProps"
     ],
-    "spec": null,
+    "spec": "checkbox",
     "shipped": true
   },
   {
     "name": "Duration",
+    "description": "Duration — a duration value control.",
     "slug": "duration",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Duration",
     "kind": "component",
     "parts": [
       "DurationProps"
@@ -339,52 +693,68 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ErrorMessage",
+    "description": "frappe-ui's public form primitives.",
     "slug": "error-message",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/ErrorMessage",
     "kind": "component",
     "parts": [
       "ErrorMessageProps"
     ],
-    "spec": null,
+    "spec": "form",
     "shipped": true
   },
   {
     "name": "FormControl",
+    "description": "frappe-ui's public form primitives.",
     "slug": "form-control",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/FormControl",
     "kind": "component",
     "parts": [
+      "FormControlProps",
       "FormControlTextProps"
     ],
-    "spec": null,
+    "spec": "form",
     "shipped": true
   },
   {
     "name": "FormLabel",
+    "description": "frappe-ui's public form primitives.",
     "slug": "form-label",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/FormLabel",
     "kind": "component",
     "parts": [
       "FormLabelProps"
     ],
-    "spec": null,
+    "spec": "form",
     "shipped": true
   },
   {
     "name": "NumberInput",
+    "description": "A Zag numeric spinbutton.",
     "slug": "number-input",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/NumberInput",
     "kind": "component",
     "parts": [
       "NumberInputProps"
     ],
-    "spec": null,
+    "spec": "number-input",
     "shipped": true
   },
   {
     "name": "Password",
+    "description": "Password — a masked text field with a reveal toggle.",
     "slug": "password",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Password",
     "kind": "component",
     "parts": [
       "PasswordProps"
@@ -394,41 +764,53 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "RadioGroup",
+    "description": "A Zag group of native radio inputs, with orientation, disabled options and bounded or wrapping arrow navigation.",
     "slug": "radio-group",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/RadioGroup",
     "kind": "component",
     "parts": [
       "RadioGroupProps"
     ],
-    "spec": null,
+    "spec": "radio-group",
     "shipped": true
   },
   {
     "name": "Rating",
+    "description": "A Zag radiogroup with whole/half-star values, controlled/uncontrolled state and optional custom glyphs.",
     "slug": "rating",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Rating",
     "kind": "component",
     "parts": [
       "RatingProps"
     ],
-    "spec": null,
+    "spec": "rating",
     "shipped": true
   },
   {
     "name": "Slider",
+    "description": "A Zag slider with a controlled value/onValueChange or an uncontrolled defaultValue, expressed as a number array.",
     "slug": "slider",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Slider",
     "kind": "component",
     "parts": [
       "SliderProps"
     ],
-    "spec": null,
+    "spec": "slider",
     "shipped": true
   },
   {
     "name": "Switch",
+    "description": "Switch — a Zag-backed boolean control.",
     "slug": "switch",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Switch",
     "kind": "component",
     "parts": [
       "SwitchProps"
@@ -438,43 +820,55 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Textarea",
+    "description": "Every control that holds a value the user enters, selects or toggles exposes the same four props with identical semantics (P5):",
     "slug": "textarea",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Textarea",
     "kind": "component",
     "parts": [
       "TextareaProps"
     ],
-    "spec": null,
+    "spec": "inputs",
     "shipped": true
   },
   {
     "name": "TextInput",
+    "description": "Every control that holds a value the user enters, selects or toggles exposes the same four props with identical semantics (P5):",
     "slug": "text-input",
     "group": "Inputs",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/TextInput",
     "kind": "component",
     "parts": [
       "TextInputProps"
     ],
-    "spec": null,
+    "spec": "inputs",
     "shipped": true
   },
   {
     "name": "AppShell",
+    "description": "Composes a desktop workspace without owning navigation state.",
     "slug": "app-shell",
     "group": "Layout",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/AppShell",
     "kind": "component",
     "parts": [
       "AppShellProps",
       "PageBodyProps",
       "PageHeaderProps"
     ],
-    "spec": null,
+    "spec": "app-shell",
     "shipped": true
   },
   {
     "name": "AppSidebar",
+    "description": "AppSidebar — the navigation sidebar a screen opens with, from @newui/blocks.",
     "slug": "app-sidebar",
     "group": "Layout",
+    "package": "@newui/blocks",
+    "source": "packages/blocks/src/AppSidebar",
     "kind": "block",
     "parts": [
       "AppSidebarProps"
@@ -484,8 +878,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "DesktopShell",
+    "description": "DesktopShell — the desktop app frame: an optional icon rail, an optional navigation sidebar, and a content column beside them.",
     "slug": "desktop-shell",
     "group": "Layout",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/DesktopShell",
     "kind": "component",
     "parts": [
       "DesktopShellProps"
@@ -495,8 +892,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "DetailHeader",
+    "description": "DetailHeader — the top of a record page: where it sits, what it is, what state it is in, and what you can do to it.",
     "slug": "detail-header",
     "group": "Layout",
+    "package": "@newui/blocks",
+    "source": "packages/blocks/src/DetailHeader",
     "kind": "block",
     "parts": [
       "DetailHeaderProps"
@@ -506,8 +906,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "MobileShell",
+    "description": "The mobile app frame: a pinned header, a natively-scrolling body and a bottom navigation bar.",
     "slug": "mobile-shell",
     "group": "Layout",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/MobileShell",
     "kind": "component",
     "parts": [
       "MobileShellProps",
@@ -518,8 +921,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "PageToolbar",
+    "description": "PageToolbar — the page header: a title, an optional title menu, and the actions.",
     "slug": "page-toolbar",
     "group": "Layout",
+    "package": "@newui/blocks",
+    "source": "packages/blocks/src/PageToolbar",
     "kind": "block",
     "parts": [
       "PageToolbarProps"
@@ -529,8 +935,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Breadcrumbs",
+    "description": "Breadcrumbs — a trail showing where the current page sits in a hierarchy and letting the user step back to a parent.",
     "slug": "breadcrumbs",
     "group": "Navigation",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Breadcrumbs",
     "kind": "component",
     "parts": [
       "BreadcrumbsProps"
@@ -540,20 +949,26 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "MobileNav",
+    "description": "Provides persistent mobile destinations.",
     "slug": "mobile-nav",
     "group": "Navigation",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/MobileNav",
     "kind": "component",
     "parts": [
       "MobileNavItemProps",
       "MobileNavProps"
     ],
-    "spec": null,
+    "spec": "mobile-nav",
     "shipped": true
   },
   {
     "name": "Pagination",
+    "description": "Pagination — page navigation for a long list, over Zag's pagination machine.",
     "slug": "pagination",
     "group": "Navigation",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Pagination",
     "kind": "component",
     "parts": [
       "PaginationProps"
@@ -563,8 +978,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Sidebar",
+    "description": "The desktop navigation rail: a labelled sidebar with a header, items, an optional collapsed rail, collapsible sections and status cards.",
     "slug": "sidebar",
     "group": "Navigation",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Sidebar",
     "kind": "component",
     "parts": [
       "SidebarCardProps",
@@ -582,8 +1000,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "BottomSheet",
+    "description": "BottomSheet — a bottom-anchored modal sheet: a grab handle, an optional title, and a scrollable body, capped at 90dvh.",
     "slug": "bottom-sheet",
     "group": "Overlays",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/BottomSheet",
     "kind": "component",
     "parts": [
       "BottomSheetProps"
@@ -593,8 +1014,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Dialog",
+    "description": "Presents a focused modal task.",
     "slug": "dialog",
     "group": "Overlays",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Dialog",
     "kind": "component",
     "parts": [
       "DialogContentProps",
@@ -602,24 +1026,77 @@ export const COMPONENTS: ComponentEntry[] = [
       "DialogHeaderProps",
       "DialogRootProps"
     ],
-    "spec": null,
+    "spec": "dialog",
+    "shipped": true
+  },
+  {
+    "name": "HoverCard",
+    "description": "Shows supplementary information on hover or focus.",
+    "slug": "hover-card",
+    "group": "Overlays",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/HoverCard",
+    "kind": "component",
+    "parts": [
+      "HoverCardRootProps",
+      "HoverCardTriggerProps"
+    ],
+    "spec": "hover-card",
+    "shipped": true
+  },
+  {
+    "name": "Popover",
+    "description": "Anchors interactive supplementary content to a trigger.",
+    "slug": "popover",
+    "group": "Overlays",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Popover",
+    "kind": "component",
+    "parts": [
+      "PopoverRootProps"
+    ],
+    "spec": "popover",
+    "shipped": true
+  },
+  {
+    "name": "ScrollArea",
+    "description": "Provides a bounded scroll viewport with custom scrollbars.",
+    "slug": "scroll-area",
+    "group": "Overlays",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/ScrollArea",
+    "kind": "component",
+    "parts": [
+      "ScrollAreaRootProps",
+      "ScrollAreaScrollbarProps",
+      "ScrollAreaViewportProps"
+    ],
+    "spec": "scroll-area",
     "shipped": true
   },
   {
     "name": "Tooltip",
+    "description": "Labels supplementary information on hover and keyboard focus.",
     "slug": "tooltip",
     "group": "Overlays",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Tooltip",
     "kind": "component",
     "parts": [
-      "TooltipProps"
+      "TooltipProps",
+      "TooltipRootProps",
+      "TooltipTriggerProps"
     ],
-    "spec": null,
+    "spec": "tooltip",
     "shipped": true
   },
   {
     "name": "AuthCard",
+    "description": "AuthCard — the centred card a sign-in, sign-up or reset screen is.",
     "slug": "auth-card",
     "group": "Patterns",
+    "package": "@newui/blocks",
+    "source": "packages/blocks/src/AuthCard",
     "kind": "block",
     "parts": [
       "AuthCardProps"
@@ -629,8 +1106,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "SettingsDialog",
+    "description": "SettingsDialog — a dialog for app settings: a sidebar of grouped tabs on the left, the selected panel on the right.",
     "slug": "settings-dialog",
     "group": "Patterns",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/SettingsDialog",
     "kind": "component",
     "parts": [
       "SettingsBodyProps",
@@ -648,8 +1128,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Combobox",
+    "description": "Combobox — a searchable single select.",
     "slug": "combobox",
     "group": "Selection",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Combobox",
     "kind": "component",
     "parts": [
       "ComboboxProps"
@@ -659,20 +1142,26 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "DatePicker",
+    "description": "DatePicker — a single-date picker.",
     "slug": "date-picker",
     "group": "Selection",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/DatePicker",
     "kind": "component",
     "parts": [
       "CalendarViewProps",
       "DatePickerProps"
     ],
-    "spec": null,
+    "spec": "datepicker",
     "shipped": true
   },
   {
     "name": "DateRangePicker",
+    "description": "DateRangePicker — a range picker.",
     "slug": "date-range-picker",
     "group": "Selection",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/DateRangePicker",
     "kind": "component",
     "parts": [
       "DateRangePickerProps"
@@ -682,19 +1171,25 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "DateTimePicker",
+    "description": "DateTimePicker — a date + time picker.",
     "slug": "date-time-picker",
     "group": "Selection",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/DateTimePicker",
     "kind": "component",
     "parts": [
       "DateTimePickerProps"
     ],
-    "spec": null,
+    "spec": "datetime-picker",
     "shipped": true
   },
   {
     "name": "FileUploader",
+    "description": "FileUploader — a drag-and-drop file picker.",
     "slug": "file-uploader",
     "group": "Selection",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/FileUploader",
     "kind": "component",
     "parts": [
       "FileUploaderProps"
@@ -704,40 +1199,64 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "MultiSelect",
+    "description": "MultiSelect — a searchable multi-valued select.",
     "slug": "multi-select",
     "group": "Selection",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/MultiSelect",
     "kind": "component",
     "parts": [
       "MultiSelectProps"
     ],
-    "spec": null,
+    "spec": "multiselect",
     "shipped": true
   },
   {
     "name": "Select",
+    "description": "A Zag value selector over fixed options, with optional icon, description and disabled state per option.",
     "slug": "select",
     "group": "Selection",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/Select",
     "kind": "component",
     "parts": [
       "SelectProps"
     ],
-    "spec": null,
+    "spec": "select",
     "shipped": true
   },
   {
     "name": "TimePicker",
+    "description": "TimePicker — a time input that opens a popover list of selectable times.",
     "slug": "time-picker",
     "group": "Selection",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/TimePicker",
     "kind": "component",
     "parts": [
       "TimePickerProps"
     ],
-    "spec": null,
+    "spec": "timepicker",
+    "shipped": true
+  },
+  {
+    "name": "ToggleGroup",
+    "description": "ToggleGroup — a row of independent on/off cells that read as one control: text alignment, a view switcher, a density picker.",
+    "slug": "toggle-group",
+    "group": "Selection",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/ToggleGroup",
+    "kind": "component",
+    "parts": [
+      "ToggleGroupItemProps",
+      "ToggleGroupProps"
+    ],
+    "spec": "toggle-group",
     "shipped": true
   }
 ]
 
-export const GROUPS = ["Actions","Data","Disclosure","Display","Feedback","Inputs","Layout","Navigation","Overlays","Patterns","Selection"] as const
+export const GROUPS = ["Actions","Charts","Editors","Data","Disclosure","Display","Feedback","Inputs","Layout","Navigation","Overlays","Patterns","Selection"] as const
 
 export function componentBySlug(slug: string): ComponentEntry | undefined {
   return COMPONENTS.find((entry) => entry.slug === slug)

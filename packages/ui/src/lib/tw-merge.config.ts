@@ -20,7 +20,8 @@ const isArbitrary = (value: string) =>
   value.startsWith('[') && value.endsWith(']')
 
 /** Our type scale: `2xs`…`11xl` and `p-…`, each with an optional weight. */
-const SIZE = /^(p-)?(2xs|xs|sm|base|md|lg|xl|1?\dxl)(-(medium|semibold|bold))?$/
+const SIZE =
+  /^(p-)?(interface|caption|heading|section|metric|hero|2xs|xs|sm|base|md|lg|xl|1?\dxl)(-(medium|semibold|bold))?$/
 const isFontSize = (value: string) => SIZE.test(value) || isArbitrary(value)
 
 const WEIGHTS = [
@@ -96,9 +97,6 @@ const isBackdropBlur = isBlur
 
 const isInvertGrayscaleSepia = (value: string) =>
   value === '' || value === '0' || isArbitrary(value)
-
-const isSnapType = (value: string) =>
-  /^(none|x|y|both|mandatory|proximity)$/.test(value) || isArbitrary(value)
 
 const isBreak = (value: string) =>
   /^(auto|avoid|all|avoid-page|page|left|right|column)$/.test(value) ||
@@ -511,8 +509,10 @@ export const twMergeConfig = {
     'touch-y': [{ 'touch-y': [isTouch] }],
     'touch-pz': [{ 'touch-pz': [isTouch] }],
     'scroll-behavior': ['scroll-auto', 'scroll-smooth'],
-    'scroll-snap-type': [{ snap: [isSnapType] }],
-    'scroll-snap-align': [{ 'snap-align': [isSnapType] }],
+    'snap-type': [{ snap: ['none', 'x', 'y', 'both'] }],
+    'snap-strictness': [{ snap: ['mandatory', 'proximity'] }],
+    'snap-align': [{ snap: ['start', 'end', 'center', 'align-none'] }],
+    'snap-stop': [{ snap: ['normal', 'always'] }],
     'scroll-margin': [{ 'scroll-m': [isLength] }],
     'scroll-padding': [{ 'scroll-p': [isLength] }],
     'accent-color': [{ accent: [() => true] }],
@@ -538,6 +538,8 @@ export const twMergeConfig = {
     'break-inside': [{ 'break-inside': [isBreak] }],
   },
   conflictingClassGroups: {
+    // Clamping also sets display and overflow; the later clamp owns both.
+    'line-clamp': ['display', 'overflow'],
     overflow: ['overflow-x', 'overflow-y'],
     overscroll: ['overscroll-x', 'overscroll-y'],
     inset: [

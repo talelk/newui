@@ -58,7 +58,8 @@ export const API = {
     {
       "name": "size",
       "type": "TimePickerSize",
-      "optional": true
+      "optional": true,
+      "default": "sm"
     },
     {
       "name": "typeable",
@@ -150,6 +151,12 @@ export const API = {
       "type": "string",
       "optional": true,
       "description": "Merged into the root."
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name when no visible `label` is rendered."
     }
   ]
 } as const

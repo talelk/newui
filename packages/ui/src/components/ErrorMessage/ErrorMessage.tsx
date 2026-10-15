@@ -29,7 +29,10 @@ export function ErrorMessage(props: ErrorMessageProps): JSX.Element {
         id={local.id}
         data-slot="error"
         role="alert"
-        class={cn('whitespace-pre-line text-p-sm text-ink-red-7', local.class)}
+        class={cn(
+          'whitespace-pre-line text-caption text-ink-red-7',
+          local.class,
+        )}
       >
         {lines().join('\n')}
       </div>

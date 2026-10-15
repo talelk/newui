@@ -34,6 +34,7 @@ export interface TabButtonsProps {
   onValueChange?: (value: string) => void
   /** Visual variant, shared with the `Tabs` family. Default `subtle`. */
   variant?: TabsVariant
+  /** @default sm */
   size?: TabsSize
   /** Stack the buttons in a column. */
   vertical?: boolean
@@ -114,6 +115,7 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
         orientation: orientation(),
         edge: edge(),
       }),
+      'max-w-full overflow-x-auto',
       local.class,
     )
 
@@ -145,10 +147,7 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
         />
       </Show>
       <Show when={isPill()}>
-        <div
-          aria-hidden="true"
-          class={cn(...tabIndicatorClipClasses(variant(), size()))}
-        >
+        <div aria-hidden="true" class={cn(...tabIndicatorClipClasses())}>
           <div
             data-slot="tab-indicator"
             aria-hidden="true"
@@ -183,6 +182,44 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
               type="button"
               role="tab"
               aria-selected={active()}
+              tabIndex={active() ? 0 : -1}
+              onKeyDown={(event) => {
+                const vertical = orientation() === 'vertical'
+                const rtl =
+                  trackEl && getComputedStyle(trackEl).direction === 'rtl'
+                const nextKey = vertical
+                  ? 'ArrowDown'
+                  : rtl
+                    ? 'ArrowLeft'
+                    : 'ArrowRight'
+                const previousKey = vertical
+                  ? 'ArrowUp'
+                  : rtl
+                    ? 'ArrowRight'
+                    : 'ArrowLeft'
+                if (![nextKey, previousKey, 'Home', 'End'].includes(event.key))
+                  return
+                const buttons = Array.from(
+                  trackEl?.querySelectorAll<HTMLButtonElement>(
+                    'button[role="tab"]:not(:disabled)',
+                  ) ?? [],
+                )
+                if (!buttons.length) return
+                event.preventDefault()
+                const current = buttons.indexOf(event.currentTarget)
+                const index =
+                  event.key === 'Home'
+                    ? 0
+                    : event.key === 'End'
+                      ? buttons.length - 1
+                      : (current +
+                          (event.key === nextKey ? 1 : -1) +
+                          buttons.length) %
+                        buttons.length
+                const target = buttons[index]
+                target?.focus()
+                if (target?.dataset['value']) setValue(target.dataset['value'])
+              }}
               disabled={option.disabled}
               data-slot="tab-trigger"
               data-value={option.value}

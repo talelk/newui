@@ -37,8 +37,9 @@ export const TooltipRoot: ParentComponent<TooltipRootProps> = (props) => {
     onChange: (value) => props.onOpenChange?.(value),
   })
 
+  const machineId = createId('tooltip')
   const { api } = createZagApi<TooltipApi>(zag.machine, zag.connect, () => ({
-    id: createId('tooltip'),
+    id: machineId,
     open: open(),
     openDelay: props.openDelay ?? 500,
     closeDelay: props.closeDelay ?? 150,

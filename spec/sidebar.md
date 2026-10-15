@@ -49,3 +49,13 @@ optional collapsed rail, collapsible sections and status cards.
 `sidebar-item`, `sidebar-rail`, `sidebar-rail-item`, `sidebar-section`,
 `sidebar-card`), plus `data-state` (`collapsed`/`expanded`, `active`/`inactive`)
 and `data-theme` on the card.
+
+## Analytics visual standard
+
+Sidebar items default to 32px high with a 6px radius and 14px interface text.
+Selection uses the semantic blue surface and foreground. Prefixes and block
+counts inherit that foreground, preserving contrast in both schemes. Keyboard
+focus is visible; width and colour motion respect reduced-motion preferences.
+
+Labelled rail items treat their custom glyph/avatar content as decorative.
+The accessible name includes the destination label and unread count.

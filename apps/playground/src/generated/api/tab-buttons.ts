@@ -33,7 +33,8 @@ export const API = {
     {
       "name": "size",
       "type": "TabsSize",
-      "optional": true
+      "optional": true,
+      "default": "sm"
     },
     {
       "name": "vertical",

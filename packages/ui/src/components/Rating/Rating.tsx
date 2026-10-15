@@ -1,5 +1,6 @@
 import * as zag from '@zag-js/rating-group'
 import { For, type JSX, Show, splitProps } from 'solid-js'
+import { Field, FieldLabelContent, useField } from '../../lib/field'
 import { createId } from '../../lib/id'
 import { cn } from '../../lib/tv'
 import { createZagApi } from '../../lib/zag'
@@ -27,6 +28,11 @@ export interface RatingProps {
   /** Star glyph; the component's content, so it is a prop + slot pair (P11). */
   icon?: (index: number) => JSX.Element
   label?: JSX.Element
+  description?: JSX.Element
+  error?: JSX.Element | false
+  required?: boolean
+  id?: string
+  name?: string
   class?: string
 }
 
@@ -50,7 +56,9 @@ function Star(): JSX.Element {
   )
 }
 
-export function Rating(props: RatingProps): JSX.Element {
+function RatingControl(props: RatingProps): JSX.Element {
+  const field = useField()
+  const machineId = createId('rating')
   const [local] = splitProps(props, [
     'value',
     'defaultValue',
@@ -64,6 +72,11 @@ export function Rating(props: RatingProps): JSX.Element {
     'icon',
     'label',
     'class',
+    'description',
+    'error',
+    'required',
+    'id',
+    'name',
   ])
 
   const size = () => local.size ?? 'sm'
@@ -71,7 +84,10 @@ export function Rating(props: RatingProps): JSX.Element {
   const allowHalf = () => local.step === 0.5
 
   const { api } = createZagApi<RatingApi>(zag.machine, zag.connect, () => ({
-    id: createId('rating'),
+    id: machineId,
+    ids: { label: field?.labelId(), control: local.id ?? field?.controlId() },
+    name: local.name,
+    required: field?.required() ?? local.required,
     value: local.value,
     defaultValue: local.defaultValue,
     count: count(),
@@ -86,20 +102,26 @@ export function Rating(props: RatingProps): JSX.Element {
     <div
       {...api().getRootProps()}
       data-slot="rating"
-      class={cn('flex flex-col gap-1', local.class)}
+      class={cn('relative flex flex-col gap-1', local.class)}
     >
       <Show when={local.label}>
         <span
           {...api().getLabelProps()}
           class="text-base font-medium text-ink-gray-8"
         >
-          {local.label}
+          <FieldLabelContent required={field?.required()}>
+            {local.label}
+          </FieldLabelContent>
         </span>
       </Show>
       <div
         {...api().getControlProps()}
         data-slot="rating-control"
-        class="flex items-center gap-0.5 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-60"
+        role="radiogroup"
+        aria-describedby={field?.describedBy()}
+        aria-invalid={field?.hasError() ? 'true' : undefined}
+        aria-required={field?.required() ? 'true' : undefined}
+        class="flex items-center gap-2 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-60"
       >
         <For each={api().items}>
           {(item) => {
@@ -108,13 +130,13 @@ export function Rating(props: RatingProps): JSX.Element {
             // the star is highlighted; the right half only when it is not half.
             const state = () => api().getItemState({ index: item })
             const halfColor = (filled: boolean) =>
-              filled ? 'text-ink-amber-6' : 'text-ink-gray-3'
+              filled ? 'text-ink-amber-6' : 'text-ink-gray-5'
             return (
               <span
                 {...api().getItemProps({ index: item })}
                 data-slot="rating-item"
                 class={cn(
-                  'relative inline-flex shrink-0',
+                  'relative inline-flex shrink-0 rounded-2 focus-visible:focus-ring-blue',
                   SIZE[size()],
                   local.disabled ? 'cursor-default' : 'cursor-pointer',
                 )}
@@ -148,5 +170,21 @@ export function Rating(props: RatingProps): JSX.Element {
         <input {...api().getHiddenInputProps()} />
       </div>
     </div>
+  )
+}
+
+export function Rating(props: RatingProps): JSX.Element {
+  return (
+    <Field
+      id={props.id}
+      label={props.label}
+      inlineLabel
+      description={props.description}
+      error={props.error}
+      required={props.required}
+      disabled={props.disabled}
+    >
+      <RatingControl {...props} />
+    </Field>
   )
 }

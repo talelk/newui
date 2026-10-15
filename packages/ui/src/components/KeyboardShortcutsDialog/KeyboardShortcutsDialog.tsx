@@ -168,7 +168,7 @@ export function KeyboardShortcutsDialog(
             fallback={
               <p
                 data-slot="shortcut-empty"
-                class="h-[20vh] py-8 text-center text-sm text-ink-gray-5"
+                class="h-[20vh] py-8 text-center text-sm text-ink-gray-6"
               >
                 {emptyMessage()}
               </p>

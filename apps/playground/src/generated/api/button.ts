@@ -17,7 +17,8 @@ export const API = {
     {
       "name": "size",
       "type": "ButtonSize",
-      "optional": true
+      "optional": true,
+      "default": "sm"
     },
     {
       "name": "label",

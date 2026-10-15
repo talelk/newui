@@ -39,7 +39,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
                 <th
                   scope="col"
                   aria-label={day().long}
-                  class="size-8 text-xs font-normal text-ink-gray-5"
+                  class="size-8 text-xs font-normal text-ink-gray-6"
                 >
                   {day().narrow}
                 </th>
@@ -104,6 +104,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
           </button>
           <button
             {...props.api.getViewTriggerProps({ view: 'day' })}
+            aria-label={`${props.dualPane ? props.api.visibleRangeText.formatted : props.api.visibleRangeText.start}, choose month`}
             type="button"
             class="rounded-3 px-2 py-0.5 text-base-medium text-ink-gray-9 transition-colors hover:bg-surface-gray-3"
           >
@@ -150,6 +151,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
           </button>
           <button
             {...props.api.getViewTriggerProps({ view: 'month' })}
+            aria-label={`${props.api.visibleRange.start.year}, choose year`}
             type="button"
             class="rounded-3 px-2 py-0.5 text-base-medium text-ink-gray-9 transition-colors hover:bg-surface-gray-3"
           >
@@ -184,6 +186,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
                             ...month,
                             columns: 4,
                           })}
+                          aria-label={`${month.label}, ${props.api.getMonthTableCellTriggerProps({ ...month, columns: 4 })['aria-label']}`}
                           type="button"
                           class={props.cellClass}
                         >

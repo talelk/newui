@@ -5,23 +5,24 @@
  * It is the loop the design work runs on — render the built site, write one PNG
  * per (route, theme, width) to `test-results/shots/`, and let a human (or the
  * agent that just changed a recipe) look at them. The repo's *asserted* visual
- * checks are elsewhere: axe on real CSS in `e2e/a11y.spec.ts`, box metrics in
+ * checks are elsewhere: deterministic snapshots in `e2e/visual.spec.ts`, axe on real CSS in `e2e/a11y.spec.ts`, box metrics in
  * `e2e/interaction.spec.ts`, and the component-level browser tests.
  *
  * Usage
- *   pnpm shots                        # every route, both themes, 1440 + 390
+ *   pnpm shots                        # every route, both themes, 1440 + 768 + 390
  *   pnpm shots /blocks /examples      # only these routes
  *   pnpm shots --theme=dark           # one theme
  *   pnpm shots --dir=/tmp/compare     # somewhere else (e.g. a before/after pair)
  *
- * The examples use remote avatars on purpose (`i.pravatar.cc`, GitHub), so a run
- * waits for every image to settle *and* for the webfonts, with a timeout — an
- * offline run still writes the shots, it just shows the fallback initials.
+ * The examples use local data and avatar initials. A run waits for the local
+ * brand image and webfonts to settle before capturing a deterministic view.
  */
-import { spawn } from 'node:child_process'
 import { mkdirSync } from 'node:fs'
 import path from 'node:path'
 import { chromium, type Page } from 'playwright'
+import { EXAMPLES } from '../apps/playground/src/lib/examples'
+
+import { startPreview } from './preview-server'
 
 const PORT = 4182
 const BASE = `http://localhost:${PORT}`
@@ -40,14 +41,17 @@ const ROUTES = [
   '/docs',
   '/foundations',
   '/components',
-  '/components/atoms',
-  '/components/feedback',
+  '/components/button',
+  '/components/toast',
   '/components/pagination',
   '/components/date-picker',
   '/blocks',
   '/examples',
-  '/examples/discussions/desktop',
-  '/examples/discussions/mobile',
+  ...EXAMPLES.flatMap((example) =>
+    example.href === '/examples/patterns'
+      ? [example.href]
+      : [example.href, `${example.href}/fullscreen`],
+  ),
   '/spec',
   '/play?c=Button',
   '/play?c=Combobox',
@@ -63,7 +67,7 @@ const ROUTES = [
 ]
 
 const THEMES = themeFilter ? [themeFilter] : ['light', 'dark']
-const WIDTHS = [1440, 390]
+const WIDTHS = [1440, 768, 390]
 const selected = routeArgs.length > 0 ? routeArgs : ROUTES
 
 function fileName(route: string, theme: string, width: number): string {
@@ -74,32 +78,7 @@ function fileName(route: string, theme: string, width: number): string {
   return `${(slug || 'home').replace(/^-/, '')}-${theme}-${width}.png`
 }
 
-const server = spawn(
-  'pnpm',
-  ['--filter', 'playground', 'preview', '--port', String(PORT), '--strictPort'],
-  { stdio: 'ignore', detached: true },
-)
-
-function stopServer() {
-  try {
-    process.kill(-server.pid)
-  } catch {
-    server.kill()
-  }
-}
-
-async function waitForServer() {
-  for (let attempt = 0; attempt < 60; attempt += 1) {
-    try {
-      const response = await fetch(BASE)
-      if (response.ok) return
-    } catch {
-      // not up yet
-    }
-    await new Promise((resolve) => setTimeout(resolve, 500))
-  }
-  throw new Error(`preview did not come up at ${BASE}`)
-}
+const preview = startPreview(PORT)
 
 /**
  * Wait for the page to be *still*: fonts loaded, images settled, no pending
@@ -133,7 +112,7 @@ async function settle(page: Page) {
 }
 
 try {
-  await waitForServer()
+  await preview.ready
   mkdirSync(outDir, { recursive: true })
   const browser = await chromium.launch({ channel: 'chrome' })
   let written = 0
@@ -175,5 +154,5 @@ try {
     `\n${written} screenshots → ${path.relative(process.cwd(), outDir)}\n`,
   )
 } finally {
-  stopServer()
+  preview.stop()
 }

@@ -1,5 +1,6 @@
 import { render, screen } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
+import { createSignal } from 'solid-js'
 import { describe, expect, it, vi } from 'vitest'
 import { Select } from './Select'
 
@@ -46,13 +47,13 @@ describe('Select', () => {
     expect(control?.getAttribute('data-variant')).toBe('outline')
   })
 
-  it('defaults to the subtle variant', () => {
+  it('defaults to the outline variant', () => {
     render(() => <Select options={OPTIONS} />)
     expect(
       document
         .querySelector('[data-slot="select-control"]')
         ?.getAttribute('data-variant'),
-    ).toBe('subtle')
+    ).toBe('outline')
   })
 
   it('renders an option icon and description in the row', async () => {
@@ -77,4 +78,39 @@ describe('Select', () => {
     ) as HTMLElement
     expect(trigger.querySelector('.lucide-check')).toBeTruthy()
   })
+})
+
+it('labels the visible trigger and links help and validation through Field', () => {
+  render(() => (
+    <Select
+      label="Region"
+      description="Choose a reporting region"
+      error="A region is required"
+      required
+      options={OPTIONS}
+    />
+  ))
+  const trigger = screen.getByRole('combobox', {
+    name: /^Region\s*\(required\)$/,
+  })
+  expect(trigger.getAttribute('aria-invalid')).toBe('true')
+  expect(trigger.getAttribute('aria-describedby')?.split(' ')).toHaveLength(2)
+  expect(document.querySelector(`label[for="${trigger.id}"]`)).not.toBeNull()
+  expect(screen.getByRole('alert').textContent).toBe('A region is required')
+})
+
+it('keeps uncontrolled selection and the trigger when validation appears', async () => {
+  const [error, setError] = createSignal<string>()
+  render(() => <Select options={OPTIONS} error={error()} />)
+  const trigger = document.querySelector(
+    '[data-slot="select-trigger"]',
+  ) as HTMLElement
+  await userEvent.click(trigger)
+  await userEvent.click(await screen.findByText('Paid'))
+  setError('Please confirm this status.')
+  expect(document.querySelector('[data-slot="select-trigger"]')).toBe(trigger)
+  expect(trigger.textContent).toContain('Paid')
+  expect(screen.getByRole('alert').textContent).toBe(
+    'Please confirm this status.',
+  )
 })

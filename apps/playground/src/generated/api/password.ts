@@ -21,6 +21,82 @@ export const API = {
       "type": "(value: string) => void",
       "optional": true,
       "description": "Called on every user-initiated change (controlled or not)."
+    },
+    {
+      "name": "variant",
+      "type": "InputVariant",
+      "optional": true
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "size",
+      "type": "InputSize",
+      "optional": true,
+      "default": "sm"
+    },
+    {
+      "name": "prefix",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "optional": true
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "onChange",
+      "type": "JSX.EventHandlerUnion<HTMLInputElement, Event>",
+      "optional": true
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "description",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "error",
+      "type": "JSX.Element | false",
+      "optional": true
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "optional": true
+    },
+    {
+      "name": "readonly",
+      "type": "boolean",
+      "optional": true
+    },
+    {
+      "name": "label",
+      "type": "JSX.Element",
+      "optional": true
     }
   ]
 } as const

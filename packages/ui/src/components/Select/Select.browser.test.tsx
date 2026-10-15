@@ -51,7 +51,7 @@ describe('Select (browser, real CSS)', () => {
 
   it('paints a filled subtle control and an unfilled outline one', () => {
     const { container, unmount } = render(() => (
-      <Select options={OPTIONS} placeholder="Choose…" />
+      <Select options={OPTIONS} placeholder="Choose…" variant="subtle" />
     ))
     const subtle = getComputedStyle(
       container.querySelector('[data-slot="select-control"]') as HTMLElement,

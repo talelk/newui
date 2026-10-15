@@ -1,6 +1,19 @@
-import { A } from '@solidjs/router'
-import { For, type JSX } from 'solid-js'
-import { MASTHEAD } from './nav'
+import { A, useLocation } from '@solidjs/router'
+import {
+  createSignal,
+  type JSX,
+  lazy,
+  onCleanup,
+  onMount,
+  Show,
+  Suspense,
+} from 'solid-js'
+import { NAV, sectionFor } from './nav'
+
+const PageFinder = lazy(() =>
+  import('./PageFinder').then((module) => ({ default: module.PageFinder })),
+)
+
 import { ThemeMenu } from './ThemeMenu'
 
 /**
@@ -24,62 +37,104 @@ function GithubMark(props: { class?: string }): JSX.Element {
   )
 }
 
-/**
- * The site masthead: brand, top-level destinations, the colour-scheme switch and
- * a link to the source. Sticky, and the only chrome with a backdrop blur — a
- * blurred sticky element forces a compositor layer, so exactly one is worth it.
- *
- * Active state comes from the router's own `activeClass` rather than a
- * `useLocation()` comparison here: the router knows about nesting and trailing
- * slashes, and a second implementation would drift from it.
- */
-export function Masthead(): JSX.Element {
+export function Masthead(props: {
+  title?: string
+  onMenu: () => void
+  menuRef: (element: HTMLButtonElement) => void
+}): JSX.Element {
+  const location = useLocation()
+  const [finding, setFinding] = createSignal(false)
+  const section = () => sectionFor(location.pathname)
+  const title = () => {
+    const exact = NAV.flatMap((entry) => entry.items).find(
+      (entry) => entry.href === location.pathname,
+    )
+    return (
+      props.title ??
+      exact?.title ??
+      (location.pathname.split('/').at(-1) ?? '').replace(/-/g, ' ')
+    )
+  }
+  onMount(() => {
+    const find = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault()
+        setFinding(true)
+      }
+    }
+    window.addEventListener('keydown', find)
+    onCleanup(() => window.removeEventListener('keydown', find))
+  })
   return (
-    <header class="sticky top-0 z-30 border-b border-outline-gray-1 bg-surface-base/85 backdrop-blur">
-      <div class="mx-auto flex h-12 max-w-[1400px] items-center gap-3 px-4 sm:px-6">
+    <header class="sticky top-0 z-30 border-b border-outline-gray-1 bg-surface-base">
+      <div class="flex min-h-12 flex-wrap items-center gap-1 px-2 sm:gap-2 sm:px-4">
+        <button
+          ref={props.menuRef}
+          type="button"
+          aria-label="Open navigation"
+          aria-haspopup="dialog"
+          onClick={() => props.onMenu()}
+          class="grid size-10 shrink-0 place-items-center rounded-3 focus-visible:focus-ring lg:hidden"
+        >
+          <span aria-hidden="true" class="lucide-menu size-4" />
+        </button>
         <A
           href="/"
-          class="flex shrink-0 items-center gap-2 rounded-4 focus-visible:focus-ring"
           aria-label="newui home"
+          class="flex shrink-0 items-center gap-2 rounded-3 focus-visible:focus-ring"
         >
-          <img src="/favicon.svg" alt="" class="size-6 rounded-[6px]" />
-          <span class="text-base-medium text-ink-gray-9">newui</span>
+          <img src="/favicon.svg" alt="" class="size-6 rounded-3" />
+          <span class="hidden font-semibold sm:inline">newui</span>
         </A>
-
-        {/* Horizontal scroll rather than a hamburger: five destinations fit on
-            one line on a phone, and a scroll area keeps them one tap away. */}
         <nav
-          aria-label="Sections"
-          class="ms-1 flex min-w-0 flex-1 items-center gap-1 overflow-x-auto"
+          aria-label="Breadcrumbs"
+          class="hidden min-w-0 items-center gap-2 text-interface text-ink-gray-6 sm:flex"
         >
-          <For each={MASTHEAD}>
-            {(item) => (
-              <A
-                href={item.href}
-                class="shrink-0 rounded-3 px-2 py-1 text-sm text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
-                activeClass="text-ink-gray-9"
-                inactiveClass=""
-                end={item.href === '/'}
-              >
-                {item.title}
-              </A>
-            )}
-          </For>
-        </nav>
-
-        <div class="flex shrink-0 items-center gap-2">
-          <a
-            href="https://github.com/talelk/newui"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Source on GitHub"
-            class="grid size-7 place-items-center rounded-4 text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
+          <span
+            aria-hidden="true"
+            class="lucide-chevron-right size-4 shrink-0"
+          />
+          <A
+            href={section()?.items[0]?.href ?? '/'}
+            class="rounded-3 hover:underline focus-visible:focus-ring"
           >
-            <GithubMark class="size-4" />
-          </a>
-          <ThemeMenu />
-        </div>
+            {section()?.title}
+          </A>
+          <Show when={title() !== section()?.title}>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page" class="truncate text-ink-gray-9">
+              {title()}
+            </span>
+          </Show>
+        </nav>
+        <button
+          type="button"
+          aria-label="Find a page"
+          aria-haspopup="dialog"
+          onClick={() => setFinding(true)}
+          class="ms-auto flex size-10 shrink-0 items-center justify-center gap-2 rounded-3 text-ink-gray-6 hover:bg-surface-gray-2 focus-visible:focus-ring sm:w-auto sm:px-3"
+        >
+          <span aria-hidden="true" class="lucide-search size-4" />
+          <span class="hidden text-caption md:inline">
+            Find a page <kbd>⌘ K</kbd>
+          </span>
+        </button>
+        <ThemeMenu />
+        <a
+          href="https://github.com/talelk/newui"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Source on GitHub"
+          class="grid size-10 shrink-0 place-items-center rounded-3 text-ink-gray-6 hover:bg-surface-gray-2 focus-visible:focus-ring"
+        >
+          <GithubMark class="size-4" />
+        </a>
       </div>
+      <Show when={finding()}>
+        <Suspense>
+          <PageFinder onClose={() => setFinding(false)} />
+        </Suspense>
+      </Show>
     </header>
   )
 }

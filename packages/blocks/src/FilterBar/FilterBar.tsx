@@ -51,21 +51,22 @@ export interface FilterBarProps {
  * and the view switcher is pushed to the far end because it changes how the data
  * below is *drawn* rather than what is in it.
  *
- * `Select` in this library is a value control, not a labelled form field: the
- * filter bar therefore gives each one an `aria-label` from its `label` and uses
+ * The filter bar gives each Select an `aria-label` from its `label` and uses
  * it as the placeholder, rather than rendering a form label above a toolbar.
  */
 export function FilterBar(props: FilterBarProps): JSX.Element {
   return (
-    <div class={`flex flex-wrap items-center gap-2 ${props.class ?? ''}`}>
+    <div
+      class={`flex max-w-full flex-wrap items-center gap-2 ${props.class ?? ''}`}
+    >
       <Show when={props.query}>
         {(query) => (
           <TextInput
-            size="sm"
+            size="md"
             value={query().value}
             placeholder={query().placeholder ?? 'Search…'}
             aria-label={query().placeholder ?? 'Search'}
-            class={query().width ?? 'w-56'}
+            class={`max-w-full ${query().width ?? 'w-56'}`}
             prefix={<Icon icon="lucide-search" class="size-4" />}
             onInput={(event) => query().onInput?.(event.currentTarget.value)}
           />
@@ -74,9 +75,9 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
 
       <For each={props.selects ?? []}>
         {(select) => (
-          <div class={select.width ?? 'w-40'}>
+          <div class={`max-w-full ${select.width ?? 'w-40'}`}>
             <Select
-              size="sm"
+              size="md"
               options={select.options}
               value={select.value ? [select.value] : []}
               placeholder={select.label}
@@ -87,7 +88,7 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
         )}
       </For>
 
-      <div class="ms-auto flex items-center gap-2">
+      <div class="ms-auto flex max-w-full flex-wrap items-center gap-2">
         <Show when={props.tabs}>
           {(tabs) => (
             <TabButtons

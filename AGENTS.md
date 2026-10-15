@@ -1,10 +1,10 @@
 # newui
 
 A SolidJS component library — the equivalent of `frappe-ui` rebuilt on
-**SolidJS + Zag + tailwind-variants + Tailwind CSS v4**.
+**SolidJS + Zag + typed variant recipes + Tailwind CSS v4**.
 
-The Vue originals are checked out read-only at `frappe-ui-main/` and the Zag
-source at `zag-main/`. Port from them; never edit them.
+The Vue originals are checked out read-only at `references/frappe-ui-main/` and the Zag
+source at `references/zag-main/`. Port from them; never edit them.
 
 Ship tier: prod.
 
@@ -56,7 +56,8 @@ had, and stays the surface the design work is reviewed on.
 | `/blocks` · `/blocks/<name>` | the same, for `@newui/blocks` |
 | `/spec` | the deterministic page the browser harness drives — no chrome, no network |
 | `/play?c=<Name>` | one component's demo; the docs embed it, and it is the screenshot unit |
-| `/examples/discussions/mobile` | the full-screen mobile recipe (`MobileShell` is `fixed inset-0`) |
+| `/examples/<slug>` · `/examples/<slug>/fullscreen` | one application guide with a persistent responsive preview; a bare application viewport |
+| `/charts` · `/editors` | generated chart and editor reference pages |
 
 Three rules keep it fast, and each has a guardrail:
 
@@ -68,7 +69,8 @@ Three rules keep it fast, and each has a guardrail:
   (a singleton in `shell/theme.ts`, so two consumers cannot drift).
 - **A route pays for itself, measured.** `pnpm budget` loads the built site per
   route and sums the gzip of every chunk that route fetched. The old playground
-  mounted all six sections on `/` and cost 219 kB gzip; the home page is 48.
+  mounted all six sections on `/` and cost 219 kB gzip; the first split reached
+  48. Current checkpoint measurements are under Performance below.
 
 ### The component reference
 
@@ -87,10 +89,10 @@ component to the library and running `pnpm api` + `pnpm site` produces its page.
   is why `vite.config.ts` allows exactly that one directory.
 - **One demo per file** (`demos/<name>.tsx`, lazily imported by `demos.ts`). As a
   single module the demos imported every component in the library, so one
-  component page cost 231 kB gzip in 29 chunks; split, `/components/<name>` is
-  66 kB.
+  component page cost 231 kB gzip in 29 chunks; the initial split brought `/components/<name>` to
+  66 kB. `pnpm budget` measures the current routes.
 - The shell imports no component; only the reference routes import the index.
-  That is what keeps the home page at 52 kB.
+  That keeps the home page independent of the component registry and demos.
 
 ### Blocks
 
@@ -107,6 +109,18 @@ blocks entry cannot reach the slider, the toast or the date picker.
 `pnpm shots` writes screenshots for every route × theme × width into
 `test-results/shots/` (gitignored, nothing asserts on them) — it is the loop the
 design work runs on, not a regression suite.
+
+### Application and reference examples
+
+`/examples` links every application recipe. All eight Frappe recipe families
+share one documentation destination per family and respond to the actual viewport; solid-ui's five application examples and 68
+registry examples have explicit destinations. `spec/reference-examples.md`
+documents the mapping and acceptance boundaries. `lib/examples.ts` owns the
+application catalog; `lib/reference-examples.ts` owns the registry mapping.
+Every shipped reference component must have an isolated lazy demo.
+
+TanStack Solid Table, Virtual, Query and Form belong to example pages. Blocks
+still import only `@newui/ui`; charts and editors stay at the page layer.
 
 ## Guardrails (enforced by tests, not convention)
 
@@ -199,12 +213,11 @@ design work runs on, not a regression suite.
   (`inlineCss` in `apps/playground/vite.config.ts`, removing a render-blocking
   round trip) and code-splits every route with dynamic imports. A library must
   not do either — consumers own their asset pipeline.
-- **Current**: `cn()` 7.3 kB · `Button` 9.5 kB · `Button + Dialog` 31.7 kB ·
-  full barrel 240.0 kB · blocks barrel 73.3 kB (all gzip, `solid-js` external).
-  Site routes:
-  **home 48 kB · docs 48 · foundations 73 · feedback 65 · examples 71 ·
-  mobile recipe 78 · desktop recipe 123 · blocks 146 · atoms 196**
-  (gzip, every chunk the route fetches — `pnpm budget`).
+- **Measured redesign checkpoint**: `cn()` 7.54 kB · `Button` 9.88 kB ·
+  `Button + Dialog` 32.86 kB · full barrel 242.19 kB · blocks barrel 74.30 kB
+  (gzip, `solid-js` external). Site: home 54.4 kB, analytics 298.8 kB,
+  tasks 162.3 kB, accounting 327.1 kB. Treat these as checkpoint measurements;
+  `pnpm size` and `pnpm budget` provide current evidence and enforce the limits.
 - **Removed `tailwind-variants`** (it bundled its own merge integration) in
   favour of an in-house `tv`/`cn`/`cx` in `lib/tv.ts`: `Button` went 34.3 →
   16.3 kB. The resolver is typed (`VariantProps<typeof recipe>` recovers the
@@ -213,8 +226,8 @@ design work runs on, not a regression suite.
   ships every Tailwind group (~14 kB gzip) on every component.
   `createTailwindMerge` needs a full config, so this one declares only the
   families this library emits, and `lib/tw-merge.test.ts` proves it agrees with
-  the (extended) default for **every pair** of utilities in the source — 5,276
-  cases, 0 mismatches. `cn()` 14.1 → 6.5 kB, `Button` 16.3 → 8.6 kB.
+  the (extended) default for **every ordered pair** of utilities in the source. The
+  sweep grows with the vocabulary; it now exercises over 540,000 cases. `cn()` 14.1 → 6.5 kB, `Button` 16.3 → 8.6 kB.
   - Note the config is *not* a subset of the default in effect: it also fixes a
     latent bug where numeric `rounded-<n>` and named `shadow-<step>` (our
     vocabulary, unknown to the stock config) did not override each other.
@@ -278,4 +291,4 @@ pnpm changeset      # add a changeset
 
 - Invent new public API vocabulary without checking `PHILOSOPHY.md`/`spec/`.
 - Add class-name or style-injection props.
-- Edit the reference checkouts (`frappe-ui-main/`, `zag-main/`).
+- Edit the reference checkouts (`references/frappe-ui-main/`, `references/solid-ui-main/`, `references/zag-main/`).

@@ -26,7 +26,7 @@ const SOURCES = [
 ]
 
 const isTextSize = (value: string) =>
-  /^(p-)?(2xs|xs|sm|base|md|lg|xl|[0-9]{1,2}xl)(-(medium|semibold|bold))?$/.test(
+  /^(p-)?(interface|caption|heading|section|metric|hero|2xs|xs|sm|base|md|lg|xl|[0-9]{1,2}xl)(-(medium|semibold|bold))?$/.test(
     value,
   )
 const isOurRadius = (value: string) => /^(\d|full|none)$/.test(value)

@@ -157,13 +157,28 @@ test('the per-component demo route renders a component', async ({ page }) => {
   // The docs embed this route in an iframe, so it must render standalone.
   await expect(page.getByRole('button', { name: 'Solid' })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Loading' })).toBeVisible()
+  for (const name of ['Solid', 'Loading', 'Disabled', 'Add']) {
+    expect(
+      await page
+        .getByRole('button', { name, exact: true })
+        .evaluate((element) => element.getBoundingClientRect().height),
+    ).toBe(28)
+  }
+  expect(
+    await page
+      .getByRole('button', { name: 'md', exact: true })
+      .evaluate((element) => element.getBoundingClientRect().height),
+  ).toBe(32)
 })
 
 test('the mobile-shell route renders full-screen', async ({ page }) => {
-  await page.goto('/examples/discussions/mobile')
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/examples/discussions/fullscreen')
   // `MobileShell` is `fixed inset-0`, so it lives on its own route rather than
   // inline in the scrolling site.
-  await expect(page.getByRole('heading', { name: 'Home' })).toBeVisible()
+  await expect(
+    page.getByRole('heading', { name: 'Design System', exact: true }),
+  ).toBeVisible()
   await expect(page.getByRole('navigation', { name: 'Primary' })).toBeVisible()
   await expect(
     page.getByRole('link', { name: 'Back to playground' }),
@@ -188,4 +203,49 @@ test('tooltip appears on keyboard focus', async ({ page }) => {
   }
   expect(focused).toBe(true)
   await expect(page.getByRole('tooltip')).toBeVisible({ timeout: 3000 })
+})
+
+test('analytics control defaults align, reserve both adornments and show focus and invalid state', async ({
+  page,
+}) => {
+  await page.goto('/spec')
+  await expect(
+    page.getByRole('button', { name: 'Save', exact: true }),
+  ).toBeVisible()
+  for (const selector of [
+    '[data-slot="button"]',
+    '[data-slot="text-input"]',
+    '[data-slot="select-control"]',
+    '[data-slot="combobox-control"]',
+    '[data-slot="multiselect-control"]',
+    '[data-slot="date-picker-control"]',
+    '[data-slot="tab-buttons"]',
+  ]) {
+    expect(
+      await page
+        .locator(selector)
+        .first()
+        .evaluate((el) => el.getBoundingClientRect().height),
+      selector,
+    ).toBe(28)
+  }
+  const amount = page.getByRole('textbox', { name: 'Invoice amount' })
+  const padding = await amount.evaluate((el) => {
+    const style = getComputedStyle(el)
+    return [
+      Number.parseFloat(style.paddingInlineStart),
+      Number.parseFloat(style.paddingInlineEnd),
+    ]
+  })
+  expect(padding.every((value) => value >= 32)).toBe(true)
+  await page.keyboard.press('Tab')
+  await amount.focus()
+  expect(
+    await amount.evaluate((el) => getComputedStyle(el).outlineStyle),
+  ).not.toBe('none')
+  const invalid = page.getByRole('textbox', { name: 'Invalid email' })
+  await expect(invalid).toHaveAttribute('aria-invalid', 'true')
+  expect(
+    await invalid.evaluate((el) => getComputedStyle(el).borderColor),
+  ).not.toBe(await amount.evaluate((el) => getComputedStyle(el).borderColor))
 })

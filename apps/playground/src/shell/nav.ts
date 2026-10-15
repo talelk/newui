@@ -1,3 +1,4 @@
+import { EXAMPLES } from '../lib/examples'
 /**
  * The site's navigation model — one tree, three consumers.
  *
@@ -26,15 +27,6 @@ export interface NavSection {
   title: string
   items: NavItem[]
 }
-
-/** Top-level destinations, rendered as the masthead nav. */
-export const MASTHEAD: NavItem[] = [
-  { title: 'Docs', href: '/docs' },
-  { title: 'Foundations', href: '/foundations' },
-  { title: 'Components', href: '/components' },
-  { title: 'Blocks', href: '/blocks' },
-  { title: 'Examples', href: '/examples' },
-]
 
 /**
  * The sidebar tree. Order is the reading order: learn the system, then the
@@ -74,16 +66,6 @@ export const NAV: NavSection[] = [
         href: '/components',
         description: 'Every compound the library exports, by group.',
       },
-      {
-        title: 'Anatomy & variants',
-        href: '/components/atoms',
-        description: 'Every axis of every atom on one page.',
-      },
-      {
-        title: 'Feedback & state',
-        href: '/components/feedback',
-        description: 'Alerts, tabs, scroll areas, the chart ramp.',
-      },
     ],
   },
   {
@@ -97,23 +79,26 @@ export const NAV: NavSection[] = [
     ],
   },
   {
+    title: 'Charts',
+    items: [{ title: 'All charts', href: '/charts' }],
+  },
+  {
+    title: 'Editors',
+    items: [{ title: 'Rich text and code', href: '/editors' }],
+  },
+  {
     title: 'Examples',
     items: [
       {
         title: 'Overview',
         href: '/examples',
-        description: 'Whole screens, taken from real products.',
+        description: 'Whole screens and working local applications.',
       },
-      {
-        title: 'Discussions · desktop',
-        href: '/examples/discussions/desktop',
-        description: 'Rail, sidebar, feed and settings dialog.',
-      },
-      {
-        title: 'Discussions · mobile',
-        href: '/examples/discussions/mobile',
-        description: 'Pinned header, feed and a Spaces sheet.',
-      },
+      ...EXAMPLES.map((example) => ({
+        title: example.name,
+        href: example.href,
+        description: example.description,
+      })),
     ],
   },
   {
@@ -138,8 +123,10 @@ export const NAV_ORDER: NavItem[] = NAV.flatMap((section) => section.items)
 
 /** The sidebar section a path belongs to, or undefined for the masthead-only pages. */
 export function sectionFor(pathname: string): NavSection | undefined {
+  const segment = pathname.split('/')[1]
+  if (!segment || segment === 'docs') return NAV[0]
   return NAV.find((section) =>
-    section.items.some((item) => item.href.split('?')[0] === pathname),
+    section.items.some((item) => item.href.split('/')[1] === segment),
   )
 }
 
@@ -161,4 +148,16 @@ export function siblingsFor(
     previous: index > 0 ? items[index - 1] : undefined,
     next: index < items.length - 1 ? items[index + 1] : undefined,
   }
+}
+
+/** Icons are literal utilities so the build can discover every glyph. */
+export const SECTION_ICONS: Record<string, string> = {
+  Overview: 'lucide-house',
+  Foundations: 'lucide-palette',
+  Components: 'lucide-component',
+  Blocks: 'lucide-blocks',
+  Charts: 'lucide-chart-no-axes-combined',
+  Editors: 'lucide-square-pen',
+  Examples: 'lucide-panels-top-left',
+  Internals: 'lucide-wrench',
 }

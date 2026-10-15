@@ -80,9 +80,25 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
       data-slot="number-card"
       class={props.class}
       aria-label={props['aria-label'] ?? props.title}
-      style={{ margin: '0' }}
+      style={{
+        margin: '0',
+        padding: '12px',
+        border: '1px solid var(--outline-gray-1)',
+        'border-radius': '10px',
+        background: 'var(--surface-elevation-1)',
+        color: 'var(--ink-gray-9)',
+      }}
     >
-      <figcaption data-slot="number-card-title">{props.title}</figcaption>
+      <figcaption
+        data-slot="number-card-title"
+        style={{
+          'font-size': '0.875rem',
+          'line-height': '1.25rem',
+          color: 'var(--ink-gray-6)',
+        }}
+      >
+        {props.title}
+      </figcaption>
 
       <Show when={props.error}>
         <div data-slot="number-card-error" role="status">
@@ -98,7 +114,16 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
       <Show when={!props.error && !props.loading}>
         <div
           data-slot="number-card-value"
-          style={props.color && !isEmpty() ? { color: props.color } : undefined}
+          style={{
+            'font-size': 'var(--text-metric, 1.75rem)',
+            'line-height': 'var(--text-metric--line-height, 2rem)',
+            'font-weight': '600',
+            'letter-spacing': '-0.025em',
+            'font-variant-numeric': 'tabular-nums',
+            'overflow-wrap': 'anywhere',
+            margin: '8px 0',
+            color: props.color && !isEmpty() ? props.color : undefined,
+          }}
         >
           <span>{valueText()}</span>
           <Show when={targetText()}>
@@ -113,7 +138,13 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
         <Show when={showDelta()}>
           <div
             data-slot="number-card-delta"
-            style={{ color: TONE_COLOR[tone()] }}
+            style={{
+              color: TONE_COLOR[tone()],
+              display: 'flex',
+              gap: '4px',
+              'font-size': '0.75rem',
+              'line-height': '1rem',
+            }}
           >
             <Show when={direction() !== 'flat'}>
               <span aria-hidden="true">{direction() === 'up' ? '▲' : '▼'}</span>

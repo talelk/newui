@@ -11,21 +11,27 @@
  *     own module, so `/components/pagination` loads ~1 kB instead of the 111 kB
  *     `api.json`. One file per slug; the page resolves its own slice through a
  *     glob, so nothing imports them all.
- *  3. **Nothing else.** The specs are read straight out of `spec/` at build
- *     time (`lib/specs.ts`), and the demos are the ones the playground already
- *     has — a second copy of either would be a second source of truth.
+ *  3. **Source manifests and acceptance inventories** — paths to application
+ *     source dependencies and actual public/reference surfaces. Text stays in
+ *     the original modules and contracts; nothing here copies their contents.
  *
  * `--check` regenerates in memory and fails on drift, the same gate `api:check`
  * and `css:check` are.
  */
+import { createHash } from 'node:crypto'
 import {
+  existsSync,
   mkdirSync,
   readdirSync,
   readFileSync,
   rmSync,
+  statSync,
   writeFileSync,
 } from 'node:fs'
 import path from 'node:path'
+import { Node, Project, SyntaxKind } from 'ts-morph'
+import { APPLICATION_FILES } from '../apps/playground/src/lib/application-files'
+import { REFERENCE_EXAMPLES } from '../apps/playground/src/lib/reference-examples'
 
 const root = process.cwd()
 const apiFile = path.join(root, 'packages/ui/api.json')
@@ -38,6 +44,7 @@ interface ApiMember {
   type: string
   optional: boolean
   description?: string
+  default?: string
 }
 
 const api = JSON.parse(readFileSync(apiFile, 'utf8')) as Record<
@@ -59,6 +66,18 @@ const FAMILIES: Record<string, string> = {
   AccordionContent: 'Accordion',
   CollapsibleTrigger: 'Collapsible',
   CollapsibleContent: 'Collapsible',
+  PopoverRoot: 'Popover',
+  MenuRoot: 'Menu',
+  MenuItem: 'Menu',
+  ScrollAreaRoot: 'ScrollArea',
+  ScrollAreaViewport: 'ScrollArea',
+  ScrollAreaScrollbar: 'ScrollArea',
+  TooltipRoot: 'Tooltip',
+  TooltipTrigger: 'Tooltip',
+  EditorToolbar: 'Editor',
+  ChartTooltipSlot: 'ChartTooltip',
+  HoverCardRoot: 'HoverCard',
+  HoverCardTrigger: 'HoverCard',
   ContextMenuRoot: 'ContextMenu',
   ContextMenuItem: 'ContextMenu',
   CalendarView: 'DatePicker',
@@ -125,10 +144,28 @@ function componentOf(part: string): string | undefined {
  * editorial decision, and getting it wrong is a nav nobody can scan.
  */
 const GROUPS: Record<string, string> = {
+  Editor: 'Editors',
+  CodeEditor: 'Editors',
+  ChartBase: 'Charts',
+  ChartCard: 'Charts',
+  ChartContainer: 'Charts',
+  ChartLegend: 'Charts',
+  ChartTooltip: 'Charts',
+  Dashboard: 'Charts',
+  AreaChart: 'Charts',
+  BarChart: 'Charts',
+  LineChart: 'Charts',
+  DonutChart: 'Charts',
+  FunnelChart: 'Charts',
+  HeatmapChart: 'Charts',
+  ScatterChart: 'Charts',
+  SankeyChart: 'Charts',
+  NumberCard: 'Charts',
   Accordion: 'Disclosure',
   Collapsible: 'Disclosure',
   Tabs: 'Disclosure',
   TabButtons: 'Disclosure',
+  ToggleGroup: 'Selection',
   Button: 'Actions',
   Dropdown: 'Actions',
   Menu: 'Actions',
@@ -192,11 +229,14 @@ const GROUPS: Record<string, string> = {
   ProgressCircle: 'Feedback',
   Spinner: 'Feedback',
   Skeleton: 'Feedback',
+  LoadingText: 'Feedback',
   Toast: 'Feedback',
 }
 
 const GROUP_ORDER = [
   'Actions',
+  'Charts',
+  'Editors',
   'Data',
   'Disclosure',
   'Display',
@@ -219,6 +259,7 @@ function kebab(value: string): string {
 /** part name → the component it belongs to, and the package it came from. */
 const partsByComponent = new Map<string, string[]>()
 const packageOf = new Map<string, 'component' | 'block'>()
+const importOf = new Map<string, string>()
 for (const [file, parts] of Object.entries(api)) {
   const kind = file.includes('/blocks/') ? 'block' : 'component'
   for (const part of Object.keys(parts)) {
@@ -228,6 +269,8 @@ for (const [file, parts] of Object.entries(api)) {
     list.push(part)
     partsByComponent.set(component, list)
     packageOf.set(component, kind)
+    const pkg = file.split('/')[1]
+    importOf.set(component, `@newui/${pkg}`)
   }
 }
 
@@ -251,26 +294,100 @@ function barrelExports(file: string): Set<string> {
 const exported = barrelExports('packages/ui/src/index.ts')
 const exportedBlocks = barrelExports('packages/blocks/src/index.ts')
 
+const SPEC_ALIASES: Record<string, string> = {
+  DatePicker: 'datepicker',
+  DateTimePicker: 'datetime-picker',
+  TimePicker: 'timepicker',
+  MultiSelect: 'multiselect',
+  FormControl: 'form',
+  FormLabel: 'form',
+  ErrorMessage: 'form',
+  TextInput: 'inputs',
+  Textarea: 'inputs',
+  Editor: 'editor',
+  CodeEditor: 'code-editor',
+  ChartBase: 'charts',
+  ChartCard: 'charts',
+  ChartContainer: 'charts',
+  ChartLegend: 'charts',
+  ChartTooltip: 'charts',
+  Dashboard: 'charts',
+  AreaChart: 'charts',
+  BarChart: 'charts',
+  LineChart: 'charts',
+  DonutChart: 'charts',
+  FunnelChart: 'charts',
+  HeatmapChart: 'charts',
+  ScatterChart: 'charts',
+  SankeyChart: 'charts',
+  NumberCard: 'charts',
+}
+for (const name of [...exported, ...exportedBlocks]) {
+  if (GROUPS[name] && !partsByComponent.has(name)) {
+    partsByComponent.set(name, [])
+    packageOf.set(name, exportedBlocks.has(name) ? 'block' : 'component')
+    importOf.set(name, exportedBlocks.has(name) ? '@newui/blocks' : '@newui/ui')
+  }
+}
+/** Compact summaries are derived from contracts, which remain authoritative. */
+function purposeFor(component: string): string {
+  const slug = SPEC_ALIASES[component] ?? kebab(component)
+  if (!specSlugs.has(slug))
+    return `${GROUPS[component]} for application interfaces.`
+  const markdown = readFileSync(path.join(root, 'spec', `${slug}.md`), 'utf8')
+  const paragraph =
+    markdown
+      .split(/\n\s*\n/)
+      .find((part) => !/^(?:#{1,6}\s|\||```|>|[-*]\s)/.test(part.trim())) ?? ''
+  const text = paragraph
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[`*]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  return (text.match(/^.*?[.!?](?:\s|$)/)?.[0] ?? text).trim().slice(0, 150)
+}
+
 const entries = [...partsByComponent.keys()]
   .filter((component) => GROUPS[component])
   .map((component) => ({
     name: component,
+    description: purposeFor(component),
     slug: kebab(component),
     group: GROUPS[component] as string,
+    package: importOf.get(component) ?? '@newui/ui',
+    source:
+      importOf.get(component) === '@newui/ui'
+        ? `packages/ui/src/components/${component}`
+        : importOf.get(component) === '@newui/blocks'
+          ? `packages/blocks/src/${component}`
+          : importOf.get(component) === '@newui/charts'
+            ? `packages/charts/src/${component}.tsx`
+            : `packages/${importOf.get(component)?.replace('@newui/', '')}/src`,
     /** `component` (an atom or molecule) or `block` (a composed section). */
     kind: packageOf.get(component) ?? 'component',
     parts: (partsByComponent.get(component) ?? []).sort(),
-    spec: specSlugs.has(kebab(component)) ? kebab(component) : null,
+    spec: specSlugs.has(SPEC_ALIASES[component] ?? kebab(component))
+      ? (SPEC_ALIASES[component] ?? kebab(component))
+      : null,
     /** A page exists only for something a barrel exports. */
     shipped:
-      packageOf.get(component) === 'block'
-        ? exportedBlocks.has(component)
-        : exported.has(component),
+      importOf.get(component) !== '@newui/ui' &&
+      importOf.get(component) !== '@newui/blocks'
+        ? true
+        : packageOf.get(component) === 'block'
+          ? exportedBlocks.has(component)
+          : exported.has(component),
   }))
   .sort((a, b) => {
     const byGroup = GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group)
     return byGroup !== 0 ? byGroup : a.name.localeCompare(b.name)
   })
+
+const unresolved = entries.filter((entry) => entry.shipped && !entry.spec)
+if (unresolved.length)
+  throw new Error(
+    `Missing contracts: ${unresolved.map((entry) => entry.name).join(', ')}`,
+  )
 
 const registry = `/**
  * Generated by \`pnpm site\`. Do not edit.
@@ -281,8 +398,11 @@ const registry = `/**
  */
 export interface ComponentEntry {
   name: string
+  description: string
   slug: string
   group: string
+  package: string
+  source: string
   /** \`component\` for a single control, \`block\` for a composed section. */
   kind: 'component' | 'block'
   parts: string[]
@@ -346,6 +466,258 @@ function write(file: string, contents: string) {
 const stale: string[] = []
 
 write(path.join(outDir, 'components.ts'), registry)
+
+// Reconcile actual exported declarations, including compound parts and helpers.
+// A documented destination is inventory evidence, never behavior acceptance.
+const project = new Project({
+  tsConfigFilePath: path.join(root, 'packages/ui/tsconfig.json'),
+})
+
+// Follow the actual local source graph, including lazy layouts and type imports.
+// Store paths only: Vite serves the originals as lazy raw modules, never copies.
+const appRoot = path.join(root, 'apps/playground/src')
+const sourcesOutDir = path.join(outDir, 'sources')
+if (!isCheck) rmSync(sourcesOutDir, { recursive: true, force: true })
+else if (existsSync(sourcesOutDir)) {
+  for (const file of readdirSync(sourcesOutDir)) {
+    if (!Object.hasOwn(APPLICATION_FILES, file.replace(/\.json$/, '')))
+      stale.push(path.relative(root, path.join(sourcesOutDir, file)))
+  }
+}
+for (const [slug, entry] of Object.entries(APPLICATION_FILES)) {
+  const visited = new Set<string>()
+  const dependencies = new Set<string>()
+  function visit(relative: string) {
+    if (visited.has(relative)) return
+    visited.add(relative)
+    const file = path.join(appRoot, relative)
+    if (!/\.[cm]?[jt]sx?$/.test(file)) return
+    const source = project.addSourceFileAtPath(file)
+    const imports = [
+      ...source
+        .getImportDeclarations()
+        .map((item) => item.getModuleSpecifierValue()),
+      ...source
+        .getExportDeclarations()
+        .flatMap((item) => item.getModuleSpecifierValue() ?? []),
+      ...source
+        .getDescendantsOfKind(SyntaxKind.CallExpression)
+        .flatMap((call) => {
+          const argument = call.getArguments()[0]
+          if (call.getExpression().getKind() !== SyntaxKind.ImportKeyword)
+            return []
+          if (!argument || !Node.isStringLiteral(argument))
+            throw new Error(
+              `Application source requires a literal lazy import: ${relative}:${call.getStartLineNumber()}`,
+            )
+          return [argument.getLiteralText()]
+        }),
+    ]
+    for (const specifier of imports) {
+      if (!specifier.startsWith('.')) {
+        dependencies.add(
+          specifier.startsWith('@')
+            ? specifier.split('/').slice(0, 2).join('/')
+            : (specifier.split('/')[0] ?? specifier),
+        )
+        continue
+      }
+      const base = path.resolve(path.dirname(file), specifier)
+      const resolved = [
+        base,
+        `${base}.ts`,
+        `${base}.tsx`,
+        path.join(base, 'index.ts'),
+        path.join(base, 'index.tsx'),
+      ].find(
+        (candidate) => existsSync(candidate) && statSync(candidate).isFile(),
+      )
+      if (!resolved?.startsWith(`${appRoot}${path.sep}`))
+        throw new Error(
+          `Unresolved application source ${relative}: ${specifier}`,
+        )
+      visit(path.relative(appRoot, resolved))
+    }
+  }
+  visit(entry)
+  write(
+    path.join(outDir, 'sources', `${slug}.json`),
+    `${JSON.stringify({ files: [...visited], packages: [...dependencies].sort() }, null, 2)}\n`,
+  )
+}
+const packages = [
+  'ui',
+  'blocks',
+  'charts',
+  'editor',
+  'code-editor',
+  'icons',
+  'tokens',
+  'tailwind',
+  'vite',
+]
+const inventory = packages.flatMap((pkg) => {
+  const manifest = JSON.parse(
+    readFileSync(path.join(root, `packages/${pkg}/package.json`), 'utf8'),
+  ) as { exports: Record<string, Record<string, string>> }
+  const target =
+    manifest.exports['.']?.['types'] ?? manifest.exports['./source']?.['types']
+  if (!target) return []
+  const file = path.join(root, `packages/${pkg}/${target}`)
+  let source = project.getSourceFile(file)
+  if (!source) {
+    try {
+      source = project.addSourceFileAtPath(file)
+    } catch {
+      return []
+    }
+  }
+  const declarations = [...source.getExportedDeclarations()].flatMap(
+    ([name, declarations]) => {
+      const declaration = declarations[0]
+      const initializer =
+        declaration && Node.isVariableDeclaration(declaration)
+          ? declaration.getInitializer()
+          : undefined
+      const parts =
+        initializer && Node.isObjectLiteralExpression(initializer)
+          ? initializer
+              .getProperties()
+              .flatMap((property) =>
+                'getName' in property
+                  ? [[`${name}.${property.getName()}`, [property]] as const]
+                  : [],
+              )
+          : []
+      return [[name, declarations] as const, ...parts]
+    },
+  )
+  return declarations
+    .map(([name, declarations]) => {
+      const declaration = declarations[0]
+      const implementation = declaration
+        ? path.relative(root, declaration.getSourceFile().getFilePath())
+        : null
+      const family = entries.find(
+        (entry) =>
+          entry.package === `@newui/${pkg}` &&
+          (entry.name === name ||
+            entry.parts.includes(name) ||
+            implementation?.includes(`/components/${entry.name}/`)),
+      )
+      const section =
+        family?.kind === 'block'
+          ? 'blocks'
+          : family?.group === 'Charts'
+            ? 'charts'
+            : family?.group === 'Editors'
+              ? 'editors'
+              : 'components'
+      return {
+        package: `@newui/${pkg}`,
+        name,
+        implementation,
+        documentation: family ? `/${section}/${family.slug}` : `/docs#${pkg}`,
+        contract: family?.spec ? `spec/${family.spec}.md` : null,
+        tests: implementation
+          ? readdirSync(path.dirname(path.join(root, implementation)))
+              .filter((file) =>
+                /\.(test|browser.test|a11y.test|ssr.test)\.tsx?$/.test(file),
+              )
+              .map((file) => path.join(path.dirname(implementation), file))
+          : [],
+        acceptance: 'pending' as const,
+      }
+    })
+    .sort((a, b) => a.name.localeCompare(b.name))
+})
+write(
+  path.join(outDir, 'surface-inventory.json'),
+  `${JSON.stringify(inventory, null, 2)}\n`,
+)
+
+const referenceFile = path.join(outDir, 'reference-inventory.json')
+type ReferenceSurface = {
+  source: string
+  implementation: string
+  documentation: string
+  tests: string[]
+  digest?: string
+  controls?: { line: number; element: string; source: string }[]
+  acceptance: 'pending'
+}
+const previousReferences: ReferenceSurface[] = existsSync(referenceFile)
+  ? JSON.parse(readFileSync(referenceFile, 'utf8'))
+  : []
+const families = [
+  'Tasks',
+  'Mail',
+  'Files',
+  'Deals',
+  'Tickets',
+  'Accounting',
+  'Compose',
+  'Discussions',
+]
+const references: ReferenceSurface[] = [
+  ...['dashboard', 'authentication', 'cards', 'mail', 'tasks'].map((name) => ({
+    source: `references/solid-ui-main/apps/docs/src/components/${name}/index.tsx`,
+    implementation: `apps/playground/src/pages/${({ dashboard: 'Analytics', authentication: 'Authentication', cards: 'Cards', mail: 'Mail', tasks: 'Tasks' } as Record<string, string>)[name]}.tsx`,
+    documentation: `/examples/${name === 'dashboard' ? 'analytics' : name}`,
+    tests: [
+      `e2e/${({ dashboard: 'analytics', authentication: 'example-patterns', cards: 'example-patterns', mail: 'mail', tasks: 'tasks' } as Record<string, string>)[name]}.spec.ts`,
+    ],
+    acceptance: 'pending' as const,
+  })),
+  ...families.flatMap((name) =>
+    ['Desktop', 'Mobile'].map((viewport) => ({
+      source: `references/frappe-ui-main/docs/components/recipes/${name}${viewport}.vue`,
+      implementation: `apps/playground/src/pages/${name}.tsx`,
+      documentation: `/examples/${name.toLowerCase()}`,
+      tests: [
+        `e2e/${({ Tasks: 'tasks', Mail: 'mail', Compose: 'compose', Discussions: 'discussions-settings' } as Record<string, string>)[name] ?? 'business-recipes'}.spec.ts`,
+      ],
+      acceptance: 'pending' as const,
+    })),
+  ),
+  ...REFERENCE_EXAMPLES.map((entry) => ({
+    source: `references/solid-ui-main/apps/docs/src/registry/example/${entry.source}.tsx`,
+    implementation: entry.implementation,
+    documentation: entry.href,
+    tests: ['e2e/reference-patterns.spec.ts'],
+    acceptance: 'pending' as const,
+  })),
+  ...['sidebar-01/index', 'demo-sidebar'].map((name) => ({
+    source: `references/solid-ui-main/apps/docs/src/registry/block/${name}.tsx`,
+    implementation: `apps/playground/src/demos/${name.split('/')[0]}.tsx`,
+    documentation: `/blocks/compositions/${name.split('/')[0]}`,
+    tests: ['e2e/responsive-preview.spec.ts'],
+    acceptance: 'pending' as const,
+  })),
+]
+for (const entry of references) {
+  const file = path.join(root, entry.source)
+  if (!existsSync(file)) {
+    const prior = previousReferences.find(
+      (item) => item.source === entry.source,
+    )
+    entry.digest = prior?.digest
+    entry.controls = prior?.controls
+    continue
+  }
+  const source = readFileSync(file, 'utf8')
+  entry.digest = createHash('sha256').update(source).digest('hex')
+  entry.controls = [
+    ...source.matchAll(
+      /<(?:Button|button|input|select|textarea|[A-Z][\w.]*(?:Item|Trigger|Select|Input|Switch|Checkbox|Tab|Menu))\b[^>]*>/g,
+    ),
+  ].map((match) => ({
+    line: source.slice(0, match.index).split('\n').length,
+    element: /^<([\w.]+)/.exec(match[0])?.[1] ?? '',
+    source: match[0],
+  }))
+}
+write(referenceFile, `${JSON.stringify(references, null, 2)}\n`)
 
 if (!isCheck) {
   rmSync(apiOutDir, { recursive: true, force: true })
