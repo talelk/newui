@@ -90,6 +90,7 @@ for (const theme of ['light', 'dark']) {
     expect(background).not.toBe('rgba(0, 0, 0, 0)')
     await expect(page).toHaveScreenshot(`overlay-${theme}.png`, {
       animations: 'disabled',
+      ...RASTERISATION,
     })
   })
 }
