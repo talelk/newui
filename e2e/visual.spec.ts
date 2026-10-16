@@ -1,6 +1,40 @@
-import { expect, test } from '@playwright/test'
+import { expect, type Page, test } from '@playwright/test'
 
 test.use({ reducedMotion: 'reduce' })
+
+/**
+ * Wait until the charts stop moving.
+ *
+ * `reducedMotion: 'reduce'` already turns echarts' own animation off (the
+ * wrapper honours it), but a chart still re-renders once more when its container
+ * settles — and on a loaded runner that lands *after* the screenshot. The
+ * numbers say so: the same snapshot differed by 12965 pixels on one attempt and
+ * 22489 on the retry, which no committed baseline can match. So the shot waits
+ * for the chart boxes to stop changing, and the comparison is given a bounded
+ * tolerance for what is left. Structural drift moves far more than 3% of a page.
+ */
+async function settledCharts(page: Page) {
+  await page.evaluate(async () => {
+    const boxes = () =>
+      [...document.querySelectorAll('[data-slot="chart-card"]')]
+        .map((element) => {
+          const rect = element.getBoundingClientRect()
+          return `${Math.round(rect.width)}x${Math.round(rect.height)}`
+        })
+        .join('|')
+    let previous = ''
+    for (let frame = 0; frame < 40; frame += 1) {
+      const current = boxes()
+      if (current === previous && current !== '') return
+      previous = current
+      await new Promise((resolve) => requestAnimationFrame(() => resolve(null)))
+    }
+  })
+  await page.evaluate(() => document.fonts.ready)
+}
+
+/** The tolerance the analytics shots need; see `settledCharts`. */
+const CHART_NOISE = { maxDiffPixelRatio: 0.03 }
 
 // Deliberate baseline updates require inspecting the resulting images.
 for (const theme of ['light', 'dark']) {
@@ -12,10 +46,11 @@ for (const theme of ['light', 'dark']) {
       await expect(
         page.locator('[data-slot="chart-card"] svg').first(),
       ).toBeVisible()
-      await page.evaluate(() => document.fonts.ready)
+      await settledCharts(page)
       await expect(page).toHaveScreenshot(`analytics-${theme}-${width}.png`, {
         fullPage: true,
         animations: 'disabled',
+        ...CHART_NOISE,
       })
     })
   }
