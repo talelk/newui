@@ -4,6 +4,9 @@ import { Dynamic } from 'solid-js/web'
 import { DEMOS } from '../demos'
 import { COMPONENTS } from '../generated/components'
 import { REFERENCE_EXAMPLES } from '../lib/reference-examples'
+// The raw-sources glob lives in a `.ts` module: a glob call written in a
+// `.tsx` file breaks Vite 8's dependency scan (registry-example-sources.ts).
+import { registryExampleSources as sources } from '../lib/registry-example-sources'
 import { PageIntro } from '../shell/PageIntro'
 import { ThemeMenu } from '../shell/ThemeMenu'
 
@@ -18,10 +21,6 @@ const patterns: Record<
   verification: () => import('../patterns/Verification'),
   'analytics-widgets': () => import('../patterns/AnalyticsWidgets'),
 }
-const sources = import.meta.glob<string>(
-  ['../demos/*.tsx', '../patterns/*.tsx'],
-  { query: '?raw', import: 'default' },
-)
 
 export function RegistryExamplePage() {
   const params = useParams()

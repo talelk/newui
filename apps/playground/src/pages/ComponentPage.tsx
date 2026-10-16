@@ -12,6 +12,14 @@ import {
 import { Dynamic } from 'solid-js/web'
 import { DEMOS } from '../demos'
 import { componentBySlug } from '../generated/components'
+// The globs behind the tables and the demo source text live here rather than
+// in this page: Vite 8's dep scan cannot parse `.tsx` files that hold a source
+// glob, so a page hosting one breaks pre-bundling.
+import {
+  API_SLICES,
+  type ApiMember,
+  DEMO_SOURCES,
+} from '../lib/component-sources'
 import { Markdown, renderInline } from '../lib/markdown'
 import { InlinePreview, ResponsivePreview } from '../lib/ResponsivePreview'
 import { loadSpec } from '../lib/specs'
@@ -30,27 +38,6 @@ import { loadSpec } from '../lib/specs'
  * running `pnpm api` + `pnpm site` produces its page. That is the property worth
  * protecting — a reference site that drifts from the code is worse than none.
  */
-
-interface ApiMember {
-  name: string
-  type: string
-  optional: boolean
-  description?: string
-  default?: string
-}
-
-/**
- * Prop tables load per component. The glob is inside the app root, so it needs
- * no `fs.allow` and Vite gives each slice its own chunk — a component page
- * fetches ~1 kB of tables rather than the 111 kB `api.json`.
- */
-const API_SLICES = import.meta.glob<{ API: Record<string, ApiMember[]> }>(
-  '../generated/api/*.ts',
-)
-
-const DEMO_SOURCES = import.meta.glob<{ default: string }>('../demos/*.tsx', {
-  query: '?raw',
-})
 
 function ApiTable(props: { part: string; members: ApiMember[] }): JSX.Element {
   return (

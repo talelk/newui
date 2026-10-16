@@ -1,10 +1,9 @@
 import { createResource, createSignal, For, Show, Suspense } from 'solid-js'
 import { Markdown } from './markdown'
+// The README glob lives in a `.ts` module: a glob call written in a `.tsx`
+// file breaks Vite 8's dependency scan (see package-guide-sources.ts).
+import { packageGuideSources as sources } from './package-guide-sources'
 
-const sources = import.meta.glob<string>('../../../../packages/*/README.md', {
-  query: '?raw',
-  import: 'default',
-})
 const packages = [
   'ui',
   'blocks',

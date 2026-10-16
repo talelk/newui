@@ -399,3 +399,12 @@ now asserts the destination name with visible avatar initials present.
 The README, completed compact redesign and dependency refresh are prepared for
 commit and push together under the user's instruction. Generated API/site/CSS
 files and release notes are included; runtime artifacts remain ignored.
+
+### Transitive audit follow-up
+
+Commit `6fda044` was pushed to `main` after the complete 19-step verification.
+A follow-up audit found Typography 0.5.20's pinned postcss-selector-parser 6.0.10
+under GHSA-rj75-hqrm-r3gf. A package-specific pnpm override selects patched
+7.1.6 until Typography updates its own pin. The override does not alter budgets,
+audit rules or the package's public API.
+Advisory: https://github.com/advisories/GHSA-rj75-hqrm-r3gf
