@@ -164,13 +164,15 @@ export function ResponsiveShell(props: ResponsiveShellProps): JSX.Element {
             trigger?.focus()
           }}
           onClick={(event) => {
-            // A click on anything that navigates closes the drawer behind it.
+            // Anything you press under the drawer was meant for the page behind
+            // it, so the drawer gets out of the way — a nav link, a filter, a
+            // section row. A click on the panel's own background is not a
+            // choice, and a control can opt out with `data-keep-drawer` (a
+            // disclosure that opens in place, or a search field's clear button).
             const target = event.target as Element
-            if (
-              event.target === drawer ||
-              target.closest('a, [data-navigates]')
-            )
-              hideDrawer()
+            if (event.target === drawer) return hideDrawer()
+            const control = target.closest('a, button, [data-navigates]')
+            if (control && !control.closest('[data-keep-drawer]')) hideDrawer()
           }}
           class="m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-3rem)] overflow-y-auto border-e border-outline-gray-1 bg-surface-sidebar p-0 text-ink-gray-9 backdrop:bg-black-overlay-200"
         >

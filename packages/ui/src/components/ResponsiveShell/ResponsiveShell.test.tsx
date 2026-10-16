@@ -1,5 +1,6 @@
 import { render, screen } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
+import { createSignal } from 'solid-js'
 import { describe, expect, it } from 'vitest'
 import {
   ResponsiveShell,
@@ -104,6 +105,55 @@ describe('ResponsiveShell', () => {
     drawer?.dispatchEvent(new Event('close'))
     expect(trigger.getAttribute('aria-expanded')).toBe('false')
     expect(document.activeElement).toBe(trigger)
+  })
+
+  it('closes the drawer on whatever you press in it', async () => {
+    media(false)
+    function Filters() {
+      const [scope, setScope] = createSignal('all')
+      return (
+        <div>
+          <button type="button" onClick={() => setScope('mine')}>
+            My tasks
+          </button>
+          <button
+            type="button"
+            data-keep-drawer
+            onClick={() => setScope('all')}
+          >
+            Show everything
+          </button>
+          <span>{scope()}</span>
+        </div>
+      )
+    }
+
+    render(() => (
+      <ResponsiveShell sidebar={<Filters />} title="Tasks">
+        <p>Content</p>
+      </ResponsiveShell>
+    ))
+
+    const opened = () =>
+      document
+        .querySelector('[data-slot="responsive-shell-drawer"]')
+        ?.hasAttribute('open')
+
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Open navigation' }),
+    )
+    // A filter under the drawer updates the page behind it, so the drawer moves.
+    await userEvent.click(screen.getByRole('button', { name: 'My tasks' }))
+    expect(opened()).toBe(false)
+
+    // Unless it says otherwise: a control that acts *within* the drawer stays.
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Open navigation' }),
+    )
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Show everything' }),
+    )
+    expect(opened()).toBe(true)
   })
 
   it('closes the drawer when something in it navigates', async () => {

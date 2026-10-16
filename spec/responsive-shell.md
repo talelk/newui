@@ -42,8 +42,11 @@ hideDrawer }`, for a nav item or a toolbar button that opens the drawer.
   focus trap, Escape, a backdrop, and focus restored to the trigger on close.
   The animated surfaces in this library (`Dialog`, `BottomSheet`) use the Zag
   machine because they need its motion and drag; a drawer needs none of that.
-- Anything inside the drawer that navigates (`a`, or `[data-navigates]`) closes
-  it, so a section row that routes does not leave the drawer standing.
+- **Anything you press in the drawer closes it** — a link, a filter button, a
+  section row — because it was meant for the page the drawer is covering. A click
+  on the panel's own background is not a choice and does nothing, and a control
+  that acts *within* the drawer opts out with `data-keep-drawer` (a disclosure, an
+  inline search).
 
 ## Not yet
 

@@ -115,6 +115,35 @@ test('deals moves by keyboard, undoes and creates validated opportunities', asyn
   await expect(page.locator('tbody')).toContainText('Northstar Analytics')
 })
 
+test('a recipe with a sidebar offers it as a drawer on a phone', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/examples/tasks/fullscreen')
+
+  // The frame: a pinned header, and no sidebar beside the content.
+  await expect(
+    page.getByRole('button', { name: 'Open navigation' }),
+  ).toBeHidden()
+  const trigger = page.getByRole('button', {
+    name: 'Toggle workspace navigation',
+  })
+  await expect(trigger).toBeVisible()
+
+  await trigger.click()
+  const drawer = page.getByRole('dialog', { name: 'Tasks navigation' })
+  await expect(drawer).toBeVisible()
+  await expect(
+    drawer.getByRole('button', { name: 'Design system' }),
+  ).toBeVisible()
+
+  // A filter under the drawer is meant for the page behind it: the drawer gets
+  // out of the way so the result is visible.
+  await drawer.getByRole('button', { name: 'Design system' }).click()
+  await expect(drawer).toBeHidden()
+  await expect(page.locator('tbody')).toContainText('TASK-1009')
+})
+
 test('tickets replies, assigns, resolves and creates a support request', async ({
   page,
 }) => {
