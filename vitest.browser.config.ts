@@ -31,7 +31,12 @@ export default defineConfig({
     include: ['packages/**/src/**/*.browser.test.{ts,tsx}'],
     browser: {
       enabled: true,
-      provider: playwright({ launchOptions: { channel: 'chrome' } }),
+      // The bundled Chromium, pinned by the Playwright version — the same
+      // reason the e2e harness pins it. These tests measure real geometry, and
+      // geometry that depends on text metrics depends on *which* Chrome: the
+      // tab indicator was 2.03px away from its tab on the runner's Chrome and
+      // inside 2px everywhere else.
+      provider: playwright(),
       headless: true,
       instances: [{ browser: 'chromium' }],
     },
