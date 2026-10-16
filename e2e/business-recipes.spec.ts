@@ -7,39 +7,40 @@ for (const width of [390, 768, 1440]) {
   }) => {
     await page.setViewportSize({ width, height: 1000 })
     await page.goto('/examples/deals/fullscreen')
-    const source = page.getByRole('button', {
-      name: 'Drag Globex',
-      exact: true,
-    })
-    const target = page.locator('[data-stage="Negotiation"]')
-    await target.scrollIntoViewIfNeeded()
-    await source.scrollIntoViewIfNeeded()
-    const start = await source.boundingBox()
-    if (!start) throw new Error('Missing drag handle')
-    await page.mouse.move(start.x + 15, start.y + 10)
+
+    // The card itself is the grab target: a press that travels is a drag, a
+    // press that does not is a click on whatever is inside it.
+    const card = page.locator('[data-kanban-id="DEAL-1"]')
+    const origin = page.locator('[data-kanban-column="Qualification"]')
+    const target = page.locator('[data-kanban-column="Negotiation"]')
+    await card.scrollIntoViewIfNeeded()
+    await expect(origin).toContainText('Globex')
+
+    const start = await card.boundingBox()
+    if (!start) throw new Error('Missing deal card')
+    await page.mouse.move(start.x + 40, start.y + 20)
     await page.mouse.down()
-    await page.mouse.move(start.x + 30, start.y + 40)
+    await page.mouse.move(start.x + 80, start.y + 40, { steps: 6 })
+    // Escape drops the card exactly where it started.
     await page.keyboard.press('Escape')
     await page.mouse.up()
-    await expect(page.locator('[data-stage="Qualification"]')).toContainText(
-      'Globex',
-    )
-    // Keyboard stage changes are the equivalent when the target is outside a
-    // narrow viewport. A wide viewport also proves the pointer drop path.
+    await expect(origin).toContainText('Globex')
+
+    // A wide viewport also proves the pointer drop path — at 390 the next
+    // column is off-screen, and the card menu is the equivalent route.
     if (width === 1440) {
+      await target.scrollIntoViewIfNeeded()
       const destination = await target.boundingBox()
       if (!destination) throw new Error('Missing drop target')
-      await page.mouse.move(start.x + 15, start.y + 10)
+      await page.mouse.move(start.x + 40, start.y + 20)
       await page.mouse.down()
-      await page.mouse.move(destination.x + 30, destination.y + 70, {
+      await page.mouse.move(destination.x + 60, destination.y + 80, {
         steps: 12,
       })
       await page.mouse.up()
       await expect(target).toContainText('Globex')
       await page.getByRole('button', { name: 'Undo deal move' }).click()
-      await expect(page.locator('[data-stage="Qualification"]')).toContainText(
-        'Globex',
-      )
+      await expect(origin).toContainText('Globex')
     }
   })
 }
@@ -87,18 +88,15 @@ test('deals moves by keyboard, undoes and creates validated opportunities', asyn
   page,
 }) => {
   await page.goto('/examples/deals/fullscreen')
-  const stage = page.getByRole('combobox', {
-    name: 'Stage for Globex',
-    exact: true,
-  })
-  await stage.click()
-  await page.getByRole('option', { name: 'Won', exact: true }).click()
-  await expect(
-    page.getByRole('region', { name: 'Won deals', exact: true }),
-  ).toContainText('Globex')
+  // No pointer at all: the card's own menu moves it between columns.
+  await page.getByRole('button', { name: 'Actions for Globex' }).click()
+  await page.getByRole('menuitem', { name: 'Won', exact: true }).click()
+  await expect(page.locator('[data-kanban-column="Won"]')).toContainText(
+    'Globex',
+  )
   await page.getByRole('button', { name: 'Undo deal move' }).click()
   await expect(
-    page.getByRole('region', { name: 'Qualification deals', exact: true }),
+    page.locator('[data-kanban-column="Qualification"]'),
   ).toContainText('Globex')
   await page.getByRole('button', { name: 'New deal', exact: true }).click()
   await page.getByRole('button', { name: 'Create deal', exact: true }).click()
@@ -111,7 +109,7 @@ test('deals moves by keyboard, undoes and creates validated opportunities', asyn
     .fill('25000')
   await page.getByRole('button', { name: 'Create deal', exact: true }).click()
   await page.getByRole('textbox', { name: 'Search deals' }).fill('Northstar')
-  await expect(page.locator('[data-deal]')).toHaveCount(1)
+  await expect(page.locator('[data-kanban-id]')).toHaveCount(1)
   await page.getByRole('tab', { name: 'List', exact: true }).click()
   await expect(page.locator('tbody tr')).toHaveCount(1)
   await expect(page.locator('tbody')).toContainText('Northstar Analytics')
@@ -234,7 +232,22 @@ test('accounting connects date filters, transactions, payroll and exported repor
   expect((await download).suggestedFilename()).toBe('acme-profit-and-loss.csv')
 })
 
-for (const name of ['deals', 'tickets', 'files', 'accounting']) {
+/**
+ * Every application recipe that carries its own theme switcher.
+ *
+ * `/examples/discussions` is the exception: it is a shelled app with its own
+ * chrome (and its own spec), so it has no `light`/`dark` button to press — the
+ * loop would be asserting our switcher, not the recipe.
+ */
+for (const name of [
+  'deals',
+  'tickets',
+  'files',
+  'accounting',
+  'mail',
+  'tasks',
+  'compose',
+]) {
   for (const theme of ['light', 'dark']) {
     test(`${name} is accessible at 390px in ${theme}, RTL and 200% text`, async ({
       page,

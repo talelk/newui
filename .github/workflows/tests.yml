@@ -110,7 +110,19 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      # Chrome is preinstalled on the runner; the config uses `channel: 'chrome'`.
+      # The harness pins Playwright's bundled Chromium rather than whatever
+      # Chrome the runner happens to ship: a Chrome version apart is 17 pixels on
+      # a screenshot and zero on every assertion, which is how a visual suite
+      # starts disagreeing with itself.
+      - name: Cache the Playwright browser
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Browser the harness pins
+        run: pnpm exec playwright install chromium
+
       - name: Component browser tests (real CSS)
         run: pnpm test:browser
 

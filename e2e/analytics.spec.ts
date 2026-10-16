@@ -167,7 +167,9 @@ test('mobile documentation navigation is keyboard reachable and closes after nav
     name: 'Documentation navigation',
   })
   await expect(navigation).toBeVisible()
-  await navigation.getByRole('link', { name: 'Examples', exact: true }).click()
+  await navigation
+    .getByRole('button', { name: 'Examples', exact: true })
+    .click()
   await page.getByRole('button', { name: 'Open navigation' }).click()
   await navigation.getByRole('link', { name: 'Analytics dashboard' }).click()
   await expect(

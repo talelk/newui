@@ -76,15 +76,24 @@ export interface ScrollAreaScrollbarProps {
 const Scrollbar: ParentComponent<ScrollAreaScrollbarProps> = (props) => {
   const api = useApi()
   const orientation = () => props.orientation ?? 'vertical'
+  const horizontal = () => orientation() === 'horizontal'
+
   return (
     <div
       {...api().getScrollbarProps({ orientation: orientation() })}
       data-slot="scroll-area-scrollbar"
       class={cn(
-        'flex touch-none select-none bg-surface-gray-2 transition-opacity',
-        orientation() === 'vertical'
-          ? 'h-full w-2 flex-col'
-          : 'h-2 w-full flex-row',
+        // An overlay bar, not a gutter: `bg-transparent` and no reserved space,
+        // so the content stays flush to the edge. It hides itself when its axis
+        // does not overflow — the machine reports that as `data-overflow-*`, and
+        // without this a perfectly short list still wears a gray strip.
+        'group z-20 flex touch-none select-none bg-transparent p-0.5 transition-opacity duration-150 ease-out',
+        horizontal()
+          ? 'h-2.5 w-full flex-row data-[overflow-x=false]:hidden'
+          : 'h-full w-2.5 flex-col data-[overflow-y=false]:hidden',
+        // The track never takes a click: it overlays content, so an interactive
+        // 10px gutter would swallow the click aimed at what is underneath it.
+        'pointer-events-none',
         props.class,
       )}
     >
@@ -92,8 +101,12 @@ const Scrollbar: ParentComponent<ScrollAreaScrollbarProps> = (props) => {
         {...api().getThumbProps({ orientation: orientation() })}
         data-slot="scroll-area-thumb"
         class={cn(
-          'relative rounded-full bg-surface-gray-5',
-          orientation() === 'vertical' ? 'w-full' : 'h-full',
+          // Fades in with the pointer or a scroll, and only then accepts a drag
+          // — an invisible thumb that still grabs is a dead 10px strip.
+          'relative flex-1 rounded-full bg-surface-gray-5 opacity-0 transition-opacity duration-150 ease-out',
+          'group-data-[hover]:pointer-events-auto group-data-[dragging]:pointer-events-auto',
+          'group-data-[hover]:opacity-100 group-data-[scrolling]:opacity-100 group-data-[dragging]:opacity-100',
+          horizontal() ? 'h-full' : 'w-full',
         )}
       />
     </div>

@@ -44,6 +44,7 @@ export function Masthead(props: {
 }): JSX.Element {
   const location = useLocation()
   const [finding, setFinding] = createSignal(false)
+  let findTrigger: HTMLButtonElement | undefined
   const section = () => sectionFor(location.pathname)
   const title = () => {
     const exact = NAV.flatMap((entry) => entry.items).find(
@@ -108,6 +109,7 @@ export function Masthead(props: {
           </Show>
         </nav>
         <button
+          ref={findTrigger}
           type="button"
           aria-label="Find a page"
           aria-haspopup="dialog"
@@ -132,7 +134,14 @@ export function Masthead(props: {
       </div>
       <Show when={finding()}>
         <Suspense>
-          <PageFinder onClose={() => setFinding(false)} />
+          <PageFinder
+            onClose={() => {
+              setFinding(false)
+              // The palette is opened programmatically, so nothing else can put
+              // focus back where the reader left it.
+              findTrigger?.focus()
+            }}
+          />
         </Suspense>
       </Show>
     </header>

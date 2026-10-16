@@ -9,6 +9,7 @@ export {
   AuthCard,
   DetailHeader,
   FilterBar,
+  KanbanBoard,
   PageToolbar,
   StatGrid,
 } from '../../packages/blocks/src/index'

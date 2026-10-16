@@ -73,6 +73,11 @@ export const CI_STEPS: CiStep[] = [
     group: 'checks',
   },
   {
+    name: 'Browser the harness pins',
+    command: 'pnpm exec playwright install chromium',
+    group: 'e2e',
+  },
+  {
     name: 'Component browser tests (real CSS)',
     command: 'pnpm test:browser',
     group: 'e2e',

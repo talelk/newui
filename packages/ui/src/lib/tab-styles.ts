@@ -4,7 +4,6 @@ import {
   createSignal,
   type JSX,
   onCleanup,
-  onMount,
 } from 'solid-js'
 
 /**
@@ -269,11 +268,29 @@ export function createTabIndicator(opts: TabIndicatorOptions) {
     setRect({ x, y, w: activeRect.width, h: activeRect.height })
   }
 
+  // Transitions arm two frames after the *first measurement*, not after mount,
+  // so a late first measure (styles not yet applied) cannot slide the indicator.
+  let measured = false
+  let disposed = false
+  const arm = () => {
+    requestAnimationFrame(() => requestAnimationFrame(() => setAnimated(true)))
+  }
+  const refresh = () => {
+    measure()
+    if (!measured && rect()) {
+      measured = true
+      arm()
+    }
+  }
+
   let resizeObserver: ResizeObserver | undefined
   if (typeof ResizeObserver !== 'undefined') {
-    resizeObserver = new ResizeObserver(() => measure())
+    resizeObserver = new ResizeObserver(() => refresh())
   }
-  onCleanup(() => resizeObserver?.disconnect())
+  onCleanup(() => {
+    disposed = true
+    resizeObserver?.disconnect()
+  })
 
   createEffect(() => {
     const track = opts.track()
@@ -285,12 +302,20 @@ export function createTabIndicator(opts: TabIndicatorOptions) {
     opts.signal()
     opts.variant()
     opts.orientation()
-    measure()
+    refresh()
   })
 
-  onMount(() => {
-    requestAnimationFrame(() => requestAnimationFrame(() => setAnimated(true)))
-  })
+  if (typeof document !== 'undefined' && document.fonts) {
+    // Webfonts with `font-display: swap` re-measure after the swap lands. If
+    // transitions were already armed, the indicator would animate across a
+    // mount-time layout correction — suppress, settle, then arm.
+    document.fonts.ready.then(() => {
+      if (disposed) return
+      setAnimated(false)
+      refresh()
+      if (measured) arm()
+    })
+  }
 
   const style = (): JSX.CSSProperties => {
     const r = rect()

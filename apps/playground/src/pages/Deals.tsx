@@ -1,4 +1,10 @@
-import { StatGrid } from '@newui/blocks'
+import {
+  KanbanBoard,
+  type KanbanColumn,
+  type KanbanMove,
+  type KanbanTone,
+  StatGrid,
+} from '@newui/blocks'
 import {
   Avatar,
   Badge,
@@ -9,14 +15,7 @@ import {
   TabButtons,
   TextInput,
 } from '@newui/ui'
-import {
-  createMemo,
-  createSignal,
-  For,
-  type JSX,
-  onCleanup,
-  Show,
-} from 'solid-js'
+import { createMemo, createSignal, type JSX, Show } from 'solid-js'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import {
   type Deal,
@@ -73,61 +72,62 @@ export function Deals(): JSX.Element {
     setSort('Board order')
     setNotice(`${deal.organization} moved to ${target.toLowerCase()}.`)
   }
-  let board: HTMLElement | undefined
-  let gesture:
-    | {
-        id: string
-        pointer: number
-        x: number
-        y: number
-        moved: boolean
-        stage?: Stage
-        before?: string
+
+  /** One tone per stage, so a column's dot says the same thing on every screen. */
+  const STAGE_TONES: Record<Stage, KanbanTone> = {
+    Qualification: 'gray',
+    Negotiation: 'amber',
+    'Ready to close': 'blue',
+    Won: 'green',
+  }
+
+  const boardColumns = createMemo<KanbanColumn<Deal>[]>(() =>
+    STAGES.map((stage) => {
+      const items = rows().filter((deal) => deal.stage === stage)
+      return {
+        id: stage,
+        name: stage,
+        theme: STAGE_TONES[stage],
+        items,
+        summary: money(items.reduce((sum, deal) => sum + deal.amount, 0)),
+        action: {
+          label: `Add a deal to ${stage}`,
+          onClick: () => {
+            setStage(stage)
+            setAttempted(false)
+            setOpen(true)
+          },
+        },
       }
-    | undefined
-  let edgeFrame = 0
-  const [dragging, setDragging] = createSignal<string>()
-  function cancelDrag() {
-    gesture = undefined
-    setDragging(undefined)
-    cancelAnimationFrame(edgeFrame)
-  }
-  function autoScroll() {
-    if (!gesture || !board) return
-    const bounds = board.getBoundingClientRect()
-    const step =
-      gesture.x < bounds.left + 48
-        ? -16
-        : gesture.x > bounds.right - 48
-          ? 16
-          : 0
-    if (step) board.scrollBy({ left: step, behavior: 'instant' })
-    edgeFrame = requestAnimationFrame(autoScroll)
-  }
-  function drag(event: PointerEvent) {
-    if (!gesture || gesture.pointer !== event.pointerId) return
-    gesture.moved ||=
-      Math.hypot(gesture.x - event.clientX, gesture.y - event.clientY) > 6
-    gesture.x = event.clientX
-    gesture.y = event.clientY
-    if (!gesture.moved) return
-    setDragging(gesture.id)
-    const target = document.elementFromPoint(event.clientX, event.clientY)
-    const stage = target?.closest<HTMLElement>('[data-stage]')?.dataset[
-      'stage'
-    ] as Stage | undefined
-    const card = target?.closest<HTMLElement>('[data-deal]')
-    gesture.stage = stage
-    gesture.before = card?.dataset['deal']
-    if (
-      card &&
-      event.clientY > card.getBoundingClientRect().top + card.clientHeight / 2
+    }),
+  )
+
+  /**
+   * The board reports one accepted move and hands back the columns it built.
+   * Flattening those is the whole adapter: the page still owns the data, the
+   * undo snapshot is still the previous array, and the list view reads the same
+   * records in the same order.
+   */
+  const applyMove = (change: KanbanMove<Deal>) => {
+    setSnapshot(deals())
+    // The columns give the new *order*; the stage is the record's own field, so
+    // it is set here rather than inferred. A deal that kept `stage:
+    // 'Qualification'` would be filtered straight back into the column it left.
+    setDeals(
+      change.columns.flatMap((column) =>
+        column.items.map((deal) =>
+          deal.id === change.itemId
+            ? { ...deal, stage: column.id as Stage }
+            : deal,
+        ),
+      ),
     )
-      gesture.before = (card.nextElementSibling as HTMLElement | null)?.dataset[
-        'deal'
-      ]
+    setSort('Board order')
+    setNotice(
+      `${change.item.organization} moved to ${change.to.column.toLowerCase()}.`,
+    )
   }
-  onCleanup(cancelDrag)
+
   const columns: DataTableColumn<Deal>[] = [
     { accessorKey: 'organization', header: 'Organization' },
     {
@@ -273,146 +273,40 @@ export function Deals(): JSX.Element {
         when={view() === 'board'}
         fallback={<DataTable title="Deals" rows={rows()} columns={columns} />}
       >
-        <section
-          ref={board}
-          aria-label="Deal pipeline board"
-          onKeyDown={(event) => {
-            if (event.key === 'Escape') {
-              cancelDrag()
-              event.preventDefault()
-            }
-          }}
-          tabindex="0"
-          class="min-w-0 overflow-x-auto snap-x snap-mandatory rounded-3 focus-visible:focus-ring"
+        <KanbanBoard
+          columns={boardColumns()}
+          label="Deal pipeline board"
+          itemLabel={(deal) => deal.organization}
+          onMove={applyMove}
+          emptyColumn={() => <span>No opportunities in this stage.</span>}
+          class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1"
         >
-          <div class="grid min-w-[1120px] grid-cols-4 gap-4 pb-4">
-            <For each={STAGES}>
-              {(column) => (
-                <section
-                  aria-label={`${column} deals`}
-                  data-stage={column}
-                  class="min-w-0 snap-start rounded-5 border border-outline-gray-1 bg-surface-gray-2 p-3"
-                  onDragOver={(event) => event.preventDefault()}
-                  onDrop={(event) => {
-                    event.preventDefault()
-                    move(
-                      event.dataTransfer?.getData('text/plain') ?? '',
-                      column,
-                    )
-                  }}
-                >
-                  <div class="mb-3 flex items-center justify-between">
-                    <h2 class="font-medium">{column}</h2>
-                    <Badge>
-                      {rows().filter((deal) => deal.stage === column).length}
-                    </Badge>
-                  </div>
-                  <p class="mb-4 text-caption tabular-nums text-ink-gray-6">
-                    {money(
-                      rows()
-                        .filter((deal) => deal.stage === column)
-                        .reduce((sum, deal) => sum + deal.amount, 0),
-                    )}
-                  </p>
-                  <ul class="flex flex-col gap-3">
-                    <For
-                      each={rows().filter((deal) => deal.stage === column)}
-                      fallback={
-                        <li class="rounded-3 border border-dashed border-outline-gray-3 p-6 text-center text-caption text-ink-gray-6">
-                          No opportunities in this stage.
-                        </li>
-                      }
-                    >
-                      {(deal) => (
-                        <li
-                          draggable
-                          onDragStart={(event) =>
-                            event.dataTransfer?.setData('text/plain', deal.id)
-                          }
-                          class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3"
-                          data-deal={deal.id}
-                          data-dragging={
-                            dragging() === deal.id ? '' : undefined
-                          }
-                        >
-                          <button
-                            type="button"
-                            aria-label={`Drag ${deal.organization}`}
-                            class="mb-2 touch-none rounded-3 px-2 py-1 text-caption text-ink-gray-6 focus-visible:focus-ring"
-                            onPointerDown={(event) => {
-                              if (event.button !== 0) return
-                              event.preventDefault()
-                              gesture = {
-                                id: deal.id,
-                                pointer: event.pointerId,
-                                x: event.clientX,
-                                y: event.clientY,
-                                moved: false,
-                              }
-                              event.currentTarget.setPointerCapture(
-                                event.pointerId,
-                              )
-                              event.currentTarget.focus()
-                              autoScroll()
-                            }}
-                            onPointerMove={drag}
-                            onPointerUp={(event) => {
-                              if (
-                                !gesture ||
-                                gesture.pointer !== event.pointerId
-                              )
-                                return
-                              if (gesture.moved && gesture.stage)
-                                move(gesture.id, gesture.stage, gesture.before)
-                              cancelDrag()
-                            }}
-                            onPointerCancel={cancelDrag}
-                            onLostPointerCapture={cancelDrag}
-                          >
-                            ⠿ Drag
-                          </button>
-                          <div class="flex items-center gap-2">
-                            <Avatar label={deal.organization} shape="square" />
-                            <h3 class="min-w-0 truncate font-medium">
-                              {deal.organization}
-                            </h3>
-                          </div>
-                          <div class="my-4 flex items-center justify-between gap-2">
-                            <p class="text-section tabular-nums">
-                              {money(deal.amount)}
-                            </p>
-                            <Badge variant="outline">{deal.source}</Badge>
-                          </div>
-                          <div class="mb-4 flex items-center justify-between gap-2 text-caption text-ink-gray-6">
-                            <span>{deal.owner}</span>
-                            <time dateTime={deal.due}>{deal.due.slice(5)}</time>
-                          </div>
-                          <Select
-                            aria-label={`Stage for ${deal.organization}`}
-                            value={[deal.stage]}
-                            options={STAGES.map((value) => ({
-                              label: value,
-                              value,
-                            }))}
-                            onValueChange={(value) =>
-                              move(
-                                deal.id,
-                                (value[0] ?? 'Qualification') as Stage,
-                              )
-                            }
-                          />
-                        </li>
-                      )}
-                    </For>
-                  </ul>
-                </section>
-              )}
-            </For>
-          </div>
-        </section>
+          {(deal) => (
+            <>
+              <div class="flex items-center gap-2">
+                <Avatar label={deal.organization} shape="square" size="sm" />
+                <span class="min-w-0 flex-1 truncate text-base-medium text-ink-gray-9">
+                  {deal.organization}
+                </span>
+              </div>
+              <div class="mt-2 flex items-center justify-between gap-2">
+                <span class="text-base-semibold tabular-nums text-ink-gray-8">
+                  {money(deal.amount)}
+                </span>
+                <Badge variant="outline">{deal.source}</Badge>
+              </div>
+              <div class="mt-3 flex items-center justify-between gap-2 text-sm text-ink-gray-6">
+                <span class="truncate">{deal.owner}</span>
+                <time dateTime={deal.due} class="shrink-0 tabular-nums">
+                  {deal.due.slice(5)}
+                </time>
+              </div>
+            </>
+          )}
+        </KanbanBoard>
         <p class="text-caption text-ink-gray-6">
-          Drag a card between columns, or use its stage control with the
-          keyboard. Changes stay in this page.
+          Drag a card between columns, or use its menu — every card moves
+          without a mouse, and changes stay in this page.
         </p>
       </Show>
       <Dialog.Root open={open()} onOpenChange={setOpen}>

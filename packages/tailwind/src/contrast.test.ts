@@ -59,6 +59,10 @@ const PAIRS: Pair[] = [
     what: 'chart subtitle and card caption',
   },
 
+  // a board column is the one tinted region muted text lands on
+  { fg: 'ink-gray-8', bg: 'surface-gray-1', what: 'column heading' },
+  { fg: 'ink-gray-6', bg: 'surface-gray-1', what: 'muted on a board column' },
+
   { fg: 'ink-blue-link', bg: 'surface-base', what: 'blue link on base' },
   { fg: 'ink-blue-link', bg: 'surface-elevation-1', what: 'blue link on card' },
   { fg: 'ink-blue-link', bg: 'surface-gray-1', what: 'blue link on canvas' },

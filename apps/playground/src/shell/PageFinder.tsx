@@ -1,109 +1,149 @@
-import { A } from '@solidjs/router'
-import { createMemo, createSignal, For, onMount } from 'solid-js'
+import {
+  CommandGroup,
+  CommandItem,
+  CommandPalette,
+  KeyboardShortcut,
+} from '@newui/ui'
+import { useNavigate } from '@solidjs/router'
+import { For, type JSX } from 'solid-js'
 import { COMPONENTS } from '../generated/components'
-import { modalKeyDown } from './modal'
 import { NAV_ORDER } from './nav'
+import { colorScheme, setColorScheme } from './theme'
 
-/** Loaded only on demand; the home shell never fetches reference metadata. */
-export function PageFinder(props: { onClose: () => void }) {
-  let dialog: HTMLDialogElement | undefined
-  const previous = document.activeElement as HTMLElement | null
-  const [query, setQuery] = createSignal('')
-  const entries = [
-    ...NAV_ORDER,
-    ...COMPONENTS.filter((entry) => entry.shipped).map((entry) => ({
-      title: entry.name,
-      href: `/${entry.kind === 'block' ? 'blocks' : entry.group === 'Charts' ? 'charts' : entry.group === 'Editors' ? 'editors' : 'components'}/${entry.slug}`,
-    })),
-  ]
-  const results = createMemo(() =>
-    entries
-      .filter((entry) =>
-        `${entry.title} ${entry.href}`
-          .toLowerCase()
-          .includes(query().toLowerCase()),
-      )
-      .slice(0, 60),
-  )
-  onMount(() => dialog?.showModal())
+/**
+ * ⌘K, over the library's `CommandPalette`.
+ *
+ * Loaded on demand, so the shell never pays for it: this module is the only
+ * thing that imports the palette, and `Masthead` pulls it in lazily. That is the
+ * whole reason the site can use a component here while the sidebar is markup —
+ * a dialog nobody has opened costs nothing until it is opened.
+ *
+ * The palette carries three kinds of thing, which is what makes it worth having
+ * over the plain page search it replaces: **destinations** (every page, each
+ * documented component and block), **actions** (the colour scheme), and
+ * **shortcuts** — pressing ⌘K and typing "dark" is how you find the theme when
+ * the button is not in front of you.
+ */
+
+/** Where a component's page lives, by the kind of entry it is. */
+function hrefFor(entry: (typeof COMPONENTS)[number]): string {
+  if (entry.kind === 'block') return `/blocks/${entry.slug}`
+  if (entry.group === 'Charts') return `/charts/${entry.slug}`
+  if (entry.group === 'Editors') return `/editors/${entry.slug}`
+  return `/components/${entry.slug}`
+}
+
+export function PageFinder(props: { onClose: () => void }): JSX.Element {
+  const navigate = useNavigate()
+  const go = (href: string) => {
+    props.onClose()
+    navigate(href)
+  }
+
+  const components = COMPONENTS.filter((entry) => entry.shipped)
+
   return (
-    <dialog
-      onKeyDown={modalKeyDown}
-      ref={dialog}
-      aria-label="Find a page"
-      onClose={() => {
-        previous?.focus()
-        props.onClose()
+    <CommandPalette
+      defaultOpen
+      label="Find a page"
+      placeholder="Search pages, components and actions…"
+      empty="Nothing matches. Try a component name, or an action like “dark”."
+      onOpenChange={(open) => {
+        if (!open) props.onClose()
       }}
-      onClick={(event) => {
-        if (event.target === dialog) dialog?.close()
-      }}
-      class="mx-auto mt-16 w-[calc(100%-2rem)] max-w-lg rounded-5 border border-outline-gray-1 bg-surface-elevation-2 p-3 text-ink-gray-9 shadow-lg backdrop:bg-surface-gray-7/50"
     >
-      <div class="flex items-center gap-2">
-        <input
-          autofocus
-          type="search"
-          aria-label="Search pages"
-          placeholder="Search pages…"
-          value={query()}
-          onInput={(event) => setQuery(event.currentTarget.value)}
-          onKeyDown={(event) => {
-            if (event.key === 'ArrowDown') {
-              event.preventDefault()
-              dialog?.querySelector<HTMLAnchorElement>('a')?.focus()
-            }
-            if (event.key === 'Enter')
-              dialog?.querySelector<HTMLAnchorElement>('a')?.click()
-          }}
-          class="h-10 min-w-0 flex-1 rounded-3 border border-outline-gray-2 bg-surface-base px-2 text-interface focus-visible:focus-ring"
-        />
-        <button
-          type="button"
-          aria-label="Close page finder"
-          onClick={() => dialog?.close()}
-          class="grid size-10 place-items-center rounded-3 focus-visible:focus-ring"
-        >
-          <span aria-hidden="true" class="lucide-x size-4" />
-        </button>
-      </div>
-      <p role="status" class="py-2 text-caption text-ink-gray-6">
-        {results().length} pages
-      </p>
-      <ul
-        class="max-h-[60dvh] overflow-auto"
-        onKeyDown={(event) => {
-          if (!['ArrowDown', 'ArrowUp'].includes(event.key)) return
-          const links = [
-            ...(dialog?.querySelectorAll<HTMLAnchorElement>('a') ?? []),
-          ]
-          const index = links.indexOf(
-            document.activeElement as HTMLAnchorElement,
-          )
-          event.preventDefault()
-          links[
-            (index + (event.key === 'ArrowDown' ? 1 : links.length - 1)) %
-              links.length
-          ]?.focus()
-        }}
-      >
-        <For each={results()}>
+      <CommandGroup label="Pages">
+        <For each={NAV_ORDER}>
           {(entry) => (
-            <li>
-              <A
-                href={entry.href}
-                onClick={() => dialog?.close()}
-                class="flex justify-between gap-2 rounded-3 px-2 py-2 text-interface hover:bg-surface-gray-2 focus-visible:focus-ring"
-              >
-                <span>{entry.title}</span>
-                <span class="truncate text-caption text-ink-gray-6">
-                  {entry.href}
-                </span>
-              </A>
-            </li>
+            <CommandItem
+              value={entry.href}
+              icon="lucide-file-text"
+              keywords={entry.description}
+              onSelect={go}
+            >
+              {entry.title}
+            </CommandItem>
           )}
         </For>
-      </ul>
-    </dialog>
+      </CommandGroup>
+
+      <CommandGroup label="Components & blocks">
+        <For each={components}>
+          {(entry) => (
+            <CommandItem
+              value={hrefFor(entry)}
+              icon={
+                entry.kind === 'block'
+                  ? 'lucide-layout-dashboard'
+                  : 'lucide-square'
+              }
+              keywords={`${entry.group} ${entry.parts.join(' ')}`}
+              description={entry.kind === 'block' ? 'block' : entry.group}
+              onSelect={go}
+            >
+              {entry.name}
+            </CommandItem>
+          )}
+        </For>
+      </CommandGroup>
+
+      <CommandGroup label="Actions">
+        <CommandItem
+          value="colour:light"
+          icon="lucide-sun"
+          keywords="theme appearance mode"
+          onSelect={() => setColorScheme('light')}
+        >
+          Switch to light
+        </CommandItem>
+        <CommandItem
+          value="colour:dark"
+          icon="lucide-moon"
+          keywords="theme appearance mode"
+          onSelect={() => setColorScheme('dark')}
+        >
+          Switch to dark
+        </CommandItem>
+        <CommandItem
+          value="colour:system"
+          icon="lucide-monitor"
+          keywords="theme appearance mode auto"
+          disabled={colorScheme() === 'system'}
+          onSelect={() => setColorScheme('system')}
+        >
+          Follow the system
+        </CommandItem>
+        <CommandItem
+          value="/spec"
+          icon="lucide-flask-conical"
+          keywords="kitchen sink components in one page"
+          onSelect={go}
+        >
+          Component spec
+        </CommandItem>
+        <CommandItem
+          value="github"
+          icon="lucide-code"
+          keywords="source repository"
+          onSelect={() => {
+            props.onClose()
+            window.open(
+              'https://github.com/talelk/newui',
+              '_blank',
+              'noreferrer',
+            )
+          }}
+        >
+          Source on GitHub
+        </CommandItem>
+      </CommandGroup>
+
+      <p class="flex items-center justify-center gap-1 px-2 py-2 text-xs text-ink-gray-5">
+        <KeyboardShortcut combo="Mod+K" /> to open ·
+        <KeyboardShortcut combo="ArrowUp" />
+        <KeyboardShortcut combo="ArrowDown" /> to move ·
+        <KeyboardShortcut combo="Enter" /> to run
+      </p>
+    </CommandPalette>
   )
 }

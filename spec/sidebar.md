@@ -59,3 +59,16 @@ focus is visible; width and colour motion respect reduced-motion preferences.
 
 Labelled rail items treat their custom glyph/avatar content as decorative.
 The accessible name includes the destination label and unread count.
+
+## Collapse, search and the trigger
+
+- **`SidebarSearch`** is the filter above the groups. It hides itself while the
+  sidebar is a rail: there is nowhere to type into 3rem, and a field crushed to
+  fit is a bug that looks deliberate.
+- **`SidebarItem` gets a real tooltip while collapsed**, not a `title`
+  attribute — a rail of bare icons is unusable without one, and `title` takes a
+  second to appear and cannot be styled. `TooltipTrigger` renders the button
+  itself, so there is no button inside a button.
+- **`SidebarTrigger`** folds the sidebar; **⌘B / Ctrl+B** does the same
+  anywhere on the page (`shortcut={false}` opts out). `SidebarCollapseToggle` is
+  the frappe-shaped variant — a `SidebarItem` at the foot of the list.

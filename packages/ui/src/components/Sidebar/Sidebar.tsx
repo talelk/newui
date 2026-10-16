@@ -5,6 +5,7 @@ import {
   createSignal,
   type JSX,
   onCleanup,
+  onMount,
   type ParentComponent,
   Show,
   splitProps,
@@ -15,6 +16,7 @@ import { createId } from '../../lib/id'
 import { cn } from '../../lib/tv'
 import { Badge } from '../Badge'
 import { Icon, type IconProp } from '../Icon'
+import { TextInput } from '../TextInput'
 import { TooltipContent, TooltipRoot, TooltipTrigger } from '../Tooltip'
 
 /** Width below which an uncontrolled sidebar collapses on its own. */
@@ -61,6 +63,11 @@ export interface SidebarProps {
   onCollapsedChange?: (collapsed: boolean) => void
   /** Accessible name of the `<nav>` landmark. Default `Main`. */
   ariaLabel?: string
+  /**
+   * Bind ⌘B / Ctrl+B to the toggle. Default `true` — it is the shortcut every
+   * editor-trained user tries first, and the one a collapsed rail is for.
+   */
+  shortcut?: boolean
   class?: string
   children?: JSX.Element
 }
@@ -73,6 +80,7 @@ export const Sidebar: ParentComponent<SidebarProps> = (props) => {
     'collapsed',
     'onCollapsedChange',
     'ariaLabel',
+    'shortcut',
     'class',
     'children',
   ])
@@ -91,6 +99,18 @@ export const Sidebar: ParentComponent<SidebarProps> = (props) => {
     if (local.collapsed === undefined) setInternal(next)
     local.onCollapsedChange?.(next)
   }
+
+  onMount(() => {
+    if (local.shortcut === false || !collapsible()) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() !== 'b') return
+      if (!event.metaKey && !event.ctrlKey) return
+      event.preventDefault()
+      toggle()
+    }
+    window.addEventListener('keydown', onKey)
+    onCleanup(() => window.removeEventListener('keydown', onKey))
+  })
 
   return (
     <SidebarContext.Provider value={{ collapsed: shouldCollapse, toggle }}>
@@ -258,24 +278,24 @@ export const SidebarItem: ParentComponent<SidebarItemProps> = (props) => {
     'children',
   ])
   const { collapsed } = useSidebar()
-  return (
-    <button
-      {...rest}
-      type="button"
-      data-slot="sidebar-item"
-      data-active={local.active ? '' : undefined}
-      data-collapsed={collapsed() ? '' : undefined}
-      {...(collapsed() && local.label
-        ? { title: local.label, 'aria-label': local.label }
-        : {})}
-      class={cn(
-        'flex h-8 w-full items-center gap-2 rounded-3 px-2 text-start text-interface text-ink-gray-6',
-        'transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring-blue motion-reduce:transition-none',
-        'data-[active]:bg-surface-blue-1 data-[active]:text-ink-blue-8',
-        collapsed() && 'justify-center px-0',
-        local.class,
-      )}
-    >
+  /**
+   * The label only has a job while the item is an icon in a rail. Returning the
+   * string (rather than a boolean) is what lets `Show` narrow the accessor to
+   * `string`, so the trigger can use it as its accessible name.
+   */
+  const collapsedLabel = () => (collapsed() ? local.label : undefined)
+
+  const classes = () =>
+    cn(
+      'flex h-8 w-full items-center gap-2 rounded-3 px-2 text-start text-interface text-ink-gray-6',
+      'transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring-blue motion-reduce:transition-none',
+      'data-[active]:bg-surface-blue-1 data-[active]:text-ink-blue-8',
+      collapsed() && 'justify-center px-0',
+      local.class,
+    )
+
+  const content = () => (
+    <>
       <Show when={local.prefix}>
         <span class="shrink-0">{local.prefix}</span>
       </Show>
@@ -283,7 +303,128 @@ export const SidebarItem: ParentComponent<SidebarItemProps> = (props) => {
         {local.children}
       </span>
       <Show when={!collapsed()}>{local.suffix}</Show>
-    </button>
+    </>
+  )
+
+  return (
+    <Show
+      when={collapsedLabel()}
+      fallback={
+        <button
+          {...rest}
+          type="button"
+          data-slot="sidebar-item"
+          data-active={local.active ? '' : undefined}
+          class={classes()}
+        >
+          {content()}
+        </button>
+      }
+    >
+      {(label) => (
+        // The tooltip *is* the item's tooltip: a rail of bare icons is unusable
+        // without one, and `title` takes a second to appear and cannot be
+        // styled. `TooltipTrigger` renders the button, so there is no wrapper
+        // button-in-button.
+        <TooltipRoot placement="right" openDelay={300}>
+          <TooltipTrigger
+            {...rest}
+            type="button"
+            data-slot="sidebar-item"
+            data-active={local.active ? '' : undefined}
+            data-collapsed=""
+            aria-label={label()}
+            class={classes()}
+          >
+            {content()}
+          </TooltipTrigger>
+          <TooltipContent>{label()}</TooltipContent>
+        </TooltipRoot>
+      )}
+    </Show>
+  )
+}
+
+export interface SidebarSearchProps {
+  value?: string
+  placeholder?: string
+  /**
+   * Trailing slot inside the field — a `⌘K` hint, usually, so the shortcut is
+   * discovered where the search is rather than in a menu.
+   */
+  hint?: JSX.Element
+  onInput?: (value: string) => void
+  class?: string
+}
+
+/**
+ * The filter a sidebar carries above its groups.
+ *
+ * It hides itself while the sidebar is collapsed: there is nowhere to type into
+ * an icon rail, and a field crushed into 3rem is a bug that looks deliberate.
+ */
+export function SidebarSearch(props: SidebarSearchProps): JSX.Element {
+  const { collapsed } = useSidebar()
+  return (
+    <Show when={!collapsed()}>
+      <div data-slot="sidebar-search" class={cn('px-2 pb-1', props.class)}>
+        <TextInput
+          size="sm"
+          type="search"
+          value={props.value ?? ''}
+          placeholder={props.placeholder ?? 'Search…'}
+          aria-label={props.placeholder ?? 'Search'}
+          prefix={<Icon icon="lucide-search" class="size-4" />}
+          suffix={props.hint}
+          onInput={(event) => props.onInput?.(event.currentTarget.value)}
+        />
+      </div>
+    </Show>
+  )
+}
+
+export interface SidebarTriggerProps {
+  /** Tooltip copy. Defaults to Collapse/Expand, per state. */
+  label?: string
+  class?: string
+}
+
+/**
+ * The button that folds the sidebar to its rail.
+ *
+ * A part rather than a prop, because where it goes is a layout decision — in the
+ * header, at the end of the rail, in a page toolbar — and every one of those is
+ * the same control. `SidebarCollapseToggle` is the frappe-shaped variant (a
+ * `SidebarItem` at the bottom of the list); this is the compact one.
+ */
+export function SidebarTrigger(props: SidebarTriggerProps): JSX.Element {
+  const { collapsed, toggle } = useSidebar()
+  const text = () =>
+    props.label ?? (collapsed() ? 'Expand sidebar' : 'Collapse sidebar')
+
+  return (
+    <TooltipRoot placement="bottom" openDelay={300}>
+      <TooltipTrigger
+        type="button"
+        onClick={() => toggle()}
+        aria-expanded={!collapsed()}
+        class={cn(
+          'grid size-8 shrink-0 place-items-center rounded-3 text-ink-gray-6 transition-colors',
+          'hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none',
+          props.class,
+        )}
+      >
+        <span class="sr-only">{text()}</span>
+        <Icon
+          icon="lucide-panel-left"
+          class={cn(
+            'size-4 transition-transform motion-reduce:transition-none',
+            collapsed() && 'rotate-180',
+          )}
+        />
+      </TooltipTrigger>
+      <TooltipContent>{`${text()} · ⌘B`}</TooltipContent>
+    </TooltipRoot>
   )
 }
 

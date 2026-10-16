@@ -2036,6 +2036,63 @@
       }
     ]
   },
+  "packages/blocks/src/KanbanBoard/KanbanBoard.tsx": {
+    "KanbanBoardProps": [
+      {
+        "name": "columns",
+        "type": "KanbanColumn<T>[]",
+        "optional": true,
+        "description": "Controlled columns. When given, the board never changes them itself."
+      },
+      {
+        "name": "defaultColumns",
+        "type": "KanbanColumn<T>[]",
+        "optional": true,
+        "description": "Uncontrolled initial columns. The board owns them from here."
+      },
+      {
+        "name": "onMove",
+        "type": "(move: KanbanMove<T>) => void",
+        "optional": true,
+        "description": "Fires on every accepted drop, controlled or not."
+      },
+      {
+        "name": "children",
+        "type": "(item: T) => JSX.Element",
+        "optional": false,
+        "description": "The card body. The frame — grab, ghost, move menu — belongs to the block."
+      },
+      {
+        "name": "renderActions",
+        "type": "(item: T) => JSX.Element",
+        "optional": true,
+        "description": "Replaces the built-in \"Move to…\" menu on every card."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the board region."
+      },
+      {
+        "name": "itemLabel",
+        "type": "(item: T) => string",
+        "optional": true,
+        "description": "How a card is named in its menu and its accessible name. Defaults to its id."
+      },
+      {
+        "name": "emptyColumn",
+        "type": "(column: KanbanColumn<T>) => JSX.Element",
+        "optional": true,
+        "description": "Rendered in a column with no cards."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
   "packages/blocks/src/PageToolbar/PageToolbar.tsx": {
     "PageToolbarProps": [
       {
@@ -2894,6 +2951,122 @@
         "type": "string",
         "optional": true,
         "description": "Accessible name when no visible `label` is rendered."
+      }
+    ]
+  },
+  "packages/ui/src/components/CommandPalette/CommandPalette.tsx": {
+    "CommandPaletteProps": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "optional": true
+      },
+      {
+        "name": "shortcut",
+        "type": "boolean",
+        "optional": true,
+        "description": "Bind ⌘K / Ctrl+K. Default `true`; the listener only opens, never closes —\npressing it inside an open palette should feel like nothing happened rather\nthan like a toggle you cannot see."
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name of both the dialog and the list. Default `Commands`."
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md' | 'lg' | 'xl'",
+        "optional": true,
+        "description": "Max width class. Default `md`."
+      },
+      {
+        "name": "empty",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Rendered when nothing matches."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ],
+    "CommandGroupProps": [
+      {
+        "name": "label",
+        "type": "string",
+        "optional": false,
+        "description": "Group heading; also the group's accessible name."
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ],
+    "CommandItemProps": [
+      {
+        "name": "value",
+        "type": "string",
+        "optional": false,
+        "description": "Stable identity; also what `onSelect` reports."
+      },
+      {
+        "name": "keywords",
+        "type": "string",
+        "optional": true,
+        "description": "Extra search text for words that are not in the visible label."
+      },
+      {
+        "name": "icon",
+        "type": "IconProp",
+        "optional": true
+      },
+      {
+        "name": "shortcut",
+        "type": "string",
+        "optional": true,
+        "description": "Trailing hint, e.g. `⌘B`. Purely informational."
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "onSelect",
+        "type": "(value: string) => void",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
       }
     ]
   },
@@ -6398,6 +6571,12 @@
         "description": "Accessible name of the `<nav>` landmark. Default `Main`."
       },
       {
+        "name": "shortcut",
+        "type": "boolean",
+        "optional": true,
+        "description": "Bind ⌘B / Ctrl+B to the toggle. Default `true` — it is the shortcut every\neditor-trained user tries first, and the one a collapsed rail is for."
+      },
+      {
         "name": "class",
         "type": "string",
         "optional": true
@@ -6495,6 +6674,47 @@
       {
         "name": "onClick",
         "type": "JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>",
+        "optional": true
+      }
+    ],
+    "SidebarSearchProps": [
+      {
+        "name": "value",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "hint",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Trailing slot inside the field — a `⌘K` hint, usually, so the shortcut is\ndiscovered where the search is rather than in a menu."
+      },
+      {
+        "name": "onInput",
+        "type": "(value: string) => void",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ],
+    "SidebarTriggerProps": [
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Tooltip copy. Defaults to Collapse/Expand, per state."
+      },
+      {
+        "name": "class",
+        "type": "string",
         "optional": true
       }
     ],

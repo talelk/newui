@@ -41,6 +41,11 @@ describe('TabButtons (browser, real CSS)', () => {
       <TabButtons options={OPTIONS} defaultValue="board" />
     ))
     await nextFrame()
+    // Layout must be font-stable: `font-display: swap` re-measures the
+    // indicator when Inter lands, and a read between the swap and the
+    // re-measure sees stale subpixel geometry.
+    await document.fonts.ready
+    await nextFrame()
     const indicator = container.querySelector(
       '[data-slot="tab-indicator"]',
     ) as HTMLElement

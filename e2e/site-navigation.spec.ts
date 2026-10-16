@@ -17,8 +17,9 @@ test('sidebar rail remembers its preference and reference navigation keeps conte
   ).toContainText('Components')
   await page.getByRole('button', { name: 'Collapse sidebar' }).click()
   await expect(sidebar).toHaveCSS('width', '48px')
+  // A rail is its section icons: the leaf links are gone, the rows are not.
   await expect(
-    sidebar.getByRole('link', { name: 'Examples', exact: true }),
+    sidebar.getByRole('button', { name: 'Examples', exact: true }),
   ).toBeVisible()
   await page.reload()
   await expect(sidebar).toHaveAttribute('data-collapsed', 'true')
@@ -56,7 +57,8 @@ test('mobile navigation traps focus, restores its trigger and closes after navig
   await expect(drawer).toBeHidden()
   await expect(trigger).toBeFocused()
   await trigger.click()
-  await drawer.getByRole('link', { name: 'Examples', exact: true }).click()
+  // A section row navigates to the section's first page and closes the drawer.
+  await drawer.getByRole('button', { name: 'Examples', exact: true }).click()
   await expect(page).toHaveURL('/examples')
   await expect(page.getByRole('dialog')).toBeHidden()
   await expect(
@@ -72,15 +74,24 @@ test('page finder loads reference metadata on demand and supports keyboard selec
   await button.focus()
   await page.keyboard.press('Control+k')
   const finder = page.getByRole('dialog', { name: 'Find a page', exact: true })
-  await finder.getByRole('searchbox').fill('DateRangePicker')
-  await page.keyboard.press('ArrowDown')
+  const field = finder.getByRole('combobox')
+  await expect(field).toBeFocused()
+  await field.fill('DateRangePicker')
+
+  // The option is announced as the active one without focus leaving the field.
   await expect(
-    finder.getByRole('link', { name: /DateRangePicker/ }),
-  ).toBeFocused()
+    finder.getByRole('option', { name: /DateRangePicker/ }),
+  ).toBeVisible()
+  await expect(field).toHaveAttribute('aria-activedescendant', /date-range/i)
+
   await page.keyboard.press('Escape')
+  await expect(finder).toBeHidden()
   await expect(button).toBeFocused()
+
   await button.click()
-  await finder.getByRole('searchbox').fill('DateRangePicker')
+  await field.fill('DateRangePicker')
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('ArrowUp')
   await page.keyboard.press('Enter')
   await expect(page).toHaveURL('/components/date-range-picker')
 })

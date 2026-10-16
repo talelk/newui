@@ -40,12 +40,23 @@ export function Chrome(
       if (media.matches) drawer?.close()
     }
     media.addEventListener('change', close)
-    onCleanup(() => media.removeEventListener('change', close))
+    const shortcut = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() !== 'b') return
+      if (!event.metaKey && !event.ctrlKey) return
+      event.preventDefault()
+      persist(!collapsed())
+    }
+    window.addEventListener('keydown', shortcut)
+    onCleanup(() => {
+      media.removeEventListener('change', close)
+      window.removeEventListener('keydown', shortcut)
+    })
   })
-  function collapse() {
-    setCollapsed(!collapsed())
+  /** Every path that folds the sidebar — the trigger, ⌘B — ends up here. */
+  function persist(next: boolean) {
+    setCollapsed(next)
     try {
-      localStorage.setItem('newui-sidebar-collapsed', String(collapsed()))
+      localStorage.setItem('newui-sidebar-collapsed', String(next))
     } catch {
       /* Storage is optional. */
     }
@@ -68,19 +79,33 @@ export function Chrome(
         <aside
           data-slot="site-sidebar"
           data-collapsed={collapsed()}
-          class="sticky top-12 hidden h-[calc(100dvh-3rem)] shrink-0 overflow-y-auto border-e border-outline-gray-1 p-2 lg:block"
+          class="sticky top-12 hidden h-[calc(100dvh-3rem)] shrink-0 flex-col overflow-hidden border-e border-outline-gray-1 lg:flex"
           classList={{ 'w-56': !collapsed(), 'w-12': collapsed() }}
         >
-          <button
-            type="button"
-            aria-label={collapsed() ? 'Expand sidebar' : 'Collapse sidebar'}
-            aria-expanded={!collapsed()}
-            onClick={collapse}
-            class="mb-2 grid size-8 place-items-center rounded-3 text-ink-gray-6 hover:bg-surface-gray-2 focus-visible:focus-ring"
-          >
-            <span aria-hidden="true" class="lucide-panel-left size-4" />
-          </button>
-          <SidebarNav collapsed={collapsed()} context={props.sidebar} />
+          <div class="flex h-9 shrink-0 items-center justify-between gap-1 ps-3 pe-1">
+            <Show when={!collapsed()}>
+              <span class="text-sm-medium text-ink-gray-5">Documentation</span>
+            </Show>
+            <button
+              type="button"
+              aria-label={collapsed() ? 'Expand sidebar' : 'Collapse sidebar'}
+              aria-expanded={!collapsed()}
+              onClick={() => persist(!collapsed())}
+              class="ms-auto grid size-7 shrink-0 place-items-center rounded-3 text-ink-gray-6 hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
+            >
+              <span
+                aria-hidden="true"
+                classList={{
+                  'lucide-panel-left': true,
+                  'size-4': true,
+                  'rotate-180': collapsed(),
+                }}
+              />
+            </button>
+          </div>
+          <div class="min-h-0 flex-1 overflow-y-auto pb-4">
+            <SidebarNav collapsed={collapsed()} context={props.sidebar} />
+          </div>
         </aside>
         <main
           id="site-content"
@@ -96,7 +121,10 @@ export function Chrome(
         aria-label="Documentation navigation"
         onClose={() => menuButton?.focus()}
         onClick={(event) => {
-          if (event.target === drawer || (event.target as Element).closest('a'))
+          if (
+            event.target === drawer ||
+            (event.target as Element).closest('a, [data-navigates]')
+          )
             drawer?.close()
         }}
         class="site-drawer fixed inset-y-0 start-0 m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-2rem)] overflow-y-auto border-e border-outline-gray-1 bg-surface-base p-3 text-ink-gray-9 backdrop:bg-surface-gray-7/50"
@@ -110,7 +138,7 @@ export function Chrome(
         >
           <span aria-hidden="true" class="lucide-x size-4" />
         </button>
-        <SidebarNav context={props.sidebar} />
+        <SidebarNav collapsed={collapsed()} context={props.sidebar} />
       </dialog>
     </div>
   )

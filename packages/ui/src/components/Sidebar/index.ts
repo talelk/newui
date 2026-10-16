@@ -18,7 +18,11 @@ export {
   type SidebarRailItemProps,
   type SidebarRailItemVariant,
   type SidebarRailProps,
+  SidebarSearch,
+  type SidebarSearchProps,
   SidebarSection,
   type SidebarSectionProps,
+  SidebarTrigger,
+  type SidebarTriggerProps,
   useSidebar,
 } from './Sidebar'

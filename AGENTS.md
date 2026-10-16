@@ -97,10 +97,10 @@ component to the library and running `pnpm api` + `pnpm site` produces its page.
 ### Blocks
 
 `@newui/blocks` is the composed layer: a component answers *what is this
-control*, a block answers *how does a page open*. Six so far — `AppSidebar`,
-`PageToolbar`, `FilterBar`, `DetailHeader`, `StatGrid`, `AuthCard` — each with a
-demo, a contract in `spec/`, a generated page and a budget entry
-(`scripts/size.ts`, "Blocks barrel").
+control*, a block answers *how does a page open*. Seven so far — `AppSidebar`,
+`PageToolbar`, `FilterBar`, `DetailHeader`, `StatGrid`, `AuthCard`,
+`KanbanBoard` — each with a demo, a contract in `spec/`, a generated page and a
+budget entry (`scripts/size.ts`, "Blocks barrel").
 
 A block may only import `@newui/ui`. If one needs a chart or an editor it belongs
 in that package's surface, not here — which is also why `pnpm size` asserts the
@@ -183,7 +183,7 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
   nobody can reach are both caught.
 - **Disposal** (`packages/ui/src/lib/disposal.test.tsx`): mount/unmount 100
   overlays and assert `document.body` is unchanged — no node or listener leak.
-- **Browser harness** (`e2e/`, `pnpm test:e2e`, Chrome via Playwright): axe on
+- **Browser harness** (`e2e/`, `pnpm test:e2e`, Playwright's pinned Chromium): axe on
   real CSS (colour contrast), keyboard/focus-visible/focus-trap, tabs/select/
   switch/tooltip interaction, responsive overflow at 320/768/1280, RTL, 200%
   text zoom, and perf budgets (LCP, CLS, dialog latency, 2000-row list).

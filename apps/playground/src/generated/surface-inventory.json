@@ -988,6 +988,72 @@
   },
   {
     "package": "@newui/ui",
+    "name": "CommandGroup",
+    "implementation": "packages/ui/src/components/CommandPalette/CommandPalette.tsx",
+    "documentation": "/components/command-palette",
+    "contract": "spec/command-palette.md",
+    "tests": [
+      "packages/ui/src/components/CommandPalette/CommandPalette.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "CommandGroupProps",
+    "implementation": "packages/ui/src/components/CommandPalette/CommandPalette.tsx",
+    "documentation": "/components/command-palette",
+    "contract": "spec/command-palette.md",
+    "tests": [
+      "packages/ui/src/components/CommandPalette/CommandPalette.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "CommandItem",
+    "implementation": "packages/ui/src/components/CommandPalette/CommandPalette.tsx",
+    "documentation": "/components/command-palette",
+    "contract": "spec/command-palette.md",
+    "tests": [
+      "packages/ui/src/components/CommandPalette/CommandPalette.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "CommandItemProps",
+    "implementation": "packages/ui/src/components/CommandPalette/CommandPalette.tsx",
+    "documentation": "/components/command-palette",
+    "contract": "spec/command-palette.md",
+    "tests": [
+      "packages/ui/src/components/CommandPalette/CommandPalette.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "CommandPalette",
+    "implementation": "packages/ui/src/components/CommandPalette/CommandPalette.tsx",
+    "documentation": "/components/command-palette",
+    "contract": "spec/command-palette.md",
+    "tests": [
+      "packages/ui/src/components/CommandPalette/CommandPalette.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "CommandPaletteProps",
+    "implementation": "packages/ui/src/components/CommandPalette/CommandPalette.tsx",
+    "documentation": "/components/command-palette",
+    "contract": "spec/command-palette.md",
+    "tests": [
+      "packages/ui/src/components/CommandPalette/CommandPalette.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
     "name": "ContextMenu",
     "implementation": "packages/ui/src/components/ContextMenu/ContextMenu.tsx",
     "documentation": "/components/context-menu",
@@ -5502,6 +5568,30 @@
   },
   {
     "package": "@newui/ui",
+    "name": "SidebarSearch",
+    "implementation": "packages/ui/src/components/Sidebar/Sidebar.tsx",
+    "documentation": "/components/sidebar",
+    "contract": "spec/sidebar.md",
+    "tests": [
+      "packages/ui/src/components/Sidebar/Sidebar.browser.test.tsx",
+      "packages/ui/src/components/Sidebar/Sidebar.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "SidebarSearchProps",
+    "implementation": "packages/ui/src/components/Sidebar/Sidebar.tsx",
+    "documentation": "/components/sidebar",
+    "contract": "spec/sidebar.md",
+    "tests": [
+      "packages/ui/src/components/Sidebar/Sidebar.browser.test.tsx",
+      "packages/ui/src/components/Sidebar/Sidebar.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
     "name": "SidebarSection",
     "implementation": "packages/ui/src/components/Sidebar/Sidebar.tsx",
     "documentation": "/components/sidebar",
@@ -5515,6 +5605,30 @@
   {
     "package": "@newui/ui",
     "name": "SidebarSectionProps",
+    "implementation": "packages/ui/src/components/Sidebar/Sidebar.tsx",
+    "documentation": "/components/sidebar",
+    "contract": "spec/sidebar.md",
+    "tests": [
+      "packages/ui/src/components/Sidebar/Sidebar.browser.test.tsx",
+      "packages/ui/src/components/Sidebar/Sidebar.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "SidebarTrigger",
+    "implementation": "packages/ui/src/components/Sidebar/Sidebar.tsx",
+    "documentation": "/components/sidebar",
+    "contract": "spec/sidebar.md",
+    "tests": [
+      "packages/ui/src/components/Sidebar/Sidebar.browser.test.tsx",
+      "packages/ui/src/components/Sidebar/Sidebar.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "SidebarTriggerProps",
     "implementation": "packages/ui/src/components/Sidebar/Sidebar.tsx",
     "documentation": "/components/sidebar",
     "contract": "spec/sidebar.md",
@@ -7380,6 +7494,18 @@
   },
   {
     "package": "@newui/blocks",
+    "name": "createKanbanDrag",
+    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
     "name": "DetailAction",
     "implementation": "packages/blocks/src/DetailHeader/DetailHeader.tsx",
     "documentation": "/docs#blocks",
@@ -7408,6 +7534,42 @@
     "contract": "spec/detail-header.md",
     "tests": [
       "packages/blocks/src/DetailHeader/DetailHeader.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "DRIFT_TOLERANCE",
+    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "EDGE",
+    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "EDGE_SPEED",
+    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
     ],
     "acceptance": "pending"
   },
@@ -7457,6 +7619,138 @@
   },
   {
     "package": "@newui/blocks",
+    "name": "KanbanBoard",
+    "implementation": "packages/blocks/src/KanbanBoard/KanbanBoard.tsx",
+    "documentation": "/blocks/kanban-board",
+    "contract": "spec/kanban-board.md",
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "KanbanBoardProps",
+    "implementation": "packages/blocks/src/KanbanBoard/KanbanBoard.tsx",
+    "documentation": "/blocks/kanban-board",
+    "contract": "spec/kanban-board.md",
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "KanbanColumn",
+    "implementation": "packages/blocks/src/KanbanBoard/KanbanBoard.tsx",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "KanbanDrag",
+    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "KanbanDragOptions",
+    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "KanbanDragState",
+    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "KanbanMove",
+    "implementation": "packages/blocks/src/KanbanBoard/KanbanBoard.tsx",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "KanbanSlot",
+    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "KanbanTone",
+    "implementation": "packages/blocks/src/KanbanBoard/KanbanBoard.tsx",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "LIFT_DELAY",
+    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "MOUSE_THRESHOLD",
+    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
     "name": "PageToolbar",
     "implementation": "packages/blocks/src/PageToolbar/PageToolbar.tsx",
     "documentation": "/blocks/page-toolbar",
@@ -7496,6 +7790,30 @@
     "contract": null,
     "tests": [
       "packages/blocks/src/PageToolbar/PageToolbar.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "placeKanbanItem",
+    "implementation": "packages/blocks/src/KanbanBoard/KanbanBoard.tsx",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "SETTLE_MS",
+    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
+    "documentation": "/docs#blocks",
+    "contract": null,
+    "tests": [
+      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
+      "packages/blocks/src/KanbanBoard/drag.test.ts"
     ],
     "acceptance": "pending"
   },

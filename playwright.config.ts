@@ -23,10 +23,19 @@ export default defineConfig({
   reporter: process.env.CI ? [['github'], ['list']] : [['list']],
   use: {
     baseURL: `http://localhost:${port}`,
-    channel: 'chrome',
     headless: true,
     trace: 'retain-on-failure',
   },
+  /**
+   * Playwright's bundled Chromium, not the machine's Chrome.
+   *
+   * `channel: 'chrome'` was convenient — the runner ships one — but it makes the
+   * pixels depend on *which* Chrome is installed. A version apart is 17 pixels
+   * on a screenshot and zero on every assertion, which is how a visual suite
+   * turns into a different result on every machine while claiming to be a
+   * regression test. The bundled build is pinned by the Playwright version, so
+   * the same input renders the same image on CI and on a laptop.
+   */
   projects: [{ name: 'chrome', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
     command: `pnpm --filter playground build && pnpm --filter playground preview --port ${port} --strictPort`,

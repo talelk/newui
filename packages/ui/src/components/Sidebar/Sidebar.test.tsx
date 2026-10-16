@@ -1,4 +1,4 @@
-import { render } from '@solidjs/testing-library'
+import { render, screen } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import {
@@ -8,6 +8,8 @@ import {
   SidebarLabel,
   SidebarRail,
   SidebarRailItem,
+  SidebarSearch,
+  SidebarTrigger,
   useSidebar,
 } from './Sidebar'
 
@@ -142,5 +144,94 @@ describe('SidebarRailItem', () => {
     expect(
       container.querySelector('[data-slot="sidebar-rail-item-badge-dot"]'),
     ).toBeTruthy()
+  })
+})
+
+describe('SidebarSearch', () => {
+  it('is a labelled filter that reports what is typed', async () => {
+    const onInput = vi.fn()
+    render(() => (
+      <Sidebar>
+        <SidebarSearch placeholder="Filter pages" onInput={onInput} />
+      </Sidebar>
+    ))
+
+    const field = screen.getByLabelText('Filter pages')
+    await userEvent.type(field, 'acc')
+    expect(onInput).toHaveBeenLastCalledWith('acc')
+  })
+
+  it('hides itself when the sidebar is a rail', () => {
+    render(() => (
+      <Sidebar collapsed>
+        <SidebarSearch placeholder="Filter pages" />
+      </Sidebar>
+    ))
+    expect(screen.queryByLabelText('Filter pages')).toBeNull()
+  })
+})
+
+describe('SidebarItem while collapsed', () => {
+  it('names itself and offers a real tooltip, not a bare title', async () => {
+    render(() => (
+      <Sidebar collapsed>
+        <SidebarItem label="Accordion" prefix={<span>icon</span>}>
+          Accordion
+        </SidebarItem>
+      </Sidebar>
+    ))
+
+    const item = screen.getByRole('button', { name: 'Accordion' })
+    expect(item.getAttribute('title')).toBeNull()
+
+    await userEvent.hover(item)
+    expect(await screen.findByRole('tooltip')).toHaveTextContent('Accordion')
+  })
+
+  it('keeps the label visible when it is not a rail', () => {
+    render(() => (
+      <Sidebar>
+        <SidebarItem label="Accordion">Accordion</SidebarItem>
+      </Sidebar>
+    ))
+    expect(screen.getByText('Accordion')).toBeTruthy()
+  })
+})
+
+describe('SidebarTrigger', () => {
+  it('folds the sidebar and says so', async () => {
+    const onCollapsedChange = vi.fn()
+    render(() => (
+      <Sidebar onCollapsedChange={onCollapsedChange}>
+        <SidebarTrigger />
+      </Sidebar>
+    ))
+
+    const trigger = screen.getByRole('button', { name: 'Collapse sidebar' })
+    expect(trigger.getAttribute('aria-expanded')).toBe('true')
+
+    await userEvent.click(trigger)
+    expect(onCollapsedChange).toHaveBeenCalledWith(true)
+    expect(screen.getByRole('button', { name: 'Expand sidebar' })).toBeTruthy()
+  })
+
+  it('is bound to ⌘B and Ctrl+B', async () => {
+    const onCollapsedChange = vi.fn()
+    render(() => <Sidebar onCollapsedChange={onCollapsedChange} />)
+
+    await userEvent.keyboard('{Meta>}b{/Meta}')
+    expect(onCollapsedChange).toHaveBeenLastCalledWith(true)
+    await userEvent.keyboard('{Control>}b{/Control}')
+    expect(onCollapsedChange).toHaveBeenLastCalledWith(false)
+  })
+
+  it('leaves the key alone when the shortcut is off', async () => {
+    const onCollapsedChange = vi.fn()
+    render(() => (
+      <Sidebar shortcut={false} onCollapsedChange={onCollapsedChange} />
+    ))
+
+    await userEvent.keyboard('{Meta>}b{/Meta}')
+    expect(onCollapsedChange).not.toHaveBeenCalled()
   })
 })

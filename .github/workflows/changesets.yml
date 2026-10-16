@@ -39,7 +39,12 @@ jobs:
           # job failed with ERR_PNPM_INVALID_VERSION_BUMP. Same trap AGENTS.md
           # documents for `pnpm ci`. `release` has no pnpm built-in, but the
           # explicit form is what keeps the pair honest.
-          version: pnpm run version
-          publish: pnpm run release
+          #
+          # `*-script` is the v2 name: `version` and `publish` were renamed, and
+          # passing the old pair is now a hard error — the action refuses before
+          # it looks at anything else, which is how a dependency bump silently
+          # turned the release path red.
+          version-script: pnpm run version
+          publish-script: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

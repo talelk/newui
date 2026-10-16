@@ -198,6 +198,12 @@ export const API = {
       "description": "Accessible name of the `<nav>` landmark. Default `Main`."
     },
     {
+      "name": "shortcut",
+      "type": "boolean",
+      "optional": true,
+      "description": "Bind ⌘B / Ctrl+B to the toggle. Default `true` — it is the shortcut every\neditor-trained user tries first, and the one a collapsed rail is for."
+    },
+    {
       "name": "class",
       "type": "string",
       "optional": true

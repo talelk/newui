@@ -905,6 +905,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "KanbanBoard",
+    "description": "KanbanBoard — columns of cards you drag between them, from @newui/blocks.",
+    "slug": "kanban-board",
+    "group": "Layout",
+    "package": "@newui/blocks",
+    "source": "packages/blocks/src/KanbanBoard",
+    "kind": "block",
+    "parts": [
+      "KanbanBoardProps"
+    ],
+    "spec": "kanban-board",
+    "shipped": true
+  },
+  {
     "name": "MobileShell",
     "description": "The mobile app frame: a pinned header, a natively-scrolling body and a bottom navigation bar.",
     "slug": "mobile-shell",
@@ -1010,6 +1024,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "BottomSheetProps"
     ],
     "spec": "bottom-sheet",
+    "shipped": true
+  },
+  {
+    "name": "CommandPalette",
+    "description": "CommandPalette — ⌘K, a query, and a list of things you can do.",
+    "slug": "command-palette",
+    "group": "Overlays",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/CommandPalette",
+    "kind": "component",
+    "parts": [
+      "CommandPaletteProps"
+    ],
+    "spec": "command-palette",
     "shipped": true
   },
   {
