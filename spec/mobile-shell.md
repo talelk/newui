@@ -127,3 +127,10 @@ from `label`. Set `aria-current="page"` on the tab for the current page —
 `mobile-shell-scroll`, `page-header-mobile`, `page-header-mobile-prefix`,
 `page-header-mobile-title`, `page-header-mobile-suffix`, `mobile-nav`,
 `mobile-nav-item`. `data-state` on `mobile-nav-item` (`active` / `inactive`).
+
+## The header's title element
+
+`PageHeaderMobile` draws its title as an `h1`: on a phone the bar usually *is* the
+page title. When the page carries its own heading below — a section name in the
+bar over a document that names itself — pass `titleAs="span"`, or the page ends up
+with two `h1`s and no way to tell which one it is.

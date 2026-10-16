@@ -948,6 +948,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "ResponsiveShell",
+    "description": "ResponsiveShell — one navigation, two frames: the docked AppShell where there is room for two columns, the MobileShell where there is not, with the si",
+    "slug": "responsive-shell",
+    "group": "Layout",
+    "package": "@newui/ui",
+    "source": "packages/ui/src/components/ResponsiveShell",
+    "kind": "component",
+    "parts": [
+      "ResponsiveShellProps"
+    ],
+    "spec": "responsive-shell",
+    "shipped": true
+  },
+  {
     "name": "Breadcrumbs",
     "description": "Breadcrumbs — a trail showing where the current page sits in a hierarchy and letting the user step back to a parent.",
     "slug": "breadcrumbs",

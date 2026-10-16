@@ -1,4 +1,5 @@
 import { type JSX, Show, splitProps } from 'solid-js'
+import { Dynamic } from 'solid-js/web'
 import { cn } from '../../lib/tv'
 
 export interface MobileShellProps {
@@ -62,6 +63,12 @@ export interface PageHeaderMobileProps {
   suffix?: JSX.Element
   /** Merged into the header. */
   class?: string
+  /**
+   * Element the title is drawn in. Default `h1` — on a phone the bar usually
+   * *is* the page title. Pass `span` when the page carries its own heading
+   * below, so the document keeps exactly one `h1`.
+   */
+  titleAs?: 'h1' | 'h2' | 'div' | 'span'
   /** Custom title markup; overrides `title`. */
   children?: JSX.Element
 }
@@ -78,6 +85,7 @@ export interface PageHeaderMobileProps {
 export function PageHeaderMobile(props: PageHeaderMobileProps): JSX.Element {
   const [local] = splitProps(props, [
     'title',
+    'titleAs',
     'prefix',
     'suffix',
     'class',
@@ -100,12 +108,13 @@ export function PageHeaderMobile(props: PageHeaderMobileProps): JSX.Element {
           {local.prefix}
         </div>
       </Show>
-      <h1
+      <Dynamic
+        component={local.titleAs ?? 'h1'}
         data-slot="page-header-mobile-title"
         class="w-full min-w-0 truncate px-12 text-center text-xl-semibold leading-tight text-ink-gray-9"
       >
         {local.children ?? local.title}
-      </h1>
+      </Dynamic>
       <Show when={local.suffix}>
         <div
           data-slot="page-header-mobile-suffix"

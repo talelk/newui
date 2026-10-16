@@ -55,6 +55,12 @@ export const API = {
       "description": "Merged into the header."
     },
     {
+      "name": "titleAs",
+      "type": "'h1' | 'h2' | 'div' | 'span'",
+      "optional": true,
+      "description": "Element the title is drawn in. Default `h1` — on a phone the bar usually\n*is* the page title. Pass `span` when the page carries its own heading\nbelow, so the document keeps exactly one `h1`."
+    },
+    {
       "name": "children",
       "type": "JSX.Element",
       "optional": true,

@@ -57,6 +57,7 @@ export const DEMOS: Record<string, () => Promise<{ default: Component }>> = {
   StatGrid: () => import('./demos/stat-grid'),
   Collapsible: () => import('./demos/collapsible'),
   CommandPalette: () => import('./demos/command-palette'),
+  ResponsiveShell: () => import('./demos/responsive-shell'),
   EmptyState: () => import('./demos/empty-state'),
   Pagination: () => import('./demos/pagination'),
   ProgressCircle: () => import('./demos/progress-circle'),

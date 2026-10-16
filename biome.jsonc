@@ -47,6 +47,16 @@
   },
   "overrides": [
     {
+      // The drawer's backdrop click. The keyboard path is the `<dialog>`'s own
+      // Escape, which the element already owns — there is no second keyboard
+      // affordance to add, and a key handler on the backdrop would be a
+      // duplicate that fires on Enter anywhere in the panel.
+      "includes": ["packages/ui/src/components/ResponsiveShell/**"],
+      "linter": {
+        "rules": { "a11y": { "useKeyWithClickEvents": "off" } }
+      }
+    },
+    {
       // A command palette is a WAI-ARIA combobox: focus stays in the field and
       // the active option is named by `aria-activedescendant`. Three rules
       // assume focus moves onto the option itself, which is precisely what the

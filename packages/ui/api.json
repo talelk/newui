@@ -5421,6 +5421,12 @@
         "description": "Merged into the header."
       },
       {
+        "name": "titleAs",
+        "type": "'h1' | 'h2' | 'div' | 'span'",
+        "optional": true,
+        "description": "Element the title is drawn in. Default `h1` — on a phone the bar usually\n*is* the page title. Pass `span` when the page carries its own heading\nbelow, so the document keeps exactly one `h1`."
+      },
+      {
         "name": "children",
         "type": "JSX.Element",
         "optional": true,
@@ -6140,6 +6146,87 @@
         "name": "class",
         "type": "string",
         "optional": true
+      }
+    ]
+  },
+  "packages/ui/src/components/ResponsiveShell/ResponsiveShell.tsx": {
+    "ResponsiveShellProps": [
+      {
+        "name": "rail",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Narrow icon rail on the far left, docked at desktop width."
+      },
+      {
+        "name": "sidebar",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The sidebar. Docked beside the content when there is room for two columns,\nand the body of a drawer when there is not — one declaration, both frames."
+      },
+      {
+        "name": "header",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The content column's own header."
+      },
+      {
+        "name": "mobileHeader",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The pinned header on a phone. Defaults to `title` plus a menu button."
+      },
+      {
+        "name": "title",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Title for the default mobile header."
+      },
+      {
+        "name": "mobileNav",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Bottom navigation on a phone, usually a `MobileNav`."
+      },
+      {
+        "name": "query",
+        "type": "string",
+        "optional": true,
+        "description": "The widening media query. Default `(min-width: 1024px)`."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name of the drawer. Default `Navigation`."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ],
+    "ResponsiveShellMenuProps": [
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name. Default `Open navigation`."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "ref",
+        "type": "(element: HTMLButtonElement) => void",
+        "optional": true,
+        "description": "Receives the button, so the shell can restore focus to it on close."
       }
     ]
   },

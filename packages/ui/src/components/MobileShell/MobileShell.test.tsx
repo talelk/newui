@@ -89,3 +89,27 @@ describe('PageHeaderMobile', () => {
     ).toBeNull()
   })
 })
+
+describe('PageHeaderMobile', () => {
+  it('draws the title as the page heading by default', () => {
+    render(() => <PageHeaderMobile title="Deals" />)
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Deals' }),
+    ).toBeTruthy()
+  })
+
+  it('steps aside when the page carries its own heading', () => {
+    render(() => (
+      <div>
+        <PageHeaderMobile title="Deals" titleAs="span" />
+        <h1>Build a healthier pipeline</h1>
+      </div>
+    ))
+    // One `h1` on the page: the bar names the section, the document names itself.
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(
+      'Build a healthier pipeline',
+    )
+    expect(screen.getByText('Deals')).toBeTruthy()
+  })
+})

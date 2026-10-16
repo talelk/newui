@@ -13,6 +13,7 @@ import {
 } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 import { createId } from '../../lib/id'
+import { createMediaQuery } from '../../lib/media'
 import { cn } from '../../lib/tv'
 import { Badge } from '../Badge'
 import { Icon, type IconProp } from '../Icon'
@@ -21,19 +22,6 @@ import { TooltipContent, TooltipRoot, TooltipTrigger } from '../Tooltip'
 
 /** Width below which an uncontrolled sidebar collapses on its own. */
 const COLLAPSE_QUERY = '(max-width: 639px)'
-
-function createMediaQuery(query: string): Accessor<boolean> {
-  const supported =
-    typeof window !== 'undefined' && typeof window.matchMedia === 'function'
-  const media = supported ? window.matchMedia(query) : undefined
-  const [matches, setMatches] = createSignal(media?.matches ?? false)
-  if (media) {
-    const onChange = () => setMatches(media.matches)
-    media.addEventListener('change', onChange)
-    onCleanup(() => media.removeEventListener('change', onChange))
-  }
-  return matches
-}
 
 interface SidebarContextValue {
   collapsed: Accessor<boolean>

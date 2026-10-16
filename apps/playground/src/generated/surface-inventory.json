@@ -735,6 +735,21 @@
   },
   {
     "package": "@newui/ui",
+    "name": "closeDialog",
+    "implementation": "packages/ui/src/lib/media.ts",
+    "documentation": "/docs#ui",
+    "contract": null,
+    "tests": [
+      "packages/ui/src/lib/color-scheme.test.ts",
+      "packages/ui/src/lib/controllable.test.ts",
+      "packages/ui/src/lib/disposal.test.tsx",
+      "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
     "name": "cn",
     "implementation": "packages/ui/src/lib/tv.ts",
     "documentation": "/docs#ui",
@@ -1366,6 +1381,21 @@
       "packages/ui/src/lib/resource/useDoctype.test.ts",
       "packages/ui/src/lib/resource/useList.test.ts",
       "packages/ui/src/lib/resource/useNewDoc.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "createMediaQuery",
+    "implementation": "packages/ui/src/lib/media.ts",
+    "documentation": "/docs#ui",
+    "contract": null,
+    "tests": [
+      "packages/ui/src/lib/color-scheme.test.ts",
+      "packages/ui/src/lib/controllable.test.ts",
+      "packages/ui/src/lib/disposal.test.tsx",
+      "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
   },
@@ -4724,6 +4754,50 @@
   },
   {
     "package": "@newui/ui",
+    "name": "ResponsiveShell",
+    "implementation": "packages/ui/src/components/ResponsiveShell/ResponsiveShell.tsx",
+    "documentation": "/components/responsive-shell",
+    "contract": "spec/responsive-shell.md",
+    "tests": [
+      "packages/ui/src/components/ResponsiveShell/ResponsiveShell.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "ResponsiveShellMenu",
+    "implementation": "packages/ui/src/components/ResponsiveShell/ResponsiveShell.tsx",
+    "documentation": "/components/responsive-shell",
+    "contract": "spec/responsive-shell.md",
+    "tests": [
+      "packages/ui/src/components/ResponsiveShell/ResponsiveShell.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "ResponsiveShellMenuProps",
+    "implementation": "packages/ui/src/components/ResponsiveShell/ResponsiveShell.tsx",
+    "documentation": "/components/responsive-shell",
+    "contract": "spec/responsive-shell.md",
+    "tests": [
+      "packages/ui/src/components/ResponsiveShell/ResponsiveShell.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "ResponsiveShellProps",
+    "implementation": "packages/ui/src/components/ResponsiveShell/ResponsiveShell.tsx",
+    "documentation": "/components/responsive-shell",
+    "contract": "spec/responsive-shell.md",
+    "tests": [
+      "packages/ui/src/components/ResponsiveShell/ResponsiveShell.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
     "name": "RunDocMethodInput",
     "implementation": "packages/ui/src/lib/resource/useDoctype.ts",
     "documentation": "/docs#ui",
@@ -5335,6 +5409,21 @@
       "packages/ui/src/components/KeyboardShortcut/KeyboardShortcut.browser.test.tsx",
       "packages/ui/src/components/KeyboardShortcut/KeyboardShortcut.ssr.test.tsx",
       "packages/ui/src/components/KeyboardShortcut/KeyboardShortcut.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "showDialog",
+    "implementation": "packages/ui/src/lib/media.ts",
+    "documentation": "/docs#ui",
+    "contract": null,
+    "tests": [
+      "packages/ui/src/lib/color-scheme.test.ts",
+      "packages/ui/src/lib/controllable.test.ts",
+      "packages/ui/src/lib/disposal.test.tsx",
+      "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
   },
@@ -7355,6 +7444,17 @@
       "packages/ui/src/lib/resource/useDoctype.test.ts",
       "packages/ui/src/lib/resource/useList.test.ts",
       "packages/ui/src/lib/resource/useNewDoc.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/ui",
+    "name": "useResponsiveShell",
+    "implementation": "packages/ui/src/components/ResponsiveShell/ResponsiveShell.tsx",
+    "documentation": "/components/responsive-shell",
+    "contract": "spec/responsive-shell.md",
+    "tests": [
+      "packages/ui/src/components/ResponsiveShell/ResponsiveShell.test.tsx"
     ],
     "acceptance": "pending"
   },

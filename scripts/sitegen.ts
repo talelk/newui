@@ -208,6 +208,7 @@ const GROUPS: Record<string, string> = {
   Pagination: 'Navigation',
   Sidebar: 'Navigation',
   AppShell: 'Layout',
+  ResponsiveShell: 'Layout',
   DesktopShell: 'Layout',
   MobileShell: 'Layout',
   MobileNav: 'Navigation',
