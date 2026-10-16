@@ -36,6 +36,17 @@ async function settledCharts(page: Page) {
 /** The tolerance the analytics shots need; see `settledCharts`. */
 const CHART_NOISE = { maxDiffPixelRatio: 0.03 }
 
+/**
+ * And the tolerance everything else needs: a handful of pixels.
+ *
+ * The runner and a developer machine rasterise a couple of glyph edges
+ * differently — 17 pixels on a 1280×720 page, and identical on every run on each
+ * machine, so it is not noise to be waited out. Bounded in *pixels*, not as a
+ * ratio: 60 pixels cannot hide a moved element or a changed colour, which is
+ * what these snapshots are for.
+ */
+const RASTERISATION = { maxDiffPixels: 60 }
+
 // Deliberate baseline updates require inspecting the resulting images.
 for (const theme of ['light', 'dark']) {
   for (const width of [390, 768, 1440]) {
@@ -62,6 +73,7 @@ for (const theme of ['light', 'dark']) {
     ).toBeVisible()
     await expect(page).toHaveScreenshot(`reference-${theme}.png`, {
       animations: 'disabled',
+      ...RASTERISATION,
     })
     await page.goto(`/spec?theme=${theme}`)
     await expect(
@@ -69,7 +81,7 @@ for (const theme of ['light', 'dark']) {
     ).toBeVisible()
     await expect(
       page.locator('[data-slot="visual-form-states"]'),
-    ).toHaveScreenshot(`form-states-${theme}.png`)
+    ).toHaveScreenshot(`form-states-${theme}.png`, RASTERISATION)
     await page.getByRole('button', { name: 'Open dialog', exact: true }).click()
     await expect(page.getByRole('dialog')).toBeVisible()
     const background = await page
