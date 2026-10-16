@@ -11,8 +11,8 @@ import {
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import { ExampleFrame } from '../examples/ExampleFrame'
-
 import { INITIAL, size, type WorkspaceFile } from '../examples/files-data'
+import { WorkspaceNav } from '../examples/WorkspaceNav'
 
 export function Files(): JSX.Element {
   const [items, setItems] = createSignal(INITIAL)
@@ -179,6 +179,24 @@ export function Files(): JSX.Element {
   ]
   return (
     <ExampleFrame
+      sidebar={
+        <WorkspaceNav
+          label="File views"
+          value={section()}
+          onChange={(value) => {
+            setSection(value)
+            setFolder(null)
+            setQuery('')
+          }}
+          items={[
+            { label: 'Home', icon: 'lucide-house' },
+            { label: 'Recents', icon: 'lucide-clock' },
+            { label: 'Favourites', icon: 'lucide-star' },
+            { label: 'Shared with me', icon: 'lucide-users' },
+            { label: 'Trash', icon: 'lucide-trash-2' },
+          ]}
+        />
+      }
       title="A home for your team's work"
       section="Files"
       description="Keep documents, assets and ideas organised. Explore folders, share context and find what matters."
@@ -239,25 +257,6 @@ export function Files(): JSX.Element {
         </>
       }
     >
-      <nav aria-label="File views" class="flex flex-wrap gap-2">
-        <For
-          each={['Home', 'Recents', 'Favourites', 'Shared with me', 'Trash']}
-        >
-          {(value) => (
-            <Button
-              variant={section() === value ? 'solid' : 'outline'}
-              theme={section() === value ? 'blue' : 'gray'}
-              onClick={() => {
-                setSection(value)
-                setFolder(null)
-                setQuery('')
-              }}
-            >
-              {value}
-            </Button>
-          )}
-        </For>
-      </nav>
       <Show when={notice()}>
         <p
           role="status"

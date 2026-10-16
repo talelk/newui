@@ -27,10 +27,18 @@ import {
   type Stage,
 } from '../examples/deals-data'
 import { ExampleFrame } from '../examples/ExampleFrame'
+import { WorkspaceNav } from '../examples/WorkspaceNav'
 
 export function Deals(): JSX.Element {
   const [deals, setDeals] = createSignal(initialDeals)
   const [view, setView] = createSignal('board')
+  /**
+   * The reference's sidebar, in its order: the workspace's other screens, then
+   * the pinned views. Selecting one moves the highlight, exactly as the reference
+   * does — it is a one-screen demo, so the board below does not change.
+   */
+  const [screen, setScreen] = createSignal('Deals')
+  const [pinned, setPinned] = createSignal('My open deals')
   const [query, setQuery] = createSignal('')
   const [owner, setOwner] = createSignal('All owners')
   const [sort, setSort] = createSignal('Board order')
@@ -172,6 +180,33 @@ export function Deals(): JSX.Element {
         >
           New deal
         </Button>
+      }
+      sidebar={
+        <div class="flex flex-col gap-4">
+          <WorkspaceNav
+            label="Deals navigation"
+            value={screen()}
+            onChange={setScreen}
+            items={[
+              { label: 'Notifications', icon: 'lucide-inbox', count: 4 },
+              { label: 'Leads', icon: 'lucide-users' },
+              { label: 'Deals', icon: 'lucide-handshake' },
+              { label: 'Contacts', icon: 'lucide-contact' },
+              { label: 'Organizations', icon: 'lucide-building-2' },
+              { label: 'Notes', icon: 'lucide-notebook-pen' },
+              { label: 'Tasks', icon: 'lucide-list-todo' },
+            ]}
+          />
+          <WorkspaceNav
+            label="Pinned views"
+            value={pinned()}
+            onChange={setPinned}
+            items={[
+              { label: 'My open deals', icon: 'lucide-star' },
+              { label: 'Closing this month', icon: 'lucide-star' },
+            ]}
+          />
+        </div>
       }
     >
       <div class="hidden sm:block">

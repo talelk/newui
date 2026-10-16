@@ -5,7 +5,8 @@
     "examples/ExampleFrame.tsx",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",
-    "examples/tickets-data.ts"
+    "examples/tickets-data.ts",
+    "examples/WorkspaceNav.tsx"
   ],
   "packages": [
     "@newui/blocks",

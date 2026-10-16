@@ -12,7 +12,6 @@ import {
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import { ExampleFrame } from '../examples/ExampleFrame'
-
 import {
   AGENTS,
   INITIAL,
@@ -21,8 +20,15 @@ import {
   type Status,
   type Ticket,
 } from '../examples/tickets-data'
+import { WorkspaceNav } from '../examples/WorkspaceNav'
 
 export function Tickets(): JSX.Element {
+  /**
+   * The reference's sidebar: the support workspace's screens, then its saved
+   * views. Selecting one moves the highlight — one screen is implemented.
+   */
+  const [screen, setScreen] = createSignal('Tickets')
+  const [savedView, setSavedView] = createSignal('My open tickets')
   const [tickets, setTickets] = createSignal(INITIAL)
   const [view, setView] = createSignal('open')
   const [priority, setPriority] = createSignal('All priorities')
@@ -134,6 +140,34 @@ export function Tickets(): JSX.Element {
   ]
   return (
     <ExampleFrame
+      sidebar={
+        <div class="flex flex-col gap-4">
+          <WorkspaceNav
+            label="Tickets navigation"
+            value={screen()}
+            onChange={setScreen}
+            items={[
+              { label: 'Tickets', icon: 'lucide-ticket', count: 24 },
+              { label: 'Customers', icon: 'lucide-building-2' },
+              { label: 'Contacts', icon: 'lucide-contact' },
+              { label: 'Agents', icon: 'lucide-headset' },
+              { label: 'Knowledge base', icon: 'lucide-book-open' },
+              { label: 'Canned responses', icon: 'lucide-message-square-text' },
+            ]}
+          />
+          <WorkspaceNav
+            label="Saved views"
+            value={savedView()}
+            onChange={setSavedView}
+            items={[
+              { label: 'My open tickets', icon: 'lucide-inbox' },
+              { label: 'Urgent', icon: 'lucide-triangle-alert' },
+              { label: 'Unassigned', icon: 'lucide-user-round-x' },
+              { label: 'Solved this week', icon: 'lucide-circle-check' },
+            ]}
+          />
+        </div>
+      }
       title="Support that feels human"
       section="Tickets"
       description="Keep every customer conversation moving, with clear ownership and service targets."

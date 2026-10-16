@@ -5,7 +5,8 @@
     "examples/ExampleFrame.tsx",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",
-    "examples/files-data.ts"
+    "examples/files-data.ts",
+    "examples/WorkspaceNav.tsx"
   ],
   "packages": [
     "@newui/ui",
