@@ -20,7 +20,14 @@ export default defineConfig({
   workers: 2,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? [['github'], ['list']] : [['list']],
+  // The flake reporter makes retries visible instead of invisible: a test that
+  // fails once and passes on retry is printed as flaky, not quietly green.
+  reporter: [
+    ...(process.env.CI
+      ? [['github'] as const, ['list'] as const]
+      : [['list'] as const]),
+    ['./e2e/flake-reporter.ts' as const],
+  ],
   use: {
     baseURL: `http://localhost:${port}`,
     headless: true,

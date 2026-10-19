@@ -61,6 +61,8 @@ Type checking uses TypeScript 7. ESLint uses Microsoft’s TypeScript 6
 compatibility package because its parser still requires the JavaScript compiler
 API; both are installed side by side.
 
-After public props change, run `pnpm api` and `pnpm site`. After tokens change,
-run `pnpm css`. Generated files are committed and drift is checked. Visual
+After public props change, run `pnpm api` and `pnpm site`, and keep the
+`spec/*.md` prop tables in step — `pnpm specs:check` fails when a documented
+prop no longer exists. After tokens change, run `pnpm css`. Generated files are
+committed and drift is checked. Visual
 baselines are updated deliberately and inspected before acceptance.

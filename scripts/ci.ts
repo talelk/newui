@@ -6,11 +6,13 @@
  *   pnpm ci:e2e          # the browser harness only
  *   pnpm ci --only=lint,test
  *   pnpm ci --from=size
+ *   pnpm verify:affected  # only the gates the diff can break
  *
  * Every step runs even when an earlier one fails (CI does the same with
  * `if: !cancelled()`), so one run reports every problem instead of the first.
  */
 import { spawnSync } from 'node:child_process'
+import { dirtyFiles, planAffected } from './affected'
 import { CHECK_STEPS, CI_STEPS, E2E_STEPS } from './ci-steps'
 
 const args = process.argv.slice(2)
@@ -26,8 +28,28 @@ const group = args
   .find((arg) => arg.startsWith('--group='))
   ?.slice('--group='.length)
 
+const affected = args.includes('--affected')
+const base = args
+  .find((arg) => arg.startsWith('--base='))
+  ?.slice('--base='.length)
+
 let steps =
   group === 'checks' ? CHECK_STEPS : group === 'e2e' ? E2E_STEPS : CI_STEPS
+if (affected) {
+  const files = dirtyFiles(base)
+  const plan = planAffected(steps, files)
+  steps = plan.steps
+  console.warn(
+    `affected: ${files.length} file(s) dirty — ${
+      plan.fallbackFull
+        ? 'unclaimable paths, running the full pipeline'
+        : `${steps.length} step(s) selected`
+    }\n`,
+  )
+  for (const step of steps)
+    console.warn(`  · ${step.name} — ${plan.why[step.name] ?? '?'}`)
+  console.warn('')
+}
 if (only?.length) {
   // Filter within the selected group, so `--group=checks --only=test` works.
   steps = steps.filter((step) =>

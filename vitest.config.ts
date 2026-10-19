@@ -22,10 +22,16 @@ export default defineConfig({
     include: [
       'packages/**/src/**/*.test.{ts,tsx}',
       'apps/**/src/**/*.test.{ts,tsx}',
+      'scripts/**/*.test.ts',
       'package.test.ts',
       'ci.test.ts',
     ],
-    exclude: ['**/node_modules/**', '**/*.browser.test.*', '**/*.ssr.test.*'],
+    exclude: [
+      '**/node_modules/**',
+      '**/*.browser.test.*',
+      '**/*.ssr.test.*',
+      '**/*.sweep.test.*',
+    ],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json-summary'],

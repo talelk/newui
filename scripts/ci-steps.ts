@@ -39,12 +39,27 @@ export const CI_STEPS: CiStep[] = [
   { name: 'Type-check', command: 'pnpm typecheck', group: 'checks' },
   { name: 'API table is current', command: 'pnpm api:check', group: 'checks' },
   {
+    name: 'Spec props & code samples',
+    command: 'pnpm specs:check',
+    group: 'checks',
+  },
+  {
+    name: 'Reference paths exist',
+    command: 'pnpm refs:check',
+    group: 'checks',
+  },
+  {
     name: 'Site data is current',
     command: 'pnpm site:check',
     group: 'checks',
   },
   { name: 'Docs site builds', command: 'pnpm docs:build', group: 'checks' },
   { name: 'Tests', command: 'pnpm test', group: 'checks' },
+  {
+    name: 'tw-merge sweep (all-pairs equivalence)',
+    command: 'pnpm test:sweep',
+    group: 'checks',
+  },
   { name: 'SSR smoke tests', command: 'pnpm test:ssr', group: 'checks' },
   {
     name: 'Bundle budget & tree-shaking',

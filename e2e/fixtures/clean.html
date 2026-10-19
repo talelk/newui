@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { margin: 0; font: 14px system-ui; color: #111; }
+      .card { padding: 12px; margin: 16px; border: 1px solid #ddd; border-radius: 6px; }
+      button { padding: 8px 16px; }
+      .scroller { height: 120px; overflow: auto; border: 1px solid #eee; }
+      .ellipsis { width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    </style>
+  </head>
+  <body>
+    <!-- Everything a healthy page does; none of it should be reported. -->
+    <div class="card" data-slot="card">
+      <button data-slot="button" type="button">Save</button>
+      <input type="text" aria-label="Name" value="fine" />
+    </div>
+    <div class="scroller">
+      <div style="height: 480px">Scrollable region with tall content.</div>
+    </div>
+    <p class="ellipsis">A long label that is truncated on purpose, with an ellipsis.</p>
+    <div style="display: none">
+      <div style="height: 2000px; overflow: hidden; height: 1px">
+        Hidden wrapper that clips its content; invisibility means it is not a user-facing bug.
+      </div>
+    </div>
+    <div style="height: 1600px">
+      Page-level vertical scroll must not be mistaken for clipping.
+    </div>
+  </body>
+</html>

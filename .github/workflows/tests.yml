@@ -55,6 +55,14 @@ jobs:
         if: ${{ !cancelled() }}
         run: pnpm api:check
 
+      - name: Spec props & code samples
+        if: ${{ !cancelled() }}
+        run: pnpm specs:check
+
+      - name: Reference paths exist
+        if: ${{ !cancelled() }}
+        run: pnpm refs:check
+
       - name: Site data is current
         if: ${{ !cancelled() }}
         run: pnpm site:check
@@ -66,6 +74,10 @@ jobs:
       - name: Tests
         if: ${{ !cancelled() }}
         run: pnpm test
+
+      - name: tw-merge sweep (all-pairs equivalence)
+        if: ${{ !cancelled() }}
+        run: pnpm test:sweep
 
       - name: SSR smoke tests
         if: ${{ !cancelled() }}

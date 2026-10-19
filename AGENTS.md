@@ -166,6 +166,9 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
 - **Public surface** (`packages/ui/src/exports.test.ts`) and **manifest**
   (`package.test.ts`) pin the exported names and `exports` targets.
 - **API tables** — `pnpm api` / `pnpm api:check`.
+- **Spec contracts** (`pnpm specs:check`, `scripts/check-specs.ts`): every prop
+  a `spec/*.md` table documents must exist in `api.json`, and every fenced
+  `ts`/`tsx` sample must parse — a renamed prop fails here, not in a reader's code.
 - **a11y** — axe in the component tests (`*.a11y.test.tsx`) and, with real CSS,
   in the browser harness.
 - **Contrast contract** (`packages/tailwind/src/contrast.test.ts`): every
@@ -177,6 +180,18 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
 - **Route budget** (`scripts/budget.ts`, `pnpm budget`): loads the built site per
   route and sums the gzip of every chunk that route actually fetched. A route
   that quietly starts pulling another page's chunk fails here, not in production.
+- **Affected routing** (`scripts/affected.ts`, `pnpm verify:affected`): the CI
+  gate table doubles as a dirty-path router, so the local loop is "change →
+  affected", not "change → twelve minutes of unrelated gates". Unclaimable
+  paths (root configs, CI definitions) fall back to the full pipeline, and
+  `scripts/affected.test.ts` pins the mapping.
+- **The merge sweep is separate from the loop** (`tw-merge.sweep.test.ts`,
+  `pnpm test:sweep`): `pnpm test` runs the fast per-family golden pairs; the
+  quadratic all-pairs sweep is a CI step that `verify:affected` pulls in only
+  when the merge config or the token vocabulary changes.
+- **Reference paths** (`pnpm refs:check`, `scripts/check-references.ts`):
+  every `references/…` path mentioned in AGENTS/spec/README must exist — the
+  guard against moving a checkout under the docs.
 - **Site structure** (`apps/playground/src/routes.test.ts`): the nav tree and the
   route table must describe the same paths in both directions, and every page
   import in `routes.tsx` must be lazy. A sidebar link with no route and a route
@@ -186,7 +201,49 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
 - **Browser harness** (`e2e/`, `pnpm test:e2e`, Playwright's pinned Chromium): axe on
   real CSS (colour contrast), keyboard/focus-visible/focus-trap, tabs/select/
   switch/tooltip interaction, responsive overflow at 320/768/1280, RTL, 200%
-  text zoom, and perf budgets (LCP, CLS, dialog latency, 2000-row list).
+  text zoom, and perf budgets (LCP, CLS, dialog latency, 2000-row list). The
+  computed-style invariants that the screenshots were doing the work of:
+  `design-contract.spec.ts` (every demo in `demos.tsx` mounts, fits 375px, and
+  keeps its box metrics), `overlay-stacking.spec.ts` (every overlay panel is
+  portal-mounted, hit-tests above its siblings, and closes on Escape),
+  `style-tokens.spec.ts` (every colour the browser resolves on `/spec` is a
+  semantic token, in both themes), `chrome-scrollbars.spec.ts` (nothing inside
+  an app rail is a scroll container — the phantom half-pixel scrollbar class),
+  and `no-duplicate-controls.spec.ts` (no
+  role+name control appears twice outside row instances). `flake-reporter.ts`
+  prints any test that passed only after a retry — a green retry is not an
+  excuse for a flake.
+- **Coherence sweep** (`e2e/coherence.spec.ts`, engine in `e2e/_lib/coherence.ts`):
+  every demo in `demos.tsx` in a real browser must report zero of four generic
+  violations — viewport overflow, clipped content, text truncated with no
+  escape hatch, and controls whose every sampled hit point lands elsewhere
+  (the invisible-overlay bug as a rule). The same pass samples each
+  `data-slot` element's computed style into role vectors;
+  `peer roles resolve identically` compares semantic peers across *all* demos
+  and fails on *new* drift — today's measured drift is pinned in
+  `e2e/role-drift.baseline.json` and shrinks via `UPDATE_ROLE_DRIFT=1`.
+- **Stress sweeps** (`e2e/stress.spec.ts`): 150% text scale, a sweep of the
+  in-between widths the fixed breakpoints miss (360/501/769/1025), and seeded
+  full-unicode fuzz (`fast-check`) into every text input — each asserts the
+  invariants that must survive, not a particular rendering.
+- **Calibration** (`e2e/calibration.spec.ts` + `e2e/fixtures/`): the harness
+  tests its own eyes. Every generic detector must flag a deliberately broken
+  fixture page, and must stay silent on a clean one — a green sweep that
+  cannot see a known-broken page is a quiet sweep, not a working one.
+- **Memory & leak tripwires** (`e2e/memory.spec.ts`, probe in
+  `e2e/_lib/memory.ts`): heap is measured through CDP (`Runtime.getHeapUsage`)
+  with forced GC (`HeapProfiler.collectGarbage`) — a delta measured without a
+  collection is noise. Overlay churn (20 open/close cycles per overlay) must
+  return both DOM and heap to baseline; `disposal.test.tsx` proves the unit
+  level, this proves the page level, where `window` listeners, uncleared timers
+  and closed-over machines grow the heap even when the DOM never moves.
+  Route navigation gets the same ratchet check, and every surface carries a
+  measured-headroom budget.
+- **Advisory visual review** (`pnpm review`, `scripts/visual-review.ts`): not
+  a gate. Runs the same deterministic sweep on live routes, crops each flagged
+  region, and — with `NEWUI_VLM_ENDPOINT` set — asks a vision model for a
+  structured verdict. Findings land in `test-results/review/`; `--require`
+  makes them blocking for the nightly design loop.
 
 ## CI
 
@@ -195,7 +252,9 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
   `pnpm verify` runs the identical commands locally. `ci.test.ts` fails if the
   workflow and the declaration drift, so "CI runs locally" stays true.
 - `pnpm verify` (all) · `pnpm verify:checks` (fast gates) · `pnpm verify:e2e`
-  (browser harness) · `pnpm verify --only=lint,test` · `pnpm verify --from=size`.
+  (browser harness) · `pnpm verify:affected` (only the gates the diff can
+  dirty — the agent loop: change → affected → full `verify` before pushing)
+  · `pnpm verify --only=lint,test` · `pnpm verify --from=size`.
 - `pnpm ci` is pnpm's own clean-install command, not ours — use `pnpm verify`.
 - Every step runs even after an earlier failure, so one run reports everything.
 - Optional: `act` (with Docker) can execute the workflow itself; `pnpm verify`
@@ -213,10 +272,12 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
   (`inlineCss` in `apps/playground/vite.config.ts`, removing a render-blocking
   round trip) and code-splits every route with dynamic imports. A library must
   not do either — consumers own their asset pipeline.
-- **Measured redesign checkpoint**: `cn()` 7.54 kB · `Button` 9.88 kB ·
-  `Button + Dialog` 32.86 kB · full barrel 242.19 kB · blocks barrel 74.30 kB
-  (gzip, `solid-js` external). Site: home 54.4 kB, analytics 298.8 kB,
-  tasks 162.3 kB, accounting 327.1 kB. Treat these as checkpoint measurements;
+- **Measured checkpoint** (shell/blocks/charts polish pass, re-measured with
+  `pnpm size` + `pnpm budget`): `cn()` 6.40 kB · `Button` 8.68 kB ·
+  `Button + Dialog` 30.08 kB · full barrel 227.80 kB · blocks barrel 77.16 kB
+  (gzip, `solid-js` external). Site: home (`/`) 54.6 kB, analytics fullscreen
+  312.6 kB, tasks fullscreen 171.9 kB, accounting fullscreen 323.3 kB — every
+  entry and route within its unchanged budget. Treat these as checkpoint measurements;
   `pnpm size` and `pnpm budget` provide current evidence and enforce the limits.
 - **Removed `tailwind-variants`** (it bundled its own merge integration) in
   favour of an in-house `tv`/`cn`/`cx` in `lib/tv.ts`: `Button` went 34.3 →
@@ -260,6 +321,7 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
 pnpm dev            # site (dev server)
 pnpm build          # build all packages
 pnpm shots          # screenshots: every route × theme × width (test-results/shots)
+pnpm review /spec   # advisory visual review of live routes (test-results/review)
 pnpm site           # regenerate the component registry + per-component API slices
 pnpm budget         # per-route gzip budget, measured in a real browser
 pnpm test           # vitest (unit + a11y + manifest)
@@ -269,10 +331,13 @@ pnpm lint           # biome check
 pnpm lint:fix       # biome check --write
 pnpm knip           # dead-code / unused-deps
 pnpm verify         # run the whole CI pipeline locally (same steps as CI)
+pnpm verify:affected # only the gates the dirty files can break (scripts/affected.ts)
 pnpm verify:checks  # the fast gates only
 pnpm verify:e2e     # the browser harness only
 pnpm api            # regenerate packages/ui/api.json
 pnpm api:check      # fail if the API table is stale
+pnpm test:sweep     # tw-merge all-pairs equivalence (routed by affected, not by pnpm test)
+pnpm refs:check     # every references/… path mentioned in docs exists
 pnpm docs:build     # render spec/*.md + api.json into a static docs/ site
 pnpm css            # regenerate @theme + tokens CSS   (run after token changes)
 pnpm changeset      # add a changeset

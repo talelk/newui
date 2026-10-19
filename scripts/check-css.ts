@@ -130,7 +130,11 @@ const missing = new Map<string, string>()
 for (const file of [...walk(UI_SRC), ...walk(BLOCKS_SRC)]) {
   // Not component markup: the config is vocabulary, and its own literals are
   // excluded from the Tailwind scan by `@source not`.
-  if (file.endsWith('tw-merge.config.ts')) continue
+  if (
+    file.endsWith('tw-merge.config.ts') ||
+    file.endsWith('tw-merge.harness.ts')
+  )
+    continue
 
   const source = readFileSync(file, 'utf8')
   for (const match of source.matchAll(/(.{0,24})['"`]([^'"`\n]*)['"`]/g)) {
