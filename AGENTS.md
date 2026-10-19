@@ -32,6 +32,11 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 | vite | `@newui/vite` | Frappe dev proxy · lucide auto-import · DocType types |
 | site | `apps/playground` | the docs site *and* the visual acceptance surface |
 
+The kit's direction is [`spec/kit.md`](./spec/kit.md) (ADR-0012): the ladder
+gains layouts (`@newui/layouts`), logic (`@newui/data`), the Storybook surface
+and the starter, in that order. Until those land, the table above is the full
+architecture.
+
 - **Primitives:** raw `@zag-js/*` via `useMachine` + `normalizeProps`
   (`packages/ui/src/lib/zag.ts`). Zag supplies keyboard, ARIA and focus.
 - **Styling:** `tv()` recipes replace frappe-ui's hand-written class maps. Only
