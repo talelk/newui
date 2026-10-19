@@ -26,6 +26,7 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 | icons | `@newui/icons` | Frappe's glyphs as Solid components |
 | components | `@newui/ui` | Solid compounds over Zag; `tv()` recipes |
 | blocks | `@newui/blocks` | composed sections built on `@newui/ui` |
+| layouts | `@newui/layouts` | page templates built on the components and blocks |
 | code editor | `@newui/code-editor` | CodeMirror 6 Solid component |
 | rich text | `@newui/editor` | TipTap 3 Solid editor + toolbar |
 | charts | `@newui/charts` | echarts Solid wrappers (SVG renderer) |
@@ -34,8 +35,9 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 
 The kit's direction is [`spec/kit.md`](./spec/kit.md) (ADR-0012): the ladder
 gains layouts (`@newui/layouts`), logic (`@newui/data`), the Storybook surface
-and the starter, in that order. Until those land, the table above is the full
-architecture.
+and the starter, in that order. Storybook and `@newui/layouts` (starting with
+`AppLayout`) have landed; `@newui/data` and the starter have not, so *those* two
+rows are still the full architecture below.
 
 - **Primitives:** raw `@zag-js/*` via `useMachine` + `normalizeProps`
   (`packages/ui/src/lib/zag.ts`). Zag supplies keyboard, ARIA and focus.

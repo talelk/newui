@@ -37,7 +37,7 @@ copyable app to the parts that already exist.
 | Tokens | what does it look like | `@newui/tokens` + `@newui/tailwind` | shipped |
 | Components (atoms/molecules) | what is this control | `@newui/ui` (+ shell frames) | shipped |
 | Blocks (organisms) | what is this section | `@newui/blocks` | shipped |
-| Layouts (templates) | how does a page open | `@newui/layouts` | missing |
+| Layouts (templates) | how does a page open | `@newui/layouts` | shipped (W2, `AppLayout`; page templates next) |
 | Logic | how does it behave | `@newui/data` | missing |
 | App | what do I copy | `apps/starter` + examples | missing |
 | Surface | how do I see any of it | Storybook | shipped (W1) |
@@ -89,19 +89,27 @@ is next.
 
 ## W2 — `@newui/layouts`, the template level
 
-Starts by extracting `ExampleFrame` into `AppLayout` (rail · sidebar · content,
-`ResponsiveShell` underneath, mobile nav), then ships the page templates the
-examples justify:
+Extracts `ExampleFrame` into `AppLayout` (rail · sidebar · folding column ·
+title block · mobile bar, `ResponsiveShell` underneath), then ships the page
+templates the examples justify:
 
-| Layout | Justified by |
-| --- | --- |
-| `AppLayout` | the nine framed examples |
-| `ListPage` — header, actions, filters slot, content, bulk footer | Deals, Tickets, Files, Mail, Tasks |
-| `DetailPage` — record header, tabs, body, side panel | Tickets, Deals, Files |
-| `SettingsPage` — grouped nav + panels | Settings, Discussions |
-| `AuthPage` — centered `AuthCard` frame | Authentication |
-| `DashboardPage` — stat grid + chart grid | Analytics, Accounting |
-| `PaneLayout` — 2/3-pane workspace with collapse | Mail, Files, Discussions |
+| Layout | Justified by | Status |
+| --- | --- | --- |
+| `AppLayout` | the nine framed examples | **shipped** — the frame moved, and the visual suite changed no snapshot |
+| `ListPage` — header, actions, filters slot, content, bulk footer | Deals, Tickets, Files, Mail, Tasks | **waiting on a consumer** |
+| `DetailPage` — record header, tabs, body, side panel | Tickets, Deals, Files | **waiting on a consumer** |
+| `SettingsPage` — grouped nav + panels | Settings, Discussions | not started |
+| `AuthPage` — centered `AuthCard` frame | Authentication | not started |
+| `DashboardPage` — stat grid + chart grid | Analytics, Accounting | not started |
+| `PaneLayout` — 2/3-pane workspace with collapse | Mail, Files, Discussions | not started |
+
+**Why `ListPage` and `DetailPage` wait.** Their slots would duplicate controls
+that already own them: `FilterBar` owns the count and the clear-all, `DataTable`
+owns the row-selection bulk bar, and our record views are dialogs rather than
+pages — so a `ListPage` today would be a template with nothing to template.
+`PaneLayout` is the next one with real consumers (Mail's resize, Files' preview,
+Discussions' three panes); it needs those three pane behaviours compared before
+its API can be honest.
 
 The block friction this exposes is fixed additively: `PageToolbar` gains
 description/multi-action, `DetailHeader` richer actions, `AppSidebar`
