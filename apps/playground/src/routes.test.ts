@@ -174,6 +174,7 @@ describe('site structure', () => {
       'SidebarNav',
       'PageIntro',
       'ReferenceLayout',
+      'nav-ui',
     ]) {
       const source = readFileSync(
         path.join(process.cwd(), `apps/playground/src/shell/${file}.tsx`),

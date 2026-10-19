@@ -31,9 +31,15 @@ const VIEW_INSET = 3
  * exactly as a utility would.
  */
 const TONE_COLOR: Record<DeltaTone, string> = {
-  positive: 'var(--ink-green-7)',
-  negative: 'var(--ink-red-7)',
-  neutral: 'var(--ink-gray-6)',
+  positive: 'var(--ink-green-8)',
+  negative: 'var(--ink-red-8)',
+  neutral: 'var(--ink-gray-7)',
+}
+
+const TONE_SURFACE: Record<DeltaTone, string> = {
+  positive: 'var(--surface-green-2)',
+  negative: 'var(--surface-red-2)',
+  neutral: 'var(--surface-gray-2)',
 }
 
 export function NumberCard(props: NumberCardProps): JSX.Element {
@@ -72,8 +78,14 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
   )
   const showSparkline = () =>
     !isEmpty() && (points().length > 0 || bars().length > 0)
-  const showDelta = () =>
-    !isEmpty() && Boolean(deltaText() || props.deltaCaption)
+  const showDelta = () => !isEmpty() && Boolean(deltaText())
+  const lastPoint = () => points()[points().length - 1]
+  // A progress bar only means something for two numbers and a positive goal.
+  const progress = (): number | undefined => {
+    if (typeof props.value !== 'number') return undefined
+    if (typeof props.target !== 'number' || props.target <= 0) return undefined
+    return Math.min(100, Math.max(0, (props.value / props.target) * 100))
+  }
 
   return (
     <figure
@@ -82,31 +94,82 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
       aria-label={props['aria-label'] ?? props.title}
       style={{
         margin: '0',
-        padding: '12px',
+        padding: '16px',
         border: '1px solid var(--outline-gray-1)',
         'border-radius': '10px',
         background: 'var(--surface-elevation-1)',
         color: 'var(--ink-gray-9)',
       }}
     >
-      <figcaption
-        data-slot="number-card-title"
+      <div
         style={{
-          'font-size': '0.875rem',
-          'line-height': '1.25rem',
-          color: 'var(--ink-gray-6)',
+          display: 'flex',
+          'align-items': 'flex-start',
+          'justify-content': 'space-between',
+          gap: '0.5rem',
         }}
       >
-        {props.title}
-      </figcaption>
+        <figcaption
+          data-slot="number-card-title"
+          style={{
+            'font-size': '0.875rem',
+            'line-height': '1.25rem',
+            'font-weight': '500',
+            color: 'var(--ink-gray-7)',
+            'overflow-wrap': 'anywhere',
+          }}
+        >
+          {props.title}
+        </figcaption>
+        <Show when={!props.error && !props.loading && showDelta()}>
+          <span
+            data-slot="number-card-delta"
+            style={{
+              display: 'inline-flex',
+              'align-items': 'center',
+              gap: '4px',
+              'flex-shrink': '0',
+              padding: '2px 6px',
+              'border-radius': '9999px',
+              'background-color': TONE_SURFACE[tone()],
+              color: TONE_COLOR[tone()],
+              'font-size': '0.75rem',
+              'line-height': '1rem',
+              'font-weight': '500',
+              'font-variant-numeric': 'tabular-nums',
+            }}
+          >
+            <Show when={direction() !== 'flat'}>
+              <span aria-hidden="true">{direction() === 'up' ? '▲' : '▼'}</span>
+            </Show>
+            <span data-slot="number-card-delta-value">{deltaText()}</span>
+          </span>
+        </Show>
+      </div>
 
       <Show when={props.error}>
-        <div data-slot="number-card-error" role="status">
+        <div
+          data-slot="number-card-error"
+          role="status"
+          style={{
+            'margin-top': '8px',
+            'font-size': '0.875rem',
+            color: 'var(--ink-red-8)',
+          }}
+        >
           {props.error}
         </div>
       </Show>
       <Show when={!props.error && props.loading}>
-        <div data-slot="number-card-loading" role="status">
+        <div
+          data-slot="number-card-loading"
+          role="status"
+          style={{
+            'margin-top': '8px',
+            'font-size': '0.875rem',
+            color: 'var(--ink-gray-7)',
+          }}
+        >
           Loading…
         </div>
       </Show>
@@ -127,34 +190,68 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
         >
           <span>{valueText()}</span>
           <Show when={targetText()}>
-            <span data-slot="number-card-target"> / {targetText()}</span>
+            <span
+              data-slot="number-card-target"
+              style={{
+                'font-size': '1rem',
+                'font-weight': '400',
+                color: 'var(--ink-gray-7)',
+              }}
+            >
+              {' '}
+              / {targetText()}
+            </span>
           </Show>
         </div>
 
-        <Show when={isEmpty()}>
-          <div data-slot="number-card-empty">No data</div>
+        <Show when={progress()}>
+          {(value) => (
+            <div
+              data-slot="number-card-progress"
+              role="progressbar"
+              aria-label={`${props.title} progress toward target`}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={Math.round(value())}
+              style={{
+                height: '6px',
+                'border-radius': '9999px',
+                'background-color': 'var(--surface-gray-2)',
+                overflow: 'hidden',
+                'margin-bottom': '8px',
+              }}
+            >
+              <div
+                style={{
+                  height: '100%',
+                  width: `${value()}%`,
+                  'border-radius': '9999px',
+                  'background-color': color(),
+                }}
+              />
+            </div>
+          )}
         </Show>
 
-        <Show when={showDelta()}>
+        <Show when={isEmpty()}>
           <div
-            data-slot="number-card-delta"
+            data-slot="number-card-empty"
+            style={{ 'font-size': '0.75rem', color: 'var(--ink-gray-7)' }}
+          >
+            No data
+          </div>
+        </Show>
+
+        <Show when={!isEmpty() && props.deltaCaption}>
+          <div
+            data-slot="number-card-caption"
             style={{
-              color: TONE_COLOR[tone()],
-              display: 'flex',
-              gap: '4px',
               'font-size': '0.75rem',
               'line-height': '1rem',
+              color: 'var(--ink-gray-7)',
             }}
           >
-            <Show when={direction() !== 'flat'}>
-              <span aria-hidden="true">{direction() === 'up' ? '▲' : '▼'}</span>
-            </Show>
-            <Show when={deltaText()}>
-              <span data-slot="number-card-delta-value">{deltaText()}</span>
-            </Show>
-            <Show when={props.deltaCaption}>
-              <span data-slot="number-card-caption">{props.deltaCaption}</span>
-            </Show>
+            {props.deltaCaption}
           </div>
         </Show>
 
@@ -162,7 +259,12 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
           <div
             data-slot="number-card-sparkline"
             aria-hidden="true"
-            style={{ position: 'relative', width: '100%', height: '3rem' }}
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: '3rem',
+              'margin-top': '8px',
+            }}
           >
             <Show when={mark() === 'bar'}>
               <For each={bars()}>
@@ -204,6 +306,26 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
                   vector-effect="non-scaling-stroke"
                 />
               </svg>
+              {/* An HTML dot, not an SVG circle: `preserveAspectRatio="none"`
+                  would stretch a circle into an ellipse. */}
+              <Show when={lastPoint()}>
+                {(point) => (
+                  <span
+                    data-slot="number-card-sparkline-end"
+                    style={{
+                      position: 'absolute',
+                      left: `calc(${point().x}% - 3px)`,
+                      top: `calc(${point().y}% - 3px)`,
+                      width: '6px',
+                      height: '6px',
+                      'border-radius': '9999px',
+                      'background-color': color(),
+                      border: '1px solid var(--surface-elevation-1)',
+                      'box-sizing': 'border-box',
+                    }}
+                  />
+                )}
+              </Show>
             </Show>
           </div>
         </Show>

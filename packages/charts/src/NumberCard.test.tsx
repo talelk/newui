@@ -21,6 +21,44 @@ describe('NumberCard', () => {
     ).toContain('/ 100')
   })
 
+  it('draws progress toward a numeric target, and only then', () => {
+    const { container } = render(() => (
+      <NumberCard title="Revenue" value={80} target={100} />
+    ))
+    const bar = container.querySelector(
+      '[data-slot="number-card-progress"]',
+    ) as HTMLElement
+    expect(bar.getAttribute('role')).toBe('progressbar')
+    expect(bar.getAttribute('aria-valuenow')).toBe('80')
+
+    const textual = render(() => (
+      <NumberCard title="Revenue" value="80" target="100" />
+    ))
+    expect(
+      textual.container.querySelector('[data-slot="number-card-progress"]'),
+    ).toBeNull()
+  })
+
+  it('puts the delta in a pill and its baseline underneath the reading', () => {
+    const { container } = render(() => (
+      <NumberCard
+        title="Revenue"
+        value={80}
+        delta={3.1}
+        deltaSuffix="%"
+        deltaCaption="from $77.6k last month"
+      />
+    ))
+    const pill = container.querySelector(
+      '[data-slot="number-card-delta"]',
+    ) as HTMLElement
+    expect(pill.style.backgroundColor).toBe('var(--surface-green-2)')
+    expect(pill.style.borderRadius).toBe('9999px')
+    expect(
+      container.querySelector('[data-slot="number-card-caption"]')?.textContent,
+    ).toBe('from $77.6k last month')
+  })
+
   it('renders the delta unsigned with a direction arrow', () => {
     const { container } = render(() => (
       <NumberCard title="Revenue" value={80} delta={-3.1} deltaSuffix="%" />
@@ -69,6 +107,9 @@ describe('NumberCard', () => {
     ))
     expect(
       area.container.querySelector('[data-slot="number-card-sparkline"] svg'),
+    ).not.toBeNull()
+    expect(
+      area.container.querySelector('[data-slot="number-card-sparkline-end"]'),
     ).not.toBeNull()
 
     const bars = render(() => (

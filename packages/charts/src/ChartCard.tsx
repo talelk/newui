@@ -15,7 +15,7 @@ const SURFACE: JSX.CSSProperties = {
   'border-color': 'var(--outline-gray-1)',
   'background-color': 'var(--surface-elevation-1)',
   'border-radius': '10px',
-  padding: '12px',
+  padding: '16px',
 }
 
 export function ChartCard(props: ChartCardProps): JSX.Element {

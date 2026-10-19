@@ -1,6 +1,7 @@
 import { Badge, Button, Dialog } from '@newui/ui'
 import { type JSX, Show } from 'solid-js'
-import { money, type Transaction } from './data'
+import { usd as money } from '../../examples/format'
+import type { Transaction } from './data'
 
 export default function ReceiptDialog(props: {
   transaction: Transaction
@@ -22,7 +23,7 @@ export default function ReceiptDialog(props: {
           </Dialog.Description>
         </Dialog.Header>
         <div class="my-5 rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-4">
-          <p class="text-caption text-ink-gray-6">Amount</p>
+          <p class="text-caption text-ink-gray-7">Amount</p>
           <p class="mt-1 text-metric tabular-nums">
             {money(props.transaction.amount)}
           </p>
@@ -39,13 +40,13 @@ export default function ReceiptDialog(props: {
           </Badge>
         </div>
         <dl class="grid grid-cols-2 gap-x-4 gap-y-3 text-interface">
-          <dt class="text-ink-gray-6">Customer</dt>
+          <dt class="text-ink-gray-7">Customer</dt>
           <dd class="text-end font-medium">{props.transaction.customer}</dd>
-          <dt class="text-ink-gray-6">Region</dt>
+          <dt class="text-ink-gray-7">Region</dt>
           <dd class="text-end">{props.transaction.region}</dd>
-          <dt class="text-ink-gray-6">Channel</dt>
+          <dt class="text-ink-gray-7">Channel</dt>
           <dd class="text-end">{props.transaction.channel}</dd>
-          <dt class="text-ink-gray-6">Date</dt>
+          <dt class="text-ink-gray-7">Date</dt>
           <dd class="text-end">Sep {props.transaction.day}, 2026</dd>
         </dl>
         <Dialog.Footer>

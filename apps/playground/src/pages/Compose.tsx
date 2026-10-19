@@ -1,5 +1,6 @@
 import { Editor, EditorToolbar } from '@newui/editor'
 import {
+  Alert,
   Badge,
   Button,
   DatePicker,
@@ -11,7 +12,10 @@ import {
   TextInput,
 } from '@newui/ui'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
+import { downloadText } from '../examples/download'
 import { ExampleFrame } from '../examples/ExampleFrame'
+import { Notice } from '../examples/Notice'
+import { Panel } from '../examples/Panel'
 import { Markdown } from '../lib/markdown'
 
 const INITIAL_BODY =
@@ -91,18 +95,12 @@ export function Compose(): JSX.Element {
     setPublicationError('')
     return true
   }
-  const exportPost = () => {
-    const url = URL.createObjectURL(
-      new Blob([`# ${title()}\n\n${body()}\n`], {
-        type: 'text/markdown;charset=utf-8',
-      }),
+  const exportPost = () =>
+    downloadText(
+      'acme-workspace-post.md',
+      `# ${title()}\n\n${body()}\n`,
+      'text/markdown;charset=utf-8',
     )
-    const link = document.createElement('a')
-    link.href = url
-    link.download = 'acme-workspace-post.md'
-    link.click()
-    URL.revokeObjectURL(url)
-  }
   return (
     <ExampleFrame
       section="Compose"
@@ -139,29 +137,14 @@ export function Compose(): JSX.Element {
         </>
       }
     >
-      <Show when={publicationError()}>
-        <p
-          role="alert"
-          class="rounded-3 border border-outline-red-3 bg-surface-red-1 p-3 text-ink-red-8"
-        >
-          {publicationError()}
-        </p>
-      </Show>
-      <Show when={notice()}>
-        <p
-          role="status"
-          class="rounded-3 border border-outline-green-3 bg-surface-green-1 p-3 text-interface text-ink-green-8"
-        >
-          {notice()}
-        </p>
-      </Show>
+      <Notice text={publicationError()} tone="red" />
+      <Notice text={notice()} tone="green" />
       <div class="grid items-start gap-4 xl:grid-cols-3">
-        <section
-          class="min-w-0 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3 xl:col-span-2"
-          aria-label="Post content"
-        >
-          <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <h2 class="text-section">Your story</h2>
+        <Panel
+          label="Post content"
+          title="Your story"
+          class="xl:col-span-2"
+          actions={
             <TabButtons
               value={view()}
               onValueChange={setView}
@@ -170,7 +153,8 @@ export function Compose(): JSX.Element {
                 { label: 'Preview', value: 'preview' },
               ]}
             />
-          </div>
+          }
+        >
           <TextInput
             label="Post title"
             value={title()}
@@ -181,7 +165,7 @@ export function Compose(): JSX.Element {
               setError('')
             }}
           />
-          <div class="mt-4">
+          <div>
             <Show
               when={view() === 'edit'}
               fallback={
@@ -211,7 +195,7 @@ export function Compose(): JSX.Element {
               </Editor>
             </Show>
           </div>
-          <div class="mt-3 flex flex-wrap justify-between gap-2 text-caption text-ink-gray-6">
+          <div class="flex flex-wrap justify-between gap-2 text-caption text-ink-gray-7">
             <span role="status">
               {words()} words · {Math.max(1, Math.ceil(words() / 200))} min read
             </span>
@@ -236,15 +220,13 @@ export function Compose(): JSX.Element {
               </button>
             </Show>
           </div>
-        </section>
+        </Panel>
         <aside class="flex min-w-0 flex-col gap-4">
-          <section
-            class="flex flex-col gap-4 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3"
-            aria-labelledby="publication-heading"
+          <Panel
+            title="Publication"
+            titleId="publication-heading"
+            labelledBy="publication-heading"
           >
-            <h2 id="publication-heading" class="text-section">
-              Publication
-            </h2>
             <Select
               label="Audience"
               value={[audience()]}
@@ -277,16 +259,12 @@ export function Compose(): JSX.Element {
               value={excerpt()}
               onInput={(event) => setExcerpt(event.currentTarget.value)}
             />
-          </section>
-          <div class="rounded-5 border border-outline-blue-1 bg-surface-blue-1 p-3">
-            <p class="text-interface font-medium text-ink-blue-8">
-              A thoughtful update goes a long way.
-            </p>
-            <p class="mt-2 text-caption text-ink-gray-7">
-              Use clear headings, short paragraphs and a preview before you
-              share.
-            </p>
-          </div>
+          </Panel>
+          <Alert
+            theme="blue"
+            title="A thoughtful update goes a long way."
+            description="Use clear headings, short paragraphs and a preview before you share."
+          />
         </aside>
       </div>
       <Dialog.Root open={confirm()} onOpenChange={setConfirm}>
@@ -302,9 +280,9 @@ export function Compose(): JSX.Element {
             </Dialog.Description>
           </Dialog.Header>
           <dl class="my-5 grid grid-cols-2 gap-3 text-interface">
-            <dt class="text-ink-gray-6">Title</dt>
+            <dt class="text-ink-gray-7">Title</dt>
             <dd class="text-end font-medium">{title()}</dd>
-            <dt class="text-ink-gray-6">Audience</dt>
+            <dt class="text-ink-gray-7">Audience</dt>
             <dd class="text-end">
               {audience() === 'workspace'
                 ? 'Workspace members'
@@ -312,7 +290,7 @@ export function Compose(): JSX.Element {
                   ? 'Only me'
                   : 'Public demo'}
             </dd>
-            <dt class="text-ink-gray-6">Date</dt>
+            <dt class="text-ink-gray-7">Date</dt>
             <dd class="text-end">{date()}</dd>
           </dl>
           <Dialog.Footer>

@@ -14,6 +14,7 @@ import {
 } from '@newui/ui'
 import { createEffect, createSignal, For, type JSX, Show } from 'solid-js'
 import { colorScheme, setColorScheme } from '../shell/theme'
+import { Notice } from './Notice'
 
 const MANAGED_COMMUNITIES = [
   {
@@ -209,12 +210,9 @@ export function DiscussionSettings(props: {
 
         <SettingsDialog.Content>
           <Show when={notice()}>
-            <p
-              role="status"
-              class="m-4 rounded-3 bg-surface-blue-1 p-3 text-ink-blue-8"
-            >
-              {notice()}
-            </p>
+            <div class="m-4">
+              <Notice text={notice()} onDismiss={() => setNotice('')} />
+            </div>
           </Show>
           <SettingsDialog.Panel value="profile">
             <SettingsDialog.Header title="Profile" />
@@ -227,7 +225,7 @@ export function DiscussionSettings(props: {
                       <div class="text-base-medium text-ink-gray-8">
                         Profile picture
                       </div>
-                      <p class="text-p-sm text-ink-gray-6">
+                      <p class="text-p-sm text-ink-gray-7">
                         Helps people recognise you
                       </p>
                     </div>
@@ -418,7 +416,7 @@ export function DiscussionSettings(props: {
                           <div class="truncate text-base text-ink-gray-8">
                             {item.name}
                           </div>
-                          <div class="mt-0.5 truncate text-sm text-ink-gray-6">
+                          <div class="mt-0.5 truncate text-sm text-ink-gray-7">
                             {item.spaces} spaces · {item.members} members
                           </div>
                         </div>
@@ -462,10 +460,10 @@ export function DiscussionSettings(props: {
               <List class="-mx-3 pt-4" columns="minmax(0,1fr) 6rem 3rem">
                 <ListRow height="h-14">
                   <ListCell>
-                    <span class="text-sm text-ink-gray-6">Member</span>
+                    <span class="text-sm text-ink-gray-7">Member</span>
                   </ListCell>
                   <ListCell>
-                    <span class="text-sm text-ink-gray-6">Role</span>
+                    <span class="text-sm text-ink-gray-7">Role</span>
                   </ListCell>
                   <ListCell />
                 </ListRow>
@@ -478,7 +476,7 @@ export function DiscussionSettings(props: {
                           <div class="truncate text-base text-ink-gray-8">
                             {member.name}
                           </div>
-                          <div class="mt-0.5 truncate text-sm text-ink-gray-6">
+                          <div class="mt-0.5 truncate text-sm text-ink-gray-7">
                             {member.email}
                           </div>
                         </div>
@@ -535,7 +533,7 @@ export function DiscussionSettings(props: {
             </div>
           </Show>
           <Show when={action() === 'password'}>
-            <p class="my-4 text-ink-gray-6">
+            <p class="my-4 text-ink-gray-7">
               Password changes require an authentication service. This local
               example has no connected account and does not store passwords.
             </p>

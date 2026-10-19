@@ -176,7 +176,10 @@ export function ResponsiveShell(props: ResponsiveShellProps): JSX.Element {
           }}
           class="m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-3rem)] overflow-y-auto border-e border-outline-gray-1 bg-surface-sidebar p-0 text-ink-gray-9 backdrop:bg-black-overlay-200"
         >
-          <div class="flex h-full flex-col">
+          {/* Rail beside sidebar, as in the docked frame: stacking a
+              full-height rail above the sidebar would push the navigation
+              it stands in for out of the drawer. */}
+          <div class="flex h-full">
             {props.rail}
             {props.sidebar}
           </div>

@@ -227,7 +227,8 @@ test('receipt updates and undo recalculate the complete report', async ({
   const revenue = page
     .locator('[data-slot="number-card"]')
     .first()
-    .locator('[data-slot="number-card-value"]')
+    .locator('[data-slot="number-card-value"] > span')
+    .first()
   const parseMoney = (value: string) => Number(value.replace(/[^0-9.]/g, ''))
   const before = parseMoney(await revenue.innerText())
   const pendingRow = page
@@ -248,10 +249,10 @@ test('receipt updates and undo recalculate the complete report', async ({
     .poll(async () => parseMoney(await revenue.innerText()))
     .toBe(before)
   const chart = page.locator('[data-slot="chart-card"]').first()
-  await expect(chart).toContainText('Dashed line: prior month.')
+  await expect(chart).toContainText('Prior month')
   await page
     .getByRole('switch', { name: 'Compare prior month', exact: true })
     .focus()
   await page.keyboard.press('Space')
-  await expect(chart).not.toContainText('Dashed line: prior month.')
+  await expect(chart).not.toContainText('Prior month')
 })

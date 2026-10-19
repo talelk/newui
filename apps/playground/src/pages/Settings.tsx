@@ -6,26 +6,11 @@ import {
   Switch,
   TextInput,
 } from '@newui/ui'
-import { createSignal, type JSX, Show } from 'solid-js'
+import { createSignal, type JSX } from 'solid-js'
+import { isEmail } from '../examples/format'
+import { Notice } from '../examples/Notice'
+import { PageSection } from '../lib/PageSection'
 import { PageIntro } from '../shell/PageIntro'
-
-function Section(props: {
-  title: string
-  description?: string
-  children: JSX.Element
-}) {
-  return (
-    <section class="flex flex-col gap-4">
-      <div>
-        <h2 class="text-section text-ink-gray-9">{props.title}</h2>
-        <Show when={props.description}>
-          <p class="text-base text-ink-gray-6">{props.description}</p>
-        </Show>
-      </div>
-      {props.children}
-    </section>
-  )
-}
 
 export function Settings(): JSX.Element {
   const [settingsOpen, setSettingsOpen] = createSignal(false)
@@ -39,7 +24,7 @@ export function Settings(): JSX.Element {
   const [digests, setDigests] = createSignal(true)
   const [attempted, setAttempted] = createSignal(false)
   const [notice, setNotice] = createSignal('')
-  const emailValid = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email())
+  const emailValid = () => isEmail(email())
   const openChanged = (open: boolean) => {
     if (!open) {
       setName(saved().name)
@@ -57,17 +42,28 @@ export function Settings(): JSX.Element {
     setNotice('Profile saved locally for this page.')
   }
   return (
-    <div class="flex flex-col gap-4">
+    <div class="mx-auto flex w-full max-w-3xl flex-col gap-4">
       <PageIntro
         title="Workspace settings"
         description="Grouped navigation and focused settings panels, built on Dialog."
       />
-      <Section
+      <PageSection
+        id="settings-dialog-recipe"
         title="Settings dialog recipe"
         description="A sidebar of grouped tabs and a panel per tab, built on Dialog."
       >
-        <div>
-          <Button onClick={() => setSettingsOpen(true)}>Open settings</Button>
+        <div class="grid place-items-center gap-3 rounded-5 border border-outline-gray-1 bg-surface-gray-1 px-4 py-12 text-center">
+          <Button
+            variant="solid"
+            theme="blue"
+            onClick={() => setSettingsOpen(true)}
+          >
+            Open settings
+          </Button>
+          <p class="max-w-sm text-caption text-ink-gray-7">
+            Profile, notifications and members, grouped in one dialog — edits
+            stay on this page.
+          </p>
         </div>
 
         <SettingsDialog.Root
@@ -142,15 +138,17 @@ export function Settings(): JSX.Element {
                       onInput={(event) => setEmail(event.currentTarget.value)}
                     />
                   </SettingsDialog.Row>
-                  <div class="flex flex-wrap items-center gap-3">
-                    <Button type="submit" variant="solid" theme="blue">
-                      Save profile
-                    </Button>
-                    <Show when={notice()}>
-                      <p role="status" class="text-caption text-ink-green-7">
-                        {notice()}
-                      </p>
-                    </Show>
+                  <div class="flex flex-col gap-3">
+                    <div>
+                      <Button type="submit" variant="solid" theme="blue">
+                        Save profile
+                      </Button>
+                    </div>
+                    <Notice
+                      text={notice()}
+                      tone="green"
+                      onDismiss={() => setNotice('')}
+                    />
                   </div>
                 </SettingsDialog.Body>
               </form>
@@ -182,7 +180,7 @@ export function Settings(): JSX.Element {
             </SettingsDialog.Panel>
           </SettingsDialog.Content>
         </SettingsDialog.Root>
-      </Section>
+      </PageSection>
     </div>
   )
 }

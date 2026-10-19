@@ -58,31 +58,33 @@ export function StatGrid(props: StatGridProps): JSX.Element {
             data-slot="stat"
             onClick={stat.onClick}
             class={cn(
-              'flex flex-col gap-1 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-start',
+              'flex flex-col gap-1 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4 text-start',
               stat.onClick &&
-                'cursor-pointer transition-colors hover:border-outline-gray-3 hover:bg-surface-gray-1 focus-visible:focus-ring',
+                'cursor-pointer transition-[border-color,box-shadow] hover:border-outline-gray-3 hover:shadow-sm focus-visible:focus-ring motion-reduce:transition-none',
             )}
           >
-            <div class="flex items-center gap-2">
+            <div class="flex items-start gap-2">
               <Show when={stat.icon}>
                 {(icon) => (
-                  <Icon icon={icon()} class="size-4 text-ink-gray-6" />
+                  <span class="grid size-8 shrink-0 place-items-center rounded-4 bg-surface-gray-2">
+                    <Icon icon={icon()} class="size-4 text-ink-gray-7" />
+                  </span>
                 )}
               </Show>
-              <span class="text-sm text-ink-gray-6">{stat.label}</span>
-            </div>
-            <span class="text-metric [overflow-wrap:anywhere] text-ink-gray-9">
-              {stat.value}
-            </span>
-            <div class="flex items-center gap-2">
+              <span class="min-w-0 flex-1 text-sm-medium [overflow-wrap:anywhere] text-ink-gray-7">
+                {stat.label}
+              </span>
               <Show when={stat.delta}>
                 {(delta) => (
                   <span
-                    class="inline-flex items-center gap-0.5 text-xs-medium"
+                    class="inline-flex shrink-0 items-center gap-0.5 rounded-full px-1.5 py-0.5 text-xs-medium tabular-nums"
                     classList={{
-                      'text-ink-green-7': isGood(delta()),
-                      'text-ink-red-7': !isGood(delta()),
-                      'text-ink-gray-6': delta().direction === 'flat',
+                      'bg-surface-green-2 text-ink-green-8':
+                        delta().direction !== 'flat' && isGood(delta()),
+                      'bg-surface-red-2 text-ink-red-8':
+                        delta().direction !== 'flat' && !isGood(delta()),
+                      'bg-surface-gray-2 text-ink-gray-7':
+                        delta().direction === 'flat',
                     }}
                   >
                     <Icon
@@ -99,12 +101,15 @@ export function StatGrid(props: StatGridProps): JSX.Element {
                   </span>
                 )}
               </Show>
-              <Show when={stat.hint}>
-                <span class="truncate text-xs text-ink-gray-6">
-                  {stat.hint}
-                </span>
-              </Show>
             </div>
+            <span class="text-metric tabular-nums [overflow-wrap:anywhere] text-ink-gray-9">
+              {stat.value}
+            </span>
+            <Show when={stat.hint}>
+              <span class="text-xs [overflow-wrap:anywhere] text-ink-gray-7">
+                {stat.hint}
+              </span>
+            </Show>
           </Dynamic>
         )}
       </For>

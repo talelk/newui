@@ -1,6 +1,7 @@
 import { createMemo, lazy, Show, Suspense } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 import { DEMOS } from '../demos'
+import { LoadingNote } from '../lib/LoadingNote'
 
 /**
  * One component's live demo, on its own route: `/play?c=Button`.
@@ -30,15 +31,13 @@ export function Play() {
       <Show
         when={demo()}
         fallback={
-          <p class="text-base text-ink-gray-6">
+          <p class="text-base text-ink-gray-7">
             No demo registered for “{name}”.
           </p>
         }
       >
         {(entry) => (
-          <Suspense
-            fallback={<p class="text-base text-ink-gray-6">Loading demo…</p>}
-          >
+          <Suspense fallback={<LoadingNote label="Loading demo…" />}>
             <Dynamic component={entry().Component} />
           </Suspense>
         )}

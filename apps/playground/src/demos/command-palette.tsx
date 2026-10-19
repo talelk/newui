@@ -21,13 +21,13 @@ export default function Demo(): JSX.Element {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        class="flex w-full max-w-sm items-center justify-between gap-3 rounded-4 border border-outline-gray-2 bg-surface-base px-3 py-2 text-base text-ink-gray-6 hover:bg-surface-gray-2 focus-visible:focus-ring"
+        class="flex w-full max-w-sm items-center justify-between gap-3 rounded-4 border border-outline-gray-2 bg-surface-base px-3 py-2 text-base text-ink-gray-7 hover:bg-surface-gray-2 focus-visible:focus-ring"
       >
         <span>Search commands…</span>
         <KeyboardShortcut combo="Mod+K" />
       </button>
 
-      <p class="text-sm text-ink-gray-6">
+      <p class="text-sm text-ink-gray-7">
         {chosen() ? `Ran ${chosen()}.` : 'Press ⌘K, then type.'}
       </p>
 

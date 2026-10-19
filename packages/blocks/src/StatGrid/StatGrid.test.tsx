@@ -34,7 +34,12 @@ describe('StatGrid', () => {
         ]}
       />
     ))
-    expect(screen.getByText('0.4 pts').className).toContain('text-ink-green-7')
+    // The pill pairing is the contrast contract's ink-*-8 on surface-*-2.
+    expect(screen.getByText('0.4 pts').className).toContain('text-ink-green-8')
+    expect(screen.getByText('0.4 pts').className).toContain(
+      'bg-surface-green-2',
+    )
+    expect(screen.getByText('0.4 pts').className).toContain('rounded-full')
     down.unmount()
 
     render(() => (
@@ -48,7 +53,8 @@ describe('StatGrid', () => {
         ]}
       />
     ))
-    expect(screen.getByText('2%').className).toContain('text-ink-red-7')
+    expect(screen.getByText('2%').className).toContain('text-ink-red-8')
+    expect(screen.getByText('2%').className).toContain('bg-surface-red-2')
   })
 
   it('is a button when it navigates, a card when it does not', async () => {

@@ -69,8 +69,12 @@ for (const layout of ['desktop', 'mobile']) {
     await expect(page.getByRole('dialog')).toBeHidden()
     if (layout === 'mobile')
       await page.getByRole('button', { name: 'Search', exact: true }).click()
+    // Desktop searches through the FilterBar (a searchbox); mobile keeps a
+    // labelled TextInput (a textbox).
     await page
-      .getByRole('textbox', { name: 'Search discussions' })
+      .getByRole(layout === 'mobile' ? 'textbox' : 'searchbox', {
+        name: 'Search discussions',
+      })
       .fill('October release')
     await page
       .getByRole('button', { name: 'Plan the October release', exact: true })

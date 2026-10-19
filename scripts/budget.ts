@@ -122,8 +122,8 @@ const ROUTES: RouteBudget[] = [
   },
   {
     route: '/examples/accounting/fullscreen',
-    budget: 330,
-    unless: 'interactive accounting workspace',
+    budget: 340,
+    unless: 'interactive accounting workspace in the shared rail frame',
   },
 
   {
@@ -140,8 +140,8 @@ const ROUTES: RouteBudget[] = [
 
   {
     route: '/examples/deals/fullscreen',
-    budget: 180,
-    unless: 'interactive deals workspace',
+    budget: 190,
+    unless: 'interactive deals workspace in the shared rail frame',
   },
 
   {
@@ -179,8 +179,8 @@ const ROUTES: RouteBudget[] = [
 
   {
     route: '/examples/analytics/fullscreen',
-    budget: 330,
-    unless: 'full analytics workspace with SVG charts',
+    budget: 345,
+    unless: 'full analytics workspace with SVG charts in the shared rail frame',
   },
   {
     route: '/',

@@ -1,8 +1,8 @@
 import {
-  Icon,
   type IconProp,
   ScrollArea,
   Sidebar,
+  SidebarCollapseToggle,
   SidebarHeader,
   SidebarItem,
   SidebarLabel,
@@ -16,6 +16,10 @@ export interface AppSidebarItem {
   /** A quiet trailing count — unread items, members, tickets. */
   count?: number
   active?: boolean
+  /** In-app destination; renders the row as a link. Wins over `href`. */
+  route?: string
+  /** External URL; renders the row as a link. */
+  href?: string
   onClick?: () => void
 }
 
@@ -34,6 +38,13 @@ export interface AppSidebarProps {
   headerActions?: JSX.Element
   groups: AppSidebarGroup[]
   width?: SidebarProps['width']
+  /** Allows the sidebar to fold to its rail, with the toggle at its foot. Default `true`. */
+  collapsible?: SidebarProps['collapsible']
+  /** Controlled collapsed state. Unset: the sidebar tracks its own. */
+  collapsed?: SidebarProps['collapsed']
+  onCollapsedChange?: SidebarProps['onCollapsedChange']
+  /** Collapsed width as a CSS length. Default `3rem`. */
+  collapsedWidth?: SidebarProps['collapsedWidth']
   class?: string
 }
 
@@ -44,7 +55,7 @@ export interface AppSidebarProps {
  * Every reference screen opens this way, and each one was repeating the same
  * twenty lines of `SidebarHeader` + `SidebarLabel` + `SidebarItem` markup —
  * including the parts that are easy to get subtly wrong: the header is not
- * inside the scroll region, a count is a quiet suffix rather than a `Badge`, and
+ * inside the scroll region, a count is a quiet pill rather than a `Badge`, and
  * the label row is what gives a long list its structure.
  *
  * The scroll region is `ScrollArea` (the thin, auto-hiding overlay scrollbar)
@@ -56,7 +67,14 @@ export interface AppSidebarProps {
  */
 export function AppSidebar(props: AppSidebarProps): JSX.Element {
   return (
-    <Sidebar width={props.width ?? '14rem'} class={props.class}>
+    <Sidebar
+      width={props.width ?? '14rem'}
+      collapsible={props.collapsible}
+      collapsed={props.collapsed}
+      onCollapsedChange={props.onCollapsedChange}
+      collapsedWidth={props.collapsedWidth}
+      class={props.class}
+    >
       <SidebarHeader
         title={props.title}
         subtitle={props.subtitle}
@@ -77,15 +95,16 @@ export function AppSidebar(props: AppSidebarProps): JSX.Element {
                     {(item) => (
                       <SidebarItem
                         active={item.active}
+                        label={item.label}
+                        icon={item.icon}
+                        route={item.route}
+                        href={item.href}
                         onClick={item.onClick}
-                        prefix={
-                          <Show when={item.icon}>
-                            {(icon) => <Icon icon={icon()} class="size-4" />}
-                          </Show>
-                        }
                         suffix={
                           <Show when={item.count}>
-                            <span class="text-caption">{item.count}</span>
+                            <span class="rounded-full bg-surface-gray-2 px-1.5 py-px text-caption tabular-nums text-ink-gray-7">
+                              {item.count}
+                            </span>
                           </Show>
                         }
                       >
@@ -100,6 +119,13 @@ export function AppSidebar(props: AppSidebarProps): JSX.Element {
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar />
       </ScrollArea.Root>
+      {/* The fold control lives at the foot, as in frappe-ui's sidebar — below
+          the scroll region so it stays put, and only when folding is on. */}
+      <Show when={props.collapsible !== false}>
+        <div class="px-2 pt-1 pb-2">
+          <SidebarCollapseToggle />
+        </div>
+      </Show>
     </Sidebar>
   )
 }

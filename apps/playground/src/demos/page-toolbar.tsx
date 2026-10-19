@@ -1,11 +1,12 @@
 import { PageToolbar } from '@newui/blocks'
 import { Button } from '@newui/ui'
 import type { JSX } from 'solid-js'
+import { DemoFrame } from './demo-frame'
 
 /** Registered in `demos.ts`; rendered by `/play` and the reference pages. */
 export default function Demo(): JSX.Element {
   return (
-    <div class="overflow-hidden rounded-6 border border-outline-gray-2">
+    <DemoFrame>
       <PageToolbar
         title="Tickets"
         menu={[{ label: 'Archive', icon: 'lucide-archive' }]}
@@ -18,6 +19,6 @@ export default function Demo(): JSX.Element {
           aria-label="Export"
         />
       </PageToolbar>
-    </div>
+    </DemoFrame>
   )
 }

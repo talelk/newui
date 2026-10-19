@@ -1910,6 +1910,29 @@
         "optional": true
       },
       {
+        "name": "collapsible",
+        "type": "SidebarProps['collapsible']",
+        "optional": true,
+        "description": "Allows the sidebar to fold to its rail, with the toggle at its foot. Default `true`."
+      },
+      {
+        "name": "collapsed",
+        "type": "SidebarProps['collapsed']",
+        "optional": true,
+        "description": "Controlled collapsed state. Unset: the sidebar tracks its own."
+      },
+      {
+        "name": "onCollapsedChange",
+        "type": "SidebarProps['onCollapsedChange']",
+        "optional": true
+      },
+      {
+        "name": "collapsedWidth",
+        "type": "SidebarProps['collapsedWidth']",
+        "optional": true,
+        "description": "Collapsed width as a CSS length. Default `3rem`."
+      },
+      {
         "name": "class",
         "type": "string",
         "optional": true
@@ -2022,6 +2045,24 @@
         "type": "{\n    options: FilterOption[]\n    value?: string\n    onValueChange?: (value: string) => void\n  }",
         "optional": true,
         "description": "A segmented control on the trailing edge — the view switcher."
+      },
+      {
+        "name": "chips",
+        "type": "FilterChip[]",
+        "optional": true,
+        "description": "Active filters restated as removable pills under the bar."
+      },
+      {
+        "name": "onClearAll",
+        "type": "() => void",
+        "optional": true,
+        "description": "Renders a \"Clear all\" button while a filter is active (a chip, a filled\nselect, or a non-empty query). The bar never clears anything itself —\nit reports the request and the caller resets its own state."
+      },
+      {
+        "name": "resultCount",
+        "type": "number",
+        "optional": true,
+        "description": "Rows the current filters match, stated under the bar (`24 results`)."
       },
       {
         "name": "children",
@@ -6736,7 +6777,30 @@
         "name": "label",
         "type": "string",
         "optional": true,
-        "description": "Accessible name and native tooltip while collapsed."
+        "description": "Accessible name and tooltip while collapsed. Defaults to string children."
+      },
+      {
+        "name": "icon",
+        "type": "IconProp",
+        "optional": true,
+        "description": "Leading glyph when `prefix` is unset: a `lucide-*` string or a component."
+      },
+      {
+        "name": "route",
+        "type": "string",
+        "optional": true,
+        "description": "In-app destination (CONTEXT: `route` is in-app, `href` is external). Wins\nover `href`. Renders an anchor with a plain `href`; pair it with `onClick`\nto intercept the click and navigate with your router."
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "optional": true,
+        "description": "External URL, opened in a new tab unless `target` says otherwise."
+      },
+      {
+        "name": "target",
+        "type": "string",
+        "optional": true
       },
       {
         "name": "class",
@@ -6812,6 +6876,12 @@
         "optional": true
       },
       {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name of the `<nav>` landmark. Default `Applications`."
+      },
+      {
         "name": "children",
         "type": "JSX.Element",
         "optional": true
@@ -6858,6 +6928,23 @@
         "type": "SidebarRailItemBadgeStyle",
         "optional": true,
         "description": "How the badge renders: a count pill or a small dot."
+      },
+      {
+        "name": "route",
+        "type": "string",
+        "optional": true,
+        "description": "In-app destination (CONTEXT: `route` is in-app, `href` is external). Wins\nover `href`. Renders an anchor with a plain `href`; pair it with `onClick`\nto intercept the click and navigate with your router."
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "optional": true,
+        "description": "External URL, opened in a new tab unless `target` says otherwise."
+      },
+      {
+        "name": "target",
+        "type": "string",
+        "optional": true
       },
       {
         "name": "class",
@@ -6908,10 +6995,22 @@
         "description": "Makes the heading a disclosure that collapses the body."
       },
       {
+        "name": "collapsed",
+        "type": "boolean",
+        "optional": true,
+        "description": "Controlled collapsed state. Unset: the section keeps its own."
+      },
+      {
         "name": "defaultCollapsed",
         "type": "boolean",
         "optional": true,
         "description": "Uncontrolled initial collapsed state."
+      },
+      {
+        "name": "onCollapsedChange",
+        "type": "(collapsed: boolean) => void",
+        "optional": true,
+        "description": "Fired on every toggle, controlled or not."
       },
       {
         "name": "class",

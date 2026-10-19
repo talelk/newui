@@ -1,11 +1,18 @@
 {
   "files": [
     "pages/Deals.tsx",
+    "examples/CreateDialog.tsx",
     "examples/DataTable.tsx",
+    "examples/ScrollTable.tsx",
     "examples/deals-data.ts",
     "examples/ExampleFrame.tsx",
+    "lib/examples.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",
+    "examples/format.ts",
+    "examples/Notice.tsx",
+    "examples/select.ts",
+    "examples/undo.ts",
     "examples/WorkspaceNav.tsx"
   ],
   "packages": [

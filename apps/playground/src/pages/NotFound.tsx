@@ -5,9 +5,9 @@ import type { JSX } from 'solid-js'
 export function NotFound(): JSX.Element {
   return (
     <div class="mx-auto flex min-h-screen max-w-3xl flex-col items-start justify-center gap-4 px-6">
-      <p class="text-sm text-ink-gray-6">404</p>
+      <p class="text-sm text-ink-gray-7">404</p>
       <h1 class="text-heading text-ink-gray-9">There is no page here.</h1>
-      <p class="text-base text-ink-gray-6">
+      <p class="text-base text-ink-gray-7">
         No route matches{' '}
         <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
           {window.location.pathname}

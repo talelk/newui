@@ -1,39 +1,28 @@
-import { DonutChart } from '@newui/charts'
-import { Button } from '@newui/ui'
-import { createSignal } from 'solid-js'
+import { ChartCard, ChartLegend, DonutChart } from '@newui/charts'
+import { ChartDemoControls, STAGE_ACTIVITY } from './chart-demo-state'
 export default function Demo() {
-  const [loading, setLoading] = createSignal(false)
-  const [empty, setEmpty] = createSignal(false)
-  const [error, setError] = createSignal(false)
   return (
-    <div class="flex flex-col gap-3">
-      <div class="flex flex-wrap gap-2">
-        <Button aria-pressed={empty()} onClick={() => setEmpty(!empty())}>
-          Toggle empty
-        </Button>
-        <Button aria-pressed={loading()} onClick={() => setLoading(!loading())}>
-          Toggle loading
-        </Button>
-        <Button aria-pressed={error()} onClick={() => setError(!error())}>
-          Toggle error
-        </Button>
-      </div>
-      <DonutChart
-        title="Monthly activity"
-        data={
-          empty()
-            ? []
-            : [
-                { name: 'Visits', value: 100 },
-                { name: 'Trials', value: 60 },
-                { name: 'Paid', value: 24 },
-              ]
-        }
-        category="name"
-        value="value"
-        loading={loading()}
-        error={error() ? 'Could not load activity.' : undefined}
-      />
-    </div>
+    <ChartDemoControls data={STAGE_ACTIVITY}>
+      {(state) => (
+        <ChartCard>
+          <DonutChart
+            title="Monthly activity"
+            data={state().data}
+            category="name"
+            value="value"
+            loading={state().loading}
+            error={state().error}
+          />
+          <ChartLegend
+            items={state().data.map((row, index) => ({
+              name: row.name,
+              label: row.name,
+              color: `var(--chart-${index + 1})`,
+              hint: String(row.value),
+            }))}
+          />
+        </ChartCard>
+      )}
+    </ChartDemoControls>
   )
 }

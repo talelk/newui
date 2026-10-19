@@ -3,6 +3,7 @@ import { createMemo, createResource, lazy, Show, Suspense } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 import { DEMOS } from '../demos'
 import { COMPONENTS } from '../generated/components'
+import { LoadingNote } from '../lib/LoadingNote'
 import { REFERENCE_EXAMPLES } from '../lib/reference-examples'
 // The raw-sources glob lives in a `.ts` module: a glob call written in a
 // `.tsx` file breaks Vite 8's dependency scan (registry-example-sources.ts).
@@ -61,7 +62,7 @@ export function RegistryExamplePage() {
             title={item().name}
             description={`Adapted from solid-ui ${item().source}. The example uses newui semantic tokens and keyboard behavior.`}
           />
-          <Suspense fallback={<p>Loading example…</p>}>
+          <Suspense fallback={<LoadingNote label="Loading example…" />}>
             <Show
               when={resolved()}
               fallback={
@@ -77,7 +78,7 @@ export function RegistryExamplePage() {
               {(demo) => (
                 <section
                   aria-label={item().name}
-                  class="min-w-0 rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-3"
+                  class="min-w-0 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3"
                 >
                   <Dynamic
                     component={demo().Component}

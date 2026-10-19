@@ -18,7 +18,7 @@ test('desktop mail navigation collapses and pane resizing preserves the inbox', 
   const handle = page.getByRole('slider', { name: 'Inbox pane width' })
   await handle.focus()
   await page.keyboard.press('End')
-  await expect(handle).toHaveValue('70')
+  await expect(handle).toHaveAttribute('aria-valuenow', '70')
   expect((await list.boundingBox())?.width).toBeGreaterThan(before?.width ?? 0)
   await expect(list).toContainText('September launch checklist')
 })
@@ -54,7 +54,7 @@ test('mail filters, stars, replies, archives and undoes local changes', async ({
   page,
 }) => {
   await page.goto('/examples/mail/fullscreen')
-  const search = page.getByRole('textbox', { name: 'Search mail' })
+  const search = page.getByRole('searchbox', { name: 'Search conversations' })
   await search.fill('launch checklist')
   const starred = page.getByRole('button', {
     name: 'Unstar September launch checklist',
@@ -185,7 +185,7 @@ for (const theme of ['light', 'dark']) {
     ).toBeLessThan(1200)
     await page.getByRole('button', { name: 'Back to conversations' }).click()
     await expect(
-      page.getByRole('textbox', { name: 'Search mail' }),
+      page.getByRole('searchbox', { name: 'Search conversations' }),
     ).toBeVisible()
   })
 }

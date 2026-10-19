@@ -16,21 +16,23 @@ export function Examples(): JSX.Element {
           {(example) => (
             <A
               href={example.href}
-              class="flex min-h-11 items-center gap-3 rounded-3 p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
+              class="flex min-h-11 items-start gap-3 rounded-3 p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
             >
-              <CatalogIcon />
+              <span class="mt-0.5 flex shrink-0">
+                <CatalogIcon icon={example.icon} />
+              </span>
               <div class="min-w-0 flex-1">
                 <h2 class="text-interface font-medium">{example.name}</h2>
-                <p class="mt-1 text-caption text-ink-gray-6">
+                <p class="mt-1 text-caption text-ink-gray-7">
                   {example.description}
                 </p>
-                <p class="mt-1 text-caption text-ink-gray-6">
+                <p class="mt-1 text-caption text-ink-gray-7">
                   {example.source}
                 </p>
               </div>
               <span
                 aria-hidden="true"
-                class="lucide-arrow-up-right size-4 shrink-0 text-ink-gray-6"
+                class="lucide-arrow-up-right size-4 shrink-0 self-center text-ink-gray-7"
               />
             </A>
           )}

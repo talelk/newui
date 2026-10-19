@@ -5,9 +5,11 @@ import {
   For,
   type JSX,
   onCleanup,
+  onMount,
   Show,
   Suspense,
 } from 'solid-js'
+import { LoadingNote } from './LoadingNote'
 
 export const VIEWPORTS = {
   mobile: { label: 'Mobile', width: 390, height: 844 },
@@ -73,7 +75,13 @@ function SourcePanel(props: {
           </p>
         }
       >
-        <Suspense fallback={<p class="p-4">Loading source…</p>}>
+        <Suspense
+          fallback={
+            <div class="p-4">
+              <LoadingNote label="Loading source…" />
+            </div>
+          }
+        >
           <div class="flex flex-wrap items-end gap-2 p-2">
             <Show when={bundle()}>
               {(files) => (
@@ -122,7 +130,7 @@ function SourcePanel(props: {
           </div>
           <Show when={bundle()}>
             {(files) => (
-              <details class="px-3 pb-2 text-caption text-ink-gray-6">
+              <details class="px-3 pb-2 text-caption text-ink-gray-7">
                 <summary class="cursor-pointer rounded-3 focus-visible:focus-ring">
                   Package setup
                 </summary>
@@ -157,6 +165,26 @@ function Preview(props: {
   const [sourceOpened, setSourceOpened] = createSignal(false)
   const dimensions = () => VIEWPORTS[viewport()]
   let frame: HTMLIFrameElement | undefined
+  let stage: HTMLDivElement | undefined
+  const [stageWidth, setStageWidth] = createSignal(0)
+  /**
+   * Presets wider than the stage (a 1440 desktop inside the docs column)
+   * scale down to fit instead of cropping: the iframe keeps its true
+   * viewport, only its rendering shrinks. At 1:1 no transform is applied.
+   */
+  const scale = () => {
+    const width = stageWidth()
+    return width > 0 ? Math.min(1, width / dimensions().width) : 1
+  }
+  onMount(() => {
+    if (!stage || typeof ResizeObserver === 'undefined') return
+    const resize = new ResizeObserver(() =>
+      setStageWidth(stage?.clientWidth ?? 0),
+    )
+    resize.observe(stage)
+    setStageWidth(stage.clientWidth)
+    onCleanup(() => resize.disconnect())
+  })
   let observer: MutationObserver | undefined
   let releaseDocument: (() => void) | undefined
   const sync = () => {
@@ -192,7 +220,9 @@ function Preview(props: {
     const revealFocus = (event: FocusEvent) => {
       if (!keyboardFocus) return
       const target = event.target as HTMLElement | null
-      const port = frame?.parentElement
+      // The scrollport is the stage, two levels up since the scaling
+      // wrapper sits between it and the frame.
+      const port = stage
       if (!target || !frame || !port) return
       const bounds = target.getBoundingClientRect()
       const frameBounds = frame.getBoundingClientRect()
@@ -286,7 +316,7 @@ function Preview(props: {
               )}
             </For>
           </fieldset>
-          <output aria-live="polite" class="text-caption text-ink-gray-6">
+          <output aria-live="polite" class="text-caption text-ink-gray-7">
             {dimensions().width} × {dimensions().height}
           </output>
           <a
@@ -303,6 +333,7 @@ function Preview(props: {
         </Show>
       </div>
       <div
+        ref={stage}
         hidden={tab() !== 'preview'}
         class="max-w-full overflow-auto"
         classList={{ 'max-h-[70dvh]': !!props.src }}
@@ -311,16 +342,27 @@ function Preview(props: {
           when={props.src}
           fallback={<div class="p-3">{props.children}</div>}
         >
-          <iframe
-            ref={frame}
-            title={`${props.title} preview`}
-            src={props.src}
-            width={dimensions().width}
-            height={dimensions().height}
-            loading="lazy"
-            onLoad={loaded}
-            class="block max-w-none border-0 bg-surface-base"
-          />
+          <div
+            style={{
+              width: `${dimensions().width * scale()}px`,
+              height: `${dimensions().height * scale()}px`,
+            }}
+          >
+            <iframe
+              ref={frame}
+              title={`${props.title} preview`}
+              src={props.src}
+              width={dimensions().width}
+              height={dimensions().height}
+              loading="lazy"
+              onLoad={loaded}
+              style={{
+                transform: scale() < 1 ? `scale(${scale()})` : undefined,
+                'transform-origin': '0 0',
+              }}
+              class="block max-w-none border-0 bg-surface-base"
+            />
+          </div>
         </Show>
       </div>
       <div hidden={tab() !== 'source'}>

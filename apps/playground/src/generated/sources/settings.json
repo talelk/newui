@@ -1,6 +1,9 @@
 {
   "files": [
     "pages/Settings.tsx",
+    "examples/format.ts",
+    "examples/Notice.tsx",
+    "lib/PageSection.tsx",
     "shell/PageIntro.tsx"
   ],
   "packages": [

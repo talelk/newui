@@ -12,6 +12,7 @@ import {
   useContext,
 } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
+import { createControllableSignal } from '../../lib/controllable'
 import { createId } from '../../lib/id'
 import { createMediaQuery } from '../../lib/media'
 import { cn } from '../../lib/tv'
@@ -193,12 +194,12 @@ export const SidebarHeader: ParentComponent<SidebarHeaderProps> = (props) => {
         <Show when={!collapsed()}>
           <div class="flex min-w-0 flex-1 flex-col">
             <Show when={local.title}>
-              <span class="truncate text-base-medium leading-tighter text-ink-gray-8">
+              <span class="truncate text-base-semibold leading-tighter text-ink-gray-9">
                 {local.title}
               </span>
             </Show>
             <Show when={local.subtitle}>
-              <span class="mt-0.5 truncate text-sm leading-tighter text-ink-gray-6">
+              <span class="mt-0.5 truncate text-caption leading-tighter text-ink-gray-7">
                 {local.subtitle}
               </span>
             </Show>
@@ -230,7 +231,7 @@ export const SidebarLabel: ParentComponent<SidebarLabelProps> = (props) => {
     >
       <div
         class={cn(
-          'text-base leading-tighter text-ink-gray-6 transition-all duration-300 ease-in-out',
+          'text-base leading-tighter text-ink-gray-7 transition-all duration-300 ease-in-out',
           collapsed() ? 'w-0 overflow-hidden opacity-0' : 'w-auto opacity-100',
         )}
       >
@@ -247,8 +248,19 @@ export const SidebarLabel: ParentComponent<SidebarLabelProps> = (props) => {
 
 export interface SidebarItemProps {
   active?: boolean
-  /** Accessible name and native tooltip while collapsed. */
+  /** Accessible name and tooltip while collapsed. Defaults to string children. */
   label?: string
+  /** Leading glyph when `prefix` is unset: a `lucide-*` string or a component. */
+  icon?: IconProp
+  /**
+   * In-app destination (CONTEXT: `route` is in-app, `href` is external). Wins
+   * over `href`. Renders an anchor with a plain `href`; pair it with `onClick`
+   * to intercept the click and navigate with your router.
+   */
+  route?: string
+  /** External URL, opened in a new tab unless `target` says otherwise. */
+  href?: string
+  target?: string
   class?: string
   prefix?: JSX.Element
   suffix?: JSX.Element
@@ -260,69 +272,96 @@ export const SidebarItem: ParentComponent<SidebarItemProps> = (props) => {
   const [local, rest] = splitProps(props, [
     'active',
     'label',
+    'icon',
+    'route',
+    'href',
+    'target',
     'class',
     'prefix',
     'suffix',
     'children',
   ])
   const { collapsed } = useSidebar()
+  const labelText = () =>
+    local.label ??
+    (typeof local.children === 'string' ? local.children : undefined)
   /**
    * The label only has a job while the item is an icon in a rail. Returning the
    * string (rather than a boolean) is what lets `Show` narrow the accessor to
    * `string`, so the trigger can use it as its accessible name.
    */
-  const collapsedLabel = () => (collapsed() ? local.label : undefined)
+  const collapsedLabel = () => (collapsed() ? labelText() : undefined)
+  const tag = () => ((local.route ?? local.href) ? 'a' : 'button')
+  const rootProps = () => {
+    if (tag() === 'a') {
+      if (local.route) return { href: local.route }
+      return {
+        href: local.href,
+        target: local.target ?? '_blank',
+        rel: 'noreferrer noopener',
+      }
+    }
+    return { type: 'button' as const }
+  }
 
-  const classes = () =>
+  const rowClasses = () =>
     cn(
-      'flex h-8 w-full items-center gap-2 rounded-3 px-2 text-start text-interface text-ink-gray-6',
-      'transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring-blue motion-reduce:transition-none',
+      'relative flex h-8 w-full items-center rounded-3 text-interface text-ink-gray-6',
+      'transition-colors hover:bg-surface-gray-2 motion-reduce:transition-none',
       'data-[active]:bg-surface-blue-1 data-[active]:text-ink-blue-8',
-      collapsed() && 'justify-center px-0',
       local.class,
+    )
+  const innerClasses = () =>
+    cn(
+      'flex h-full min-w-0 flex-1 items-center gap-2 rounded-3 px-2 text-start',
+      'focus-visible:focus-ring-blue',
+      collapsed() && 'justify-center px-0',
     )
 
   const content = () => (
     <>
-      <Show when={local.prefix}>
-        <span class="shrink-0">{local.prefix}</span>
+      <Show when={local.prefix ?? local.icon} fallback={null}>
+        <span class="shrink-0">
+          {local.prefix ?? <Icon icon={local.icon} class="size-4" />}
+        </span>
       </Show>
       <span class={cn('flex-1 truncate', collapsed() && 'sr-only')}>
         {local.children}
       </span>
-      <Show when={!collapsed()}>{local.suffix}</Show>
     </>
   )
 
-  return (
+  const inner = () => (
     <Show
       when={collapsedLabel()}
       fallback={
-        <button
+        <Dynamic
+          component={tag()}
           {...rest}
-          type="button"
-          data-slot="sidebar-item"
+          {...rootProps()}
           data-active={local.active ? '' : undefined}
-          class={classes()}
+          aria-current={local.active ? 'page' : undefined}
+          class={innerClasses()}
         >
           {content()}
-        </button>
+        </Dynamic>
       }
     >
       {(label) => (
         // The tooltip *is* the item's tooltip: a rail of bare icons is unusable
         // without one, and `title` takes a second to appear and cannot be
-        // styled. `TooltipTrigger` renders the button, so there is no wrapper
+        // styled. `TooltipTrigger` renders the element, so there is no wrapper
         // button-in-button.
         <TooltipRoot placement="right" openDelay={300}>
           <TooltipTrigger
             {...rest}
-            type="button"
-            data-slot="sidebar-item"
+            as={tag()}
+            {...rootProps()}
             data-active={local.active ? '' : undefined}
             data-collapsed=""
+            aria-current={local.active ? 'page' : undefined}
             aria-label={label()}
-            class={classes()}
+            class={innerClasses()}
           >
             {content()}
           </TooltipTrigger>
@@ -330,6 +369,21 @@ export const SidebarItem: ParentComponent<SidebarItemProps> = (props) => {
         </TooltipRoot>
       )}
     </Show>
+  )
+
+  return (
+    <div
+      data-slot="sidebar-item"
+      data-active={local.active ? '' : undefined}
+      class={rowClasses()}
+    >
+      {inner()}
+      {/* The suffix sits beside the link, not inside it, so a menu button
+          there is valid HTML (the frappe-ui row anatomy). */}
+      <Show when={!collapsed() && local.suffix}>
+        <span class="flex shrink-0 items-center pe-2">{local.suffix}</span>
+      </Show>
+    </div>
   )
 }
 
@@ -418,11 +472,14 @@ export function SidebarTrigger(props: SidebarTriggerProps): JSX.Element {
 
 export interface SidebarRailProps {
   class?: string
+  /** Accessible name of the `<nav>` landmark. Default `Applications`. */
+  label?: string
   children?: JSX.Element
 }
 
 export const SidebarRail: ParentComponent<SidebarRailProps> = (props) => (
-  <div
+  <nav
+    aria-label={props.label ?? 'Applications'}
     data-slot="sidebar-rail"
     class={cn(
       'flex h-full w-[50px] shrink-0 flex-col items-center bg-surface-sidebar px-[11px] pb-3 pt-2.5',
@@ -430,7 +487,7 @@ export const SidebarRail: ParentComponent<SidebarRailProps> = (props) => (
     )}
   >
     {props.children}
-  </div>
+  </nav>
 )
 
 export type SidebarRailItemVariant = 'subtle' | 'ghost'
@@ -450,6 +507,15 @@ export interface SidebarRailItemProps {
   badge?: number
   /** How the badge renders: a count pill or a small dot. */
   badgeStyle?: SidebarRailItemBadgeStyle
+  /**
+   * In-app destination (CONTEXT: `route` is in-app, `href` is external). Wins
+   * over `href`. Renders an anchor with a plain `href`; pair it with `onClick`
+   * to intercept the click and navigate with your router.
+   */
+  route?: string
+  /** External URL, opened in a new tab unless `target` says otherwise. */
+  href?: string
+  target?: string
   class?: string
   children?: JSX.Element
   onClick?: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>
@@ -466,9 +532,24 @@ export const SidebarRailItem: ParentComponent<SidebarRailItemProps> = (
     'variant',
     'badge',
     'badgeStyle',
+    'route',
+    'href',
+    'target',
     'class',
     'children',
   ])
+  const tag = () => ((local.route ?? local.href) ? 'a' : 'button')
+  const rootProps = () => {
+    if (tag() === 'a') {
+      if (local.route) return { href: local.route }
+      return {
+        href: local.href,
+        target: local.target ?? '_blank',
+        rel: 'noreferrer noopener',
+      }
+    }
+    return { type: 'button' as const }
+  }
   const variant = () => local.variant ?? 'subtle'
   const badge = () => local.badge ?? 0
   const showIndicator = () => variant() === 'subtle' && Boolean(local.active)
@@ -487,11 +568,12 @@ export const SidebarRailItem: ParentComponent<SidebarRailItemProps> = (
     <TooltipRoot placement="right" openDelay={0}>
       <TooltipTrigger
         {...rest}
-        as="button"
-        type="button"
+        as={tag()}
+        {...rootProps()}
         data-slot="sidebar-rail-item"
         data-variant={variant()}
         data-active={local.active ? '' : undefined}
+        aria-current={local.active ? 'page' : undefined}
         aria-label={ariaLabel()}
         class={cn(
           'relative grid size-7 shrink-0 place-items-center text-base transition',
@@ -594,8 +676,12 @@ export interface SidebarSectionProps {
   label?: JSX.Element
   /** Makes the heading a disclosure that collapses the body. */
   collapsible?: boolean
+  /** Controlled collapsed state. Unset: the section keeps its own. */
+  collapsed?: boolean
   /** Uncontrolled initial collapsed state. */
   defaultCollapsed?: boolean
+  /** Fired on every toggle, controlled or not. */
+  onCollapsedChange?: (collapsed: boolean) => void
   class?: string
   children?: JSX.Element
 }
@@ -608,13 +694,17 @@ export function SidebarSection(props: SidebarSectionProps): JSX.Element {
   const [local] = splitProps(props, [
     'label',
     'collapsible',
+    'collapsed',
     'defaultCollapsed',
+    'onCollapsedChange',
     'class',
     'children',
   ])
-  const [collapsed, setCollapsed] = createSignal(
-    local.defaultCollapsed ?? false,
-  )
+  const [collapsed, setCollapsed] = createControllableSignal<boolean>({
+    value: () => local.collapsed,
+    defaultValue: local.defaultCollapsed ?? false,
+    onChange: (value) => local.onCollapsedChange?.(value),
+  })
   const { collapsed: sidebarCollapsed } = useSidebar()
   const headingId = createId('sidebar-section')
   const bodyId = createId('sidebar-section-body')
@@ -642,7 +732,7 @@ export function SidebarSection(props: SidebarSectionProps): JSX.Element {
                 class="flex items-center gap-1 rounded-4 focus-visible:focus-ring"
                 aria-expanded={!collapsed()}
                 aria-controls={bodyId}
-                onClick={() => setCollapsed((value) => !value)}
+                onClick={() => setCollapsed(!collapsed())}
               >
                 {local.label}
                 <span
@@ -673,7 +763,8 @@ export function SidebarSection(props: SidebarSectionProps): JSX.Element {
 
 export interface SidebarCardAction {
   label: string
-  onClick?: () => void
+  /** `dismiss` removes the card the same way its close button does. */
+  onClick?: (context: { dismiss: () => void }) => void
 }
 
 export interface SidebarCardProps {
@@ -760,7 +851,9 @@ export function SidebarCard(props: SidebarCardProps): JSX.Element {
         {(action) => (
           <button
             type="button"
-            onClick={action().onClick}
+            onClick={() =>
+              action().onClick?.({ dismiss: () => local.onDismiss?.() })
+            }
             class="w-fit rounded-3 px-1.5 py-0.5 text-sm-medium text-ink-blue-6 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring-blue motion-reduce:transition-none"
           >
             {action().label}

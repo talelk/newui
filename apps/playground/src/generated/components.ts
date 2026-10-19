@@ -24,7 +24,7 @@ export interface ComponentEntry {
 export const COMPONENTS: ComponentEntry[] = [
   {
     "name": "Button",
-    "description": "Button — an action control.",
+    "description": "An action control.",
     "slug": "button",
     "group": "Actions",
     "package": "@newui/ui",
@@ -38,7 +38,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ContextMenu",
-    "description": "ContextMenu — a menu that opens at the pointer when the user right-clicks inside its trigger area.",
+    "description": "A menu that opens at the pointer when the user right-clicks inside its trigger area.",
     "slug": "context-menu",
     "group": "Actions",
     "package": "@newui/ui",
@@ -53,7 +53,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Dropdown",
-    "description": "Dropdown — an options-based action menu.",
+    "description": "An options-based action menu.",
     "slug": "dropdown",
     "group": "Actions",
     "package": "@newui/ui",
@@ -67,7 +67,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "KeyboardShortcut",
-    "description": "KeyboardShortcut — draws a key combination as <kbd> glyphs.",
+    "description": "Draws a key combination as <kbd> glyphs.",
     "slug": "keyboard-shortcut",
     "group": "Actions",
     "package": "@newui/ui",
@@ -110,7 +110,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "AreaChart",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "Filled line series for change over time.",
     "slug": "area-chart",
     "group": "Charts",
     "package": "@newui/charts",
@@ -124,7 +124,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "BarChart",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "Bars for comparing categories and series.",
     "slug": "bar-chart",
     "group": "Charts",
     "package": "@newui/charts",
@@ -138,7 +138,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ChartBase",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "The shared ECharts host every chart renders through.",
     "slug": "chart-base",
     "group": "Charts",
     "package": "@newui/charts",
@@ -152,7 +152,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ChartCard",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "The bordered card a chart sits in, with title chrome.",
     "slug": "chart-card",
     "group": "Charts",
     "package": "@newui/charts",
@@ -166,7 +166,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ChartContainer",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "Sizing, loading and empty states around a chart.",
     "slug": "chart-container",
     "group": "Charts",
     "package": "@newui/charts",
@@ -180,7 +180,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ChartLegend",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "Series legend with hover emphasis.",
     "slug": "chart-legend",
     "group": "Charts",
     "package": "@newui/charts",
@@ -194,7 +194,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ChartTooltip",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "The formatted hover card for chart values.",
     "slug": "chart-tooltip",
     "group": "Charts",
     "package": "@newui/charts",
@@ -209,7 +209,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Dashboard",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "A ready-made grid of KPI cards and charts.",
     "slug": "dashboard",
     "group": "Charts",
     "package": "@newui/charts",
@@ -223,7 +223,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "DonutChart",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "Part-to-whole shares as a ring.",
     "slug": "donut-chart",
     "group": "Charts",
     "package": "@newui/charts",
@@ -237,7 +237,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "FunnelChart",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "Stage-by-stage conversion drop-off.",
     "slug": "funnel-chart",
     "group": "Charts",
     "package": "@newui/charts",
@@ -251,7 +251,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "HeatmapChart",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "Density across two categorical axes.",
     "slug": "heatmap-chart",
     "group": "Charts",
     "package": "@newui/charts",
@@ -265,7 +265,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "LineChart",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "Line series for trends and comparisons.",
     "slug": "line-chart",
     "group": "Charts",
     "package": "@newui/charts",
@@ -279,7 +279,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "NumberCard",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "One KPI: value, delta, target and sparkline.",
     "slug": "number-card",
     "group": "Charts",
     "package": "@newui/charts",
@@ -293,7 +293,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "SankeyChart",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "Flows and their magnitudes between nodes.",
     "slug": "sankey-chart",
     "group": "Charts",
     "package": "@newui/charts",
@@ -307,7 +307,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ScatterChart",
-    "description": "@newui/charts renders analytical data with SVG ECharts and semantic tokens.",
+    "description": "Point clouds for correlation and outliers.",
     "slug": "scatter-chart",
     "group": "Charts",
     "package": "@newui/charts",
@@ -350,7 +350,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "FilterBar",
-    "description": "FilterBar — the row of controls above a list: search, one or two selects, and the view switcher.",
+    "description": "The row of controls above a list: search, one or two selects, and the view switcher, on one quiet surface.",
     "slug": "filter-bar",
     "group": "Data",
     "package": "@newui/blocks",
@@ -364,7 +364,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "StatGrid",
-    "description": "StatGrid — a row of KPI cards.",
+    "description": "A row of KPI cards.",
     "slug": "stat-grid",
     "group": "Data",
     "package": "@newui/blocks",
@@ -378,7 +378,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Accordion",
-    "description": "Accordion — a set of collapsible sections, over Zag's accordion machine.",
+    "description": "A set of collapsible sections, over Zag's accordion machine.",
     "slug": "accordion",
     "group": "Disclosure",
     "package": "@newui/ui",
@@ -395,7 +395,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Collapsible",
-    "description": "Collapsible — one disclosure: a trigger and the panel it shows or hides, over Zag's collapsible machine.",
+    "description": "One disclosure: a trigger and the panel it shows or hides, over Zag's collapsible machine.",
     "slug": "collapsible",
     "group": "Disclosure",
     "package": "@newui/ui",
@@ -497,7 +497,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "EmptyState",
-    "description": "EmptyState — what a list, table or panel shows when it has nothing to show.",
+    "description": "What a list, table or panel shows when it has nothing to show.",
     "slug": "empty-state",
     "group": "Display",
     "package": "@newui/ui",
@@ -525,7 +525,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ItemListRow",
-    "description": "ItemListRow — a single row of a menu or list, with a prefix, a label and a suffix.",
+    "description": "A single row of a menu or list, with a prefix, a label and a suffix.",
     "slug": "item-list-row",
     "group": "Display",
     "package": "@newui/ui",
@@ -555,7 +555,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Timeline",
-    "description": "Timeline — a vertical run of events, oldest first, with a rail drawn between the markers rather than through them.",
+    "description": "A vertical run of events, oldest first, with a rail drawn between the markers rather than through them.",
     "slug": "timeline",
     "group": "Display",
     "package": "@newui/ui",
@@ -569,7 +569,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Tree",
-    "description": "Tree — a hierarchical tree view with expand/collapse and selection.",
+    "description": "A hierarchical tree view with expand/collapse and selection.",
     "slug": "tree",
     "group": "Display",
     "package": "@newui/ui",
@@ -611,7 +611,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ProgressCircle",
-    "description": "ProgressCircle — a determinate ring: a full-circle track and a value drawn as a dash offset on a second circle of the same geometry, so the fill alway",
+    "description": "A determinate ring: a full-circle track and a value drawn as a dash offset on a second circle of the same geometry, so the fill always starts at…",
     "slug": "progress-circle",
     "group": "Feedback",
     "package": "@newui/ui",
@@ -653,7 +653,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Toast",
-    "description": "Import toast and mount one Toaster inside UIProvider.",
+    "description": "Transient notifications, mounted once via the Toaster.",
     "slug": "toast",
     "group": "Feedback",
     "package": "@newui/ui",
@@ -679,7 +679,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Duration",
-    "description": "Duration — a duration value control.",
+    "description": "A duration value control.",
     "slug": "duration",
     "group": "Inputs",
     "package": "@newui/ui",
@@ -693,7 +693,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ErrorMessage",
-    "description": "frappe-ui's public form primitives.",
+    "description": "The inline error half of the labelling contract (P5).",
     "slug": "error-message",
     "group": "Inputs",
     "package": "@newui/ui",
@@ -707,7 +707,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "FormControl",
-    "description": "frappe-ui's public form primitives.",
+    "description": "Wires a label, control and error together (P5).",
     "slug": "form-control",
     "group": "Inputs",
     "package": "@newui/ui",
@@ -722,7 +722,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "FormLabel",
-    "description": "frappe-ui's public form primitives.",
+    "description": "The label half of the shared labelling contract (P5).",
     "slug": "form-label",
     "group": "Inputs",
     "package": "@newui/ui",
@@ -750,7 +750,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Password",
-    "description": "Password — a masked text field with a reveal toggle.",
+    "description": "A masked text field with a reveal toggle.",
     "slug": "password",
     "group": "Inputs",
     "package": "@newui/ui",
@@ -806,7 +806,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Switch",
-    "description": "Switch — a Zag-backed boolean control.",
+    "description": "A Zag-backed boolean control.",
     "slug": "switch",
     "group": "Inputs",
     "package": "@newui/ui",
@@ -820,7 +820,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Textarea",
-    "description": "Every control that holds a value the user enters, selects or toggles exposes the same four props with identical semantics (P5):",
+    "description": "Multi-line text value with the shared labelling contract.",
     "slug": "textarea",
     "group": "Inputs",
     "package": "@newui/ui",
@@ -834,7 +834,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "TextInput",
-    "description": "Every control that holds a value the user enters, selects or toggles exposes the same four props with identical semantics (P5):",
+    "description": "Single-line text value with the shared labelling contract.",
     "slug": "text-input",
     "group": "Inputs",
     "package": "@newui/ui",
@@ -864,7 +864,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "AppSidebar",
-    "description": "AppSidebar — the navigation sidebar a screen opens with, from @newui/blocks.",
+    "description": "The navigation sidebar a screen opens with, from @newui/blocks.",
     "slug": "app-sidebar",
     "group": "Layout",
     "package": "@newui/blocks",
@@ -878,7 +878,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "DesktopShell",
-    "description": "DesktopShell — the desktop app frame: an optional icon rail, an optional navigation sidebar, and a content column beside them.",
+    "description": "The desktop app frame: an optional icon rail, an optional navigation sidebar, and a content column beside them.",
     "slug": "desktop-shell",
     "group": "Layout",
     "package": "@newui/ui",
@@ -892,7 +892,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "DetailHeader",
-    "description": "DetailHeader — the top of a record page: where it sits, what it is, what state it is in, and what you can do to it.",
+    "description": "The top of a record page: where it sits, what it is, what state it is in, and what you can do to it.",
     "slug": "detail-header",
     "group": "Layout",
     "package": "@newui/blocks",
@@ -906,7 +906,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "KanbanBoard",
-    "description": "KanbanBoard — columns of cards you drag between them, from @newui/blocks.",
+    "description": "Columns of cards you drag between them, from @newui/blocks.",
     "slug": "kanban-board",
     "group": "Layout",
     "package": "@newui/blocks",
@@ -935,7 +935,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "PageToolbar",
-    "description": "PageToolbar — the page header: a title, an optional title menu, and the actions.",
+    "description": "The page header: a title, an optional title menu, and the actions.",
     "slug": "page-toolbar",
     "group": "Layout",
     "package": "@newui/blocks",
@@ -949,7 +949,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ResponsiveShell",
-    "description": "ResponsiveShell — one navigation, two frames: the docked AppShell where there is room for two columns, the MobileShell where there is not, with the si",
+    "description": "One navigation, two frames: the docked AppShell where there is room for two columns, the MobileShell where there is not, with the sidebar becoming…",
     "slug": "responsive-shell",
     "group": "Layout",
     "package": "@newui/ui",
@@ -963,7 +963,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Breadcrumbs",
-    "description": "Breadcrumbs — a trail showing where the current page sits in a hierarchy and letting the user step back to a parent.",
+    "description": "A trail showing where the current page sits in a hierarchy and letting the user step back to a parent.",
     "slug": "breadcrumbs",
     "group": "Navigation",
     "package": "@newui/ui",
@@ -992,7 +992,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Pagination",
-    "description": "Pagination — page navigation for a long list, over Zag's pagination machine.",
+    "description": "Page navigation for a long list, over Zag's pagination machine.",
     "slug": "pagination",
     "group": "Navigation",
     "package": "@newui/ui",
@@ -1028,7 +1028,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "BottomSheet",
-    "description": "BottomSheet — a bottom-anchored modal sheet: a grab handle, an optional title, and a scrollable body, capped at 90dvh.",
+    "description": "A bottom-anchored modal sheet: a grab handle, an optional title, and a scrollable body, capped at 90dvh.",
     "slug": "bottom-sheet",
     "group": "Overlays",
     "package": "@newui/ui",
@@ -1042,7 +1042,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "CommandPalette",
-    "description": "CommandPalette — ⌘K, a query, and a list of things you can do.",
+    "description": "⌘K, a query, and a list of things you can do.",
     "slug": "command-palette",
     "group": "Overlays",
     "package": "@newui/ui",
@@ -1134,7 +1134,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "AuthCard",
-    "description": "AuthCard — the centred card a sign-in, sign-up or reset screen is.",
+    "description": "The centred card a sign-in, sign-up or reset screen is.",
     "slug": "auth-card",
     "group": "Patterns",
     "package": "@newui/blocks",
@@ -1148,7 +1148,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "SettingsDialog",
-    "description": "SettingsDialog — a dialog for app settings: a sidebar of grouped tabs on the left, the selected panel on the right.",
+    "description": "A dialog for app settings: a sidebar of grouped tabs on the left, the selected panel on the right.",
     "slug": "settings-dialog",
     "group": "Patterns",
     "package": "@newui/ui",
@@ -1170,7 +1170,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Combobox",
-    "description": "Combobox — a searchable single select.",
+    "description": "A searchable single select.",
     "slug": "combobox",
     "group": "Selection",
     "package": "@newui/ui",
@@ -1184,7 +1184,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "DatePicker",
-    "description": "DatePicker — a single-date picker.",
+    "description": "A single-date picker.",
     "slug": "date-picker",
     "group": "Selection",
     "package": "@newui/ui",
@@ -1199,7 +1199,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "DateRangePicker",
-    "description": "DateRangePicker — a range picker.",
+    "description": "A range picker.",
     "slug": "date-range-picker",
     "group": "Selection",
     "package": "@newui/ui",
@@ -1213,7 +1213,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "DateTimePicker",
-    "description": "DateTimePicker — a date + time picker.",
+    "description": "A date + time picker.",
     "slug": "date-time-picker",
     "group": "Selection",
     "package": "@newui/ui",
@@ -1227,7 +1227,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "FileUploader",
-    "description": "FileUploader — a drag-and-drop file picker.",
+    "description": "A drag-and-drop file picker.",
     "slug": "file-uploader",
     "group": "Selection",
     "package": "@newui/ui",
@@ -1241,7 +1241,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "MultiSelect",
-    "description": "MultiSelect — a searchable multi-valued select.",
+    "description": "A searchable multi-valued select.",
     "slug": "multi-select",
     "group": "Selection",
     "package": "@newui/ui",
@@ -1269,7 +1269,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "TimePicker",
-    "description": "TimePicker — a time input that opens a popover list of selectable times.",
+    "description": "A time input that opens a popover list of selectable times.",
     "slug": "time-picker",
     "group": "Selection",
     "package": "@newui/ui",
@@ -1283,7 +1283,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ToggleGroup",
-    "description": "ToggleGroup — a row of independent on/off cells that read as one control: text alignment, a view switcher, a density picker.",
+    "description": "A row of independent on/off cells that read as one control: text alignment, a view switcher, a density picker.",
     "slug": "toggle-group",
     "group": "Selection",
     "package": "@newui/ui",

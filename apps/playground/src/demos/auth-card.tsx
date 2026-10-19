@@ -1,11 +1,12 @@
 import { AuthCard } from '@newui/blocks'
 import { Button, TextInput } from '@newui/ui'
 import type { JSX } from 'solid-js'
+import { DemoFrame } from './demo-frame'
 
 /** Registered in `demos.ts`; rendered by `/play` and the reference pages. */
 export default function Demo(): JSX.Element {
   return (
-    <div class="rounded-6 border border-outline-gray-2">
+    <DemoFrame>
       <AuthCard
         title="Sign in to Acme"
         description="Use your work email to continue."
@@ -23,6 +24,6 @@ export default function Demo(): JSX.Element {
           Sign in
         </Button>
       </AuthCard>
-    </div>
+    </DemoFrame>
   )
 }

@@ -1,32 +1,28 @@
 import {
+  FilterBar,
   KanbanBoard,
   type KanbanColumn,
   type KanbanMove,
   type KanbanTone,
   StatGrid,
 } from '@newui/blocks'
-import {
-  Avatar,
-  Badge,
-  Button,
-  DatePicker,
-  Dialog,
-  Select,
-  TabButtons,
-  TextInput,
-} from '@newui/ui'
+import { Avatar, Badge, Button, DatePicker, Select, TextInput } from '@newui/ui'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
+import { CreateDialog } from '../examples/CreateDialog'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import {
   type Deal,
   initialDeals,
-  money,
   OWNERS,
   placeDeal,
   STAGES,
   type Stage,
 } from '../examples/deals-data'
 import { ExampleFrame } from '../examples/ExampleFrame'
+import { usd as money } from '../examples/format'
+import { Notice } from '../examples/Notice'
+import { first, optionsOf } from '../examples/select'
+import { createUndo } from '../examples/undo'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
 
 export function Deals(): JSX.Element {
@@ -37,8 +33,7 @@ export function Deals(): JSX.Element {
    * the pinned views. Selecting one moves the highlight, exactly as the reference
    * does — it is a one-screen demo, so the board below does not change.
    */
-  const [screen, setScreen] = createSignal('Deals')
-  const [pinned, setPinned] = createSignal('My open deals')
+  const [nav, setNav] = createSignal('Deals')
   const [query, setQuery] = createSignal('')
   const [owner, setOwner] = createSignal('All owners')
   const [sort, setSort] = createSignal('Board order')
@@ -48,9 +43,8 @@ export function Deals(): JSX.Element {
   const [newOwner, setNewOwner] = createSignal(OWNERS[0] ?? '')
   const [stage, setStage] = createSignal<Stage>('Qualification')
   const [due, setDue] = createSignal('2026-10-15')
-  const [attempted, setAttempted] = createSignal(false)
   const [notice, setNotice] = createSignal('')
-  const [snapshot, setSnapshot] = createSignal<Deal[]>()
+  const dealUndo = createUndo<Deal[]>()
   let nextId = initialDeals.length + 1
   const rows = createMemo(() => {
     const order = sort()
@@ -75,7 +69,7 @@ export function Deals(): JSX.Element {
     if (!deal) return
     const next = placeDeal(deals(), id, target, before)
     if (next === deals()) return
-    setSnapshot(deals())
+    dealUndo.capture(deals())
     setDeals(next)
     setSort('Board order')
     setNotice(`${deal.organization} moved to ${target.toLowerCase()}.`)
@@ -102,7 +96,6 @@ export function Deals(): JSX.Element {
           label: `Add a deal to ${stage}`,
           onClick: () => {
             setStage(stage)
-            setAttempted(false)
             setOpen(true)
           },
         },
@@ -117,7 +110,7 @@ export function Deals(): JSX.Element {
    * records in the same order.
    */
   const applyMove = (change: KanbanMove<Deal>) => {
-    setSnapshot(deals())
+    dealUndo.capture(deals())
     // The columns give the new *order*; the stage is the record's own field, so
     // it is set here rather than inferred. A deal that kept `stage:
     // 'Qualification'` would be filtered straight back into the column it left.
@@ -151,11 +144,11 @@ export function Deals(): JSX.Element {
         <Select
           aria-label={`Stage for ${context.row.original.organization}`}
           value={[context.row.original.stage]}
-          options={STAGES.map((value) => ({ label: value, value }))}
+          options={optionsOf(STAGES)}
           onValueChange={(value) =>
             move(
               context.row.original.id,
-              (value[0] ?? 'Qualification') as Stage,
+              first(value, 'Qualification') as Stage,
             )
           }
         />
@@ -173,40 +166,33 @@ export function Deals(): JSX.Element {
           variant="solid"
           theme="blue"
           iconLeft="lucide-plus"
-          onClick={() => {
-            setAttempted(false)
-            setOpen(true)
-          }}
+          onClick={() => setOpen(true)}
         >
           New deal
         </Button>
       }
       sidebar={
-        <div class="flex flex-col gap-4">
-          <WorkspaceNav
-            label="Deals navigation"
-            value={screen()}
-            onChange={setScreen}
-            items={[
-              { label: 'Notifications', icon: 'lucide-inbox', count: 4 },
-              { label: 'Leads', icon: 'lucide-users' },
-              { label: 'Deals', icon: 'lucide-handshake' },
-              { label: 'Contacts', icon: 'lucide-contact' },
-              { label: 'Organizations', icon: 'lucide-building-2' },
-              { label: 'Notes', icon: 'lucide-notebook-pen' },
-              { label: 'Tasks', icon: 'lucide-list-todo' },
-            ]}
-          />
-          <WorkspaceNav
-            label="Pinned views"
-            value={pinned()}
-            onChange={setPinned}
-            items={[
+        <WorkspaceNav
+          label="Deals navigation"
+          value={nav()}
+          onChange={setNav}
+          items={[
+            { label: 'Notifications', icon: 'lucide-inbox', count: 4 },
+            { label: 'Leads', icon: 'lucide-users' },
+            { label: 'Deals', icon: 'lucide-handshake' },
+            { label: 'Contacts', icon: 'lucide-contact' },
+            { label: 'Organizations', icon: 'lucide-building-2' },
+            { label: 'Notes', icon: 'lucide-notebook-pen' },
+            { label: 'Tasks', icon: 'lucide-list-todo' },
+          ]}
+          group={{
+            label: 'Pinned views',
+            items: [
               { label: 'My open deals', icon: 'lucide-star' },
               { label: 'Closing this month', icon: 'lucide-star' },
-            ]}
-          />
-        </div>
+            ],
+          }}
+        />
       }
     >
       <div class="hidden sm:block">
@@ -219,12 +205,16 @@ export function Deals(): JSX.Element {
                   .filter((deal) => deal.stage !== 'Won')
                   .reduce((sum, deal) => sum + deal.amount, 0),
               ),
+              hint: 'Excluding won deals',
+              icon: 'lucide-handshake',
             },
             {
               label: 'Open opportunities',
               value: String(
                 rows().filter((deal) => deal.stage !== 'Won').length,
               ),
+              hint: 'Still in play across the board',
+              icon: 'lucide-list-todo',
             },
             {
               label: 'Ready to close',
@@ -233,6 +223,8 @@ export function Deals(): JSX.Element {
                   .filter((deal) => deal.stage === 'Ready to close')
                   .reduce((sum, deal) => sum + deal.amount, 0),
               ),
+              hint: `${rows().filter((deal) => deal.stage === 'Ready to close').length} deals at the final stage`,
+              icon: 'lucide-flag',
             },
             {
               label: 'Closed won',
@@ -241,72 +233,79 @@ export function Deals(): JSX.Element {
                   .filter((deal) => deal.stage === 'Won')
                   .reduce((sum, deal) => sum + deal.amount, 0),
               ),
+              hint: 'Booked and off the board',
+              icon: 'lucide-circle-check',
             },
           ]}
         />
       </div>
-      <div class="flex flex-wrap items-end justify-between gap-3 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3">
-        <div class="flex flex-wrap items-end gap-3">
-          <TextInput
-            label="Search deals"
-            placeholder="Organization or source…"
-            value={query()}
-            onInput={(event) => setQuery(event.currentTarget.value)}
-          />
-          <Select
-            label="Deal owner"
-            value={[owner()]}
-            options={['All owners', ...OWNERS].map((value) => ({
-              label: value,
-              value,
-            }))}
-            onValueChange={(value) => setOwner(value[0] ?? 'All owners')}
-          />
-          <Select
-            label="Sort deals"
-            value={[sort()]}
-            options={['Board order', 'Due date', 'Highest value'].map(
-              (value) => ({
-                label: value,
-                value,
-              }),
-            )}
-            onValueChange={(value) => setSort(value[0] ?? 'Due date')}
-          />
-        </div>
-        <TabButtons
-          value={view()}
-          onValueChange={setView}
-          options={[
+      <FilterBar
+        query={{
+          placeholder: 'Search deals',
+          value: query(),
+          onInput: setQuery,
+        }}
+        selects={[
+          {
+            label: 'Owner',
+            value: owner() === 'All owners' ? '' : owner(),
+            onValueChange: (value) => setOwner(value || 'All owners'),
+            options: optionsOf(OWNERS),
+          },
+        ]}
+        tabs={{
+          value: view(),
+          onValueChange: setView,
+          options: [
             { label: 'Board', value: 'board' },
             { label: 'List', value: 'list' },
-          ]}
+          ],
+        }}
+        chips={[
+          ...(owner() !== 'All owners'
+            ? [
+                {
+                  label: `Owner: ${owner()}`,
+                  onRemove: () => setOwner('All owners'),
+                },
+              ]
+            : []),
+          ...(query()
+            ? [{ label: `Search: ${query()}`, onRemove: () => setQuery('') }]
+            : []),
+        ]}
+        resultCount={rows().length}
+        onClearAll={() => {
+          setOwner('All owners')
+          setQuery('')
+        }}
+      >
+        <Select
+          aria-label="Sort deals"
+          variant="subtle"
+          class="w-40 max-w-full"
+          value={[sort()]}
+          options={optionsOf(['Board order', 'Due date', 'Highest value'])}
+          onValueChange={(value) => setSort(first(value, 'Due date'))}
         />
-      </div>
-      <Show when={notice()}>
-        <div
-          role="status"
-          class="flex flex-wrap items-center justify-between gap-3 rounded-3 border border-outline-blue-1 bg-surface-blue-1 p-3 text-ink-blue-8"
-        >
-          <span>{notice()}</span>
-          <Show when={snapshot()}>
-            <Button
-              size="sm"
-              onClick={() => {
-                const previous = snapshot()
-                if (previous) setDeals(previous)
-                setSnapshot(undefined)
+      </FilterBar>
+      <Notice
+        text={notice()}
+        onUndo={
+          dealUndo.snapshot()
+            ? () => {
+                dealUndo.undo(setDeals)
                 setNotice('Deal move undone.')
-              }}
-            >
-              Undo deal move
-            </Button>
-          </Show>
-        </div>
-      </Show>
+              }
+            : undefined
+        }
+        undoLabel="Undo deal move"
+      />
       <Show
         when={view() === 'board'}
-        fallback={<DataTable title="Deals" rows={rows()} columns={columns} />}
+        fallback={
+          <DataTable title="Deals" hideSearch rows={rows()} columns={columns} />
+        }
       >
         <KanbanBoard
           columns={boardColumns()}
@@ -330,7 +329,7 @@ export function Deals(): JSX.Element {
                 </span>
                 <Badge variant="outline">{deal.source}</Badge>
               </div>
-              <div class="mt-3 flex items-center justify-between gap-2 text-sm text-ink-gray-6">
+              <div class="mt-3 flex items-center justify-between gap-2 text-sm text-ink-gray-7">
                 <span class="truncate">{deal.owner}</span>
                 <time dateTime={deal.due} class="shrink-0 tabular-nums">
                   {deal.due.slice(5)}
@@ -339,50 +338,44 @@ export function Deals(): JSX.Element {
             </>
           )}
         </KanbanBoard>
-        <p class="text-caption text-ink-gray-6">
+        <p class="text-caption text-ink-gray-7">
           Drag a card between columns, or use its menu — every card moves
           without a mouse, and changes stay in this page.
         </p>
       </Show>
-      <Dialog.Root open={open()} onOpenChange={setOpen}>
-        <Dialog.Content>
-          <Dialog.Header>
-            <Dialog.Title>New opportunity</Dialog.Title>
-            <Dialog.Description>
-              Add a deal to your local pipeline.
-            </Dialog.Description>
-          </Dialog.Header>
-          <form
-            noValidate
-            class="mt-5 flex flex-col gap-4"
-            onSubmit={(event) => {
-              event.preventDefault()
-              setAttempted(true)
-              if (
-                organization().trim().length < 2 ||
-                !Number.isFinite(Number(amount())) ||
-                Number(amount()) <= 0 ||
-                !due()
-              )
-                return
-              setDeals((previous) => [
-                ...previous,
-                {
-                  id: `DEAL-${nextId++}`,
-                  organization: organization().trim(),
-                  amount: Number(amount()),
-                  owner: newOwner(),
-                  stage: stage(),
-                  source: 'Inbound',
-                  due: due(),
-                },
-              ])
-              setOpen(false)
-              setNotice(`${organization()} added to the pipeline.`)
-              setOrganization('')
-              setAmount('')
-            }}
-          >
+      <CreateDialog
+        open={open()}
+        onOpenChange={setOpen}
+        title="New opportunity"
+        description="Add a deal to your local pipeline."
+        submitLabel="Create deal"
+        onSubmit={() => {
+          if (
+            organization().trim().length < 2 ||
+            !Number.isFinite(Number(amount())) ||
+            Number(amount()) <= 0 ||
+            !due()
+          )
+            return
+          setDeals((previous) => [
+            ...previous,
+            {
+              id: `DEAL-${nextId++}`,
+              organization: organization().trim(),
+              amount: Number(amount()),
+              owner: newOwner(),
+              stage: stage(),
+              source: 'Inbound',
+              due: due(),
+            },
+          ])
+          setOpen(false)
+          setNotice(`${organization()} added to the pipeline.`)
+          setOrganization('')
+          setAmount('')
+        }}
+        fields={(attempted) => (
+          <>
             <TextInput
               label="Organization"
               value={organization()}
@@ -410,17 +403,17 @@ export function Deals(): JSX.Element {
             <Select
               label="Opportunity owner"
               value={[newOwner()]}
-              options={OWNERS.map((value) => ({ label: value, value }))}
+              options={optionsOf(OWNERS)}
               onValueChange={(value) =>
-                setNewOwner(value[0] ?? OWNERS[0] ?? '')
+                setNewOwner(first(value, OWNERS[0] ?? ''))
               }
             />
             <Select
               label="Initial stage"
               value={[stage()]}
-              options={STAGES.map((value) => ({ label: value, value }))}
+              options={optionsOf(STAGES)}
               onValueChange={(value) =>
-                setStage((value[0] ?? 'Qualification') as Stage)
+                setStage(first(value, 'Qualification') as Stage)
               }
             />
             <DatePicker
@@ -430,17 +423,9 @@ export function Deals(): JSX.Element {
               required
               error={attempted() && !due() ? 'Choose a close date.' : undefined}
             />
-            <Dialog.Footer>
-              <Button variant="outline" onClick={() => setOpen(false)}>
-                Cancel
-              </Button>
-              <Button type="submit" variant="solid" theme="blue">
-                Create deal
-              </Button>
-            </Dialog.Footer>
-          </form>
-        </Dialog.Content>
-      </Dialog.Root>
+          </>
+        )}
+      />
     </ExampleFrame>
   )
 }

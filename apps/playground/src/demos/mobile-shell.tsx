@@ -28,7 +28,7 @@ export default function Demo() {
           </MobileNav>
         }
       >
-        <p class="p-4 text-interface text-ink-gray-6">
+        <p class="p-4 text-interface text-ink-gray-7">
           {active()} content stays between the pinned header and navigation.
         </p>
       </MobileShell>

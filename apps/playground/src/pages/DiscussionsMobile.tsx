@@ -76,7 +76,7 @@ function DiscussionRow(props: {
               </button>
             </span>
           </div>
-          <div class="mt-1.5 flex min-w-0 items-center text-md text-ink-gray-6">
+          <div class="mt-1.5 flex min-w-0 items-center text-md text-ink-gray-7">
             <Show when={props.showReplyIcon}>
               <Icon icon="lucide-reply" class="mr-1 size-4 shrink-0" />
             </Show>
@@ -87,7 +87,7 @@ function DiscussionRow(props: {
       </ListCell>
       <ListCell class="justify-end">
         <div>
-          <div class="text-right text-sm whitespace-nowrap text-ink-gray-6">
+          <div class="text-right text-sm whitespace-nowrap text-ink-gray-7">
             {props.discussion.lastActivity}
           </div>
           <div class="mt-1.5 flex items-center justify-end">
@@ -229,6 +229,13 @@ export function DiscussionsMobile(props: {
                           discussions.setQuery(event.currentTarget.value)
                         }
                       />
+                      <p
+                        role="status"
+                        class="mt-2 text-caption text-ink-gray-7"
+                      >
+                        {rows().length}{' '}
+                        {rows().length === 1 ? 'result' : 'results'}
+                      </p>
                     </div>
                   </Show>
                   <Show when={tab() === 'notifications'}>
@@ -253,7 +260,7 @@ export function DiscussionsMobile(props: {
                     </For>
                   </List>
                   <Show when={!rows().length}>
-                    <p class="p-4 text-ink-gray-6">
+                    <p class="p-4 text-ink-gray-7">
                       No discussions match this space and filter.
                     </p>
                   </Show>
@@ -263,7 +270,7 @@ export function DiscussionsMobile(props: {
               <section class="p-4">
                 <Avatar label="Rhea Kapoor" size="2xl" />
                 <h1 class="mt-4 text-section">Rhea Kapoor</h1>
-                <p class="mt-2 text-ink-gray-6">
+                <p class="mt-2 text-ink-gray-7">
                   Product designer · Design workspace
                 </p>
                 <Button variant="ghost" onClick={() => props.onOpenSettings()}>

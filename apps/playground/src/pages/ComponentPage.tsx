@@ -20,9 +20,18 @@ import {
   type ApiMember,
   DEMO_SOURCES,
 } from '../lib/component-sources'
-import { Markdown, renderInline } from '../lib/markdown'
+import { LoadingNote } from '../lib/LoadingNote'
+import {
+  Markdown,
+  markdownHeadings,
+  renderInline,
+  withoutPropsSections,
+} from '../lib/markdown'
+import { PageSection } from '../lib/PageSection'
 import { InlinePreview, ResponsivePreview } from '../lib/ResponsivePreview'
 import { loadSpec } from '../lib/specs'
+import { TableOfContents } from '../lib/TableOfContents'
+import { usePageToc } from '../shell/SiteLayout'
 
 /**
  * One component's reference page.
@@ -79,13 +88,13 @@ function ApiTable(props: { part: string; members: ApiMember[] }): JSX.Element {
                       </span>
                     </Show>
                   </td>
-                  <td class="border-b border-outline-gray-1 px-3 py-2 align-top font-mono text-sm text-ink-gray-6">
+                  <td class="border-b border-outline-gray-1 px-3 py-2 align-top font-mono text-sm text-ink-gray-7">
                     {member.type}
                   </td>
-                  <td class="border-b border-outline-gray-1 px-3 py-2 align-top text-ink-gray-6">
+                  <td class="border-b border-outline-gray-1 px-3 py-2 align-top text-ink-gray-7">
                     <code>{member.default ?? '—'}</code>
                   </td>
-                  <td class="border-b border-outline-gray-1 px-3 py-2 align-top text-ink-gray-6">
+                  <td class="border-b border-outline-gray-1 px-3 py-2 align-top text-ink-gray-7">
                     {/* The JSDoc is markdown (`**rows**`, backticks), so it
                         goes through the same inline renderer as the specs. */}
                     {renderInline(member.description ?? '')}
@@ -111,13 +120,11 @@ function ApiTables(props: { slug: string }): JSX.Element {
   )
 
   return (
-    <Suspense
-      fallback={<p class="text-base text-ink-gray-6">Loading props…</p>}
-    >
+    <Suspense fallback={<LoadingNote label="Loading props…" />}>
       <Show
         when={tables() && Object.keys(tables() ?? {}).length > 0}
         fallback={
-          <p class="text-base text-ink-gray-6">
+          <p class="text-base text-ink-gray-7">
             No documented props for this component.
           </p>
         }
@@ -134,7 +141,7 @@ function ApiTables(props: { slug: string }): JSX.Element {
   )
 }
 
-function Contract(props: { slug: string }): JSX.Element {
+function Contract(props: { slug: string; stripProps: boolean }): JSX.Element {
   const [markdown] = createResource(
     () => props.slug,
     async (slug) => {
@@ -144,26 +151,76 @@ function Contract(props: { slug: string }): JSX.Element {
   )
 
   return (
-    <Suspense
-      fallback={<p class="text-base text-ink-gray-6">Loading the contract…</p>}
-    >
+    <Suspense fallback={<LoadingNote label="Loading the contract…" />}>
       <Show
         when={markdown()}
         fallback={
-          <p class="text-base text-ink-gray-6">
+          <p class="text-base text-ink-gray-7">
             The contract could not be loaded. Reload the page to try again.
           </p>
         }
       >
-        {(text) => <Markdown markdown={text()} />}
+        {(text) => (
+          <Markdown
+            markdown={props.stripProps ? withoutPropsSections(text()) : text()}
+          />
+        )}
       </Show>
     </Suspense>
   )
 }
 
+const REFERENCE_SECTIONS = [
+  { id: 'preview', label: 'Live demo' },
+  { id: 'usage', label: 'Usage' },
+  { id: 'props', label: 'Props' },
+  { id: 'contract', label: 'Contract' },
+]
+
+/**
+ * The reference page's table of contents: the four fixed sections plus the
+ * contract's own level-2 headings once the spec chunk arrives.
+ */
+function ReferenceToc(props: {
+  slug: string
+  stripProps: boolean
+}): JSX.Element {
+  const [markdown] = createResource(
+    () => props.slug,
+    async (slug) => {
+      const load = loadSpec(slug)
+      return load ? await load() : null
+    },
+  )
+  const entries = createMemo(() => [
+    ...REFERENCE_SECTIONS,
+    ...markdownHeadings(
+      props.stripProps
+        ? withoutPropsSections(markdown() ?? '')
+        : (markdown() ?? ''),
+    )
+      .filter((heading) => heading.level === 2)
+      .map((heading) => ({ id: heading.id, label: heading.label })),
+  ])
+  return <TableOfContents entries={entries()} />
+}
+
 export function ComponentPage(): JSX.Element {
   const params = useParams()
   const entry = createMemo(() => componentBySlug(params['name'] ?? ''))
+  usePageToc(() => (
+    <Show
+      when={entry()}
+      fallback={<TableOfContents entries={REFERENCE_SECTIONS} />}
+    >
+      {(component) => (
+        <ReferenceToc
+          slug={component().spec ?? component().slug}
+          stripProps={component().parts.length > 0}
+        />
+      )}
+    </Show>
+  ))
 
   return (
     <Show
@@ -173,7 +230,7 @@ export function ComponentPage(): JSX.Element {
           <h1 class="text-heading text-ink-gray-9">
             No component called “{params['name']}”
           </h1>
-          <p class="text-base text-ink-gray-6">
+          <p class="text-base text-ink-gray-7">
             The index lists every documented component —{' '}
             <A
               href="/components"
@@ -199,25 +256,22 @@ export function ComponentPage(): JSX.Element {
             <header class="flex flex-col gap-3">
               <div class="flex flex-wrap items-center gap-2">
                 <h1 class="text-heading text-ink-gray-9">{component().name}</h1>
-                <Badge
-                  size="sm"
-                  theme={component().kind === 'block' ? 'violet' : 'gray'}
-                >
+                <Badge size="sm" theme="gray">
                   {component().kind === 'block' ? 'block' : component().group}
                 </Badge>
                 <Show when={component().spec}>
                   <Badge size="sm" theme="blue" label="contract" />
                 </Show>
               </div>
-              <p class="max-w-2xl text-interface text-ink-gray-6">
+              <p class="max-w-2xl text-interface text-ink-gray-7">
                 {component().description}
               </p>
-              <p class="text-caption text-ink-gray-6">
+              <p class="text-caption text-ink-gray-7">
                 {component().package} · {component().parts.length} parts
               </p>
               <nav
                 aria-label="Reference sections"
-                class="flex flex-wrap gap-3 text-interface text-ink-gray-6"
+                class="flex flex-wrap gap-3 text-interface text-ink-gray-7"
               >
                 <a
                   href="#preview"
@@ -267,8 +321,7 @@ export function ComponentPage(): JSX.Element {
               </div>
             </header>
 
-            <section id="preview" class="flex scroll-mt-16 flex-col gap-3">
-              <h2 class="text-section text-ink-gray-9">Live demo</h2>
+            <PageSection id="preview" title="Live demo">
               <Show
                 when={component().kind === 'block'}
                 fallback={
@@ -283,18 +336,14 @@ export function ComponentPage(): JSX.Element {
                     <Show
                       when={demo()}
                       fallback={
-                        <p class="text-base text-ink-gray-6">
+                        <p class="text-base text-ink-gray-7">
                           No demo registered for this component yet.
                         </p>
                       }
                     >
                       {(entry) => (
                         <Suspense
-                          fallback={
-                            <p class="text-base text-ink-gray-6">
-                              Loading demo…
-                            </p>
-                          }
+                          fallback={<LoadingNote label="Loading demo…" />}
                         >
                           <Dynamic component={entry().Component} />
                         </Suspense>
@@ -313,31 +362,34 @@ export function ComponentPage(): JSX.Element {
                   }
                 />
               </Show>
-            </section>
+            </PageSection>
 
-            <section id="usage" class="flex scroll-mt-16 flex-col gap-3">
-              <h2 class="text-section text-ink-gray-9">Usage</h2>
+            <PageSection id="usage" title="Usage">
               <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4 text-caption">
                 <code>{`import { ${component().name} } from '${component().package}'`}</code>
               </pre>
-            </section>
-            <section id="props" class="flex scroll-mt-16 flex-col gap-3">
-              <h2 class="text-section text-ink-gray-9">Props</h2>
+            </PageSection>
+            <PageSection id="props" title="Props">
               <ApiTables slug={component().slug} />
-            </section>
+            </PageSection>
 
-            <section id="contract" class="flex scroll-mt-16 flex-col gap-3">
-              <div class="flex items-baseline gap-2">
-                <h2 class="text-section text-ink-gray-9">Contract</h2>
+            <PageSection
+              id="contract"
+              title="Contract"
+              actions={
                 <A
                   href={`https://github.com/talelk/newui/blob/main/spec/${component().spec ?? component().slug}.md`}
-                  class="text-sm text-ink-gray-6 underline decoration-dotted"
+                  class="text-sm text-ink-gray-7 underline decoration-dotted"
                 >
                   spec/{component().spec ?? component().slug}.md
                 </A>
-              </div>
-              <Contract slug={component().spec ?? component().slug} />
-            </section>
+              }
+            >
+              <Contract
+                slug={component().spec ?? component().slug}
+                stripProps={component().parts.length > 0}
+              />
+            </PageSection>
           </article>
         )
       }}

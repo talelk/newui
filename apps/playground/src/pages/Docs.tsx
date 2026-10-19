@@ -1,5 +1,9 @@
 import type { JSX } from 'solid-js'
 import { PackageGuides } from '../lib/PackageGuides'
+import { PageSection } from '../lib/PageSection'
+import { TableOfContents } from '../lib/TableOfContents'
+import { PageIntro } from '../shell/PageIntro'
+import { usePageToc } from '../shell/SiteLayout'
 
 /**
  * Installation.
@@ -10,15 +14,6 @@ import { PackageGuides } from '../lib/PackageGuides'
  * instead of being silently promised.
  */
 
-function Block(props: { title: string; children: JSX.Element }): JSX.Element {
-  return (
-    <section class="flex flex-col gap-3">
-      <h2 class="text-section text-ink-gray-9">{props.title}</h2>
-      {props.children}
-    </section>
-  )
-}
-
 function Code(props: { children: string }): JSX.Element {
   return (
     <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
@@ -28,16 +23,24 @@ function Code(props: { children: string }): JSX.Element {
 }
 
 export function Docs(): JSX.Element {
+  usePageToc(() => (
+    <TableOfContents
+      entries={[
+        { id: 'packages', label: 'Packages' },
+        { id: 'stylesheet', label: 'Stylesheet' },
+        { id: 'provider', label: 'Provider' },
+        { id: 'first-component', label: 'A first component' },
+      ]}
+    />
+  ))
   return (
-    <article class="flex max-w-3xl flex-col gap-4">
-      <header class="flex flex-col gap-2">
-        <h1 class="text-2xl-semibold text-ink-gray-9">Installation</h1>
-        <p class="text-lg text-ink-gray-6">
-          Three packages, one stylesheet, one provider.
-        </p>
-      </header>
+    <article class="flex max-w-3xl flex-col gap-8">
+      <PageIntro
+        title="Installation"
+        description="Three packages, one stylesheet, one provider."
+      />
 
-      <Block title="1 · Packages">
+      <PageSection id="packages" title="1 · Packages">
         <p class="text-base text-ink-gray-7">
           Install only what you use.{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
@@ -72,9 +75,9 @@ export function Docs(): JSX.Element {
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">solid-js</code>{' '}
           is a peer dependency, so your app owns its version.
         </p>
-      </Block>
+      </PageSection>
 
-      <Block title="2 · Stylesheet">
+      <PageSection id="stylesheet" title="2 · Stylesheet">
         <p class="text-base text-ink-gray-7">
           One import, once, in your entry stylesheet. It brings Tailwind, the
           fonts, the generated{' '}
@@ -91,9 +94,9 @@ export function Docs(): JSX.Element {
           No Tailwind config file is needed: v4 reads the theme from the
           stylesheet, and the preset is a plugin inside it.
         </p>
-      </Block>
+      </PageSection>
 
-      <Block title="3 · Provider">
+      <PageSection id="provider" title="3 · Provider">
         <p class="text-base text-ink-gray-7">
           Mount{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
@@ -119,9 +122,9 @@ export function App() {
     </UIProvider>
   )
 }`}</Code>
-      </Block>
+      </PageSection>
 
-      <Block title="4 · A first component">
+      <PageSection id="first-component" title="4 · A first component">
         <p class="text-base text-ink-gray-7">
           Components are compound: the parts you see are subcomponents, and
           their state is a signal you own, never a string you set from outside.
@@ -151,7 +154,7 @@ function DeleteProject() {
     </>
   )
 }`}</Code>
-      </Block>
+      </PageSection>
 
       <PackageGuides />
     </article>

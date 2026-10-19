@@ -18,8 +18,8 @@ export default function Demo() {
       </CardHeader>
       <CardContent>
         <p class="text-metric">$128,430</p>
-        <p class="mt-2 text-caption text-ink-gray-6">
-          Revenue grew 18.6% from the previous month.
+        <p class="mt-2 text-caption text-ink-gray-7">
+          Revenue grew 18.6% from $108,288 the previous month.
         </p>
       </CardContent>
       <CardFooter>

@@ -1,10 +1,11 @@
 import { AppSidebar } from '@newui/blocks'
 import type { JSX } from 'solid-js'
+import { DemoFrame } from './demo-frame'
 
 /** Registered in `demos.ts`; rendered by `/play` and the reference pages. */
 export default function Demo(): JSX.Element {
   return (
-    <div class="h-80 overflow-hidden rounded-6 border border-outline-gray-2">
+    <DemoFrame medium>
       <AppSidebar
         title="Acme support"
         subtitle="18 members"
@@ -30,6 +31,6 @@ export default function Demo(): JSX.Element {
           },
         ]}
       />
-    </div>
+    </DemoFrame>
   )
 }

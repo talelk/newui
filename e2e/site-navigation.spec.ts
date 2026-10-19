@@ -29,7 +29,10 @@ test('sidebar rail remembers its preference and reference navigation keeps conte
     .fill('TextInput')
   await sidebar.getByRole('link', { name: 'TextInput', exact: true }).click()
   await expect(page).toHaveURL('/components/text-input')
-  await page.getByRole('link', { name: 'Props', exact: true }).click()
+  await page
+    .getByRole('navigation', { name: 'On this page' })
+    .getByRole('link', { name: 'Props', exact: true })
+    .click()
   await expect(page.locator('#props')).toBeInViewport()
 })
 
@@ -102,15 +105,17 @@ test('embedded documentation links leave the frame while application anchors ret
   await page.goto('/examples/analytics?viewport=mobile')
   const app = page.frameLocator('iframe')
   await app.getByRole('button', { name: 'Toggle workspace navigation' }).click()
-  await app.getByRole('link', { name: 'Transactions', exact: true }).click()
+  // The frame's section nav scrolls inside the frame: the host page (and its
+  // URL) does not move, and the section it names is what comes into view.
+  await app.getByRole('button', { name: /^Transactions/ }).click()
   await expect(page).toHaveURL('/examples/analytics?viewport=mobile')
-  expect(
-    page
-      .frames()
-      .some((frame) => frame.url().endsWith('/fullscreen#transactions')),
-  ).toBe(true)
-  await app.getByRole('link', { name: 'Build your own dashboard' }).click()
-  await expect(page).toHaveURL('/docs')
+  await expect(
+    app.getByRole('heading', { name: 'Transactions', exact: true }),
+  ).toBeVisible()
+  // A documentation link (the breadcrumb back to the workspace index) still
+  // leaves the frame: the host navigates and the embed is gone.
+  await app.getByRole('link', { name: 'Workspace', exact: true }).click()
+  await expect(page).toHaveURL('/examples')
   await expect(page.locator('iframe')).toHaveCount(0)
   await page.goto('/examples/authentication?viewport=mobile')
   await app.getByRole('button', { name: 'GitHub demo', exact: true }).click()

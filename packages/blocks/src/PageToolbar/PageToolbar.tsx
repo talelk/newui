@@ -1,11 +1,6 @@
 import { Button, Dropdown, type IconProp, PageHeader } from '@newui/ui'
 import { type JSX, Show } from 'solid-js'
 
-export interface PageToolbarTab {
-  label: string
-  value: string
-}
-
 export interface PageToolbarAction {
   label: string
   /** A `lucide-*` string or a component (P11). */
@@ -38,9 +33,7 @@ export function PageToolbar(props: PageToolbarProps): JSX.Element {
   return (
     <PageHeader class={props.class}>
       <div class="flex min-w-0 items-center gap-1">
-        <span class="truncate text-lg font-semibold text-ink-gray-9">
-          {props.title}
-        </span>
+        <span class="truncate text-heading text-ink-gray-9">{props.title}</span>
         <Show when={props.menu}>
           {(menu) => (
             <Dropdown

@@ -1,4 +1,4 @@
-import { StatGrid } from '@newui/blocks'
+import { FilterBar, StatGrid } from '@newui/blocks'
 import {
   AreaChart,
   ChartCard,
@@ -11,7 +11,6 @@ import {
   Button,
   DateRangePicker,
   type DateRangeValue,
-  Select,
   Switch,
   TabButtons,
 } from '@newui/ui'
@@ -19,15 +18,18 @@ import { createMemo, createSignal, For, type JSX, lazy, Show } from 'solid-js'
 import {
   aggregateCashflow,
   CATEGORIES,
-  currency,
-  downloadCSV,
   type Employee,
   INITIAL,
   INITIAL_EMPLOYEES,
   type Transaction,
 } from '../examples/accounting-data'
 import type { DataTableColumn } from '../examples/DataTable'
+import { downloadCsv as downloadCSV } from '../examples/download'
 import { ExampleFrame } from '../examples/ExampleFrame'
+import { usd as currency, usdK } from '../examples/format'
+import { Notice } from '../examples/Notice'
+import { ScrollTable, TABLE_HEAD_CLASS } from '../examples/ScrollTable'
+import { optionsOf } from '../examples/select'
 
 const AccountingDialogs = lazy(() => import('./accounting/AccountingDialogs'))
 
@@ -230,137 +232,146 @@ export function Accounting(): JSX.Element {
         </>
       }
     >
-      <nav aria-label="Accounting pages" class="flex flex-wrap gap-2">
-        <For
-          each={[
-            'Cashflow',
-            'Cash accounts',
-            'Expenses',
-            'Payroll',
-            'Profit & loss',
-          ]}
-        >
-          {(name) => (
-            <Button
-              variant={page() === name ? 'solid' : 'outline'}
-              theme={page() === name ? 'blue' : 'gray'}
-              onClick={() => setPage(name)}
-            >
-              {name}
-            </Button>
-          )}
-        </For>
-      </nav>
-      <div class="flex flex-wrap items-end justify-between gap-3">
-        <h2 class="text-section">{page()}</h2>
-        <div class="flex flex-wrap items-end gap-2">
-          <Select
-            label="Aggregate cashflow"
-            value={[grain()]}
-            options={['Monthly', 'Quarterly'].map((value) => ({
-              value,
-              label: value,
-            }))}
-            onValueChange={(value) =>
-              setGrain(value[0] === 'Quarterly' ? 'Quarterly' : 'Monthly')
-            }
-          />
-          <Select
-            label="Date preset"
-            value={[]}
-            options={[
-              { label: 'September 2026', value: 'month' },
-              { label: 'Q3 2026', value: 'quarter' },
-              { label: 'Last six months', value: 'six' },
-            ]}
-            onValueChange={(value) =>
-              setRange(
-                value[0] === 'month'
-                  ? ['2026-09-01', '2026-09-30']
-                  : value[0] === 'quarter'
-                    ? ['2026-07-01', '2026-09-30']
-                    : ['2026-04-01', '2026-09-30'],
-              )
-            }
-          />
-          <DateRangePicker
-            label="Reporting period"
-            value={range()}
-            onValueChange={setRange}
-            class="max-w-full"
-          />
-          <Button
-            variant="outline"
-            onClick={() => setRange(['2026-09-01', '2026-09-30'])}
-          >
-            September
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => setRange(['2026-04-01', '2026-09-30'])}
-          >
-            Last six months
-          </Button>
-        </div>
-      </div>
-      <Show when={notice()}>
-        <p
-          role="status"
-          class="rounded-3 border border-outline-blue-1 bg-surface-blue-1 p-3 text-ink-blue-8"
-        >
-          {notice()}
-        </p>
-      </Show>
+      <TabButtons
+        value={page()}
+        onValueChange={setPage}
+        options={optionsOf([
+          'Cashflow',
+          'Cash accounts',
+          'Expenses',
+          'Payroll',
+          'Profit & loss',
+        ])}
+      />
+      <h2 class="text-section">{page()}</h2>
+      <FilterBar
+        selects={[
+          {
+            label: 'Aggregate',
+            value: grain() === 'Monthly' ? '' : grain(),
+            onValueChange: (value) =>
+              setGrain(value === 'Quarterly' ? 'Quarterly' : 'Monthly'),
+            options: optionsOf(['Monthly', 'Quarterly']),
+          },
+        ]}
+        chips={[
+          ...(range()[0] !== '2026-04-01' || range()[1] !== '2026-09-30'
+            ? [
+                {
+                  label: `Period: ${range()[0] ?? ''} to ${range()[1] ?? ''}`,
+                  onRemove: () => setRange(['2026-04-01', '2026-09-30']),
+                },
+              ]
+            : []),
+          ...(grain() !== 'Monthly'
+            ? [
+                {
+                  label: `Aggregate: ${grain()}`,
+                  onRemove: () => setGrain('Monthly'),
+                },
+              ]
+            : []),
+        ]}
+        resultCount={ledger().length}
+        onClearAll={() => {
+          setRange(['2026-04-01', '2026-09-30'])
+          setGrain('Monthly')
+        }}
+        tabs={{
+          value:
+            range()[0] === '2026-09-01'
+              ? 'month'
+              : range()[0] === '2026-07-01'
+                ? 'quarter'
+                : range()[0] === '2026-04-01'
+                  ? 'six'
+                  : '',
+          onValueChange: (value) =>
+            setRange(
+              value === 'month'
+                ? ['2026-09-01', '2026-09-30']
+                : value === 'quarter'
+                  ? ['2026-07-01', '2026-09-30']
+                  : ['2026-04-01', '2026-09-30'],
+            ),
+          options: [
+            { label: 'September', value: 'month' },
+            { label: 'Q3 2026', value: 'quarter' },
+            { label: 'Last six months', value: 'six' },
+          ],
+        }}
+      >
+        <DateRangePicker
+          aria-label="Reporting period"
+          value={range()}
+          onValueChange={setRange}
+          class="max-w-full"
+        />
+      </FilterBar>
+      <Notice text={notice()} onDismiss={() => setNotice('')} />
       <StatGrid
         stats={[
-          { label: 'Posted income', value: currency(income()) },
-          { label: 'Posted expenses', value: currency(expenses()) },
-          { label: 'Net profit', value: currency(income() - expenses()) },
+          {
+            label: 'Posted income',
+            value: currency(income()),
+            hint: 'Posted in the selected period',
+            icon: 'lucide-trending-up',
+          },
+          {
+            label: 'Posted expenses',
+            value: currency(expenses()),
+            hint: 'Posted in the selected period',
+            icon: 'lucide-receipt',
+          },
+          {
+            label: 'Net profit',
+            value: currency(income() - expenses()),
+            hint: 'Income less expenses, posted only',
+            icon: 'lucide-scale',
+          },
           {
             label: 'Profit margin',
             value: `${income() ? (((income() - expenses()) / income()) * 100).toFixed(1) : '0'}%`,
+            hint: 'Share of posted income kept',
+            icon: 'lucide-percent',
           },
         ]}
       />
       <Show when={page() === 'Cash accounts'}>
-        <section class="grid gap-4 sm:grid-cols-3" aria-label="Cash accounts">
-          <For each={['Operating account', 'Savings', 'Petty cash']}>
-            {(account) => (
-              <article class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3">
-                <h3 class="font-medium">{account}</h3>
-                <p class="mt-3 text-metric">
-                  {currency(
-                    posted()
-                      .filter(
-                        (row) =>
-                          (row.account ?? 'Operating account') === account,
-                      )
-                      .reduce(
-                        (sum, row) =>
-                          sum +
-                          (row.category === 'Revenue'
-                            ? row.amount
-                            : -row.amount),
-                        0,
-                      ),
-                  )}
-                </p>
-                <p class="mt-2 text-caption text-ink-gray-6">
-                  Net posted movement in the selected period
-                </p>
-                <Button
-                  onClick={() => {
-                    setPage('Cashflow')
-                    setNotice(
-                      `Showing cashflow. ${account} movement is included in the posted totals.`,
+        <section aria-label="Cash accounts" class="contents">
+          <StatGrid
+            stats={['Operating account', 'Savings', 'Petty cash'].map(
+              (account) => ({
+                label: account,
+                value: currency(
+                  posted()
+                    .filter(
+                      (row) => (row.account ?? 'Operating account') === account,
                     )
-                  }}
-                >
-                  View cashflow
-                </Button>
-              </article>
+                    .reduce(
+                      (sum, row) =>
+                        sum +
+                        (row.category === 'Revenue' ? row.amount : -row.amount),
+                      0,
+                    ),
+                ),
+                hint: 'Net posted movement in the selected period',
+                icon: 'lucide-landmark',
+              }),
             )}
-          </For>
+          />
+          <div>
+            <Button
+              onClick={() => {
+                setPage('Cashflow')
+                setNotice(
+                  'Showing cashflow. Account movement is included in the posted totals.',
+                )
+              }}
+            >
+              View cashflow
+            </Button>
+          </div>
         </section>
       </Show>
       <Show when={page() === 'Cashflow'}>
@@ -374,7 +385,7 @@ export function Accounting(): JSX.Element {
               y={['Income', 'Expenses']}
               title="Cashflow over time"
               subtitle="Posted income and expenses in your selected period"
-              yAxis={{ format: (value) => `$${Math.round(value / 1000)}k` }}
+              yAxis={{ format: usdK }}
               height={300}
               aria-label={`Income and expenses ${grain().toLowerCase()}`}
             />
@@ -417,55 +428,59 @@ export function Accounting(): JSX.Element {
             { label: 'Outgoing', value: 'outgoing' },
           ]}
         />
-        <section
-          aria-label="Cashflow ledger"
-          tabindex="0"
-          class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-elevation-1 focus-visible:focus-ring"
-        >
-          <table class="w-full min-w-[640px] text-interface">
-            <thead class="border-b border-outline-gray-1 bg-surface-gray-1 text-caption text-ink-gray-6">
-              <tr>
-                <For
-                  each={['Description', 'Category', 'Date', 'Amount', 'Status']}
-                >
-                  {(title) => (
-                    <th scope="col" class="px-4 py-3 text-start">
-                      {title}
-                    </th>
+        <div class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1">
+          <ScrollTable label="Cashflow ledger">
+            <table class="w-full min-w-[640px] text-interface">
+              <thead class={TABLE_HEAD_CLASS}>
+                <tr>
+                  <For
+                    each={[
+                      'Description',
+                      'Category',
+                      'Date',
+                      'Amount',
+                      'Status',
+                    ]}
+                  >
+                    {(title) => (
+                      <th scope="col" class="px-4 py-3 text-start">
+                        {title}
+                      </th>
+                    )}
+                  </For>
+                </tr>
+              </thead>
+              <tbody>
+                <For each={flowRows()}>
+                  {(transaction) => (
+                    <tr class="border-b border-outline-gray-1 last:border-b-0">
+                      <td class="px-4 py-3">{transaction.description}</td>
+                      <td class="px-4 py-3">{transaction.category}</td>
+                      <td class="px-4 py-3">{transaction.date}</td>
+                      <td class="px-4 py-3 tabular-nums">
+                        {currency(transaction.amount)}
+                      </td>
+                      <td class="px-4 py-3">
+                        <Badge
+                          theme={
+                            transaction.status === 'Posted' ? 'green' : 'amber'
+                          }
+                        >
+                          {transaction.status}
+                        </Badge>
+                      </td>
+                    </tr>
                   )}
                 </For>
-              </tr>
-            </thead>
-            <tbody>
-              <For each={flowRows()}>
-                {(transaction) => (
-                  <tr class="border-b border-outline-gray-1 last:border-b-0">
-                    <td class="px-4 py-3">{transaction.description}</td>
-                    <td class="px-4 py-3">{transaction.category}</td>
-                    <td class="px-4 py-3">{transaction.date}</td>
-                    <td class="px-4 py-3 tabular-nums">
-                      {currency(transaction.amount)}
-                    </td>
-                    <td class="px-4 py-3">
-                      <Badge
-                        theme={
-                          transaction.status === 'Posted' ? 'green' : 'amber'
-                        }
-                      >
-                        {transaction.status}
-                      </Badge>
-                    </td>
-                  </tr>
-                )}
-              </For>
-            </tbody>
-          </table>
-          <Show when={!flowRows().length}>
-            <p class="p-8 text-center text-ink-gray-6">
-              No transactions in this period.
-            </p>
-          </Show>
-        </section>
+              </tbody>
+            </table>
+            <Show when={!flowRows().length}>
+              <p class="p-8 text-center text-ink-gray-7">
+                No transactions in this period.
+              </p>
+            </Show>
+          </ScrollTable>
+        </div>
       </Show>
       <Show when={page() === 'Expenses'}>
         <TransactionTable
@@ -519,7 +534,7 @@ export function Accounting(): JSX.Element {
               onCheckedChange={setCompare}
             />
           </div>
-          <p class="mb-4 text-caption text-ink-gray-6">
+          <p class="mb-4 text-caption text-ink-gray-7">
             Prior-period figures are a fixed comparison cohort at 90% of each
             selected category.
           </p>
@@ -529,7 +544,7 @@ export function Accounting(): JSX.Element {
             aria-label="Profit and loss figures"
           >
             <table class="w-full min-w-[400px] text-interface">
-              <thead class="border-b border-outline-gray-1 text-caption text-ink-gray-6">
+              <thead class="border-b border-outline-gray-1 text-caption text-ink-gray-7">
                 <tr>
                   <th class="p-3 text-start" scope="col">
                     Category
@@ -555,7 +570,7 @@ export function Accounting(): JSX.Element {
                         {currency(item.total)}
                       </td>
                       <Show when={compare()}>
-                        <td class="p-3 text-end tabular-nums text-ink-gray-6">
+                        <td class="p-3 text-end tabular-nums text-ink-gray-7">
                           {currency(item.total * 0.9)}
                         </td>
                       </Show>

@@ -1,14 +1,23 @@
 {
   "files": [
     "pages/Files.tsx",
+    "examples/CreateDialog.tsx",
     "examples/DataTable.tsx",
+    "examples/ScrollTable.tsx",
+    "examples/download.ts",
     "examples/ExampleFrame.tsx",
+    "lib/examples.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",
     "examples/files-data.ts",
+    "examples/format.ts",
+    "examples/Notice.tsx",
+    "examples/select.ts",
     "examples/WorkspaceNav.tsx"
   ],
   "packages": [
+    "@newui/blocks",
+    "@newui/charts",
     "@newui/ui",
     "@solidjs/router",
     "@tanstack/solid-table",

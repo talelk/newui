@@ -33,17 +33,25 @@ export function Patterns() {
         fallback={
           <>
             <section
-              class="grid gap-4 sm:grid-cols-2"
+              class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1"
               aria-label="Additional patterns"
             >
               <For each={PATTERNS}>
                 {(item) => (
                   <A
                     href={`/examples/patterns/${item.slug}`}
-                    class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3 hover:border-outline-gray-3 focus-visible:focus-ring"
+                    class="flex min-h-11 items-center gap-3 rounded-3 p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
                   >
-                    <h2 class="text-section">{item.title}</h2>
-                    <p class="mt-2 text-ink-gray-6">{item.description}</p>
+                    <div class="min-w-0 flex-1">
+                      <h2 class="text-interface font-medium">{item.title}</h2>
+                      <p class="mt-1 text-caption text-ink-gray-7">
+                        {item.description}
+                      </p>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="lucide-arrow-up-right size-4 shrink-0 text-ink-gray-7"
+                    />
                   </A>
                 )}
               </For>

@@ -22,4 +22,6 @@ answered in that order: the trail first, so they know this is the record they
 clicked; then the name; then the status, because a status only means something
 once you know what it belongs to. Actions sit on the trailing edge with the
 primary one **last**, so the least-common (often destructive) action is never the
-one nearest the title.
+one nearest the title. The subtitle reads at `ink-gray-7` (secondary text never
+drops below that step), and the trailing action row wraps rather than pushing
+the title off a narrow record page.

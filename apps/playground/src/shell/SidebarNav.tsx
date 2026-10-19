@@ -1,6 +1,7 @@
 import { A, useLocation, useNavigate } from '@solidjs/router'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { NAV, SECTION_ICONS, sectionFor } from './nav'
+import { FilterInput, NAV_ROW, NothingMatches } from './nav-ui'
 
 /**
  * The site's navigation.
@@ -61,39 +62,26 @@ export function SidebarNav(props: {
           Charts, Editors) bring their own filter for their own names, and two
           fields stacked in one column is a question the reader has to answer
           before they can type. */}
-      <label
-        class="relative mx-2 mb-1 flex items-center"
+      <div
+        class="mx-2 mb-1"
         hidden={showFilter() === false || props.collapsed === true}
       >
-        <span class="sr-only">Filter pages</span>
-        <span
-          aria-hidden="true"
-          class="lucide-search pointer-events-none absolute start-2 size-3.5 text-ink-gray-5"
-        />
-        <input
-          type="search"
-          value={query()}
-          onInput={(event) => setQuery(event.currentTarget.value)}
+        <FilterInput
+          label="Filter pages"
           placeholder="Filter pages"
-          class="h-7 w-full rounded-4 border border-outline-gray-2 bg-surface-base ps-7 pe-2 text-sm text-ink-gray-8 placeholder:text-ink-gray-5 focus-visible:focus-ring"
+          value={query()}
+          onInput={setQuery}
         />
-      </label>
+      </div>
 
       <Show
         when={!searching()}
         fallback={
           <div class="flex flex-col gap-3 px-2 pb-6">
-            <For
-              each={results()}
-              fallback={
-                <p class="px-2 py-1 text-sm text-ink-gray-6">
-                  Nothing matches “{query()}”.
-                </p>
-              }
-            >
+            <For each={results()} fallback={<NothingMatches query={query()} />}>
               {(entry) => (
                 <div class="flex flex-col gap-0.5">
-                  <span class="px-2 text-xs font-medium tracking-wide text-ink-gray-5 uppercase">
+                  <span class="px-2 pt-1 text-xs-medium text-ink-gray-7">
                     {entry.section.title}
                   </span>
                   <For each={entry.items}>
@@ -119,7 +107,7 @@ export function SidebarNav(props: {
                   data-navigates=""
                   title={props.collapsed ? section.title : undefined}
                   aria-label={props.collapsed ? section.title : undefined}
-                  class="flex h-8 w-full items-center gap-2 rounded-3 px-2 text-start text-interface text-ink-gray-6 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none aria-[current=true]:bg-surface-gray-2 aria-[current=true]:text-ink-gray-9"
+                  class={`${NAV_ROW} w-full text-start`}
                   classList={{
                     'justify-center px-0': props.collapsed === true,
                   }}
@@ -139,7 +127,7 @@ export function SidebarNav(props: {
                     </span>
                     <span
                       aria-hidden="true"
-                      class={`${isOpen(section.title) ? 'lucide-chevron-down' : 'lucide-chevron-right'} size-3.5 shrink-0 text-ink-gray-5`}
+                      class={`${isOpen(section.title) ? 'lucide-chevron-down' : 'lucide-chevron-right'} size-3.5 shrink-0 text-ink-gray-7`}
                     />
                   </Show>
                 </button>
@@ -176,7 +164,7 @@ function NavLink(props: {
     <A
       href={props.item.href}
       aria-current={location.pathname === props.item.href ? 'page' : undefined}
-      class="flex min-h-7 items-center gap-2 rounded-3 px-2 text-interface text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none aria-[current=page]:bg-surface-gray-2 aria-[current=page]:text-ink-gray-9"
+      class={NAV_ROW}
     >
       <span class="min-w-0 flex-1 truncate">{props.item.title}</span>
       <Show when={props.item.status}>

@@ -52,7 +52,7 @@ export default function Demo(): JSX.Element {
           </MobileNav>
         }
       >
-        <div class="p-4 text-ink-gray-6">
+        <div class="p-4 text-ink-gray-7">
           <p>
             Drag the demo edge, or narrow the window, to see the frame change.
           </p>

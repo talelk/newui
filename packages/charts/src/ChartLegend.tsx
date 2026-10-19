@@ -1,4 +1,4 @@
-import { For, type JSX, Show } from 'solid-js'
+import { createSignal, For, type JSX, Show } from 'solid-js'
 import type { ChartLegendItem, ChartLegendProps } from './types'
 
 /**
@@ -6,10 +6,17 @@ import type { ChartLegendItem, ChartLegendProps } from './types'
  * it flips the series' visibility, and hovering or focusing it raises a
  * highlight so the caller can emphasise the matching marks.
  *
+ * While one entry is highlighted the others dim, mirroring the emphasis the
+ * caller applies to the marks — but only when a handler exists to act on it;
+ * a legend nobody wired up stays at full strength.
+ *
  * It takes the rows it needs rather than scrolling: a legend that scrolls hides
  * series names behind a gesture nobody makes.
  */
 export function ChartLegend(props: ChartLegendProps): JSX.Element {
+  const [highlighted, setHighlighted] = createSignal<string | null>(null)
+  const interactive = () => Boolean(props.onToggle || props.onHighlight)
+
   return (
     <div
       data-slot="chart-legend"
@@ -20,7 +27,7 @@ export function ChartLegend(props: ChartLegendProps): JSX.Element {
         'flex-wrap': 'wrap',
         'align-items': 'center',
         'justify-content': 'center',
-        'column-gap': '0.25rem',
+        'column-gap': '0.5rem',
         'row-gap': '0.125rem',
       }}
     >
@@ -28,8 +35,16 @@ export function ChartLegend(props: ChartLegendProps): JSX.Element {
         {(item) => (
           <LegendEntry
             item={item}
+            dimmed={
+              interactive() &&
+              highlighted() !== null &&
+              highlighted() !== item.name
+            }
             onToggle={props.onToggle}
-            onHighlight={props.onHighlight}
+            onHighlight={(name) => {
+              setHighlighted(name)
+              props.onHighlight?.(name)
+            }}
           />
         )}
       </For>
@@ -39,6 +54,7 @@ export function ChartLegend(props: ChartLegendProps): JSX.Element {
 
 function LegendEntry(props: {
   item: ChartLegendItem
+  dimmed?: boolean
   onToggle?: (name: string) => void
   onHighlight?: (name: string | null) => void
 }): JSX.Element {
@@ -49,6 +65,7 @@ function LegendEntry(props: {
     <button
       type="button"
       data-slot="chart-legend-item"
+      data-dimmed={props.dimmed || undefined}
       aria-pressed={!props.item.hidden}
       aria-label={toggleLabel()}
       onClick={() => props.onToggle?.(props.item.name)}
@@ -65,17 +82,19 @@ function LegendEntry(props: {
         'font-size': '0.75rem',
         'line-height': '1rem',
         border: 'none',
-        'border-radius': '6px',
+        'border-radius': '9999px',
         background: 'transparent',
         cursor: 'pointer',
-        color: 'var(--ink-gray-6)',
+        color: 'var(--ink-gray-7)',
+        opacity: props.dimmed ? '0.4' : undefined,
       }}
     >
       <span
         aria-hidden="true"
         style={{
-          width: '0.5rem',
-          height: '0.5rem',
+          width: '14px',
+          height: '3px',
+          'flex-shrink': '0',
           'border-radius': '9999px',
           'background-color': props.item.color,
           opacity: props.item.hidden ? '0.3' : '1',
@@ -89,7 +108,14 @@ function LegendEntry(props: {
         {props.item.label}
       </span>
       <Show when={props.item.hint}>
-        <span style={{ color: 'var(--ink-gray-6)' }}>{props.item.hint}</span>
+        <span
+          style={{
+            color: 'var(--ink-gray-7)',
+            'font-variant-numeric': 'tabular-nums',
+          }}
+        >
+          {props.item.hint}
+        </span>
       </Show>
     </button>
   )

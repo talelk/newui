@@ -1,17 +1,20 @@
-import { StatGrid } from '@newui/blocks'
+import { FilterBar, StatGrid } from '@newui/blocks'
 import {
   Badge,
   Button,
   Checkbox,
   Dialog,
+  EmptyState,
   Select,
-  TabButtons,
   Textarea,
   TextInput,
 } from '@newui/ui'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
+import { CreateDialog } from '../examples/CreateDialog'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import { ExampleFrame } from '../examples/ExampleFrame'
+import { Notice } from '../examples/Notice'
+import { optionsOf } from '../examples/select'
 import {
   AGENTS,
   INITIAL,
@@ -28,7 +31,6 @@ export function Tickets(): JSX.Element {
    * views. Selecting one moves the highlight — one screen is implemented.
    */
   const [screen, setScreen] = createSignal('Tickets')
-  const [savedView, setSavedView] = createSignal('My open tickets')
   const [tickets, setTickets] = createSignal(INITIAL)
   const [view, setView] = createSignal('open')
   const [priority, setPriority] = createSignal('All priorities')
@@ -42,7 +44,6 @@ export function Tickets(): JSX.Element {
   const [subject, setSubject] = createSignal('')
   const [customer, setCustomer] = createSignal('')
   const [description, setDescription] = createSignal('')
-  const [attempted, setAttempted] = createSignal(false)
   const [notice, setNotice] = createSignal('')
   let nextId = 1025
   const current = createMemo(() =>
@@ -89,7 +90,7 @@ export function Tickets(): JSX.Element {
           }}
         >
           {context.row.original.subject}
-          <span class="mt-1 block text-caption text-ink-gray-6">
+          <span class="mt-1 block text-caption text-ink-gray-7">
             {context.row.original.customer}
           </span>
         </button>
@@ -108,7 +109,7 @@ export function Tickets(): JSX.Element {
           >
             {context.row.original.response}
           </p>
-          <p class="mt-1 text-ink-gray-6">{context.row.original.resolution}</p>
+          <p class="mt-1 text-ink-gray-7">{context.row.original.resolution}</p>
         </div>
       ),
     },
@@ -147,24 +148,26 @@ export function Tickets(): JSX.Element {
             value={screen()}
             onChange={setScreen}
             items={[
-              { label: 'Tickets', icon: 'lucide-ticket', count: 24 },
+              {
+                label: 'Tickets',
+                icon: 'lucide-ticket',
+                count: tickets().length,
+              },
               { label: 'Customers', icon: 'lucide-building-2' },
               { label: 'Contacts', icon: 'lucide-contact' },
               { label: 'Agents', icon: 'lucide-headset' },
               { label: 'Knowledge base', icon: 'lucide-book-open' },
               { label: 'Canned responses', icon: 'lucide-message-square-text' },
             ]}
-          />
-          <WorkspaceNav
-            label="Saved views"
-            value={savedView()}
-            onChange={setSavedView}
-            items={[
-              { label: 'My open tickets', icon: 'lucide-inbox' },
-              { label: 'Urgent', icon: 'lucide-triangle-alert' },
-              { label: 'Unassigned', icon: 'lucide-user-round-x' },
-              { label: 'Solved this week', icon: 'lucide-circle-check' },
-            ]}
+            group={{
+              label: 'Saved views',
+              items: [
+                { label: 'My open tickets', icon: 'lucide-inbox' },
+                { label: 'Urgent', icon: 'lucide-triangle-alert' },
+                { label: 'Unassigned', icon: 'lucide-user-round-x' },
+                { label: 'Solved this week', icon: 'lucide-circle-check' },
+              ],
+            }}
           />
         </div>
       }
@@ -176,10 +179,7 @@ export function Tickets(): JSX.Element {
           variant="solid"
           theme="blue"
           iconLeft="lucide-plus"
-          onClick={() => {
-            setAttempted(false)
-            setOpen(true)
-          }}
+          onClick={() => setOpen(true)}
         >
           New ticket
         </Button>
@@ -193,6 +193,8 @@ export function Tickets(): JSX.Element {
               value: String(
                 tickets().filter((ticket) => ticket.status === 'Open').length,
               ),
+              hint: 'Waiting on a first response',
+              icon: 'lucide-ticket',
             },
             {
               label: 'Awaiting reply',
@@ -200,6 +202,8 @@ export function Tickets(): JSX.Element {
                 tickets().filter((ticket) => ticket.status === 'Replied')
                   .length,
               ),
+              hint: 'The ball is with the customer',
+              icon: 'lucide-message-square-text',
             },
             {
               label: 'Unassigned',
@@ -210,6 +214,8 @@ export function Tickets(): JSX.Element {
                     ticket.status !== 'Resolved',
                 ).length,
               ),
+              hint: 'Open and without an owner',
+              icon: 'lucide-user-round-x',
             },
             {
               label: 'Resolved',
@@ -217,67 +223,89 @@ export function Tickets(): JSX.Element {
                 tickets().filter((ticket) => ticket.status === 'Resolved')
                   .length,
               ),
+              hint: `Of ${tickets().length} tickets in total`,
+              icon: 'lucide-circle-check',
             },
           ]}
         />
       </div>
-      <Show when={notice()}>
-        <p
-          role="status"
-          class="rounded-3 border border-outline-blue-1 bg-surface-blue-1 p-3 text-ink-blue-8"
-        >
-          {notice()}
-        </p>
-      </Show>
-      <div class="flex flex-wrap items-end justify-between gap-3">
-        <TabButtons
-          value={view()}
-          onValueChange={setView}
-          options={[
+      <Notice text={notice()} onDismiss={() => setNotice('')} />
+      <FilterBar
+        query={{
+          placeholder: 'Find tickets…',
+          value: query(),
+          onInput: setQuery,
+        }}
+        selects={[
+          {
+            label: 'Priority',
+            value: priority() === 'All priorities' ? '' : priority(),
+            onValueChange: (value) => setPriority(value || 'All priorities'),
+            options: optionsOf(PRIORITIES),
+          },
+          {
+            label: 'Agent',
+            value: agent() === 'All agents' ? '' : agent(),
+            onValueChange: (value) => setAgent(value || 'All agents'),
+            options: optionsOf(AGENTS),
+          },
+          {
+            label: 'Queue',
+            value: queue() === 'All queues' ? '' : queue(),
+            onValueChange: (value) => setQueue(value || 'All queues'),
+            options: optionsOf([
+              'Unassigned',
+              'Assigned to me',
+              'SLA breached',
+            ]),
+          },
+        ]}
+        tabs={{
+          value: view(),
+          onValueChange: setView,
+          options: [
             { label: 'Open tickets', value: 'open' },
             { label: 'All tickets', value: 'all' },
             { label: 'Closed tickets', value: 'closed' },
-          ]}
-        />
-        <div class="flex flex-wrap gap-3">
-          <Select
-            label="Filter priority"
-            value={[priority()]}
-            options={['All priorities', ...PRIORITIES].map((value) => ({
-              label: value,
-              value,
-            }))}
-            onValueChange={(value) => setPriority(value[0] ?? 'All priorities')}
-          />
-          <Select
-            label="Filter assignee"
-            value={[agent()]}
-            options={['All agents', ...AGENTS].map((value) => ({
-              label: value,
-              value,
-            }))}
-            onValueChange={(value) => setAgent(value[0] ?? 'All agents')}
-          />
-        </div>
-      </div>
-      <div class="flex flex-wrap gap-3">
-        <TextInput
-          label="Find tickets"
-          value={query()}
-          onInput={(event) => setQuery(event.currentTarget.value)}
-        />
-        <Select
-          label="Ticket queue"
-          value={[queue()]}
-          options={[
-            'All queues',
-            'Unassigned',
-            'Assigned to me',
-            'SLA breached',
-          ].map((value) => ({ value, label: value }))}
-          onValueChange={(value) => setQueue(value[0] ?? 'All queues')}
-        />
-      </div>
+          ],
+        }}
+        chips={[
+          ...(priority() !== 'All priorities'
+            ? [
+                {
+                  label: `Priority: ${priority()}`,
+                  onRemove: () => setPriority('All priorities'),
+                },
+              ]
+            : []),
+          ...(agent() !== 'All agents'
+            ? [
+                {
+                  label: `Agent: ${agent()}`,
+                  onRemove: () => setAgent('All agents'),
+                },
+              ]
+            : []),
+          ...(queue() !== 'All queues'
+            ? [
+                {
+                  label: `Queue: ${queue()}`,
+                  onRemove: () => setQueue('All queues'),
+                },
+              ]
+            : []),
+          ...(query()
+            ? [{ label: `Search: ${query()}`, onRemove: () => setQuery('') }]
+            : []),
+        ]}
+        resultCount={rows().length}
+        onClearAll={() => {
+          setPriority('All priorities')
+          setAgent('All agents')
+          setQueue('All queues')
+          setQuery('')
+        }}
+      />
       <section class="flex flex-col gap-3 sm:hidden" aria-label="Ticket cards">
         <Show when={mobileSelection().length}>
           <Button
@@ -330,7 +358,7 @@ export function Tickets(): JSX.Element {
               <p class="mt-3 text-caption">
                 {ticket.id} · {ticket.customer}
               </p>
-              <p class="mt-2 text-caption text-ink-gray-6">
+              <p class="mt-2 text-caption text-ink-gray-7">
                 {ticket.priority} · {ticket.agent} · {ticket.status}
               </p>
               <p class="mt-2 text-caption">First response: {ticket.response}</p>
@@ -338,12 +366,30 @@ export function Tickets(): JSX.Element {
           )}
         </For>
         <Show when={!rows().length}>
-          <p>No tickets match this queue.</p>
+          <EmptyState
+            bordered
+            icon="lucide-ticket"
+            title="No tickets match this queue"
+            description="Clear a filter or two and the matching tickets come back."
+            action={
+              <Button
+                onClick={() => {
+                  setPriority('All priorities')
+                  setAgent('All agents')
+                  setQueue('All queues')
+                  setQuery('')
+                }}
+              >
+                Clear filters
+              </Button>
+            }
+          />
         </Show>
       </section>
       <div class="hidden sm:block">
         <DataTable
           title="Tickets"
+          hideSearch
           rows={rows()}
           columns={columns}
           actionLabel="Resolve tickets"
@@ -476,47 +522,41 @@ export function Tickets(): JSX.Element {
           </Show>
         </Dialog.Content>
       </Dialog.Root>
-      <Dialog.Root open={open()} onOpenChange={setOpen}>
-        <Dialog.Content>
-          <Dialog.Header>
-            <Dialog.Title>Create a support ticket</Dialog.Title>
-            <Dialog.Description>
-              Describe the issue and add it to the local helpdesk.
-            </Dialog.Description>
-          </Dialog.Header>
-          <form
-            class="mt-5 flex flex-col gap-4"
-            noValidate
-            onSubmit={(event) => {
-              event.preventDefault()
-              setAttempted(true)
-              if (
-                subject().trim().length < 3 ||
-                !customer().trim() ||
-                description().trim().length < 10
-              )
-                return
-              setTickets((previous) => [
-                {
-                  id: `TKT-${nextId++}`,
-                  subject: subject().trim(),
-                  customer: customer().trim(),
-                  status: 'Open',
-                  priority: 'Medium',
-                  agent: 'Unassigned',
-                  response: 'Due in 15m',
-                  resolution: 'Due in 4h',
-                  messages: [description().trim()],
-                },
-                ...previous,
-              ])
-              setOpen(false)
-              setNotice('Ticket created and waiting for an agent.')
-              setSubject('')
-              setDescription('')
-              setCustomer('')
-            }}
-          >
+      <CreateDialog
+        open={open()}
+        onOpenChange={setOpen}
+        title="Create a support ticket"
+        description="Describe the issue and add it to the local helpdesk."
+        submitLabel="Create ticket"
+        onSubmit={() => {
+          if (
+            subject().trim().length < 3 ||
+            !customer().trim() ||
+            description().trim().length < 10
+          )
+            return
+          setTickets((previous) => [
+            {
+              id: `TKT-${nextId++}`,
+              subject: subject().trim(),
+              customer: customer().trim(),
+              status: 'Open',
+              priority: 'Medium',
+              agent: 'Unassigned',
+              response: 'Due in 15m',
+              resolution: 'Due in 4h',
+              messages: [description().trim()],
+            },
+            ...previous,
+          ])
+          setOpen(false)
+          setNotice('Ticket created and waiting for an agent.')
+          setSubject('')
+          setDescription('')
+          setCustomer('')
+        }}
+        fields={(attempted) => (
+          <>
             <TextInput
               label="Ticket subject"
               value={subject()}
@@ -551,17 +591,9 @@ export function Tickets(): JSX.Element {
                   : undefined
               }
             />
-            <Dialog.Footer>
-              <Button variant="outline" onClick={() => setOpen(false)}>
-                Cancel
-              </Button>
-              <Button variant="solid" theme="blue" type="submit">
-                Create ticket
-              </Button>
-            </Dialog.Footer>
-          </form>
-        </Dialog.Content>
-      </Dialog.Root>
+          </>
+        )}
+      />
     </ExampleFrame>
   )
 }

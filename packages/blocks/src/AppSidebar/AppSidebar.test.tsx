@@ -28,7 +28,7 @@ describe('AppSidebar', () => {
     expect(screen.getByRole('button', { name: /Customers/ })).toBeTruthy()
   })
 
-  it('shows a count as a quiet suffix, not a badge', () => {
+  it('shows a count as a quiet pill, not a badge', () => {
     const { container } = render(() => (
       <AppSidebar
         title="Tickets"
@@ -36,7 +36,9 @@ describe('AppSidebar', () => {
       />
     ))
     expect(container.querySelector('[data-slot="badge"]')).toBeNull()
-    expect(screen.getByText('24')).toBeTruthy()
+    const pill = screen.getByText('24')
+    expect(pill.className).toContain('rounded-full')
+    expect(pill.className).toContain('tabular-nums')
   })
 
   it('marks the active item and forwards clicks', async () => {
@@ -52,6 +54,35 @@ describe('AppSidebar', () => {
     expect(item.getAttribute('data-active')).toBe('')
     await userEvent.click(item)
     expect(onClick).toHaveBeenCalled()
+  })
+
+  it('carries a collapse toggle at its foot that folds the sidebar', async () => {
+    const onCollapsedChange = vi.fn()
+    const { container } = render(() => (
+      <AppSidebar
+        title="Tickets"
+        onCollapsedChange={onCollapsedChange}
+        groups={[{ items: [{ label: 'Open', icon: 'lucide-ticket' }] }]}
+      />
+    ))
+    const nav = container.querySelector('[data-slot="sidebar"]')
+    expect(nav?.getAttribute('data-state')).toBe('expanded')
+
+    await userEvent.click(screen.getByRole('button', { name: /^Collapse$/ }))
+    expect(onCollapsedChange).toHaveBeenCalledWith(true)
+    expect(nav?.getAttribute('data-state')).toBe('collapsed')
+    expect(screen.getByRole('button', { name: /^Expand$/ })).toBeTruthy()
+  })
+
+  it('drops the toggle when the sidebar cannot collapse', () => {
+    render(() => (
+      <AppSidebar
+        title="Tickets"
+        collapsible={false}
+        groups={[{ items: [{ label: 'Open' }] }]}
+      />
+    ))
+    expect(screen.queryByRole('button', { name: 'Collapse' })).toBeNull()
   })
 
   it('omits the leading slot when an item has no icon', () => {

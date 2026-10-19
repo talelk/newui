@@ -1,18 +1,21 @@
+import { FilterBar } from '@newui/blocks'
 import {
   Avatar,
   Badge,
   BottomSheet,
   Button,
   Checkbox,
-  Dialog,
   Select,
+  Slider,
   Switch,
   TabButtons,
   Textarea,
   TextInput,
 } from '@newui/ui'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
+import { CreateDialog } from '../examples/CreateDialog'
 import { ExampleFrame } from '../examples/ExampleFrame'
+import { isEmail } from '../examples/format'
 import {
   filterMail,
   initialMail,
@@ -21,6 +24,10 @@ import {
   type MailMessage,
   patchMail,
 } from '../examples/mail-data'
+import { Notice } from '../examples/Notice'
+import { optionsOf } from '../examples/select'
+import { createUndo } from '../examples/undo'
+import { WorkspaceNav } from '../examples/WorkspaceNav'
 
 const FOLDERS = [
   'Inbox',
@@ -47,6 +54,11 @@ export function Mail(): JSX.Element {
   const [query, setQuery] = createSignal('')
   const [category, setCategory] = createSignal('All categories')
   const [mode, setMode] = createSignal('all')
+  const clearMailFilters = () => {
+    setQuery('')
+    setCategory('All categories')
+    setMode('all')
+  }
   const [active, setActive] = createSignal<string>()
   const [selected, setSelected] = createSignal<string[]>([])
   const [reply, setReply] = createSignal('')
@@ -54,13 +66,12 @@ export function Mail(): JSX.Element {
   const [forwardTo, setForwardTo] = createSignal('')
   const [replyAttempted, setReplyAttempted] = createSignal(false)
   const [notice, setNotice] = createSignal('')
-  const [snapshot, setSnapshot] = createSignal<MailMessage[]>()
+  const mailUndo = createUndo<MailMessage[]>()
   const [compose, setCompose] = createSignal(false)
   const [draftId, setDraftId] = createSignal<string>()
   const [recipient, setRecipient] = createSignal('')
   const [subject, setSubject] = createSignal('')
   const [body, setBody] = createSignal('')
-  const [attempted, setAttempted] = createSignal(false)
   const rows = createMemo(() =>
     filterMail(messages(), folder(), query(), mode() === 'unread', category()),
   )
@@ -81,7 +92,7 @@ export function Mail(): JSX.Element {
     patch: Partial<MailMessage>,
     description: string,
   ) => {
-    setSnapshot(messages())
+    mailUndo.capture(messages())
     setMessages(patchMail(messages(), ids, patch))
     setNotice(description)
     setSelected([])
@@ -120,16 +131,12 @@ export function Mail(): JSX.Element {
     setRecipient('')
     setSubject('')
     setBody('')
-    setAttempted(false)
     setCompose(true)
   }
   const saveMessage = (target: 'Sent' | 'Drafts') => {
-    setAttempted(true)
     if (
       target === 'Sent' &&
-      (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient()) ||
-        !subject().trim() ||
-        !body().trim())
+      (!isEmail(recipient()) || !subject().trim() || !body().trim())
     )
       return
     const message: MailMessage = {
@@ -151,7 +158,6 @@ export function Mail(): JSX.Element {
       ...previous.filter((item) => item.id !== message.id),
     ])
     setCompose(false)
-    setAttempted(false)
     setNotice(
       target === 'Sent'
         ? 'Message sent in this local demo. No email left this page.'
@@ -159,35 +165,36 @@ export function Mail(): JSX.Element {
     )
     setActive(undefined)
   }
+  const FOLDER_ICONS: Record<string, string> = {
+    Inbox: 'lucide-inbox',
+    Starred: 'lucide-star',
+    Sent: 'lucide-send',
+    Drafts: 'lucide-file-pen',
+    Archive: 'lucide-archive',
+    Snoozed: 'lucide-clock',
+    Trash: 'lucide-trash-2',
+    Work: 'lucide-briefcase',
+    Personal: 'lucide-user',
+  }
   const MailboxItems = () => (
-    <>
-      <For each={FOLDERS}>
-        {(item) => (
-          <button
-            type="button"
-            class="flex items-center justify-between gap-3 rounded-3 px-3 py-2 text-start text-ink-gray-6 hover:bg-surface-gray-2 focus-visible:focus-ring"
-            classList={{
-              'bg-surface-blue-2 text-ink-blue-8': folder() === item,
-            }}
-            aria-current={folder() === item ? 'page' : undefined}
-            onClick={() => {
-              selectFolder(item)
-              setMailboxesOpen(false)
-            }}
-          >
-            <span>{item}</span>
-            <span class="text-caption tabular-nums">
-              {item === 'Inbox'
-                ? messages().filter(
-                    (message) => message.folder === item && message.unread,
-                  ).length
-                : filterMail(messages(), item, '', false, 'All categories')
-                    .length}
-            </span>
-          </button>
-        )}
-      </For>
-    </>
+    <WorkspaceNav
+      label="Mailboxes"
+      value={folder()}
+      onChange={(item) => {
+        selectFolder(item)
+        setMailboxesOpen(false)
+      }}
+      items={FOLDERS.map((item) => ({
+        label: item,
+        icon: FOLDER_ICONS[item] ?? 'lucide-folder',
+        count:
+          item === 'Inbox'
+            ? messages().filter(
+                (message) => message.folder === item && message.unread,
+              ).length
+            : filterMail(messages(), item, '', false, 'All categories').length,
+      }))}
+    />
   )
   return (
     <ExampleFrame
@@ -229,7 +236,7 @@ export function Mail(): JSX.Element {
             )
             setAccount(next)
             selectFolder('Inbox')
-            setSnapshot(undefined)
+            mailUndo.clear()
           }}
         />
         <Button
@@ -244,65 +251,54 @@ export function Mail(): JSX.Element {
             Mailboxes · {folder()}
           </Button>
         </div>
-        <label class="hidden text-caption text-ink-gray-6 sm:flex sm:flex-col sm:gap-2">
-          Inbox pane width
-          <input
-            type="range"
+        <div class="hidden w-48 sm:block">
+          <Slider
+            label="Inbox pane width"
             aria-label="Inbox pane width"
-            min="30"
-            max="70"
-            value="50"
-            onInput={(event) => {
-              const value = Number(event.currentTarget.value)
+            min={30}
+            max={70}
+            defaultValue={[50]}
+            onValueChange={(values) => {
+              const value = values[0] ?? 50
               panes?.style.setProperty(
                 '--mail-list-width',
                 `${value / (100 - value)}fr`,
               )
             }}
           />
-        </label>
-      </div>
-      <Show when={notice()}>
-        <div
-          role="status"
-          class="flex flex-wrap items-center justify-between gap-2 rounded-3 border border-outline-blue-1 bg-surface-blue-1 p-3 text-ink-blue-8"
-        >
-          <span>{notice()}</span>
-          <Show when={snapshot()}>
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={() => {
-                const previous = snapshot()
-                if (previous) setMessages(previous)
-                setSnapshot(undefined)
-                setNotice('Change undone.')
-              }}
-            >
-              Undo mail action
-            </Button>
-          </Show>
         </div>
-      </Show>
+      </div>
+      <Notice
+        text={notice()}
+        onUndo={
+          mailUndo.snapshot()
+            ? () => {
+                mailUndo.undo(setMessages)
+                setNotice('Change undone.')
+              }
+            : undefined
+        }
+        undoLabel="Undo mail action"
+        onDismiss={() => setNotice('')}
+      />
       <div
         class="grid min-h-[640px] min-w-0 overflow-hidden rounded-5 border border-outline-gray-1 bg-surface-elevation-1"
         classList={{ 'xl:grid-cols-[160px_minmax(0,1fr)]': navigationOpen() }}
       >
-        <nav
-          aria-label="Mailboxes"
-          class="hidden flex-wrap gap-1 border-b border-outline-gray-1 p-3 xl:flex-col xl:border-b-0 xl:border-e"
-          classList={{ 'sm:flex': navigationOpen() }}
+        {/* `MailboxItems` renders the `Mailboxes` nav itself (WorkspaceNav);
+          these wrappers only place it. */}
+        <div
+          class="hidden border-b border-outline-gray-1 p-3 xl:border-b-0 xl:border-e"
+          classList={{ 'sm:block': navigationOpen() }}
         >
           <MailboxItems />
-        </nav>
+        </div>
         <BottomSheet
           open={mailboxesOpen()}
           title="Mailboxes"
           onOpenChange={setMailboxesOpen}
         >
-          <nav aria-label="Mobile mailboxes">
-            <MailboxItems />
-          </nav>
+          <MailboxItems />
         </BottomSheet>
         <div
           ref={panes}
@@ -313,40 +309,58 @@ export function Mail(): JSX.Element {
             class="min-w-0 border-outline-gray-1 sm:border-e"
             classList={{ 'hidden sm:block': !!active() }}
           >
-            <div class="flex flex-col gap-3 border-b border-outline-gray-1 p-3">
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <h2 class="text-section">{folder()}</h2>
-                <TabButtons
-                  value={mode()}
-                  onValueChange={setMode}
-                  options={[
-                    { label: 'All mail', value: 'all' },
+            <div class="flex flex-col gap-3 p-3">
+              <h2 class="text-section">{folder()}</h2>
+              <FilterBar
+                query={{
+                  placeholder: 'Search conversations…',
+                  value: query(),
+                  onInput: setQuery,
+                }}
+                selects={[
+                  {
+                    label: 'Category',
+                    value: category() === 'All categories' ? '' : category(),
+                    onValueChange: (value) =>
+                      setCategory(value || 'All categories'),
+                    options: optionsOf(MAIL_CATEGORIES),
+                  },
+                ]}
+                tabs={{
+                  value: mode(),
+                  onValueChange: setMode,
+                  options: [
+                    { label: 'All', value: 'all' },
                     { label: 'Unread', value: 'unread' },
-                  ]}
-                />
-              </div>
-              <TextInput
-                aria-label="Search mail"
-                placeholder="Search conversations…"
-                prefix={
-                  <span aria-hidden="true" class="lucide-search size-4" />
-                }
-                value={query()}
-                onInput={(event) => setQuery(event.currentTarget.value)}
-              />
-              <Select
-                label="Category"
-                options={['All categories', ...MAIL_CATEGORIES].map(
-                  (value) => ({ label: value, value }),
-                )}
-                value={[category()]}
-                onValueChange={(value) =>
-                  setCategory(value[0] ?? 'All categories')
-                }
+                  ],
+                }}
+                chips={[
+                  ...(category() !== 'All categories'
+                    ? [
+                        {
+                          label: `Category: ${category()}`,
+                          onRemove: () => setCategory('All categories'),
+                        },
+                      ]
+                    : []),
+                  ...(mode() === 'unread'
+                    ? [{ label: 'Unread only', onRemove: () => setMode('all') }]
+                    : []),
+                  ...(query()
+                    ? [
+                        {
+                          label: `Search: ${query()}`,
+                          onRemove: () => setQuery(''),
+                        },
+                      ]
+                    : []),
+                ]}
+                resultCount={rows().length}
+                onClearAll={clearMailFilters}
               />
               <Show when={selected().length}>
                 <div class="flex flex-wrap items-center gap-2">
-                  <span class="text-caption text-ink-gray-6">
+                  <span class="text-caption text-ink-gray-7">
                     {selected().length} selected
                   </span>
                   <Button size="sm" onClick={() => move('Archive')}>
@@ -367,17 +381,10 @@ export function Mail(): JSX.Element {
                 fallback={
                   <li class="p-8 text-center">
                     <p class="font-medium">No conversations here</p>
-                    <p class="mt-1 text-caption text-ink-gray-6">
+                    <p class="mt-1 text-caption text-ink-gray-7">
                       Choose another mailbox or clear your filters.
                     </p>
-                    <Button
-                      class="mt-3"
-                      onClick={() => {
-                        setQuery('')
-                        setMode('all')
-                        setCategory('All categories')
-                      }}
-                    >
+                    <Button class="mt-3" onClick={clearMailFilters}>
                       Clear mail filters
                     </Button>
                   </li>
@@ -421,7 +428,7 @@ export function Mail(): JSX.Element {
                       >
                         {message.subject}
                       </span>
-                      <span class="mt-1 line-clamp-2 text-caption text-ink-gray-6">
+                      <span class="mt-1 line-clamp-2 text-caption text-ink-gray-7">
                         {message.body.split('\n\n')[1]}
                       </span>
                       <span class="mt-2 flex gap-2">
@@ -460,10 +467,10 @@ export function Mail(): JSX.Element {
                 <div class="grid flex-1 place-content-center p-8 text-center">
                   <span
                     aria-hidden="true"
-                    class="lucide-mail mx-auto mb-3 size-8 text-ink-gray-6"
+                    class="lucide-mail mx-auto mb-3 size-8 text-ink-gray-7"
                   />
                   <h2 class="text-section">A little room to focus</h2>
-                  <p class="mt-2 text-ink-gray-6">
+                  <p class="mt-2 text-ink-gray-7">
                     Select a conversation to read and reply.
                   </p>
                 </div>
@@ -528,7 +535,7 @@ export function Mail(): JSX.Element {
                       <Avatar label={message().name} />
                       <div class="min-w-0">
                         <p class="font-medium">{message().name}</p>
-                        <p class="break-all text-caption text-ink-gray-6">
+                        <p class="break-all text-caption text-ink-gray-7">
                           {message().email} · Sep 30, 2026
                         </p>
                       </div>
@@ -539,7 +546,7 @@ export function Mail(): JSX.Element {
                     <For each={message().replies}>
                       {(text) => (
                         <div class="mt-5 rounded-3 border border-outline-gray-1 bg-surface-gray-1 p-3">
-                          <p class="mb-2 text-caption font-medium text-ink-gray-6">
+                          <p class="mb-2 text-caption font-medium text-ink-gray-7">
                             Rhea Kapoor · Local reply
                           </p>
                           <p class="whitespace-pre-wrap">{text}</p>
@@ -556,8 +563,7 @@ export function Mail(): JSX.Element {
                       if (!reply().trim()) return
                       const item = message()
                       if (replyKind() === 'Forward') {
-                        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(forwardTo()))
-                          return
+                        if (!isEmail(forwardTo())) return
                         setMessages((previous) => [
                           {
                             ...item,
@@ -610,8 +616,7 @@ export function Mail(): JSX.Element {
                         required
                         value={forwardTo()}
                         error={
-                          replyAttempted() &&
-                          !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(forwardTo())
+                          replyAttempted() && !isEmail(forwardTo())
                             ? 'Enter a valid recipient email.'
                             : undefined
                         }
@@ -658,22 +663,17 @@ export function Mail(): JSX.Element {
           </section>
         </div>
       </div>
-      <Dialog.Root open={compose()} onOpenChange={setCompose}>
-        <Dialog.Content>
-          <Dialog.Header>
-            <Dialog.Title>New message</Dialog.Title>
-            <Dialog.Description>
-              Write a local demo email. Nothing is sent externally.
-            </Dialog.Description>
-          </Dialog.Header>
-          <form
-            class="mt-5 flex flex-col gap-4"
-            noValidate
-            onSubmit={(event) => {
-              event.preventDefault()
-              saveMessage('Sent')
-            }}
-          >
+      <CreateDialog
+        open={compose()}
+        onOpenChange={setCompose}
+        title="New message"
+        description="Write a local demo email. Nothing is sent externally."
+        submitLabel="Send demo email"
+        secondaryLabel="Save email draft"
+        onSecondary={() => saveMessage('Drafts')}
+        onSubmit={() => saveMessage('Sent')}
+        fields={(attempted) => (
+          <>
             <TextInput
               label="To"
               type="email"
@@ -681,7 +681,7 @@ export function Mail(): JSX.Element {
               value={recipient()}
               onInput={(event) => setRecipient(event.currentTarget.value)}
               error={
-                attempted() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient())
+                attempted() && !isEmail(recipient())
                   ? 'Enter a valid recipient email.'
                   : undefined
               }
@@ -705,17 +705,9 @@ export function Mail(): JSX.Element {
                 attempted() && !body().trim() ? 'Write a message.' : undefined
               }
             />
-            <Dialog.Footer>
-              <Button variant="outline" onClick={() => saveMessage('Drafts')}>
-                Save email draft
-              </Button>
-              <Button type="submit" variant="solid" theme="blue">
-                Send demo email
-              </Button>
-            </Dialog.Footer>
-          </form>
-        </Dialog.Content>
-      </Dialog.Root>
+          </>
+        )}
+      />
     </ExampleFrame>
   )
 }

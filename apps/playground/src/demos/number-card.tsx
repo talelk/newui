@@ -4,10 +4,12 @@ export default function Demo() {
     <NumberCard
       title="Revenue"
       value={24680}
+      target={30000}
       prefix="$"
       delta={12.8}
       deltaSuffix="%"
-      deltaCaption="vs last month"
+      deltaCaption="from $21,880 last month"
+      sparkline={{ data: [12, 15, 13, 18, 17, 21, 24] }}
     />
   )
 }

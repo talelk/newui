@@ -1,12 +1,20 @@
 {
   "files": [
     "pages/Mail.tsx",
+    "examples/CreateDialog.tsx",
     "examples/ExampleFrame.tsx",
+    "lib/examples.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",
-    "examples/mail-data.ts"
+    "examples/format.ts",
+    "examples/mail-data.ts",
+    "examples/Notice.tsx",
+    "examples/select.ts",
+    "examples/undo.ts",
+    "examples/WorkspaceNav.tsx"
   ],
   "packages": [
+    "@newui/blocks",
     "@newui/ui",
     "@solidjs/router",
     "solid-js"

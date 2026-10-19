@@ -138,7 +138,7 @@ export function PageFinder(props: { onClose: () => void }): JSX.Element {
         </CommandItem>
       </CommandGroup>
 
-      <p class="flex items-center justify-center gap-1 px-2 py-2 text-xs text-ink-gray-5">
+      <p class="flex items-center justify-center gap-1 px-2 py-2 text-xs text-ink-gray-7">
         <KeyboardShortcut combo="Mod+K" /> to open ·
         <KeyboardShortcut combo="ArrowUp" />
         <KeyboardShortcut combo="ArrowDown" /> to move ·

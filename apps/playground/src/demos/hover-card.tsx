@@ -7,7 +7,7 @@ export default function Demo() {
       </HoverCard.Trigger>
       <HoverCard.Content>
         <p class="font-medium">Rhea Kapoor</p>
-        <p class="mt-2 text-caption text-ink-gray-6">
+        <p class="mt-2 text-caption text-ink-gray-7">
           Product designer · Acme workspace
         </p>
       </HoverCard.Content>

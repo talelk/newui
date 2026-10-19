@@ -1,10 +1,15 @@
 {
   "files": [
     "pages/Tickets.tsx",
+    "examples/CreateDialog.tsx",
     "examples/DataTable.tsx",
+    "examples/ScrollTable.tsx",
     "examples/ExampleFrame.tsx",
+    "lib/examples.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",
+    "examples/Notice.tsx",
+    "examples/select.ts",
     "examples/tickets-data.ts",
     "examples/WorkspaceNav.tsx"
   ],

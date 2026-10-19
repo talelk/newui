@@ -45,7 +45,7 @@ export function Authentication(): JSX.Element {
           newui
         </A>
         <div class="max-w-lg">
-          <p class="mb-5 text-caption">THE WORKSPACE FOR WHAT COMES NEXT</p>
+          <p class="mb-5 text-caption">The workspace for what comes next</p>
           <h2 class="text-hero">Good work starts with a clear view.</h2>
           <p class="mt-6 text-lg">
             Your projects, customers and numbers. One thoughtfully composed
@@ -58,7 +58,7 @@ export function Authentication(): JSX.Element {
         <div class="absolute inset-x-0 top-0 flex items-center justify-between p-3">
           <A
             href="/examples"
-            class="rounded-3 text-caption text-ink-gray-6 focus-visible:focus-ring"
+            class="rounded-3 text-caption text-ink-gray-7 focus-visible:focus-ring"
           >
             <span
               aria-hidden="true"
@@ -83,12 +83,28 @@ export function Authentication(): JSX.Element {
               : 'A little clarity. A lot of possibility.'
           }
           logo={<Badge theme="blue">Interactive demo</Badge>}
+          providers={
+            session()
+              ? undefined
+              : [
+                  {
+                    label: 'GitHub demo',
+                    onClick: () => {
+                      setEmail('')
+                      setSession('GitHub demo session ready')
+                    },
+                  },
+                ]
+          }
+          footer={
+            session() ? undefined : 'Demo only. Credentials stay on this page.'
+          }
         >
           <Show
             when={!session()}
             fallback={
               <div class="flex flex-col gap-4 text-center">
-                <p role="status" class="text-ink-gray-6">
+                <p role="status" class="text-ink-gray-7">
                   {mode() === 'link'
                     ? 'Your local demo sign-in link is ready. No email was sent.'
                     : 'Your local demo session is ready to explore.'}
@@ -226,23 +242,6 @@ export function Authentication(): JSX.Element {
                 ? 'Use a password instead'
                 : 'Use a sign-in link instead'}
             </Button>
-            <div class="flex items-center gap-3 text-caption text-ink-gray-6">
-              <span class="h-px flex-1 bg-outline-gray-1" />
-              or continue with
-              <span class="h-px flex-1 bg-outline-gray-1" />
-            </div>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setEmail('')
-                setSession('GitHub demo session ready')
-              }}
-            >
-              GitHub demo
-            </Button>
-            <p class="text-center text-caption text-ink-gray-6">
-              Demo only. Credentials stay on this page.
-            </p>
           </Show>
         </AuthCard>
       </div>

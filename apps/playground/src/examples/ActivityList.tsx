@@ -26,7 +26,7 @@ export function ActivityList(props: { rows: ActivityRecord[] }): JSX.Element {
     >
       <div class="border-b border-outline-gray-1 p-3">
         <h2 class="text-section">Workspace activity</h2>
-        <p class="text-caption text-ink-gray-6">
+        <p class="text-caption text-ink-gray-7">
           {props.rows.length} records · Scroll to explore the complete feed.
         </p>
       </div>
@@ -62,11 +62,11 @@ export function ActivityList(props: { rows: ActivityRecord[] }): JSX.Element {
                   </span>
                   <div class="min-w-0 flex-1">
                     <p class="truncate font-medium">{row()?.title}</p>
-                    <p class="text-caption text-ink-gray-6">
+                    <p class="text-caption text-ink-gray-7">
                       {row()?.owner} · {row()?.id}
                     </p>
                   </div>
-                  <span class="text-caption text-ink-gray-6">
+                  <span class="text-caption text-ink-gray-7">
                     {row()?.status}
                   </span>
                 </li>

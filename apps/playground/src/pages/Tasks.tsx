@@ -1,14 +1,14 @@
-import { StatGrid } from '@newui/blocks'
+import { FilterBar, StatGrid } from '@newui/blocks'
 import {
   Badge,
   BottomSheet,
   Button,
   Dialog,
+  EmptyState,
   MobileNav,
   MobileNavItem,
   Pagination,
   Select,
-  TabButtons,
   Textarea,
   TextInput,
 } from '@newui/ui'
@@ -32,12 +32,15 @@ import {
 import { ActivityList } from '../examples/ActivityList'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import { ExampleFrame } from '../examples/ExampleFrame'
+import { Notice } from '../examples/Notice'
+import { optionsOf } from '../examples/select'
 import {
   createTaskRepository,
   TASK_STATUSES,
   type TaskRecord,
   type TaskRepository,
 } from '../examples/tasks-data'
+import { WorkspaceNav } from '../examples/WorkspaceNav'
 
 const taskColumns = (
   onOpen: (id: string) => void,
@@ -46,7 +49,7 @@ const taskColumns = (
     accessorKey: 'id',
     header: 'Task',
     cell: (context) => (
-      <span class="whitespace-nowrap text-caption text-ink-gray-6">
+      <span class="whitespace-nowrap text-caption text-ink-gray-7">
         {context.getValue<string>()}
       </span>
     ),
@@ -93,7 +96,7 @@ const taskColumns = (
       <span
         classList={{
           'text-ink-red-7': context.getValue<string>() === 'High',
-          'text-ink-gray-6': context.getValue<string>() !== 'High',
+          'text-ink-gray-7': context.getValue<string>() !== 'High',
         }}
       >
         {context.getValue<string>()}
@@ -287,28 +290,43 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
       }
       description="Plan the next release, keep work moving, and give every detail a home."
       sidebar={
-        <div class="flex flex-col gap-2">
-          <For
-            each={[
-              ['all', 'All tasks'],
-              ['mine', 'My tasks'],
-              ['Website', 'Website'],
-              ['Mobile app', 'Mobile app'],
-              ['Design system', 'Design system'],
-            ]}
-          >
-            {(item) => (
-              <button
-                type="button"
-                aria-pressed={scope() === item[0]}
-                class="rounded-3 px-3 py-2 text-start aria-pressed:bg-surface-blue-2 focus-visible:focus-ring"
-                onClick={() => setScope(item[0] ?? 'all')}
-              >
-                {item[1]}
-              </button>
-            )}
-          </For>
-        </div>
+        <WorkspaceNav
+          label="Task scopes"
+          heading="Tasks"
+          value={
+            scope() === 'all'
+              ? 'All tasks'
+              : scope() === 'mine'
+                ? 'My tasks'
+                : scope()
+          }
+          onChange={(label) =>
+            setScope(
+              label === 'All tasks'
+                ? 'all'
+                : label === 'My tasks'
+                  ? 'mine'
+                  : label,
+            )
+          }
+          items={[
+            {
+              label: 'All tasks',
+              icon: 'lucide-list-checks',
+              count: all().length,
+            },
+            {
+              label: 'My tasks',
+              icon: 'lucide-user',
+              count: all().filter((row) => row.owner === 'Rhea Kapoor').length,
+            },
+            ...['Website', 'Mobile app', 'Design system'].map((project) => ({
+              label: project,
+              icon: 'lucide-folder',
+              count: all().filter((row) => row.project === project).length,
+            })),
+          ]}
+        />
       }
       actions={
         <>
@@ -334,35 +352,108 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
         </>
       }
     >
-      <div class="flex flex-wrap gap-2">
-        <div class="min-w-40 flex-1">
-          <TextInput
-            label="Find tasks"
-            value={search()}
-            onInput={(event) => setSearch(event.currentTarget.value)}
-          />
-        </div>
-        <div class="w-44">
-          <Select
-            label="Assignment"
-            value={[owner()]}
-            options={[
-              'all',
+      <FilterBar
+        query={{
+          placeholder: 'Find tasks',
+          value: search(),
+          onInput: setSearch,
+        }}
+        selects={[
+          {
+            label: 'Assignment',
+            value: owner() === 'all' ? '' : owner(),
+            onValueChange: (value) => setOwner(value || 'all'),
+            options: optionsOf([
               'Rhea Kapoor',
               'Priya Nair',
               'Sam Rivera',
               'Ana Costa',
-            ].map((value) => ({
-              value,
-              label: value === 'all' ? 'All assignees' : value,
-            }))}
-            onValueChange={(value) => setOwner(value[0] ?? 'all')}
-          />
-        </div>
+            ]),
+          },
+          {
+            label: 'Status',
+            value: status() === 'all' ? '' : status(),
+            onValueChange: (value) => setStatus(value || 'all'),
+            options: optionsOf(TASK_STATUSES),
+          },
+          {
+            label: 'Priority',
+            value: priority() === 'all' ? '' : priority(),
+            onValueChange: (value) => setPriority(value || 'all'),
+            options: optionsOf(['High', 'Medium', 'Low']),
+          },
+        ]}
+        tabs={{
+          value: view(),
+          onValueChange: setView,
+          options: [
+            { label: 'Table', value: 'table' },
+            { label: 'Activity', value: 'activity' },
+          ],
+        }}
+        chips={[
+          ...(status() !== 'all'
+            ? [
+                {
+                  label: `Status: ${status()}`,
+                  onRemove: () => setStatus('all'),
+                },
+              ]
+            : []),
+          ...(priority() !== 'all'
+            ? [
+                {
+                  label: `Priority: ${priority()}`,
+                  onRemove: () => setPriority('all'),
+                },
+              ]
+            : []),
+          ...(owner() !== 'all'
+            ? [
+                {
+                  label: `Assignee: ${owner()}`,
+                  onRemove: () => setOwner('all'),
+                },
+              ]
+            : []),
+          ...(scope() !== 'all'
+            ? [
+                {
+                  label: `Scope: ${scope() === 'mine' ? 'My tasks' : scope()}`,
+                  onRemove: () => setScope('all'),
+                },
+              ]
+            : []),
+          ...(search()
+            ? [{ label: `Search: ${search()}`, onRemove: () => setSearch('') }]
+            : []),
+        ]}
+        resultCount={filtered().length}
+        onClearAll={() => {
+          setStatus('all')
+          setPriority('all')
+          setOwner('all')
+          setScope('all')
+          setSearch('')
+        }}
+      >
         <Button aria-pressed={grouped()} onClick={() => setGrouped(!grouped())}>
           Group by status
         </Button>
-      </div>
+        <div class="sm:hidden">
+          <Select
+            label="Sort task list"
+            value={[taskSort()]}
+            options={optionsOf([
+              'Default order',
+              'Title',
+              'Priority',
+              'Due date',
+            ])}
+            onValueChange={(value) => setTaskSort(value[0] ?? 'Default order')}
+          />
+        </div>
+      </FilterBar>
       <div class="hidden sm:block">
         <StatGrid
           stats={[
@@ -370,122 +461,65 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
               label: 'Total tasks',
               value: all().length.toLocaleString('en-US'),
               hint: 'Across the workspace',
+              icon: 'lucide-list-checks',
             },
             {
               label: 'In progress',
               value: all().filter((row) => row.status === 'In Progress').length,
               hint: 'Work moving forward',
+              icon: 'lucide-clock',
             },
             {
               label: 'Completed',
               value: done(),
               hint: `${all().length ? Math.round((done() / all().length) * 100) : 0}% of all tasks`,
+              icon: 'lucide-circle-check',
             },
             {
               label: 'High priority',
               value: all().filter(
                 (row) => row.priority === 'High' && row.status !== 'Done',
               ).length,
-              hint: 'Needs your attention',
+              hint: 'Open and needs your attention',
+              icon: 'lucide-flag',
             },
           ]}
         />
       </div>
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <div class="flex flex-wrap gap-2">
-          <div class="w-44">
-            <Select
-              aria-label="Filter task status"
-              value={[status()]}
-              options={[
-                { label: 'All statuses', value: 'all' },
-                ...TASK_STATUSES.map((value) => ({ value, label: value })),
-              ]}
-              onValueChange={(value) => setStatus(value[0] ?? 'all')}
-            />
-          </div>
-          <div class="w-40">
-            <Select
-              aria-label="Filter task priority"
-              value={[priority()]}
-              options={[
-                { label: 'All priorities', value: 'all' },
-                ...['High', 'Medium', 'Low'].map((value) => ({
-                  value,
-                  label: value,
-                })),
-              ]}
-              onValueChange={(value) => setPriority(value[0] ?? 'all')}
-            />
-          </div>
-        </div>
-        <div class="hidden sm:block">
-          <TabButtons
-            value={view()}
-            onValueChange={setView}
-            options={[
-              { label: 'Table', value: 'table' },
-              { label: 'Activity', value: 'activity' },
-            ]}
-          />
-        </div>
-        <div class="sm:hidden">
-          <TabButtons
-            value={view()}
-            onValueChange={setView}
-            options={[
-              { label: 'List', value: 'table' },
-              { label: 'Activity', value: 'activity' },
-            ]}
-          />
-        </div>
-        <div class="sm:hidden">
-          <Select
-            label="Sort task list"
-            value={[taskSort()]}
-            options={['Default order', 'Title', 'Priority', 'Due date'].map(
-              (value) => ({ value, label: value }),
-            )}
-            onValueChange={(value) => setTaskSort(value[0] ?? 'Default order')}
-          />
-        </div>
-      </div>
-      <Show when={notice()}>
-        <p
-          role="status"
-          class="rounded-3 border border-outline-green-3 bg-surface-green-1 px-4 py-3 text-ink-green-8"
-        >
-          {notice()}
-        </p>
-      </Show>
+      <Notice text={notice()} tone="green" onDismiss={() => setNotice('')} />
       <Show
         when={!query.isPending}
         fallback={
-          <div
-            role="status"
-            class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-10 text-center text-ink-gray-6"
-          >
-            Loading tasks…
+          <div role="status">
+            <EmptyState
+              bordered
+              icon="lucide-list-checks"
+              title="Loading tasks…"
+              description="Fetching the workspace task list."
+            />
           </div>
         }
       >
         <Show
           when={!query.isError}
           fallback={
-            <div
-              role="alert"
-              class="rounded-5 border border-outline-red-3 bg-surface-elevation-1 p-6"
-            >
-              <h2 class="text-section">Could not load tasks</h2>
-              <p class="my-3 text-ink-gray-6">{query.error?.message}</p>
-              <Button
-                onClick={() => {
-                  setFailure(false)
-                  void query.refetch()
-                }}
-              >
-                Try again
-              </Button>
+            <div role="alert">
+              <EmptyState
+                bordered
+                icon="lucide-circle-alert"
+                title="Could not load tasks"
+                description={query.error?.message}
+                action={
+                  <Button
+                    onClick={() => {
+                      setFailure(false)
+                      void query.refetch()
+                    }}
+                  >
+                    Try again
+                  </Button>
+                }
+              />
             </div>
           }
         >
@@ -496,6 +530,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
             <div class={grouped() ? 'hidden' : 'hidden sm:block'}>
               <DataTable
                 title="Tasks"
+                hideSearch
                 rows={filtered()}
                 columns={columns}
                 actionLabel="Complete selected"
@@ -538,7 +573,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
                               class="flex w-full flex-col gap-2 p-3 text-start focus-visible:focus-ring"
                               onClick={() => setSelected(row.id)}
                             >
-                              <span class="text-caption text-ink-gray-6">
+                              <span class="text-caption text-ink-gray-7">
                                 {row.id} · {row.project}
                               </span>
                               <span class="font-medium">{row.title}</span>
@@ -570,7 +605,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
           </Show>
         </Show>
       </Show>
-      <details class="text-caption text-ink-gray-6">
+      <details class="text-caption text-ink-gray-7">
         <summary class="w-fit cursor-pointer rounded-3 focus-visible:focus-ring">
           Explore loading and error states
         </summary>

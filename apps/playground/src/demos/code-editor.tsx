@@ -38,7 +38,7 @@ export default function Demo() {
         language={language()}
         readonly={readonly()}
       />
-      <output aria-live="polite" class="text-caption text-ink-gray-6">
+      <output aria-live="polite" class="text-caption text-ink-gray-7">
         {value().length} characters
       </output>
     </div>

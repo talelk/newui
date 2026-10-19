@@ -40,13 +40,13 @@ export function AuthCard(props: AuthCardProps): JSX.Element {
       data-slot="auth-card"
       class={`flex min-h-screen items-center justify-center bg-surface-base px-4 py-12 ${props.class ?? ''}`}
     >
-      <div class="flex w-full max-w-sm flex-col gap-4">
+      <div class="flex w-full max-w-sm flex-col gap-4 rounded-6 border border-outline-gray-1 bg-surface-elevation-1 p-6 shadow-sm">
         <div class="flex flex-col items-center gap-3 text-center">
           <Show when={props.logo}>{props.logo}</Show>
           <div class="flex flex-col gap-1">
             <h1 class="text-metric text-ink-gray-9">{props.title}</h1>
             <Show when={props.description}>
-              <p class="text-base text-ink-gray-6">{props.description}</p>
+              <p class="text-base text-ink-gray-7">{props.description}</p>
             </Show>
           </div>
         </div>
@@ -72,7 +72,7 @@ export function AuthCard(props: AuthCardProps): JSX.Element {
         </Show>
 
         <Show when={props.footer}>
-          <p class="text-center text-base text-ink-gray-6">{props.footer}</p>
+          <p class="text-center text-base text-ink-gray-7">{props.footer}</p>
         </Show>
       </div>
     </div>

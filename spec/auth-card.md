@@ -20,6 +20,9 @@
   same layout with different fields.
 - The measure is capped at `max-w-sm` so fields do not stretch on a wide display,
   and the title is the page's only `h1`.
+- The column sits on a card surface (`bg-surface-elevation-1`, one-step border,
+  `rounded-6`, `shadow-sm`, `p-6`) over the plain `bg-surface-base` page, so the
+  sign-in form reads as one object rather than loose fields on the page.
 - The "or" divider appears only when there are providers *and* a form.
 - Lucide has no brand glyphs, so a provider's mark is passed as a component
   (`icon` takes a `lucide-*` string or a component).

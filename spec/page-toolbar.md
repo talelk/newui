@@ -17,6 +17,8 @@ actions.
 
 ## Behavior
 
+- The title is set at the `text-heading` scale: the toolbar is the page's
+  title, not a bar label, and it should read at the same measure as one.
 - The header is `PageHeader`, not a bare sticky div, so it flips to the pinned
   mobile variant with the shell.
 - The title menu is an ellipsis button. A chevron beside a title reads as a

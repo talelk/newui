@@ -3,12 +3,14 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import {
   Sidebar,
+  SidebarCard,
   SidebarHeader,
   SidebarItem,
   SidebarLabel,
   SidebarRail,
   SidebarRailItem,
   SidebarSearch,
+  SidebarSection,
   SidebarTrigger,
   useSidebar,
 } from './Sidebar'
@@ -195,6 +197,97 @@ describe('SidebarItem while collapsed', () => {
       </Sidebar>
     ))
     expect(screen.getByText('Accordion')).toBeTruthy()
+  })
+})
+
+describe('SidebarItem links (frappe-ui parity)', () => {
+  it('renders a route as a same-tab link and marks the active row', () => {
+    render(() => (
+      <Sidebar>
+        <SidebarItem route="/inbox" active>
+          Inbox
+        </SidebarItem>
+        <SidebarItem href="https://example.com">External</SidebarItem>
+      </Sidebar>
+    ))
+    const inbox = screen.getByRole('link', { name: 'Inbox' })
+    expect(inbox.getAttribute('href')).toBe('/inbox')
+    expect(inbox.getAttribute('aria-current')).toBe('page')
+    expect(inbox.getAttribute('target')).toBeNull()
+    const external = screen.getByRole('link', { name: 'External' })
+    expect(external.getAttribute('target')).toBe('_blank')
+  })
+
+  it('keeps the suffix beside the link so it may hold a button', () => {
+    const { container } = render(() => (
+      <Sidebar>
+        <SidebarItem
+          route="/inbox"
+          icon="lucide-inbox"
+          suffix={<button type="button">Options</button>}
+        >
+          Inbox
+        </SidebarItem>
+      </Sidebar>
+    ))
+    const link = screen.getByRole('link', { name: 'Inbox' })
+    const options = screen.getByRole('button', { name: 'Options' })
+    expect(link.contains(options)).toBe(false)
+    expect(
+      container.querySelector('[data-slot="sidebar-item"] .lucide-inbox'),
+    ).toBeTruthy()
+  })
+
+  it('renders a rail route as a link with aria-current', () => {
+    render(() => (
+      <SidebarRail>
+        <SidebarRailItem label="Home" route="/" active />
+      </SidebarRail>
+    ))
+    const item = screen.getByRole('link', { name: 'Home' })
+    expect(item.getAttribute('href')).toBe('/')
+    expect(item.getAttribute('aria-current')).toBe('page')
+  })
+})
+
+describe('SidebarSection controlled state', () => {
+  it('honours controlled collapsed and reports toggles', async () => {
+    const onCollapsedChange = vi.fn()
+    render(() => (
+      <Sidebar>
+        <SidebarSection
+          label="Projects"
+          collapsible
+          collapsed
+          onCollapsedChange={onCollapsedChange}
+        >
+          <SidebarItem>Website</SidebarItem>
+        </SidebarSection>
+      </Sidebar>
+    ))
+    expect(screen.queryByText('Website')).toBeNull()
+    await userEvent.click(screen.getByRole('button', { name: /Projects/ }))
+    expect(onCollapsedChange).toHaveBeenCalledWith(false)
+    // Controlled: the parent did not flip the prop, so the body stays shut.
+    expect(screen.queryByText('Website')).toBeNull()
+  })
+})
+
+describe('SidebarCard action', () => {
+  it('hands the action a dismiss that fires onDismiss', async () => {
+    const onDismiss = vi.fn()
+    render(() => (
+      <SidebarCard
+        title="Trial ends soon"
+        onDismiss={onDismiss}
+        action={{
+          label: 'Upgrade',
+          onClick: ({ dismiss }) => dismiss(),
+        }}
+      />
+    ))
+    await userEvent.click(screen.getByRole('button', { name: 'Upgrade' }))
+    expect(onDismiss).toHaveBeenCalledOnce()
   })
 })
 

@@ -65,11 +65,11 @@ export function DetailHeader(props: DetailHeaderProps): JSX.Element {
             </Show>
           </div>
           <Show when={props.subtitle}>
-            <p class="truncate text-base text-ink-gray-6">{props.subtitle}</p>
+            <p class="truncate text-base text-ink-gray-7">{props.subtitle}</p>
           </Show>
         </div>
 
-        <div class="flex shrink-0 items-center gap-2">
+        <div class="flex shrink-0 flex-wrap items-center gap-2">
           {props.children}
           <For each={secondary()}>
             {(action) => (

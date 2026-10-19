@@ -1,18 +1,21 @@
+import { SidebarItem, useSidebar } from '@newui/ui'
 import { For, type JSX, Show } from 'solid-js'
 
 /**
  * The navigation list an application recipe carries in its sidebar.
  *
- * It mirrors the reference recipes' `SidebarItem` lists: a glyph, a label, and a
- * quiet count where the reference has one. In the reference each entry switches
- * the *screen* — the demo implements one screen, so selecting an entry moves the
- * highlight there too, and the comment at each call site says whether the recipe
- * gives it a real effect (Mail's mailboxes filter the inbox) or mirrors the
- * reference's single-screen demo (Deals' Notifications, Leads, Contacts…).
+ * Rows are the library's `SidebarItem` — the same anatomy frappe-ui's
+ * recipes compose. Inside the example frame they sit in a real `<Sidebar>`
+ * root, so the list folds to a labelled icon rail with the frame (headings
+ * and the footnote step aside; there is no room for prose in a rail).
+ * Standalone use (Mail's in-page mailbox list) reads the context's expanded
+ * default, so the same list simply never folds.
  *
- * Plain markup rather than the library's `Sidebar`: these lists live inside the
- * example frame, which already owns the width, the border and the drawer, and the
- * frame is not the place to nest a second sidebar component.
+ * In the reference each entry switches the *screen* — the demo implements
+ * one screen, so selecting an entry moves the highlight there too, and the
+ * comment at each call site says whether the recipe gives it a real effect
+ * (Mail's mailboxes filter the inbox) or mirrors the reference's
+ * single-screen demo (Deals' Notifications, Leads, Contacts…).
  */
 
 export interface WorkspaceNavItem {
@@ -37,16 +40,17 @@ export function WorkspaceNav(props: {
   footnote?: string
   class?: string
 }): JSX.Element {
+  const { collapsed } = useSidebar()
   const render = (
     items: WorkspaceNavItem[],
     heading: string | undefined,
     spaced: boolean,
   ): JSX.Element => (
     <>
-      <Show when={heading}>
+      <Show when={heading && !collapsed()}>
         <p
           classList={{
-            'px-2 pb-1 text-xs font-medium tracking-wide text-ink-gray-5 uppercase': true,
+            'px-2 pb-1 text-xs font-medium text-ink-gray-7': true,
             'pt-3': spaced,
           }}
         >
@@ -55,18 +59,21 @@ export function WorkspaceNav(props: {
       </Show>
       <For each={items}>
         {(item) => (
-          <button
-            type="button"
-            aria-current={props.value === item.label ? 'page' : undefined}
+          <SidebarItem
+            label={item.label}
+            icon={item.icon}
+            active={props.value === item.label}
             onClick={() => props.onChange(item.label)}
-            class="flex h-8 w-full items-center gap-2 rounded-3 px-2 text-start text-interface text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none aria-[current=page]:bg-surface-blue-2 aria-[current=page]:text-ink-blue-8"
+            suffix={
+              item.count ? (
+                <span class="rounded-full bg-surface-gray-2 px-1.5 py-px text-caption tabular-nums text-ink-gray-7">
+                  {item.count}
+                </span>
+              ) : undefined
+            }
           >
-            <span aria-hidden="true" class={`${item.icon} size-4 shrink-0`} />
-            <span class="min-w-0 flex-1 truncate">{item.label}</span>
-            <Show when={item.count}>
-              <span class="shrink-0 text-xs text-ink-gray-5">{item.count}</span>
-            </Show>
-          </button>
+            {item.label}
+          </SidebarItem>
         )}
       </For>
     </>
@@ -81,8 +88,8 @@ export function WorkspaceNav(props: {
       <Show when={props.group}>
         {(group) => render(group().items, group().label, true)}
       </Show>
-      <Show when={props.footnote}>
-        <p class="px-2 pt-3 text-xs text-ink-gray-5">{props.footnote}</p>
+      <Show when={props.footnote && !collapsed()}>
+        <p class="px-2 pt-3 text-xs text-ink-gray-7">{props.footnote}</p>
       </Show>
     </nav>
   )

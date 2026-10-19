@@ -114,7 +114,30 @@ export const API = {
       "name": "label",
       "type": "string",
       "optional": true,
-      "description": "Accessible name and native tooltip while collapsed."
+      "description": "Accessible name and tooltip while collapsed. Defaults to string children."
+    },
+    {
+      "name": "icon",
+      "type": "IconProp",
+      "optional": true,
+      "description": "Leading glyph when `prefix` is unset: a `lucide-*` string or a component."
+    },
+    {
+      "name": "route",
+      "type": "string",
+      "optional": true,
+      "description": "In-app destination (CONTEXT: `route` is in-app, `href` is external). Wins\nover `href`. Renders an anchor with a plain `href`; pair it with `onClick`\nto intercept the click and navigate with your router."
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "optional": true,
+      "description": "External URL, opened in a new tab unless `target` says otherwise."
+    },
+    {
+      "name": "target",
+      "type": "string",
+      "optional": true
     },
     {
       "name": "class",
@@ -257,6 +280,23 @@ export const API = {
       "description": "How the badge renders: a count pill or a small dot."
     },
     {
+      "name": "route",
+      "type": "string",
+      "optional": true,
+      "description": "In-app destination (CONTEXT: `route` is in-app, `href` is external). Wins\nover `href`. Renders an anchor with a plain `href`; pair it with `onClick`\nto intercept the click and navigate with your router."
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "optional": true,
+      "description": "External URL, opened in a new tab unless `target` says otherwise."
+    },
+    {
+      "name": "target",
+      "type": "string",
+      "optional": true
+    },
+    {
       "name": "class",
       "type": "string",
       "optional": true
@@ -279,6 +319,12 @@ export const API = {
       "optional": true
     },
     {
+      "name": "label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name of the `<nav>` landmark. Default `Applications`."
+    },
+    {
       "name": "children",
       "type": "JSX.Element",
       "optional": true
@@ -298,10 +344,22 @@ export const API = {
       "description": "Makes the heading a disclosure that collapses the body."
     },
     {
+      "name": "collapsed",
+      "type": "boolean",
+      "optional": true,
+      "description": "Controlled collapsed state. Unset: the section keeps its own."
+    },
+    {
       "name": "defaultCollapsed",
       "type": "boolean",
       "optional": true,
       "description": "Uncontrolled initial collapsed state."
+    },
+    {
+      "name": "onCollapsedChange",
+      "type": "(collapsed: boolean) => void",
+      "optional": true,
+      "description": "Fired on every toggle, controlled or not."
     },
     {
       "name": "class",

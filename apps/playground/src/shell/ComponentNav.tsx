@@ -1,10 +1,8 @@
 import { A, useLocation } from '@solidjs/router'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
-import {
-  COMPONENTS,
-  type ComponentEntry,
-  GROUPS,
-} from '../generated/components'
+import { COMPONENTS, GROUPS } from '../generated/components'
+import { groupEntries, matchesEntry } from '../lib/catalog'
+import { FilterInput, NAV_ROW, NothingMatches } from './nav-ui'
 
 export type NavKind = 'component' | 'block'
 
@@ -27,17 +25,6 @@ export const OVERVIEW: Record<NavKind, { title: string; href: string }[]> = {
   block: [{ title: 'All blocks', href: '/blocks' }],
 }
 
-/** Name, group and part names are all fair game for the filter. */
-function matches(entry: ComponentEntry, query: string): boolean {
-  if (query === '') return true
-  const needle = query.toLowerCase()
-  return (
-    entry.name.toLowerCase().includes(needle) ||
-    entry.group.toLowerCase().includes(needle) ||
-    entry.parts.some((part) => part.toLowerCase().includes(needle))
-  )
-}
-
 export function ComponentNav(props: { kind: NavKind }): JSX.Element {
   const location = useLocation()
   const base = () => `/${location.pathname.split('/')[1] ?? 'components'}`
@@ -55,17 +42,12 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
             : entry.package ===
               (props.kind === 'block' ? '@newui/blocks' : '@newui/ui')),
     )
-      .filter((entry) => matches(entry, query().trim()))
+      .filter((entry) => matchesEntry(entry, query()))
       .slice()
       .sort((a, b) => a.name.localeCompare(b.name)),
   )
 
-  const grouped = createMemo(() =>
-    GROUPS.map((group) => ({
-      group,
-      entries: visible().filter((entry) => entry.group === group),
-    })).filter((section) => section.entries.length > 0),
-  )
+  const grouped = createMemo(() => groupEntries(visible(), GROUPS))
 
   const current = () => location.pathname.split('/')[2] ?? ''
   const overview = () =>
@@ -83,20 +65,12 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
       aria-label={props.kind === 'block' ? 'Blocks' : 'Components'}
       class="flex flex-col gap-4"
     >
-      <label class="relative flex items-center">
-        <span class="sr-only">Filter</span>
-        <span
-          aria-hidden="true"
-          class="lucide-search pointer-events-none absolute start-2.5 size-4 text-ink-gray-6"
-        />
-        <input
-          type="search"
-          value={query()}
-          onInput={(event) => setQuery(event.currentTarget.value)}
-          placeholder="Filter…"
-          class="h-7 w-full rounded-3 border border-outline-gray-2 bg-surface-base ps-8 pe-2 text-base text-ink-gray-8 placeholder:text-ink-gray-6 focus-visible:focus-ring"
-        />
-      </label>
+      <FilterInput
+        label="Filter"
+        placeholder="Filter…"
+        value={query()}
+        onInput={setQuery}
+      />
 
       <ul class="flex flex-col gap-0.5">
         <For each={overview()}>
@@ -107,7 +81,7 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
                 aria-current={
                   location.pathname === item.href ? 'page' : undefined
                 }
-                class="block rounded-4 px-2 py-1 text-sm text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 aria-[current=page]:bg-surface-gray-2 aria-[current=page]:text-ink-gray-9"
+                class={NAV_ROW}
               >
                 {item.title}
               </A>
@@ -118,16 +92,12 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
 
       <Show
         when={grouped().length > 0}
-        fallback={
-          <p class="px-2 text-sm text-ink-gray-6">
-            Nothing matches “{query()}”.
-          </p>
-        }
+        fallback={<NothingMatches query={query()} />}
       >
         <For each={grouped()}>
           {(section) => (
             <div class="flex flex-col gap-0.5">
-              <h2 class="px-2 text-xs font-medium tracking-wide text-ink-gray-6 uppercase">
+              <h2 class="px-2 pt-1 text-xs-medium text-ink-gray-7">
                 {section.group}
               </h2>
               <ul class="flex flex-col gap-0.5">
@@ -139,13 +109,13 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
                         aria-current={
                           current() === entry.slug ? 'page' : undefined
                         }
-                        class="flex items-baseline gap-2 rounded-4 px-2 py-1 text-sm text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 aria-[current=page]:bg-surface-gray-2 aria-[current=page]:text-ink-gray-9"
+                        class={NAV_ROW}
                       >
                         <span class="min-w-0 flex-1 truncate">
                           {entry.name}
                         </span>
                         <Show when={!entry.spec}>
-                          <span class="shrink-0 text-xs text-ink-gray-6">
+                          <span class="shrink-0 text-xs text-ink-gray-7">
                             api
                           </span>
                         </Show>

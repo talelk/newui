@@ -94,7 +94,7 @@ function Crumb(props: CrumbProps): JSX.Element {
       aria-current={local.current ? 'page' : undefined}
       onClick={handleClick}
       class={cn(
-        'flex items-center rounded-4 px-0.5 py-1 text-lg-medium leading-tighter',
+        'flex min-w-0 max-w-full items-center rounded-4 px-0.5 py-1 text-lg-medium leading-tighter',
         local.current
           ? 'min-w-0 text-ink-gray-9'
           : 'text-ink-gray-6 hover:text-ink-gray-7',
@@ -105,10 +105,7 @@ function Crumb(props: CrumbProps): JSX.Element {
           <span class={cn(icon(), 'size-4 shrink-0')} aria-hidden="true" />
         )}
       </Show>
-      <span
-        class={cn(local.current && 'min-w-0 truncate')}
-        title={local.current ? local.item.label : undefined}
-      >
+      <span class={cn('min-w-0 truncate')} title={local.item.label}>
         {local.item.label}
       </span>
     </Dynamic>
@@ -133,7 +130,10 @@ export function Breadcrumbs(props: BreadcrumbsProps): JSX.Element {
     >
       <ol
         data-slot="breadcrumbs-list"
-        class="m-0 flex min-w-0 list-none items-center p-0"
+        // Wrap rather than overflow: a trail that pushes the page sideways at
+        // 375px is the overflow bug class; wrapping to a second line keeps
+        // the trail readable without a scrollbar.
+        class="m-0 flex min-w-0 flex-wrap items-center gap-y-1 list-none p-0"
       >
         <For each={local.items}>
           {(item, index) => (

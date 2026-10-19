@@ -13,7 +13,8 @@ Existing numbered utilities remain available. Metrics use tabular numerals.
 Controls use xs=24, sm=28, md=32, lg=40px, default sm. Text entry defaults to
 outline; Button remains neutral/subtle. Primary actions explicitly use solid/blue.
 Controls have 6px radii, cards 10px, overlays 12px. Layout follows a 4px rhythm,
-12px card padding, 16px section gaps and 8px control-group gaps. Dialogs retain
+12px card padding (data cards — StatGrid stats and chart cards — pad at 16px;
+see `spec/stat-grid.md` and `spec/charts.md`), 16px section gaps and 8px control-group gaps. Dialogs retain
 16px padding. Mobile navigation and primary icon actions retain 40–44px touch
 targets. Borders define cards; floating surfaces
 use restrained shadows. Short transitions respect reduced motion.
@@ -56,7 +57,10 @@ The shell has a 48px header and one 224px contextual sidebar at 1024px and above
 Its remembered collapsed preference produces a 48px section-icon rail. Both
 presentations and the modal mobile drawer use the same navigation model, along
 with breadcrumbs and reading order. The current reference section retains its
-filter and group headings. Developer harness destinations are secondary.
+filter and group headings (sentence case, never tracked uppercase). At large
+widths the masthead also carries flat Docs / Components / Blocks / Examples
+links resolved from the same navigation model, and a page may supply an
+optional right-hand "On this page" column. Developer harness destinations are secondary.
 Header utilities are named, focus-visible actions; the keyboard page finder
 loads reference metadata only when opened. Modal navigation contains focus,
 closes on Escape or navigation and restores focus when dismissed. At enlarged

@@ -1,6 +1,7 @@
 import { BottomSheet, Button, Dialog, Menu, TextInput } from '@newui/ui'
 import { A } from '@solidjs/router'
-import { createSignal, For, Show } from 'solid-js'
+import { createSignal, For } from 'solid-js'
+import { Notice } from '../examples/Notice'
 
 export default function Navigation() {
   const [sheet, setSheet] = createSignal(false)
@@ -63,7 +64,7 @@ export default function Navigation() {
             )}
           </For>
         </nav>
-        <p class="mt-3 text-caption text-ink-gray-6">
+        <p class="mt-3 text-caption text-ink-gray-7">
           Current workspace: {saved()}
         </p>
       </section>
@@ -141,14 +142,7 @@ export default function Navigation() {
           {form()}
         </BottomSheet>
       </section>
-      <Show when={notice()}>
-        <p
-          role="status"
-          class="rounded-3 bg-surface-blue-1 p-3 text-ink-blue-8"
-        >
-          {notice()}
-        </p>
-      </Show>
+      <Notice text={notice()} onDismiss={() => setNotice('')} />
     </div>
   )
 }

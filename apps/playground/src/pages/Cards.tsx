@@ -16,6 +16,7 @@ import {
 } from '@newui/ui'
 import { createSignal, For, type JSX, Show } from 'solid-js'
 import { ExampleFrame } from '../examples/ExampleFrame'
+import { isEmail } from '../examples/format'
 
 function CreateAccount(): JSX.Element {
   const [name, setName] = createSignal('')
@@ -33,9 +34,7 @@ function CreateAccount(): JSX.Element {
         class="flex flex-col gap-3"
         onSubmit={(event) => {
           event.preventDefault()
-          const valid =
-            name().trim().length > 1 &&
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email())
+          const valid = name().trim().length > 1 && isEmail(email())
           setError(!valid)
           setSaved(valid)
         }}
@@ -56,9 +55,7 @@ function CreateAccount(): JSX.Element {
           value={email()}
           onInput={(event) => setEmail(event.currentTarget.value)}
           error={
-            error() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email())
-              ? 'Enter a valid email.'
-              : undefined
+            error() && !isEmail(email()) ? 'Enter a valid email.' : undefined
           }
         />
         <Button type="submit" variant="solid" theme="blue">
@@ -133,7 +130,7 @@ function PaymentMethod(): JSX.Element {
           />
         </Show>
         <Show when={method() === 'paypal'}>
-          <p class="text-interface text-ink-gray-6">
+          <p class="text-interface text-ink-gray-7">
             Save PayPal as the preferred provider for this local demo.
           </p>
         </Show>
@@ -174,7 +171,7 @@ function TeamMembers(): JSX.Element {
             <Avatar label={member.name} size="md" />
             <div class="min-w-0 flex-1">
               <p class="truncate text-interface font-medium">{member.name}</p>
-              <p class="truncate text-caption text-ink-gray-6">
+              <p class="truncate text-caption text-ink-gray-7">
                 {member.email}
               </p>
             </div>
@@ -206,7 +203,7 @@ function TeamMembers(): JSX.Element {
         class="flex flex-col gap-2 border-t border-outline-gray-1 pt-3"
         onSubmit={(event) => {
           event.preventDefault()
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(invite())) {
+          if (!isEmail(invite())) {
             setError('Enter a valid email.')
             return
           }
@@ -237,7 +234,7 @@ function TeamMembers(): JSX.Element {
           Add demo member
         </Button>
       </form>
-      <p role="status" class="text-caption text-ink-gray-6">
+      <p role="status" class="text-caption text-ink-gray-7">
         {members().length} members in this workspace.
       </p>
     </Card>
@@ -278,7 +275,7 @@ function ShareDocument(): JSX.Element {
       <Button variant="outline" iconLeft="lucide-copy" onClick={copy}>
         Copy link
       </Button>
-      <p class="text-caption text-ink-gray-6" role="status">
+      <p class="text-caption text-ink-gray-7" role="status">
         {copied() || `People with this link can ${access()}.`}
       </p>
     </Card>
@@ -297,14 +294,12 @@ function Notifications(): JSX.Element {
           Choose the updates that matter to you.
         </CardDescription>
       </CardHeader>
-      <div class="rounded-3 border border-outline-gray-1 bg-surface-gray-1 p-3">
-        <Switch
-          label="Push notifications"
-          description="Updates about your assigned work."
-          checked={push()}
-          onCheckedChange={setPush}
-        />
-      </div>
+      <Switch
+        label="Push notifications"
+        description="Updates about your assigned work."
+        checked={push()}
+        onCheckedChange={setPush}
+      />
       <Switch
         label="Email notifications"
         checked={email()}
@@ -315,7 +310,7 @@ function Notifications(): JSX.Element {
         checked={digest()}
         onCheckedChange={setDigest}
       />
-      <p class="text-caption text-ink-gray-6" role="status">
+      <p class="text-caption text-ink-gray-7" role="status">
         {[push(), email(), digest()].filter(Boolean).length} notification
         channels enabled.
       </p>
@@ -404,13 +399,6 @@ function WorkspaceCard(): JSX.Element {
           A clear view of revenue, channels, and the next opportunity.
         </CardDescription>
       </CardHeader>
-      <div class="flex h-16 items-end gap-2" aria-hidden="true">
-        <For each={['h-5', 'h-8', 'h-6', 'h-12', 'h-10', 'h-16']}>
-          {(height) => (
-            <span class={`flex-1 rounded-2 bg-surface-blue-6 ${height}`} />
-          )}
-        </For>
-      </div>
       <div class="flex flex-wrap gap-2">
         <Button route="/examples/analytics/fullscreen" variant="outline">
           Open workspace

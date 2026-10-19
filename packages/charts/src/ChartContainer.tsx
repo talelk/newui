@@ -1,4 +1,4 @@
-import { type JSX, Show } from 'solid-js'
+import { For, type JSX, Show } from 'solid-js'
 import type { ChartContainerProps } from './types'
 
 /**
@@ -75,7 +75,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
       style={{
         display: 'flex',
         'flex-direction': 'column',
-        gap: '0.375rem',
+        gap: '0.5rem',
         width: '100%',
         'min-width': '0',
         height: cssHeight(props.height),
@@ -89,6 +89,9 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
             'align-items': 'flex-start',
             'justify-content': 'space-between',
             gap: '0.75rem',
+            'padding-bottom': '0.625rem',
+            'margin-bottom': '0.25rem',
+            'border-bottom': '1px solid var(--outline-gray-1)',
           }}
         >
           <div style={{ 'min-width': '0' }}>
@@ -96,9 +99,10 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
               <div
                 data-slot="chart-title"
                 style={{
-                  'font-size': '0.875rem',
-                  'line-height': '1.5',
-                  color: 'var(--ink-gray-8)',
+                  'font-size': '1rem',
+                  'font-weight': '600',
+                  'line-height': '1.375',
+                  color: 'var(--ink-gray-9)',
                   overflow: 'hidden',
                   'text-overflow': 'ellipsis',
                   'white-space': 'normal',
@@ -113,7 +117,9 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                 data-slot="chart-subtitle"
                 style={{
                   'font-size': '0.75rem',
-                  color: 'var(--ink-gray-6)',
+                  'line-height': '1rem',
+                  'margin-top': '0.125rem',
+                  color: 'var(--ink-gray-7)',
                   overflow: 'hidden',
                   'text-overflow': 'ellipsis',
                   'white-space': 'normal',
@@ -179,15 +185,33 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
             <Show
               when={props.loadingContent}
               fallback={
+                /* Static skeleton bars: a pulse would need a stylesheet media
+                   query to honour reduced motion, and this package ships none. */
                 <div
                   aria-hidden="true"
                   style={{
                     width: '100%',
                     height: '100%',
-                    'border-radius': '0.5rem',
-                    'background-color': 'var(--surface-elevation-1)',
+                    display: 'flex',
+                    'align-items': 'flex-end',
+                    gap: '0.5rem',
+                    padding: '1rem 0.25rem 0.25rem',
+                    'box-sizing': 'border-box',
                   }}
-                />
+                >
+                  <For each={['45%', '70%', '55%', '85%', '62%', '78%', '50%']}>
+                    {(height) => (
+                      <div
+                        style={{
+                          flex: '1 1 0%',
+                          height,
+                          'border-radius': '0.375rem 0.375rem 0 0',
+                          'background-color': 'var(--surface-gray-2)',
+                        }}
+                      />
+                    )}
+                  </For>
+                </div>
               }
             >
               {props.loadingContent}
@@ -226,7 +250,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                     <span
                       style={{
                         'font-size': '0.75rem',
-                        color: 'var(--ink-gray-6)',
+                        color: 'var(--ink-gray-7)',
                         'max-width': '24rem',
                       }}
                     >
@@ -257,14 +281,29 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
             <Show
               when={props.emptyContent}
               fallback={
-                <span
-                  style={{
-                    'font-size': '0.75rem',
-                    color: 'var(--ink-gray-6)',
-                  }}
-                >
-                  No data to show
-                </span>
+                <>
+                  {/* A placeholder reading keeps the card's rhythm: never a
+                      blank plot under a live title. */}
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      'font-size': '1.5rem',
+                      'line-height': '2rem',
+                      'font-weight': '600',
+                      color: 'var(--ink-gray-7)',
+                    }}
+                  >
+                    —
+                  </span>
+                  <span
+                    style={{
+                      'font-size': '0.75rem',
+                      color: 'var(--ink-gray-7)',
+                    }}
+                  >
+                    No data to show
+                  </span>
+                </>
               }
             >
               {props.emptyContent}
@@ -282,7 +321,9 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
       </Show>
 
       <Show when={props.legend}>
-        <div data-slot="chart-legend-row">{props.legend}</div>
+        <div data-slot="chart-legend-row" style={{ 'margin-top': '0.5rem' }}>
+          {props.legend}
+        </div>
       </Show>
     </div>
   )
@@ -309,7 +350,7 @@ function AxisTitles(props: {
           props.placement === 'bottom' ? 'flex-end' : 'space-between',
         gap: '0.75rem',
         'font-size': '0.6875rem',
-        color: 'var(--ink-gray-6)',
+        color: 'var(--ink-gray-7)',
         ...(props.placement === 'bottom' ? { 'margin-top': '-0.5rem' } : {}),
       }}
     >

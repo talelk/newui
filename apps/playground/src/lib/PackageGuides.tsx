@@ -1,4 +1,5 @@
 import { createResource, createSignal, For, Show, Suspense } from 'solid-js'
+import { LoadingNote } from './LoadingNote'
 import { Markdown } from './markdown'
 // The README glob lives in a `.ts` module: a glob call written in a `.tsx`
 // file breaks Vite 8's dependency scan (see package-guide-sources.ts).
@@ -22,7 +23,7 @@ function Guide(props: { name: string }) {
       (await sources[`../../../../packages/${name}/README.md`]?.()) ?? '',
   )
   return (
-    <Suspense fallback={<p>Loading package guide…</p>}>
+    <Suspense fallback={<LoadingNote label="Loading package guide…" />}>
       <Markdown markdown={markdown() ?? ''} />
     </Suspense>
   )

@@ -1,8 +1,17 @@
 {
   "files": [
     "pages/Analytics.tsx",
+    "examples/DataTable.tsx",
+    "examples/ScrollTable.tsx",
+    "examples/download.ts",
+    "examples/ExampleFrame.tsx",
+    "lib/examples.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",
+    "examples/format.ts",
+    "examples/Notice.tsx",
+    "examples/undo.ts",
+    "examples/WorkspaceNav.tsx",
     "pages/analytics/data.ts",
     "pages/analytics/ReceiptDialog.tsx"
   ],
@@ -11,6 +20,7 @@
     "@newui/charts",
     "@newui/ui",
     "@solidjs/router",
+    "@tanstack/solid-table",
     "solid-js"
   ]
 }

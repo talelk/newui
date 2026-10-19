@@ -41,6 +41,29 @@ export const API = {
       "optional": true
     },
     {
+      "name": "collapsible",
+      "type": "SidebarProps['collapsible']",
+      "optional": true,
+      "description": "Allows the sidebar to fold to its rail, with the toggle at its foot. Default `true`."
+    },
+    {
+      "name": "collapsed",
+      "type": "SidebarProps['collapsed']",
+      "optional": true,
+      "description": "Controlled collapsed state. Unset: the sidebar tracks its own."
+    },
+    {
+      "name": "onCollapsedChange",
+      "type": "SidebarProps['onCollapsedChange']",
+      "optional": true
+    },
+    {
+      "name": "collapsedWidth",
+      "type": "SidebarProps['collapsedWidth']",
+      "optional": true,
+      "description": "Collapsed width as a CSS length. Default `3rem`."
+    },
+    {
       "name": "class",
       "type": "string",
       "optional": true

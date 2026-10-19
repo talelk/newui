@@ -14,7 +14,7 @@ test('mobile task lists paginate the scale fixture, sort and open the final reco
   await page.getByRole('option', { name: 'Title', exact: true }).click()
   await expect(list).toContainText('1–30 of 1000')
   await page
-    .getByRole('textbox', { name: 'Find tasks', exact: true })
+    .getByRole('searchbox', { name: 'Find tasks', exact: true })
     .fill('TASK-2000')
   await expect(list.locator('li')).toHaveCount(1)
   await list.locator('li button').click()
@@ -30,7 +30,7 @@ test('task table filters, sorts, paginates, hides columns and completes selected
   const first = await rows.first().innerText()
   await page.getByRole('button', { name: 'Next page', exact: true }).click()
   await expect(rows.first()).not.toHaveText(first)
-  await page.getByRole('searchbox', { name: 'Search tasks' }).fill('TASK-1001')
+  await page.getByRole('searchbox', { name: 'Find tasks' }).fill('TASK-1001')
   await expect(rows).toHaveCount(1)
   await page
     .getByRole('checkbox', { name: 'Select TASK-1001', exact: true })
@@ -40,7 +40,7 @@ test('task table filters, sorts, paginates, hides columns and completes selected
   await expect(
     page.getByText('1 task marked complete.', { exact: true }),
   ).toBeVisible()
-  await page.getByRole('searchbox', { name: 'Search tasks' }).fill('')
+  await page.getByRole('searchbox', { name: 'Find tasks' }).fill('')
   await page.getByRole('button', { name: 'Title', exact: true }).click()
   await expect(
     page.getByRole('columnheader', { name: 'Title', exact: true }),
@@ -78,7 +78,7 @@ test('task creation validates before saving and survives query reloads', async (
     .click()
   await page.getByRole('button', { name: 'Simulate service error' }).click()
   await expect(
-    page.getByRole('heading', { name: 'Could not load tasks' }),
+    page.getByText('Could not load tasks', { exact: true }),
   ).toBeVisible()
   await page.getByRole('button', { name: 'Try again', exact: true }).click()
   await expect(page.locator('tbody tr').first()).toContainText(

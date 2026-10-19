@@ -46,6 +46,8 @@ const ROUTES = [
   '/components/pagination',
   '/components/date-picker',
   '/blocks',
+  '/charts',
+  '/editors',
   '/examples',
   ...EXAMPLES.flatMap((example) =>
     example.href === '/examples/patterns'

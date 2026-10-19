@@ -1,44 +1,36 @@
-import { Button, Icon } from '@newui/ui'
-import { createSignal, For, Show } from 'solid-js'
+import { AppSidebar } from '@newui/blocks'
+import { Button } from '@newui/ui'
+import { createSignal, Show } from 'solid-js'
 
-/** Copyable site composition; this is not an @newui/blocks export. */
+const ITEMS = [
+  { label: 'Home', icon: 'lucide-house' },
+  { label: 'Inbox', icon: 'lucide-mail' },
+  { label: 'Calendar', icon: 'lucide-calendar' },
+  { label: 'Search', icon: 'lucide-search' },
+  { label: 'Settings', icon: 'lucide-settings' },
+]
+
+/** Application sidebar composition on the AppSidebar block. */
 export default function DemoSidebar() {
   const [open, setOpen] = createSignal(true)
   const [destination, setDestination] = createSignal('Home')
   return (
     <div class="flex min-h-screen bg-surface-base">
       <Show when={open()}>
-        <nav
-          aria-label="Application"
-          class="w-44 shrink-0 border-e border-outline-gray-1 p-3"
-        >
-          <h2 class="mb-3 text-caption text-ink-gray-6">Application</h2>
-          <For each={['Home', 'Inbox', 'Calendar', 'Search', 'Settings']}>
-            {(item) => (
-              <button
-                type="button"
-                aria-current={destination() === item ? 'page' : undefined}
-                class="flex w-full items-center gap-2 rounded-3 px-3 py-2 text-start aria-[current=page]:bg-surface-blue-2 focus-visible:focus-ring"
-                onClick={() => setDestination(item)}
-              >
-                <Icon
-                  icon={
-                    item === 'Inbox'
-                      ? 'lucide-mail'
-                      : item === 'Calendar'
-                        ? 'lucide-calendar'
-                        : item === 'Settings'
-                          ? 'lucide-settings'
-                          : item === 'Search'
-                            ? 'lucide-search'
-                            : 'lucide-house'
-                  }
-                />
-                {item}
-              </button>
-            )}
-          </For>
-        </nav>
+        <AppSidebar
+          title="Application"
+          showLogo={false}
+          width="11rem"
+          groups={[
+            {
+              items: ITEMS.map((item) => ({
+                ...item,
+                active: destination() === item.label,
+                onClick: () => setDestination(item.label),
+              })),
+            },
+          ]}
+        />
       </Show>
       <main class="min-w-0 flex-1 p-4">
         <Button
@@ -48,8 +40,8 @@ export default function DemoSidebar() {
           icon="lucide-panel-left"
         />
         <h1 class="mt-6 text-heading">{destination()}</h1>
-        <p class="mt-3 text-ink-gray-6">
-          This local composition changes sections without leaving the preview.
+        <p class="mt-3 text-ink-gray-7">
+          This composition changes sections without leaving the preview.
         </p>
       </main>
     </div>

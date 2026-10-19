@@ -10,7 +10,8 @@ lines of `SidebarHeader` + `SidebarLabel` + `SidebarItem` — including the part
 that are easy to get subtly wrong:
 
 - the header is **not** inside the scroll region;
-- a count is a quiet trailing suffix, not a `Badge`;
+- a count is a quiet trailing pill (tabular numerals on `surface-gray-2`), not
+  a `Badge`;
 - the label row is what gives a long list its structure.
 
 ## Props
@@ -24,9 +25,14 @@ that are easy to get subtly wrong:
 | `headerActions` | `JSX.Element` | — | trailing header slot, usually a menu |
 | `groups` | `AppSidebarGroup[]` | required | `{ label?, items }` |
 | `width` | `SidebarProps['width']` | `'14rem'` | |
+| `collapsible` | `boolean` | `true` | folds to the rail, toggle at the foot |
+| `collapsed` | `boolean` | — | controlled state; unset tracks its own |
+| `onCollapsedChange` | `(collapsed: boolean) => void` | — | the `Sidebar` callback, forwarded |
+| `collapsedWidth` | `string` | `'3rem'` | |
 | `class` | `string` | — | merged into the `Sidebar` |
 
-`AppSidebarItem` is `{ label, icon?, count?, active?, onClick? }`.
+`AppSidebarItem` is `{ label, icon?, count?, active?, route?, href?, onClick? }`
+— `route`/`href` render the row as a link, exactly as `SidebarItem` does.
 
 ## Behavior
 
@@ -36,6 +42,13 @@ that are easy to get subtly wrong:
 - An item with no `icon` renders no leading slot at all: an empty flex child
   would shift its label out of line with the items that have one.
 - The header stays put while the groups scroll.
+- **Collapse** is the `Sidebar` behavior, forwarded whole — controlled via
+  `collapsed`/`onCollapsedChange`, otherwise its own state (⌘B / Ctrl+B
+  included, auto-collapse below `sm` included). The block's one addition is
+  the visible control: a `SidebarCollapseToggle` at the foot, below the
+  scroll region so it never scrolls away, rendered only while `collapsible`
+  is on. An item without an `icon` folds to a tooltip-only row, exactly as
+  `SidebarItem` specifies — give rail-bound items icons.
 
 ## Styling hooks
 

@@ -33,6 +33,21 @@ export default function Demo() {
             value: 120,
             color: 'var(--chart-1)',
           },
+          {
+            name: 'refunds',
+            label: 'Refunds',
+            formattedValue: '$8',
+            kind: 'series',
+            value: 8,
+            color: 'var(--chart-2)',
+          },
+          {
+            name: 'orders',
+            label: 'Orders',
+            formattedValue: '1,840',
+            kind: 'context',
+            value: 1840,
+          },
         ]}
       />
     </>

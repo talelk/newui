@@ -1,6 +1,7 @@
 import { A, useLocation } from '@solidjs/router'
 import {
   createSignal,
+  For,
   type JSX,
   lazy,
   onCleanup,
@@ -9,12 +10,49 @@ import {
   Suspense,
 } from 'solid-js'
 import { NAV, sectionFor } from './nav'
+import { NAV_ROW } from './nav-ui'
 
 const PageFinder = lazy(() =>
   import('./PageFinder').then((module) => ({ default: module.PageFinder })),
 )
 
 import { ThemeMenu } from './ThemeMenu'
+
+/**
+ * The flattened primary links, shown at `lg+` beside search.
+ *
+ * Hrefs resolve out of `NAV` rather than being restated, so a moved page
+ * moves here too; `section` is the `NAV` section each link stands for, which
+ * is what the active state compares against.
+ */
+function sectionHref(title: string, fallback: string): string {
+  return NAV.find((entry) => entry.title === title)?.items[0]?.href ?? fallback
+}
+
+const TOP_LINKS: { title: string; href: string; section: string }[] = [
+  {
+    title: 'Docs',
+    href:
+      NAV.flatMap((entry) => entry.items).find((item) => item.href === '/docs')
+        ?.href ?? '/docs',
+    section: 'Overview',
+  },
+  {
+    title: 'Components',
+    href: sectionHref('Components', '/components'),
+    section: 'Components',
+  },
+  {
+    title: 'Blocks',
+    href: sectionHref('Blocks', '/blocks'),
+    section: 'Blocks',
+  },
+  {
+    title: 'Examples',
+    href: sectionHref('Examples', '/examples'),
+    section: 'Examples',
+  },
+]
 
 /**
  * The GitHub mark, inline.
@@ -89,7 +127,7 @@ export function Masthead(props: {
         </A>
         <nav
           aria-label="Breadcrumbs"
-          class="hidden min-w-0 items-center gap-2 text-interface text-ink-gray-6 sm:flex"
+          class="hidden min-w-0 items-center gap-2 text-interface text-ink-gray-7 sm:flex"
         >
           <span
             aria-hidden="true"
@@ -108,18 +146,37 @@ export function Masthead(props: {
             </span>
           </Show>
         </nav>
+        <nav
+          aria-label="Primary"
+          class="ms-auto hidden shrink-0 items-center gap-0.5 lg:flex"
+        >
+          <For each={TOP_LINKS}>
+            {(link) => (
+              <A
+                href={link.href}
+                aria-current={
+                  section()?.title === link.section ? 'true' : undefined
+                }
+                class={NAV_ROW}
+              >
+                {link.title}
+              </A>
+            )}
+          </For>
+        </nav>
         <button
           ref={findTrigger}
           type="button"
           aria-label="Find a page"
           aria-haspopup="dialog"
           onClick={() => setFinding(true)}
-          class="ms-auto flex size-10 shrink-0 items-center justify-center gap-2 rounded-3 text-ink-gray-6 hover:bg-surface-gray-2 focus-visible:focus-ring sm:w-auto sm:px-3"
+          class="ms-auto flex size-10 shrink-0 items-center justify-center gap-2 rounded-4 text-ink-gray-7 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none sm:h-8 sm:w-auto sm:justify-start sm:border sm:border-outline-gray-1 sm:bg-surface-gray-1 sm:ps-2.5 sm:pe-1.5 lg:ms-0"
         >
-          <span aria-hidden="true" class="lucide-search size-4" />
-          <span class="hidden text-caption md:inline">
-            Find a page <kbd>⌘ K</kbd>
-          </span>
+          <span aria-hidden="true" class="lucide-search size-4 shrink-0" />
+          <span class="hidden text-caption sm:inline">Find a page</span>
+          <kbd class="hidden rounded-3 border border-outline-gray-1 bg-surface-base px-1 text-xs text-ink-gray-7 sm:inline">
+            ⌘ K
+          </kbd>
         </button>
         <ThemeMenu />
         <a

@@ -1,6 +1,8 @@
 import { KanbanBoard, type KanbanColumn } from '@newui/blocks'
 import { Avatar, Badge } from '@newui/ui'
 import { createSignal, type JSX } from 'solid-js'
+import { usd as money } from '../examples/format'
+import { DemoFrame } from './demo-frame'
 
 interface Deal {
   id: string
@@ -9,13 +11,6 @@ interface Deal {
   owner: string
   tag: string
 }
-
-const money = (value: number) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(value)
 
 const DEALS: Deal[] = [
   {
@@ -102,7 +97,7 @@ export default function Demo(): JSX.Element {
   const [notice, setNotice] = createSignal('')
   return (
     <div class="flex flex-col gap-2">
-      <div class="h-[26rem] overflow-hidden rounded-6 border border-outline-gray-1">
+      <DemoFrame tall>
         <KanbanBoard
           defaultColumns={columns}
           label="Deals pipeline"
@@ -128,15 +123,15 @@ export default function Demo(): JSX.Element {
                 </span>
                 <Badge variant="outline">{deal.tag}</Badge>
               </div>
-              <div class="mt-3 flex items-center justify-between gap-2 text-sm text-ink-gray-6">
+              <div class="mt-3 flex items-center justify-between gap-2 text-sm text-ink-gray-7">
                 <span class="truncate">{deal.owner}</span>
                 <span class="shrink-0">Due Aug 2</span>
               </div>
             </>
           )}
         </KanbanBoard>
-      </div>
-      <p class="text-sm text-ink-gray-6" aria-live="polite">
+      </DemoFrame>
+      <p class="text-sm text-ink-gray-7" aria-live="polite">
         {notice() ||
           'Drag a card, or use its menu — every card is movable without a mouse.'}
       </p>

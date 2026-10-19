@@ -1,5 +1,5 @@
 import { cn } from '@newui/ui'
-import { For, type JSX, Match, Switch } from 'solid-js'
+import { createSignal, For, type JSX, Match, Switch } from 'solid-js'
 
 /**
  * A markdown subset, rendered to JSX.
@@ -14,13 +14,29 @@ import { For, type JSX, Match, Switch } from 'solid-js'
  */
 
 type Block =
-  | { kind: 'heading'; level: 2 | 3 | 4; text: string }
+  | { kind: 'heading'; level: 2 | 3 | 4; text: string; id: string }
   | { kind: 'paragraph'; text: string }
   | { kind: 'code'; code: string }
   | { kind: 'table'; head: string[]; rows: string[][] }
   | { kind: 'list'; ordered: boolean; items: string[] }
   | { kind: 'quote'; text: string }
   | { kind: 'rule' }
+
+/** Heading text without its inline markers — the label a TOC entry carries. */
+export function plainHeading(text: string): string {
+  return text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[`*_]/g, '')
+    .trim()
+}
+
+/** `## Behavior notes` → `behavior-notes`. */
+export function slugifyHeading(text: string): string {
+  return plainHeading(text)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
 
 function isTableRule(line: string): boolean {
   return /^\|[\s:|-]+\|?\s*$/.test(line)
@@ -41,6 +57,7 @@ function splitRow(line: string): string[] {
 export function parseMarkdown(markdown: string): Block[] {
   const lines = markdown.replace(/\r\n/g, '\n').split('\n')
   const blocks: Block[] = []
+  const seenSlugs = new Map<string, number>()
   let index = 0
 
   while (index < lines.length) {
@@ -64,10 +81,15 @@ export function parseMarkdown(markdown: string): Block[] {
       // dropped and the rest shift down one level.
       const depth = (heading[1] ?? '').length
       if (depth > 1) {
+        const text = heading[2] ?? ''
+        const base = slugifyHeading(text) || 'section'
+        const seen = seenSlugs.get(base) ?? 0
+        seenSlugs.set(base, seen + 1)
         blocks.push({
           kind: 'heading',
           level: Math.min(depth, 4) as 2 | 3 | 4,
-          text: heading[2] ?? '',
+          text,
+          id: seen ? `${base}-${seen + 1}` : base,
         })
       }
       index += 1
@@ -134,6 +156,51 @@ export function parseMarkdown(markdown: string): Block[] {
   return blocks
 }
 
+export interface MarkdownHeading {
+  id: string
+  label: string
+  level: 2 | 3 | 4
+}
+
+/**
+ * The heading list a table of contents is built from — the same ids the
+ * renderer stamps on the headings, in document order.
+ */
+/**
+ * The contract without its `## Props` sections.
+ *
+ * Reference pages render the generated API tables directly above the
+ * contract, so the spec's own props table would say the same thing twice.
+ * The spec file keeps its table — `specs:check` guards it against
+ * `api.json` — only this rendering drops it. Fence-aware: a `## Props`
+ * line inside a code sample is content, not a heading.
+ */
+export function withoutPropsSections(markdown: string): string {
+  const lines = markdown.replace(/\r\n/g, '\n').split('\n')
+  const kept: string[] = []
+  let inFence = false
+  let skipping = false
+  for (const line of lines) {
+    if (line.startsWith('```')) inFence = !inFence
+    const heading = inFence ? null : /^(#{1,2})\s+(.*)$/.exec(line)
+    if (heading) {
+      skipping =
+        (heading[1] ?? '').length === 2 &&
+        plainHeading(heading[2] ?? '') === 'Props'
+    }
+    if (!skipping) kept.push(line)
+  }
+  return kept.join('\n')
+}
+
+export function markdownHeadings(markdown: string): MarkdownHeading[] {
+  return parseMarkdown(markdown).flatMap((block) =>
+    block.kind === 'heading'
+      ? [{ id: block.id, label: plainHeading(block.text), level: block.level }]
+      : [],
+  )
+}
+
 /**
  * Inline markdown: code spans, bold, and links.
  *
@@ -174,6 +241,35 @@ export function renderInline(text: string): JSX.Element {
   )
 }
 
+/** A fenced code block with its own copy button. */
+function CodeBlock(props: { code: string }): JSX.Element {
+  const [copied, setCopied] = createSignal(false)
+  return (
+    <div class="relative">
+      <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-4 text-sm leading-relaxed text-ink-gray-8">
+        <code>{props.code}</code>
+      </pre>
+      <div class="absolute end-2 top-2">
+        {/* Plain markup, not `Button`: this module rides the prose routes
+          (`/docs` is budgeted as prose only), so it stays component-free. */}
+        <button
+          type="button"
+          aria-label="Copy code"
+          class="rounded-3 border border-outline-gray-2 bg-surface-elevation-1 px-2 py-1 text-caption text-ink-gray-8 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none"
+          onClick={() => {
+            void navigator.clipboard?.writeText(props.code).then(
+              () => setCopied(true),
+              () => setCopied(false),
+            )
+          }}
+        >
+          {copied() ? 'Copied' : 'Copy'}
+        </button>
+      </div>
+    </div>
+  )
+}
+
 export function Markdown(props: {
   markdown: string
   class?: string
@@ -189,17 +285,26 @@ export function Markdown(props: {
               {(heading) => (
                 <Switch>
                   <Match when={heading().level === 2}>
-                    <h2 class="mt-2 text-section text-ink-gray-9">
+                    <h2
+                      id={heading().id}
+                      class="mt-2 scroll-mt-16 text-section text-ink-gray-9"
+                    >
                       {renderInline(heading().text)}
                     </h2>
                   </Match>
                   <Match when={heading().level === 3}>
-                    <h3 class="mt-1 text-lg-medium text-ink-gray-9">
+                    <h3
+                      id={heading().id}
+                      class="mt-1 scroll-mt-16 text-lg-medium text-ink-gray-9"
+                    >
                       {renderInline(heading().text)}
                     </h3>
                   </Match>
                   <Match when={heading().level === 4}>
-                    <h4 class="text-base-medium text-ink-gray-8">
+                    <h4
+                      id={heading().id}
+                      class="scroll-mt-16 text-base-medium text-ink-gray-8"
+                    >
                       {renderInline(heading().text)}
                     </h4>
                   </Match>
@@ -216,11 +321,7 @@ export function Markdown(props: {
             </Match>
 
             <Match when={block.kind === 'code' && block}>
-              {(code) => (
-                <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-4 text-sm leading-relaxed text-ink-gray-8">
-                  <code>{code().code}</code>
-                </pre>
-              )}
+              {(code) => <CodeBlock code={code().code} />}
             </Match>
 
             <Match when={block.kind === 'table' && block}>
@@ -288,7 +389,7 @@ export function Markdown(props: {
 
             <Match when={block.kind === 'quote' && block}>
               {(quote) => (
-                <blockquote class="border-s-2 border-outline-gray-2 ps-4 text-base text-ink-gray-6">
+                <blockquote class="border-s-2 border-outline-gray-2 ps-4 text-base text-ink-gray-7">
                   {renderInline(quote().text)}
                 </blockquote>
               )}

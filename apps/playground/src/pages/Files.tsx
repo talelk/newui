@@ -1,17 +1,24 @@
+import { FilterBar } from '@newui/blocks'
+import { NumberCard } from '@newui/charts'
 import {
   Badge,
   BottomSheet,
+  Breadcrumbs,
   Button,
   Dialog,
-  Progress,
+  EmptyState,
   Select,
-  TabButtons,
   TextInput,
 } from '@newui/ui'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
+import { CreateDialog } from '../examples/CreateDialog'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
+import { downloadBlob } from '../examples/download'
 import { ExampleFrame } from '../examples/ExampleFrame'
-import { INITIAL, size, type WorkspaceFile } from '../examples/files-data'
+import { INITIAL, type WorkspaceFile } from '../examples/files-data'
+import { bytes as size } from '../examples/format'
+import { Notice } from '../examples/Notice'
+import { first, optionsOf } from '../examples/select'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
 
 export function Files(): JSX.Element {
@@ -24,7 +31,6 @@ export function Files(): JSX.Element {
   const [sort, setSort] = createSignal('Name')
   const [newFolder, setNewFolder] = createSignal(false)
   const [name, setName] = createSignal('')
-  const [attempted, setAttempted] = createSignal(false)
   const [actionId, setActionId] = createSignal<string>()
   const actionFile = createMemo(() =>
     items().find((item) => item.id === actionId()),
@@ -134,17 +140,12 @@ export function Files(): JSX.Element {
         )
     } else setPreview(item.content ?? 'No preview available.')
   }
-  const download = (item: WorkspaceFile) => {
-    const url = URL.createObjectURL(
+  const download = (item: WorkspaceFile) =>
+    downloadBlob(
+      item.name,
       item.file ??
         new Blob([item.content ?? ''], { type: 'text/plain;charset=utf-8' }),
     )
-    const link = document.createElement('a')
-    link.href = url
-    link.download = item.name
-    link.click()
-    URL.revokeObjectURL(url)
-  }
   const columns: DataTableColumn<WorkspaceFile>[] = [
     {
       accessorKey: 'name',
@@ -173,7 +174,13 @@ export function Files(): JSX.Element {
       header: 'Size',
       cell: (context) =>
         context.row.original.type === 'folder'
-          ? `${items().filter((item) => item.parent === context.row.original.id && !item.trashed).length} items`
+          ? (() => {
+              const n = items().filter(
+                (item) =>
+                  item.parent === context.row.original.id && !item.trashed,
+              ).length
+              return `${n} item${n === 1 ? '' : 's'}`
+            })()
           : size(context.row.original.bytes),
     },
   ]
@@ -189,11 +196,34 @@ export function Files(): JSX.Element {
             setQuery('')
           }}
           items={[
-            { label: 'Home', icon: 'lucide-house' },
-            { label: 'Recents', icon: 'lucide-clock' },
-            { label: 'Favourites', icon: 'lucide-star' },
-            { label: 'Shared with me', icon: 'lucide-users' },
-            { label: 'Trash', icon: 'lucide-trash-2' },
+            {
+              label: 'Home',
+              icon: 'lucide-house',
+              count: items().filter((item) => !item.trashed).length,
+            },
+            {
+              label: 'Recents',
+              icon: 'lucide-clock',
+              count: items().filter((item) => !item.trashed && item.day <= 3)
+                .length,
+            },
+            {
+              label: 'Favourites',
+              icon: 'lucide-star',
+              count: items().filter((item) => !item.trashed && item.starred)
+                .length,
+            },
+            {
+              label: 'Shared with me',
+              icon: 'lucide-users',
+              count: items().filter((item) => !item.trashed && item.shared)
+                .length,
+            },
+            {
+              label: 'Trash',
+              icon: 'lucide-trash-2',
+              count: items().filter((item) => item.trashed).length,
+            },
           ]}
         />
       }
@@ -207,7 +237,6 @@ export function Files(): JSX.Element {
             iconLeft="lucide-folder-plus"
             onClick={() => {
               setName('')
-              setAttempted(false)
               setNewFolder(true)
             }}
           >
@@ -257,85 +286,79 @@ export function Files(): JSX.Element {
         </>
       }
     >
-      <Show when={notice()}>
-        <p
-          role="status"
-          class="rounded-3 border border-outline-blue-1 bg-surface-blue-1 p-3 text-ink-blue-8"
-        >
-          {notice()}
-        </p>
-      </Show>
-      <div class="flex flex-wrap items-end justify-between gap-3">
-        <div class="flex flex-wrap items-end gap-3">
-          <TextInput
-            label="Search files"
-            value={query()}
-            onInput={(event) => setQuery(event.currentTarget.value)}
-          />
-          <Select
-            label="File type"
-            value={[type()]}
-            options={['All types', 'Folders', 'Files'].map((value) => ({
-              label: value,
-              value,
-            }))}
-            onValueChange={(value) => setType(value[0] ?? 'All types')}
-          />
-          <Select
-            label="Sort files"
-            value={[sort()]}
-            options={['Name', 'Modified', 'Size'].map((value) => ({
-              label: value,
-              value,
-            }))}
-            onValueChange={(value) => setSort(value[0] ?? 'Name')}
-          />
-        </div>
-        <TabButtons
-          value={view()}
-          onValueChange={setView}
-          options={[
+      <Notice text={notice()} onDismiss={() => setNotice('')} />
+      <FilterBar
+        query={{
+          placeholder: 'Search files…',
+          value: query(),
+          onInput: setQuery,
+        }}
+        selects={[
+          {
+            label: 'Type',
+            value: type() === 'All types' ? '' : type(),
+            onValueChange: (value) => setType(value || 'All types'),
+            options: optionsOf(['Folders', 'Files']),
+          },
+        ]}
+        tabs={{
+          value: view(),
+          onValueChange: setView,
+          options: [
             { label: 'Grid', value: 'grid' },
             { label: 'List', value: 'list' },
-          ]}
-        />
-      </div>
-      <nav
-        aria-label="Folder path"
-        class="flex flex-wrap items-center gap-2 text-interface"
+          ],
+        }}
+        chips={[
+          ...(type() !== 'All types'
+            ? [
+                {
+                  label: `Type: ${type()}`,
+                  onRemove: () => setType('All types'),
+                },
+              ]
+            : []),
+          ...(query()
+            ? [{ label: `Search: ${query()}`, onRemove: () => setQuery('') }]
+            : []),
+        ]}
+        resultCount={rows().length}
+        onClearAll={() => {
+          setType('All types')
+          setQuery('')
+        }}
       >
-        <button
-          type="button"
-          class="rounded-3 text-ink-blue-link focus-visible:focus-ring"
-          onClick={() => {
-            setSection('Home')
-            setFolder(null)
-          }}
-        >
-          All files
-        </button>
-        <For each={breadcrumbs()}>
-          {(item) => (
-            <>
-              <span aria-hidden="true" class="text-ink-gray-6">
-                /
-              </span>
-              <button
-                type="button"
-                class="rounded-3 text-ink-blue-link focus-visible:focus-ring"
-                onClick={() => setFolder(item.id)}
-              >
-                {item.name}
-              </button>
-            </>
-          )}
-        </For>
-      </nav>
+        <Select
+          aria-label="Sort files"
+          variant="subtle"
+          class="w-40 max-w-full"
+          value={[sort()]}
+          options={optionsOf(['Name', 'Modified', 'Size'])}
+          onValueChange={(value) => setSort(first(value, 'Name'))}
+        />
+      </FilterBar>
+      <Breadcrumbs
+        aria-label="Folder path"
+        items={[
+          {
+            label: 'All files',
+            onClick: () => {
+              setSection('Home')
+              setFolder(null)
+            },
+          },
+          ...breadcrumbs().map((item) => ({
+            label: item.name,
+            onClick: () => setFolder(item.id),
+          })),
+        ]}
+      />
       <Show
         when={view() === 'grid'}
         fallback={
           <DataTable
             title="Files"
+            hideSearch
             rows={rows()}
             columns={columns}
             actionLabel={
@@ -352,11 +375,13 @@ export function Files(): JSX.Element {
           <For
             each={rows()}
             fallback={
-              <li class="rounded-5 border border-dashed border-outline-gray-3 p-8 text-center sm:col-span-2">
-                <h2 class="text-section">No files here yet</h2>
-                <p class="mt-2 text-ink-gray-6">
-                  Try another view or add a file to this folder.
-                </p>
+              <li class="sm:col-span-2">
+                <EmptyState
+                  bordered
+                  icon="lucide-folder-open"
+                  title="No files here yet"
+                  description="Try another view or add a file to this folder."
+                />
               </li>
             }
           >
@@ -391,7 +416,7 @@ export function Files(): JSX.Element {
                 >
                   {item.name}
                 </button>
-                <p class="mt-1 text-caption text-ink-gray-6">
+                <p class="mt-1 text-caption text-ink-gray-7">
                   {item.owner} ·{' '}
                   {item.type === 'folder'
                     ? `${items().filter((child) => child.parent === item.id && !child.trashed).length} items`
@@ -466,84 +491,57 @@ export function Files(): JSX.Element {
         </Show>
       </BottomSheet>
       <div class="max-w-sm">
-        <Progress
-          label="Local demo storage"
-          value={Math.min(
-            100,
-            (items()
-              .filter((item) => !item.trashed)
-              .reduce((sum, item) => sum + item.bytes, 0) /
-              (10 * 1024 * 1024)) *
-              100,
-          )}
-          size="md"
+        <NumberCard
+          title="Local demo storage"
+          value={items()
+            .filter((item) => !item.trashed)
+            .reduce((sum, item) => sum + item.bytes, 0)}
+          target={10 * 1024 * 1024}
+          format={(value) => size(value)}
         />
-        <p class="mt-2 text-caption text-ink-gray-6">
-          {size(
-            items()
-              .filter((item) => !item.trashed)
-              .reduce((sum, item) => sum + item.bytes, 0),
-          )}{' '}
-          in this page · 10 MB demonstration scale
+        <p class="mt-2 text-caption text-ink-gray-7">
+          In this page · 10 MB demonstration scale
         </p>
       </div>
-      <Dialog.Root open={newFolder()} onOpenChange={setNewFolder}>
-        <Dialog.Content>
-          <Dialog.Header>
-            <Dialog.Title>Create a folder</Dialog.Title>
-            <Dialog.Description>
-              Keep related files together.
-            </Dialog.Description>
-          </Dialog.Header>
-          <form
-            class="mt-5 flex flex-col gap-4"
-            noValidate
-            onSubmit={(event) => {
-              event.preventDefault()
-              setAttempted(true)
-              if (!name().trim()) return
-              setItems((previous) => [
-                ...previous,
-                {
-                  id: `FOLDER-${nextId++}`,
-                  parent: folder(),
-                  name: name().trim(),
-                  type: 'folder',
-                  bytes: 0,
-                  owner: 'Rhea Kapoor',
-                  starred: false,
-                  shared: false,
-                  trashed: false,
-                  day: 0,
-                },
-              ])
-              setSection('Home')
-              setNewFolder(false)
-              setNotice('Folder created.')
-            }}
-          >
-            <TextInput
-              label="Folder name"
-              required
-              value={name()}
-              onInput={(event) => setName(event.currentTarget.value)}
-              error={
-                attempted() && !name().trim()
-                  ? 'Enter a folder name.'
-                  : undefined
-              }
-            />
-            <Dialog.Footer>
-              <Button variant="outline" onClick={() => setNewFolder(false)}>
-                Cancel
-              </Button>
-              <Button type="submit" variant="solid" theme="blue">
-                Create folder
-              </Button>
-            </Dialog.Footer>
-          </form>
-        </Dialog.Content>
-      </Dialog.Root>
+      <CreateDialog
+        open={newFolder()}
+        onOpenChange={setNewFolder}
+        title="Create a folder"
+        description="Keep related files together."
+        submitLabel="Create folder"
+        onSubmit={() => {
+          if (!name().trim()) return
+          setItems((previous) => [
+            ...previous,
+            {
+              id: `FOLDER-${nextId++}`,
+              parent: folder(),
+              name: name().trim(),
+              type: 'folder',
+              bytes: 0,
+              owner: 'Rhea Kapoor',
+              starred: false,
+              shared: false,
+              trashed: false,
+              day: 0,
+            },
+          ])
+          setSection('Home')
+          setNewFolder(false)
+          setNotice('Folder created.')
+        }}
+        fields={(attempted) => (
+          <TextInput
+            label="Folder name"
+            required
+            value={name()}
+            onInput={(event) => setName(event.currentTarget.value)}
+            error={
+              attempted() && !name().trim() ? 'Enter a folder name.' : undefined
+            }
+          />
+        )}
+      />
       <Dialog.Root
         open={!!active()}
         onOpenChange={(value) => {

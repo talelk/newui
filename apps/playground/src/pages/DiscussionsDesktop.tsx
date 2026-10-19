@@ -1,3 +1,4 @@
+import { AppSidebar, FilterBar, PageToolbar } from '@newui/blocks'
 import {
   AppShell,
   Avatar,
@@ -10,17 +11,8 @@ import {
   ListRow,
   Menu,
   PageBody,
-  PageHeader,
-  PageHeaderTitle,
-  ScrollArea,
-  Sidebar,
-  SidebarHeader,
-  SidebarItem,
-  SidebarLabel,
   SidebarRail,
   SidebarRailItem,
-  TabButtons,
-  TextInput,
   Tooltip,
 } from '@newui/ui'
 import {
@@ -80,35 +72,6 @@ const SPACE_ACTIONS = [
   { label: 'Manage access', value: 'manage-access', icon: 'lucide-users' },
   { label: 'Archive', value: 'archive', icon: 'lucide-archive' },
 ]
-
-/** Icon-only action menu for the page header — dots trigger, no chevron. */
-function SpaceActionsMenu(props: {
-  onSelect: (value: string) => void
-}): JSX.Element {
-  return (
-    <Menu.Root onSelect={props.onSelect}>
-      <Menu.Trigger
-        aria-label="Space actions"
-        class="grid size-7 shrink-0 place-items-center rounded-4 text-ink-gray-8 transition-colors hover:bg-surface-gray-2 data-[state=open]:bg-surface-gray-3 focus-visible:ring-0 focus-visible:focus-ring"
-      >
-        <Icon icon="lucide-ellipsis" class="size-4" />
-      </Menu.Trigger>
-      <Menu.Content>
-        <For each={SPACE_ACTIONS}>
-          {(action) => (
-            <Menu.Item value={action.value}>
-              <Icon
-                icon={action.icon}
-                class="size-4 shrink-0 text-ink-gray-6"
-              />
-              {action.label}
-            </Menu.Item>
-          )}
-        </For>
-      </Menu.Content>
-    </Menu.Root>
-  )
-}
 
 /** A plain avatar trigger for the account menu — no chevron, no pill. */
 function AccountMenu(props: {
@@ -173,19 +136,41 @@ export function DiscussionsDesktop(props: {
       : discussions.rows(),
   )
 
+  const spaceAction = (value: string) => {
+    if (value === 'mark-read') {
+      discussions.markRead()
+      setNotice('All discussions in this space are read.')
+    }
+    if (value === 'copy-link') {
+      void navigator.clipboard
+        .writeText(
+          `${location.origin}${location.pathname}#${encodeURIComponent(space())}`,
+        )
+        .then(
+          () => setNotice('Space link copied.'),
+          () => setNotice('Copy the current page address to share this demo.'),
+        )
+    }
+    if (value === 'manage-access') {
+      props.onOpenSettings('users')
+    }
+    if (value === 'archive') {
+      setSpace('Archive')
+      setNotice('Viewing the archive. Original discussions are retained.')
+    }
+  }
+
   return (
     <div class="flex flex-col gap-4">
+      {/* PageToolbar's title is a span by design; this standalone screen
+        still owes the document its one heading. */}
+      <h1 class="sr-only">Discussions</h1>
       <div class="min-h-screen overflow-hidden rounded-6 border border-outline-gray-1 shadow-md">
         <AppShell
           class="max-md:[&_[data-slot=sidebar-rail]]:hidden max-md:[&_[data-slot=sidebar]]:hidden"
           rail={
             <SidebarRail class="border-r border-outline-gray-1">
-              {/* The logo fills the whole cell and carries no tooltip of its own. */}
-              <a
-                href="/"
-                aria-label="Home"
-                class="flex size-7 items-center justify-center rounded-[7px] transition focus-visible:ring-0 focus-visible:focus-ring hover:opacity-90"
-              >
+              <SidebarRailItem label="Home" route="/">
                 <img
                   src="/favicon.svg"
                   alt=""
@@ -193,7 +178,7 @@ export function DiscussionsDesktop(props: {
                   width="28"
                   height="28"
                 />
-              </a>
+              </SidebarRailItem>
 
               <div class="flex w-full flex-1 flex-col items-center gap-3 pt-3">
                 <For each={COMMUNITIES}>
@@ -213,13 +198,12 @@ export function DiscussionsDesktop(props: {
               {/* Bottom cluster: the extra gap keeps the utility items and the
                 account avatar from crowding each other at the foot of the rail. */}
               <div class="flex flex-col items-center gap-2.5">
+                {/* The FilterBar search box owns the `/` shortcut, so the
+                  rail entry no longer reaches for it by id. */}
                 <SidebarRailItem
                   label="Search"
                   variant="ghost"
                   icon="lucide-search"
-                  onClick={() =>
-                    document.getElementById('discussion-search')?.focus()
-                  }
                 />
                 <SidebarRailItem
                   label="Settings"
@@ -241,17 +225,27 @@ export function DiscussionsDesktop(props: {
             </SidebarRail>
           }
           sidebar={
-            <Sidebar width="14rem" class="border-r border-outline-gray-1">
-              {/* No logo here: the rail already shows the active community's
-                avatar, so a header logo would just duplicate it. */}
-              <SidebarHeader
-                title={
-                  COMMUNITIES.find((item) => item.id === community())?.name ??
-                  'Design'
-                }
-                subtitle="18 members"
-                showLogo={false}
-                actions={
+            /* No logo here: the rail already shows the active community's
+              avatar, so a header logo would just duplicate it. The
+              sort-spaces button rides in the header actions — AppSidebar
+              groups have no per-group action slot. */
+            <AppSidebar
+              class="border-r border-outline-gray-1"
+              title={
+                COMMUNITIES.find((item) => item.id === community())?.name ??
+                'Design'
+              }
+              subtitle="18 members"
+              showLogo={false}
+              headerActions={
+                <div class="flex items-center gap-1">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    icon="lucide-arrow-up-down"
+                    onClick={() => setSpacesReversed((value) => !value)}
+                    aria-label="Sort spaces"
+                  />
                   <Dropdown
                     options={[
                       {
@@ -269,136 +263,88 @@ export function DiscussionsDesktop(props: {
                   >
                     <span class="sr-only">Community actions</span>
                   </Dropdown>
-                }
-              />
-
-              <ScrollArea.Root class="min-h-0 flex-1">
-                <ScrollArea.Viewport class="px-2 pt-0.5 pb-10">
-                  <div class="flex flex-col gap-0.5">
-                    <SidebarItem
-                      prefix={<Icon icon="lucide-house" class="size-4" />}
-                    >
-                      Home
-                    </SidebarItem>
-                    <SidebarItem
-                      prefix={<Icon icon="lucide-search" class="size-4" />}
-                    >
-                      Search
-                    </SidebarItem>
-                  </div>
-
-                  <div class="mt-4 flex h-7 items-center justify-between">
-                    <SidebarLabel>Spaces</SidebarLabel>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      icon="lucide-arrow-up-down"
-                      onClick={() => setSpacesReversed((value) => !value)}
-                      aria-label="Sort spaces"
-                    />
-                  </div>
-
-                  <div class="mt-0.5 flex flex-col gap-0.5">
-                    <For
-                      each={spacesReversed() ? [...SPACES].reverse() : SPACES}
-                    >
-                      {(item) => (
-                        <SidebarItem
-                          active={space() === item.name}
-                          prefix={<Icon icon={item.icon} class="size-4" />}
-                          onClick={() => setSpace(item.name)}
-                          suffix={
-                            <Show when={item.unread}>
-                              <span class="grid size-4 place-content-center text-xs text-ink-gray-6">
-                                {item.unread}
-                              </span>
-                            </Show>
-                          }
-                        >
-                          {item.name}
-                        </SidebarItem>
-                      )}
-                    </For>
-                  </div>
-                </ScrollArea.Viewport>
-                <ScrollArea.Scrollbar />
-              </ScrollArea.Root>
-            </Sidebar>
+                </div>
+              }
+              groups={[
+                {
+                  items: [
+                    { label: 'Home', icon: 'lucide-house' },
+                    { label: 'Search', icon: 'lucide-search' },
+                  ],
+                },
+                {
+                  label: 'Spaces',
+                  items: (spacesReversed()
+                    ? [...SPACES].reverse()
+                    : SPACES
+                  ).map((item) => ({
+                    label: item.name,
+                    icon: item.icon,
+                    ...(item.unread ? { count: item.unread } : {}),
+                    active: space() === item.name,
+                    onClick: () => setSpace(item.name),
+                  })),
+                },
+              ]}
+            />
           }
         >
-          <PageHeader class="flex-wrap py-2">
-            <div class="flex min-w-0 flex-1 items-center gap-1">
-              <PageHeaderTitle>{space()}</PageHeaderTitle>
-              <SpaceActionsMenu
-                onSelect={(value) => {
-                  if (value === 'mark-read') {
-                    discussions.markRead()
-                    setNotice('All discussions in this space are read.')
-                  }
-                  if (value === 'copy-link') {
-                    void navigator.clipboard
-                      .writeText(
-                        `${location.origin}${location.pathname}#${encodeURIComponent(space())}`,
-                      )
-                      .then(
-                        () => setNotice('Space link copied.'),
-                        () =>
-                          setNotice(
-                            'Copy the current page address to share this demo.',
-                          ),
-                      )
-                  }
-                  if (value === 'manage-access') {
-                    props.onOpenSettings('users')
-                  }
-                  if (value === 'archive') {
-                    setSpace('Archive')
-                    setNotice(
-                      'Viewing the archive. Original discussions are retained.',
-                    )
-                  }
-                }}
-              />
-            </div>
-            <Button
-              variant="solid"
-              theme="blue"
-              iconLeft="lucide-plus"
-              onClick={discussions.start}
-            >
-              Add new
-            </Button>
-          </PageHeader>
+          <PageToolbar
+            title={space()}
+            menu={SPACE_ACTIONS.map((action) => ({
+              label: action.label,
+              icon: action.icon,
+              onClick: () => spaceAction(action.value),
+            }))}
+            action={{ label: 'Add new', onClick: discussions.start }}
+          />
 
           <PageBody>
             <div class="mb-4">
-              <TextInput
-                id="discussion-search"
-                label="Search discussions"
-                value={discussions.query()}
-                onInput={(event) =>
-                  discussions.setQuery(event.currentTarget.value)
-                }
+              <FilterBar
+                query={{
+                  placeholder: 'Search discussions…',
+                  value: discussions.query(),
+                  onInput: discussions.setQuery,
+                }}
+                tabs={{
+                  value: feedTab(),
+                  onValueChange: setFeedTab,
+                  options: [
+                    { label: 'Unread', value: 'Unread' },
+                    { label: 'All', value: 'All' },
+                  ],
+                }}
+                chips={[
+                  ...(feedTab() === 'Unread'
+                    ? [
+                        {
+                          label: 'Unread only',
+                          onRemove: () => setFeedTab('All'),
+                        },
+                      ]
+                    : []),
+                  ...(discussions.query()
+                    ? [
+                        {
+                          label: `Search: ${discussions.query()}`,
+                          onRemove: () => discussions.setQuery(''),
+                        },
+                      ]
+                    : []),
+                ]}
+                resultCount={visibleDiscussions().length}
+                onClearAll={() => {
+                  discussions.setQuery('')
+                  setFeedTab('All')
+                }}
               />
             </div>
             <Show when={notice()}>
-              <p role="status" class="mb-3 text-caption text-ink-gray-6">
+              <p role="status" class="mb-3 text-caption text-ink-gray-7">
                 {notice()}
               </p>
             </Show>
-            <div class="mb-4 flex items-center justify-between">
-              <TabButtons
-                value={feedTab()}
-                onValueChange={setFeedTab}
-                options={[
-                  { label: 'Unread', value: 'Unread' },
-                  { label: 'All', value: 'All' },
-                ]}
-              />
-              <span class="text-sm text-ink-gray-6">
-                {visibleDiscussions().length} discussions
-              </span>
-            </div>
 
             {/* `-mx-3` lets the row hover surface bleed past the text edge, so the
               content stays aligned with the container. */}
@@ -431,7 +377,7 @@ export function DiscussionsDesktop(props: {
                             </button>
                           </span>
                         </div>
-                        <div class="mt-1.5 flex min-w-0 items-center text-base text-ink-gray-6">
+                        <div class="mt-1.5 flex min-w-0 items-center text-base text-ink-gray-7">
                           <Icon
                             icon="lucide-reply"
                             class="mr-1 size-4 shrink-0"
@@ -445,7 +391,7 @@ export function DiscussionsDesktop(props: {
                     </ListCell>
                     <ListCell class="justify-end">
                       <div>
-                        <div class="text-right text-sm whitespace-nowrap text-ink-gray-6">
+                        <div class="text-right text-sm whitespace-nowrap text-ink-gray-7">
                           {discussion.lastActivity}
                         </div>
                         <div class="mt-1.5 flex items-center justify-end">
@@ -467,7 +413,7 @@ export function DiscussionsDesktop(props: {
               </For>
             </List>
             <Show when={!visibleDiscussions().length}>
-              <p class="py-8 text-center text-ink-gray-6">
+              <p class="py-8 text-center text-ink-gray-7">
                 No discussions match this space and filter.
               </p>
             </Show>

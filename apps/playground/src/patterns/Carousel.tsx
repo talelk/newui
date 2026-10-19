@@ -220,25 +220,25 @@ export default function Carousel(props: { example?: string }) {
               >
                 <div>
                   <p class="text-caption text-ink-blue-8">
-                    ACME WORKSPACE / 0{position() + 1}
+                    Acme workspace / 0{position() + 1}
                   </p>
                   <h2 class="mt-3 text-section text-ink-gray-9">
                     {slide.title}
                   </h2>
-                  <p class="mt-2 text-interface text-ink-gray-6">
+                  <p class="mt-2 text-interface text-ink-gray-7">
                     {slide.description}
                   </p>
                 </div>
                 <div class="mt-6">
                   <p class="text-metric text-ink-gray-9">{slide.metric}</p>
-                  <p class="mt-1 text-caption text-ink-gray-6">{slide.label}</p>
+                  <p class="mt-1 text-caption text-ink-gray-7">{slide.label}</p>
                 </div>
               </article>
             )}
           </For>
         </section>
         <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
-          <p role="status" class="text-caption text-ink-gray-6">
+          <p role="status" class="text-caption text-ink-gray-7">
             Slide {index() + 1} of {SLIDES.length}
             {reduced() ? ' · Automatic motion disabled by your preference' : ''}
           </p>

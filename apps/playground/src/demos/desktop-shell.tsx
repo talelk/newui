@@ -12,7 +12,7 @@ export default function Demo() {
         <PageHeader>
           <h3 class="text-section">Analytics</h3>
         </PageHeader>
-        <div class="p-4 text-interface text-ink-gray-6">
+        <div class="p-4 text-interface text-ink-gray-7">
           A scrolling desktop workspace.
         </div>
       </DesktopShell>

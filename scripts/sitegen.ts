@@ -332,8 +332,38 @@ for (const name of [...exported, ...exportedBlocks]) {
     importOf.set(name, exportedBlocks.has(name) ? '@newui/blocks' : '@newui/ui')
   }
 }
+/**
+ * One-line purposes for components that share a contract file. Without
+ * these, every chart would inherit the package sentence verbatim.
+ */
+const PURPOSE_OVERRIDES: Record<string, string> = {
+  AreaChart: 'Filled line series for change over time.',
+  BarChart: 'Bars for comparing categories and series.',
+  ChartBase: 'The shared ECharts host every chart renders through.',
+  ChartCard: 'The bordered card a chart sits in, with title chrome.',
+  ChartContainer: 'Sizing, loading and empty states around a chart.',
+  ChartLegend: 'Series legend with hover emphasis.',
+  ChartTooltip: 'The formatted hover card for chart values.',
+  Dashboard: 'A ready-made grid of KPI cards and charts.',
+  DonutChart: 'Part-to-whole shares as a ring.',
+  FunnelChart: 'Stage-by-stage conversion drop-off.',
+  HeatmapChart: 'Density across two categorical axes.',
+  LineChart: 'Line series for trends and comparisons.',
+  NumberCard: 'One KPI: value, delta, target and sparkline.',
+  SankeyChart: 'Flows and their magnitudes between nodes.',
+  ScatterChart: 'Point clouds for correlation and outliers.',
+  FormControl: 'Wires a label, control and error together (P5).',
+  FormLabel: 'The label half of the shared labelling contract (P5).',
+  ErrorMessage: 'The inline error half of the labelling contract (P5).',
+  TextInput: 'Single-line text value with the shared labelling contract.',
+  Textarea: 'Multi-line text value with the shared labelling contract.',
+  Toast: 'Transient notifications, mounted once via the Toaster.',
+}
+
 /** Compact summaries are derived from contracts, which remain authoritative. */
 function purposeFor(component: string): string {
+  const override = PURPOSE_OVERRIDES[component]
+  if (override) return override
   const slug = SPEC_ALIASES[component] ?? kebab(component)
   if (!specSlugs.has(slug))
     return `${GROUPS[component]} for application interfaces.`
@@ -347,7 +377,15 @@ function purposeFor(component: string): string {
     .replace(/[`*]/g, '')
     .replace(/\s+/g, ' ')
     .trim()
-  return (text.match(/^.*?[.!?](?:\s|$)/)?.[0] ?? text).trim().slice(0, 150)
+  const sentence = (text.match(/^.*?[.!?](?:\s|$)/)?.[0] ?? text).trim()
+  // Index rows already print the name; a leading "Button — " repeats it.
+  const withoutName = sentence.startsWith(`${component} — `)
+    ? sentence.slice(component.length + 3)
+    : sentence
+  const capitalised = withoutName.charAt(0).toUpperCase() + withoutName.slice(1)
+  if (capitalised.length <= 150) return capitalised
+  const cut = capitalised.slice(0, 149)
+  return `${cut.slice(0, cut.lastIndexOf(' '))}…`
 }
 
 const entries = [...partsByComponent.keys()]

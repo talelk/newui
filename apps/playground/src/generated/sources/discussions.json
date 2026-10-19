@@ -3,12 +3,15 @@
     "pages/Discussions.tsx",
     "examples/discussion-fixtures.ts",
     "examples/discussions.tsx",
+    "examples/CreateDialog.tsx",
     "pages/DiscussionsDesktop.tsx",
     "pages/DiscussionsMobile.tsx",
     "examples/DiscussionSettings.tsx",
-    "shell/theme.ts"
+    "shell/theme.ts",
+    "examples/Notice.tsx"
   ],
   "packages": [
+    "@newui/blocks",
     "@newui/ui",
     "solid-js"
   ]

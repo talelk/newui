@@ -33,9 +33,10 @@ const SURFACE: JSX.CSSProperties = {
   'z-index': '100',
   'pointer-events': 'none',
   'max-width': '20rem',
-  'border-radius': '0.375rem',
+  'border-radius': '0.5rem',
+  border: '1px solid var(--outline-gray-1)',
   'background-color': 'var(--surface-elevation-2)',
-  padding: '0.5rem 0.75rem',
+  padding: '0.625rem 0.75rem',
   'box-shadow': 'var(--shadow-lg)',
 }
 
@@ -118,8 +119,11 @@ function TooltipBody(props: ChartTooltipSlotProps): JSX.Element {
           data-slot="chart-tooltip-label"
           style={{
             'margin-bottom': '0.5rem',
+            'padding-bottom': '0.375rem',
+            'border-bottom': '1px solid var(--outline-gray-1)',
             'font-size': '0.75rem',
-            color: 'var(--ink-gray-6)',
+            'font-weight': '600',
+            color: 'var(--ink-gray-9)',
           }}
         >
           {props.label}
@@ -187,14 +191,14 @@ function SeriesRow(props: { item: ChartTooltipItem }): JSX.Element {
           data-slot="chart-tooltip-swatch"
           aria-hidden="true"
           style={{
-            width: '0.5rem',
-            height: '0.5rem',
+            width: '14px',
+            height: '3px',
             'flex-shrink': '0',
-            'border-radius': '0.25rem',
+            'border-radius': '9999px',
             'background-color': props.item.color,
           }}
         />
-        <span style={{ ...TRUNCATE, color: 'var(--ink-gray-6)' }}>
+        <span style={{ ...TRUNCATE, color: 'var(--ink-gray-7)' }}>
           {props.item.label}
         </span>
       </span>
@@ -203,12 +207,12 @@ function SeriesRow(props: { item: ChartTooltipItem }): JSX.Element {
           'flex-shrink': '0',
           'font-weight': '600',
           'font-variant-numeric': 'tabular-nums',
-          color: 'var(--ink-gray-8)',
+          color: 'var(--ink-gray-9)',
         }}
       >
         {props.item.formattedValue}
         <Show when={props.item.percent !== undefined}>
-          <span style={{ color: 'var(--ink-gray-6)', 'font-weight': '400' }}>
+          <span style={{ color: 'var(--ink-gray-7)', 'font-weight': '400' }}>
             {' '}
             {formatPercent(props.item.percent ?? 0)}
           </span>
@@ -221,14 +225,14 @@ function SeriesRow(props: { item: ChartTooltipItem }): JSX.Element {
 function ContextRow(props: { item: ChartTooltipItem }): JSX.Element {
   return (
     <div data-slot="chart-tooltip-item" style={ROW}>
-      <span style={{ ...TRUNCATE, color: 'var(--ink-gray-6)' }}>
+      <span style={{ ...TRUNCATE, color: 'var(--ink-gray-7)' }}>
         {props.item.label}
       </span>
       <span
         style={{
           'flex-shrink': '0',
           'font-variant-numeric': 'tabular-nums',
-          color: 'var(--ink-gray-7)',
+          color: 'var(--ink-gray-8)',
         }}
       >
         {props.item.formattedValue}

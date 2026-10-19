@@ -83,28 +83,6 @@ export const INITIAL_EMPLOYEES: Employee[] = [
   salary: 4200 + index * 350,
   status: 'Pending',
 }))
-export const currency = (value: number) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(value)
-export const downloadCSV = (name: string, rows: (string | number)[][]) => {
-  const csv = rows
-    .map((row) =>
-      row.map((value) => `"${String(value).replaceAll('"', '""')}"`).join(','),
-    )
-    .join('\r\n')
-  const url = URL.createObjectURL(
-    new Blob([csv], { type: 'text/csv;charset=utf-8' }),
-  )
-  const link = document.createElement('a')
-  link.href = url
-  link.download = name
-  link.click()
-  URL.revokeObjectURL(url)
-}
-
 export function aggregateCashflow(
   rows: Transaction[],
   grain: 'Monthly' | 'Quarterly',

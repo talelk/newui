@@ -40,4 +40,26 @@ describe('ChartLegend', () => {
     first.dispatchEvent(new MouseEvent('mouseenter'))
     expect(onHighlight).toHaveBeenCalledWith('sales')
   })
+
+  it('dims the other entries while one is highlighted', () => {
+    const { container } = render(() => (
+      <ChartLegend items={items} onHighlight={() => {}} />
+    ))
+    const buttons = container.querySelectorAll(
+      '[data-slot="chart-legend-item"]',
+    )
+    ;(buttons[0] as HTMLElement).dispatchEvent(new MouseEvent('mouseenter'))
+    expect((buttons[0] as HTMLElement).style.opacity).toBe('')
+    expect((buttons[1] as HTMLElement).style.opacity).toBe('0.4')
+    expect(buttons[1]?.getAttribute('data-dimmed')).toBe('true')
+  })
+
+  it('does not dim when no handler is wired', () => {
+    const { container } = render(() => <ChartLegend items={items} />)
+    const buttons = container.querySelectorAll(
+      '[data-slot="chart-legend-item"]',
+    )
+    ;(buttons[0] as HTMLElement).dispatchEvent(new MouseEvent('mouseenter'))
+    expect((buttons[1] as HTMLElement).style.opacity).toBe('')
+  })
 })

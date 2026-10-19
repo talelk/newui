@@ -27,11 +27,11 @@ optional collapsed rail, collapsible sections and status cards.
 | `Sidebar` | `<nav>` landmark; `collapsible` (default `true`), `collapsed`/`onCollapsedChange`, `collapsedWidth` (3rem), `ariaLabel` (Main). Auto-collapses below `sm` when uncontrolled. |
 | `SidebarHeader` | `title`/`subtitle`, `logo`/`showLogo`, collapse-aware. |
 | `SidebarLabel` | group label; `divider` swaps it for a rule while collapsed. |
-| `SidebarItem` | row; `active`, `label` (accessible name + native tooltip when collapsed), `prefix`/`suffix`. |
-| `SidebarRail` / `SidebarRailItem` | icon-only rail; item `variant` (`subtle`/`ghost`), `description`, `badge` + `badgeStyle` (`count`/`dot`), active indicator, tooltip. |
+| `SidebarItem` | row; `active`, `label` (accessible name + tooltip when collapsed; defaults to string children), `icon` (used when `prefix` is unset), `prefix`/`suffix`, `route`/`href` (link rendering, frappe-ui parity). |
+| `SidebarRail` / `SidebarRailItem` | 50px icon-only rail; item `variant` (`subtle`/`ghost`), `description`, `badge` + `badgeStyle` (`count`/`dot`), `route`/`href`, active indicator, tooltip. |
 | `SidebarCollapseToggle` | a `SidebarItem` that toggles the sidebar; `expandLabel`/`collapseLabel`. |
-| `SidebarSection` | labelled, optionally collapsible group (accordion ARIA). |
-| `SidebarCard` | compact status card: `theme`, `title`, `description`, `icon`, `action`, `dismissible`. |
+| `SidebarSection` | labelled, optionally collapsible group (accordion ARIA); controlled via `collapsed`/`onCollapsedChange`. |
+| `SidebarCard` | compact status card: `theme`, `title`, `description`, `icon`, `action` (its `onClick` receives `{ dismiss }`), `dismissible`. |
 
 `useSidebar()` returns `{ collapsed, toggle }` for a custom toggle.
 
@@ -42,6 +42,14 @@ optional collapsed rail, collapsible sections and status cards.
   to `title`/`aria-label` and its text becomes `sr-only`.
 - **Section.** `collapsible` renders an accordion heading (`aria-expanded` +
   `aria-controls`); the body unmounts when collapsed.
+- **Links (frappe-ui parity).** `SidebarItem` and `SidebarRailItem` take
+  `route` (in-app, wins) / `href` (external, new tab) and render an anchor;
+  with neither they render a button. `onClick` fires in every case, which is
+  where a router intercepts. Unlike frappe-ui there is no router in the
+  library, so `active` is never auto-derived from the URL — the caller owns
+  it. The active row carries `aria-current="page"`. A `SidebarItem`'s
+  `suffix` sits beside the link, not inside it, so a menu button there is
+  valid HTML; the row background covers both.
 
 ## Styling hooks
 

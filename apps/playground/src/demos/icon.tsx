@@ -2,7 +2,7 @@ import { CircleCheckIcon } from '@newui/icons'
 import { Icon } from '@newui/ui'
 export default function Demo() {
   return (
-    <div class="flex flex-wrap gap-4 text-ink-gray-6">
+    <div class="flex flex-wrap gap-4 text-ink-gray-7">
       <CircleCheckIcon class="size-5" />
       <Icon icon="lucide-search" class="size-5" />
       <Icon icon="lucide-chart-no-axes-combined" class="size-5" />

@@ -408,3 +408,54 @@ under GHSA-rj75-hqrm-r3gf. A package-specific pnpm override selects patched
 7.1.6 until Typography updates its own pin. The override does not alter budgets,
 audit rules or the package's public API.
 Advisory: https://github.com/advisories/GHSA-rj75-hqrm-r3gf
+
+## Shell, blocks and chart-chrome polish — 2026-10-16
+
+Implemented from [`spec/redesign-blueprint.md`](redesign-blueprint.md) as
+separate slice diffs on the working tree (uncommitted at the time of writing).
+Tokens and public APIs stayed stable except FilterBar's additive props.
+
+- Guardrails: `pnpm specs:check` (`scripts/check-specs.ts`, wired into
+  `scripts/ci-steps.ts` and the workflow) checks every spec prop table against
+  `api.json` and parses every spec code sample; the token-vocabulary test now
+  derives names from `@newui/tokens`; `tv.test.ts` calls the real Button recipe.
+- Shell: masthead gains flat Docs/Components/Blocks/Examples links and a
+  bordered search trigger with a visible ⌘K hint; sidebar group headings are
+  sentence case; `SiteLayout`/`ReferenceLayout` accept an optional xl-only
+  "On this page" column; secondary shell text is `ink-gray-7` minimum.
+  The shell still imports no component and every route stays lazy.
+- Blocks: AppSidebar counts are tabular pills; PageToolbar title is
+  `text-heading`; DetailHeader subtitle/actions wrap cleanly; FilterBar sits on
+  one surface and gains additive `chips`/`onClearAll`/`resultCount`
+  (`.changeset/filter-bar-chips.md`, minor); StatGrid adopts the label-first KPI
+  anatomy with good-toned delta pills and mandatory baseline hints.
+- Charts: ChartCard pads at 16px; ChartContainer headers, legend pills,
+  tooltip card and NumberCard (progress bar, delta pill, sparkline end dot)
+  follow `spec/charts.md` "Card chrome". Inline `var(--…)` only, as before.
+- Site pages: Docs adopts `PageIntro`; ComponentPage badges are gray (no
+  violet accent); Analytics wires FilterBar chips/result count and baseline
+  delta captions; Tasks/Accounting stats carry icons and hints; Home,
+  Foundations and Examples copy matches the new chrome (Foundations type-role
+  labels corrected to the token values: heading 24/30, section 18/24,
+  metric 28/32).
+- Measured after the pass (`pnpm size`, `pnpm budget`, both green, budgets
+  unchanged): `cn()` 6.40 kB, Button 8.68, Button+Dialog 30.08, full barrel
+  227.80, blocks barrel 77.16 (gzip, `solid-js` external); routes: `/` 54.6,
+  analytics fullscreen 312.6, tasks fullscreen 171.9, accounting fullscreen
+  323.3 kB. `pnpm specs:check`, `pnpm api:check`, `pnpm site:check` and
+  `pnpm docs:build` pass; `routes.test.ts` is green (no orphaned routes).
+- Slice 5 closed in the examples refresh (`spec/examples-refresh.md`):
+  AuthCard sits on its card surface (visual only, patch changeset), Home is
+  the text-only rewrite with no fake preview dashboard, and Docs,
+  Foundations and every component/block reference page supply the TOC
+  column through the shell slot. Earlier reference-parity gaps above remain
+  tracked separately.
+- Limits pass (after Slice 5): Home gains real, working component previews
+  as a chunk loaded on scroll into view (the initial route cost is
+  unchanged); the TOC marks the section being read; reference pages render
+  a single Props table (spec files keep theirs for `specs:check`); the
+  sidebar/Cards demos are rebuilt on `AppSidebar` with no fake chart bars;
+  Analytics' table is the shared `DataTable`; dialog scaffolds share
+  `examples/CreateDialog` (H16); remaining `text-ink-gray-5/6` uses are
+  icon glyphs and one placeholder, per the contrast contract; and the dead
+  `PageToolbarTab` export is deleted (major changeset).

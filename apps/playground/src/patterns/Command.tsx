@@ -93,7 +93,7 @@ export default function Command() {
               placeholder="Type a command…"
             />
           </div>
-          <p class="mt-4 text-caption text-ink-gray-6">
+          <p class="mt-4 text-caption text-ink-gray-7">
             Arrow keys to choose · Enter to open · Escape to close
           </p>
         </Dialog.Content>

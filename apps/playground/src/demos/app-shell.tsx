@@ -13,7 +13,7 @@ export default function Demo() {
           <h3 class="text-section">Overview</h3>
         </PageHeader>
         <PageBody>
-          <p class="text-interface text-ink-gray-6">
+          <p class="text-interface text-ink-gray-7">
             A structured frame with local content scrolling.
           </p>
         </PageBody>

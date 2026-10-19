@@ -2,6 +2,7 @@ import {
   BarChart,
   buildAxisChartOption,
   ChartBase,
+  ChartCard,
   normalizeAxisChart,
   useChartTokens,
 } from '@newui/charts'
@@ -17,21 +18,25 @@ export default function Demo() {
   // they use before mounting ChartBase, as described in the package guide.
   return (
     <div class="grid gap-4 sm:grid-cols-2">
-      <BarChart title="High-level wrapper" data={data} x="month" y="value" />
-      <ChartBase
-        title="Custom option builder"
-        label="Custom activity"
-        option={() =>
-          buildAxisChartOption(
-            normalizeAxisChart({ data, x: 'month', y: 'value' }, 'bar'),
-            { tokens: tokens() },
-          )
-        }
-        fallback={{
-          columns: ['Month', 'Value'],
-          rows: data.map((row) => [row.month, row.value]),
-        }}
-      />
+      <ChartCard>
+        <BarChart title="High-level wrapper" data={data} x="month" y="value" />
+      </ChartCard>
+      <ChartCard>
+        <ChartBase
+          title="Custom option builder"
+          label="Custom activity"
+          option={() =>
+            buildAxisChartOption(
+              normalizeAxisChart({ data, x: 'month', y: 'value' }, 'bar'),
+              { tokens: tokens() },
+            )
+          }
+          fallback={{
+            columns: ['Month', 'Value'],
+            rows: data.map((row) => [row.month, row.value]),
+          }}
+        />
+      </ChartCard>
     </div>
   )
 }

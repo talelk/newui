@@ -21,7 +21,7 @@ export default function Verification() {
     >
       <div>
         <h2 class="text-section">Check your inbox</h2>
-        <p class="mt-2 text-ink-gray-6">
+        <p class="mt-2 text-ink-gray-7">
           Use the demonstration code{' '}
           <strong class="font-medium text-ink-gray-9">123456</strong>. No
           message is sent.
@@ -71,7 +71,7 @@ export default function Verification() {
         </Button>
       </div>
       <Show when={notice()}>
-        <p role="status" class="text-interface text-ink-gray-6">
+        <p role="status" class="text-interface text-ink-gray-7">
           {notice()}
         </p>
       </Show>

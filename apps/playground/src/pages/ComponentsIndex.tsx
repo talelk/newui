@@ -1,8 +1,9 @@
 import { Icon } from '@newui/ui'
-import { A, useLocation } from '@solidjs/router'
-import { createMemo, createSignal, For, type JSX } from 'solid-js'
+import { useLocation } from '@solidjs/router'
+import { createMemo, createSignal, type JSX, Show } from 'solid-js'
 import { COMPONENTS, GROUPS } from '../generated/components'
-import { CatalogIcon } from '../lib/CatalogIcon'
+import { CatalogList } from '../lib/CatalogList'
+import { groupEntries } from '../lib/catalog'
 import { PageIntro } from '../shell/PageIntro'
 
 /**
@@ -42,12 +43,7 @@ export function ComponentsIndex(): JSX.Element {
     )
   })
 
-  const grouped = createMemo(() =>
-    GROUPS.map((group) => ({
-      group,
-      entries: visible().filter((entry) => entry.group === group),
-    })).filter((section) => section.entries.length > 0),
-  )
+  const grouped = createMemo(() => groupEntries(visible(), GROUPS))
 
   return (
     <>
@@ -71,44 +67,22 @@ export function ComponentsIndex(): JSX.Element {
         />
       </label>
 
-      <div class="flex flex-col gap-4">
-        <For each={grouped()}>
-          {(section) => (
-            <section class="flex flex-col gap-3">
-              <h2 class="text-section text-ink-gray-9">{section.group}</h2>
-              <ul class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1">
-                <For each={section.entries}>
-                  {(entry) => (
-                    <li>
-                      <A
-                        href={`${base()}/${entry.slug}`}
-                        class="flex min-h-11 items-center gap-3 rounded-3 p-3 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring"
-                      >
-                        <CatalogIcon group={section.group} />
-                        <span class="flex min-w-0 flex-1 flex-wrap items-baseline justify-between gap-2">
-                          <span class="truncate text-base-medium text-ink-gray-9">
-                            {entry.name}
-                          </span>
-                          <span class="hidden min-w-0 flex-1 truncate text-caption text-ink-gray-6 md:block">
-                            {entry.description}
-                          </span>
-                          <span class="shrink-0 text-xs text-ink-gray-6">
-                            {entry.parts.length} part
-                            {entry.parts.length === 1 ? '' : 's'}
-                          </span>
-                        </span>
-                        <span class="hidden text-caption text-ink-gray-6 sm:block">
-                          {entry.spec ? 'Has a contract' : 'Props only'}
-                        </span>
-                      </A>
-                    </li>
-                  )}
-                </For>
-              </ul>
-            </section>
-          )}
-        </For>
-      </div>
+      <CatalogList
+        sections={grouped()}
+        href={(entry) => `${base()}/${entry.slug}`}
+        trailing={(entry) => (
+          <>
+            <Show when={entry.parts.length > 0}>
+              <span class="shrink-0 text-xs text-ink-gray-7">
+                {entry.parts.length} part{entry.parts.length === 1 ? '' : 's'}
+              </span>
+            </Show>
+            <span class="hidden text-caption text-ink-gray-7 sm:block">
+              {entry.spec ? 'Has a contract' : 'Props only'}
+            </span>
+          </>
+        )}
+      />
     </>
   )
 }

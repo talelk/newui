@@ -11,9 +11,13 @@ test('application preview preserves editing, comments and its document across al
   await expect(iframe).toHaveAttribute('width', '390')
   await expect(iframe).toHaveAttribute('height', '844')
   await app
-    .getByRole('textbox', { name: 'Find tasks', exact: true })
+    .getByRole('searchbox', { name: 'Find tasks', exact: true })
     .fill('TASK-1001')
-  await app.getByRole('button', { name: /TASK-1001 · Website/ }).click()
+  const task = app.getByRole('button', { name: /TASK-1001 · Website/ })
+  // Activate from the keyboard: at this width the row sits below the fold
+  // of the frame's inner scroller, where a synthesized click cannot land.
+  await task.focus()
+  await task.press('Enter')
   await app
     .getByRole('textbox', { name: 'Task title', exact: false })
     .fill('Review the shared task workflow')
@@ -122,7 +126,7 @@ test('a source download failure leaves the application session usable', async ({
 }) => {
   await page.goto('/examples/tasks')
   const app = page.frameLocator('iframe[title="Tasks preview"]')
-  const search = app.getByRole('textbox', { name: 'Find tasks', exact: true })
+  const search = app.getByRole('searchbox', { name: 'Find tasks', exact: true })
   await search.fill('TASK-1001')
   await page.route(/\/assets\/tasks-[^/]+\.js$/, (route) => route.abort())
   await page.getByRole('button', { name: 'Source', exact: true }).click()

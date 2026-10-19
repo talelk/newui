@@ -1,5 +1,6 @@
 import { Button, Dialog, Textarea, TextInput } from '@newui/ui'
 import { createMemo, createSignal, For, Show } from 'solid-js'
+import { CreateDialog } from './CreateDialog'
 
 export interface Discussion {
   title: string
@@ -30,7 +31,6 @@ export function createDiscussions(
   const [title, setTitle] = createSignal('')
   const [body, setBody] = createSignal('')
   const [reply, setReply] = createSignal('')
-  const [attempted, setAttempted] = createSignal(false)
   const current = createMemo(() =>
     posts().find((post) => post.title === selected()),
   )
@@ -46,7 +46,6 @@ export function createDiscussions(
   const start = () => {
     setTitle('')
     setBody('')
-    setAttempted(false)
     setCreating(true)
   }
   const open = (post: Discussion) => {
@@ -65,7 +64,6 @@ export function createDiscussions(
       ),
     )
   const create = () => {
-    setAttempted(true)
     if (title().trim().length < 3 || !body().trim()) return
     if (posts().some((post) => post.title === title().trim())) return
     setPosts((previous) => [
@@ -115,7 +113,6 @@ export function createDiscussions(
     setBody,
     reply,
     setReply,
-    attempted,
     current,
     start,
     open,
@@ -131,32 +128,25 @@ export function DiscussionDialogs(props: {
   const store = () => props.store
   return (
     <>
-      <Dialog.Root open={store().creating()} onOpenChange={store().setCreating}>
-        <Dialog.Content>
-          <Dialog.Header>
-            <Dialog.Title>New discussion</Dialog.Title>
-            <Dialog.Description>
-              Start a conversation in the selected space. Changes stay on this
-              page.
-            </Dialog.Description>
-          </Dialog.Header>
-          <form
-            class="mt-4 flex flex-col gap-4"
-            noValidate
-            onSubmit={(event) => {
-              event.preventDefault()
-              store().create()
-            }}
-          >
+      <CreateDialog
+        open={store().creating()}
+        onOpenChange={store().setCreating}
+        title="New discussion"
+        description="Start a conversation in the selected space. Changes stay on this page."
+        submitLabel="Post discussion"
+        secondaryLabel="Cancel discussion"
+        onSubmit={() => store().create()}
+        fields={(attempted) => (
+          <>
             <TextInput
               label="Discussion title"
               required
               value={store().title()}
               onInput={(event) => store().setTitle(event.currentTarget.value)}
               error={
-                store().attempted() && store().title().trim().length < 3
+                attempted() && store().title().trim().length < 3
                   ? 'Enter a title with at least 3 characters.'
-                  : store().attempted() &&
+                  : attempted() &&
                       store()
                         .posts()
                         .some((post) => post.title === store().title().trim())
@@ -171,26 +161,14 @@ export function DiscussionDialogs(props: {
               value={store().body()}
               onInput={(event) => store().setBody(event.currentTarget.value)}
               error={
-                store().attempted() && !store().body().trim()
+                attempted() && !store().body().trim()
                   ? 'Write a message to start the conversation.'
                   : undefined
               }
             />
-            <Dialog.Footer>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => store().setCreating(false)}
-              >
-                Cancel discussion
-              </Button>
-              <Button type="submit" variant="solid" theme="blue">
-                Post discussion
-              </Button>
-            </Dialog.Footer>
-          </form>
-        </Dialog.Content>
-      </Dialog.Root>
+          </>
+        )}
+      />
       <Dialog.Root
         open={Boolean(store().current())}
         onOpenChange={(open) => {

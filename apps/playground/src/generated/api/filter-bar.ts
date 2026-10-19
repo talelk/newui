@@ -23,6 +23,24 @@ export const API = {
       "description": "A segmented control on the trailing edge — the view switcher."
     },
     {
+      "name": "chips",
+      "type": "FilterChip[]",
+      "optional": true,
+      "description": "Active filters restated as removable pills under the bar."
+    },
+    {
+      "name": "onClearAll",
+      "type": "() => void",
+      "optional": true,
+      "description": "Renders a \"Clear all\" button while a filter is active (a chip, a filled\nselect, or a non-empty query). The bar never clears anything itself —\nit reports the request and the caller resets its own state."
+    },
+    {
+      "name": "resultCount",
+      "type": "number",
+      "optional": true,
+      "description": "Rows the current filters match, stated under the bar (`24 results`)."
+    },
+    {
       "name": "children",
       "type": "JSX.Element",
       "optional": true,

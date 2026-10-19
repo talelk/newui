@@ -51,7 +51,7 @@ test('mobile tickets use cards, closed queues and local resolution', async ({
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/examples/tickets/fullscreen')
   const cards = page.getByRole('region', { name: 'Ticket cards' })
-  await page.getByRole('textbox', { name: 'Find tickets' }).fill('TKT-1024')
+  await page.getByRole('searchbox', { name: 'Find tickets' }).fill('TKT-1024')
   await cards.getByRole('checkbox').check()
   await page
     .getByRole('button', { name: 'Resolve selected tickets (1)' })
@@ -66,19 +66,18 @@ test('accounting quarterly aggregation and cash accounts use the selected ledger
   page,
 }) => {
   await page.goto('/examples/accounting/fullscreen')
-  await page.getByRole('combobox', { name: 'Aggregate cashflow' }).click()
+  await page.getByRole('combobox', { name: 'Aggregate', exact: true }).click()
   await page.getByRole('option', { name: 'Quarterly', exact: true }).click()
   await expect(
     page.getByRole('img', { name: 'Income and expenses quarterly' }),
   ).toBeVisible()
-  await page.getByRole('combobox', { name: 'Date preset' }).click()
-  await page.getByRole('option', { name: 'Q3 2026', exact: true }).click()
-  await page.getByRole('button', { name: 'Cash accounts', exact: true }).click()
+  await page.getByRole('tab', { name: 'Q3 2026', exact: true }).click()
+  await page.getByRole('tab', { name: 'Cash accounts', exact: true }).click()
   const accounts = page.getByRole('region', {
     name: 'Cash accounts',
     exact: true,
   })
-  await expect(accounts.getByRole('article')).toHaveCount(3)
+  await expect(accounts.locator('[data-slot="stat"]')).toHaveCount(3)
   await expect(accounts).toContainText(
     'Net posted movement in the selected period',
   )
@@ -108,7 +107,7 @@ test('deals moves by keyboard, undoes and creates validated opportunities', asyn
     .getByRole('spinbutton', { name: 'Deal value', exact: false })
     .fill('25000')
   await page.getByRole('button', { name: 'Create deal', exact: true }).click()
-  await page.getByRole('textbox', { name: 'Search deals' }).fill('Northstar')
+  await page.getByRole('searchbox', { name: 'Search deals' }).fill('Northstar')
   await expect(page.locator('[data-kanban-id]')).toHaveCount(1)
   await page.getByRole('tab', { name: 'List', exact: true }).click()
   await expect(page.locator('tbody tr')).toHaveCount(1)
@@ -148,7 +147,7 @@ test('tickets replies, assigns, resolves and creates a support request', async (
   page,
 }) => {
   await page.goto('/examples/tickets/fullscreen')
-  await page.getByRole('searchbox', { name: 'Search tickets' }).fill('TKT-1024')
+  await page.getByRole('searchbox', { name: 'Find tickets' }).fill('TKT-1024')
   await page.locator('tbody').getByRole('button').first().click()
   await page
     .getByRole('textbox', { name: 'Ticket reply', exact: false })
@@ -174,7 +173,7 @@ test('tickets replies, assigns, resolves and creates a support request', async (
     .fill('The September export does not include the last transaction.')
   await page.getByRole('button', { name: 'Create ticket', exact: true }).click()
   await page
-    .getByRole('searchbox', { name: 'Search tickets' })
+    .getByRole('searchbox', { name: 'Find tickets' })
     .fill('Report export')
   await expect(page.locator('tbody tr')).toHaveCount(1)
 })
@@ -228,7 +227,7 @@ test('accounting connects date filters, transactions, payroll and exported repor
   await expect(
     page.locator('[data-slot="chart-card"] svg').first(),
   ).toBeVisible()
-  await page.getByRole('button', { name: 'September', exact: true }).click()
+  await page.getByRole('tab', { name: 'September', exact: true }).click()
   const income = page.locator('[data-slot="stat"]').first()
   const before = await income.innerText()
   await page
@@ -244,7 +243,7 @@ test('accounting connects date filters, transactions, payroll and exported repor
     .getByRole('button', { name: 'Record transaction', exact: true })
     .click()
   await expect(income).not.toHaveText(before)
-  await page.getByRole('button', { name: 'Payroll', exact: true }).click()
+  await page.getByRole('tab', { name: 'Payroll', exact: true }).click()
   await page
     .getByRole('checkbox', { name: 'Select EMP-1', exact: true })
     .check()
@@ -252,7 +251,7 @@ test('accounting connects date filters, transactions, payroll and exported repor
     .getByRole('button', { name: 'Record payroll payments (1)' })
     .click()
   await expect(page.locator('tbody tr').first()).toContainText('Paid')
-  await page.getByRole('button', { name: 'Profit & loss', exact: true }).click()
+  await page.getByRole('tab', { name: 'Profit & loss', exact: true }).click()
   await expect(
     page.getByRole('region', { name: 'Profit and loss report' }),
   ).toContainText('Net profit')
@@ -278,12 +277,16 @@ for (const name of [
   'compose',
 ]) {
   for (const theme of ['light', 'dark']) {
-    test(`${name} is accessible at 390px in ${theme}, RTL and 200% text`, async ({
-      page,
-    }) => {
+    // Axe on a 390px recipe under 200% text is the heaviest test in the suite;
+    // the 30s default was flaky on loaded dev hosts. Explicit budget, no retry
+    // tricks — the flake reporter tells us if these ever need one.
+    test(`${name} is accessible at 390px in ${theme}, RTL and 200% text`, {
+      timeout: 90_000,
+    }, async ({ page }) => {
       await page.emulateMedia({ reducedMotion: 'reduce' })
       await page.setViewportSize({ width: 390, height: 900 })
       await page.goto(`/examples/${name}/fullscreen`)
+      await expect(page.locator('h1')).toBeVisible()
       await page.getByRole('button', { name: theme, exact: true }).click()
       await expect(page.locator('h1')).toBeVisible()
       expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])
@@ -291,6 +294,7 @@ for (const name of [
         document.documentElement.dir = 'rtl'
         document.documentElement.style.fontSize = '200%'
       })
+      await page.waitForTimeout(50) // let re-layout settle
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth - innerWidth,

@@ -692,6 +692,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -707,6 +708,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -744,6 +746,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -759,6 +762,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -884,6 +888,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -899,6 +904,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -1232,6 +1238,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -1247,6 +1254,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -1262,6 +1270,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -1277,6 +1286,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -1314,6 +1324,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -1395,6 +1406,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -1466,6 +1478,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -1481,6 +1494,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -1496,6 +1510,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -1679,6 +1694,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -2110,6 +2126,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -2416,6 +2433,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -2455,6 +2473,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -2470,6 +2489,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -2485,6 +2505,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -2500,6 +2521,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -2515,6 +2537,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -4246,6 +4269,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -4261,6 +4285,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -4682,6 +4707,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -5423,6 +5449,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -5906,6 +5933,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -5993,6 +6021,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -6044,6 +6073,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -6071,6 +6101,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -6999,6 +7030,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -7014,6 +7046,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -7029,6 +7062,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -7044,6 +7078,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -7059,6 +7094,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -7074,6 +7110,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -7089,6 +7126,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -7302,6 +7340,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -7481,6 +7520,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -7496,6 +7536,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -7511,6 +7552,7 @@
       "packages/ui/src/lib/controllable.test.ts",
       "packages/ui/src/lib/disposal.test.tsx",
       "packages/ui/src/lib/tv.test.ts",
+      "packages/ui/src/lib/tw-merge.sweep.test.ts",
       "packages/ui/src/lib/tw-merge.test.ts"
     ],
     "acceptance": "pending"
@@ -7690,6 +7732,17 @@
     "implementation": "packages/blocks/src/FilterBar/FilterBar.tsx",
     "documentation": "/blocks/filter-bar",
     "contract": "spec/filter-bar.md",
+    "tests": [
+      "packages/blocks/src/FilterBar/FilterBar.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/blocks",
+    "name": "FilterChip",
+    "implementation": "packages/blocks/src/FilterBar/FilterBar.tsx",
+    "documentation": "/docs#blocks",
+    "contract": null,
     "tests": [
       "packages/blocks/src/FilterBar/FilterBar.test.tsx"
     ],
@@ -7877,17 +7930,6 @@
     "implementation": "packages/blocks/src/PageToolbar/PageToolbar.tsx",
     "documentation": "/blocks/page-toolbar",
     "contract": "spec/page-toolbar.md",
-    "tests": [
-      "packages/blocks/src/PageToolbar/PageToolbar.test.tsx"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
-    "name": "PageToolbarTab",
-    "implementation": "packages/blocks/src/PageToolbar/PageToolbar.tsx",
-    "documentation": "/docs#blocks",
-    "contract": null,
     "tests": [
       "packages/blocks/src/PageToolbar/PageToolbar.test.tsx"
     ],

@@ -1,3 +1,5 @@
+import { csvText } from '../../examples/download'
+
 export interface Transaction {
   id: string
   customer: string
@@ -97,31 +99,19 @@ export function sortTransactions(
 }
 
 export function csv(rows: Transaction[]) {
-  const quote = (value: string | number) =>
-    `"${String(value).replaceAll('"', '""')}"`
-  return [
-    'Invoice,Customer,Date,Region,Channel,Amount,Status',
-    ...rows.map((row) =>
-      [
-        row.id,
-        row.customer,
-        `2026-09-${String(row.day).padStart(2, '0')}`,
-        row.region,
-        row.channel,
-        row.amount,
-        row.status,
-      ]
-        .map(quote)
-        .join(','),
-    ),
-  ].join('\r\n')
+  return csvText([
+    ['Invoice', 'Customer', 'Date', 'Region', 'Channel', 'Amount', 'Status'],
+    ...rows.map((row) => [
+      row.id,
+      row.customer,
+      `2026-09-${String(row.day).padStart(2, '0')}`,
+      row.region,
+      row.channel,
+      row.amount,
+      row.status,
+    ]),
+  ])
 }
-export const money = (value: number) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(value)
 
 /** A deterministic prior-month cohort, independent of current-page mutations. */
 export const previousTransactions: Transaction[] = transactions.map((row) => ({

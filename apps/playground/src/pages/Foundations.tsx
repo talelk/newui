@@ -1,16 +1,10 @@
 import { radius, semanticColors } from '@newui/tokens'
 import { Button, Dialog, Switch } from '@newui/ui'
-import { For, type JSX } from 'solid-js'
+import { For } from 'solid-js'
+import { PageSection } from '../lib/PageSection'
+import { TableOfContents } from '../lib/TableOfContents'
 import { PageIntro } from '../shell/PageIntro'
-
-function Section(props: { title: string; children: JSX.Element }) {
-  return (
-    <section class="flex flex-col gap-4">
-      <h2 class="text-section text-ink-gray-9">{props.title}</h2>
-      {props.children}
-    </section>
-  )
-}
+import { usePageToc } from '../shell/SiteLayout'
 
 function Swatch(props: { label: string; cssVar: string }) {
   return (
@@ -19,23 +13,38 @@ function Swatch(props: { label: string; cssVar: string }) {
         class="h-10 rounded-3 border border-outline-gray-1"
         style={{ 'background-color': props.cssVar }}
       />
-      <span class="truncate text-2xs text-ink-gray-6">{props.label}</span>
+      <span class="truncate text-2xs text-ink-gray-7">{props.label}</span>
     </div>
   )
 }
 
 export function Foundations() {
+  usePageToc(() => (
+    <TableOfContents
+      entries={[
+        { id: 'semantic-colors', label: 'Semantic colors' },
+        { id: 'radius', label: 'Radius' },
+        { id: 'typography-roles', label: 'Typography roles' },
+        { id: 'numbered-typography', label: 'Numbered typography' },
+        { id: 'elevation', label: 'Elevation' },
+        { id: 'focus-rings', label: 'Focus rings' },
+        { id: 'button', label: 'Button' },
+        { id: 'switch', label: 'Switch' },
+        { id: 'dialog', label: 'Dialog' },
+      ]}
+    />
+  ))
   return (
     <div class="flex flex-col gap-4">
       <PageIntro
         title="Design tokens"
         description="The vocabulary every component is built from. Colours are semantic — surface-*, ink-*, outline-* — so light and dark come from one document attribute rather than a second set of classes."
       />
-      <Section title="Semantic colors">
+      <PageSection id="semantic-colors" title="Semantic colors">
         <For each={Object.entries(semanticColors.light)}>
           {([category, entries]) => (
             <div class="flex flex-col gap-2">
-              <h3 class="text-sm-medium text-ink-gray-6">{category}</h3>
+              <h3 class="text-sm-medium text-ink-gray-7">{category}</h3>
               <div class="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-8">
                 <For each={Object.keys(entries)}>
                   {(name) => (
@@ -49,53 +58,53 @@ export function Foundations() {
             </div>
           )}
         </For>
-      </Section>
+      </PageSection>
 
-      <Section title="Radius">
+      <PageSection id="radius" title="Radius">
         <div class="flex flex-wrap items-end gap-3">
           <For each={Object.entries(radius)}>
             {([key, value]) => (
               <div class="flex flex-col items-center gap-1">
                 <div
-                  class="size-14 border border-outline-gray-2 bg-surface-gray-2"
+                  class="size-14 border border-outline-gray-3 bg-surface-gray-3"
                   style={{ 'border-radius': `var(--radius-${key})` }}
                 />
-                <span class="text-2xs text-ink-gray-6">
+                <span class="text-2xs text-ink-gray-7">
                   {key} · {value}
                 </span>
               </div>
             )}
           </For>
         </div>
-      </Section>
+      </PageSection>
 
-      <Section title="Typography roles">
+      <PageSection id="typography-roles" title="Typography roles">
         <div class="flex flex-col gap-4 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3">
           <div>
-            <p class="text-caption text-ink-gray-6">Page heading · 30 / 36</p>
+            <p class="text-caption text-ink-gray-7">Page heading · 24 / 30</p>
             <p class="text-heading">Revenue overview</p>
           </div>
           <div>
-            <p class="text-caption text-ink-gray-6">
-              Section heading · 20 / 28
+            <p class="text-caption text-ink-gray-7">
+              Section heading · 18 / 24
             </p>
             <p class="text-section">Recent transactions</p>
           </div>
           <div>
-            <p class="text-caption text-ink-gray-6">Metric · 30 / 36</p>
+            <p class="text-caption text-ink-gray-7">Metric · 28 / 32</p>
             <p class="text-metric tabular-nums">$128,430</p>
           </div>
           <div>
             <p class="text-interface">
               Interface · 14 / 20 · Filters, labels and body copy
             </p>
-            <p class="text-caption text-ink-gray-6">
+            <p class="text-caption text-ink-gray-7">
               Supporting text · 12 / 16 · Compared with last month
             </p>
           </div>
         </div>
-      </Section>
-      <Section title="Numbered typography">
+      </PageSection>
+      <PageSection id="numbered-typography" title="Numbered typography">
         <div class="flex flex-col gap-1.5">
           <span class="text-2xs">text-2xs · 11px</span>
           <span class="text-xs">text-xs · 12px</span>
@@ -109,9 +118,9 @@ export function Foundations() {
           <span class="text-3xl-bold">text-3xl-bold · 20px</span>
           <span class="text-4xl-bold">text-4xl-bold · 24px</span>
         </div>
-      </Section>
+      </PageSection>
 
-      <Section title="Elevation">
+      <PageSection id="elevation" title="Elevation">
         <div class="flex flex-wrap gap-4 py-4">
           <div class="flex size-20 items-center justify-center rounded-5 bg-surface-base shadow-sm">
             sm
@@ -132,9 +141,9 @@ export function Foundations() {
             2xl
           </div>
         </div>
-      </Section>
+      </PageSection>
 
-      <Section title="Focus rings">
+      <PageSection id="focus-rings" title="Focus rings">
         <div class="flex flex-wrap gap-3">
           <button
             type="button"
@@ -167,14 +176,14 @@ export function Foundations() {
             red
           </button>
         </div>
-      </Section>
+      </PageSection>
 
-      <Section title="Button">
+      <PageSection id="button" title="Button">
         <div class="flex flex-col gap-4">
           <For each={['solid', 'subtle', 'outline', 'ghost'] as const}>
             {(variant) => (
               <div class="flex flex-wrap items-center gap-3">
-                <span class="w-16 text-xs text-ink-gray-6">{variant}</span>
+                <span class="w-16 text-xs text-ink-gray-7">{variant}</span>
                 <Button variant={variant} theme="gray">
                   Gray
                 </Button>
@@ -205,17 +214,17 @@ export function Foundations() {
             </Button>
           </div>
         </div>
-      </Section>
+      </PageSection>
 
-      <Section title="Switch">
+      <PageSection id="switch" title="Switch">
         <div class="flex flex-wrap items-center gap-4">
           <Switch label="Notifications" defaultChecked />
           <Switch label="Disabled" disabled />
           <Switch label="Unchecked" />
         </div>
-      </Section>
+      </PageSection>
 
-      <Section title="Dialog">
+      <PageSection id="dialog" title="Dialog">
         <Dialog.Root>
           <Dialog.Trigger class="w-fit rounded-4 bg-surface-gray-10 px-3 py-1.5 text-base text-ink-base">
             Open dialog
@@ -238,7 +247,7 @@ export function Foundations() {
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Root>
-      </Section>
+      </PageSection>
     </div>
   )
 }
