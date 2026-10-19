@@ -14,12 +14,12 @@ import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { CreateDialog } from '../examples/CreateDialog'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import { downloadBlob } from '../examples/download'
-import { ExampleFrame } from '../examples/ExampleFrame'
 import { INITIAL, type WorkspaceFile } from '../examples/files-data'
 import { bytes as size } from '../examples/format'
 import { Notice } from '../examples/Notice'
 import { first, optionsOf } from '../examples/select'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
+import { WorkspacePage } from '../examples/WorkspacePage'
 
 export function Files(): JSX.Element {
   const [items, setItems] = createSignal(INITIAL)
@@ -185,7 +185,7 @@ export function Files(): JSX.Element {
     },
   ]
   return (
-    <ExampleFrame
+    <WorkspacePage
       sidebar={
         <WorkspaceNav
           label="File views"
@@ -619,6 +619,6 @@ export function Files(): JSX.Element {
           </Show>
         </Dialog.Content>
       </Dialog.Root>
-    </ExampleFrame>
+    </WorkspacePage>
   )
 }

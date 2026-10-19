@@ -12,8 +12,8 @@ export interface ComponentEntry {
   group: string
   package: string
   source: string
-  /** `component` for a single control, `block` for a composed section. */
-  kind: 'component' | 'block'
+  /** Which level of the ladder this entry sits on. */
+  kind: 'component' | 'block' | 'layout'
   parts: string[]
   /** Kebab name of the file in `spec/`, when the component has a contract. */
   spec: string | null
@@ -847,6 +847,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "AppLayout",
+    "description": "The application frame: a title block, a navigation column, and a content area that scrolls inside the viewport rather than with it.",
+    "slug": "app-layout",
+    "group": "Layout",
+    "package": "@newui/layouts",
+    "source": "packages/layouts/src",
+    "kind": "layout",
+    "parts": [
+      "AppLayoutProps"
+    ],
+    "spec": "app-layout",
+    "shipped": true
+  },
+  {
     "name": "AppShell",
     "description": "Composes a desktop workspace without owning navigation state.",
     "slug": "app-shell",
@@ -1307,5 +1321,10 @@ export function componentBySlug(slug: string): ComponentEntry | undefined {
 /** Only the blocks: what `/blocks` lists and pages through. */
 export const BLOCKS: ComponentEntry[] = COMPONENTS.filter(
   (entry) => entry.kind === 'block',
+)
+
+/** Only the layouts: what `/layouts` lists and pages through. */
+export const LAYOUTS: ComponentEntry[] = COMPONENTS.filter(
+  (entry) => entry.kind === 'layout',
 )
 

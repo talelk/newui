@@ -17,6 +17,7 @@ import { twMergeConfig } from '../packages/ui/src/lib/tw-merge.config'
 const REPO = process.cwd()
 const UI_SRC = path.join(REPO, 'packages/ui/src')
 const BLOCKS_SRC = path.join(REPO, 'packages/blocks/src')
+const LAYOUTS_SRC = path.join(REPO, 'packages/layouts/src')
 const APP_SRC = path.join(REPO, 'apps/playground/src')
 const DIST = path.join(REPO, 'apps/playground/dist')
 
@@ -127,7 +128,11 @@ const missing = new Map<string, string>()
 // Both packages that ship class names: the components and the blocks composed
 // from them. A block's classes are scanned by `style.css`'s `@source`, so a
 // missing rule there is a real defect — the block renders unstyled.
-for (const file of [...walk(UI_SRC), ...walk(BLOCKS_SRC)]) {
+for (const file of [
+  ...walk(UI_SRC),
+  ...walk(BLOCKS_SRC),
+  ...walk(LAYOUTS_SRC),
+]) {
   // Not component markup: the config is vocabulary, and its own literals are
   // excluded from the Tailwind scan by `@source not`.
   if (

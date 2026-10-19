@@ -22,6 +22,7 @@ const outFile = path.join(root, 'packages/ui/api.json')
 const SOURCES = [
   'packages/ui',
   'packages/blocks',
+  'packages/layouts',
   'packages/charts',
   'packages/editor',
   'packages/code-editor',

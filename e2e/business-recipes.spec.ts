@@ -31,8 +31,12 @@ for (const width of [390, 768, 1440]) {
     if (width === 1440) {
       await target.scrollIntoViewIfNeeded()
       const destination = await target.boundingBox()
-      if (!destination) throw new Error('Missing drop target')
-      await page.mouse.move(start.x + 40, start.y + 20)
+      // Re-measure the card: the cancelled drag above scrolled the board (edge
+      // auto-scroll is part of the gesture), so its old box is stale and the
+      // press would land on whichever card moved into those coordinates.
+      const grab = await card.boundingBox()
+      if (!destination || !grab) throw new Error('Missing drop target')
+      await page.mouse.move(grab.x + 40, grab.y + 20)
       await page.mouse.down()
       await page.mouse.move(destination.x + 60, destination.y + 80, {
         steps: 12,

@@ -28,6 +28,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'components-feedback-alert--default',
     load: () => import('../stories/alert.stories'),
   },
+  AppLayout: {
+    id: 'layouts-applayout--default',
+    load: () => import('../stories/app-layout.stories'),
+  },
   AppShell: {
     id: 'components-layout-appshell--default',
     load: () => import('../stories/app-shell.stories'),

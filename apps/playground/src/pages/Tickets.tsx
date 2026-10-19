@@ -12,7 +12,6 @@ import {
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { CreateDialog } from '../examples/CreateDialog'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
-import { ExampleFrame } from '../examples/ExampleFrame'
 import { Notice } from '../examples/Notice'
 import { optionsOf } from '../examples/select'
 import {
@@ -24,6 +23,7 @@ import {
   type Ticket,
 } from '../examples/tickets-data'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
+import { WorkspacePage } from '../examples/WorkspacePage'
 
 export function Tickets(): JSX.Element {
   /**
@@ -140,7 +140,7 @@ export function Tickets(): JSX.Element {
     { accessorKey: 'agent', header: 'Assigned to' },
   ]
   return (
-    <ExampleFrame
+    <WorkspacePage
       sidebar={
         <div class="flex flex-col gap-4">
           <WorkspaceNav
@@ -594,6 +594,6 @@ export function Tickets(): JSX.Element {
           </>
         )}
       />
-    </ExampleFrame>
+    </WorkspacePage>
   )
 }

@@ -15,8 +15,8 @@ import {
   TextInput,
 } from '@newui/ui'
 import { createSignal, For, type JSX, Show } from 'solid-js'
-import { ExampleFrame } from '../examples/ExampleFrame'
 import { isEmail } from '../examples/format'
+import { WorkspacePage } from '../examples/WorkspacePage'
 
 function CreateAccount(): JSX.Element {
   const [name, setName] = createSignal('')
@@ -462,7 +462,7 @@ function CookieSettings(): JSX.Element {
 
 export function Cards(): JSX.Element {
   return (
-    <ExampleFrame
+    <WorkspacePage
       section="Cards"
       title="Small surfaces. Useful patterns."
       description="Eight everyday compositions, built from the same compact controls and semantic surfaces."
@@ -482,6 +482,6 @@ export function Cards(): JSX.Element {
           <CookieSettings />
         </div>
       </section>
-    </ExampleFrame>
+    </WorkspacePage>
   )
 }

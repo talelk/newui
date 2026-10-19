@@ -31,6 +31,25 @@ module.exports = {
       to: { pathNot: '^packages/tokens', dependencyTypesNot: ['core'] },
     },
     {
+      name: 'the-ladder-only-points-down',
+      severity: 'error',
+      comment:
+        'ADR-0012: components (ui) ← blocks ← layouts ← apps. A layout may compose components and blocks; a block or a component may never reach up to a layout, and nothing here may reach into an app.',
+      from: { path: '^packages/(ui|blocks)/' },
+      to: { path: '^packages/layouts/' },
+    },
+    {
+      name: 'layouts-do-not-reach-past-ui-and-blocks',
+      severity: 'error',
+      comment:
+        'A page template is arrangement, not data or rendering: it composes @newui/ui and @newui/blocks and stops there.',
+      from: { path: '^packages/layouts/' },
+      to: {
+        path: '^packages/(ui|blocks)/',
+        pathNot: '(packages/ui/src|packages/blocks/src)',
+      },
+    },
+    {
       name: 'packages-do-not-reach-apps',
       severity: 'error',
       comment: 'A shipped package must never import from the playground.',

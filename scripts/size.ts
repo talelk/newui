@@ -89,6 +89,15 @@ const ENTRIES: Entry[] = [
     forbid: ['"slider"', '"toast"', '"tree-view"', '"date-picker"'],
   },
   {
+    name: 'Layouts barrel',
+    file: 'scripts/fixtures/layouts.ts',
+    // A frame is a thin composition over the shell: `ResponsiveShell` (and so
+    // the sidebar's machinery) plus a title block. It must not pull a page
+    // template, a chart or an editor in behind it.
+    budget: 40,
+    forbid: ['"slider"', '"toast"', '"tree-view"', '"date-picker"', '"chart"'],
+  },
+  {
     name: 'Full barrel',
     file: 'scripts/fixtures/all.ts',
     // Raised 132 → 140 (Combobox), 140 → 172 (DatePicker's

@@ -11,9 +11,16 @@ import { Chrome } from './SiteLayout'
  * that walks that section's list rather than dropping the reader back into the
  * site tree.
  */
+
+/** Which package a section's entries come from. */
+const PACKAGE = {
+  component: '@newui/ui',
+  block: '@newui/blocks',
+  layout: '@newui/layouts',
+} as const
 function ReferenceLayout(
   props: RouteSectionProps & {
-    kind: 'component' | 'block'
+    kind: 'component' | 'block' | 'layout'
     toc?: () => JSX.Element
   },
 ): JSX.Element {
@@ -40,8 +47,7 @@ function ReferenceLayout(
           ? entry.group === 'Charts'
           : base() === '/editors'
             ? entry.group === 'Editors'
-            : entry.package ===
-              (props.kind === 'block' ? '@newui/blocks' : '@newui/ui')),
+            : entry.package === PACKAGE[props.kind]),
     )
       .slice()
       .sort((a, b) => a.name.localeCompare(b.name))
@@ -89,4 +95,9 @@ export function ComponentsLayout(props: RouteSectionProps): JSX.Element {
 /** The blocks frame. */
 export function BlocksLayout(props: RouteSectionProps): JSX.Element {
   return <ReferenceLayout {...props} kind="block" />
+}
+
+/** The layouts frame. */
+export function LayoutsLayout(props: RouteSectionProps): JSX.Element {
+  return <ReferenceLayout {...props} kind="layout" />
 }

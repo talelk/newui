@@ -2184,6 +2184,30 @@
         "test",
         "manifest"
       ]
+    },
+    {
+      "id": "layouts-applayout--default",
+      "title": "Layouts/AppLayout",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/app-layout.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "layouts-applayout--without-navigation",
+      "title": "Layouts/AppLayout",
+      "name": "Without Navigation",
+      "exportName": "WithoutNavigation",
+      "importPath": "src/stories/app-layout.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
     }
   ]
 }

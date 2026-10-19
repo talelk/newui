@@ -209,6 +209,7 @@ const GROUPS: Record<string, string> = {
   Sidebar: 'Navigation',
   AppShell: 'Layout',
   ResponsiveShell: 'Layout',
+  AppLayout: 'Layout',
   DesktopShell: 'Layout',
   MobileShell: 'Layout',
   MobileNav: 'Navigation',
@@ -261,10 +262,14 @@ function kebab(value: string): string {
 
 /** part name → the component it belongs to, and the package it came from. */
 const partsByComponent = new Map<string, string[]>()
-const packageOf = new Map<string, 'component' | 'block'>()
+const packageOf = new Map<string, 'component' | 'block' | 'layout'>()
 const importOf = new Map<string, string>()
 for (const [file, parts] of Object.entries(api)) {
-  const kind = file.includes('/blocks/') ? 'block' : 'component'
+  const kind = file.includes('/layouts/')
+    ? 'layout'
+    : file.includes('/blocks/')
+      ? 'block'
+      : 'component'
   for (const part of Object.keys(parts)) {
     const component = componentOf(part)
     if (!component) continue
@@ -296,6 +301,7 @@ function barrelExports(file: string): Set<string> {
 }
 const exported = barrelExports('packages/ui/src/index.ts')
 const exportedBlocks = barrelExports('packages/blocks/src/index.ts')
+const exportedLayouts = barrelExports('packages/layouts/src/index.ts')
 
 const SPEC_ALIASES: Record<string, string> = {
   DatePicker: 'datepicker',
@@ -329,7 +335,14 @@ for (const name of [...exported, ...exportedBlocks]) {
   if (GROUPS[name] && !partsByComponent.has(name)) {
     partsByComponent.set(name, [])
     packageOf.set(name, exportedBlocks.has(name) ? 'block' : 'component')
-    importOf.set(name, exportedBlocks.has(name) ? '@newui/blocks' : '@newui/ui')
+    importOf.set(
+      name,
+      exportedBlocks.has(name)
+        ? '@newui/blocks'
+        : exportedLayouts.has(name)
+          ? '@newui/layouts'
+          : '@newui/ui',
+    )
   }
 }
 /**
@@ -444,8 +457,8 @@ export interface ComponentEntry {
   group: string
   package: string
   source: string
-  /** \`component\` for a single control, \`block\` for a composed section. */
-  kind: 'component' | 'block'
+  /** Which level of the ladder this entry sits on. */
+  kind: 'component' | 'block' | 'layout'
   parts: string[]
   /** Kebab name of the file in \`spec/\`, when the component has a contract. */
   spec: string | null
@@ -466,6 +479,11 @@ export function componentBySlug(slug: string): ComponentEntry | undefined {
 /** Only the blocks: what \`/blocks\` lists and pages through. */
 export const BLOCKS: ComponentEntry[] = COMPONENTS.filter(
   (entry) => entry.kind === 'block',
+)
+
+/** Only the layouts: what \`/layouts\` lists and pages through. */
+export const LAYOUTS: ComponentEntry[] = COMPONENTS.filter(
+  (entry) => entry.kind === 'layout',
 )
 
 `

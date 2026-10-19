@@ -1,0 +1,29 @@
+{
+  "name": "@newui/layouts",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Page templates built on @newui/ui and @newui/blocks: how a page opens.",
+  "exports": {
+    ".": {
+      "solid": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@newui/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.9.0"
+  },
+  "devDependencies": {
+    "solid-js": "^1.9.0"
+  },
+  "sideEffects": false
+}

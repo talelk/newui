@@ -283,6 +283,9 @@ importers:
       '@newui/icons':
         specifier: workspace:*
         version: link:../../packages/icons
+      '@newui/layouts':
+        specifier: workspace:*
+        version: link:../../packages/layouts
       '@newui/tailwind':
         specifier: workspace:*
         version: link:../../packages/tailwind
@@ -458,6 +461,16 @@ importers:
     devDependencies:
       solid-js:
         specifier: ^1.9.17
+        version: 1.9.17
+
+  packages/layouts:
+    dependencies:
+      '@newui/ui':
+        specifier: workspace:*
+        version: link:../ui
+    devDependencies:
+      solid-js:
+        specifier: ^1.9.0
         version: 1.9.17
 
   packages/tailwind:

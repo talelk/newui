@@ -72,7 +72,13 @@ test.describe('each story', () => {
 })
 
 test('peer roles resolve identically across the library', async () => {
-  test.setTimeout(360_000)
+  // This test is an aggregate over the sweep above, so its budget has to cover
+  // the *queue*, not the sweep: with two workers and nine hundred other tests in
+  // the run, the 184 story loads can take many minutes to all report in. The
+  // poll below is a wait for the sweep to finish, and a timeout here means the
+  // run outgrew its budget — so it is sized from the whole suite, and it says how
+  // many vectors actually arrived rather than just "expected 184, got 0".
+  test.setTimeout(1_000_000)
   const expected = new Set(STORIES)
   // The per-story tests run in parallel; wait for the whole sweep, not a
   // fixed sleep. Files for stories removed since a previous run are ignored —
@@ -86,7 +92,7 @@ test('peer roles resolve identically across the library', async () => {
           return expected.has(f.replace(/\.json$/, ''))
         }).length
       },
-      { timeout: 300_000, interval: 2_000 },
+      { timeout: 900_000, interval: 2_000 },
     )
     .toBe(STORIES.length)
 

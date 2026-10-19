@@ -31,3 +31,4 @@
 @source not "../../ui/src/**/*.test.{ts,tsx}";
 @source "../../icons/src/**/*.{ts,tsx}";
 @source "../../blocks/src/**/*.{ts,tsx}";
+@source "../../layouts/src/**/*.{ts,tsx}";

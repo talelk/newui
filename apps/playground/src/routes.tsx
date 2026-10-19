@@ -55,6 +55,11 @@ const BlocksLayout = lazy(() =>
     default: module.BlocksLayout,
   })),
 )
+const LayoutsLayout = lazy(() =>
+  import('./shell/ReferenceLayout').then((module) => ({
+    default: module.LayoutsLayout,
+  })),
+)
 
 const RegistryExamplePage = page(
   () => import('./pages/RegistryExamplePage'),
@@ -79,6 +84,7 @@ const Home = page(() => import('./pages/Home'), 'Home')
 const Docs = page(() => import('./pages/Docs'), 'Docs')
 const Foundations = page(() => import('./pages/Foundations'), 'Foundations')
 const BlocksIndex = page(() => import('./pages/BlocksIndex'), 'BlocksIndex')
+const LayoutsIndex = page(() => import('./pages/LayoutsIndex'), 'LayoutsIndex')
 const ComponentsIndex = page(
   () => import('./pages/ComponentsIndex'),
   'ComponentsIndex',
@@ -145,6 +151,8 @@ export const ROUTES: { path: string; title: string }[] = [
   { path: '/blocks', title: 'All blocks' },
   { path: '/blocks/compositions/:name', title: 'Site composition' },
   { path: '/blocks/:name', title: 'Block' },
+  { path: '/layouts', title: 'All layouts' },
+  { path: '/layouts/:name', title: 'Layout' },
   { path: '/examples', title: 'Examples' },
   { path: '/examples/registry/:name', title: 'Registry example' },
   { path: '/examples/patterns', title: 'Component recipes' },
@@ -200,7 +208,9 @@ function RouteTitle(): JSX.Element {
     const pathname = location.pathname
     const title = TITLES.get(pathname)
     if (title) document.title = `${title} · newui`
-    else if (/^\/(components|blocks|charts|editors)\/[^/]+$/.test(pathname)) {
+    else if (
+      /^\/(components|blocks|layouts|charts|editors)\/[^/]+$/.test(pathname)
+    ) {
       let current = true
       onCleanup(() => {
         current = false
@@ -257,6 +267,13 @@ export function AppRoutes(): JSX.Element {
             `/:name` is one component — writing the parent's own path again
             would nest it (`/components/components/:name`). */}
         <Route path="/" component={ComponentsIndex} />
+        <Route path="/:name" component={ComponentPage} />
+      </Route>
+
+      {/* The layouts are the third reference section: the same generated page,
+          one level up the ladder from the blocks. */}
+      <Route path="/layouts" component={LayoutsLayout}>
+        <Route path="/" component={LayoutsIndex} />
         <Route path="/:name" component={ComponentPage} />
       </Route>
 

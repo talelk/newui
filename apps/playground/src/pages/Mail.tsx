@@ -14,7 +14,6 @@ import {
 } from '@newui/ui'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { CreateDialog } from '../examples/CreateDialog'
-import { ExampleFrame } from '../examples/ExampleFrame'
 import { isEmail } from '../examples/format'
 import {
   filterMail,
@@ -28,6 +27,7 @@ import { Notice } from '../examples/Notice'
 import { optionsOf } from '../examples/select'
 import { createUndo } from '../examples/undo'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
+import { WorkspacePage } from '../examples/WorkspacePage'
 
 const FOLDERS = [
   'Inbox',
@@ -197,7 +197,7 @@ export function Mail(): JSX.Element {
     />
   )
   return (
-    <ExampleFrame
+    <WorkspacePage
       title="Your inbox, in focus"
       section="Mail"
       description="A clear home for conversations, updates and the work that happens between them."
@@ -708,6 +708,6 @@ export function Mail(): JSX.Element {
           </>
         )}
       />
-    </ExampleFrame>
+    </WorkspacePage>
   )
 }

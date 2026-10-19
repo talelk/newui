@@ -23,11 +23,11 @@ import {
 } from 'solid-js'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import { downloadText } from '../examples/download'
-import { ExampleFrame } from '../examples/ExampleFrame'
 import { count, usd as money, usdK } from '../examples/format'
 import { Notice } from '../examples/Notice'
 import { createUndo } from '../examples/undo'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
+import { WorkspacePage } from '../examples/WorkspacePage'
 import {
   channelSeries,
   comparisonSeries,
@@ -256,7 +256,7 @@ export function Analytics(): JSX.Element {
   ])
 
   return (
-    <ExampleFrame
+    <WorkspacePage
       section="Analytics"
       title="Revenue overview"
       description="A clear view of how your business is growing."
@@ -571,6 +571,6 @@ export function Analytics(): JSX.Element {
           </Suspense>
         )}
       </Show>
-    </ExampleFrame>
+    </WorkspacePage>
   )
 }

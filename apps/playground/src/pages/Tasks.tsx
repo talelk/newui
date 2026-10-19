@@ -31,7 +31,6 @@ import {
 } from 'solid-js'
 import { ActivityList } from '../examples/ActivityList'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
-import { ExampleFrame } from '../examples/ExampleFrame'
 import { Notice } from '../examples/Notice'
 import { optionsOf } from '../examples/select'
 import {
@@ -41,6 +40,7 @@ import {
   type TaskRepository,
 } from '../examples/tasks-data'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
+import { WorkspacePage } from '../examples/WorkspacePage'
 
 const taskColumns = (
   onOpen: (id: string) => void,
@@ -279,7 +279,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
       setNotice(`Created ${value.title}.`)
     })
   return (
-    <ExampleFrame
+    <WorkspacePage
       section="Tasks"
       title={
         scope() === 'all'
@@ -830,7 +830,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
           <NewTask onSave={saveTask} />
         </Dialog.Content>
       </Dialog.Root>
-    </ExampleFrame>
+    </WorkspacePage>
   )
 }
 

@@ -25,11 +25,11 @@ import {
 } from '../examples/accounting-data'
 import type { DataTableColumn } from '../examples/DataTable'
 import { downloadCsv as downloadCSV } from '../examples/download'
-import { ExampleFrame } from '../examples/ExampleFrame'
 import { usd as currency, usdK } from '../examples/format'
 import { Notice } from '../examples/Notice'
 import { ScrollTable, TABLE_HEAD_CLASS } from '../examples/ScrollTable'
 import { optionsOf } from '../examples/select'
+import { WorkspacePage } from '../examples/WorkspacePage'
 
 const AccountingDialogs = lazy(() => import('./accounting/AccountingDialogs'))
 
@@ -205,7 +205,7 @@ export function Accounting(): JSX.Element {
       ])
   }
   return (
-    <ExampleFrame
+    <WorkspacePage
       title="Know where your business stands"
       section="Accounting"
       description="A clear view of cash, costs and the people behind your business. All figures are local demonstration data."
@@ -609,6 +609,6 @@ export function Accounting(): JSX.Element {
           nextId={() => nextId++}
         />
       </Show>
-    </ExampleFrame>
+    </WorkspacePage>
   )
 }

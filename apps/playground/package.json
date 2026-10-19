@@ -16,6 +16,7 @@
     "@newui/code-editor": "workspace:*",
     "@newui/editor": "workspace:*",
     "@newui/icons": "workspace:*",
+    "@newui/layouts": "workspace:*",
     "@newui/tailwind": "workspace:*",
     "@newui/tokens": "workspace:*",
     "@newui/ui": "workspace:*",

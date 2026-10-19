@@ -18,12 +18,12 @@ import {
   STAGES,
   type Stage,
 } from '../examples/deals-data'
-import { ExampleFrame } from '../examples/ExampleFrame'
 import { usd as money } from '../examples/format'
 import { Notice } from '../examples/Notice'
 import { first, optionsOf } from '../examples/select'
 import { createUndo } from '../examples/undo'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
+import { WorkspacePage } from '../examples/WorkspacePage'
 
 export function Deals(): JSX.Element {
   const [deals, setDeals] = createSignal(initialDeals)
@@ -157,7 +157,7 @@ export function Deals(): JSX.Element {
     { accessorKey: 'due', header: 'Close date' },
   ]
   return (
-    <ExampleFrame
+    <WorkspacePage
       title="Build a healthier pipeline"
       section="Deals"
       description="Every opportunity, a clear next step. Move from first conversation to a confident close."
@@ -426,6 +426,6 @@ export function Deals(): JSX.Element {
           </>
         )}
       />
-    </ExampleFrame>
+    </WorkspacePage>
   )
 }

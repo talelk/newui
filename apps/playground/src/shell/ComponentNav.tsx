@@ -4,7 +4,7 @@ import { COMPONENTS, GROUPS } from '../generated/components'
 import { groupEntries, matchesEntry } from '../lib/catalog'
 import { FilterInput, NAV_ROW, NothingMatches } from './nav-ui'
 
-export type NavKind = 'component' | 'block'
+export type NavKind = 'component' | 'block' | 'layout'
 
 /**
  * The section sidebar for the reference pages: every entry of one kind,
@@ -23,6 +23,14 @@ export type NavKind = 'component' | 'block'
 export const OVERVIEW: Record<NavKind, { title: string; href: string }[]> = {
   component: [{ title: 'All components', href: '/components' }],
   block: [{ title: 'All blocks', href: '/blocks' }],
+  layout: [{ title: 'All layouts', href: '/layouts' }],
+}
+
+/** Which package an entry of each kind comes from. */
+const PACKAGE: Record<NavKind, string> = {
+  component: '@newui/ui',
+  block: '@newui/blocks',
+  layout: '@newui/layouts',
 }
 
 export function ComponentNav(props: { kind: NavKind }): JSX.Element {
@@ -39,8 +47,7 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
           ? entry.group === 'Charts'
           : base() === '/editors'
             ? entry.group === 'Editors'
-            : entry.package ===
-              (props.kind === 'block' ? '@newui/blocks' : '@newui/ui')),
+            : entry.package === PACKAGE[props.kind]),
     )
       .filter((entry) => matchesEntry(entry, query()))
       .slice()

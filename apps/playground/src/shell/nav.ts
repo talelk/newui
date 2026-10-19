@@ -79,6 +79,16 @@ export const NAV: NavSection[] = [
     ],
   },
   {
+    title: 'Layouts',
+    items: [
+      {
+        title: 'All layouts',
+        href: '/layouts',
+        description: 'Page templates: how a page opens.',
+      },
+    ],
+  },
+  {
     title: 'Charts',
     items: [{ title: 'All charts', href: '/charts' }],
   },

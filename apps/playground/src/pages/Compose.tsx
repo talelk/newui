@@ -13,9 +13,9 @@ import {
 } from '@newui/ui'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
 import { downloadText } from '../examples/download'
-import { ExampleFrame } from '../examples/ExampleFrame'
 import { Notice } from '../examples/Notice'
 import { Panel } from '../examples/Panel'
+import { WorkspacePage } from '../examples/WorkspacePage'
 import { Markdown } from '../lib/markdown'
 
 const INITIAL_BODY =
@@ -102,7 +102,7 @@ export function Compose(): JSX.Element {
       'text/markdown;charset=utf-8',
     )
   return (
-    <ExampleFrame
+    <WorkspacePage
       section="Compose"
       title="Compose a post"
       description="Shape your ideas, review the details, and share a clear update with your team."
@@ -315,6 +315,6 @@ export function Compose(): JSX.Element {
           </Dialog.Footer>
         </Dialog.Content>
       </Dialog.Root>
-    </ExampleFrame>
+    </WorkspacePage>
   )
 }
