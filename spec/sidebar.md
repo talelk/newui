@@ -26,7 +26,7 @@ optional collapsed rail, collapsible sections and status cards.
 | --- | --- |
 | `Sidebar` | `<nav>` landmark; `collapsible` (default `true`), `collapsed`/`onCollapsedChange`, `collapsedWidth` (3rem), `ariaLabel` (Main). Auto-collapses below `sm` when uncontrolled. |
 | `SidebarHeader` | `title`/`subtitle`, `logo`/`showLogo`, collapse-aware. |
-| `SidebarLabel` | group label; `divider` swaps it for a rule while collapsed. |
+| `SidebarLabel` | group label; `action` is a trailing control of the group row (hidden in the rail); `divider` swaps the label for a rule while collapsed. |
 | `SidebarItem` | row; `active`, `label` (accessible name + tooltip when collapsed; defaults to string children), `icon` (used when `prefix` is unset), `prefix`/`suffix`, `route`/`href` (link rendering, frappe-ui parity). |
 | `SidebarRail` / `SidebarRailItem` | 50px icon-only rail; item `variant` (`subtle`/`ghost`), `description`, `badge` + `badgeStyle` (`count`/`dot`), `route`/`href`, active indicator, tooltip. |
 | `SidebarCollapseToggle` | a `SidebarItem` that toggles the sidebar; `expandLabel`/`collapseLabel`. |

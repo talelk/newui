@@ -250,6 +250,38 @@ describe('SidebarItem links (frappe-ui parity)', () => {
   })
 })
 
+describe('SidebarLabel action', () => {
+  it('carries a trailing control with the label, and drops it in the rail', () => {
+    const { unmount } = render(() => (
+      <Sidebar>
+        <SidebarLabel
+          action={
+            <button type="button" aria-label="Sort spaces">
+              Sort
+            </button>
+          }
+        >
+          Spaces
+        </SidebarLabel>
+      </Sidebar>
+    ))
+    expect(screen.getByText('Spaces')).toBeTruthy()
+    expect(screen.getByRole('button', { name: 'Sort spaces' })).toBeVisible()
+    unmount()
+
+    // A rail has no room for the label, so the control that acts on it goes
+    // with it — an icon button beside nothing is a mystery.
+    render(() => (
+      <Sidebar collapsed>
+        <SidebarLabel action={<button type="button">Sort</button>}>
+          Spaces
+        </SidebarLabel>
+      </Sidebar>
+    ))
+    expect(screen.queryByRole('button', { name: 'Sort' })).toBeNull()
+  })
+})
+
 describe('SidebarSection controlled state', () => {
   it('honours controlled collapsed and reports toggles', async () => {
     const onCollapsedChange = vi.fn()

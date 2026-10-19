@@ -28,6 +28,27 @@ describe('AppSidebar', () => {
     expect(screen.getByRole('button', { name: /Customers/ })).toBeTruthy()
   })
 
+  it('places a group action on the group row it acts on', () => {
+    render(() => (
+      <AppSidebar
+        title="Discussions"
+        groups={[
+          {
+            label: 'Spaces',
+            action: (
+              <button type="button" aria-label="Sort spaces">
+                Sort
+              </button>
+            ),
+            items: [{ label: 'Design System' }],
+          },
+        ]}
+      />
+    ))
+    expect(screen.getByText('Spaces')).toBeTruthy()
+    expect(screen.getByRole('button', { name: 'Sort spaces' })).toBeVisible()
+  })
+
   it('shows a count as a quiet pill, not a badge', () => {
     const { container } = render(() => (
       <AppSidebar

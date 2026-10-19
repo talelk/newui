@@ -226,9 +226,7 @@ export function DiscussionsDesktop(props: {
           }
           sidebar={
             /* No logo here: the rail already shows the active community's
-              avatar, so a header logo would just duplicate it. The
-              sort-spaces button rides in the header actions — AppSidebar
-              groups have no per-group action slot. */
+              avatar, so a header logo would just duplicate it. */
             <AppSidebar
               class="border-r border-outline-gray-1"
               title={
@@ -239,13 +237,6 @@ export function DiscussionsDesktop(props: {
               showLogo={false}
               headerActions={
                 <div class="flex items-center gap-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon="lucide-arrow-up-down"
-                    onClick={() => setSpacesReversed((value) => !value)}
-                    aria-label="Sort spaces"
-                  />
                   <Dropdown
                     options={[
                       {
@@ -274,6 +265,17 @@ export function DiscussionsDesktop(props: {
                 },
                 {
                   label: 'Spaces',
+                  // The sort belongs to the group it reorders, not to the
+                  // header that acts on the whole community.
+                  action: (
+                    <Button
+                      variant="ghost"
+                      size="xs"
+                      icon="lucide-arrow-up-down"
+                      onClick={() => setSpacesReversed((value) => !value)}
+                      aria-label="Sort spaces"
+                    />
+                  ),
                   items: (spacesReversed()
                     ? [...SPACES].reverse()
                     : SPACES

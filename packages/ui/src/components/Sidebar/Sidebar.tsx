@@ -217,12 +217,14 @@ export interface SidebarLabelProps {
    * visually separated.
    */
   divider?: boolean
+  /** Trailing control of the group row: sort, filter, add. Hidden in the rail. */
+  action?: JSX.Element
   class?: string
   children?: JSX.Element
 }
 
 export const SidebarLabel: ParentComponent<SidebarLabelProps> = (props) => {
-  const [local] = splitProps(props, ['divider', 'class', 'children'])
+  const [local] = splitProps(props, ['divider', 'action', 'class', 'children'])
   const { collapsed } = useSidebar()
   return (
     <div
@@ -237,6 +239,11 @@ export const SidebarLabel: ParentComponent<SidebarLabelProps> = (props) => {
       >
         {local.children}
       </div>
+      <Show when={local.action && !collapsed()}>
+        <span class="ms-auto flex shrink-0 items-center pe-1">
+          {local.action}
+        </span>
+      </Show>
       <Show when={local.divider && collapsed()}>
         <div aria-hidden="true" class="absolute inset-0 flex items-center">
           <hr class="w-full border-t border-ink-gray-3" />

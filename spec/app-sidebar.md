@@ -12,7 +12,9 @@ that are easy to get subtly wrong:
 - the header is **not** inside the scroll region;
 - a count is a quiet trailing pill (tabular numerals on `surface-gray-2`), not
   a `Badge`;
-- the label row is what gives a long list its structure.
+- the label row is what gives a long list its structure, and **a group's action
+  sits on that row** — the sort that reorders one group belongs beside the group
+  it sorts, not in the header acting on everything.
 
 ## Props
 
@@ -23,7 +25,7 @@ that are easy to get subtly wrong:
 | `logo` | `IconProp` | — | header mark |
 | `showLogo` | `boolean` | `true` | set `false` when a rail already shows it |
 | `headerActions` | `JSX.Element` | — | trailing header slot, usually a menu |
-| `groups` | `AppSidebarGroup[]` | required | `{ label?, items }` |
+| `groups` | `AppSidebarGroup[]` | required | `{ label?, action?, items }` |
 | `width` | `SidebarProps['width']` | `'14rem'` | |
 | `collapsible` | `boolean` | `true` | folds to the rail, toggle at the foot |
 | `collapsed` | `boolean` | — | controlled state; unset tracks its own |
@@ -33,6 +35,8 @@ that are easy to get subtly wrong:
 
 `AppSidebarItem` is `{ label, icon?, count?, active?, route?, href?, onClick? }`
 — `route`/`href` render the row as a link, exactly as `SidebarItem` does.
+`AppSidebarGroup` is `{ label?, action?, items }`: the action is rendered on the
+label row and disappears with it in the rail.
 
 ## Behavior
 

@@ -26,6 +26,11 @@ export interface AppSidebarItem {
 export interface AppSidebarGroup {
   /** Section heading, rendered as a `SidebarLabel` and dropped when absent. */
   label?: JSX.Element
+  /**
+   * Trailing control of the group row — sort, filter, add. It sits with the
+   * label it acts on, instead of in the header acting on everything.
+   */
+  action?: JSX.Element
   items: AppSidebarItem[]
 }
 
@@ -87,8 +92,10 @@ export function AppSidebar(props: AppSidebarProps): JSX.Element {
           <For each={props.groups}>
             {(group, index) => (
               <div class={index() === 0 ? undefined : 'mt-4'}>
-                <Show when={group.label}>
-                  <SidebarLabel>{group.label}</SidebarLabel>
+                <Show when={group.label || group.action}>
+                  <SidebarLabel action={group.action}>
+                    {group.label}
+                  </SidebarLabel>
                 </Show>
                 <div class="flex flex-col gap-0.5">
                   <For each={group.items}>

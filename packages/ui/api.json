@@ -6918,6 +6918,12 @@
         "description": "While collapsed, swap the label for a horizontal divider so groups stay\nvisually separated."
       },
       {
+        "name": "action",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Trailing control of the group row: sort, filter, add. Hidden in the rail."
+      },
+      {
         "name": "class",
         "type": "string",
         "optional": true
