@@ -91,10 +91,12 @@ const ENTRIES: Entry[] = [
   {
     name: 'Layouts barrel',
     file: 'scripts/fixtures/layouts.ts',
-    // A frame is a thin composition over the shell: `ResponsiveShell` (and so
-    // the sidebar's machinery) plus a title block. It must not pull a page
-    // template, a chart or an editor in behind it.
-    budget: 40,
+    // Both layouts: a frame that composes `ResponsiveShell` (and so the
+    // sidebar's folding column, its tooltips and the mobile bar) plus a
+    // two-pane split that is its own thing. 36.4 measured after the frame grew
+    // a rail; the level is meant to grow, so the headroom is deliberate. What
+    // matters is the `forbid` list: none of this may reach a chart or an editor.
+    budget: 44,
     forbid: ['"slider"', '"toast"', '"tree-view"', '"date-picker"', '"chart"'],
   },
   {

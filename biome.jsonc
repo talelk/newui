@@ -85,6 +85,16 @@
       }
     },
     {
+      // A window splitter is a *widget* separator: WAI-ARIA's `separator` with
+      // `aria-valuenow`, a tab stop and arrow keys. `useSemanticElements`
+      // suggests `<hr>`, which is a static rule — it carries no value, takes no
+      // focus and has no keyboard handler, so there is nothing to suggest.
+      "includes": ["packages/layouts/src/PaneLayout/**"],
+      "linter": {
+        "rules": { "a11y": { "useSemanticElements": "off" } }
+      }
+    },
+    {
       "includes": [
         "**/*.test.ts",
         "**/*.test.tsx",

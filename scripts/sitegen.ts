@@ -212,6 +212,7 @@ const GROUPS: Record<string, string> = {
   AppShell: 'Layout',
   ResponsiveShell: 'Layout',
   AppLayout: 'Layout',
+  PaneLayout: 'Layout',
   DesktopShell: 'Layout',
   MobileShell: 'Layout',
   MobileNav: 'Navigation',

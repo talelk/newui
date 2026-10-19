@@ -962,6 +962,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "PaneLayout",
+    "description": "Two panes side by side, with a draggable divider.",
+    "slug": "pane-layout",
+    "group": "Layout",
+    "package": "@newui/layouts",
+    "source": "packages/layouts/src",
+    "kind": "layout",
+    "parts": [
+      "PaneLayoutProps"
+    ],
+    "spec": "pane-layout",
+    "shipped": true
+  },
+  {
     "name": "ResponsiveShell",
     "description": "One navigation, two frames: the docked AppShell where there is room for two columns, the MobileShell where there is not, with the sidebar becoming…",
     "slug": "responsive-shell",

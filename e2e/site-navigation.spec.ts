@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { LAYOUTS } from '../apps/playground/src/generated/components'
 
 test.use({ reducedMotion: 'reduce' })
 
@@ -177,7 +178,7 @@ test('a reference section opens its own index in the sidebar', async ({
   // The count is the registry's, not a second hand-written list.
   await expect(
     sidebar.getByRole('button', { name: 'Layouts', exact: true }),
-  ).toContainText('1')
+  ).toContainText(String(LAYOUTS.length))
 })
 
 test('the mobile drawer is never a rail, even when the desk is folded', async ({

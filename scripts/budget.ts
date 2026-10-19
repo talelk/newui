@@ -88,12 +88,17 @@ const ROUTES: RouteBudget[] = [
   {
     route: '/layouts',
     budget: 100,
-    unless: 'the layout index; one entry today, read from the registry',
+    unless: 'the layout index, read from the registry',
   },
   {
     route: '/layouts/app-layout',
     budget: 240,
     unless: 'the frame demo: shell, sidebar, tooltips',
+  },
+  {
+    route: '/layouts/pane-layout',
+    budget: 110,
+    unless: 'the split demo: two panes, badges and a list',
   },
   { route: '/charts', budget: 90 },
   { route: '/editors', budget: 90 },

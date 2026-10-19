@@ -299,13 +299,14 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
   (`inlineCss` in `apps/playground/vite.config.ts`, removing a render-blocking
   round trip) and code-splits every route with dynamic imports. A library must
   not do either — consumers own their asset pipeline.
-- **Measured checkpoint** (Storybook/states pass, re-measured with `pnpm size`
-  + `pnpm budget`): `cn()` 6.40 kB · `Button` 8.68 kB · `Button + Dialog`
-  30.08 kB · full barrel 228.44 kB · blocks barrel 77.66 kB (gzip, `solid-js`
-  external). Site: home (`/`) 55.3 kB, analytics fullscreen 337.0 kB, tasks
-  fullscreen 180.2 kB, accounting fullscreen 331.7 kB — every
-  entry and route within its unchanged budget. Treat these as checkpoint measurements;
-  `pnpm size` and `pnpm budget` provide current evidence and enforce the limits.
+- **Measured checkpoint** (ladder pass, re-measured with `pnpm size` +
+  `pnpm budget`): `cn()` 6.40 kB · `Button` 8.68 kB · `Button + Dialog`
+  30.08 kB · full barrel 228.48 kB · blocks barrel 77.67 kB · layouts barrel
+  36.35 kB (gzip, `solid-js` external). Site: home (`/`) 56.6 kB, analytics
+  fullscreen 338.1 kB, tasks fullscreen 181.4 kB, accounting fullscreen
+  332.9 kB — every entry and route within its budget. Treat these as checkpoint
+  measurements; `pnpm size` and `pnpm budget` provide current evidence and
+  enforce the limits.
 - **Removed `tailwind-variants`** (it bundled its own merge integration) in
   favour of an in-house `tv`/`cn`/`cx` in `lib/tv.ts`: `Button` went 34.3 →
   16.3 kB. The resolver is typed (`VariantProps<typeof recipe>` recovers the

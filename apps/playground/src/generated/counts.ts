@@ -8,6 +8,6 @@ export const LADDER_COUNTS = {
   "foundations": 384,
   "components": 81,
   "blocks": 7,
-  "layouts": 1,
+  "layouts": 2,
   "applications": 12
 } as const

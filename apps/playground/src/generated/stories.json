@@ -2208,6 +2208,30 @@
         "test",
         "manifest"
       ]
+    },
+    {
+      "id": "layouts-panelayout--default",
+      "title": "Layouts/PaneLayout",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/pane-layout.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "layouts-panelayout--record-open",
+      "title": "Layouts/PaneLayout",
+      "name": "Record Open",
+      "exportName": "RecordOpen",
+      "importPath": "src/stories/pane-layout.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
     }
   ]
 }

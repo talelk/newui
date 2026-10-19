@@ -268,6 +268,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'components-navigation-pagination--default',
     load: () => import('../stories/pagination.stories'),
   },
+  PaneLayout: {
+    id: 'layouts-panelayout--default',
+    load: () => import('../stories/pane-layout.stories'),
+  },
   Password: {
     id: 'components-inputs-password--default',
     load: () => import('../stories/password.stories'),

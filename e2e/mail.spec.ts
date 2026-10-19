@@ -15,11 +15,32 @@ test('desktop mail navigation collapses and pane resizing preserves the inbox', 
   await expect(navigation).toBeHidden()
   const list = page.getByRole('region', { name: 'Conversation list' })
   const before = await list.boundingBox()
-  const handle = page.getByRole('slider', { name: 'Inbox pane width' })
+  // The divider is the resize control — a separator with a value, not a slider
+  // in the toolbar.
+  const handle = page.getByRole('separator', {
+    name: 'Resize the conversation list',
+  })
   await handle.focus()
   await page.keyboard.press('End')
   await expect(handle).toHaveAttribute('aria-valuenow', '70')
-  expect((await list.boundingBox())?.width).toBeGreaterThan(before?.width ?? 0)
+  const widened = (await list.boundingBox())?.width ?? 0
+  expect(widened).toBeGreaterThan(before?.width ?? 0)
+
+  await page.keyboard.press('Home')
+  await expect(handle).toHaveAttribute('aria-valuenow', '20')
+  expect((await list.boundingBox())?.width ?? 0).toBeLessThan(widened)
+
+  // The pointer path: grab the divider and drag it back to the right.
+  const divider = await handle.boundingBox()
+  if (!divider) throw new Error('Missing divider')
+  const narrowed = (await list.boundingBox())?.width ?? 0
+  await page.mouse.move(divider.x + divider.width / 2, divider.y + 40)
+  await page.mouse.down()
+  await page.mouse.move(divider.x + divider.width / 2 + 160, divider.y + 40, {
+    steps: 8,
+  })
+  await page.mouse.up()
+  expect((await list.boundingBox())?.width ?? 0).toBeGreaterThan(narrowed)
   await expect(list).toContainText('September launch checklist')
 })
 

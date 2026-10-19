@@ -101,15 +101,21 @@ templates the examples justify:
 | `SettingsPage` — grouped nav + panels | Settings, Discussions | not started |
 | `AuthPage` — centered `AuthCard` frame | Authentication | not started |
 | `DashboardPage` — stat grid + chart grid | Analytics, Accounting | not started |
-| `PaneLayout` — 2/3-pane workspace with collapse | Mail, Files, Discussions | not started |
+| `PaneLayout` — a list pane beside a record, divider included | Mail (Files and Discussions preview in dialogs) | **shipped** — Mail's hand-rolled grid, CSS variable and toolbar slider are gone |
 
 **Why `ListPage` and `DetailPage` wait.** Their slots would duplicate controls
 that already own them: `FilterBar` owns the count and the clear-all, `DataTable`
 owns the row-selection bulk bar, and our record views are dialogs rather than
 pages — so a `ListPage` today would be a template with nothing to template.
-`PaneLayout` is the next one with real consumers (Mail's resize, Files' preview,
-Discussions' three panes); it needs those three pane behaviours compared before
-its API can be honest.
+`PaneLayout` shipped once Mail's split was compared with the others: Files
+previews in a dialog and Discussions is a list plus dialogs, so the honest API is
+two panes and a divider — not the three-pane workspace the plan imagined.
+
+The remaining templates (`SettingsPage`, `AuthPage`, `DashboardPage`) are
+arrangement over blocks that already exist, and `spec/examples-refresh.md` says
+why `PageToolbar`, `DetailHeader` and `AppSidebar` could not absorb those
+compositions. They wait for the same reason the first two did: a template with
+nothing to template is worse than none.
 
 The block friction this exposes is fixed additively: `PageToolbar` gains
 description/multi-action, `DetailHeader` richer actions, `AppSidebar`

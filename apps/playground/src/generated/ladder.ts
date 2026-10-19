@@ -55,7 +55,7 @@ export const LADDER: LadderLevel[] = [
     "question": "How does the page open?",
     "unit": "template",
     "package": "@newui/layouts",
-    "count": 1,
+    "count": 2,
     "href": "/layouts",
     "blurb": "The frame, the title block and the navigation column: where the content sits and how it scrolls."
   },
