@@ -70,7 +70,12 @@ export function Docs(): JSX.Element {
           >
             the ladder
           </A>
-          ). Add{' '}
+          );{' '}
+          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
+            @newui/data
+          </code>{' '}
+          carries the logic layer — formatting, selection, undo, downloads —
+          headless, so it costs no component. Add{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
             @newui/charts
           </code>
@@ -88,8 +93,8 @@ export function Docs(): JSX.Element {
         </p>
         <Code>{`pnpm add @newui/ui @newui/tailwind @newui/icons
 
-# the composed layers, when a page needs them
-pnpm add @newui/blocks @newui/layouts`}</Code>
+# the composed layers and the logic layer
+pnpm add @newui/blocks @newui/layouts @newui/data`}</Code>
         <p class="text-base text-ink-gray-7">
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">solid-js</code>{' '}
           is a peer dependency, so your app owns its version.
