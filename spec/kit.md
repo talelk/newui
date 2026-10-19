@@ -38,7 +38,7 @@ copyable app to the parts that already exist.
 | Components (atoms/molecules) | what is this control | `@newui/ui` (+ shell frames) | shipped |
 | Blocks (organisms) | what is this section | `@newui/blocks` | shipped |
 | Layouts (templates) | how does a page open | `@newui/layouts` | shipped (W2, `AppLayout`; page templates next) |
-| Logic | how does it behave | `@newui/data` | missing |
+| Logic | how does it behave | `@newui/data` | shipped (pure helpers; async and forms next) |
 | App | what do I copy | `apps/starter` + examples | missing |
 | Surface | how do I see any of it | Storybook | shipped (W1) |
 

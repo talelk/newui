@@ -149,6 +149,7 @@ export function Architecture(): JSX.Element {
     <TableOfContents
       entries={[
         { id: 'ladder', label: 'The ladder' },
+        { id: 'logic', label: 'The logic layer' },
         { id: 'atomic-design', label: 'Atomic design' },
         { id: 'rules', label: 'The rules' },
       ]}
@@ -172,6 +173,34 @@ export function Architecture(): JSX.Element {
             {(level, index) => <Rung level={level} index={index()} />}
           </For>
         </ol>
+      </PageSection>
+
+      <PageSection
+        id="logic"
+        title="The logic layer"
+        description="One rung is not visual. Formatting, selection, undo and downloads behave the same in every app, and no two apps agree on them when they each write their own — so they are a package too."
+      >
+        <div class="flex flex-col gap-3 text-base text-ink-gray-7">
+          <p class="max-w-2xl">
+            <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
+              @newui/data
+            </code>{' '}
+            sits <em>beside</em> the ladder rather than on it: a page uses it
+            the way it uses a component, but nothing above it is made of it. It
+            is headless by contract — it imports <code>solid-js</code> for
+            signals and nothing from the visual packages — and no component may
+            import it. That is what keeps a control from acquiring an opinion
+            about money.
+          </p>
+          <pre class="w-fit max-w-full overflow-x-auto rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
+            <code>{`import { createUndo, downloadCsv, optionsOf, usd } from '@newui/data'`}</code>
+          </pre>
+          <p class="max-w-2xl">
+            What renders stays in the kit. The examples copied their status
+            strip eleven times too, but it renders a banner with buttons —
+            promoting it here would have made the layer lie about itself.
+          </p>
+        </div>
       </PageSection>
 
       <PageSection

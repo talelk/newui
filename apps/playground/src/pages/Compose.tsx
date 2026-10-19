@@ -1,3 +1,4 @@
+import { downloadText } from '@newui/data'
 import { Editor, EditorToolbar } from '@newui/editor'
 import {
   Alert,
@@ -12,7 +13,6 @@ import {
   TextInput,
 } from '@newui/ui'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
-import { downloadText } from '../examples/download'
 import { Notice } from '../examples/Notice'
 import { Panel } from '../examples/Panel'
 import { WorkspacePage } from '../examples/WorkspacePage'

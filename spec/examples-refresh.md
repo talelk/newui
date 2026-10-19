@@ -53,6 +53,12 @@ All homes are reached only from lazy page/demo chunks, so none of these
 can leak into the shell chunk. Create in slice order; each lands with its
 first consumer in the same diff (no orphan helpers).
 
+> **Since this was written:** H2–H5 are no longer playground helpers. They are
+> the first surfaces of `@newui/data` (`spec/data.md`), importable by any app and
+> headless by contract; the example copies are deleted. H1 stayed an example
+> composition — it renders, so it is a component, and it belongs in the kit or in
+> the app, not in the logic layer.
+
 | # | Path | Exports / props | Consumers (evidence) |
 | --- | --- | --- | --- |
 | H1 | `pg/examples/Notice.tsx` | `<Notice text tone?='blue'\|'green'\|'red' onUndo? onDismiss?>`, `role="status"` | 11 notice signals: Deals:52,286-306 · Files:34,260-267 · Mail:56-57,265-286 · Tickets:46,224-231 · Accounting:60,306-313 · Tasks:188,457-464 · Compose:38,150-157 · Analytics:66-67,552-570 · Settings:41,149-152 · DiscussionSettings:92,211 · patterns/Navigation:10,144 |

@@ -1,8 +1,8 @@
 /**
- * Select plumbing for the examples (H5, spec/examples-refresh.md §1).
+ * Select plumbing: a string list to options, and the chosen value back.
  *
- * Every page turned a string list into `{ label, value }` options inline,
- * and unwrapped the single-value array the same way. Two spellings, once.
+ * Every page turned a list into `{ label, value }` inline and unwrapped the
+ * single-value array the same way. Two spellings, once.
  */
 
 export interface SelectOption {

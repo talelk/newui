@@ -1,4 +1,5 @@
 import { FilterBar, StatGrid } from '@newui/blocks'
+import { optionsOf } from '@newui/data'
 import {
   Badge,
   BottomSheet,
@@ -32,7 +33,6 @@ import {
 import { ActivityList } from '../examples/ActivityList'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import { Notice } from '../examples/Notice'
-import { optionsOf } from '../examples/select'
 import {
   createTaskRepository,
   TASK_STATUSES,

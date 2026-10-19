@@ -1,11 +1,10 @@
 import { type Accessor, createSignal } from 'solid-js'
 
 /**
- * One-step undo (H2, spec/examples-refresh.md §1).
+ * One-step undo.
  *
- * Three pages kept the same shape by hand — a snapshot signal, capture
- * before mutating, restore and clear on undo. `createUndo` owns that
- * signal; the page keeps owning its data and its notice copy.
+ * A snapshot signal, captured before a mutation, restored once. The page keeps
+ * owning its data and its notice copy; this owns the signal.
  */
 export interface Undo<T> {
   /** The captured value, or `undefined` when there is nothing to undo. */

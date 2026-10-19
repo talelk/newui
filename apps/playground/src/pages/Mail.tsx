@@ -1,4 +1,5 @@
 import { FilterBar } from '@newui/blocks'
+import { createUndo, isEmail, optionsOf } from '@newui/data'
 import { PaneLayout } from '@newui/layouts'
 import {
   Avatar,
@@ -14,7 +15,6 @@ import {
 } from '@newui/ui'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { CreateDialog } from '../examples/CreateDialog'
-import { isEmail } from '../examples/format'
 import {
   filterMail,
   initialMail,
@@ -24,8 +24,6 @@ import {
   patchMail,
 } from '../examples/mail-data'
 import { Notice } from '../examples/Notice'
-import { optionsOf } from '../examples/select'
-import { createUndo } from '../examples/undo'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
 import { WorkspacePage } from '../examples/WorkspacePage'
 

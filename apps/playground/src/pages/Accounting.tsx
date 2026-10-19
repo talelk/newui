@@ -7,6 +7,12 @@ import {
   useChartTokens,
 } from '@newui/charts'
 import {
+  usd as currency,
+  downloadCsv as downloadCSV,
+  optionsOf,
+  usdK,
+} from '@newui/data'
+import {
   Badge,
   Button,
   DateRangePicker,
@@ -24,11 +30,8 @@ import {
   type Transaction,
 } from '../examples/accounting-data'
 import type { DataTableColumn } from '../examples/DataTable'
-import { downloadCsv as downloadCSV } from '../examples/download'
-import { usd as currency, usdK } from '../examples/format'
 import { Notice } from '../examples/Notice'
 import { ScrollTable, TABLE_HEAD_CLASS } from '../examples/ScrollTable'
-import { optionsOf } from '../examples/select'
 import { WorkspacePage } from '../examples/WorkspacePage'
 
 const AccountingDialogs = lazy(() => import('./accounting/AccountingDialogs'))

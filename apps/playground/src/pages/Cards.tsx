@@ -1,3 +1,4 @@
+import { isEmail } from '@newui/data'
 import {
   Avatar,
   Badge,
@@ -15,7 +16,6 @@ import {
   TextInput,
 } from '@newui/ui'
 import { createSignal, For, type JSX, Show } from 'solid-js'
-import { isEmail } from '../examples/format'
 import { WorkspacePage } from '../examples/WorkspacePage'
 
 function CreateAccount(): JSX.Element {

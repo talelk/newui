@@ -4,10 +4,7 @@
     "examples/accounting-data.ts",
     "examples/DataTable.tsx",
     "examples/ScrollTable.tsx",
-    "examples/download.ts",
-    "examples/format.ts",
     "examples/Notice.tsx",
-    "examples/select.ts",
     "examples/WorkspacePage.tsx",
     "lib/examples.ts",
     "shell/ThemeMenu.tsx",
@@ -19,6 +16,7 @@
   "packages": [
     "@newui/blocks",
     "@newui/charts",
+    "@newui/data",
     "@newui/layouts",
     "@newui/ui",
     "@solidjs/router",

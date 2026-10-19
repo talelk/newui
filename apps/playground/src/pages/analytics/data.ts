@@ -1,4 +1,4 @@
-import { csvText } from '../../examples/download'
+import { csvText } from '@newui/data'
 
 export interface Transaction {
   id: string

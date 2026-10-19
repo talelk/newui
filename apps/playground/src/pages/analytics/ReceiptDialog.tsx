@@ -1,6 +1,6 @@
+import { usd as money } from '@newui/data'
 import { Badge, Button, Dialog } from '@newui/ui'
 import { type JSX, Show } from 'solid-js'
-import { usd as money } from '../../examples/format'
 import type { Transaction } from './data'
 
 export default function ReceiptDialog(props: {

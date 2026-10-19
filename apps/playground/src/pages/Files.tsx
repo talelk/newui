@@ -1,5 +1,6 @@
 import { FilterBar } from '@newui/blocks'
 import { NumberCard } from '@newui/charts'
+import { downloadBlob, first, optionsOf, bytes as size } from '@newui/data'
 import {
   Badge,
   BottomSheet,
@@ -13,11 +14,8 @@ import {
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { CreateDialog } from '../examples/CreateDialog'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
-import { downloadBlob } from '../examples/download'
 import { INITIAL, type WorkspaceFile } from '../examples/files-data'
-import { bytes as size } from '../examples/format'
 import { Notice } from '../examples/Notice'
-import { first, optionsOf } from '../examples/select'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
 import { WorkspacePage } from '../examples/WorkspacePage'
 

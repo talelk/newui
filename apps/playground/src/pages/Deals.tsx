@@ -6,6 +6,7 @@ import {
   type KanbanTone,
   StatGrid,
 } from '@newui/blocks'
+import { createUndo, first, usd as money, optionsOf } from '@newui/data'
 import { Avatar, Badge, Button, DatePicker, Select, TextInput } from '@newui/ui'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
 import { CreateDialog } from '../examples/CreateDialog'
@@ -18,10 +19,7 @@ import {
   STAGES,
   type Stage,
 } from '../examples/deals-data'
-import { usd as money } from '../examples/format'
 import { Notice } from '../examples/Notice'
-import { first, optionsOf } from '../examples/select'
-import { createUndo } from '../examples/undo'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
 import { WorkspacePage } from '../examples/WorkspacePage'
 

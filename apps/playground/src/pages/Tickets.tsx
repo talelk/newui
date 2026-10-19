@@ -1,4 +1,5 @@
 import { FilterBar, StatGrid } from '@newui/blocks'
+import { optionsOf } from '@newui/data'
 import {
   Badge,
   Button,
@@ -13,7 +14,6 @@ import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { CreateDialog } from '../examples/CreateDialog'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import { Notice } from '../examples/Notice'
-import { optionsOf } from '../examples/select'
 import {
   AGENTS,
   INITIAL,

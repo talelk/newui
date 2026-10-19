@@ -1,9 +1,8 @@
 /**
- * The example layer's downloads (H4, spec/examples-refresh.md §1).
+ * Saving a file, without the Blob/anchor/revoke dance every page wrote.
  *
- * The Blob + anchor + revoke dance was hand-copied into four pages, and the
- * CSV quoting into two. Both live here now; a page says what the file is
- * called and what it holds, nothing more.
+ * `downloadCsv` quotes every cell and doubles inner quotes, which is the part
+ * that is easy to get subtly wrong.
  */
 
 /** Save a Blob (or a local `File`) under `name`. */

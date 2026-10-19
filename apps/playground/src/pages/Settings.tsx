@@ -1,3 +1,4 @@
+import { isEmail } from '@newui/data'
 import {
   Avatar,
   Badge,
@@ -7,7 +8,6 @@ import {
   TextInput,
 } from '@newui/ui'
 import { createSignal, type JSX } from 'solid-js'
-import { isEmail } from '../examples/format'
 import { Notice } from '../examples/Notice'
 import { PageSection } from '../lib/PageSection'
 import { PageIntro } from '../shell/PageIntro'

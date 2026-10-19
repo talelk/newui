@@ -2,11 +2,8 @@
   "files": [
     "pages/Mail.tsx",
     "examples/CreateDialog.tsx",
-    "examples/format.ts",
     "examples/mail-data.ts",
     "examples/Notice.tsx",
-    "examples/select.ts",
-    "examples/undo.ts",
     "examples/WorkspaceNav.tsx",
     "examples/WorkspacePage.tsx",
     "lib/examples.ts",
@@ -15,6 +12,7 @@
   ],
   "packages": [
     "@newui/blocks",
+    "@newui/data",
     "@newui/layouts",
     "@newui/ui",
     "@solidjs/router",

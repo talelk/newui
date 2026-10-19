@@ -1,7 +1,6 @@
 {
   "files": [
     "pages/Compose.tsx",
-    "examples/download.ts",
     "examples/Notice.tsx",
     "examples/Panel.tsx",
     "examples/WorkspacePage.tsx",
@@ -11,6 +10,7 @@
     "lib/markdown.tsx"
   ],
   "packages": [
+    "@newui/data",
     "@newui/editor",
     "@newui/layouts",
     "@newui/ui",

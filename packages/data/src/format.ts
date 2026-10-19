@@ -1,9 +1,9 @@
 /**
- * The example layer's shared formatting (H3, spec/examples-refresh.md §1).
+ * Shared formatting: money, counts, sizes, addresses.
  *
- * Four near-identical `Intl.NumberFormat` USD copies lived in the data
- * modules and the kanban demo; they all read from here now. Zero
- * dependencies, so any lazy page or demo chunk can import it freely.
+ * Built once at module scope — an `Intl.NumberFormat` per render is the kind of
+ * cost that never shows in a profile and always shows in a list. The examples
+ * had four near-identical USD copies; this is the one.
  */
 
 const usdFormat = new Intl.NumberFormat('en-US', {

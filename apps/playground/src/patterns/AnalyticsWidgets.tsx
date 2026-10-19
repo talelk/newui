@@ -1,7 +1,7 @@
 import { NumberCard } from '@newui/charts'
+import { count, usd } from '@newui/data'
 import { Alert, Button } from '@newui/ui'
 import { createSignal, For, Show } from 'solid-js'
-import { count, usd } from '../examples/format'
 
 const CHANNELS = [
   { name: 'Direct', value: 8420 },

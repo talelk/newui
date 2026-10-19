@@ -1,8 +1,8 @@
 import { KanbanBoard, type KanbanColumn } from '@newui/blocks'
+import { usd as money } from '@newui/data'
 import { Avatar, Badge } from '@newui/ui'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
-import { usd as money } from '../examples/format'
 import { DemoFrame } from './demo-frame'
 
 interface Deal {

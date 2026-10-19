@@ -5,10 +5,7 @@
     "examples/DataTable.tsx",
     "examples/ScrollTable.tsx",
     "examples/deals-data.ts",
-    "examples/format.ts",
     "examples/Notice.tsx",
-    "examples/select.ts",
-    "examples/undo.ts",
     "examples/WorkspaceNav.tsx",
     "examples/WorkspacePage.tsx",
     "lib/examples.ts",
@@ -17,6 +14,7 @@
   ],
   "packages": [
     "@newui/blocks",
+    "@newui/data",
     "@newui/layouts",
     "@newui/ui",
     "@solidjs/router",

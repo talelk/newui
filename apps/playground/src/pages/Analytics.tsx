@@ -10,6 +10,13 @@ import {
   paletteColors,
   useChartTokens,
 } from '@newui/charts'
+import {
+  count,
+  createUndo,
+  downloadText,
+  usd as money,
+  usdK,
+} from '@newui/data'
 import { Alert, Badge, Button, Select, Switch } from '@newui/ui'
 import { useNavigate } from '@solidjs/router'
 import {
@@ -22,10 +29,7 @@ import {
   Suspense,
 } from 'solid-js'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
-import { downloadText } from '../examples/download'
-import { count, usd as money, usdK } from '../examples/format'
 import { Notice } from '../examples/Notice'
-import { createUndo } from '../examples/undo'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
 import { WorkspacePage } from '../examples/WorkspacePage'
 import {

@@ -50,6 +50,22 @@ module.exports = {
       },
     },
     {
+      name: 'data-is-headless',
+      severity: 'error',
+      comment:
+        'ADR-0012: @newui/data owns behaviour, not rendering. It imports solid-js and nothing from the visual packages, so a page can use it without paying for a component — and a component can never depend on a policy it might want to change.',
+      from: { path: '^packages/data/' },
+      to: { path: '^packages/(ui|blocks|layouts|tailwind|icons)/' },
+    },
+    {
+      name: 'nothing-below-imports-data',
+      severity: 'error',
+      comment:
+        'The data layer sits beside the component ladder, not under it. A component that needs formatting takes it from the app or the standard library; it may not reach sideways into the logic layer.',
+      from: { path: '^packages/(ui|blocks|layouts|tokens|tailwind|icons)/' },
+      to: { path: '^packages/data/' },
+    },
+    {
       name: 'packages-do-not-reach-apps',
       severity: 'error',
       comment: 'A shipped package must never import from the playground.',

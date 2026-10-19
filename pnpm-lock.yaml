@@ -277,6 +277,9 @@ importers:
       '@newui/code-editor':
         specifier: workspace:*
         version: link:../../packages/code-editor
+      '@newui/data':
+        specifier: workspace:*
+        version: link:../../packages/data
       '@newui/editor':
         specifier: workspace:*
         version: link:../../packages/editor
@@ -400,6 +403,12 @@ importers:
     devDependencies:
       solid-js:
         specifier: ^1.9.17
+        version: 1.9.17
+
+  packages/data:
+    devDependencies:
+      solid-js:
+        specifier: ^1.9.0
         version: 1.9.17
 
   packages/editor:

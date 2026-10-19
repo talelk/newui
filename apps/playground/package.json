@@ -14,6 +14,7 @@
     "@newui/blocks": "workspace:*",
     "@newui/charts": "workspace:*",
     "@newui/code-editor": "workspace:*",
+    "@newui/data": "workspace:*",
     "@newui/editor": "workspace:*",
     "@newui/icons": "workspace:*",
     "@newui/layouts": "workspace:*",

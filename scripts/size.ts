@@ -100,6 +100,14 @@ const ENTRIES: Entry[] = [
     forbid: ['"slider"', '"toast"', '"tree-view"', '"date-picker"', '"chart"'],
   },
   {
+    name: 'Data barrel',
+    file: 'scripts/fixtures/data.ts',
+    // The whole logic layer is formatting, selection, a snapshot signal and a
+    // Blob dance — it must never cost what a control costs.
+    budget: 6,
+    forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
+  },
+  {
     name: 'Full barrel',
     file: 'scripts/fixtures/all.ts',
     // Raised 132 → 140 (Combobox), 140 → 172 (DatePicker's
