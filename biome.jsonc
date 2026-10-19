@@ -47,6 +47,16 @@
   },
   "overrides": [
     {
+      // A scroll viewport is a tab stop by contract (WCAG 2.1.1), not by
+      // accident: a region that scrolls and cannot be reached from the keyboard
+      // is the defect `scrollable-region-focusable` names. The lint rule assumes
+      // `tabindex` on a non-interactive element is a mistake; here it is the fix.
+      "includes": ["packages/ui/src/components/ScrollArea/**"],
+      "linter": {
+        "rules": { "a11y": { "noNoninteractiveTabindex": "off" } }
+      }
+    },
+    {
       // The drawer's backdrop click. The keyboard path is the `<dialog>`'s own
       // Escape, which the element already owns — there is no second keyboard
       // affordance to add, and a key handler on the backdrop would be a

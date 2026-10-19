@@ -61,9 +61,12 @@ const Viewport: ParentComponent<ScrollAreaViewportProps> = (props) => {
     <div
       {...api().getViewportProps()}
       data-slot="scroll-area-viewport"
-      // Zag makes the viewport a tab stop exactly when its content overflows —
-      // the WCAG 2.1.1 answer for a scroll region whose own content offers
-      // nothing focusable — so it is not forced on for every short list.
+      // A scroll region whose content offers nothing focusable has to be
+      // reachable from the keyboard (WCAG 2.1.1), and that means *this* element
+      // is the tab stop. Zag also sets one when it has measured overflow, but it
+      // measures at mount — a viewport that grows later (fonts, images, a lazy
+      // list) would be scrollable and unreachable.
+      tabIndex={0}
       class={cn('h-full w-full', props.class)}
     >
       {props.children}
