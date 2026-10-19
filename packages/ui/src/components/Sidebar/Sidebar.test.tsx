@@ -273,7 +273,16 @@ describe('SidebarSection controlled state', () => {
   })
 })
 
-describe('SidebarCard action', () => {
+describe('SidebarCard', () => {
+  it('hides itself when the sidebar is a rail', () => {
+    render(() => (
+      <Sidebar collapsed>
+        <SidebarCard title="Trial ends soon" />
+      </Sidebar>
+    ))
+    expect(screen.queryByText('Trial ends soon')).toBeNull()
+  })
+
   it('hands the action a dismiss that fires onDismiss', async () => {
     const onDismiss = vi.fn()
     render(() => (

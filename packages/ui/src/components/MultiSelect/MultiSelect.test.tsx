@@ -154,7 +154,11 @@ describe('MultiSelect', () => {
     render(() => <MultiSelect options={OPTIONS} label="Status" loading />)
     await userEvent.click(inputOf())
     expect(await screen.findByText('Loading...')).toBeTruthy()
-    expect(screen.queryByRole('option')).toBeNull()
+    // The row is a *disabled option*: a listbox may only contain options
+    // (axe: aria-required-children), and none of them selectable.
+    const options = screen.queryAllByRole('option')
+    expect(options).toHaveLength(1)
+    expect(options[0]).toHaveAttribute('aria-disabled', 'true')
   })
 
   it('keeps every option when filterable is false', async () => {

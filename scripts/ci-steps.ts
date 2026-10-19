@@ -53,6 +53,11 @@ export const CI_STEPS: CiStep[] = [
     command: 'pnpm site:check',
     group: 'checks',
   },
+  {
+    name: 'Story index is current',
+    command: 'pnpm stories:check',
+    group: 'checks',
+  },
   { name: 'Docs site builds', command: 'pnpm docs:build', group: 'checks' },
   { name: 'Tests', command: 'pnpm test', group: 'checks' },
   {

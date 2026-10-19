@@ -2943,7 +2943,7 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/block/sidebar-01/index.tsx",
-    "implementation": "apps/playground/src/demos/sidebar-01.tsx",
+    "implementation": "apps/playground/src/stories/sidebar-01.stories.tsx",
     "documentation": "/blocks/compositions/sidebar-01",
     "tests": [
       "e2e/responsive-preview.spec.ts"
@@ -2970,7 +2970,7 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/block/demo-sidebar.tsx",
-    "implementation": "apps/playground/src/demos/demo-sidebar.tsx",
+    "implementation": "apps/playground/src/stories/demo-sidebar.stories.tsx",
     "documentation": "/blocks/compositions/demo-sidebar",
     "tests": [
       "e2e/responsive-preview.spec.ts"

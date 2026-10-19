@@ -109,11 +109,6 @@ export const NAV: NavSection[] = [
         href: '/spec',
         description: 'The deterministic route the tests drive.',
       },
-      {
-        title: 'Single demo',
-        href: '/play?c=Button',
-        description: 'One component, isolated — the docs embed this.',
-      },
     ],
   },
 ]

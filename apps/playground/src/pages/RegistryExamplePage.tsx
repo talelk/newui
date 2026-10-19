@@ -1,13 +1,13 @@
 import { A, useParams } from '@solidjs/router'
 import { createMemo, createResource, lazy, Show, Suspense } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
-import { DEMOS } from '../demos'
 import { COMPONENTS } from '../generated/components'
+import { STORIES } from '../generated/stories'
 import { LoadingNote } from '../lib/LoadingNote'
 import { REFERENCE_EXAMPLES } from '../lib/reference-examples'
 // The raw-sources glob lives in a `.ts` module: a glob call written in a
 // `.tsx` file breaks Vite 8's dependency scan (registry-example-sources.ts).
-import { registryExampleSources as sources } from '../lib/registry-example-sources'
+import { REGISTRY_EXAMPLE_SOURCES as sources } from '../lib/registry-example-sources'
 import { PageIntro } from '../shell/PageIntro'
 import { ThemeMenu } from '../shell/ThemeMenu'
 
@@ -23,6 +23,22 @@ const patterns: Record<
   'analytics-widgets': () => import('../patterns/AnalyticsWidgets'),
 }
 
+const PATTERN_FILES: Record<string, string> = {
+  carousel: 'Carousel',
+  command: 'Command',
+  layout: 'Layout',
+  navigation: 'Navigation',
+  verification: 'Verification',
+  'analytics-widgets': 'AnalyticsWidgets',
+}
+
+/** A story file's `Demo` as a lazily loaded component. */
+function storyDemo(
+  load: () => Promise<{ Demo: import('solid-js').Component }>,
+) {
+  return () => load().then((module) => ({ default: module.Demo }))
+}
+
 export function RegistryExamplePage() {
   const params = useParams()
   const entry = () =>
@@ -35,18 +51,26 @@ export function RegistryExamplePage() {
       entry()?.source === 'table-demo'
     )
       return {
-        Component: lazy(() => import('../demos/task-table')),
-        source: '../demos/task-table.tsx',
+        Component: lazy(
+          storyDemo(() => import('../stories/task-table.stories')),
+        ),
+        source: '../stories/task-table.stories.tsx',
       }
     const component = COMPONENTS.find((item) => item.slug === slug)
+    if (component) {
+      const story = STORIES[component.name]
+      return story
+        ? {
+            Component: lazy(storyDemo(story.load)),
+            source: `../stories/${slug}.stories.tsx`,
+          }
+        : undefined
+    }
     const pattern = patterns[slug]
-    const load = component ? DEMOS[component.name] : pattern
-    return load
+    return pattern
       ? {
-          Component: lazy(load),
-          source: component
-            ? `../demos/${slug}.tsx`
-            : `../patterns/${({ carousel: 'Carousel', command: 'Command', layout: 'Layout', navigation: 'Navigation', verification: 'Verification', 'analytics-widgets': 'AnalyticsWidgets' } as Record<string, string>)[slug]}.tsx`,
+          Component: lazy(pattern),
+          source: `../patterns/${PATTERN_FILES[slug]}.tsx`,
         }
       : undefined
   })

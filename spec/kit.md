@@ -40,7 +40,7 @@ copyable app to the parts that already exist.
 | Layouts (templates) | how does a page open | `@newui/layouts` | missing |
 | Logic | how does it behave | `@newui/data` | missing |
 | App | what do I copy | `apps/starter` + examples | missing |
-| Surface | how do I see any of it | Storybook | `/play` only |
+| Surface | how do I see any of it | Storybook | shipped (W1) |
 
 Rules (ADR-0012):
 
@@ -55,10 +55,11 @@ Rules (ADR-0012):
 ## W1 — Storybook, the surface
 
 Hosted in `apps/playground` (`.storybook/`, `storybook@10.6.2` +
-`storybook-solidjs-vite@10.7.2`, `@storybook/addon-a11y`). The ninety-three
-`src/demos/*.tsx` files are absorbed as `src/stories/*.stories.tsx`; each file
-keeps a non-story `Demo` export for the site's inline embeds and exposes its
-states as stories. `src/stories.ts` replaces `demos.tsx`; `/play` is deleted.
+`storybook-solidjs-vite@10.7.2`, `@storybook/addon-a11y`). The 91 demo files in
+`src/demos/` (plus two shared helpers) are absorbed as
+`src/stories/*.stories.tsx`; each file keeps a non-story `Demo` export for the
+site's inline embeds and exposes its states as stories. The generated
+`src/generated/stories.ts` replaces `demos.tsx`; `/play` is deleted.
 
 - **Taxonomy** — `Components/<group>/<Name>`, `Blocks/<Name>`, `Charts/<Name>`,
   `Editors/<Name>`, `Compositions/<Name>`.
@@ -66,12 +67,25 @@ states as stories. `src/stories.ts` replaces `demos.tsx`; `/play` is deleted.
   states; every overlay shows open/closed; data surfaces show
   loading/empty/error. The contract is `spec/states.md`; the coverage is
   checked by `pnpm stories:check` plus the browser sweep.
-- **Sweep** — every story in `index.json` is a unit (a `!sweep` tag is the rare
-  escape hatch) for the design-contract, coherence, a11y and memory specs;
+- **Sweep** — every story in `index.json` is a unit (a `no-sweep` tag is the
+  rare escape hatch) for the design-contract, coherence, a11y and memory specs;
   screenshots drive story URLs. Storybook serves on its own origin (6006 dev,
   6007 static) so embeds and the harness do not share the site's route space.
 - **Acceptance** — `/play` gone; docs embeds read stories; `stories:check`
   green in CI; sweeps pass at max coverage within budget.
+
+**Status (2026-10-19).** Landed. The 91 demos are absorbed into 91 story files;
+the generated index holds 182 stories (91 `Default` plus 89 state stories), and
+`spec/states.md` + `scripts/story-states.ts` are enforced by
+`pnpm stories`/`stories:check`. `/play` is deleted; the site's reference pages,
+`pnpm shots`, `docs:build` and the browser harness all read story URLs.
+Design-contract (one load per story, measured narrow-first), coherence, a11y,
+stress and the memory tripwires drive every story; `no-sweep` is the escape
+hatch. The per-state axe sweep found real defects — legend labels, the
+palette's empty listbox and group contrast, the combobox loading rows, the
+file-uploader label, a focusable scroll viewport, and the sidebar's card/clipped
+section header in the rail — fixed in this slice with tests. W2 (`layouts`)
+is next.
 
 ## W2 — `@newui/layouts`, the template level
 

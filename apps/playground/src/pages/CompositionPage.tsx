@@ -1,9 +1,10 @@
 import { useParams } from '@solidjs/router'
 import { Show } from 'solid-js'
-// The demo-sources glob lives in a `.ts` module: a glob call written in a
-// `.tsx` file breaks Vite 8's dependency scan (demo-sources.ts).
-import { demoSources as sources } from '../lib/demo-sources'
+import { STORIES } from '../generated/stories'
 import { ResponsivePreview } from '../lib/ResponsivePreview'
+// The story-sources glob lives in a `.ts` module: a glob call written in a
+// `.tsx` file breaks Vite 8's dependency scan (story-sources.ts).
+import { storySources as sources } from '../lib/story-sources'
 import { PageIntro } from '../shell/PageIntro'
 
 const compositions: Record<string, { title: string; demo: string }> = {
@@ -21,14 +22,18 @@ export function CompositionPage() {
             title={item().title}
             description="A copyable solid-ui block composition built from newui. This composition lives in the site; it is not a package export."
           />
-          <ResponsivePreview
-            title={item().title}
-            src={`/play?c=${item().demo}`}
-            source={() =>
-              sources[`../demos/${params['name']}.tsx`]?.() ??
-              Promise.resolve('')
-            }
-          />
+          <Show when={STORIES[item().demo]}>
+            {(story) => (
+              <ResponsivePreview
+                title={item().title}
+                story={story().id}
+                source={() =>
+                  sources[`../stories/${params['name']}.stories.tsx`]?.() ??
+                  Promise.resolve('')
+                }
+              />
+            )}
+          </Show>
         </article>
       )}
     </Show>

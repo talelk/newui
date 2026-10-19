@@ -183,11 +183,27 @@ interface Page {
 }
 
 /**
- * Live demos. The playground serves `/play?c=<Name>` (see
- * `apps/playground/src/demos.tsx`); a component page embeds it. Set
- * `NEWUI_DEMO_BASE` when the playground is served from another origin.
+ * Live demos. Storybook's static build answers on its own origin — a component
+ * page embeds `iframe.html?id=<story>` (see `pnpm stories` and `spec/states.md`).
+ * Set `NEWUI_STORYBOOK_BASE` when Storybook is served from another origin.
  */
-const DEMO_BASE = process.env.NEWUI_DEMO_BASE ?? 'http://localhost:4173'
+const STORYBOOK_BASE =
+  process.env['NEWUI_STORYBOOK_BASE'] ?? 'http://localhost:6006'
+/** Storybook's index, so a slug resolves to the story a deep link opens. */
+const STORY_INDEX = JSON.parse(
+  readFileSync(
+    path.join(root, 'apps/playground/src/generated/stories.json'),
+    'utf8',
+  ),
+) as { stories: Array<{ id: string; title: string; name: string }> }
+
+function storyIdFor(component: string): string | undefined {
+  const titled = STORY_INDEX.stories.filter(
+    (story) => story.title.split('/').at(-1) === component,
+  )
+  return (titled.find((candidate) => candidate.name === 'Default') ?? titled[0])
+    ?.id
+}
 const DEMO_COMPONENTS = new Set([
   'Alert',
   'Avatar',
@@ -239,7 +255,9 @@ function demoNameForSlug(slug: string): string | undefined {
 function demoFrame(slug: string): string {
   const name = demoNameForSlug(slug)
   if (!name) return ''
-  return `<div class="demo"><iframe src="${DEMO_BASE}/play?c=${name}" title="${esc(name)} live demo" loading="lazy"></iframe></div>`
+  const id = storyIdFor(name)
+  if (!id) return ''
+  return `<div class="demo"><iframe src="${STORYBOOK_BASE}/iframe.html?id=${id}&amp;viewMode=story" title="${esc(name)} live demo" loading="lazy"></iframe></div>`
 }
 
 // The runtime token variables, embedded so swatches and demos on the generated

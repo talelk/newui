@@ -9,23 +9,68 @@
  * `e2e/interaction.spec.ts`, and the component-level browser tests.
  *
  * Usage
- *   pnpm shots                        # every route, both themes, 1440 + 768 + 390
+ *   pnpm shots                        # every route + story spot-check, both
+ *                                     # themes, 1440 + 768 + 390
  *   pnpm shots /blocks /examples      # only these routes
+ *   pnpm shots story:Accordion        # only this story, on Storybook's origin
  *   pnpm shots --theme=dark           # one theme
  *   pnpm shots --dir=/tmp/compare     # somewhere else (e.g. a before/after pair)
  *
  * The examples use local data and avatar initials. A run waits for the local
  * brand image and webfonts to settle before capturing a deterministic view.
  */
-import { mkdirSync } from 'node:fs'
+import { mkdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import { chromium, type Page } from 'playwright'
 import { EXAMPLES } from '../apps/playground/src/lib/examples'
 
 import { startPreview } from './preview-server'
+import { STORYBOOK_PORT, serveStorybook } from './serve-storybook'
 
 const PORT = 4182
 const BASE = `http://localhost:${PORT}`
+const STORYBOOK_BASE = `http://localhost:${STORYBOOK_PORT}`
+
+/**
+ * The story spot-checks — the families the design loop watches while working
+ * on recipes. Stories are the unit now: `story:<Component>` selects one, and
+ * each picture is `iframe.html?id=…` with the theme as a URL global.
+ */
+const STORY_CHECKS = [
+  'Button',
+  'Combobox',
+  'DatePicker',
+  'Tree',
+  'Accordion',
+  'Collapsible',
+  'EmptyState',
+  'Pagination',
+  'ProgressCircle',
+  'Timeline',
+  'ToggleGroup',
+]
+
+/** Read Storybook's index once and resolve each name to its `Default` story. */
+const storyIndex = JSON.parse(
+  readFileSync(
+    path.join(process.cwd(), 'apps/playground/src/generated/stories.json'),
+    'utf8',
+  ),
+) as { stories: Array<{ id: string; title: string; name: string }> }
+
+function storyIdFor(component: string): string {
+  const titled = storyIndex.stories.filter(
+    (story) => story.title.split('/').at(-1) === component,
+  )
+  const story =
+    titled.find((candidate) => candidate.name === 'Default') ?? titled[0]
+  if (!story) throw new Error(`no story documents “${component}”`)
+  return story.id
+}
+
+function storyHref(component: string, theme: string): string {
+  return `${STORYBOOK_BASE}/iframe.html?id=${storyIdFor(component)}&viewMode=story&globals=theme:${theme}`
+}
 
 const args = process.argv.slice(2)
 const flag = (name: string): string | undefined =>
@@ -55,22 +100,24 @@ const ROUTES = [
       : [example.href, `${example.href}/fullscreen`],
   ),
   '/spec',
-  '/play?c=Button',
-  '/play?c=Combobox',
-  '/play?c=DatePicker',
-  '/play?c=Tree',
-  '/play?c=Accordion',
-  '/play?c=Collapsible',
-  '/play?c=EmptyState',
-  '/play?c=Pagination',
-  '/play?c=ProgressCircle',
-  '/play?c=Timeline',
-  '/play?c=ToggleGroup',
 ]
 
 const THEMES = themeFilter ? [themeFilter] : ['light', 'dark']
 const WIDTHS = [1440, 768, 390]
-const selected = routeArgs.length > 0 ? routeArgs : ROUTES
+const storyArgs = args
+  .filter((arg) => arg.startsWith('story:'))
+  .map((arg) => arg.slice('story:'.length))
+// A filter narrows both surfaces: route args select site routes, `story:` args
+// select stories. With no filter, everything runs.
+const selectedRoutes =
+  routeArgs.length > 0 ? routeArgs : storyArgs.length > 0 ? [] : ROUTES
+const selectedStories =
+  storyArgs.length > 0 ? storyArgs : routeArgs.length > 0 ? [] : STORY_CHECKS
+
+function storyFileName(component: string, theme: string, width: number) {
+  const slug = component.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
+  return `story-${slug}-${theme}-${width}.png`
+}
 
 function fileName(route: string, theme: string, width: number): string {
   const slug = route
@@ -81,6 +128,7 @@ function fileName(route: string, theme: string, width: number): string {
 }
 
 const preview = startPreview(PORT)
+const storybook = serveStorybook({ port: STORYBOOK_PORT })
 
 /**
  * Wait for the page to be *still*: fonts loaded, images settled, no pending
@@ -115,6 +163,7 @@ async function settle(page: Page) {
 
 try {
   await preview.ready
+  await storybook.ready
   mkdirSync(outDir, { recursive: true })
   const browser = await chromium.launch({ channel: 'chrome' })
   let written = 0
@@ -133,13 +182,27 @@ try {
       }, theme)
 
       const page = await context.newPage()
-      for (const route of selected) {
+      for (const route of selectedRoutes) {
         await page.goto(BASE + route, {
           waitUntil: 'networkidle',
           timeout: 60_000,
         })
         await settle(page)
         const file = fileName(route, theme, width)
+        await page.screenshot({
+          path: path.join(outDir, file),
+          fullPage: true,
+        })
+        written += 1
+        console.warn(`  ${file}`)
+      }
+      for (const component of selectedStories) {
+        await page.goto(storyHref(component, theme), {
+          waitUntil: 'networkidle',
+          timeout: 60_000,
+        })
+        await settle(page)
+        const file = storyFileName(component, theme, width)
         await page.screenshot({
           path: path.join(outDir, file),
           fullPage: true,
@@ -157,4 +220,5 @@ try {
   )
 } finally {
   preview.stop()
+  storybook.stop()
 }

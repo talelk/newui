@@ -26,6 +26,15 @@ with `/foundations`, browse `/components` and `/blocks`, or open
 `/examples/patterns` maps all 68 solid-ui registry examples to their newui
 compositions. Every page and live demo loads lazily.
 
+```sh
+pnpm storybook
+```
+
+Storybook is the isolated surface: every component, block, chart and
+composition on its own origin, with one story per state
+([`spec/states.md`](spec/states.md)). The site embeds the same story modules, so
+a demo is written once.
+
 ## Packages
 
 | Package | Responsibility |
@@ -45,7 +54,8 @@ remain read-only and are never shipped as runtime code.
 
 Read [AGENTS.md](AGENTS.md), [PHILOSOPHY.md](PHILOSOPHY.md),
 [CONTEXT.md](CONTEXT.md), then the component's contract under `spec/`.
-The [visual system](spec/visual-system.md),
+The [construction kit](spec/kit.md), [states](spec/states.md),
+[visual system](spec/visual-system.md),
 [migration notes](spec/migrations.md),
 [reference inventory](spec/reference-examples.md) and
 [TanStack integration](spec/tanstack-integration.md) describe the redesign.

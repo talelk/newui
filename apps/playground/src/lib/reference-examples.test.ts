@@ -1,8 +1,8 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { DEMOS } from '../demos'
 import { COMPONENTS } from '../generated/components'
+import { STORIES } from '../generated/stories'
 import { APPLICATION_FILES } from './application-files'
 import { EXAMPLES } from './examples'
 import { PATTERNS, REFERENCE_EXAMPLES } from './reference-examples'
@@ -38,9 +38,9 @@ describe('reference example coverage', () => {
       expect(manifest.packages, slug).toContain('solid-js')
     }
   })
-  it('gives every shipped reference component an isolated live demo', () => {
+  it('gives every shipped reference component an isolated story', () => {
     expect(
-      COMPONENTS.filter((entry) => entry.shipped && !DEMOS[entry.name]).map(
+      COMPONENTS.filter((entry) => entry.shipped && !STORIES[entry.name]).map(
         (entry) => entry.name,
       ),
     ).toEqual([])

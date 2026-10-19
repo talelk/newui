@@ -13,6 +13,7 @@ what a contract says, never the contract itself.
 ## Foundations
 
 - [The construction kit](kit.md) — the ladder, workstreams and the ratified decisions (plan of record).
+- [States](states.md) — the required-state contract every shipped component's story file is checked against.
 - [Visual system](visual-system.md) — typography, control sizing, surfaces, states and motion.
 - [Reference examples](reference-examples.md) — application and component example inventory.
 - [TanStack integration](tanstack-integration.md) — example-layer ownership and budgets.

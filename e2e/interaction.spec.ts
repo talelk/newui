@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { gotoStory, storyIdFor } from './_lib/stories'
 
 /**
  * Keyboard and focus behaviour — the parts only a real browser can prove.
@@ -152,9 +153,10 @@ test('date picker opens and closes the calendar', async ({ page }) => {
   await expect(page.getByRole('grid')).toBeHidden()
 })
 
-test('the per-component demo route renders a component', async ({ page }) => {
-  await page.goto('/play?c=Button')
-  // The docs embed this route in an iframe, so it must render standalone.
+test('the isolated story renders a component', async ({ page }) => {
+  await gotoStory(page, storyIdFor('Button'))
+  // The docs and Storybook both deep-link this story, so it must render
+  // standalone — no page chrome, no site context.
   await expect(page.getByRole('button', { name: 'Solid' })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Loading' })).toBeVisible()
   for (const name of ['Solid', 'Loading', 'Disabled', 'Add']) {

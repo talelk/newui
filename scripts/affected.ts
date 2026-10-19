@@ -124,6 +124,16 @@ const RULES: Rule[] = [
       /^packages\/blocks\/src/,
     ],
   },
+  {
+    match: 'Story index',
+    paths: [
+      /^apps\/playground\/\.storybook/,
+      /^apps\/playground\/src\/(stories|generated\/stories)/,
+      /serve-storybook/,
+      /scripts\/stories/,
+      /story-states/,
+    ],
+  },
   { match: 'Docs site builds', paths: [/^spec\//, /^packages\//, /docs\.ts/] },
   { match: 'Tests', paths: [TS], scopeable: true },
   { match: 'SSR smoke', paths: [TS], scopeable: false },
@@ -147,7 +157,7 @@ const RULES: Rule[] = [
     match: 'CSS emission',
     paths: [
       /^packages\/(ui|blocks|tailwind|tokens)\//,
-      /^apps\/playground\/src\/(demos|pages)/,
+      /^apps\/playground\/(src\/(stories|pages)|\.storybook)/,
       /tailwind/,
     ],
   },
@@ -167,7 +177,7 @@ const RULES: Rule[] = [
   {
     match: 'Browser harness',
     paths: [
-      /^apps\/playground\/src\/(pages|lib|demos|routes)/,
+      /^apps\/playground\/(src\/(pages|lib|stories|routes)|\.storybook)/,
       /^e2e\//,
       /playwright\.config/,
     ],

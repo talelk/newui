@@ -374,110 +374,127 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
             data-slot="multiselect-positioner"
             class="z-50"
           >
-            <div
-              {...api().getContentProps()}
-              data-slot="multiselect-content"
-              class="max-h-60 min-w-40 overflow-y-auto rounded-6 border border-outline-gray-1 bg-surface-elevation-1 p-1 text-ink-gray-9 shadow-lg focus-visible:outline-none"
-            >
-              <Show
-                when={!local.loading}
-                fallback={
-                  <div
-                    data-slot="multiselect-loading"
-                    class="flex items-center gap-2 px-2 py-1.5 text-base text-ink-gray-6"
-                  >
-                    <Spinner class="size-4" />
-                    <span>Loading...</span>
-                  </div>
-                }
+            {/*
+              The panel is presentation and the listbox owns only the rows: a
+              listbox may contain options and nothing else, so the select-all
+              footer lives beside the list, not inside it.
+            */}
+            <div class="flex max-h-60 min-w-40 flex-col rounded-6 border border-outline-gray-1 bg-surface-elevation-1 text-ink-gray-9 shadow-lg">
+              <div
+                {...api().getContentProps()}
+                data-slot="multiselect-content"
+                class="min-h-0 flex-1 overflow-y-auto p-1 focus-visible:outline-none"
               >
                 <Show
-                  when={filtered().length > 0}
+                  when={!local.loading}
                   fallback={
-                    <div class="px-2 py-4 text-center text-sm text-ink-gray-6">
-                      {local.emptyText ?? 'No results'}
+                    <div
+                      role="option"
+                      aria-disabled="true"
+                      data-slot="multiselect-loading"
+                      class="flex items-center gap-2 px-2 py-1.5 text-base text-ink-gray-6"
+                    >
+                      <span aria-hidden="true">
+                        <Spinner class="size-4" />
+                      </span>
+                      <span>Loading...</span>
                     </div>
                   }
                 >
-                  <For each={filteredGroups()}>
-                    {(group) => (
-                      <>
-                        <Show when={group.group && !group.hideLabel}>
-                          <div
-                            data-slot="multiselect-group-label"
-                            class="flex h-7 items-center px-2 text-sm-medium leading-tighter text-ink-gray-6"
-                          >
-                            {group.group}
-                          </div>
-                        </Show>
-                        <For each={group.options}>
-                          {(option) => (
+                  <Show
+                    when={filtered().length > 0}
+                    fallback={
+                      <div
+                        role="option"
+                        aria-disabled="true"
+                        class="px-2 py-4 text-center text-sm text-ink-gray-6"
+                      >
+                        {local.emptyText ?? 'No results'}
+                      </div>
+                    }
+                  >
+                    <For each={filteredGroups()}>
+                      {(group) => (
+                        <>
+                          <Show when={group.group && !group.hideLabel}>
                             <div
-                              {...api().getItemProps({ item: option })}
-                              data-slot="multiselect-item"
-                              class={cn(
-                                ROW,
-                                'data-[highlighted]:bg-surface-gray-3',
-                                'data-[state=checked]:text-ink-blue-6',
-                                'data-[disabled]:cursor-not-allowed data-[disabled]:text-ink-gray-4',
-                              )}
+                              data-slot="multiselect-group-label"
+                              class="flex h-7 items-center px-2 text-sm-medium leading-tighter text-ink-gray-6"
                             >
-                              <span class="flex min-w-0 flex-1 items-center gap-2">
-                                <Show when={option.icon}>
-                                  {(icon) => (
-                                    <Icon
-                                      icon={icon()}
-                                      class="size-4 shrink-0 text-ink-gray-6"
-                                    />
-                                  )}
-                                </Show>
-                                <span
-                                  {...api().getItemTextProps({ item: option })}
-                                  class="min-w-0"
-                                >
-                                  <span class="block truncate">
-                                    {option.label}
-                                  </span>
-                                  <Show when={option.description}>
-                                    <span class="block truncate text-p-sm text-ink-gray-6">
-                                      {option.description}
-                                    </span>
-                                  </Show>
-                                </span>
-                              </span>
-                              <span
-                                {...api().getItemIndicatorProps({
-                                  item: option,
-                                })}
-                                class="text-ink-blue-6"
-                              >
-                                <svg
-                                  viewBox="0 0 12 12"
-                                  class="size-3"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2"
-                                  aria-hidden="true"
-                                >
-                                  <path
-                                    d="M2 6.5 4.5 9 10 3"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                  />
-                                </svg>
-                              </span>
+                              {group.group}
                             </div>
-                          )}
-                        </For>
-                      </>
-                    )}
-                  </For>
+                          </Show>
+                          <For each={group.options}>
+                            {(option) => (
+                              <div
+                                {...api().getItemProps({ item: option })}
+                                data-slot="multiselect-item"
+                                class={cn(
+                                  ROW,
+                                  'data-[highlighted]:bg-surface-gray-3',
+                                  'data-[state=checked]:text-ink-blue-6',
+                                  'data-[disabled]:cursor-not-allowed data-[disabled]:text-ink-gray-4',
+                                )}
+                              >
+                                <span class="flex min-w-0 flex-1 items-center gap-2">
+                                  <Show when={option.icon}>
+                                    {(icon) => (
+                                      <Icon
+                                        icon={icon()}
+                                        class="size-4 shrink-0 text-ink-gray-6"
+                                      />
+                                    )}
+                                  </Show>
+                                  <span
+                                    {...api().getItemTextProps({
+                                      item: option,
+                                    })}
+                                    class="min-w-0"
+                                  >
+                                    <span class="block truncate">
+                                      {option.label}
+                                    </span>
+                                    <Show when={option.description}>
+                                      <span class="block truncate text-p-sm text-ink-gray-6">
+                                        {option.description}
+                                      </span>
+                                    </Show>
+                                  </span>
+                                </span>
+                                <span
+                                  {...api().getItemIndicatorProps({
+                                    item: option,
+                                  })}
+                                  class="text-ink-blue-6"
+                                >
+                                  <svg
+                                    viewBox="0 0 12 12"
+                                    class="size-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    aria-hidden="true"
+                                  >
+                                    <path
+                                      d="M2 6.5 4.5 9 10 3"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                    />
+                                  </svg>
+                                </span>
+                              </div>
+                            )}
+                          </For>
+                        </>
+                      )}
+                    </For>
+                  </Show>
                 </Show>
-              </Show>
+              </div>
 
               <div
                 data-slot="multiselect-footer"
-                class="mt-1 flex items-center justify-between gap-2 border-t border-outline-gray-1 px-1 pt-1"
+                class="flex shrink-0 items-center justify-between gap-2 border-t border-outline-gray-1 px-2 py-1"
               >
                 <button
                   type="button"

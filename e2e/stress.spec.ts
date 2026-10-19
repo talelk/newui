@@ -24,8 +24,8 @@ import { gotoDemo, inspectCoherence, settle } from './_lib/coherence'
  * property report, so a red run is reproducible without replaying the world.
  */
 
-/** Demos where layout pressure actually bites: dense, wrapping, scrolling. */
-const LAYOUT_DEMOS = [
+/** Stories where layout pressure actually bites: dense, wrapping, scrolling. */
+const LAYOUT_STORIES = [
   'Button',
   'Card',
   'TabButtons',
@@ -45,8 +45,8 @@ const LAYOUT_DEMOS = [
 /** Widths no fixed-size breakpoint catches — the in-between cases. */
 const INTERVAL_WIDTHS = [360, 501, 769, 1025]
 
-/** Demos that own a text input someone can paste anything into. */
-const INPUT_DEMOS = [
+/** Stories that own a text input someone can paste anything into. */
+const INPUT_STORIES = [
   'TextInput',
   'Textarea',
   'Password',
@@ -70,7 +70,7 @@ const TEXTY_INPUT =
 
 test.describe('text scale stress', () => {
   test.describe.configure({ timeout: 30_000 })
-  for (const name of LAYOUT_DEMOS) {
+  for (const name of LAYOUT_STORIES) {
     test(`${name} keeps its controls after 150% text`, async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 900 })
       await gotoDemo(page, name)
@@ -93,7 +93,7 @@ test.describe('text scale stress', () => {
 
 test.describe('width interval sweep', () => {
   test.describe.configure({ timeout: 60_000 })
-  for (const name of LAYOUT_DEMOS) {
+  for (const name of LAYOUT_STORIES) {
     test(`${name} holds every in-between width`, async ({ page }) => {
       for (const width of INTERVAL_WIDTHS) {
         await page.setViewportSize({ width, height: 900 })
@@ -112,7 +112,7 @@ test.describe('width interval sweep', () => {
 
 test.describe('unicode fuzz', () => {
   test.describe.configure({ timeout: 30_000 })
-  for (const name of INPUT_DEMOS) {
+  for (const name of INPUT_STORIES) {
     test(`${name} survives generated text`, async ({ page }, testInfo) => {
       await page.setViewportSize({ width: 1280, height: 900 })
       const pageErrors: string[] = []

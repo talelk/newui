@@ -95,7 +95,11 @@ describe('CommandPalette', () => {
   it('says so when nothing matches', async () => {
     palette()
     await userEvent.type(field(), 'zzzz')
-    expect(options()).toHaveLength(0)
+    // The message is the list's only child, and it is a disabled option: a
+    // listbox may not contain bare text (axe: aria-required-children).
+    const remaining = options()
+    expect(remaining).toHaveLength(1)
+    expect(remaining[0]).toHaveAttribute('aria-disabled', 'true')
     expect(screen.getByText('Nothing matches.')).toBeTruthy()
   })
 

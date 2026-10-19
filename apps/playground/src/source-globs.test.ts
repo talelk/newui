@@ -11,7 +11,7 @@ import { describe, expect, it } from 'vitest'
  * cold dev load pays for unbundled imports.
  *
  * So `.tsx` files must not even *mention* the call: globs live in `.ts`
- * modules (`lib/component-sources.ts`, `lib/demo-sources.ts`,
+ * modules (`lib/component-sources.ts`, `lib/story-sources.ts`,
  * `lib/registry-example-sources.ts`, `lib/package-guide-sources.ts`,
  * `lib/specs.ts`, `lib/application-sources.ts`) and `.tsx` files import them.
  * This test is the guard from the other side.

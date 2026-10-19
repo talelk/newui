@@ -30,7 +30,7 @@ import { BareLayout, SiteLayout } from './shell/SiteLayout'
  *     playground mounted all six sections on a single route and paid 219 kB
  *     gzip for the privilege.
  *
- * The harness routes (`/spec`, `/play`, and the full-screen mobile recipe)
+ * The harness routes (`/spec` and the full-screen mobile recipe)
  * render outside the site chrome on purpose: a docs embed must not carry a
  * masthead, and a screenshot must not move because one loaded.
  */
@@ -99,7 +99,6 @@ const Examples = page(() => import('./pages/Examples'), 'Examples')
 const NotFound = page(() => import('./pages/NotFound'), 'NotFound')
 const Discussions = page(() => import('./pages/Discussions'), 'Discussions')
 const Spec = page(() => import('./pages/Spec'), 'Spec')
-const Play = page(() => import('./pages/Play'), 'Play')
 
 /**
  * Wraps every route: the UI context each overlay and input reads, and the one
@@ -183,7 +182,6 @@ export const ROUTES: { path: string; title: string }[] = [
   { path: '/examples/discussions/fullscreen', title: 'Discussions' },
 
   { path: '/spec', title: 'Component spec' },
-  { path: '/play', title: 'Single demo' },
 ]
 
 const TITLES = new Map(ROUTES.map((route) => [route.path, route.title]))
@@ -305,7 +303,6 @@ export function AppRoutes(): JSX.Element {
           component={Discussions}
         />
         <Route path="/spec" component={Spec} />
-        <Route path="/play" component={Play} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>

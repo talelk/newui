@@ -76,7 +76,7 @@ module.exports = {
   options: {
     doNotFollow: { path: 'node_modules' },
     exclude: {
-      path: '(^|/)(dist|coverage|test-results|playwright-report|generated)/',
+      path: '(^|/)(dist|coverage|test-results|playwright-report|storybook-static|generated)/',
     },
     enhancedResolveOptions: {
       exportsFields: ['exports'],

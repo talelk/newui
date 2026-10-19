@@ -12,6 +12,9 @@ import { defineConfig, devices } from '@playwright/test'
  * set of components (no avatars, no network) so the measurements are stable.
  */
 const port = process.env['NEWUI_E2E_PORT'] ?? '4173'
+/** Storybook's static origin: the docs embed it, and every sweep drives it. */
+const storybookPort = process.env['NEWUI_STORYBOOK_PORT'] ?? '6007'
+const storybookBase = `http://localhost:${storybookPort}`
 
 export default defineConfig({
   testDir: 'e2e',
@@ -44,10 +47,23 @@ export default defineConfig({
    * the same input renders the same image on CI and on a laptop.
    */
   projects: [{ name: 'chrome', use: { ...devices['Desktop Chrome'] } }],
-  webServer: {
-    command: `pnpm --filter playground build && pnpm --filter playground preview --port ${port} --strictPort`,
-    url: `http://localhost:${port}/spec`,
-    reuseExistingServer: !process.env.CI && !process.env['NEWUI_E2E_PORT'],
-    timeout: 180_000,
-  },
+  webServer: [
+    {
+      // The site build is told where Storybook answers, so its "Open in
+      // Storybook" links and block previews resolve to the static origin the
+      // harness serves — never a guessed port.
+      command: `VITE_STORYBOOK_BASE=${storybookBase} pnpm --filter playground build && pnpm --filter playground preview --port ${port} --strictPort`,
+      url: `http://localhost:${port}/spec`,
+      reuseExistingServer: !process.env.CI && !process.env['NEWUI_E2E_PORT'],
+      timeout: 180_000,
+    },
+    {
+      // The story build is the other half of the surface: `iframe.html?id=…`
+      // on its own origin, exactly what a docs embed or a deep link loads.
+      command: `pnpm storybook:serve --port ${storybookPort} --build`,
+      url: `${storybookBase}/iframe.html`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 300_000,
+    },
+  ],
 })

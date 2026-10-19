@@ -58,8 +58,13 @@ function LegendEntry(props: {
   onToggle?: (name: string) => void
   onHighlight?: (name: string | null) => void
 }): JSX.Element {
-  const toggleLabel = () =>
-    `${props.item.hidden ? 'Show' : 'Hide'} ${props.item.label}`
+  // The accessible name has to contain everything visible inside the button
+  // (WCAG 2.5.3): the series label *and* the value hint.
+  const toggleLabel = () => {
+    const action = props.item.hidden ? 'Show' : 'Hide'
+    const hint = props.item.hint ? ` ${props.item.hint}` : ''
+    return `${action} ${props.item.label}${hint}`
+  }
 
   return (
     <button
@@ -106,17 +111,21 @@ function LegendEntry(props: {
         }}
       >
         {props.item.label}
+        {/* The hint stays inside the label's text flow so the visible string
+            ("Revenue 100") is one run — the accessible name has to contain it
+            (WCAG 2.5.3), and `"Revenue100"` would not. */}
+        <Show when={props.item.hint}>
+          {' '}
+          <span
+            style={{
+              color: 'var(--ink-gray-7)',
+              'font-variant-numeric': 'tabular-nums',
+            }}
+          >
+            {props.item.hint}
+          </span>
+        </Show>
       </span>
-      <Show when={props.item.hint}>
-        <span
-          style={{
-            color: 'var(--ink-gray-7)',
-            'font-variant-numeric': 'tabular-nums',
-          }}
-        >
-          {props.item.hint}
-        </span>
-      </Show>
     </button>
   )
 }

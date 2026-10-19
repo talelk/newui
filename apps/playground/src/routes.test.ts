@@ -127,9 +127,9 @@ describe('site structure', () => {
     const linked = new Set(
       NAV_ORDER.map((item) => item.href.split('?')[0] ?? item.href),
     )
-    // The two harness routes are reached by URL and by test, deliberately not
-    // by a nav entry, but they are still listed so they cannot 404.
-    const harness = new Set(['/spec', '/play'])
+    // The harness route is reached by URL and by test, deliberately not
+    // by a nav entry, but it is still listed so it cannot 404.
+    const harness = new Set(['/spec'])
     /** A parameterised route is reachable through its parent: `/components/:name`
      * is linked from `/components`, which the nav lists. */
     const parentOf = (path: string) =>

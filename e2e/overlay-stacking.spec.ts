@@ -1,4 +1,5 @@
 import { expect, type Page, test } from '@playwright/test'
+import { gotoStory, storyIdFor } from './_lib/stories'
 
 /**
  * Overlay stacking invariants — the dialog-under-other-elements bug, as a rule.
@@ -19,7 +20,7 @@ import { expect, type Page, test } from '@playwright/test'
  */
 
 interface OverlayDemo {
-  /** Demo key in `demos.tsx`. */
+  /** Component name, resolved to its `Default` story. */
   demo: string
   /** How the demo opens its overlay. */
   open: 'click' | 'hover' | 'right-click' | 'key'
@@ -63,8 +64,7 @@ const contentSlot = (_demo: string) =>
   '[data-slot$="-content"],[data-slot$="-listbox"],[data-slot$="-menu"]'
 
 async function openOverlay(page: Page, entry: OverlayDemo): Promise<void> {
-  await page.goto(`/play?c=${entry.demo}`)
-  await page.locator('main *').first().waitFor()
+  await gotoStory(page, storyIdFor(entry.demo))
 
   if (entry.open === 'key') {
     await page.keyboard.press(entry.key ?? 'Control+k')

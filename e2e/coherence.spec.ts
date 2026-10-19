@@ -9,13 +9,12 @@ import path from 'node:path'
 import { expect, test } from '@playwright/test'
 import {
   collectStyleVectors,
-  demoNames,
   divergingRoles,
-  gotoDemo,
   inspectCoherence,
   type KeyAggregate,
   mergeVectors,
 } from './_lib/coherence'
+import { gotoStory, storyIds } from './_lib/stories'
 
 /**
  * Coherence sweep — every shipped demo, held to the same generic rules.
@@ -35,38 +34,38 @@ import {
  * like the design system without *being* it is the drift this catches.
  */
 
-const DEMOS = demoNames()
+const STORIES = storyIds()
 
-/** Where each demo writes its sampled style vectors. */
+/** Where each story writes its sampled style vectors. */
 const VECTORS = path.join(process.cwd(), 'test-results', 'coherence-vectors')
 
-test('the sweep drives every shipped demo', () => {
-  // Same canary design-contract runs: if the parse breaks, the suite goes
+test('the sweep drives every shipped story', () => {
+  // Same canary design-contract runs: if the index read breaks, the suite goes
   // silent — so fail loudly, here, in both files.
-  expect(DEMOS.length).toBeGreaterThan(80)
+  expect(STORIES.length).toBeGreaterThan(80)
 })
 
-test.describe('each demo', () => {
+test.describe('each story', () => {
   test.describe.configure({ timeout: 30_000 })
 
-  for (const name of DEMOS) {
-    test(`${name} is coherent in the browser`, async ({ page }) => {
+  for (const id of STORIES) {
+    test(`${id} is coherent in the browser`, async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 900 })
-      await gotoDemo(page, name)
+      await gotoStory(page, id)
 
       const violations = await inspectCoherence(page)
-      // Collect before asserting: the merge test needs this demo's samples
+      // Collect before asserting: the merge test needs this story's samples
       // even when this one fails.
       const vectors = await collectStyleVectors(page)
       mkdirSync(VECTORS, { recursive: true })
       writeFileSync(
-        path.join(VECTORS, `${name}.json`),
-        JSON.stringify({ demo: name, vectors }),
+        path.join(VECTORS, `${id}.json`),
+        JSON.stringify({ demo: id, vectors }),
       )
 
       expect(
         violations.map((v) => `${v.rule} — ${v.target}: ${v.details}`),
-        `coherence violations in ${name}`,
+        `coherence violations in ${id}`,
       ).toEqual([])
     })
   }
@@ -74,9 +73,9 @@ test.describe('each demo', () => {
 
 test('peer roles resolve identically across the library', async () => {
   test.setTimeout(360_000)
-  const expected = new Set(DEMOS)
-  // The per-demo tests run in parallel; wait for the whole sweep, not a
-  // fixed sleep. Files for demos removed since a previous run are ignored —
+  const expected = new Set(STORIES)
+  // The per-story tests run in parallel; wait for the whole sweep, not a
+  // fixed sleep. Files for stories removed since a previous run are ignored —
   // presence, not mere count, is the condition.
   await expect
     .poll(
@@ -89,7 +88,7 @@ test('peer roles resolve identically across the library', async () => {
       },
       { timeout: 300_000, interval: 2_000 },
     )
-    .toBe(DEMOS.length)
+    .toBe(STORIES.length)
 
   const aggregates = new Map<string, KeyAggregate>()
   for (const file of readdirSync(VECTORS)) {

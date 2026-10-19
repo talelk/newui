@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { gotoStory, storyIdFor } from './_lib/stories'
 
 /**
  * Sidebar collapse, exercised where it can actually break: in rendered CSS.
@@ -18,7 +19,7 @@ const widthOf = (locator: import('@playwright/test').Locator) =>
 test.describe('sidebar collapse', () => {
   test('the component demo folds to its rail', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 })
-    await page.goto('/play?c=Sidebar')
+    await gotoStory(page, storyIdFor('Sidebar'))
 
     const nav = page.locator('[data-slot="sidebar"]')
     await expect(nav).toBeVisible()

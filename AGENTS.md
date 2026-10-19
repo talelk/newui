@@ -30,7 +30,7 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 | rich text | `@newui/editor` | TipTap 3 Solid editor + toolbar |
 | charts | `@newui/charts` | echarts Solid wrappers (SVG renderer) |
 | vite | `@newui/vite` | Frappe dev proxy · lucide auto-import · DocType types |
-| site | `apps/playground` | the docs site *and* the visual acceptance surface |
+| site | `apps/playground` | the docs site, Storybook's host, and the visual acceptance surface |
 
 The kit's direction is [`spec/kit.md`](./spec/kit.md) (ADR-0012): the ladder
 gains layouts (`@newui/layouts`), logic (`@newui/data`), the Storybook surface
@@ -52,7 +52,15 @@ architecture.
 ## The site (`apps/playground`)
 
 The playground became the documentation site; it keeps every harness route it
-had, and stays the surface the design work is reviewed on.
+had, hosts Storybook, and stays the surface the design work is reviewed on.
+
+Storybook is the isolated surface (`spec/kit.md`, W1): every component, block,
+chart and composition has one story file, `src/stories/<name>.stories.tsx`,
+with a non-story `Demo` (the site's inline embed) plus `Default` and the states
+[`spec/states.md`](./spec/states.md) requires. `pnpm storybook` serves it on
+**6006**; the built static output (`pnpm storybook:build`) answers on **6007**
+via `pnpm storybook:serve`, which is what the harness, `pnpm shots` and the docs
+build embed.
 
 | path | what it is |
 | --- | --- |
@@ -60,9 +68,12 @@ had, and stays the surface the design work is reviewed on.
 | `/components` · `/components/<name>` | the component reference, inside `ComponentsLayout` — same chrome, but the sidebar is the filterable index |
 | `/blocks` · `/blocks/<name>` | the same, for `@newui/blocks` |
 | `/spec` | the deterministic page the browser harness drives — no chrome, no network |
-| `/play?c=<Name>` | one component's demo; the docs embed it, and it is the screenshot unit |
 | `/examples/<slug>` · `/examples/<slug>/fullscreen` | one application guide with a persistent responsive preview; a bare application viewport |
 | `/charts` · `/editors` | generated chart and editor reference pages |
+
+Storybook is not a site route: it renders the same story modules on its own
+origin, and `pnpm stories` writes the index (`generated/stories.json`) that the
+harness, the docs embed and the sweep unit share.
 
 Three rules keep it fast, and each has a guardrail:
 
@@ -92,28 +103,30 @@ component to the library and running `pnpm api` + `pnpm site` produces its page.
   `import.meta.glob(..., '?raw')`, so `spec/` stays the single source of truth
   and each page downloads its own contract. The glob crosses the app root, which
   is why `vite.config.ts` allows exactly that one directory.
-- **One demo per file** (`demos/<name>.tsx`, lazily imported by `demos.ts`). As a
-  single module the demos imported every component in the library, so one
-  component page cost 231 kB gzip in 29 chunks; the initial split brought `/components/<name>` to
-  66 kB. `pnpm budget` measures the current routes.
+- **One story file per component** (`src/stories/<name>.stories.tsx`, lazily
+  imported by the generated `src/generated/stories.ts`). The file's non-story
+  `Demo` export is the site's inline embed — one demo, two surfaces. The
+  generated index is Storybook's own (`pnpm stories`), so the sweep unit and a
+  deep link cannot drift from what Storybook serves.
 - The shell imports no component; only the reference routes import the index.
-  That keeps the home page independent of the component registry and demos.
+  That keeps the home page independent of the component registry and stories.
 
 ### Blocks
 
 `@newui/blocks` is the composed layer: a component answers *what is this
 control*, a block answers *how does a page open*. Seven so far — `AppSidebar`,
 `PageToolbar`, `FilterBar`, `DetailHeader`, `StatGrid`, `AuthCard`,
-`KanbanBoard` — each with a demo, a contract in `spec/`, a generated page and a
+`KanbanBoard` — each with a story file, a contract in `spec/`, a generated page and a
 budget entry (`scripts/size.ts`, "Blocks barrel").
 
 A block may only import `@newui/ui`. If one needs a chart or an editor it belongs
 in that package's surface, not here — which is also why `pnpm size` asserts the
 blocks entry cannot reach the slider, the toast or the date picker.
 
-`pnpm shots` writes screenshots for every route × theme × width into
-`test-results/shots/` (gitignored, nothing asserts on them) — it is the loop the
-design work runs on, not a regression suite.
+`pnpm shots` writes screenshots for every route × theme × width, plus the story
+spot-checks on Storybook's origin, into `test-results/shots/` (gitignored,
+nothing asserts on them) — it is the loop the design work runs on, not a
+regression suite.
 
 ### Application and reference examples
 
@@ -122,7 +135,7 @@ share one documentation destination per family and respond to the actual viewpor
 registry examples have explicit destinations. `spec/reference-examples.md`
 documents the mapping and acceptance boundaries. `lib/examples.ts` owns the
 application catalog; `lib/reference-examples.ts` owns the registry mapping.
-Every shipped reference component must have an isolated lazy demo.
+Every shipped reference component must have an isolated lazy story.
 
 TanStack Solid Table, Virtual, Query and Form belong to example pages. Blocks
 still import only `@newui/ui`; charts and editors stay at the page layer.
@@ -197,6 +210,12 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
 - **Reference paths** (`pnpm refs:check`, `scripts/check-references.ts`):
   every `references/…` path mentioned in AGENTS/spec/README must exist — the
   guard against moving a checkout under the docs.
+- **Story index & state contract** (`pnpm stories:check`, `scripts/stories.ts` +
+  `scripts/story-states.ts`): Storybook's own index must match the committed
+  `generated/stories.json` and `generated/stories.ts`; every shipped component
+  must have a story file with `Default`, and every state
+  [`spec/states.md`](./spec/states.md) requires must exist. The spec is the
+  policy; `scripts/story-states.ts` is the machine copy.
 - **Site structure** (`apps/playground/src/routes.test.ts`): the nav tree and the
   route table must describe the same paths in both directions, and every page
   import in `routes.tsx` must be lazy. A sidebar link with no route and a route
@@ -208,8 +227,8 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
   switch/tooltip interaction, responsive overflow at 320/768/1280, RTL, 200%
   text zoom, and perf budgets (LCP, CLS, dialog latency, 2000-row list). The
   computed-style invariants that the screenshots were doing the work of:
-  `design-contract.spec.ts` (every demo in `demos.tsx` mounts, fits 375px, and
-  keeps its box metrics), `overlay-stacking.spec.ts` (every overlay panel is
+  `design-contract.spec.ts` (every story in the generated index mounts, fits
+  375px, and keeps its box metrics — one load per story, three measurements), `overlay-stacking.spec.ts` (every overlay panel is
   portal-mounted, hit-tests above its siblings, and closes on Escape),
   `style-tokens.spec.ts` (every colour the browser resolves on `/spec` is a
   semantic token, in both themes), `chrome-scrollbars.spec.ts` (nothing inside
@@ -219,12 +238,12 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
   prints any test that passed only after a retry — a green retry is not an
   excuse for a flake.
 - **Coherence sweep** (`e2e/coherence.spec.ts`, engine in `e2e/_lib/coherence.ts`):
-  every demo in `demos.tsx` in a real browser must report zero of four generic
-  violations — viewport overflow, clipped content, text truncated with no
-  escape hatch, and controls whose every sampled hit point lands elsewhere
-  (the invisible-overlay bug as a rule). The same pass samples each
+  every story in `generated/stories.json` in a real browser must report zero of
+  four generic violations — viewport overflow, clipped content, text truncated
+  with no escape hatch, and controls whose every sampled hit point lands
+  elsewhere (the invisible-overlay bug as a rule). The same pass samples each
   `data-slot` element's computed style into role vectors;
-  `peer roles resolve identically` compares semantic peers across *all* demos
+  `peer roles resolve identically` compares semantic peers across *all* stories
   and fails on *new* drift — today's measured drift is pinned in
   `e2e/role-drift.baseline.json` and shrinks via `UPDATE_ROLE_DRIFT=1`.
 - **Stress sweeps** (`e2e/stress.spec.ts`): 150% text scale, a sweep of the
@@ -277,11 +296,11 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
   (`inlineCss` in `apps/playground/vite.config.ts`, removing a render-blocking
   round trip) and code-splits every route with dynamic imports. A library must
   not do either — consumers own their asset pipeline.
-- **Measured checkpoint** (shell/blocks/charts polish pass, re-measured with
-  `pnpm size` + `pnpm budget`): `cn()` 6.40 kB · `Button` 8.68 kB ·
-  `Button + Dialog` 30.08 kB · full barrel 227.80 kB · blocks barrel 77.16 kB
-  (gzip, `solid-js` external). Site: home (`/`) 54.6 kB, analytics fullscreen
-  312.6 kB, tasks fullscreen 171.9 kB, accounting fullscreen 323.3 kB — every
+- **Measured checkpoint** (Storybook/states pass, re-measured with `pnpm size`
+  + `pnpm budget`): `cn()` 6.40 kB · `Button` 8.68 kB · `Button + Dialog`
+  30.08 kB · full barrel 228.44 kB · blocks barrel 77.66 kB (gzip, `solid-js`
+  external). Site: home (`/`) 55.3 kB, analytics fullscreen 337.0 kB, tasks
+  fullscreen 180.2 kB, accounting fullscreen 331.7 kB — every
   entry and route within its unchanged budget. Treat these as checkpoint measurements;
   `pnpm size` and `pnpm budget` provide current evidence and enforce the limits.
 - **Removed `tailwind-variants`** (it bundled its own merge integration) in
@@ -324,8 +343,13 @@ still import only `@newui/ui`; charts and editors stay at the page layer.
 
 ```
 pnpm dev            # site (dev server)
+pnpm storybook      # Storybook, the isolated surface (6006)
+pnpm storybook:build # static Storybook build (storybook-static/)
+pnpm storybook:serve # serve the static build (6007; harness, shots, docs)
+pnpm stories        # regenerate generated/stories.json + stories.ts from Storybook's index
+pnpm stories:check  # fail on stale index or a missing required state (spec/states.md)
 pnpm build          # build all packages
-pnpm shots          # screenshots: every route × theme × width (test-results/shots)
+pnpm shots          # screenshots: every route × theme × width + story spot-checks
 pnpm review /spec   # advisory visual review of live routes (test-results/review)
 pnpm site           # regenerate the component registry + per-component API slices
 pnpm budget         # per-route gzip budget, measured in a real browser

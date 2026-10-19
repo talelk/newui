@@ -10,6 +10,7 @@ import {
   Suspense,
 } from 'solid-js'
 import { LoadingNote } from './LoadingNote'
+import { type StoryGlobals, storyUrl } from './storybook'
 
 export const VIEWPORTS = {
   mobile: { label: 'Mobile', width: 390, height: 844 },
@@ -153,7 +154,13 @@ function SourcePanel(props: {
 
 function Preview(props: {
   title: string
+  /** A same-origin document; theme and direction are mirrored into it. */
   src?: string
+  /**
+   * A Storybook story id. The frame is cross-origin, so theme and direction
+   * ride the URL globals instead and the frame reloads when they change.
+   */
+  story?: string
   source: () => Promise<string | PreviewSources>
   children?: JSX.Element
 }): JSX.Element {
@@ -164,6 +171,20 @@ function Preview(props: {
   const [tab, setTab] = createSignal<'preview' | 'source'>('preview')
   const [sourceOpened, setSourceOpened] = createSignal(false)
   const dimensions = () => VIEWPORTS[viewport()]
+  /**
+   * The host's scheme and direction, as primitives so a re-read that changed
+   * nothing cannot reload the frame. `sync` keeps them current.
+   */
+  const [theme, setTheme] = createSignal<StoryGlobals['theme']>(
+    document.documentElement.dataset['theme'] === 'dark' ? 'dark' : 'light',
+  )
+  const [dir, setDir] = createSignal<StoryGlobals['dir']>(
+    document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr',
+  )
+  const frameSrc = () =>
+    props.story
+      ? storyUrl(props.story, { theme: theme(), dir: dir() })
+      : props.src
   let frame: HTMLIFrameElement | undefined
   let stage: HTMLDivElement | undefined
   const [stageWidth, setStageWidth] = createSignal(0)
@@ -188,6 +209,10 @@ function Preview(props: {
   let observer: MutationObserver | undefined
   let releaseDocument: (() => void) | undefined
   const sync = () => {
+    setTheme(
+      document.documentElement.dataset['theme'] === 'dark' ? 'dark' : 'light',
+    )
+    setDir(document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr')
     const root = frame?.contentDocument?.documentElement
     if (!root) return
     root.dataset['theme'] = document.documentElement.dataset['theme'] ?? 'light'
@@ -289,7 +314,7 @@ function Preview(props: {
             )}
           </For>
         </fieldset>
-        <Show when={props.src}>
+        <Show when={props.src ?? props.story}>
           <fieldset aria-label="Preview viewport" class="ms-auto flex gap-1">
             <For
               each={
@@ -320,7 +345,7 @@ function Preview(props: {
             {dimensions().width} × {dimensions().height}
           </output>
           <a
-            href={props.src}
+            href={frameSrc()}
             target="_blank"
             rel="noreferrer"
             aria-label="Open fullscreen"
@@ -336,10 +361,10 @@ function Preview(props: {
         ref={stage}
         hidden={tab() !== 'preview'}
         class="max-w-full overflow-auto"
-        classList={{ 'max-h-[70dvh]': !!props.src }}
+        classList={{ 'max-h-[70dvh]': !!(props.src ?? props.story) }}
       >
         <Show
-          when={props.src}
+          when={props.src ?? props.story}
           fallback={<div class="p-3">{props.children}</div>}
         >
           <div
@@ -351,7 +376,7 @@ function Preview(props: {
             <iframe
               ref={frame}
               title={`${props.title} preview`}
-              src={props.src}
+              src={frameSrc()}
               width={dimensions().width}
               height={dimensions().height}
               loading="lazy"
@@ -366,7 +391,10 @@ function Preview(props: {
         </Show>
       </div>
       <div hidden={tab() !== 'source'}>
-        <Show when={sourceOpened() && (props.src ?? props.title)} keyed>
+        <Show
+          when={sourceOpened() && (props.src ?? props.story ?? props.title)}
+          keyed
+        >
           {(key) => <SourcePanel sourceKey={key} source={props.source} />}
         </Show>
       </div>
@@ -374,10 +402,16 @@ function Preview(props: {
   )
 }
 
-/** Changing dimensions preserves the document, its machines and domain state. */
+/**
+ * A framed preview. `src` renders a same-origin document and mirrors the
+ * host's theme into it; `story` renders a Storybook story cross-origin, so
+ * its theme rides URL globals instead. Changing dimensions preserves the
+ * document, its machines and domain state.
+ */
 export function ResponsivePreview(props: {
   title: string
-  src: string
+  src?: string
+  story?: string
   source: () => Promise<string | PreviewSources>
 }): JSX.Element {
   return <Preview {...props} />

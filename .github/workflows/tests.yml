@@ -67,6 +67,10 @@ jobs:
         if: ${{ !cancelled() }}
         run: pnpm site:check
 
+      - name: Story index is current
+        if: ${{ !cancelled() }}
+        run: pnpm stories:check
+
       - name: Docs site builds
         if: ${{ !cancelled() }}
         run: pnpm docs:build

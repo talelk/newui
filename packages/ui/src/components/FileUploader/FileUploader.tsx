@@ -136,6 +136,15 @@ function FileUploaderControl(props: ControlProps): JSX.Element {
     return `Up to ${limit} files`
   }
 
+  // The dropzone's accessible name must contain its visible text (WCAG 2.5.3):
+  // the field label alone is not enough while the instruction is on screen.
+  const instructionId = `${machineId}:instruction`
+  const hintId = `${machineId}:hint`
+  const dropzoneLabelledBy = () =>
+    [field?.labelId(), instructionId, hint() ? hintId : undefined]
+      .filter(Boolean)
+      .join(' ')
+
   return (
     <div
       {...api().getRootProps()}
@@ -147,7 +156,7 @@ function FileUploaderControl(props: ControlProps): JSX.Element {
       {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: role="button" is supplied by Zag's getDropzoneProps spread. */}
       <div
         {...api().getDropzoneProps()}
-        aria-labelledby={field ? field.labelId() : undefined}
+        aria-labelledby={dropzoneLabelledBy()}
         aria-describedby={field?.describedBy()}
         data-slot="file-uploader-dropzone"
         class={cn(
@@ -160,13 +169,15 @@ function FileUploaderControl(props: ControlProps): JSX.Element {
         )}
       >
         <span class="lucide-upload size-5 text-ink-gray-6" aria-hidden="true" />
-        <span class="text-base text-ink-gray-8">
+        <span id={instructionId} class="text-base text-ink-gray-8">
           {local.multiple
             ? 'Drag and drop files here, or click to browse'
             : 'Drag and drop a file here, or click to browse'}
         </span>
         <Show when={hint()}>
-          <span class="text-p-sm text-ink-gray-6">{hint()}</span>
+          <span id={hintId} class="text-p-sm text-ink-gray-6">
+            {hint()}
+          </span>
         </Show>
       </div>
 

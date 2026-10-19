@@ -8,6 +8,10 @@ docs/
 *.log
 .DS_Store
 
+# Storybook's static output: built to serve story URLs to the harness, shots
+# and the docs build — regenerated output, never committed.
+apps/playground/storybook-static/
+
 # Reference checkouts, kept read-only for porting. Never committed: 64 MB of
 # vendored source across three checkouts.
 references/

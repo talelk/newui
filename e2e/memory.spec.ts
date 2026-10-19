@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { createMemoryProbe, mb, measureChurn } from './_lib/memory'
+import { gotoStory, storyIdFor } from './_lib/stories'
 
 /**
  * Memory — heap retention and leak tripwires, measured against forced GC.
@@ -76,8 +77,7 @@ test.describe('overlay churn', () => {
       page,
     }) => {
       await page.setViewportSize({ width: 1280, height: 900 })
-      await page.goto(`/play?c=${demo}`)
-      await page.locator('main > *').first().waitFor()
+      await gotoStory(page, storyIdFor(demo))
       await page.waitForTimeout(200)
 
       const probe = await createMemoryProbe(page)

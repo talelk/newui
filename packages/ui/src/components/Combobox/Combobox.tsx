@@ -315,10 +315,14 @@ function ComboboxControl(props: ControlProps): JSX.Element {
                 when={!local.loading}
                 fallback={
                   <div
+                    role="option"
+                    aria-disabled="true"
                     data-slot="combobox-loading"
                     class="flex items-center gap-2 px-2 py-1.5 text-base text-ink-gray-6"
                   >
-                    <Spinner class="size-4" />
+                    <span aria-hidden="true">
+                      <Spinner class="size-4" />
+                    </span>
                     <span>Loading...</span>
                   </div>
                 }
@@ -326,7 +330,11 @@ function ComboboxControl(props: ControlProps): JSX.Element {
                 <Show
                   when={filtered().length > 0}
                   fallback={
-                    <div class="px-2 py-4 text-center text-sm text-ink-gray-6">
+                    <div
+                      role="option"
+                      aria-disabled="true"
+                      class="px-2 py-4 text-center text-sm text-ink-gray-6"
+                    >
                       {local.emptyText ?? 'No results'}
                     </div>
                   }

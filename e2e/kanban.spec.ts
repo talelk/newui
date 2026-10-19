@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { gotoStory, storyIdFor } from './_lib/stories'
 
 /**
  * The board's gesture, in a real browser.
@@ -10,10 +11,11 @@ import { expect, test } from '@playwright/test'
  * the card lands in, and that a card can be moved with no pointer at all.
  */
 
-const DEMO = '/play?c=KanbanBoard'
+const openBoard = (page: import('@playwright/test').Page) =>
+  gotoStory(page, storyIdFor('KanbanBoard'))
 
 test('a card can be dragged into another column', async ({ page }) => {
-  await page.goto(DEMO)
+  await openBoard(page)
 
   const card = page.locator('[data-kanban-id="D-1"]')
   const target = page.locator('[data-kanban-column="negotiation"]')
@@ -59,7 +61,7 @@ test('a card can be dragged into another column', async ({ page }) => {
 })
 
 test('Escape drops the card back where it started', async ({ page }) => {
-  await page.goto(DEMO)
+  await openBoard(page)
 
   const card = page.locator('[data-kanban-id="D-1"]')
   const bounds = await card.boundingBox()
@@ -85,7 +87,7 @@ test('Escape drops the card back where it started', async ({ page }) => {
 })
 
 test('a card can be moved with the keyboard alone', async ({ page }) => {
-  await page.goto(DEMO)
+  await openBoard(page)
 
   await page.getByRole('button', { name: 'Actions for Globex' }).click()
   await page.getByRole('menuitem', { name: 'Ready to close' }).click()
@@ -99,7 +101,7 @@ test('a card can be moved with the keyboard alone', async ({ page }) => {
 test('the board scrolls sideways with the keyboard and keeps its columns', async ({
   page,
 }) => {
-  await page.goto(DEMO)
+  await openBoard(page)
 
   const scroller = page
     .locator('[data-slot="kanban-board"] [data-slot="scroll-area-viewport"]')

@@ -31,7 +31,7 @@ optional collapsed rail, collapsible sections and status cards.
 | `SidebarRail` / `SidebarRailItem` | 50px icon-only rail; item `variant` (`subtle`/`ghost`), `description`, `badge` + `badgeStyle` (`count`/`dot`), `route`/`href`, active indicator, tooltip. |
 | `SidebarCollapseToggle` | a `SidebarItem` that toggles the sidebar; `expandLabel`/`collapseLabel`. |
 | `SidebarSection` | labelled, optionally collapsible group (accordion ARIA); controlled via `collapsed`/`onCollapsedChange`. |
-| `SidebarCard` | compact status card: `theme`, `title`, `description`, `icon`, `action` (its `onClick` receives `{ dismiss }`), `dismissible`. |
+| `SidebarCard` | compact status card: `theme`, `title`, `description`, `icon`, `action` (its `onClick` receives `{ dismiss }`), `dismissible`. Unmounts when the sidebar is a rail, like `SidebarSearch`. |
 
 `useSidebar()` returns `{ collapsed, toggle }` for a custom toggle.
 

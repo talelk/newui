@@ -299,8 +299,12 @@ export function CommandPalette(props: CommandPaletteProps): JSX.Element {
               */}
               {props.children}
               <Show when={isEmpty()}>
+                {/* A listbox may only contain options/groups: the empty
+                    message is a disabled option, the one shape a screen
+                    reader can address inside the list. */}
                 <div
-                  role="presentation"
+                  role="option"
+                  aria-disabled="true"
                   class="px-2 py-6 text-center text-base text-ink-gray-6"
                 >
                   {props.empty ?? 'Nothing matches.'}
@@ -333,7 +337,7 @@ export function CommandGroup(props: CommandGroupProps): JSX.Element {
       <Show when={context.query() === ''}>
         <div
           data-slot="command-group-label"
-          class="px-2 pt-2 pb-1 text-sm-medium text-ink-gray-5"
+          class="px-2 pt-2 pb-1 text-sm-medium text-ink-gray-6"
         >
           {props.label}
         </div>

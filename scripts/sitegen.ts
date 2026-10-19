@@ -730,7 +730,7 @@ const references: ReferenceSurface[] = [
   })),
   ...['sidebar-01/index', 'demo-sidebar'].map((name) => ({
     source: `references/solid-ui-main/apps/docs/src/registry/block/${name}.tsx`,
-    implementation: `apps/playground/src/demos/${name.split('/')[0]}.tsx`,
+    implementation: `apps/playground/src/stories/${name.split('/')[0]}.stories.tsx`,
     documentation: `/blocks/compositions/${name.split('/')[0]}`,
     tests: ['e2e/responsive-preview.spec.ts'],
     acceptance: 'pending' as const,

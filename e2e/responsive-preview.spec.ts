@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { gotoStory, storyIdFor } from './_lib/stories'
 
 test.use({ reducedMotion: 'reduce' })
 
@@ -161,7 +162,7 @@ test('block preview has an exact viewport and keeps its overlays in the frame', 
 test('bottom sheet supports drag threshold, cancellation and dismissal', async ({
   page,
 }) => {
-  await page.goto('/play?c=BottomSheet')
+  await gotoStory(page, storyIdFor('BottomSheet'))
   await page.getByRole('button', { name: 'Open preferences drawer' }).click()
   const handle = page.locator('[data-slot="bottom-sheet-handle"]')
   const box = await handle.boundingBox()
@@ -188,7 +189,7 @@ test('sheet touch gestures respect scrolling, cancellation and dismissible', asy
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/play?c=BottomSheet')
+  await gotoStory(page, storyIdFor('BottomSheet'))
   const session = await page.context().newCDPSession(page)
   const touch = (
     type: 'touchStart' | 'touchMove' | 'touchEnd' | 'touchCancel',

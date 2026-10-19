@@ -98,6 +98,35 @@
       "linter": {
         "rules": { "complexity": { "noImportantStyles": "off" } }
       }
+    },
+    {
+      // `Error` is a required state-story name (spec/states.md): the export is
+      // a Storybook story, not a shadow of the global constructor.
+      "includes": ["apps/playground/src/stories/**"],
+      "linter": {
+        "rules": {
+          "suspicious": { "noShadowRestrictedNames": "off" }
+        }
+      }
+    },
+    {
+      // A listbox may contain only options and groups (axe's
+      // `aria-required-children`), and the loading/empty placeholder is a
+      // disabled *option*. Options are addressed by `aria-activedescendant`
+      // and stay unfocusable on purpose (focus never leaves the field), which
+      // is the same carve-out the CommandPalette documents above.
+      "includes": [
+        "packages/ui/src/components/Combobox/**",
+        "packages/ui/src/components/MultiSelect/**"
+      ],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useFocusableInteractive": "off",
+            "useSemanticElements": "off"
+          }
+        }
+      }
     }
   ]
 }

@@ -719,6 +719,10 @@ export function SidebarSection(props: SidebarSectionProps): JSX.Element {
         <div class="relative flex items-center gap-1 px-2 py-1.5">
           <h3
             id={headingId}
+            // In the rail the label is clipped to zero width; `inert` keeps the
+            // clipped toggle out of the tab order and the accessibility tree
+            // while the fade/slide still animates.
+            inert={sidebarCollapsed()}
             class={cn(
               'text-sm leading-tighter text-ink-gray-6 transition-all duration-300',
               sidebarCollapsed()
@@ -798,6 +802,7 @@ const CARD_ICON_INK: Record<NonNullable<SidebarCardProps['theme']>, string> = {
 
 /** A compact status card for the sidebar: icon, copy and an optional action. */
 export function SidebarCard(props: SidebarCardProps): JSX.Element {
+  const { collapsed } = useSidebar()
   const [local] = splitProps(props, [
     'theme',
     'title',
@@ -811,55 +816,59 @@ export function SidebarCard(props: SidebarCardProps): JSX.Element {
   ])
   const theme = () => local.theme ?? 'gray'
 
+  // A card is copy and an action; there is no rail form of it, so it unmounts
+  // with the rest of the expanded content (like `SidebarSearch`).
   return (
-    <div
-      data-slot="sidebar-card"
-      data-theme={theme()}
-      class={cn(
-        'flex flex-col gap-1 rounded-5 border border-outline-gray-2 bg-surface-base p-3 text-ink-gray-8',
-        local.class,
-      )}
-    >
-      <div class="flex items-start gap-2">
-        <Icon
-          icon={local.icon ?? CARD_ICON[theme()]}
-          class={cn('mt-0.5 size-4 shrink-0', CARD_ICON_INK[theme()])}
-        />
-        <div class="flex flex-1 flex-col gap-0.5">
-          <Show when={local.title}>
-            <span class="text-sm-medium leading-tighter">{local.title}</span>
-          </Show>
-          <Show when={local.description}>
-            <span class="text-p-sm text-ink-gray-6">{local.description}</span>
-          </Show>
-          <Show when={local.children}>
-            <div class="text-p-sm text-ink-gray-6">{local.children}</div>
+    <Show when={!collapsed()}>
+      <div
+        data-slot="sidebar-card"
+        data-theme={theme()}
+        class={cn(
+          'flex flex-col gap-1 rounded-5 border border-outline-gray-2 bg-surface-base p-3 text-ink-gray-8',
+          local.class,
+        )}
+      >
+        <div class="flex items-start gap-2">
+          <Icon
+            icon={local.icon ?? CARD_ICON[theme()]}
+            class={cn('mt-0.5 size-4 shrink-0', CARD_ICON_INK[theme()])}
+          />
+          <div class="flex flex-1 flex-col gap-0.5">
+            <Show when={local.title}>
+              <span class="text-sm-medium leading-tighter">{local.title}</span>
+            </Show>
+            <Show when={local.description}>
+              <span class="text-p-sm text-ink-gray-6">{local.description}</span>
+            </Show>
+            <Show when={local.children}>
+              <div class="text-p-sm text-ink-gray-6">{local.children}</div>
+            </Show>
+          </div>
+          <Show when={local.dismissible}>
+            <button
+              type="button"
+              aria-label="Dismiss"
+              onClick={() => local.onDismiss?.()}
+              class="-m-1 shrink-0 rounded-3 p-1 text-ink-gray-5 transition-colors hover:text-ink-gray-8"
+            >
+              <span class="lucide-x size-3.5" aria-hidden="true" />
+            </button>
           </Show>
         </div>
-        <Show when={local.dismissible}>
-          <button
-            type="button"
-            aria-label="Dismiss"
-            onClick={() => local.onDismiss?.()}
-            class="-m-1 shrink-0 rounded-3 p-1 text-ink-gray-5 transition-colors hover:text-ink-gray-8"
-          >
-            <span class="lucide-x size-3.5" aria-hidden="true" />
-          </button>
+        <Show when={local.action}>
+          {(action) => (
+            <button
+              type="button"
+              onClick={() =>
+                action().onClick?.({ dismiss: () => local.onDismiss?.() })
+              }
+              class="w-fit rounded-3 px-1.5 py-0.5 text-sm-medium text-ink-blue-link transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring-blue motion-reduce:transition-none"
+            >
+              {action().label}
+            </button>
+          )}
         </Show>
       </div>
-      <Show when={local.action}>
-        {(action) => (
-          <button
-            type="button"
-            onClick={() =>
-              action().onClick?.({ dismiss: () => local.onDismiss?.() })
-            }
-            class="w-fit rounded-3 px-1.5 py-0.5 text-sm-medium text-ink-blue-6 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring-blue motion-reduce:transition-none"
-          >
-            {action().label}
-          </button>
-        )}
-      </Show>
-    </div>
+    </Show>
   )
 }

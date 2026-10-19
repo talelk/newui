@@ -11,9 +11,10 @@
  *                         off, and the child is *not* in a scrollable region
  *  - `truncated-text`     text is cut off without an ellipsis, a clamp, or a
  *                         way to reach the rest of it
- *  - `occluded-control`   a visible, enabled control whose sampled hit points
- *                         all land on something else — the invisible-overlay
- *                         bug, expressed as a rule
+ *  - `occluded-control`   a visible, enabled, reachable control whose sampled
+ *                         hit points all land on something else — the
+ *                         invisible-overlay bug, expressed as a rule (a control
+ *                         inside an open modal is inert, not occluded)
  *
  * Everything it reports is geometry and computed style, so the same sweep runs
  * against a real demo and against the planted-defect fixtures in
@@ -25,19 +26,23 @@
  * so `role-coherence.spec.ts` can compare semantic peers across every demo in
  * the library, not just the ones a human thought to assert on.
  */
-import { readFileSync } from 'node:fs'
-import path from 'node:path'
 import type { Page } from '@playwright/test'
+import { gotoStory, settle, storyIdFor } from './stories'
 
-/** Demo keys, parsed from `demos.tsx` — the registry is the source of truth. */
-export function demoNames(): string[] {
-  const registry = readFileSync(
-    path.join(process.cwd(), 'apps/playground/src/demos.tsx'),
-    'utf8',
-  )
-  return [...registry.matchAll(/^\s{2}([A-Za-z0-9]+): \(\) => import/gm)].map(
-    (match) => match[1],
-  )
+export { settle }
+
+/**
+ * Load one component's `Default` story the way a docs deep link does, then
+ * make the page *still*: lazy chunk resolved, fonts landed, two frames
+ * painted. Measuring before the webfont settles measures the fallback metrics
+ * — the lesson from the responsive-spec's CI-only failure.
+ */
+export async function gotoDemo(
+  page: Page,
+  name: string,
+  options?: { theme?: 'light' | 'dark' },
+): Promise<void> {
+  await gotoStory(page, storyIdFor(name), options)
 }
 
 export type CoherenceRule =
@@ -57,46 +62,6 @@ export interface Violation {
 export interface InspectOptions {
   /** Restrict which rules run (calibration uses the full set). */
   rules?: CoherenceRule[]
-}
-
-/**
- * Load a demo the way the docs site does, then make the page *still*:
- * lazy chunk resolved, fonts landed, two frames painted. Measuring before the
- * webfont settles measures the fallback metrics — the lesson from the
- * responsive-spec's CI-only failure.
- */
-export async function gotoDemo(
-  page: Page,
-  name: string,
-  options?: { theme?: 'light' | 'dark' },
-): Promise<void> {
-  const theme = options?.theme ?? 'light'
-  // Same key `pnpm shots` and the site chrome use — the app reads its scheme
-  // from localStorage, not from the media query.
-  await page.addInitScript((value) => {
-    localStorage.setItem('theme', value)
-  }, theme)
-  await page.goto(`/play?c=${name}`)
-  await expectMounted(page)
-  await settle(page)
-}
-
-/** A demo is mounted when `main` has children — portal demos keep most of
- * their DOM outside `main`, so counting `main` children alone is enough. */
-async function expectMounted(page: Page): Promise<void> {
-  await page.locator('main > *').first().waitFor({ timeout: 15_000 })
-  if ((await page.locator('main > *').count()) === 0) {
-    throw new Error('demo did not mount')
-  }
-}
-
-export async function settle(page: Page): Promise<void> {
-  await page.evaluate(async () => {
-    await document.fonts.ready
-    await new Promise<void>((resolve) =>
-      requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
-    )
-  })
 }
 
 /**
@@ -316,6 +281,33 @@ export async function inspectCoherence(
 
       // -- occluded-control ------------------------------------------------------
       if (active.has('occluded-control')) {
+        // Where an element is *actually* visible: its box intersected with the
+        // viewport and every clipping ancestor. A control clipped to nothing
+        // (a label collapsed to `w-0 overflow-hidden`, a row scrolled out of a
+        // rail) is not a control whose hit points anyone can reach — sampling
+        // it would blame whatever happens to sit at its stale coordinates.
+        const visibleBox = (el: Element) => {
+          const box = el.getBoundingClientRect()
+          let left = Math.max(box.left, 0)
+          let top = Math.max(box.top, 0)
+          let right = Math.min(box.right, window.innerWidth)
+          let bottom = Math.min(box.bottom, window.innerHeight)
+          for (let node = el.parentElement; node; node = node.parentElement) {
+            const style = getComputedStyle(node)
+            if (
+              style.overflow === 'visible' &&
+              style.overflowX === 'visible' &&
+              style.overflowY === 'visible'
+            )
+              continue
+            const parent = node.getBoundingClientRect()
+            left = Math.max(left, parent.left)
+            top = Math.max(top, parent.top)
+            right = Math.min(right, parent.right)
+            bottom = Math.min(bottom, parent.bottom)
+          }
+          return { left, top, right, bottom }
+        }
         const INTERACTIVE = [
           'a[href]',
           'button',
@@ -338,6 +330,12 @@ export async function inspectCoherence(
           if (!visible(raw)) continue
           if ((raw as HTMLButtonElement).disabled) continue
           if (raw.getAttribute('aria-disabled') === 'true') continue
+          // A control behind an open modal is inert by design: `inert` /
+          // `aria-hidden` take it out of pointer and assistive reach, so its
+          // occlusion is the modal's contract, not a stacking bug.
+          if (raw.closest('[inert],[aria-hidden="true"]')) continue
+          const box = visibleBox(raw)
+          if (box.right - box.left < 1 || box.bottom - box.top < 1) continue
           // Zag hides native controls behind a styled layer; when the element
           // itself is invisible ink (appearance:none + zero opacity or a
           // visually-hidden box) its hit points are someone else's problem.

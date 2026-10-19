@@ -25,8 +25,8 @@ export const API_SLICES = import.meta.glob<{
   API: Record<string, ApiMember[]>
 }>('../generated/api/*.ts')
 
-export const DEMO_SOURCES = import.meta.glob<{ default: string }>(
-  '../demos/*.tsx',
+export const STORY_SOURCES = import.meta.glob<{ default: string }>(
+  '../stories/*.stories.tsx',
   {
     query: '?raw',
   },

@@ -10,15 +10,15 @@ import {
   Suspense,
 } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
-import { DEMOS } from '../demos'
 import { componentBySlug } from '../generated/components'
-// The globs behind the tables and the demo source text live here rather than
+import { STORIES } from '../generated/stories'
+// The globs behind the tables and the story source text live here rather than
 // in this page: Vite 8's dep scan cannot parse `.tsx` files that hold a source
 // glob, so a page hosting one breaks pre-bundling.
 import {
   API_SLICES,
   type ApiMember,
-  DEMO_SOURCES,
+  STORY_SOURCES,
 } from '../lib/component-sources'
 import { LoadingNote } from '../lib/LoadingNote'
 import {
@@ -30,6 +30,7 @@ import {
 import { PageSection } from '../lib/PageSection'
 import { InlinePreview, ResponsivePreview } from '../lib/ResponsivePreview'
 import { loadSpec } from '../lib/specs'
+import { storyUrl } from '../lib/storybook'
 import { TableOfContents } from '../lib/TableOfContents'
 import { usePageToc } from '../shell/SiteLayout'
 
@@ -38,8 +39,8 @@ import { usePageToc } from '../shell/SiteLayout'
  *
  * Assembled from three things that already exist, in this order of authority:
  *
- *  1. the live demo — the same function `/play` renders, so there is one demo
- *     and not a documentation copy of one;
+ *  1. the live demo — the story file's `Demo` export, the same function
+ *     Storybook's stories render, so there is one demo and not a copy;
  *  2. the prop tables, from this component's slice of `api.json`;
  *  3. the contract, from `spec/<name>.md`.
  *
@@ -244,12 +245,25 @@ export function ComponentPage(): JSX.Element {
       }
     >
       {(component) => {
-        // The demo module is lazy, and wrapped so `<Show>` cannot mistake a
+        // The story module is lazy, and wrapped so `<Show>` cannot mistake a
         // component for a plain value.
         const demo = createMemo(() => {
-          const load = DEMOS[component().name]
-          return load ? { Component: lazy(load) } : undefined
+          const entry = STORIES[component().name]
+          return entry
+            ? {
+                Component: lazy(() =>
+                  entry.load().then((module) => ({ default: module.Demo })),
+                ),
+                id: entry.id,
+              }
+            : undefined
         })
+        // The "show the code" panel reads the story file itself: the demo and
+        // its states are one source.
+        const source = () =>
+          STORY_SOURCES[`../stories/${component().slug}.stories.tsx`]?.().then(
+            (module) => module.default,
+          ) ?? Promise.resolve('')
 
         return (
           <article class="flex flex-col gap-4">
@@ -299,17 +313,20 @@ export function ComponentPage(): JSX.Element {
                 </a>
               </nav>
               <div class="flex flex-wrap gap-2">
-                {/* `route` renders a plain anchor, which is what a standalone
-                    demo wants: its own document, not a router transition. */}
-                <Button
-                  route={`/play?c=${component().name}`}
-                  target="_blank"
-                  variant="outline"
-                  size="sm"
-                  iconLeft="lucide-external-link"
-                >
-                  Open standalone
-                </Button>
+                {/* A plain anchor, absolute: the story lives on Storybook's
+                    origin, so it is an href and not an in-app `route`. */}
+                <Show when={demo()}>
+                  {(entry) => (
+                    <Button
+                      href={storyUrl(entry().id)}
+                      variant="outline"
+                      size="sm"
+                      iconLeft="lucide-external-link"
+                    >
+                      Open in Storybook
+                    </Button>
+                  )}
+                </Show>
                 <Button
                   href={`https://github.com/talelk/newui/tree/main/${component().source}`}
                   variant="ghost"
@@ -323,44 +340,33 @@ export function ComponentPage(): JSX.Element {
 
             <PageSection id="preview" title="Live demo">
               <Show
-                when={component().kind === 'block'}
+                when={demo()}
                 fallback={
-                  <InlinePreview
-                    title={component().name}
-                    source={() =>
-                      DEMO_SOURCES[`../demos/${component().slug}.tsx`]?.().then(
-                        (module) => module.default,
-                      ) ?? Promise.resolve('')
-                    }
-                  >
-                    <Show
-                      when={demo()}
-                      fallback={
-                        <p class="text-base text-ink-gray-7">
-                          No demo registered for this component yet.
-                        </p>
-                      }
-                    >
-                      {(entry) => (
+                  <p class="text-base text-ink-gray-7">
+                    No demo registered for this component yet.
+                  </p>
+                }
+              >
+                {(entry) => (
+                  <Show
+                    when={component().kind === 'block'}
+                    fallback={
+                      <InlinePreview title={component().name} source={source}>
                         <Suspense
                           fallback={<LoadingNote label="Loading demo…" />}
                         >
                           <Dynamic component={entry().Component} />
                         </Suspense>
-                      )}
-                    </Show>
-                  </InlinePreview>
-                }
-              >
-                <ResponsivePreview
-                  title={component().name}
-                  src={`/play?c=${component().name}`}
-                  source={() =>
-                    DEMO_SOURCES[`../demos/${component().slug}.tsx`]?.().then(
-                      (module) => module.default,
-                    ) ?? Promise.resolve('')
-                  }
-                />
+                      </InlinePreview>
+                    }
+                  >
+                    <ResponsivePreview
+                      title={component().name}
+                      story={entry().id}
+                      source={source}
+                    />
+                  </Show>
+                )}
               </Show>
             </PageSection>
 
