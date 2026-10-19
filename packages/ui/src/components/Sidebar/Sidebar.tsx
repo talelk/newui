@@ -554,8 +554,12 @@ export const SidebarRailItem: ParentComponent<SidebarRailItemProps> = (
   const badge = () => local.badge ?? 0
   const showIndicator = () => variant() === 'subtle' && Boolean(local.active)
 
-  const ariaLabel = () =>
-    badge() > 0 ? `${local.label ?? ''}, ${badge()} unread` : local.label
+  const ariaLabel = () => {
+    if (badge() <= 0) return local.label
+    return local.label
+      ? `${local.label}, ${badge()} unread`
+      : `${badge()} unread`
+  }
   const tooltipDescription = () => {
     if (local.description !== undefined) return local.description
     if ((local.badgeStyle ?? 'count') === 'dot' && badge() > 0)
@@ -756,11 +760,12 @@ export function SidebarSection(props: SidebarSectionProps): JSX.Element {
           </Show>
         </div>
       </Show>
-      <Show when={!collapsed()}>
-        <div id={bodyId} class="flex flex-col">
-          {local.children}
-        </div>
-      </Show>
+      {/* Kept mounted and hidden rather than unmounted: the heading's
+          `aria-controls` has to resolve in both states, and a control that
+          points at nothing is worse than a hidden region. */}
+      <div id={bodyId} hidden={collapsed()} class="flex flex-col">
+        {local.children}
+      </div>
     </div>
   )
 }

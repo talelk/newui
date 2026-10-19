@@ -66,9 +66,10 @@ build embed.
 
 | path | what it is |
 | --- | --- |
-| `/` `/docs` `/foundations` `/blocks` `/examples/*` | the site, inside `SiteLayout` (masthead · sidebar · content · prev/next) |
+| `/` `/docs` `/foundations` `/architecture` `/examples/*` | the site, inside `SiteLayout` (masthead · sidebar · content · prev/next). `/architecture` is the ladder written down: five levels, one question each, with counts generated from the registry |
 | `/components` · `/components/<name>` | the component reference, inside `ComponentsLayout` — same chrome, but the sidebar is the filterable index |
 | `/blocks` · `/blocks/<name>` | the same, for `@newui/blocks` |
+| `/layouts` · `/layouts/<name>` | the same, for `@newui/layouts` |
 | `/spec` | the deterministic page the browser harness drives — no chrome, no network |
 | `/examples/<slug>` · `/examples/<slug>/fullscreen` | one application guide with a persistent responsive preview; a bare application viewport |
 | `/charts` · `/editors` | generated chart and editor reference pages |

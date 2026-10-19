@@ -7,6 +7,7 @@ import {
 import { useNavigate } from '@solidjs/router'
 import { For, type JSX } from 'solid-js'
 import { COMPONENTS } from '../generated/components'
+import { hrefOf } from '../lib/reference-href'
 import { NAV_ORDER } from './nav'
 import { colorScheme, setColorScheme } from './theme'
 
@@ -24,14 +25,6 @@ import { colorScheme, setColorScheme } from './theme'
  * **shortcuts** — pressing ⌘K and typing "dark" is how you find the theme when
  * the button is not in front of you.
  */
-
-/** Where a component's page lives, by the kind of entry it is. */
-function hrefFor(entry: (typeof COMPONENTS)[number]): string {
-  if (entry.kind === 'block') return `/blocks/${entry.slug}`
-  if (entry.group === 'Charts') return `/charts/${entry.slug}`
-  if (entry.group === 'Editors') return `/editors/${entry.slug}`
-  return `/components/${entry.slug}`
-}
 
 export function PageFinder(props: { onClose: () => void }): JSX.Element {
   const navigate = useNavigate()
@@ -67,18 +60,22 @@ export function PageFinder(props: { onClose: () => void }): JSX.Element {
         </For>
       </CommandGroup>
 
-      <CommandGroup label="Components & blocks">
+      <CommandGroup label="Components, blocks & layouts">
         <For each={components}>
           {(entry) => (
             <CommandItem
-              value={hrefFor(entry)}
+              value={hrefOf(entry)}
               icon={
-                entry.kind === 'block'
-                  ? 'lucide-layout-dashboard'
-                  : 'lucide-square'
+                entry.kind === 'layout'
+                  ? 'lucide-layout-template'
+                  : entry.kind === 'block'
+                    ? 'lucide-layout-dashboard'
+                    : 'lucide-square'
               }
               keywords={`${entry.group} ${entry.parts.join(' ')}`}
-              description={entry.kind === 'block' ? 'block' : entry.group}
+              description={
+                entry.kind === 'component' ? entry.group : entry.kind
+              }
               onSelect={go}
             >
               {entry.name}

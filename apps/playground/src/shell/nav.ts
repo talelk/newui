@@ -1,3 +1,4 @@
+import { LADDER_COUNTS } from '../generated/counts'
 import { EXAMPLES } from '../lib/examples'
 /**
  * The site's navigation model — one tree, three consumers.
@@ -11,6 +12,10 @@ import { EXAMPLES } from '../lib/examples'
  * `status` is the only decoration: a small pill in the sidebar. `new` marks a
  * surface added in the current push, `beta` an unstable contract (the
  * `/experimental` entry).
+ *
+ * The order is the ladder (ADR-0012): foundations → components → blocks →
+ * layouts → applications. A reader who follows it downwards learns one level,
+ * then watches the next level use it.
  */
 
 export type NavStatus = 'new' | 'beta'
@@ -21,12 +26,19 @@ export interface NavItem {
   /** One line, shown under the title on an index page and as a tooltip. */
   description?: string
   status?: NavStatus
+  /** How many entries the destination lists, when the count is meaningful. */
+  count?: number
 }
 
 export interface NavSection {
   title: string
   items: NavItem[]
+  /** How many entries this level of the ladder ships. */
+  count?: number
 }
+
+/** One level's count, from the registry the pages are generated from. */
+const level = (key: keyof typeof LADDER_COUNTS) => LADDER_COUNTS[key]
 
 /**
  * The sidebar tree. Order is the reading order: learn the system, then the
@@ -46,10 +58,17 @@ export const NAV: NavSection[] = [
         href: '/docs',
         description: 'Packages, stylesheet, provider, theme.',
       },
+      {
+        title: 'Architecture',
+        href: '/architecture',
+        description:
+          'The five levels of the ladder, and the rule between them.',
+      },
     ],
   },
   {
     title: 'Foundations',
+    count: level('foundations'),
     items: [
       {
         title: 'Design tokens',
@@ -60,6 +79,7 @@ export const NAV: NavSection[] = [
   },
   {
     title: 'Components',
+    count: level('components'),
     items: [
       {
         title: 'All components',
@@ -70,6 +90,7 @@ export const NAV: NavSection[] = [
   },
   {
     title: 'Blocks',
+    count: level('blocks'),
     items: [
       {
         title: 'All blocks',
@@ -80,6 +101,7 @@ export const NAV: NavSection[] = [
   },
   {
     title: 'Layouts',
+    count: level('layouts'),
     items: [
       {
         title: 'All layouts',
@@ -98,6 +120,7 @@ export const NAV: NavSection[] = [
   },
   {
     title: 'Examples',
+    count: level('applications'),
     items: [
       {
         title: 'Overview',
@@ -161,6 +184,7 @@ export const SECTION_ICONS: Record<string, string> = {
   Foundations: 'lucide-palette',
   Components: 'lucide-component',
   Blocks: 'lucide-blocks',
+  Layouts: 'lucide-layout-template',
   Charts: 'lucide-chart-no-axes-combined',
   Editors: 'lucide-square-pen',
   Examples: 'lucide-panels-top-left',

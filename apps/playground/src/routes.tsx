@@ -83,6 +83,7 @@ const Analytics = page(() => import('./pages/Analytics'), 'Analytics')
 const Home = page(() => import('./pages/Home'), 'Home')
 const Docs = page(() => import('./pages/Docs'), 'Docs')
 const Foundations = page(() => import('./pages/Foundations'), 'Foundations')
+const Architecture = page(() => import('./pages/Architecture'), 'Architecture')
 const BlocksIndex = page(() => import('./pages/BlocksIndex'), 'BlocksIndex')
 const LayoutsIndex = page(() => import('./pages/LayoutsIndex'), 'LayoutsIndex')
 const ComponentsIndex = page(
@@ -142,6 +143,7 @@ export const ROUTES: { path: string; title: string }[] = [
   { path: '/', title: 'Introduction' },
   { path: '/docs', title: 'Installation' },
   { path: '/foundations', title: 'Design tokens' },
+  { path: '/architecture', title: 'Architecture' },
   { path: '/components', title: 'Components' },
   { path: '/components/:name', title: 'Component' },
   { path: '/charts', title: 'Charts' },
@@ -231,6 +233,7 @@ export function AppRoutes(): JSX.Element {
         <Route path="/" component={Home} />
         <Route path="/docs" component={Docs} />
         <Route path="/foundations" component={Foundations} />
+        <Route path="/architecture" component={Architecture} />
         {/* The two hand-written reference pages sit in the site group; the
             generated `:name` pages sit in their own group below. A static
             segment outranks a parameter, so these win for their own paths. */}

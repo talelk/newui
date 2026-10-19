@@ -2,6 +2,7 @@ import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 import { COMPONENTS } from '../apps/playground/src/generated/components'
 import { REFERENCE_EXAMPLES } from '../apps/playground/src/lib/reference-examples'
+import { hrefOf } from '../apps/playground/src/lib/reference-href'
 
 test('editor grammar changes preserve edits and read-only prevents writing', async ({
   page,
@@ -52,15 +53,7 @@ test('all shipped references resolve contracts, source and live demos in both sc
   for (const theme of ['light', 'dark']) {
     for (const entry of COMPONENTS.filter((entry) => entry.shipped)) {
       await test.step(`${entry.name} ${theme}`, async () => {
-        const base =
-          entry.kind === 'block'
-            ? 'blocks'
-            : entry.group === 'Charts'
-              ? 'charts'
-              : entry.group === 'Editors'
-                ? 'editors'
-                : 'components'
-        await page.goto(`/${base}/${entry.slug}`)
+        await page.goto(hrefOf(entry))
         await page.evaluate((scheme) => {
           document.documentElement.dataset['theme'] = scheme
         }, theme)

@@ -83,14 +83,23 @@ function useCommand(): CommandContextValue {
  *   select or datalist expresses.
  */
 
+/**
+ * Both sides are reduced to letters and digits before comparing, so the way
+ * people actually type a compound name finds it: `date picker`, `date-picker`
+ * and `DatePicker` are one query, and no one has to know where the case
+ * boundary is.
+ */
+function fold(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '')
+}
+
 /** Rank: a label that starts with the query beats one that merely contains it. */
 function score(label: string, keywords: string, query: string): number | null {
-  if (query === '') return 0
-  const haystack = `${label} ${keywords}`.toLowerCase()
-  const needle = query.toLowerCase()
-  const index = haystack.indexOf(needle)
+  const needle = fold(query)
+  if (needle === '') return 0
+  const index = fold(`${label} ${keywords}`).indexOf(needle)
   if (index === -1) return null
-  return (label.toLowerCase().startsWith(needle) ? 0 : 100) + index
+  return (fold(label).startsWith(needle) ? 0 : 100) + index
 }
 
 let commandId = 0

@@ -41,7 +41,8 @@ optional collapsed rail, collapsible sections and status cards.
   tracks its own state and collapses below `sm`. A collapsed item's label moves
   to `title`/`aria-label` and its text becomes `sr-only`.
 - **Section.** `collapsible` renders an accordion heading (`aria-expanded` +
-  `aria-controls`); the body unmounts when collapsed.
+  `aria-controls`); the body stays in the tree and is `hidden` when collapsed,
+  so the control's `aria-controls` resolves in both states.
 - **Links (frappe-ui parity).** `SidebarItem` and `SidebarRailItem` take
   `route` (in-app, wins) / `href` (external, new tab) and render an anchor;
   with neither they render a button. `onClick` fires in every case, which is

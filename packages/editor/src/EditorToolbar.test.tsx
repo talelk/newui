@@ -88,6 +88,7 @@ describe('EditorToolbar', () => {
     await tick()
     expect(bold.getAttribute('aria-pressed')).toBe('true')
     expect(bold.getAttribute('data-active')).toBe('')
+    expect(bold.getAttribute('data-state')).toBe('active')
   })
 
   it('toggles a heading and a list through their commands', async () => {

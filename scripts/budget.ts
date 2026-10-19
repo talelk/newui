@@ -80,9 +80,26 @@ const ROUTES: RouteBudget[] = [
     budget: Number(budget),
     unless: 'responsive preview with documentation chrome',
   })),
+  {
+    route: '/architecture',
+    budget: 80,
+    unless: 'prose page; the ladder is data, not components',
+  },
+  {
+    route: '/layouts',
+    budget: 100,
+    unless: 'the layout index; one entry today, read from the registry',
+  },
+  {
+    route: '/layouts/app-layout',
+    budget: 240,
+    unless: 'the frame demo: shell, sidebar, tooltips',
+  },
   { route: '/charts', budget: 90 },
   { route: '/editors', budget: 90 },
-  { route: '/charts/bar-chart', budget: 280 },
+  // 280.0 measured: the shell now carries the ladder's counts, and a budget
+  // with no headroom turns the next honest shell addition into a red gate.
+  { route: '/charts/bar-chart', budget: 285 },
   { route: '/editors/code-editor', budget: 280 },
   { route: '/blocks/page-toolbar', budget: 190 },
   {
@@ -187,7 +204,7 @@ const ROUTES: RouteBudget[] = [
     budget: 60,
     unless: 'the shell, the router and the toast host',
   },
-  { route: '/docs', budget: 60, unless: 'prose only' },
+  { route: '/docs', budget: 62, unless: 'prose only' },
   { route: '/foundations', budget: 88, unless: 'token swatches' },
   {
     route: '/components',

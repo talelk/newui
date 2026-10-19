@@ -1,5 +1,13 @@
 import { A, useLocation, useNavigate } from '@solidjs/router'
-import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  For,
+  type JSX,
+  on,
+  Show,
+} from 'solid-js'
 import { NAV, SECTION_ICONS, sectionFor } from './nav'
 import { FilterInput, NAV_ROW, NothingMatches } from './nav-ui'
 
@@ -13,6 +21,11 @@ import { FilterInput, NAV_ROW, NothingMatches } from './nav-ui'
  * machines, is what an app composes. What is shared between the two is the
  * design, not the code: same 8px rows, same icon-then-label shape, same
  * quiet-suffix counts.
+ *
+ * The sections are the ladder (ADR-0012) in reading order. Three details make
+ * that legible rather than merely true: the registry count on each level, the
+ * current level opened on arrival, and a level's own index replacing the site
+ * tree once a reference section supplies one.
  */
 
 export function SidebarNav(props: {
@@ -39,8 +52,24 @@ export function SidebarNav(props: {
     })).filter((entry) => entry.items.length > 0)
   })
 
-  const isOpen = (title: string) =>
-    searching() || expanded().includes(title) || current()?.title === title
+  // Arriving in a section opens it; leaving it does not close it, so the
+  // reader's own folds survive navigation. Crucially this reacts to the
+  // *pathname*, not to `expanded` — otherwise folding the section you are in
+  // would immediately reopen it, and a section could never be closed.
+  createEffect(
+    on(
+      () => location.pathname,
+      () => {
+        const title = current()?.title
+        if (title)
+          setExpanded((open) =>
+            open.includes(title) ? open : [...open, title],
+          )
+      },
+    ),
+  )
+
+  const isOpen = (title: string) => searching() || expanded().includes(title)
 
   const toggle = (title: string) =>
     setExpanded((open) =>
@@ -54,14 +83,14 @@ export function SidebarNav(props: {
 
   const hasContext = (title: string) =>
     !!props.context &&
-    ['Components', 'Blocks', 'Charts', 'Editors'].includes(title)
+    ['Components', 'Blocks', 'Layouts', 'Charts', 'Editors'].includes(title)
 
   return (
     <>
       {/* One search per sidebar. The registry sections (Components, Blocks,
-          Charts, Editors) bring their own filter for their own names, and two
-          fields stacked in one column is a question the reader has to answer
-          before they can type. */}
+          Layouts, Charts, Editors) bring their own filter for their own names,
+          and two fields stacked in one column is a question the reader has to
+          answer before they can type. */}
       <div
         class="mx-2 mb-1"
         hidden={showFilter() === false || props.collapsed === true}
@@ -99,21 +128,32 @@ export function SidebarNav(props: {
               <div class="flex flex-col gap-0.5">
                 <button
                   type="button"
-                  aria-expanded={isOpen(section.title)}
+                  aria-expanded={
+                    props.collapsed ? undefined : isOpen(section.title)
+                  }
                   onClick={() => {
+                    // Opening a level takes you into it; closing it only
+                    // closes it. (The row used to do both, so folding the
+                    // section you were reading also navigated away.)
+                    if (!isOpen(section.title))
+                      navigate(section.items[0]?.href ?? '/')
                     toggle(section.title)
-                    navigate(section.items[0]?.href ?? '/')
                   }}
                   data-navigates=""
+                  data-active={
+                    current()?.title === section.title ? '' : undefined
+                  }
                   title={props.collapsed ? section.title : undefined}
                   aria-label={props.collapsed ? section.title : undefined}
-                  class={`${NAV_ROW} w-full text-start`}
+                  aria-current={
+                    props.collapsed && current()?.title === section.title
+                      ? 'true'
+                      : undefined
+                  }
+                  class={`${NAV_ROW} w-full text-start data-[active]:bg-surface-gray-2 data-[active]:text-ink-gray-9`}
                   classList={{
                     'justify-center px-0': props.collapsed === true,
                   }}
-                  aria-current={
-                    current()?.title === section.title ? 'true' : undefined
-                  }
                 >
                   <span
                     aria-hidden="true"
@@ -125,6 +165,16 @@ export function SidebarNav(props: {
                         ? 'Developer'
                         : section.title}
                     </span>
+                    <Show when={section.count}>
+                      {(count) => (
+                        <span
+                          aria-hidden="true"
+                          class="shrink-0 text-xs tabular-nums text-ink-gray-6"
+                        >
+                          {count()}
+                        </span>
+                      )}
+                    </Show>
                     <span
                       aria-hidden="true"
                       class={`${isOpen(section.title) ? 'lucide-chevron-down' : 'lucide-chevron-right'} size-3.5 shrink-0 text-ink-gray-7`}

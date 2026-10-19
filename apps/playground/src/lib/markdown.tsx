@@ -113,8 +113,21 @@ export function parseMarkdown(markdown: string): Block[] {
       const items: string[] = []
       const pattern = ordered ? /^\d+\.\s+/ : /^[-*]\s+/
       while (index < lines.length && pattern.test(lines[index] ?? '')) {
-        items.push((lines[index] ?? '').replace(pattern, ''))
+        let item = (lines[index] ?? '').replace(pattern, '')
         index += 1
+        // A list item wraps. Its continuation lines are indented, carry no
+        // marker of their own, and belong to the item — parsing them as
+        // paragraphs (the previous behaviour) split one sentence into three
+        // blocks and made every multi-line bullet in `spec/` unreadable.
+        while (index < lines.length) {
+          const next = lines[index] ?? ''
+          if (next.trim() === '') break
+          if (pattern.test(next)) break
+          if (!/^\s{2,}\S/.test(next)) break
+          item = `${item} ${next.trim()}`
+          index += 1
+        }
+        items.push(item)
       }
       blocks.push({ kind: 'list', ordered, items })
       continue

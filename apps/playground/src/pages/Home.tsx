@@ -9,6 +9,7 @@ import {
   Show,
   Suspense,
 } from 'solid-js'
+import { LADDER } from '../generated/ladder'
 
 /**
  * The home page.
@@ -107,30 +108,6 @@ function PreviewSection(): JSX.Element {
   )
 }
 
-interface HandOff {
-  title: string
-  href: string
-  body: string
-}
-
-const HAND_OFFS: HandOff[] = [
-  {
-    title: 'Components',
-    href: '/components',
-    body: 'Atoms and molecules over Zag primitives — keyboard, focus and ARIA come from the machine.',
-  },
-  {
-    title: 'Blocks',
-    href: '/blocks',
-    body: 'The shapes a page is assembled from: a filter bar, a toolbar, a sidebar, a stat grid.',
-  },
-  {
-    title: 'Examples',
-    href: '/examples',
-    body: 'Whole screens rebuilt end to end, every control wired to real state.',
-  },
-]
-
 const RULES: { title: string; body: string }[] = [
   {
     title: 'Two colour axes, never more',
@@ -168,26 +145,56 @@ export function Home(): JSX.Element {
       </header>
 
       <section class="flex flex-col gap-4">
-        <h2 class="text-section text-ink-gray-9">Start here</h2>
-        <div class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1">
-          <For each={HAND_OFFS}>
-            {(item) => (
-              <A
-                href={item.href}
-                class="flex min-h-11 items-center gap-3 rounded-3 p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
-              >
-                <div class="min-w-0 flex-1">
-                  <h3 class="text-interface font-medium">{item.title}</h3>
-                  <p class="mt-1 text-caption text-ink-gray-7">{item.body}</p>
-                </div>
-                <span
-                  aria-hidden="true"
-                  class="lucide-arrow-right size-4 shrink-0 text-ink-gray-7"
-                />
-              </A>
+        <div class="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 class="text-section text-ink-gray-9">The ladder</h2>
+          <A
+            href="/architecture"
+            class="rounded-3 text-caption text-ink-blue-link focus-visible:focus-ring"
+          >
+            How the five levels fit together →
+          </A>
+        </div>
+        <ol class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1">
+          <For each={LADDER}>
+            {(level, index) => (
+              <li>
+                <A
+                  href={level.href}
+                  class="flex items-center gap-3 rounded-3 p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
+                >
+                  <span
+                    aria-hidden="true"
+                    class="w-5 shrink-0 text-xs tabular-nums text-ink-gray-6"
+                  >
+                    {String(index() + 1).padStart(2, '0')}
+                  </span>
+                  <div class="min-w-0 flex-1">
+                    <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                      <h3 class="text-interface font-medium text-ink-gray-9">
+                        {level.title}
+                      </h3>
+                      <code class="text-xs text-ink-gray-7">
+                        {level.package}
+                      </code>
+                      <span class="text-caption tabular-nums text-ink-gray-7">
+                        {level.count} {level.unit}
+                        {level.count === 1 ? '' : 's'}
+                      </span>
+                    </div>
+                    <p class="mt-1 text-caption text-ink-gray-7">
+                      <span class="italic">{level.question}</span> —{' '}
+                      {level.blurb}
+                    </p>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="lucide-arrow-right size-4 shrink-0 text-ink-gray-7"
+                  />
+                </A>
+              </li>
             )}
           </For>
-        </div>
+        </ol>
       </section>
 
       <PreviewSection />

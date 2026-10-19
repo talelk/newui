@@ -192,7 +192,12 @@ export function Chrome(
           >
             <span aria-hidden="true" class="lucide-x size-4" />
           </button>
-          <SidebarNav collapsed={collapsed()} context={props.sidebar} />
+          {/* The drawer is never a rail: the desktop fold is a preference
+              about a column beside the content, and a drawer of bare icons is
+              no navigation at all. Passing `collapsed` here made the mobile
+              menu inherit a desktop choice the reader cannot see the control
+              for. */}
+          <SidebarNav context={props.sidebar} />
         </dialog>
       </div>
     </TocContext.Provider>
@@ -291,11 +296,11 @@ export function BareLayout(props: RouteSectionProps): JSX.Element {
       const url = new URL(anchor.href, location.href)
       if (
         url.origin !== location.origin ||
-        /\/(fullscreen|play)(?:$|\?)/.test(url.pathname)
+        /\/fullscreen(?:$|\?)/.test(url.pathname)
       )
         return
       if (
-        !/^\/(?:$|docs(?:\/|$)|foundations(?:\/|$)|components(?:\/|$)|blocks(?:\/|$)|charts(?:\/|$)|editors(?:\/|$)|examples(?:\/|$))/.test(
+        !/^\/(?:$|docs(?:\/|$)|foundations(?:\/|$)|architecture(?:\/|$)|components(?:\/|$)|blocks(?:\/|$)|layouts(?:\/|$)|charts(?:\/|$)|editors(?:\/|$)|examples(?:\/|$))/.test(
           url.pathname,
         )
       )

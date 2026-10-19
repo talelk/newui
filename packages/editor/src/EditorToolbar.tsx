@@ -254,6 +254,16 @@ export function EditorToolbar(props: EditorToolbarProps): JSX.Element {
             type="button"
             data-slot="editor-toolbar-item"
             data-action={action.id}
+            // `data-state` is the hook the coherence sweep groups peers by: an
+            // active toggle is a different thing from an idle one, and without
+            // it their colours read as drift instead of state.
+            data-state={
+              action.toggle
+                ? isActive(action)
+                  ? 'active'
+                  : 'inactive'
+                : undefined
+            }
             data-active={action.toggle && isActive(action) ? '' : undefined}
             aria-pressed={action.toggle ? isActive(action) : undefined}
             aria-label={action.label}

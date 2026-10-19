@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   markdownHeadings,
+  parseMarkdown,
   slugifyHeading,
   withoutPropsSections,
 } from './markdown'
@@ -44,6 +45,39 @@ describe('markdown headings (Slice E)', () => {
       'notes',
       'notes-2',
       'notes-3',
+    ])
+  })
+})
+
+describe('markdown lists', () => {
+  it('joins a wrapped list item instead of splitting it into paragraphs', () => {
+    const blocks = parseMarkdown(
+      '- **One `h1`.** The title is the page title; the bar is a `span`\n  (`titleAs`), because two headings is one too many.\n- Second item.\n',
+    )
+    expect(blocks).toEqual([
+      {
+        kind: 'list',
+        ordered: false,
+        items: [
+          '**One `h1`.** The title is the page title; the bar is a `span` (`titleAs`), because two headings is one too many.',
+          'Second item.',
+        ],
+      },
+    ])
+  })
+
+  it('stops the list at a blank line or an unindented paragraph', () => {
+    const blocks = parseMarkdown('- one\n\nafter\n')
+    expect(blocks).toEqual([
+      { kind: 'list', ordered: false, items: ['one'] },
+      { kind: 'paragraph', text: 'after' },
+    ])
+  })
+
+  it('keeps ordered items separate from unordered ones', () => {
+    const blocks = parseMarkdown('1. first\n2. second\n')
+    expect(blocks).toEqual([
+      { kind: 'list', ordered: true, items: ['first', 'second'] },
     ])
   })
 })

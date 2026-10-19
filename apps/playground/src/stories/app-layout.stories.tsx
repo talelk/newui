@@ -79,11 +79,17 @@ function Example(props: { sidebar?: boolean }): JSX.Element {
         }
       >
         <div class="grid gap-3 sm:grid-cols-3">
-          <For each={['Pipeline value', 'Open opportunities', 'Closed won']}>
-            {(label) => (
+          <For
+            each={[
+              { label: 'Pipeline value', value: '1,036,500' },
+              { label: 'Open opportunities', value: '28' },
+              { label: 'Closed won', value: '12' },
+            ]}
+          >
+            {(stat) => (
               <div class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4">
-                <span class="text-sm text-ink-gray-6">{label}</span>
-                <p class="text-2xl-semibold text-ink-gray-9">1,036,500</p>
+                <span class="text-sm text-ink-gray-6">{stat.label}</span>
+                <p class="text-2xl-semibold text-ink-gray-9">{stat.value}</p>
               </div>
             )}
           </For>

@@ -48,6 +48,11 @@ const TOP_LINKS: { title: string; href: string; section: string }[] = [
     section: 'Blocks',
   },
   {
+    title: 'Layouts',
+    href: sectionHref('Layouts', '/layouts'),
+    section: 'Layouts',
+  },
+  {
     title: 'Examples',
     href: sectionHref('Examples', '/examples'),
     section: 'Examples',

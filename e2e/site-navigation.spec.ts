@@ -156,3 +156,111 @@ for (const width of [320, 768]) {
     await expect(page).toHaveURL('/components/button')
   })
 }
+
+test('a reference section opens its own index in the sidebar', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/layouts/app-layout')
+  const sidebar = page.locator('[data-slot="site-sidebar"]')
+  // The layouts used to fall through to the site tree: no index, and a page
+  // filter stacked over nothing. They are a reference section like the rest.
+  await expect(
+    sidebar.getByRole('button', { name: 'Layouts', exact: true }),
+  ).toHaveAttribute('aria-expanded', 'true')
+  await expect(
+    sidebar.getByRole('link', { name: 'All layouts', exact: true }),
+  ).toBeVisible()
+  await expect(
+    sidebar.getByRole('link', { name: 'AppLayout', exact: true }),
+  ).toHaveAttribute('aria-current', 'page')
+  // The count is the registry's, not a second hand-written list.
+  await expect(
+    sidebar.getByRole('button', { name: 'Layouts', exact: true }),
+  ).toContainText('1')
+})
+
+test('the mobile drawer is never a rail, even when the desk is folded', async ({
+  page,
+}) => {
+  await page.addInitScript(() =>
+    localStorage.setItem('newui-sidebar-collapsed', 'true'),
+  )
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/components/button')
+  await page.getByRole('button', { name: 'Open navigation' }).click()
+  const drawer = page.getByRole('dialog', { name: 'Documentation navigation' })
+  // The fold is a preference about a column beside the content. A drawer of
+  // bare icons is no navigation at all, and the reader cannot see the control
+  // that would unfold it.
+  await expect(
+    drawer.getByRole('link', { name: 'Button', exact: true }),
+  ).toBeVisible()
+  await expect(
+    drawer.getByRole('button', { name: 'Components', exact: true }),
+  ).toBeVisible()
+})
+
+test('folding the section you are in does not navigate away', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/docs')
+  const overview = page
+    .locator('[data-slot="site-sidebar"]')
+    .getByRole('button', { name: 'Overview', exact: true })
+  await expect(overview).toHaveAttribute('aria-expanded', 'true')
+
+  await overview.click()
+  await expect(overview).toHaveAttribute('aria-expanded', 'false')
+  // Closing a level used to also jump to its first page, so the reader could
+  // not fold the section they were reading without leaving it.
+  await expect(page).toHaveURL('/docs')
+})
+
+test('the architecture page states the ladder and links every level', async ({
+  page,
+}) => {
+  await page.goto('/architecture')
+  await expect(
+    page.getByRole('heading', { name: 'Architecture', level: 1 }),
+  ).toBeVisible()
+  for (const level of [
+    'Foundations',
+    'Components',
+    'Blocks',
+    'Layouts',
+    'Applications',
+  ]) {
+    await expect(
+      page.getByRole('heading', { name: level, exact: true, level: 3 }),
+    ).toBeVisible()
+  }
+  await expect(
+    page.getByRole('link', { name: 'Browse layouts', exact: true }),
+  ).toHaveAttribute('href', '/layouts')
+})
+
+test('an entry reached from the wrong section says where it lives', async ({
+  page,
+}) => {
+  await page.goto('/components/app-layout')
+  // The generated page is shared by five route groups; `/components/app-layout`
+  // is the same content under the wrong breadcrumb, so it points at the one
+  // canonical URL instead of rendering a duplicate.
+  await expect(
+    page.getByRole('heading', { name: 'AppLayout is a layout', level: 1 }),
+  ).toBeVisible()
+  await page.getByRole('link', { name: 'Open AppLayout under layouts' }).click()
+  await expect(page).toHaveURL('/layouts/app-layout')
+})
+
+test('the command palette links a layout to its own section', async ({
+  page,
+}) => {
+  await page.goto('/')
+  await page.keyboard.press('Meta+k')
+  await page.getByRole('combobox', { name: 'Find a page' }).fill('app-layout')
+  await page.getByRole('option', { name: /AppLayout/ }).click()
+  await expect(page).toHaveURL('/layouts/app-layout')
+})

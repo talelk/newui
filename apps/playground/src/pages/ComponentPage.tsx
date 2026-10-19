@@ -1,5 +1,5 @@
 import { Badge, Button } from '@newui/ui'
-import { A, useParams } from '@solidjs/router'
+import { A, useLocation, useParams } from '@solidjs/router'
 import {
   createMemo,
   createResource,
@@ -29,6 +29,7 @@ import {
 } from '../lib/markdown'
 import { PageSection } from '../lib/PageSection'
 import { InlinePreview, ResponsivePreview } from '../lib/ResponsivePreview'
+import { hrefOf, sectionOf } from '../lib/reference-href'
 import { loadSpec } from '../lib/specs'
 import { storyUrl } from '../lib/storybook'
 import { TableOfContents } from '../lib/TableOfContents'
@@ -208,7 +209,13 @@ function ReferenceToc(props: {
 
 export function ComponentPage(): JSX.Element {
   const params = useParams()
+  const location = useLocation()
   const entry = createMemo(() => componentBySlug(params['name'] ?? ''))
+  const here = () => location.pathname.split('/')[1] ?? ''
+  const misplaced = () => {
+    const found = entry()
+    return found && here() !== sectionOf(found) ? found : undefined
+  }
   usePageToc(() => (
     <Show
       when={entry()}
@@ -224,181 +231,210 @@ export function ComponentPage(): JSX.Element {
   ))
 
   return (
-    <Show
-      when={entry()}
-      fallback={
-        <div class="flex flex-col gap-2">
-          <h1 class="text-heading text-ink-gray-9">
-            No component called “{params['name']}”
-          </h1>
-          <p class="text-base text-ink-gray-7">
-            The index lists every documented component —{' '}
-            <A
-              href="/components"
-              class="text-ink-blue-6 underline decoration-dotted"
-            >
-              browse it
-            </A>
-            .
-          </p>
-        </div>
-      }
-    >
-      {(component) => {
-        // The story module is lazy, and wrapped so `<Show>` cannot mistake a
-        // component for a plain value.
-        const demo = createMemo(() => {
-          const entry = STORIES[component().name]
-          return entry
-            ? {
-                Component: lazy(() =>
-                  entry.load().then((module) => ({ default: module.Demo })),
-                ),
-                id: entry.id,
-              }
-            : undefined
-        })
-        // The "show the code" panel reads the story file itself: the demo and
-        // its states are one source.
-        const source = () =>
-          STORY_SOURCES[`../stories/${component().slug}.stories.tsx`]?.().then(
-            (module) => module.default,
-          ) ?? Promise.resolve('')
-
-        return (
-          <article class="flex flex-col gap-4">
-            <header class="flex flex-col gap-3">
-              <div class="flex flex-wrap items-center gap-2">
-                <h1 class="text-heading text-ink-gray-9">{component().name}</h1>
-                <Badge size="sm" theme="gray">
-                  {component().kind === 'block' ? 'block' : component().group}
-                </Badge>
-                <Show when={component().spec}>
-                  <Badge size="sm" theme="blue" label="contract" />
-                </Show>
-              </div>
-              <p class="max-w-2xl text-interface text-ink-gray-7">
-                {component().description}
-              </p>
-              <p class="text-caption text-ink-gray-7">
-                {component().package} · {component().parts.length} parts
-              </p>
-              <nav
-                aria-label="Reference sections"
-                class="flex flex-wrap gap-3 text-interface text-ink-gray-7"
+    <>
+      {/* One canonical URL per entry. A layout reached at `/components/...`
+          is the same page under the wrong breadcrumb, which is how duplicate
+          content starts; it says where it lives instead. */}
+      <Show when={misplaced()}>
+        {(component) => (
+          <div class="flex flex-col gap-2">
+            <h1 class="text-heading text-ink-gray-9">
+              {component().name} is a {component().kind}
+            </h1>
+            <p class="text-base text-ink-gray-7">
+              Every entry has one section.{' '}
+              <A
+                href={hrefOf(component())}
+                class="text-ink-blue-6 underline decoration-dotted"
               >
-                <a
-                  href="#preview"
-                  class="rounded-3 hover:underline focus-visible:focus-ring"
+                Open {component().name} under {sectionOf(component())}
+              </A>
+              .
+            </p>
+          </div>
+        )}
+      </Show>
+
+      <Show
+        when={!misplaced() && entry()}
+        fallback={
+          entry() ? undefined : (
+            <div class="flex flex-col gap-2">
+              <h1 class="text-heading text-ink-gray-9">
+                No component called “{params['name']}”
+              </h1>
+              <p class="text-base text-ink-gray-7">
+                The index lists every documented component —{' '}
+                <A
+                  href="/components"
+                  class="text-ink-blue-6 underline decoration-dotted"
                 >
-                  Preview
-                </a>
-                <a
-                  href="#usage"
-                  class="rounded-3 hover:underline focus-visible:focus-ring"
+                  browse it
+                </A>
+                .
+              </p>
+            </div>
+          )
+        }
+      >
+        {(component) => {
+          // The story module is lazy, and wrapped so `<Show>` cannot mistake a
+          // component for a plain value.
+          const demo = createMemo(() => {
+            const entry = STORIES[component().name]
+            return entry
+              ? {
+                  Component: lazy(() =>
+                    entry.load().then((module) => ({ default: module.Demo })),
+                  ),
+                  id: entry.id,
+                }
+              : undefined
+          })
+          // The "show the code" panel reads the story file itself: the demo and
+          // its states are one source.
+          const source = () =>
+            STORY_SOURCES[
+              `../stories/${component().slug}.stories.tsx`
+            ]?.().then((module) => module.default) ?? Promise.resolve('')
+
+          return (
+            <article class="flex flex-col gap-4">
+              <header class="flex flex-col gap-3">
+                <div class="flex flex-wrap items-center gap-2">
+                  <h1 class="text-heading text-ink-gray-9">
+                    {component().name}
+                  </h1>
+                  <Badge size="sm" theme="gray">
+                    {component().kind === 'block' ? 'block' : component().group}
+                  </Badge>
+                  <Show when={component().spec}>
+                    <Badge size="sm" theme="blue" label="contract" />
+                  </Show>
+                </div>
+                <p class="max-w-2xl text-interface text-ink-gray-7">
+                  {component().description}
+                </p>
+                <p class="text-caption text-ink-gray-7">
+                  {component().package} · {component().parts.length} parts
+                </p>
+                <nav
+                  aria-label="Reference sections"
+                  class="flex flex-wrap gap-3 text-interface text-ink-gray-7"
                 >
-                  Usage
-                </a>
-                <a
-                  href="#props"
-                  class="rounded-3 hover:underline focus-visible:focus-ring"
-                >
-                  Props
-                </a>
-                <a
-                  href="#contract"
-                  class="rounded-3 hover:underline focus-visible:focus-ring"
-                >
-                  Contract
-                </a>
-              </nav>
-              <div class="flex flex-wrap gap-2">
-                {/* A plain anchor, absolute: the story lives on Storybook's
+                  <a
+                    href="#preview"
+                    class="rounded-3 hover:underline focus-visible:focus-ring"
+                  >
+                    Preview
+                  </a>
+                  <a
+                    href="#usage"
+                    class="rounded-3 hover:underline focus-visible:focus-ring"
+                  >
+                    Usage
+                  </a>
+                  <a
+                    href="#props"
+                    class="rounded-3 hover:underline focus-visible:focus-ring"
+                  >
+                    Props
+                  </a>
+                  <a
+                    href="#contract"
+                    class="rounded-3 hover:underline focus-visible:focus-ring"
+                  >
+                    Contract
+                  </a>
+                </nav>
+                <div class="flex flex-wrap gap-2">
+                  {/* A plain anchor, absolute: the story lives on Storybook's
                     origin, so it is an href and not an in-app `route`. */}
-                <Show when={demo()}>
+                  <Show when={demo()}>
+                    {(entry) => (
+                      <Button
+                        href={storyUrl(entry().id)}
+                        variant="outline"
+                        size="sm"
+                        iconLeft="lucide-external-link"
+                      >
+                        Open in Storybook
+                      </Button>
+                    )}
+                  </Show>
+                  <Button
+                    href={`https://github.com/talelk/newui/tree/main/${component().source}`}
+                    variant="ghost"
+                    size="sm"
+                    iconLeft="lucide-code"
+                  >
+                    Source
+                  </Button>
+                </div>
+              </header>
+
+              <PageSection id="preview" title="Live demo">
+                <Show
+                  when={demo()}
+                  fallback={
+                    <p class="text-base text-ink-gray-7">
+                      No demo registered for this component yet.
+                    </p>
+                  }
+                >
                   {(entry) => (
-                    <Button
-                      href={storyUrl(entry().id)}
-                      variant="outline"
-                      size="sm"
-                      iconLeft="lucide-external-link"
+                    <Show
+                      when={component().kind === 'block'}
+                      fallback={
+                        <InlinePreview title={component().name} source={source}>
+                          <Suspense
+                            fallback={<LoadingNote label="Loading demo…" />}
+                          >
+                            <Dynamic component={entry().Component} />
+                          </Suspense>
+                        </InlinePreview>
+                      }
                     >
-                      Open in Storybook
-                    </Button>
+                      <ResponsivePreview
+                        title={component().name}
+                        story={entry().id}
+                        source={source}
+                      />
+                    </Show>
                   )}
                 </Show>
-                <Button
-                  href={`https://github.com/talelk/newui/tree/main/${component().source}`}
-                  variant="ghost"
-                  size="sm"
-                  iconLeft="lucide-code"
-                >
-                  Source
-                </Button>
-              </div>
-            </header>
+              </PageSection>
 
-            <PageSection id="preview" title="Live demo">
-              <Show
-                when={demo()}
-                fallback={
-                  <p class="text-base text-ink-gray-7">
-                    No demo registered for this component yet.
-                  </p>
+              <PageSection id="usage" title="Usage">
+                <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4 text-caption">
+                  <code>{`import { ${component().name} } from '${component().package}'`}</code>
+                </pre>
+              </PageSection>
+              <PageSection id="props" title="Props">
+                <ApiTables slug={component().slug} />
+              </PageSection>
+
+              <PageSection
+                id="contract"
+                title="Contract"
+                actions={
+                  <A
+                    href={`https://github.com/talelk/newui/blob/main/spec/${component().spec ?? component().slug}.md`}
+                    class="text-sm text-ink-gray-7 underline decoration-dotted"
+                  >
+                    spec/{component().spec ?? component().slug}.md
+                  </A>
                 }
               >
-                {(entry) => (
-                  <Show
-                    when={component().kind === 'block'}
-                    fallback={
-                      <InlinePreview title={component().name} source={source}>
-                        <Suspense
-                          fallback={<LoadingNote label="Loading demo…" />}
-                        >
-                          <Dynamic component={entry().Component} />
-                        </Suspense>
-                      </InlinePreview>
-                    }
-                  >
-                    <ResponsivePreview
-                      title={component().name}
-                      story={entry().id}
-                      source={source}
-                    />
-                  </Show>
-                )}
-              </Show>
-            </PageSection>
-
-            <PageSection id="usage" title="Usage">
-              <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4 text-caption">
-                <code>{`import { ${component().name} } from '${component().package}'`}</code>
-              </pre>
-            </PageSection>
-            <PageSection id="props" title="Props">
-              <ApiTables slug={component().slug} />
-            </PageSection>
-
-            <PageSection
-              id="contract"
-              title="Contract"
-              actions={
-                <A
-                  href={`https://github.com/talelk/newui/blob/main/spec/${component().spec ?? component().slug}.md`}
-                  class="text-sm text-ink-gray-7 underline decoration-dotted"
-                >
-                  spec/{component().spec ?? component().slug}.md
-                </A>
-              }
-            >
-              <Contract
-                slug={component().spec ?? component().slug}
-                stripProps={component().parts.length > 0}
-              />
-            </PageSection>
-          </article>
-        )
-      }}
-    </Show>
+                <Contract
+                  slug={component().spec ?? component().slug}
+                  stripProps={component().parts.length > 0}
+                />
+              </PageSection>
+            </article>
+          )
+        }}
+      </Show>
+    </>
   )
 }

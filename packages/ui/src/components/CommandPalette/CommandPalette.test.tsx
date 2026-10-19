@@ -165,6 +165,19 @@ describe('CommandPalette', () => {
     expect(screen.getByRole('listbox', { name: 'Commands' })).toBeTruthy()
   })
 
+  it('folds case and separators, so a compound name is found however it is typed', async () => {
+    palette()
+    // `Introduction` is one word, `Blocks` two — the fold is what makes a
+    // hyphen or a space equivalent to the case boundary.
+    await userEvent.type(field(), 'intro-duction')
+    expect(options()).toHaveLength(1)
+    expect(options()[0]?.textContent).toContain('Introduction')
+    await userEvent.clear(field())
+    await userEvent.type(field(), 'TOGGLE THEME')
+    expect(options()).toHaveLength(1)
+    expect(options()[0]?.textContent).toContain('Toggle theme')
+  })
+
   it('starts a fresh search each time it opens', async () => {
     palette()
     await userEvent.type(field(), 'toggle')

@@ -265,11 +265,13 @@ describe('SidebarSection controlled state', () => {
         </SidebarSection>
       </Sidebar>
     ))
-    expect(screen.queryByText('Website')).toBeNull()
+    // The body stays mounted and hidden, so the heading's `aria-controls`
+    // resolves in both states; hidden is the assertion, not absent.
+    expect(screen.getByText('Website')).not.toBeVisible()
     await userEvent.click(screen.getByRole('button', { name: /Projects/ }))
     expect(onCollapsedChange).toHaveBeenCalledWith(false)
     // Controlled: the parent did not flip the prop, so the body stays shut.
-    expect(screen.queryByText('Website')).toBeNull()
+    expect(screen.getByText('Website')).not.toBeVisible()
   })
 })
 

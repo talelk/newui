@@ -1,3 +1,4 @@
+import { A } from '@solidjs/router'
 import type { JSX } from 'solid-js'
 import { PackageGuides } from '../lib/PackageGuides'
 import { PageSection } from '../lib/PageSection'
@@ -37,7 +38,7 @@ export function Docs(): JSX.Element {
     <article class="flex max-w-3xl flex-col gap-8">
       <PageIntro
         title="Installation"
-        description="Three packages, one stylesheet, one provider."
+        description="One stylesheet, one provider, and only the packages a screen needs."
       />
 
       <PageSection id="packages" title="1 · Packages">
@@ -54,7 +55,22 @@ export function Docs(): JSX.Element {
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
             @newui/icons
           </code>{' '}
-          carries the glyph components. Add{' '}
+          carries the glyph components;{' '}
+          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
+            @newui/blocks
+          </code>{' '}
+          and{' '}
+          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
+            @newui/layouts
+          </code>{' '}
+          carry the composed sections and the page templates (
+          <A
+            href="/architecture"
+            class="text-ink-blue-6 underline decoration-dotted"
+          >
+            the ladder
+          </A>
+          ). Add{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
             @newui/charts
           </code>
@@ -70,7 +86,10 @@ export function Docs(): JSX.Element {
           (echarts, TipTap, CodeMirror), which is exactly why they are separate
           packages.
         </p>
-        <Code>{`pnpm add @newui/ui @newui/tailwind @newui/icons`}</Code>
+        <Code>{`pnpm add @newui/ui @newui/tailwind @newui/icons
+
+# the composed layers, when a page needs them
+pnpm add @newui/blocks @newui/layouts`}</Code>
         <p class="text-base text-ink-gray-7">
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">solid-js</code>{' '}
           is a peer dependency, so your app owns its version.
