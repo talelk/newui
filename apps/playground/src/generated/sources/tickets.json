@@ -2,8 +2,6 @@
   "files": [
     "pages/Tickets.tsx",
     "examples/CreateDialog.tsx",
-    "examples/DataTable.tsx",
-    "examples/ScrollTable.tsx",
     "examples/Notice.tsx",
     "examples/tickets-data.ts",
     "examples/WorkspaceNav.tsx",
@@ -18,7 +16,6 @@
     "@newui/layouts",
     "@newui/ui",
     "@solidjs/router",
-    "@tanstack/solid-table",
     "solid-js"
   ]
 }

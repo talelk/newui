@@ -2,8 +2,6 @@
   "files": [
     "pages/Tasks.tsx",
     "examples/ActivityList.tsx",
-    "examples/DataTable.tsx",
-    "examples/ScrollTable.tsx",
     "examples/Notice.tsx",
     "examples/tasks-data.ts",
     "examples/WorkspaceNav.tsx",
@@ -18,7 +16,6 @@
     "@newui/layouts",
     "@newui/ui",
     "@solidjs/router",
-    "@tanstack/solid-table",
     "@tanstack/solid-virtual",
     "solid-js"
   ]

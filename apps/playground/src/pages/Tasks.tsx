@@ -2,6 +2,7 @@ import { FilterBar, StatGrid } from '@newui/blocks'
 import { optionsOf } from '@newui/data'
 import { createAppForm, Form, fieldError } from '@newui/data/form'
 import { createCollection, DataProvider } from '@newui/data/query'
+import { DataTable, type DataTableColumn } from '@newui/data/table'
 import {
   Badge,
   BottomSheet,
@@ -25,7 +26,6 @@ import {
   untrack,
 } from 'solid-js'
 import { ActivityList } from '../examples/ActivityList'
-import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import { Notice } from '../examples/Notice'
 import {
   createTaskRepository,

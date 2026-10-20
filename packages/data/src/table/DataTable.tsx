@@ -28,26 +28,45 @@ import {
 } from 'solid-js'
 import { ScrollTable, TABLE_HEAD_CLASS } from './ScrollTable'
 
-const features = tableFeatures({
-  columnFilteringFeature,
-  columnVisibilityFeature,
-  globalFilteringFeature,
-  rowPaginationFeature,
-  rowSelectionFeature,
-  rowSortingFeature,
-  filteredRowModel: createFilteredRowModel(),
-  paginatedRowModel: createPaginatedRowModel(),
-  sortedRowModel: createSortedRowModel(),
-  sortFns: {
-    alphanumeric: sortFn_alphanumeric,
-    datetime: sortFn_datetime,
-    text: sortFn_text,
-  },
-})
+/**
+ * Built on the first table, not when the module is evaluated.
+ *
+ * A page can import this entry for `ScrollTable` alone (the accounting ledger
+ * does); if the feature set were a module-level `const`, evaluating the module
+ * would build it — and rollup could not drop the table engine behind it.
+ */
+function createFeatures() {
+  return tableFeatures({
+    columnFilteringFeature,
+    columnVisibilityFeature,
+    globalFilteringFeature,
+    rowPaginationFeature,
+    rowSelectionFeature,
+    rowSortingFeature,
+    filteredRowModel: createFilteredRowModel(),
+    paginatedRowModel: createPaginatedRowModel(),
+    sortedRowModel: createSortedRowModel(),
+    sortFns: {
+      alphanumeric: sortFn_alphanumeric,
+      datetime: sortFn_datetime,
+      text: sortFn_text,
+    },
+  })
+}
 
-export type DataTableColumn<T extends object> = ColumnDef<typeof features, T>
+type Features = ReturnType<typeof createFeatures>
 
-/** The example layer's table composition. No new public component API. */
+export type DataTableColumn<T extends object> = ColumnDef<Features, T>
+
+/**
+ * A collection as a table: search, sort, page, hide columns, select rows.
+ *
+ * TanStack Table is the engine; this is the kit's composition of it. The surface
+ * lives in `@newui/data` rather than `@newui/ui` because it owns that dependency
+ * — a component package that carried a table engine would make every `Button`
+ * pay for row models. It renders with `@newui/ui`, so it is the one promoted
+ * surface the headless rule carves out.
+ */
 export function DataTable<T extends { id: string }>(props: {
   title: string
   rows: T[]
@@ -92,8 +111,8 @@ export function DataTable<T extends { id: string }>(props: {
   const resolvedColumns = createMemo(() =>
     selectable() ? [selection, ...props.columns] : props.columns,
   )
-  const table = createTable<typeof features, T>({
-    features,
+  const table = createTable<Features, T>({
+    features: createFeatures(),
     get data() {
       return props.rows
     },
@@ -126,7 +145,7 @@ export function DataTable<T extends { id: string }>(props: {
     <section
       class="min-w-0 rounded-5 border border-outline-gray-1 bg-surface-elevation-1"
       aria-label={props.title}
-      data-slot="example-data-table"
+      data-slot="data-table"
     >
       <div class="flex flex-wrap items-center justify-between gap-3 p-3">
         <Show when={!props.hideSearch}>

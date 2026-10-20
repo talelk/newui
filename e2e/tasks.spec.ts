@@ -25,7 +25,7 @@ test('task table filters, sorts, paginates, hides columns and completes selected
   page,
 }) => {
   await page.goto('/examples/tasks/fullscreen')
-  const rows = page.locator('[data-slot="example-data-table"] tbody tr')
+  const rows = page.locator('[data-slot="data-table"] tbody tr')
   await expect(rows).toHaveCount(10)
   const first = await rows.first().innerText()
   await page.getByRole('button', { name: 'Next page', exact: true }).click()

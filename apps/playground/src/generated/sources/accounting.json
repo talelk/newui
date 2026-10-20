@@ -2,8 +2,6 @@
   "files": [
     "pages/Accounting.tsx",
     "examples/accounting-data.ts",
-    "examples/DataTable.tsx",
-    "examples/ScrollTable.tsx",
     "examples/Notice.tsx",
     "examples/WorkspacePage.tsx",
     "lib/examples.ts",
@@ -20,7 +18,6 @@
     "@newui/layouts",
     "@newui/ui",
     "@solidjs/router",
-    "@tanstack/solid-table",
     "solid-js"
   ]
 }

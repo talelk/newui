@@ -144,9 +144,10 @@ Every shipped reference component must have an isolated lazy story.
 
 TanStack Solid Query and Form belong to `@newui/data` (`/query`: the client, the
 repository contract and the collection mutations; `/form`: the submit lifecycle
-and the field-error bridge). Table and Virtual remain at the page layer until
-their promoted surfaces land. Blocks still import only `@newui/ui`; charts and
-editors stay at the page layer.
+and the field-error bridge; `/table`: the TanStack Table composition, the one
+promoted surface allowed to import `@newui/ui`). Virtual remains at the page
+layer until its promoted surface lands. Blocks still import only `@newui/ui`;
+charts and editors stay at the page layer.
 
 ## Guardrails (enforced by tests, not convention)
 

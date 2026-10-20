@@ -1,8 +1,6 @@
 {
   "files": [
     "pages/Analytics.tsx",
-    "examples/DataTable.tsx",
-    "examples/ScrollTable.tsx",
     "examples/Notice.tsx",
     "examples/WorkspaceNav.tsx",
     "examples/WorkspacePage.tsx",
@@ -19,7 +17,6 @@
     "@newui/layouts",
     "@newui/ui",
     "@solidjs/router",
-    "@tanstack/solid-table",
     "solid-js"
   ]
 }

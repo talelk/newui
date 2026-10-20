@@ -12,6 +12,8 @@ import {
   optionsOf,
   usdK,
 } from '@newui/data'
+import type { DataTableColumn } from '@newui/data/table'
+import { ScrollTable, TABLE_HEAD_CLASS } from '@newui/data/table/scroll'
 import {
   Badge,
   Button,
@@ -29,9 +31,7 @@ import {
   INITIAL_EMPLOYEES,
   type Transaction,
 } from '../examples/accounting-data'
-import type { DataTableColumn } from '../examples/DataTable'
 import { Notice } from '../examples/Notice'
-import { ScrollTable, TABLE_HEAD_CLASS } from '../examples/ScrollTable'
 import { WorkspacePage } from '../examples/WorkspacePage'
 
 const AccountingDialogs = lazy(() => import('./accounting/AccountingDialogs'))
@@ -39,12 +39,12 @@ const AccountingDialogs = lazy(() => import('./accounting/AccountingDialogs'))
 const ExpenseChart = lazy(() => import('./accounting/ExpenseChart'))
 
 const TransactionTable = lazy(() =>
-  import('../examples/DataTable').then((module) => ({
+  import('@newui/data/table').then((module) => ({
     default: module.DataTable<Transaction>,
   })),
 )
 const EmployeeTable = lazy(() =>
-  import('../examples/DataTable').then((module) => ({
+  import('@newui/data/table').then((module) => ({
     default: module.DataTable<Employee>,
   })),
 )

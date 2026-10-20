@@ -1,12 +1,11 @@
 import type { JSX } from 'solid-js'
 
 /**
- * The wide-table scroll shell (H7, spec/examples-refresh.md §1).
+ * The wide-table scroll shell.
  *
  * A table wider than its column needs one focusable, labelled horizontal
- * scroller or keyboard users cannot reach the far columns. Four tables
- * spelled that section out; this is the one spelling, with the shared
- * header-row classes beside it.
+ * scroller or keyboard users cannot reach the far columns. Every wide table in
+ * the kit uses this one, with the shared header-row classes beside it.
  */
 export function ScrollTable(props: {
   /** Names the region, e.g. `Deals table`. */

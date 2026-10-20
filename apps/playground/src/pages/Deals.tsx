@@ -7,10 +7,10 @@ import {
   StatGrid,
 } from '@newui/blocks'
 import { createUndo, first, usd as money, optionsOf } from '@newui/data'
+import { DataTable, type DataTableColumn } from '@newui/data/table'
 import { Avatar, Badge, Button, DatePicker, Select, TextInput } from '@newui/ui'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
 import { CreateDialog } from '../examples/CreateDialog'
-import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import {
   type Deal,
   initialDeals,

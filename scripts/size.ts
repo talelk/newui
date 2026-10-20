@@ -125,6 +125,14 @@ const ENTRIES: Entry[] = [
     forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
   },
   {
+    name: 'Data table',
+    file: 'scripts/fixtures/data-table.ts',
+    // 37.6 measured: TanStack Table is the heaviest dependency the kit owns,
+    // which is exactly why the surface lives here and not in `@newui/ui`.
+    budget: 42,
+    forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
+  },
+  {
     name: 'Full barrel',
     file: 'scripts/fixtures/all.ts',
     // Raised 132 → 140 (Combobox), 140 → 172 (DatePicker's

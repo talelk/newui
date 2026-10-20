@@ -162,9 +162,36 @@ a wrapper that picked one for you would either grow a variant per control or
 take the control as a prop and become a second component tree. The shared call
 shape is `value` / `error={fieldError(field())}` / `handleChange`.
 
+## Table — `@newui/data/table`
+
+```ts
+import { DataTable, type DataTableColumn } from '@newui/data/table'
+```
+
+A collection as a table: search, sort, page, hide columns, select rows, a bulk
+action and an empty state. TanStack Table is the engine; this is the kit's
+composition of it.
+
+- **It renders with `@newui/ui`** — the one carve-out in the headless rule,
+  scoped to `packages/data/src/table/**` in `.dependency-cruiser.cjs`. The table
+  owns the engine, and a component package that carried it would make every
+  `Button` pay for row models.
+- **Selection is a column, not a prop.** With `selectable` (the default) the
+  first column is a checkbox pair; the bulk action renders only while something
+  is selected, and hands the ids to `onRowsAction`.
+- **Column widths are the consumer's.** `DataTableColumn<T>` is TanStack's
+  `ColumnDef` with this table's feature set, so `meta: { align: 'end' }` is the
+  one opinion the kit adds (numeric columns).
+- **`ScrollTable`** is a *separate* entry, `@newui/data/table/scroll`: a
+  focusable, labelled horizontal scroller for a table wider than its column, with
+  `TABLE_HEAD_CLASS` beside it. Accounting's ledger renders its own semantic
+  table and needs only the shell — importing the main entry for it would pull the
+  whole TanStack composition into a route that never renders one (measured: 20 kB
+  on `/examples/accounting/fullscreen`).
+- The root is `data-slot="data-table"` (it was `example-data-table` while it
+  lived in the playground).
+
 ## Not yet
 
-The promoted surfaces — `DataTable` (TanStack Table) and `VirtualList`
-(TanStack Virtual) — still live in the examples. They render, so promoting them
-is a UI decision as much as a data one; `spec/tanstack-integration.md` records
-their current ownership.
+The promoted `VirtualList` (TanStack Virtual) still lives in the examples;
+`spec/tanstack-integration.md` records its ownership until it moves.

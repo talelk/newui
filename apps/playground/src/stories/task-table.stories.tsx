@@ -1,6 +1,6 @@
+import { DataTable } from '@newui/data/table'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
-import { DataTable } from '../examples/DataTable'
 import { seedTasks } from '../examples/tasks-data'
 
 /**

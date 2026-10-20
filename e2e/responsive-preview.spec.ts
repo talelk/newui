@@ -85,7 +85,10 @@ test('application preview preserves editing, comments and its document across al
   const copied = await page.evaluate(() => navigator.clipboard.readText())
   expect(copied).toContain('// pages/Tasks.tsx')
   expect(copied).toContain('// examples/tasks-data.ts')
-  expect(copied).toContain('// examples/DataTable.tsx')
+  expect(copied).toContain('// examples/ActivityList.tsx')
+  // The table is a package surface now: the copy lists `@newui/data` as a
+  // dependency instead of carrying the library's source into the app.
+  expect(copied).not.toContain('// examples/DataTable.tsx')
   await page.getByRole('button', { name: 'Preview', exact: true }).click()
   await expect(app.getByRole('dialog')).toContainText(
     'Keep this comment when resizing.',

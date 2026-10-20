@@ -17,6 +17,7 @@ import {
   usd as money,
   usdK,
 } from '@newui/data'
+import { DataTable, type DataTableColumn } from '@newui/data/table'
 import { Alert, Badge, Button, Select, Switch } from '@newui/ui'
 import { useNavigate } from '@solidjs/router'
 import {
@@ -28,7 +29,6 @@ import {
   Show,
   Suspense,
 } from 'solid-js'
-import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import { Notice } from '../examples/Notice'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
 import { WorkspacePage } from '../examples/WorkspacePage'

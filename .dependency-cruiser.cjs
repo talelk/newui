@@ -54,7 +54,12 @@ module.exports = {
       severity: 'error',
       comment:
         'ADR-0012: @newui/data owns behaviour, not rendering. It imports solid-js and nothing from the visual packages, so a page can use it without paying for a component — and a component can never depend on a policy it might want to change.',
-      from: { path: '^packages/data/' },
+      from: {
+        path: '^packages/data/',
+        // The promoted surfaces render, so they compose `@newui/ui` — the one
+        // carve-out the layer's name allows. Everything else stays headless.
+        pathNot: '^packages/data/src/(table|virtual)/',
+      },
       to: { path: '^packages/(ui|blocks|layouts|tailwind|icons)/' },
     },
     {

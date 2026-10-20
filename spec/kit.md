@@ -38,7 +38,7 @@ copyable app to the parts that already exist.
 | Components (atoms/molecules) | what is this control | `@newui/ui` (+ shell frames) | shipped |
 | Blocks (organisms) | what is this section | `@newui/blocks` | shipped |
 | Layouts (templates) | how does a page open | `@newui/layouts` | shipped (W2, `AppLayout`; page templates next) |
-| Logic | how does it behave | `@newui/data` | shipped (helpers, `/query`, `/form`; promoted surfaces next) |
+| Logic | how does it behave | `@newui/data` | shipped (helpers, `/query`, `/form`, `/table`; `/virtual` next) |
 | App | what do I copy | `apps/starter` + examples | missing |
 | Surface | how do I see any of it | Storybook | shipped (W1) |
 
@@ -146,8 +146,8 @@ examples adopt it and their local copies are deleted; `spec/data.md` replaces
 `createAppForm`, `Form` and `fieldError` over TanStack Form. Tasks and
 Authentication adopt them — neither imports TanStack Query or Form, creates a
 client, or maps a field's error list by hand. The promoted
-`DataTable`/`VirtualList` remain; `spec/tanstack-integration.md` records their
-current ownership.
+`DataTable` shipped at `@newui/data/table`; `VirtualList` remains.
+`spec/tanstack-integration.md` records its ownership.
 
 ## W4 — Composition: starter and guides
 

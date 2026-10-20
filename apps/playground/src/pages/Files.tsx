@@ -1,6 +1,7 @@
 import { FilterBar } from '@newui/blocks'
 import { NumberCard } from '@newui/charts'
 import { downloadBlob, first, optionsOf, bytes as size } from '@newui/data'
+import { DataTable, type DataTableColumn } from '@newui/data/table'
 import {
   Badge,
   BottomSheet,
@@ -13,7 +14,6 @@ import {
 } from '@newui/ui'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { CreateDialog } from '../examples/CreateDialog'
-import { DataTable, type DataTableColumn } from '../examples/DataTable'
 import { INITIAL, type WorkspaceFile } from '../examples/files-data'
 import { Notice } from '../examples/Notice'
 import { WorkspaceNav } from '../examples/WorkspaceNav'
