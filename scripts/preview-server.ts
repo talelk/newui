@@ -7,8 +7,20 @@ function stripAnsi(text: string): string {
   return text.replace(/\p{Cc}\[[0-9;]*m/gu, '')
 }
 
-/** Own the Vite process directly; pnpm may create a separate child process group. */
-export function startPreview(port: number) {
+/**
+ * Own the Vite process directly; pnpm may create a separate child process group.
+ *
+ * **Ports are an allocation, not a preference.** A readiness probe only proves
+ * *something* answers on the port; if two apps share one, the probe passes
+ * against the other app and the measurement silently measures the wrong build
+ * (a starter on Lighthouse's port reported its console errors as the site's).
+ *   4173 e2e site · 4180 lighthouse · 4181 budget site · 4182 budget starter
+ *   4183 starter dev/preview · 6006/6007 Storybook
+ *
+ * `root` lets a second app (the starter) be measured the same way the site is:
+ * the measurement should not care whose `dist` it is reading.
+ */
+export function startPreview(port: number, root = 'apps/playground') {
   const require = createRequire(import.meta.url)
   const vite = path.join(
     path.dirname(require.resolve('vite/package.json')),
@@ -16,14 +28,7 @@ export function startPreview(port: number) {
   )
   const server = spawn(
     process.execPath,
-    [
-      vite,
-      'preview',
-      'apps/playground',
-      '--port',
-      String(port),
-      '--strictPort',
-    ],
+    [vite, 'preview', root, '--port', String(port), '--strictPort'],
     {
       detached: true,
       stdio: ['ignore', 'pipe', 'pipe'],

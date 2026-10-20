@@ -33,13 +33,15 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 | charts | `@newui/charts` | echarts Solid wrappers (SVG renderer) |
 | vite | `@newui/vite` | Frappe dev proxy · lucide auto-import · DocType types |
 | site | `apps/playground` | the docs site, Storybook's host, and the visual acceptance surface |
+| starter | `apps/starter` | the gated application skeleton — the copyable composition of every level |
 
 The kit's direction is [`spec/kit.md`](./spec/kit.md) (ADR-0012): the ladder
 gains layouts (`@newui/layouts`), logic (`@newui/data`), the Storybook surface
-and the starter, in that order. Storybook, `@newui/layouts` (`AppLayout`,
-`PaneLayout`) and `@newui/data`'s pure helpers have landed; the async/forms
-surfaces and the starter have not, so *that* row is still the full architecture
-below.
+and the starter, in that order. All five have landed: Storybook, `AppLayout` +
+`PaneLayout`, the helpers plus the query/form/table/virtual surfaces, and
+`apps/starter` — a real app, gated by typecheck, CSS emission, a browser smoke
+suite and a route budget. `/kit` is the guide (*The ladder*, *Compose a page*,
+*Wire data*, *Start an app*).
 
 - **Primitives:** raw `@zag-js/*` via `useMachine` + `normalizeProps`
   (`packages/ui/src/lib/zag.ts`). Zag supplies keyboard, ARIA and focus.
@@ -74,6 +76,7 @@ build embed.
 | `/layouts` · `/layouts/<name>` | the same, for `@newui/layouts` |
 | `/spec` | the deterministic page the browser harness drives — no chrome, no network |
 | `/examples/<slug>` · `/examples/<slug>/fullscreen` | one application guide with a persistent responsive preview; a bare application viewport |
+| `/kit` | the guide: the ladder, composing a page, wiring data, starting from the starter |
 | `/charts` · `/editors` | generated chart and editor reference pages |
 
 Storybook is not a site route: it renders the same story modules on its own
@@ -353,12 +356,14 @@ editors stay at the page layer.
 
 ```
 pnpm dev            # site (dev server)
+pnpm dev:starter    # the starter app (4180)
 pnpm storybook      # Storybook, the isolated surface (6006)
 pnpm storybook:build # static Storybook build (storybook-static/)
 pnpm storybook:serve # serve the static build (6007; harness, shots, docs)
 pnpm stories        # regenerate generated/stories.json + stories.ts from Storybook's index
 pnpm stories:check  # fail on stale index or a missing required state (spec/states.md)
 pnpm build          # build all packages
+pnpm build:starter  # build the starter app
 pnpm shots          # screenshots: every route × theme × width + story spot-checks
 pnpm review /spec   # advisory visual review of live routes (test-results/review)
 pnpm site           # regenerate the component registry + per-component API slices

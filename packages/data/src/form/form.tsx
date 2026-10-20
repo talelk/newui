@@ -26,15 +26,17 @@ export function fieldError(field: {
 }): string | undefined {
   const { errors } = field.state.meta
   if (errors.length === 0) return undefined
-  return errors
-    .map((error) =>
-      typeof error === 'string'
-        ? error
-        : error && typeof error === 'object' && 'message' in error
-          ? String((error as { message: unknown }).message)
-          : String(error),
-    )
-    .join(' ')
+  const messages = errors.map((error) =>
+    typeof error === 'string'
+      ? error
+      : error && typeof error === 'object' && 'message' in error
+        ? String((error as { message: unknown }).message)
+        : String(error),
+  )
+  // A field usually declares the same message for `onChange` and `onSubmit`
+  // (validate as you type, and again on the way out). TanStack keeps one entry
+  // per validator, so the naive join prints the sentence twice.
+  return [...new Set(messages)].join(' ')
 }
 
 export function createAppForm<T extends object>(options: AppFormOptions<T>) {

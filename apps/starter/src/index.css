@@ -1,0 +1,11 @@
+@import "@newui/tailwind/style.css";
+
+/*
+ * Tailwind scans only the files a project tells it about. Two `@source` lines
+ * cover an app: the HTML that holds the mount point, and the source tree.
+ * Without the second, the classes a component writes in `.tsx` never reach the
+ * stylesheet — the failure looks like "the components have no styles" rather
+ * than a missing scan path.
+ */
+@source "../index.html";
+@source "./**/*.{ts,tsx}";

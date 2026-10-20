@@ -29,7 +29,23 @@ describe('affected gate routing', () => {
     expect(picked).toContain(
       'Browser harness (a11y · interaction · responsive · perf)',
     )
-    expect(picked).toContain('Route JS budget (every route, gzip)')
+    expect(picked).toContain(
+      'Route JS budget (every route and the starter, gzip)',
+    )
+  })
+
+  it('routes starter changes to its build, budget and browser suite', () => {
+    const picked = names(['apps/starter/src/pages/Records.tsx'])
+    expect(picked).toContain('Build starter')
+    expect(picked).toContain(
+      'Route JS budget (every route and the starter, gzip)',
+    )
+    expect(picked).toContain(
+      'CSS emission (every referenced utility is emitted)',
+    )
+    expect(picked).toContain(
+      'Browser harness (a11y · interaction · responsive · perf)',
+    )
   })
 
   it('runs the sweep only for merge-config, tokens or sweep changes', () => {

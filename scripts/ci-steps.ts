@@ -78,12 +78,17 @@ export const CI_STEPS: CiStep[] = [
     group: 'checks',
   },
   {
+    name: 'Build starter',
+    command: 'pnpm build:starter',
+    group: 'checks',
+  },
+  {
     name: 'CSS emission (every referenced utility is emitted)',
     command: 'pnpm css:check',
     group: 'checks',
   },
   {
-    name: 'Route JS budget (every route, gzip)',
+    name: 'Route JS budget (every route and the starter, gzip)',
     command: 'pnpm budget',
     group: 'checks',
   },

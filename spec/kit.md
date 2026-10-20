@@ -152,12 +152,21 @@ client, or maps a field's error list by hand. The promoted
 ## W4 — Composition: starter and guides
 
 `apps/starter` is a buildable, gated skeleton — app frame, list page, detail
-page, settings, auth, data wired — assembled only from public kit surfaces,
-with a smoke e2e, typecheck and budget entry. `/examples/starter` renders it
-and explains the copy path. The docs gain a Kit section (*The ladder*,
-*Compose a page*, *Wire data*, *Start an app*), and Storybook gains composed
-recipes that fill layouts with real blocks. A `create-newui` CLI is explicitly
-parked; the starter comes first.
+dialog, settings, auth, data wired — assembled only from public kit surfaces,
+with a smoke e2e, typecheck and budget entry. `/kit` is the guide (*The ladder*,
+*Compose a page*, *Wire data*, *Start an app*), and Storybook's composed recipes
+fill layouts with real blocks. A `create-newui` CLI is explicitly parked; the
+starter comes first.
+
+**Status.** Shipped. `apps/starter` runs on its own origin (4183), is measured
+beside the site's routes (`pnpm budget`, 138 kB gzip against 170), and a
+seven-test browser suite drives the collection, the validated create, an
+optimistic status change, a confirmed delete, the filter bar, the demo session
+and the settings form, plus axe and a 390px overflow check. It is not rendered a
+second time inside the docs site: the starter *is* the render, and a facsimile
+on `/examples/starter` would be a copy that drifts — `/kit` documents the copy
+path and links the live surfaces (`/layouts/app-layout`, `/examples/tasks`,
+`/examples/files`).
 
 ## W5 — Hardening
 

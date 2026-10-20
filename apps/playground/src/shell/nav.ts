@@ -111,6 +111,16 @@ export const NAV: NavSection[] = [
     ],
   },
   {
+    title: 'Kit',
+    items: [
+      {
+        title: 'Build an app',
+        href: '/kit',
+        description: 'Compose a page, wire data, start from the gated starter.',
+      },
+    ],
+  },
+  {
     title: 'Charts',
     items: [{ title: 'All charts', href: '/charts' }],
   },

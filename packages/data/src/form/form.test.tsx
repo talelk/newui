@@ -94,5 +94,9 @@ describe('fieldError', () => {
         state: { meta: { errors: [{ message: 'Required.' }, 'Too short.'] } },
       }),
     ).toBe('Required. Too short.')
+    // The same message from `onChange` and `onSubmit` is one sentence, not two.
+    expect(
+      fieldError({ state: { meta: { errors: ['Required.', 'Required.'] } } }),
+    ).toBe('Required.')
   })
 })

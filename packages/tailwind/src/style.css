@@ -32,3 +32,7 @@
 @source "../../icons/src/**/*.{ts,tsx}";
 @source "../../blocks/src/**/*.{ts,tsx}";
 @source "../../layouts/src/**/*.{ts,tsx}";
+/* The promoted surfaces (`/table`, `/virtual`) render with `@newui/ui`, so
+ * their classes are component markup and must emit like the rest. */
+@source "../../data/src/**/*.{ts,tsx}";
+@source not "../../data/src/**/*.test.{ts,tsx}";

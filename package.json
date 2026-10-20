@@ -5,6 +5,7 @@
   "packageManager": "pnpm@12.11.2",
   "scripts": {
     "dev": "pnpm --filter playground dev",
+    "dev:starter": "pnpm --filter starter dev",
     "storybook": "pnpm --filter playground storybook",
     "storybook:build": "pnpm --filter playground storybook:build",
     "storybook:serve": "tsx scripts/serve-storybook.ts",
@@ -12,6 +13,7 @@
     "stories:check": "tsx scripts/stories.ts --check",
     "build": "pnpm --filter @newui/tailwind build",
     "build:playground": "pnpm --filter playground build",
+    "build:starter": "pnpm --filter starter build",
     "verify": "tsx scripts/ci.ts",
     "verify:affected": "tsx scripts/ci.ts --affected",
     "verify:checks": "tsx scripts/ci.ts --group=checks",

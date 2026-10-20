@@ -25,6 +25,11 @@ const PORT = 4181
 const BASE = `http://localhost:${PORT}`
 const ASSETS = path.join(process.cwd(), 'apps/playground/dist/assets')
 
+/** The starter is an app, not a route: one dist, one budget, one page. */
+const STARTER_PORT = 4182
+const STARTER_BASE = `http://localhost:${STARTER_PORT}`
+const STARTER_ASSETS = path.join(process.cwd(), 'apps/starter/dist/assets')
+
 interface RouteBudget {
   /** Path, as the browser requests it. */
   route: string
@@ -246,18 +251,25 @@ const ROUTES: RouteBudget[] = [
   },
 ]
 
-const preview = startPreview(PORT)
+interface MeasureOptions {
+  label: string
+  base: string
+  assets: string
+  routes: RouteBudget[]
+}
 
-try {
-  await preview.ready
-  const browser = await chromium.launch({ channel: 'chrome' })
+/** Load each route, record what it fetched, and sum the gzip of those files. */
+async function measure(
+  browser: import('playwright').Browser,
+  options: MeasureOptions,
+): Promise<string[]> {
+  const { label, base, assets, routes } = options
   const failures: string[] = []
-
   console.warn(
-    '\nRoute JavaScript budget (gzip, every chunk the route fetches)\n',
+    `\n${label} JavaScript budget (gzip, every chunk the route fetches)\n`,
   )
 
-  for (const { route, budget, unless, viewport } of ROUTES) {
+  for (const { route, budget, unless, viewport } of routes) {
     const page = await browser.newPage({
       viewport: viewport ?? { width: 1440, height: 900 },
     })
@@ -270,7 +282,7 @@ try {
       files.add(path.basename(url.pathname))
     })
 
-    await page.goto(BASE + route, { waitUntil: 'networkidle', timeout: 60_000 })
+    await page.goto(base + route, { waitUntil: 'networkidle', timeout: 60_000 })
     // A route may fetch a chunk after first paint (a lazily mounted overlay);
     // give in-flight work a beat to land so the count is not racy.
     await page.waitForTimeout(600)
@@ -278,13 +290,13 @@ try {
 
     let gzipBytes = 0
     for (const file of files) {
-      gzipBytes += gzipSync(readFileSync(path.join(ASSETS, file))).length
+      gzipBytes += gzipSync(readFileSync(path.join(assets, file))).length
     }
     const kb = gzipBytes / 1024
     const ok = kb <= budget
     if (!ok) {
       failures.push(
-        `${route}: ${kb.toFixed(1)} kB exceeds ${budget} kB (${files.size} chunks)`,
+        `${label} ${route}: ${kb.toFixed(1)} kB exceeds ${budget} kB (${files.size} chunks)`,
       )
     }
     console.warn(
@@ -297,16 +309,50 @@ try {
       })`,
     )
   }
+  return failures
+}
+
+const preview = startPreview(PORT)
+const starterPreview = startPreview(STARTER_PORT, 'apps/starter')
+
+try {
+  await preview.ready
+  await starterPreview.ready
+  const browser = await chromium.launch({ channel: 'chrome' })
+
+  const failures = [
+    ...(await measure(browser, {
+      label: 'Route',
+      base: BASE,
+      assets: ASSETS,
+      routes: ROUTES,
+    })),
+    ...(await measure(browser, {
+      label: 'Starter',
+      base: STARTER_BASE,
+      assets: STARTER_ASSETS,
+      routes: [
+        {
+          route: '/',
+          // 142.3 measured: the whole app — frame, router, data client, table
+          // and form. There is no route splitting to hide behind at this size.
+          budget: 170,
+          unless: 'the complete starter on one page',
+        },
+      ],
+    })),
+  ]
 
   await browser.close()
 
   if (failures.length) {
-    console.error('\nRoute budget failures:')
+    console.error('\nBudget failures:')
     for (const failure of failures) console.error(`  - ${failure}`)
     process.exitCode = 1
   } else {
-    console.warn('\nEvery route is within budget.\n')
+    console.warn('\nEvery measured app is within budget.\n')
   }
 } finally {
   preview.stop()
+  starterPreview.stop()
 }

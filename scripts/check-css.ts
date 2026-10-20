@@ -18,6 +18,7 @@ const REPO = process.cwd()
 const UI_SRC = path.join(REPO, 'packages/ui/src')
 const BLOCKS_SRC = path.join(REPO, 'packages/blocks/src')
 const LAYOUTS_SRC = path.join(REPO, 'packages/layouts/src')
+const DATA_SRC = path.join(REPO, 'packages/data/src')
 const APP_SRC = path.join(REPO, 'apps/playground/src')
 const DIST = path.join(REPO, 'apps/playground/dist')
 
@@ -125,13 +126,15 @@ function escapeClass(token: string): string {
 const TOKEN_RE = /^[a-z][a-z0-9./-]*$/
 const missing = new Map<string, string>()
 
-// Both packages that ship class names: the components and the blocks composed
-// from them. A block's classes are scanned by `style.css`'s `@source`, so a
-// missing rule there is a real defect — the block renders unstyled.
+// Every package that ships class names: the components, the blocks and layouts
+// composed from them, and the data layer's promoted surfaces. Their classes are
+// scanned by `style.css`'s `@source`, so a missing rule there is a real defect —
+// the component renders unstyled.
 for (const file of [
   ...walk(UI_SRC),
   ...walk(BLOCKS_SRC),
   ...walk(LAYOUTS_SRC),
+  ...walk(DATA_SRC),
 ]) {
   // Not component markup: the config is vocabulary, and its own literals are
   // excluded from the Tailwind scan by `@source not`.

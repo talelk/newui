@@ -58,6 +58,15 @@ export default defineConfig({
       timeout: 180_000,
     },
     {
+      // The starter is a second application: a separate origin, so its smoke
+      // tests can run the real frame, router and data layer rather than a
+      // facsimile inside the docs site.
+      command: 'pnpm --filter starter dev --port 4183 --strictPort',
+      url: 'http://localhost:4183/',
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+    },
+    {
       // The story build is the other half of the surface: `iframe.html?id=…`
       // on its own origin, exactly what a docs embed or a deep link loads.
       command: `pnpm storybook:serve --port ${storybookPort} --build`,

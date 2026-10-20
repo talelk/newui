@@ -154,16 +154,28 @@ const RULES: Rule[] = [
     paths: [/^apps\/playground/, /^packages\/(ui|blocks|tailwind|tokens)\//],
   },
   {
+    match: 'Build starter',
+    paths: [
+      /^apps\/starter/,
+      /^packages\/(ui|blocks|layouts|data|tailwind|tokens)\//,
+    ],
+  },
+  {
     match: 'CSS emission',
     paths: [
       /^packages\/(ui|blocks|tailwind|tokens)\//,
       /^apps\/playground\/(src\/(stories|pages)|\.storybook)/,
+      /^apps\/starter/,
       /tailwind/,
     ],
   },
   {
     match: 'Route JS budget',
-    paths: [/^apps\/playground/, /^packages\/(ui|blocks|charts)\//],
+    paths: [
+      /^apps\/playground/,
+      /^apps\/starter/,
+      /^packages\/(ui|blocks|charts|data)\//,
+    ],
   },
   {
     match: 'Lighthouse',
@@ -178,6 +190,7 @@ const RULES: Rule[] = [
     match: 'Browser harness',
     paths: [
       /^apps\/playground\/(src\/(pages|lib|stories|routes)|\.storybook)/,
+      /^apps\/starter/,
       /^e2e\//,
       /playwright\.config/,
     ],
