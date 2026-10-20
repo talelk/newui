@@ -196,7 +196,9 @@ function registry(stories: Story[]): string {
   const body = entries
     .map(
       (entry) =>
-        `  ${entry.component}: {\n` +
+        // Quoted: a story title may end in prose ("Layouts/Records page"), and
+        // an unquoted key with a space is a build error in the generated file.
+        `  ${JSON.stringify(entry.component)}: {\n` +
         `    id: '${entry.id}',\n` +
         `    load: () => import('${entry.specifier}'),\n` +
         `  },`,

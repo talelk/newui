@@ -20,375 +20,379 @@ export interface StoryEntry {
 }
 
 export const STORIES: Record<string, StoryEntry> = {
-  Accordion: {
+  "Accordion": {
     id: 'components-disclosure-accordion--default',
     load: () => import('../stories/accordion.stories'),
   },
-  Alert: {
+  "Alert": {
     id: 'components-feedback-alert--default',
     load: () => import('../stories/alert.stories'),
   },
-  AppLayout: {
+  "AppLayout": {
     id: 'layouts-applayout--default',
     load: () => import('../stories/app-layout.stories'),
   },
-  AppShell: {
+  "AppShell": {
     id: 'components-layout-appshell--default',
     load: () => import('../stories/app-shell.stories'),
   },
-  AppSidebar: {
+  "AppSidebar": {
     id: 'blocks-appsidebar--default',
     load: () => import('../stories/app-sidebar.stories'),
   },
-  AreaChart: {
+  "AreaChart": {
     id: 'charts-areachart--default',
     load: () => import('../stories/area-chart.stories'),
   },
-  AuthCard: {
+  "AuthCard": {
     id: 'blocks-authcard--default',
     load: () => import('../stories/auth-card.stories'),
   },
-  Avatar: {
+  "Avatar": {
     id: 'components-display-avatar--default',
     load: () => import('../stories/avatar.stories'),
   },
-  Badge: {
+  "Badge": {
     id: 'components-display-badge--default',
     load: () => import('../stories/badge.stories'),
   },
-  BarChart: {
+  "BarChart": {
     id: 'charts-barchart--default',
     load: () => import('../stories/bar-chart.stories'),
   },
-  BottomSheet: {
+  "BottomSheet": {
     id: 'components-overlays-bottomsheet--default',
     load: () => import('../stories/bottom-sheet.stories'),
   },
-  Breadcrumbs: {
+  "Breadcrumbs": {
     id: 'components-navigation-breadcrumbs--default',
     load: () => import('../stories/breadcrumbs.stories'),
   },
-  Button: {
+  "Button": {
     id: 'components-actions-button--default',
     load: () => import('../stories/button.stories'),
   },
-  Card: {
+  "Card": {
     id: 'components-display-card--default',
     load: () => import('../stories/card.stories'),
   },
-  ChartBase: {
+  "ChartBase": {
     id: 'charts-chartbase--default',
     load: () => import('../stories/chart-base.stories'),
   },
-  ChartCard: {
+  "ChartCard": {
     id: 'charts-chartcard--default',
     load: () => import('../stories/chart-card.stories'),
   },
-  ChartContainer: {
+  "ChartContainer": {
     id: 'charts-chartcontainer--default',
     load: () => import('../stories/chart-container.stories'),
   },
-  ChartLegend: {
+  "ChartLegend": {
     id: 'charts-chartlegend--default',
     load: () => import('../stories/chart-legend.stories'),
   },
-  ChartTooltip: {
+  "ChartTooltip": {
     id: 'charts-charttooltip--default',
     load: () => import('../stories/chart-tooltip.stories'),
   },
-  Checkbox: {
+  "Checkbox": {
     id: 'components-inputs-checkbox--default',
     load: () => import('../stories/checkbox.stories'),
   },
-  CodeEditor: {
+  "CodeEditor": {
     id: 'editors-codeeditor--default',
     load: () => import('../stories/code-editor.stories'),
   },
-  Collapsible: {
+  "Collapsible": {
     id: 'components-disclosure-collapsible--default',
     load: () => import('../stories/collapsible.stories'),
   },
-  Combobox: {
+  "Combobox": {
     id: 'components-selection-combobox--default',
     load: () => import('../stories/combobox.stories'),
   },
-  CommandPalette: {
+  "CommandPalette": {
     id: 'components-overlays-commandpalette--default',
     load: () => import('../stories/command-palette.stories'),
   },
-  ContextMenu: {
+  "ContextMenu": {
     id: 'components-actions-contextmenu--default',
     load: () => import('../stories/context-menu.stories'),
   },
-  Dashboard: {
+  "Dashboard": {
     id: 'charts-dashboard--default',
     load: () => import('../stories/dashboard.stories'),
   },
-  DatePicker: {
+  "DatePicker": {
     id: 'components-selection-datepicker--default',
     load: () => import('../stories/date-picker.stories'),
   },
-  DateRangePicker: {
+  "DateRangePicker": {
     id: 'components-selection-daterangepicker--default',
     load: () => import('../stories/date-range-picker.stories'),
   },
-  DateTimePicker: {
+  "DateTimePicker": {
     id: 'components-selection-datetimepicker--default',
     load: () => import('../stories/date-time-picker.stories'),
   },
-  DemoSidebar: {
+  "DemoSidebar": {
     id: 'compositions-demosidebar--default',
     load: () => import('../stories/demo-sidebar.stories'),
   },
-  DesktopShell: {
+  "DesktopShell": {
     id: 'components-layout-desktopshell--default',
     load: () => import('../stories/desktop-shell.stories'),
   },
-  DetailHeader: {
+  "DetailHeader": {
     id: 'blocks-detailheader--default',
     load: () => import('../stories/detail-header.stories'),
   },
-  Dialog: {
+  "Dialog": {
     id: 'components-overlays-dialog--default',
     load: () => import('../stories/dialog.stories'),
   },
-  Divider: {
+  "Divider": {
     id: 'components-display-divider--default',
     load: () => import('../stories/divider.stories'),
   },
-  DonutChart: {
+  "DonutChart": {
     id: 'charts-donutchart--default',
     load: () => import('../stories/donut-chart.stories'),
   },
-  Dropdown: {
+  "Dropdown": {
     id: 'components-actions-dropdown--default',
     load: () => import('../stories/dropdown.stories'),
   },
-  Duration: {
+  "Duration": {
     id: 'components-inputs-duration--default',
     load: () => import('../stories/duration.stories'),
   },
-  Editor: {
+  "Editor": {
     id: 'editors-editor--default',
     load: () => import('../stories/editor.stories'),
   },
-  EmptyState: {
+  "EmptyState": {
     id: 'components-display-emptystate--default',
     load: () => import('../stories/empty-state.stories'),
   },
-  ErrorMessage: {
+  "ErrorMessage": {
     id: 'components-inputs-errormessage--default',
     load: () => import('../stories/error-message.stories'),
   },
-  FileUploader: {
+  "FileUploader": {
     id: 'components-selection-fileuploader--default',
     load: () => import('../stories/file-uploader.stories'),
   },
-  FilterBar: {
+  "FilterBar": {
     id: 'blocks-filterbar--default',
     load: () => import('../stories/filter-bar.stories'),
   },
-  FormControl: {
+  "FormControl": {
     id: 'components-inputs-formcontrol--default',
     load: () => import('../stories/form-control.stories'),
   },
-  FormLabel: {
+  "FormLabel": {
     id: 'components-inputs-formlabel--default',
     load: () => import('../stories/form-label.stories'),
   },
-  FunnelChart: {
+  "FunnelChart": {
     id: 'charts-funnelchart--default',
     load: () => import('../stories/funnel-chart.stories'),
   },
-  HeatmapChart: {
+  "HeatmapChart": {
     id: 'charts-heatmapchart--default',
     load: () => import('../stories/heatmap-chart.stories'),
   },
-  HoverCard: {
+  "HoverCard": {
     id: 'components-overlays-hovercard--default',
     load: () => import('../stories/hover-card.stories'),
   },
-  Icon: {
+  "Icon": {
     id: 'components-display-icon--default',
     load: () => import('../stories/icon.stories'),
   },
-  ItemListRow: {
+  "ItemListRow": {
     id: 'components-display-itemlistrow--default',
     load: () => import('../stories/item-list-row.stories'),
   },
-  KanbanBoard: {
+  "KanbanBoard": {
     id: 'blocks-kanbanboard--default',
     load: () => import('../stories/kanban-board.stories'),
   },
-  KeyboardShortcut: {
+  "KeyboardShortcut": {
     id: 'components-actions-keyboardshortcut--default',
     load: () => import('../stories/keyboard-shortcut.stories'),
   },
-  KeyboardShortcutsDialog: {
+  "KeyboardShortcutsDialog": {
     id: 'components-actions-keyboardshortcutsdialog--default',
     load: () => import('../stories/keyboard-shortcuts-dialog.stories'),
   },
-  LineChart: {
+  "LineChart": {
     id: 'charts-linechart--default',
     load: () => import('../stories/line-chart.stories'),
   },
-  List: {
+  "List": {
     id: 'components-display-list--default',
     load: () => import('../stories/list.stories'),
   },
-  Menu: {
+  "Menu": {
     id: 'components-actions-menu--default',
     load: () => import('../stories/menu.stories'),
   },
-  MobileNav: {
+  "MobileNav": {
     id: 'components-navigation-mobilenav--default',
     load: () => import('../stories/mobile-nav.stories'),
   },
-  MobileShell: {
+  "MobileShell": {
     id: 'components-layout-mobileshell--default',
     load: () => import('../stories/mobile-shell.stories'),
   },
-  MultiSelect: {
+  "MultiSelect": {
     id: 'components-selection-multiselect--default',
     load: () => import('../stories/multi-select.stories'),
   },
-  NumberCard: {
+  "NumberCard": {
     id: 'charts-numbercard--default',
     load: () => import('../stories/number-card.stories'),
   },
-  NumberInput: {
+  "NumberInput": {
     id: 'components-inputs-numberinput--default',
     load: () => import('../stories/number-input.stories'),
   },
-  PageToolbar: {
+  "PageToolbar": {
     id: 'blocks-pagetoolbar--default',
     load: () => import('../stories/page-toolbar.stories'),
   },
-  Pagination: {
+  "Pagination": {
     id: 'components-navigation-pagination--default',
     load: () => import('../stories/pagination.stories'),
   },
-  PaneLayout: {
+  "PaneLayout": {
     id: 'layouts-panelayout--default',
     load: () => import('../stories/pane-layout.stories'),
   },
-  Password: {
+  "Password": {
     id: 'components-inputs-password--default',
     load: () => import('../stories/password.stories'),
   },
-  Popover: {
+  "Popover": {
     id: 'components-overlays-popover--default',
     load: () => import('../stories/popover.stories'),
   },
-  Progress: {
+  "Progress": {
     id: 'components-feedback-progress--default',
     load: () => import('../stories/progress.stories'),
   },
-  ProgressCircle: {
+  "ProgressCircle": {
     id: 'components-feedback-progresscircle--default',
     load: () => import('../stories/progress-circle.stories'),
   },
-  RadioGroup: {
+  "RadioGroup": {
     id: 'components-inputs-radiogroup--default',
     load: () => import('../stories/radio-group.stories'),
   },
-  Rating: {
+  "Rating": {
     id: 'components-inputs-rating--default',
     load: () => import('../stories/rating.stories'),
   },
-  ResponsiveShell: {
+  "Records page": {
+    id: 'layouts-records-page--default',
+    load: () => import('../stories/records-page.stories'),
+  },
+  "ResponsiveShell": {
     id: 'components-layout-responsiveshell--default',
     load: () => import('../stories/responsive-shell.stories'),
   },
-  SankeyChart: {
+  "SankeyChart": {
     id: 'charts-sankeychart--default',
     load: () => import('../stories/sankey-chart.stories'),
   },
-  ScatterChart: {
+  "ScatterChart": {
     id: 'charts-scatterchart--default',
     load: () => import('../stories/scatter-chart.stories'),
   },
-  ScrollArea: {
+  "ScrollArea": {
     id: 'components-overlays-scrollarea--default',
     load: () => import('../stories/scroll-area.stories'),
   },
-  Select: {
+  "Select": {
     id: 'components-selection-select--default',
     load: () => import('../stories/select.stories'),
   },
-  SettingsDialog: {
+  "SettingsDialog": {
     id: 'components-patterns-settingsdialog--default',
     load: () => import('../stories/settings-dialog.stories'),
   },
-  Sidebar: {
+  "Sidebar": {
     id: 'components-navigation-sidebar--default',
     load: () => import('../stories/sidebar.stories'),
   },
-  Sidebar01: {
+  "Sidebar01": {
     id: 'compositions-sidebar01--default',
     load: () => import('../stories/sidebar-01.stories'),
   },
-  Skeleton: {
+  "Skeleton": {
     id: 'components-feedback-skeleton--default',
     load: () => import('../stories/skeleton.stories'),
   },
-  Slider: {
+  "Slider": {
     id: 'components-inputs-slider--default',
     load: () => import('../stories/slider.stories'),
   },
-  Spinner: {
+  "Spinner": {
     id: 'components-feedback-spinner--default',
     load: () => import('../stories/spinner.stories'),
   },
-  StatGrid: {
+  "StatGrid": {
     id: 'blocks-statgrid--default',
     load: () => import('../stories/stat-grid.stories'),
   },
-  Switch: {
+  "Switch": {
     id: 'components-inputs-switch--default',
     load: () => import('../stories/switch.stories'),
   },
-  TabButtons: {
+  "TabButtons": {
     id: 'components-disclosure-tabbuttons--default',
     load: () => import('../stories/tab-buttons.stories'),
   },
-  Tabs: {
+  "Tabs": {
     id: 'components-disclosure-tabs--default',
     load: () => import('../stories/tabs.stories'),
   },
-  TaskTable: {
+  "TaskTable": {
     id: 'compositions-tasktable--default',
     load: () => import('../stories/task-table.stories'),
   },
-  Textarea: {
+  "Textarea": {
     id: 'components-inputs-textarea--default',
     load: () => import('../stories/textarea.stories'),
   },
-  TextInput: {
+  "TextInput": {
     id: 'components-inputs-textinput--default',
     load: () => import('../stories/text-input.stories'),
   },
-  Timeline: {
+  "Timeline": {
     id: 'components-display-timeline--default',
     load: () => import('../stories/timeline.stories'),
   },
-  TimePicker: {
+  "TimePicker": {
     id: 'components-selection-timepicker--default',
     load: () => import('../stories/time-picker.stories'),
   },
-  Toast: {
+  "Toast": {
     id: 'components-feedback-toast--default',
     load: () => import('../stories/toast.stories'),
   },
-  ToggleGroup: {
+  "ToggleGroup": {
     id: 'components-selection-togglegroup--default',
     load: () => import('../stories/toggle-group.stories'),
   },
-  Tooltip: {
+  "Tooltip": {
     id: 'components-overlays-tooltip--default',
     load: () => import('../stories/tooltip.stories'),
   },
-  Tree: {
+  "Tree": {
     id: 'components-display-tree--default',
     load: () => import('../stories/tree.stories'),
   },

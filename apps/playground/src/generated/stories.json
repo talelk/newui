@@ -2232,6 +2232,18 @@
         "test",
         "manifest"
       ]
+    },
+    {
+      "id": "layouts-records-page--default",
+      "title": "Layouts/Records page",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/records-page.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
     }
   ]
 }
