@@ -23,6 +23,10 @@
     "./table/scroll": {
       "types": "./src/table/scroll.ts",
       "default": "./src/table/scroll.ts"
+    },
+    "./virtual": {
+      "types": "./src/virtual/index.ts",
+      "default": "./src/virtual/index.ts"
     }
   },
   "files": [
@@ -42,6 +46,7 @@
     "@newui/ui": "workspace:*",
     "@tanstack/solid-form": "^1.33.5",
     "@tanstack/solid-query": "^5.104.3",
-    "@tanstack/solid-table": "^9.3.1"
+    "@tanstack/solid-table": "^9.3.1",
+    "@tanstack/solid-virtual": "^3.13.47"
   }
 }

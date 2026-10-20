@@ -301,9 +301,6 @@ importers:
       '@solidjs/router':
         specifier: ^1.0.0
         version: 1.0.0(solid-js@1.9.17)
-      '@tanstack/solid-virtual':
-        specifier: 3.13.47
-        version: 3.13.47(solid-js@1.9.17)
       solid-js:
         specifier: ^1.9.17
         version: 1.9.17
@@ -410,6 +407,9 @@ importers:
       '@tanstack/solid-table':
         specifier: ^9.3.1
         version: 9.3.1(solid-js@1.9.17)
+      '@tanstack/solid-virtual':
+        specifier: ^3.13.47
+        version: 3.13.47(solid-js@1.9.17)
     devDependencies:
       solid-js:
         specifier: ^1.9.0

@@ -16,7 +16,6 @@
     "@newui/layouts",
     "@newui/ui",
     "@solidjs/router",
-    "@tanstack/solid-virtual",
     "solid-js"
   ]
 }

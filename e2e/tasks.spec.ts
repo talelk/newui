@@ -92,7 +92,7 @@ test('the activity stream keeps a bounded DOM while reaching all 1000 tasks', as
   await page.goto('/examples/tasks/fullscreen')
   await expect(page.locator('tbody tr')).toHaveCount(10)
   await page.getByRole('tab', { name: 'Activity', exact: true }).click()
-  const feed = page.locator('[data-slot="virtual-activity"]')
+  const feed = page.locator('[data-slot="virtual-list"]')
   await expect(feed.locator('li').first()).toBeVisible()
   expect(await feed.locator('li').count()).toBeLessThan(30)
   await feed.focus()

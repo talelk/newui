@@ -133,6 +133,15 @@ const ENTRIES: Entry[] = [
     forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
   },
   {
+    name: 'Data virtual',
+    file: 'scripts/fixtures/data-virtual.ts',
+    // 20.0 measured: TanStack Virtual plus the scroll region around it. The
+    // headroom is deliberate — a budget at exactly the measured number turns
+    // the next honest addition into a red gate.
+    budget: 24,
+    forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
+  },
+  {
     name: 'Full barrel',
     file: 'scripts/fixtures/all.ts',
     // Raised 132 → 140 (Combobox), 140 → 172 (DatePicker's

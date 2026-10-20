@@ -22,7 +22,6 @@
     "@newui/tokens": "workspace:*",
     "@newui/ui": "workspace:*",
     "@solidjs/router": "^1.0.0",
-    "@tanstack/solid-virtual": "3.13.47",
     "solid-js": "^1.9.17"
   },
   "devDependencies": {

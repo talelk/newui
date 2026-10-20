@@ -191,7 +191,35 @@ composition of it.
 - The root is `data-slot="data-table"` (it was `example-data-table` while it
   lived in the playground).
 
-## Not yet
+## Virtual — `@newui/data/virtual`
 
-The promoted `VirtualList` (TanStack Virtual) still lives in the examples;
-`spec/tanstack-integration.md` records its ownership until it moves.
+```ts
+import { VirtualList } from '@newui/data/virtual'
+```
+
+A bounded DOM for a long list:
+
+```tsx
+<VirtualList label="Task activity" items={rows} itemSize={72} height="440px">
+  {(row) => <Row row={row} />}
+</VirtualList>
+```
+
+- **Fixed row height** (`itemSize`): the virtualiser needs to know where the next
+  row starts without measuring every row, which is the whole point on the lists
+  this is for. `height` is the viewport, `overscan` the rows rendered beyond it.
+- **The scroll region is focusable** (WCAG 2.1.1) and `Home`/`End`/arrows scroll
+  it natively once focused — the same contract as `ScrollArea`, and the reason
+  for the scoped `noNoninteractiveTabindex` carve-out.
+- **Rows declare their position**: `aria-posinset` / `aria-setsize` on each `li`,
+  so a screen reader knows the list's real size even though the DOM holds
+  thirty rows.
+- It renders nothing but the region, the list and the positioned rows — the row's
+  anatomy and any card around it belong to the page, as `ActivityList` shows.
+
+## All five adapters
+
+TanStack Query (`/query`), Form (`/form`), Table (`/table`), Virtual
+(`/virtual`) and the helpers (root) are the package's surfaces. The playground
+depends on none of the TanStack packages directly; each entry is separately
+budgeted so a page pays only for what it renders.
