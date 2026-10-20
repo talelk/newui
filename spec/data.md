@@ -217,9 +217,9 @@ A bounded DOM for a long list:
 - It renders nothing but the region, the list and the positioned rows — the row's
   anatomy and any card around it belong to the page, as `ActivityList` shows.
 
-## All five adapters
+## The surfaces
 
-TanStack Query (`/query`), Form (`/form`), Table (`/table`), Virtual
-(`/virtual`) and the helpers (root) are the package's surfaces. The playground
+The root entry is the helpers; `/query`, `/form`, `/table` and `/virtual` are
+the four TanStack adapters, each its own entry point. The playground
 depends on none of the TanStack packages directly; each entry is separately
 budgeted so a page pays only for what it renders.
