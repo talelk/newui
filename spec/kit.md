@@ -38,7 +38,7 @@ copyable app to the parts that already exist.
 | Components (atoms/molecules) | what is this control | `@newui/ui` (+ shell frames) | shipped |
 | Blocks (organisms) | what is this section | `@newui/blocks` | shipped |
 | Layouts (templates) | how does a page open | `@newui/layouts` | shipped (W2, `AppLayout`; page templates next) |
-| Logic | how does it behave | `@newui/data` | shipped (pure helpers; async and forms next) |
+| Logic | how does it behave | `@newui/data` | shipped (helpers + `/query`; forms and promoted surfaces next) |
 | App | what do I copy | `apps/starter` + examples | missing |
 | Surface | how do I see any of it | Storybook | shipped (W1) |
 
@@ -139,6 +139,13 @@ One headless package that says how apps behave:
 Acceptance: exactly one way to do data/forms/tables/lists in the repo; the
 examples adopt it and their local copies are deleted; `spec/data.md` replaces
 `spec/tanstack-integration.md`.
+
+**Status.** The helpers and the query surface have shipped: `DataProvider`,
+`createDataClient`, the `Repository` contract and `createCollection` (one list
+query with optimistic, reversible mutations). Tasks is the first adopter — it no
+longer imports TanStack Query, creates a client or touches the cache. Forms
+(TanStack Form) and the promoted `DataTable`/`VirtualList` are the remaining
+surfaces; `spec/tanstack-integration.md` records their current ownership.
 
 ## W4 — Composition: starter and guides
 

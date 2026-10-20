@@ -19,7 +19,6 @@
     "@newui/ui",
     "@solidjs/router",
     "@tanstack/solid-form",
-    "@tanstack/solid-query",
     "@tanstack/solid-table",
     "@tanstack/solid-virtual",
     "solid-js"

@@ -16,7 +16,7 @@ what a contract says, never the contract itself.
 - [States](states.md) — the required-state contract every shipped component's story file is checked against.
 - [Visual system](visual-system.md) — typography, control sizing, surfaces, states and motion.
 - [Reference examples](reference-examples.md) — application and component example inventory.
-- [TanStack integration](tanstack-integration.md) — example-layer ownership and budgets.
+- [TanStack integration](tanstack-integration.md) — what is left at the example layer now that the query adapter lives in `@newui/data`.
 
 ## Components
 

@@ -1,3 +1,5 @@
+import type { Repository } from '@newui/data/query'
+
 export const TASK_STATUSES = [
   'Backlog',
   'Todo',
@@ -45,11 +47,23 @@ export function seedTasks(count = 1000): TaskRecord[] {
   }))
 }
 
-export function createTaskRepository() {
+export interface NewTask {
+  title: string
+  priority: string
+}
+
+/**
+ * The local task store, behind the kit's `Repository` contract.
+ *
+ * `create` fills the defaults a new task gets; `update` is the only write verb,
+ * so "complete", "reassign" and "comment" are patches at the call site rather
+ * than a method each.
+ */
+export function createTaskRepository(): Repository<TaskRecord, NewTask> {
   let rows = seedTasks()
   return {
-    read: () => [...rows],
-    create: (input: { title: string; priority: string }) => {
+    list: async () => [...rows],
+    create: async (input) => {
       const record: TaskRecord = {
         ...input,
         id: `TASK-${1001 + rows.length}`,
@@ -61,35 +75,17 @@ export function createTaskRepository() {
         comments: [],
       }
       rows = [record, ...rows]
-      return [...rows]
+      return record
     },
-    update: (
-      id: string,
-      changes: Partial<
-        Pick<
-          TaskRecord,
-          'title' | 'status' | 'priority' | 'owner' | 'project' | 'due'
-        >
-      >,
-    ) => {
-      rows = rows.map((row) => (row.id === id ? { ...row, ...changes } : row))
-      return [...rows]
+    update: async (id, patch) => {
+      rows = rows.map((row) => (row.id === id ? { ...row, ...patch } : row))
+      const updated = rows.find((row) => row.id === id)
+      if (!updated) throw new Error(`No task called ${id}`)
+      return updated
     },
-    comment: (id: string, text: string) => {
-      if (text.trim())
-        rows = rows.map((row) =>
-          row.id === id
-            ? { ...row, comments: [...row.comments, text.trim()] }
-            : row,
-        )
-      return [...rows]
-    },
-    complete: (ids: string[]) => {
-      const selected = new Set(ids)
-      rows = rows.map((row) =>
-        selected.has(row.id) ? { ...row, status: 'Done' } : row,
-      )
-      return [...rows]
+    remove: async (ids) => {
+      const gone = new Set(ids)
+      rows = rows.filter((row) => !gone.has(row.id))
     },
   }
 }

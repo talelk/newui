@@ -27,7 +27,7 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 | components | `@newui/ui` | Solid compounds over Zag; `tv()` recipes |
 | blocks | `@newui/blocks` | composed sections built on `@newui/ui` |
 | layouts | `@newui/layouts` | page templates built on the components and blocks |
-| data | `@newui/data` | the logic layer: formatting, selection, undo, downloads (headless) |
+| data | `@newui/data` | the logic layer: formatting, selection, undo, downloads; `/query` adds the client, repository and collection mutations (headless) |
 | code editor | `@newui/code-editor` | CodeMirror 6 Solid component |
 | rich text | `@newui/editor` | TipTap 3 Solid editor + toolbar |
 | charts | `@newui/charts` | echarts Solid wrappers (SVG renderer) |
@@ -142,8 +142,10 @@ documents the mapping and acceptance boundaries. `lib/examples.ts` owns the
 application catalog; `lib/reference-examples.ts` owns the registry mapping.
 Every shipped reference component must have an isolated lazy story.
 
-TanStack Solid Table, Virtual, Query and Form belong to example pages. Blocks
-still import only `@newui/ui`; charts and editors stay at the page layer.
+TanStack Solid Query belongs to `@newui/data/query` (the client, the repository
+contract and the collection mutations); Table, Virtual and Form remain at the
+page layer until their promoted surfaces land. Blocks still import only
+`@newui/ui`; charts and editors stay at the page layer.
 
 ## Guardrails (enforced by tests, not convention)
 

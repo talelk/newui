@@ -1,5 +1,6 @@
 import { FilterBar, StatGrid } from '@newui/blocks'
 import { optionsOf } from '@newui/data'
+import { createCollection, DataProvider } from '@newui/data/query'
 import {
   Badge,
   BottomSheet,
@@ -15,20 +16,13 @@ import {
 } from '@newui/ui'
 import { createForm } from '@tanstack/solid-form'
 import {
-  createMutation,
-  createQuery,
-  QueryClient,
-  QueryClientProvider,
-  useQueryClient,
-} from '@tanstack/solid-query'
-import {
   createEffect,
   createMemo,
   createSignal,
   For,
   type JSX,
-  onCleanup,
   Show,
+  untrack,
 } from 'solid-js'
 import { ActivityList } from '../examples/ActivityList'
 import { DataTable, type DataTableColumn } from '../examples/DataTable'
@@ -182,7 +176,6 @@ function NewTask(props: {
 }
 
 function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
-  const queryClient = useQueryClient()
   const [failure, setFailure] = createSignal(false)
   const [status, setStatus] = createSignal('all')
   const [priority, setPriority] = createSignal('all')
@@ -200,29 +193,28 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
   const [comment, setComment] = createSignal('')
   const [detailError, setDetailError] = createSignal('')
   const columns = taskColumns(setSelected)
-  const query = createQuery(() => ({
-    queryKey: ['example-tasks'],
-    queryFn: async () => {
+  // The failure switch is the page's: it wraps the repository's `list` so the
+  // "Try again" path exercises the kit's error state, not a special case.
+  // The page owns the repository for its lifetime; reading the prop once says
+  // so, and keeps the query's `list` from re-subscribing on every render.
+  const source = untrack(() => props.repository)
+  const repository = {
+    ...source,
+    list: async () => {
       await new Promise((resolve) => setTimeout(resolve, 120))
       if (failure())
         throw new Error('The local task service is temporarily unavailable.')
-      return props.repository.read()
+      return source.list()
     },
+  }
+  const tasks = createCollection(() => ({
+    key: ['example-tasks'],
+    repository,
     staleTime: Infinity,
     retry: false,
-    throwOnError: false,
   }))
-  const mutation = createMutation(() => ({
-    mutationFn: async (operation: {
-      create?: { title: string; priority: string }
-      complete?: string[]
-    }) =>
-      operation.create
-        ? props.repository.create(operation.create)
-        : props.repository.complete(operation.complete ?? []),
-    onSuccess: (rows) => queryClient.setQueryData(['example-tasks'], rows),
-  }))
-  const all = () => (query.isPending ? [] : (query.data ?? []))
+  const query = tasks.query
+  const all = () => query.rows()
   const filtered = createMemo(() => {
     const order = taskSort()
     return all()
@@ -266,15 +258,11 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
   const current = createMemo(() => all().find((row) => row.id === selected()))
   function update(changes: Parameters<TaskRepository['update']>[1]) {
     const id = selected()
-    if (id)
-      queryClient.setQueryData(
-        ['example-tasks'],
-        props.repository.update(id, changes),
-      )
+    if (id) tasks.update.mutate({ id, patch: changes })
   }
   const done = () => all().filter((row) => row.status === 'Done').length
   const saveTask = (value: { title: string; priority: string }) =>
-    mutation.mutateAsync({ create: value }).then(() => {
+    tasks.create.mutateAsync(value).then(() => {
       setOpen(false)
       setNotice(`Created ${value.title}.`)
     })
@@ -333,7 +321,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
           <Button
             variant="outline"
             iconLeft="lucide-refresh-cw"
-            loading={query.isFetching}
+            loading={query.isFetching()}
             onClick={() => {
               setFailure(false)
               void query.refetch()
@@ -488,7 +476,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
       </div>
       <Notice text={notice()} tone="green" onDismiss={() => setNotice('')} />
       <Show
-        when={!query.isPending}
+        when={!query.isPending()}
         fallback={
           <div role="status">
             <EmptyState
@@ -501,14 +489,14 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
         }
       >
         <Show
-          when={!query.isError}
+          when={!query.isError()}
           fallback={
             <div role="alert">
               <EmptyState
                 bordered
                 icon="lucide-circle-alert"
                 title="Could not load tasks"
-                description={query.error?.message}
+                description={query.error()?.message}
                 action={
                   <Button
                     onClick={() => {
@@ -535,7 +523,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
                 columns={columns}
                 actionLabel="Complete selected"
                 onRowsAction={(ids) => {
-                  mutation.mutate({ complete: ids })
+                  tasks.updateMany.mutate({ ids, patch: { status: 'Done' } })
                   setNotice(
                     `${ids.length} ${ids.length === 1 ? 'task' : 'tasks'} marked complete.`,
                   )
@@ -804,10 +792,12 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
                   <Button
                     disabled={!comment().trim()}
                     onClick={() => {
-                      queryClient.setQueryData(
-                        ['example-tasks'],
-                        props.repository.comment(row().id, comment()),
-                      )
+                      tasks.update.mutate({
+                        id: row().id,
+                        patch: {
+                          comments: [...row().comments, comment().trim()],
+                        },
+                      })
                       setComment('')
                     }}
                   >
@@ -835,12 +825,10 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
 }
 
 export function Tasks(): JSX.Element {
-  const client = new QueryClient()
   const repository = createTaskRepository()
-  onCleanup(() => client.clear())
   return (
-    <QueryClientProvider client={client}>
+    <DataProvider>
       <TasksWorkspace repository={repository} />
-    </QueryClientProvider>
+    </DataProvider>
   )
 }

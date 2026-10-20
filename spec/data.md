@@ -55,11 +55,89 @@ composition) until it earns its own surface.
   turn as the synthetic click, which is what every browser this kit targets
   accepts; a deferred revoke would leak a URL per download.
 
+## Query — `@newui/data/query`
+
+The query surface is a separate entry point, so a page that only formats a
+number never pays for a cache.
+
+```ts
+import { DataProvider, createCollection } from '@newui/data/query'
+```
+
+### `DataProvider` and `createDataClient`
+
+`DataProvider` wraps the page in a `QueryClientProvider`. Pass `client` to share
+one cache across panes; omit it and the provider owns a client and **clears it on
+unmount**, so a route change leaves no timers or caches behind.
+
+`createDataClient(options)` states the kit's defaults once:
+
+| option | default | why |
+| --- | --- | --- |
+| `staleTime` | `30_000` | local data does not change under a stale page |
+| `retry` | `1` | a transient failure is worth one more try |
+| `refetchOnWindowFocus` | `false` | not a dashboard; returning to the tab is not a refresh |
+| `throwOnError` | `false` | an error is data the page renders, not an exception that tears the tree down |
+| mutations `retry` | `0` | a write is not idempotent by accident |
+
+### The repository
+
+```ts
+export interface Repository<T extends { id: string }, New = NewRecord<T>> {
+  list(options?: { signal?: AbortSignal }): Promise<T[]>
+  create(input: New, options?: { signal?: AbortSignal }): Promise<T>
+  update(id: string, patch: Partial<T>, options?: { signal?: AbortSignal }): Promise<T>
+  remove(ids: string[], options?: { signal?: AbortSignal }): Promise<void>
+}
+```
+
+- **`list` is the only read.** A page that needs one record filters the list the
+  cache already holds; a remote adapter that wants one request still exposes
+  `list` and lets the cache be the collection.
+- **Domain verbs are patches.** `complete`, `archive` and `comment` are
+  `update(id, { status: 'Done' })` at the call site. A contract that grows a
+  method per business action is a database, not a seam.
+- **`New` is the create input**, not `Omit<T, 'id'>`: a repository fills the
+  defaults it owns, and Tasks creates from `{ title, priority }` alone.
+
+### `createCollection`
+
+```ts
+const tasks = createCollection(() => ({
+  key: ['example-tasks'],
+  repository,
+}))
+
+tasks.query.rows()        // T[]
+tasks.query.isPending()   // first request in flight
+tasks.query.isFetching()  // any request in flight (the Refresh button)
+tasks.query.isError()     // the last request failed
+tasks.query.error()       // Error | undefined
+tasks.query.refetch()     // "Try again"
+
+tasks.create.mutateAsync({ title, priority })
+tasks.update.mutate({ id, patch })
+tasks.updateMany.mutate({ ids, patch })
+tasks.remove.mutate({ ids })
+```
+
+- **Updates and removals are optimistic and reversible.** The patch lands on
+  screen before the request, and a failure restores the previous list — proven
+  in `collection.test.tsx` with a gated promise, not by inspecting the cache.
+- **Creates are not optimistic.** A new record's id and defaults are the
+  repository's to decide; guessing them would show a row that then changes
+  identity. `mutateAsync` resolves after the refresh, which is what lets a
+  create dialog close knowing the row is on screen.
+- **Every mutation refreshes the list on settle** (`invalidateQueries`), so a
+  mutation and the "Refresh" button take the same path and cannot disagree.
+- **Errors are normalised** to `Error` (TanStack's is `unknown`) and reported
+  once through `onError`, so a page words one notice for every failure.
+- **`key` is the cache identity** — two panes reading the same collection share
+  one request and one update.
+
 ## Not yet
 
-The async shapes are the next slice: a repository contract
-(`list/get/create/update/remove`), `createListQuery` over TanStack Query with
-optimistic update, rollback, notice and undo, forms over TanStack Form, and the
-promoted `DataTable` / `VirtualList` surfaces that currently live in the
-examples. `spec/tanstack-integration.md` still describes the application-level
-usage those will replace.
+The promoted surfaces — `DataTable` (TanStack Table) and `VirtualList`
+(TanStack Virtual) — and the TanStack Form bridge still live in the examples.
+They render, so promoting them is a UI decision as much as a data one;
+`spec/tanstack-integration.md` records the current ownership until they move.

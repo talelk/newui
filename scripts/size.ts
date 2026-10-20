@@ -108,6 +108,15 @@ const ENTRIES: Entry[] = [
     forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
   },
   {
+    name: 'Data query',
+    file: 'scripts/fixtures/data-query.ts',
+    // 15.5 measured: TanStack Query plus the seam around it. The helpers stay
+    // in the root entry; a page that only formats a number must not pay for
+    // the cache.
+    budget: 20,
+    forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
+  },
+  {
     name: 'Full barrel',
     file: 'scripts/fixtures/all.ts',
     // Raised 132 → 140 (Combobox), 140 → 172 (DatePicker's

@@ -1,9 +1,10 @@
 # TanStack Solid adapters in the examples
 
-> Superseded by [`kit.md`](kit.md) when `@newui/data` lands (ADR-0012): the
-> adapters move behind newui's own conventions in that package, and the
-> examples adopt them. This document remains the record of the example-layer
-> stance until then.
+> **Partly superseded.** The query adapter moved behind
+> [`data.md`](data.md) — `@newui/data/query` owns the client, the repository
+> contract and the collection mutations, and Tasks adopts them. Table, Virtual
+> and Form are still example-layer and are recorded here until they are
+> promoted.
 
 The playground uses four TanStack adapters where they add concrete behaviour.
 They are application dependencies, not `@newui/ui` or `@newui/blocks` dependencies.
