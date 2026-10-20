@@ -45,19 +45,24 @@ function page<T extends Record<string, Component>>(
   )
 }
 
-const ComponentsLayout = lazy(() =>
+const AtomsLayout = lazy(() =>
   import('./shell/ReferenceLayout').then((module) => ({
-    default: module.ComponentsLayout,
+    default: module.AtomsLayout,
   })),
 )
-const BlocksLayout = lazy(() =>
+const MoleculesLayout = lazy(() =>
   import('./shell/ReferenceLayout').then((module) => ({
-    default: module.BlocksLayout,
+    default: module.MoleculesLayout,
   })),
 )
-const LayoutsLayout = lazy(() =>
+const OrganismsLayout = lazy(() =>
   import('./shell/ReferenceLayout').then((module) => ({
-    default: module.LayoutsLayout,
+    default: module.OrganismsLayout,
+  })),
+)
+const TemplatesLayout = lazy(() =>
+  import('./shell/ReferenceLayout').then((module) => ({
+    default: module.TemplatesLayout,
   })),
 )
 
@@ -85,8 +90,6 @@ const Docs = page(() => import('./pages/Docs'), 'Docs')
 const Foundations = page(() => import('./pages/Foundations'), 'Foundations')
 const Architecture = page(() => import('./pages/Architecture'), 'Architecture')
 const Kit = page(() => import('./pages/Kit'), 'Kit')
-const BlocksIndex = page(() => import('./pages/BlocksIndex'), 'BlocksIndex')
-const LayoutsIndex = page(() => import('./pages/LayoutsIndex'), 'LayoutsIndex')
 const ComponentsIndex = page(
   () => import('./pages/ComponentsIndex'),
   'ComponentsIndex',
@@ -104,6 +107,10 @@ const CompositionPage = page(
   'CompositionPage',
 )
 const Examples = page(() => import('./pages/Examples'), 'Examples')
+const LegacyRedirect = page(
+  () => import('./pages/LegacyRedirect'),
+  'LegacyRedirect',
+)
 const NotFound = page(() => import('./pages/NotFound'), 'NotFound')
 const Discussions = page(() => import('./pages/Discussions'), 'Discussions')
 const Spec = page(() => import('./pages/Spec'), 'Spec')
@@ -144,56 +151,58 @@ export const ROUTES: { path: string; title: string }[] = [
   { path: '/', title: 'Introduction' },
   { path: '/docs', title: 'Installation' },
   { path: '/foundations', title: 'Design tokens' },
-  { path: '/architecture', title: 'Architecture' },
+  { path: '/architecture', title: 'Atomic design' },
   { path: '/kit', title: 'Build an app' },
-  { path: '/components', title: 'Components' },
-  { path: '/components/:name', title: 'Component' },
-  { path: '/charts', title: 'Charts' },
-  { path: '/charts/:name', title: 'Chart' },
-  { path: '/editors', title: 'Editors' },
-  { path: '/editors/:name', title: 'Editor' },
-  { path: '/blocks', title: 'All blocks' },
-  { path: '/blocks/compositions/:name', title: 'Site composition' },
-  { path: '/blocks/:name', title: 'Block' },
-  { path: '/layouts', title: 'All layouts' },
-  { path: '/layouts/:name', title: 'Layout' },
-  { path: '/examples', title: 'Examples' },
-  { path: '/examples/registry/:name', title: 'Registry example' },
-  { path: '/examples/patterns', title: 'Component recipes' },
-  { path: '/examples/patterns/:name', title: 'Reference pattern' },
-  { path: '/examples/analytics/fullscreen', title: 'Analytics' },
-  { path: '/examples/analytics', title: 'Analytics dashboard' },
-  { path: '/examples/authentication/fullscreen', title: 'Authentication' },
-  { path: '/examples/authentication', title: 'Authentication' },
-  { path: '/examples/cards/fullscreen', title: 'Cards' },
-  { path: '/examples/cards', title: 'Cards' },
-  { path: '/examples/settings/fullscreen', title: 'Settings' },
-  { path: '/examples/settings', title: 'Settings' },
-  { path: '/examples/deals', title: 'Deals' },
-  { path: '/examples/deals/fullscreen', title: 'Deals' },
-
-  { path: '/examples/tickets', title: 'Tickets' },
-  { path: '/examples/tickets/fullscreen', title: 'Tickets' },
-
-  { path: '/examples/files', title: 'Files' },
-  { path: '/examples/files/fullscreen', title: 'Files' },
-
-  { path: '/examples/accounting', title: 'Accounting' },
-  { path: '/examples/accounting/fullscreen', title: 'Accounting' },
-
-  { path: '/examples/mail', title: 'Mail' },
-  { path: '/examples/mail/fullscreen', title: 'Mail' },
-
-  { path: '/examples/compose', title: 'Compose' },
-  { path: '/examples/compose/fullscreen', title: 'Compose' },
-
-  { path: '/examples/tasks', title: 'Tasks' },
-  { path: '/examples/tasks/fullscreen', title: 'Tasks' },
-
-  { path: '/examples/discussions', title: 'Discussions' },
-  { path: '/examples/discussions/fullscreen', title: 'Discussions' },
-
+  { path: '/atoms', title: 'Atoms' },
+  { path: '/atoms/:name', title: 'Atom' },
+  { path: '/molecules', title: 'Molecules' },
+  { path: '/molecules/:name', title: 'Molecule' },
+  { path: '/organisms', title: 'Organisms' },
+  { path: '/organisms/compositions/:name', title: 'Site composition' },
+  { path: '/organisms/:name', title: 'Organism' },
+  { path: '/templates', title: 'Templates' },
+  { path: '/templates/:name', title: 'Template' },
+  { path: '/pages', title: 'Pages' },
+  { path: '/pages/accounting', title: 'Accounting' },
+  { path: '/pages/files', title: 'Files' },
+  { path: '/pages/tickets', title: 'Tickets' },
+  { path: '/pages/deals', title: 'Deals' },
+  { path: '/pages/mail', title: 'Mail' },
+  { path: '/pages/compose', title: 'Compose' },
+  { path: '/pages/analytics', title: 'Analytics dashboard' },
+  { path: '/pages/tasks', title: 'Tasks' },
+  { path: '/pages/cards', title: 'Cards' },
+  { path: '/pages/authentication', title: 'Authentication' },
+  { path: '/pages/discussions', title: 'Discussions' },
+  { path: '/pages/settings', title: 'Settings' },
+  { path: '/pages/registry/:name', title: 'Registry example' },
+  { path: '/pages/patterns', title: 'Component recipes' },
+  { path: '/pages/patterns/:name', title: 'Reference pattern' },
+  { path: '/pages/settings/fullscreen', title: 'Settings' },
+  { path: '/pages/analytics/fullscreen', title: 'Analytics' },
+  { path: '/pages/authentication/fullscreen', title: 'Authentication' },
+  { path: '/pages/cards/fullscreen', title: 'Cards' },
+  { path: '/pages/deals/fullscreen', title: 'Deals' },
+  { path: '/pages/tickets/fullscreen', title: 'Tickets' },
+  { path: '/pages/files/fullscreen', title: 'Files' },
+  { path: '/pages/accounting/fullscreen', title: 'Accounting' },
+  { path: '/pages/mail/fullscreen', title: 'Mail' },
+  { path: '/pages/compose/fullscreen', title: 'Compose' },
+  { path: '/pages/tasks/fullscreen', title: 'Tasks' },
+  { path: '/pages/discussions/fullscreen', title: 'Discussions' },
   { path: '/spec', title: 'Component spec' },
+  { path: '/components', title: 'Redirect' },
+  { path: '/components/*', title: 'Redirect' },
+  { path: '/blocks', title: 'Redirect' },
+  { path: '/blocks/*', title: 'Redirect' },
+  { path: '/layouts', title: 'Redirect' },
+  { path: '/layouts/*', title: 'Redirect' },
+  { path: '/charts', title: 'Redirect' },
+  { path: '/charts/*', title: 'Redirect' },
+  { path: '/editors', title: 'Redirect' },
+  { path: '/editors/*', title: 'Redirect' },
+  { path: '/examples', title: 'Redirect' },
+  { path: '/examples/*', title: 'Redirect' },
 ]
 
 const TITLES = new Map(ROUTES.map((route) => [route.path, route.title]))
@@ -237,94 +246,87 @@ export function AppRoutes(): JSX.Element {
         <Route path="/foundations" component={Foundations} />
         <Route path="/architecture" component={Architecture} />
         <Route path="/kit" component={Kit} />
-        {/* The two hand-written reference pages sit in the site group; the
-            generated `:name` pages sit in their own group below. A static
-            segment outranks a parameter, so these win for their own paths. */}
 
-        <Route path="/examples" component={Examples} />
-        <Route path="/examples/analytics" component={ApplicationPage} />
-        <Route path="/examples/authentication" component={ApplicationPage} />
-        <Route path="/examples/cards" component={ApplicationPage} />
-        <Route path="/examples/settings" component={ApplicationPage} />
-        <Route path="/examples/deals" component={ApplicationPage} />
-        <Route path="/examples/tickets" component={ApplicationPage} />
-        <Route path="/examples/files" component={ApplicationPage} />
-        <Route path="/examples/accounting" component={ApplicationPage} />
-        <Route path="/examples/mail" component={ApplicationPage} />
-        <Route path="/examples/compose" component={ApplicationPage} />
-        <Route path="/examples/tasks" component={ApplicationPage} />
-        <Route path="/examples/discussions" component={ApplicationPage} />
-        <Route
-          path="/examples/registry/:name"
-          component={RegistryExamplePage}
-        />
-        <Route path="/examples/patterns" component={Patterns} />
-        <Route path="/examples/patterns/:name" component={Patterns} />
+        {/* Pages: the top of the ladder. Applications, the solid-ui recipes and
+            the registry examples all live here; `:slug` is the preview page and
+            the `fullscreen` routes below are the bare viewports. */}
+        <Route path="/pages" component={Examples} />
+        <Route path="/pages/registry/:name" component={RegistryExamplePage} />
+        <Route path="/pages/patterns" component={Patterns} />
+        <Route path="/pages/patterns/:name" component={Patterns} />
+        <Route path="/pages/accounting" component={ApplicationPage} />
+        <Route path="/pages/analytics" component={ApplicationPage} />
+        <Route path="/pages/authentication" component={ApplicationPage} />
+        <Route path="/pages/cards" component={ApplicationPage} />
+        <Route path="/pages/deals" component={ApplicationPage} />
+        <Route path="/pages/tickets" component={ApplicationPage} />
+        <Route path="/pages/files" component={ApplicationPage} />
+        <Route path="/pages/mail" component={ApplicationPage} />
+        <Route path="/pages/compose" component={ApplicationPage} />
+        <Route path="/pages/tasks" component={ApplicationPage} />
+        <Route path="/pages/discussions" component={ApplicationPage} />
+        <Route path="/pages/settings" component={ApplicationPage} />
+
+        {/*
+          The pre-atomic URLs. They were public for long enough that dropping
+          them would break every bookmark and every stack-overflow answer; each
+          one redirects, and the component redirects resolve the entry's level
+          rather than guessing a section.
+        */}
+        <Route path="/components" component={LegacyRedirect} />
+        <Route path="/components/*" component={LegacyRedirect} />
+        <Route path="/blocks" component={LegacyRedirect} />
+        <Route path="/blocks/*" component={LegacyRedirect} />
+        <Route path="/layouts" component={LegacyRedirect} />
+        <Route path="/layouts/*" component={LegacyRedirect} />
+        <Route path="/charts" component={LegacyRedirect} />
+        <Route path="/charts/*" component={LegacyRedirect} />
+        <Route path="/editors" component={LegacyRedirect} />
+        <Route path="/editors/*" component={LegacyRedirect} />
+        <Route path="/examples" component={LegacyRedirect} />
+        <Route path="/examples/*" component={LegacyRedirect} />
       </Route>
 
       {/*
-        The components section brings its own sidebar (the full index), so it is
-        its own layout group. Only these routes import the index — which is the
-        point: the shell stays at 48 kB because a page pays for its own
-        furniture.
+        The four atomic levels bring their own sidebar (the full index), so
+        each is its own layout group. Only these routes import the registry —
+        which is the point: the shell stays small because a page pays for its
+        own furniture.
       */}
-      <Route path="/components" component={ComponentsLayout}>
-        {/* Child paths are relative to the parent, so `/` is the index and
-            `/:name` is one component — writing the parent's own path again
-            would nest it (`/components/components/:name`). */}
+      <Route path="/atoms" component={AtomsLayout}>
         <Route path="/" component={ComponentsIndex} />
         <Route path="/:name" component={ComponentPage} />
       </Route>
-
-      {/* The layouts are the third reference section: the same generated page,
-          one level up the ladder from the blocks. */}
-      <Route path="/layouts" component={LayoutsLayout}>
-        <Route path="/" component={LayoutsIndex} />
-        <Route path="/:name" component={ComponentPage} />
-      </Route>
-
-      {/* The blocks are a reference section too: their own index, their own
-          sidebar, and the same generated page. */}
-      <Route path="/charts" component={ComponentsLayout}>
+      <Route path="/molecules" component={MoleculesLayout}>
         <Route path="/" component={ComponentsIndex} />
         <Route path="/:name" component={ComponentPage} />
       </Route>
-      <Route path="/editors" component={ComponentsLayout}>
-        <Route path="/" component={ComponentsIndex} />
-        <Route path="/:name" component={ComponentPage} />
-      </Route>
-      <Route path="/blocks" component={BlocksLayout}>
+      <Route path="/organisms" component={OrganismsLayout}>
         <Route path="/compositions/:name" component={CompositionPage} />
-        <Route path="/" component={BlocksIndex} />
+        <Route path="/" component={ComponentsIndex} />
+        <Route path="/:name" component={ComponentPage} />
+      </Route>
+      <Route path="/templates" component={TemplatesLayout}>
+        <Route path="/" component={ComponentsIndex} />
         <Route path="/:name" component={ComponentPage} />
       </Route>
 
       <Route component={BareLayout}>
-        <Route path="/examples/settings/fullscreen" component={Settings} />
-        <Route path="/examples/analytics/fullscreen" component={Analytics} />
+        <Route path="/pages/settings/fullscreen" component={Settings} />
+        <Route path="/pages/analytics/fullscreen" component={Analytics} />
         <Route
-          path="/examples/authentication/fullscreen"
+          path="/pages/authentication/fullscreen"
           component={Authentication}
         />
-        <Route path="/examples/cards/fullscreen" component={Cards} />
-        <Route path="/examples/deals/fullscreen" component={Deals} />
-
-        <Route path="/examples/tickets/fullscreen" component={Tickets} />
-
-        <Route path="/examples/files/fullscreen" component={Files} />
-
-        <Route path="/examples/accounting/fullscreen" component={Accounting} />
-
-        <Route path="/examples/mail/fullscreen" component={Mail} />
-
-        <Route path="/examples/compose/fullscreen" component={Compose} />
-
-        <Route path="/examples/tasks/fullscreen" component={Tasks} />
-
-        <Route
-          path="/examples/discussions/fullscreen"
-          component={Discussions}
-        />
+        <Route path="/pages/cards/fullscreen" component={Cards} />
+        <Route path="/pages/deals/fullscreen" component={Deals} />
+        <Route path="/pages/tickets/fullscreen" component={Tickets} />
+        <Route path="/pages/files/fullscreen" component={Files} />
+        <Route path="/pages/accounting/fullscreen" component={Accounting} />
+        <Route path="/pages/mail/fullscreen" component={Mail} />
+        <Route path="/pages/compose/fullscreen" component={Compose} />
+        <Route path="/pages/tasks/fullscreen" component={Tasks} />
+        <Route path="/pages/discussions/fullscreen" component={Discussions} />
         <Route path="/spec" component={Spec} />
         <Route path="*" component={NotFound} />
       </Route>

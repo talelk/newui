@@ -2,7 +2,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/components/dashboard/index.tsx",
     "implementation": "apps/playground/src/pages/Analytics.tsx",
-    "documentation": "/examples/analytics",
+    "documentation": "/pages/analytics",
     "tests": [
       "e2e/analytics.spec.ts"
     ],
@@ -39,7 +39,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/components/authentication/index.tsx",
     "implementation": "apps/playground/src/pages/Authentication.tsx",
-    "documentation": "/examples/authentication",
+    "documentation": "/pages/authentication",
     "tests": [
       "e2e/example-patterns.spec.ts"
     ],
@@ -50,7 +50,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/components/cards/index.tsx",
     "implementation": "apps/playground/src/pages/Cards.tsx",
-    "documentation": "/examples/cards",
+    "documentation": "/pages/cards",
     "tests": [
       "e2e/example-patterns.spec.ts"
     ],
@@ -61,7 +61,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/components/mail/index.tsx",
     "implementation": "apps/playground/src/pages/Mail.tsx",
-    "documentation": "/examples/mail",
+    "documentation": "/pages/mail",
     "tests": [
       "e2e/mail.spec.ts"
     ],
@@ -88,7 +88,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/components/tasks/index.tsx",
     "implementation": "apps/playground/src/pages/Tasks.tsx",
-    "documentation": "/examples/tasks",
+    "documentation": "/pages/tasks",
     "tests": [
       "e2e/tasks.spec.ts"
     ],
@@ -97,7 +97,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/TasksDesktop.vue",
     "implementation": "apps/playground/src/pages/Tasks.tsx",
-    "documentation": "/examples/tasks",
+    "documentation": "/pages/tasks",
     "tests": [
       "e2e/tasks.spec.ts"
     ],
@@ -179,7 +179,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/TasksMobile.vue",
     "implementation": "apps/playground/src/pages/Tasks.tsx",
-    "documentation": "/examples/tasks",
+    "documentation": "/pages/tasks",
     "tests": [
       "e2e/tasks.spec.ts"
     ],
@@ -251,7 +251,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/MailDesktop.vue",
     "implementation": "apps/playground/src/pages/Mail.tsx",
-    "documentation": "/examples/mail",
+    "documentation": "/pages/mail",
     "tests": [
       "e2e/mail.spec.ts"
     ],
@@ -328,7 +328,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/MailMobile.vue",
     "implementation": "apps/playground/src/pages/Mail.tsx",
-    "documentation": "/examples/mail",
+    "documentation": "/pages/mail",
     "tests": [
       "e2e/mail.spec.ts"
     ],
@@ -405,7 +405,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/FilesDesktop.vue",
     "implementation": "apps/playground/src/pages/Files.tsx",
-    "documentation": "/examples/files",
+    "documentation": "/pages/files",
     "tests": [
       "e2e/business-recipes.spec.ts"
     ],
@@ -447,7 +447,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/FilesMobile.vue",
     "implementation": "apps/playground/src/pages/Files.tsx",
-    "documentation": "/examples/files",
+    "documentation": "/pages/files",
     "tests": [
       "e2e/business-recipes.spec.ts"
     ],
@@ -519,7 +519,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/DealsDesktop.vue",
     "implementation": "apps/playground/src/pages/Deals.tsx",
-    "documentation": "/examples/deals",
+    "documentation": "/pages/deals",
     "tests": [
       "e2e/business-recipes.spec.ts"
     ],
@@ -566,7 +566,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/DealsMobile.vue",
     "implementation": "apps/playground/src/pages/Deals.tsx",
-    "documentation": "/examples/deals",
+    "documentation": "/pages/deals",
     "tests": [
       "e2e/business-recipes.spec.ts"
     ],
@@ -618,7 +618,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/TicketsDesktop.vue",
     "implementation": "apps/playground/src/pages/Tickets.tsx",
-    "documentation": "/examples/tickets",
+    "documentation": "/pages/tickets",
     "tests": [
       "e2e/business-recipes.spec.ts"
     ],
@@ -660,7 +660,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/TicketsMobile.vue",
     "implementation": "apps/playground/src/pages/Tickets.tsx",
-    "documentation": "/examples/tickets",
+    "documentation": "/pages/tickets",
     "tests": [
       "e2e/business-recipes.spec.ts"
     ],
@@ -697,7 +697,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/AccountingDesktop.vue",
     "implementation": "apps/playground/src/pages/Accounting.tsx",
-    "documentation": "/examples/accounting",
+    "documentation": "/pages/accounting",
     "tests": [
       "e2e/business-recipes.spec.ts"
     ],
@@ -764,7 +764,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/AccountingMobile.vue",
     "implementation": "apps/playground/src/pages/Accounting.tsx",
-    "documentation": "/examples/accounting",
+    "documentation": "/pages/accounting",
     "tests": [
       "e2e/business-recipes.spec.ts"
     ],
@@ -796,7 +796,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/ComposeDesktop.vue",
     "implementation": "apps/playground/src/pages/Compose.tsx",
-    "documentation": "/examples/compose",
+    "documentation": "/pages/compose",
     "tests": [
       "e2e/compose.spec.ts"
     ],
@@ -828,7 +828,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/ComposeMobile.vue",
     "implementation": "apps/playground/src/pages/Compose.tsx",
-    "documentation": "/examples/compose",
+    "documentation": "/pages/compose",
     "tests": [
       "e2e/compose.spec.ts"
     ],
@@ -860,7 +860,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/DiscussionsDesktop.vue",
     "implementation": "apps/playground/src/pages/Discussions.tsx",
-    "documentation": "/examples/discussions",
+    "documentation": "/pages/discussions",
     "tests": [
       "e2e/discussions-settings.spec.ts"
     ],
@@ -1012,7 +1012,7 @@
   {
     "source": "references/frappe-ui-main/docs/components/recipes/DiscussionsMobile.vue",
     "implementation": "apps/playground/src/pages/Discussions.tsx",
-    "documentation": "/examples/discussions",
+    "documentation": "/pages/discussions",
     "tests": [
       "e2e/discussions-settings.spec.ts"
     ],
@@ -1053,8 +1053,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/accordion-demo.tsx",
-    "implementation": "/components/accordion",
-    "documentation": "/examples/registry/accordion-demo",
+    "implementation": "/molecules/accordion",
+    "documentation": "/pages/registry/accordion-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1095,8 +1095,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/alert-demo.tsx",
-    "implementation": "/components/alert",
-    "documentation": "/examples/registry/alert-demo",
+    "implementation": "/molecules/alert",
+    "documentation": "/pages/registry/alert-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1106,8 +1106,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/alert-dialog-demo.tsx",
-    "implementation": "/components/dialog",
-    "documentation": "/examples/registry/alert-dialog-demo",
+    "implementation": "/molecules/dialog",
+    "documentation": "/pages/registry/alert-dialog-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1123,8 +1123,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/area-chart-demo.tsx",
-    "implementation": "/charts/area-chart",
-    "documentation": "/examples/registry/area-chart-demo",
+    "implementation": "/organisms/area-chart",
+    "documentation": "/pages/registry/area-chart-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1134,8 +1134,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/aspect-ratio-demo.tsx",
-    "implementation": "/examples/patterns/layout",
-    "documentation": "/examples/registry/aspect-ratio-demo",
+    "implementation": "/pages/patterns/layout",
+    "documentation": "/pages/registry/aspect-ratio-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1145,8 +1145,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/avatar-demo.tsx",
-    "implementation": "/components/avatar",
-    "documentation": "/examples/registry/avatar-demo",
+    "implementation": "/atoms/avatar",
+    "documentation": "/pages/registry/avatar-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1156,8 +1156,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/badge-delta-demo.tsx",
-    "implementation": "/examples/patterns/analytics-widgets",
-    "documentation": "/examples/registry/badge-delta-demo",
+    "implementation": "/pages/patterns/analytics-widgets",
+    "documentation": "/pages/registry/badge-delta-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1167,8 +1167,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/badge-demo.tsx",
-    "implementation": "/components/badge",
-    "documentation": "/examples/registry/badge-demo",
+    "implementation": "/atoms/badge",
+    "documentation": "/pages/registry/badge-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1178,8 +1178,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/bar-chart-demo.tsx",
-    "implementation": "/charts/bar-chart",
-    "documentation": "/examples/registry/bar-chart-demo",
+    "implementation": "/organisms/bar-chart",
+    "documentation": "/pages/registry/bar-chart-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1189,8 +1189,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/bar-list-demo.tsx",
-    "implementation": "/examples/patterns/analytics-widgets",
-    "documentation": "/examples/registry/bar-list-demo",
+    "implementation": "/pages/patterns/analytics-widgets",
+    "documentation": "/pages/registry/bar-list-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1200,8 +1200,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/breadcrumb-demo.tsx",
-    "implementation": "/components/breadcrumbs",
-    "documentation": "/examples/registry/breadcrumb-demo",
+    "implementation": "/molecules/breadcrumbs",
+    "documentation": "/pages/registry/breadcrumb-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1232,8 +1232,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/button-demo.tsx",
-    "implementation": "/components/button",
-    "documentation": "/examples/registry/button-demo",
+    "implementation": "/atoms/button",
+    "documentation": "/pages/registry/button-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1274,8 +1274,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/calendar-demo.tsx",
-    "implementation": "/components/date-picker",
-    "documentation": "/examples/registry/calendar-demo",
+    "implementation": "/molecules/date-picker",
+    "documentation": "/pages/registry/calendar-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1346,8 +1346,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/callout-demo.tsx",
-    "implementation": "/examples/patterns/analytics-widgets",
-    "documentation": "/examples/registry/callout-demo",
+    "implementation": "/pages/patterns/analytics-widgets",
+    "documentation": "/pages/registry/callout-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1357,8 +1357,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/card-demo.tsx",
-    "implementation": "/components/card",
-    "documentation": "/examples/registry/card-demo",
+    "implementation": "/molecules/card",
+    "documentation": "/pages/registry/card-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1374,8 +1374,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-api-demo.tsx",
-    "implementation": "/examples/patterns/carousel",
-    "documentation": "/examples/registry/carousel-api-demo",
+    "implementation": "/pages/patterns/carousel",
+    "documentation": "/pages/registry/carousel-api-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1391,8 +1391,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-demo.tsx",
-    "implementation": "/examples/patterns/carousel",
-    "documentation": "/examples/registry/carousel-demo",
+    "implementation": "/pages/patterns/carousel",
+    "documentation": "/pages/registry/carousel-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1408,8 +1408,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-orientation-demo.tsx",
-    "implementation": "/examples/patterns/carousel",
-    "documentation": "/examples/registry/carousel-orientation-demo",
+    "implementation": "/pages/patterns/carousel",
+    "documentation": "/pages/registry/carousel-orientation-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1425,8 +1425,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-plugin-demo.tsx",
-    "implementation": "/examples/patterns/carousel",
-    "documentation": "/examples/registry/carousel-plugin-demo",
+    "implementation": "/pages/patterns/carousel",
+    "documentation": "/pages/registry/carousel-plugin-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1442,8 +1442,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-size-demo.tsx",
-    "implementation": "/examples/patterns/carousel",
-    "documentation": "/examples/registry/carousel-size-demo",
+    "implementation": "/pages/patterns/carousel",
+    "documentation": "/pages/registry/carousel-size-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1459,8 +1459,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-spacing-demo.tsx",
-    "implementation": "/examples/patterns/carousel",
-    "documentation": "/examples/registry/carousel-spacing-demo",
+    "implementation": "/pages/patterns/carousel",
+    "documentation": "/pages/registry/carousel-spacing-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1476,8 +1476,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/checkbox-demo.tsx",
-    "implementation": "/components/checkbox",
-    "documentation": "/examples/registry/checkbox-demo",
+    "implementation": "/atoms/checkbox",
+    "documentation": "/pages/registry/checkbox-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1487,8 +1487,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/checkbox-indeterminate-demo.tsx",
-    "implementation": "/components/checkbox",
-    "documentation": "/examples/registry/checkbox-indeterminate-demo",
+    "implementation": "/atoms/checkbox",
+    "documentation": "/pages/registry/checkbox-indeterminate-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1498,8 +1498,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/collapsible-demo.tsx",
-    "implementation": "/components/collapsible",
-    "documentation": "/examples/registry/collapsible-demo",
+    "implementation": "/molecules/collapsible",
+    "documentation": "/pages/registry/collapsible-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1515,8 +1515,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/combobox-demo.tsx",
-    "implementation": "/components/combobox",
-    "documentation": "/examples/registry/combobox-demo",
+    "implementation": "/molecules/combobox",
+    "documentation": "/pages/registry/combobox-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1542,8 +1542,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/command-demo.tsx",
-    "implementation": "/examples/patterns/command",
-    "documentation": "/examples/registry/command-demo",
+    "implementation": "/pages/patterns/command",
+    "documentation": "/pages/registry/command-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1589,8 +1589,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/command-dialog-demo.tsx",
-    "implementation": "/examples/patterns/command",
-    "documentation": "/examples/registry/command-dialog-demo",
+    "implementation": "/pages/patterns/command",
+    "documentation": "/pages/registry/command-dialog-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1636,8 +1636,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/context-menu-demo.tsx",
-    "implementation": "/components/context-menu",
-    "documentation": "/examples/registry/context-menu-demo",
+    "implementation": "/molecules/context-menu",
+    "documentation": "/pages/registry/context-menu-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1718,8 +1718,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/data-table-demo.tsx",
-    "implementation": "/examples/tasks",
-    "documentation": "/examples/registry/data-table-demo",
+    "implementation": "/pages/tasks",
+    "documentation": "/pages/registry/data-table-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1790,8 +1790,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/date-picker-demo.tsx",
-    "implementation": "/components/date-picker",
-    "documentation": "/examples/registry/date-picker-demo",
+    "implementation": "/molecules/date-picker",
+    "documentation": "/pages/registry/date-picker-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1872,8 +1872,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/date-range-demo.tsx",
-    "implementation": "/components/date-range-picker",
-    "documentation": "/examples/registry/date-range-demo",
+    "implementation": "/molecules/date-range-picker",
+    "documentation": "/pages/registry/date-range-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1964,8 +1964,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/delta-bar-demo.tsx",
-    "implementation": "/examples/patterns/analytics-widgets",
-    "documentation": "/examples/registry/delta-bar-demo",
+    "implementation": "/pages/patterns/analytics-widgets",
+    "documentation": "/pages/registry/delta-bar-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1975,8 +1975,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/dialog-demo.tsx",
-    "implementation": "/components/dialog",
-    "documentation": "/examples/registry/dialog-demo",
+    "implementation": "/molecules/dialog",
+    "documentation": "/pages/registry/dialog-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2007,8 +2007,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/drawer-demo.tsx",
-    "implementation": "/components/bottom-sheet",
-    "documentation": "/examples/registry/drawer-demo",
+    "implementation": "/molecules/bottom-sheet",
+    "documentation": "/pages/registry/drawer-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2039,8 +2039,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/drawer-dialog.tsx",
-    "implementation": "/examples/patterns/navigation",
-    "documentation": "/examples/registry/drawer-dialog",
+    "implementation": "/pages/patterns/navigation",
+    "documentation": "/pages/registry/drawer-dialog",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2076,8 +2076,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/dropdown-menu-demo.tsx",
-    "implementation": "/components/dropdown",
-    "documentation": "/examples/registry/dropdown-menu-demo",
+    "implementation": "/molecules/dropdown",
+    "documentation": "/pages/registry/dropdown-menu-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2158,8 +2158,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/flex-demo.tsx",
-    "implementation": "/examples/patterns/layout",
-    "documentation": "/examples/registry/flex-demo",
+    "implementation": "/pages/patterns/layout",
+    "documentation": "/pages/registry/flex-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2169,8 +2169,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/grid-demo.tsx",
-    "implementation": "/examples/patterns/layout",
-    "documentation": "/examples/registry/grid-demo",
+    "implementation": "/pages/patterns/layout",
+    "documentation": "/pages/registry/grid-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2180,8 +2180,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/hover-card-demo.tsx",
-    "implementation": "/components/hover-card",
-    "documentation": "/examples/registry/hover-card-demo",
+    "implementation": "/molecules/hover-card",
+    "documentation": "/pages/registry/hover-card-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2197,8 +2197,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/menubar-demo.tsx",
-    "implementation": "/examples/patterns/navigation",
-    "documentation": "/examples/registry/menubar-demo",
+    "implementation": "/pages/patterns/navigation",
+    "documentation": "/pages/registry/menubar-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2395,7 +2395,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/mode-toggle.tsx",
     "implementation": "/foundations",
-    "documentation": "/examples/registry/mode-toggle",
+    "documentation": "/pages/registry/mode-toggle",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2431,8 +2431,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/navigation-menu-demo.tsx",
-    "implementation": "/examples/patterns/navigation",
-    "documentation": "/examples/registry/navigation-menu-demo",
+    "implementation": "/pages/patterns/navigation",
+    "documentation": "/pages/registry/navigation-menu-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2478,8 +2478,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/number-field-demo.tsx",
-    "implementation": "/components/number-input",
-    "documentation": "/examples/registry/number-field-demo",
+    "implementation": "/molecules/number-input",
+    "documentation": "/pages/registry/number-field-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2505,8 +2505,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/otp-field-demo.tsx",
-    "implementation": "/examples/patterns/verification",
-    "documentation": "/examples/registry/otp-field-demo",
+    "implementation": "/pages/patterns/verification",
+    "documentation": "/pages/registry/otp-field-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2522,8 +2522,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/pagination-demo.tsx",
-    "implementation": "/components/pagination",
-    "documentation": "/examples/registry/pagination-demo",
+    "implementation": "/molecules/pagination",
+    "documentation": "/pages/registry/pagination-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2539,8 +2539,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/pie-chart-demo.tsx",
-    "implementation": "/charts/donut-chart",
-    "documentation": "/examples/registry/pie-chart-demo",
+    "implementation": "/organisms/donut-chart",
+    "documentation": "/pages/registry/pie-chart-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2550,8 +2550,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/popover-demo.tsx",
-    "implementation": "/components/popover",
-    "documentation": "/examples/registry/popover-demo",
+    "implementation": "/molecules/popover",
+    "documentation": "/pages/registry/popover-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2567,8 +2567,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/progress-circle-demo.tsx",
-    "implementation": "/components/progress-circle",
-    "documentation": "/examples/registry/progress-circle-demo",
+    "implementation": "/atoms/progress-circle",
+    "documentation": "/pages/registry/progress-circle-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2578,8 +2578,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/progress-demo.tsx",
-    "implementation": "/components/progress",
-    "documentation": "/examples/registry/progress-demo",
+    "implementation": "/atoms/progress",
+    "documentation": "/pages/registry/progress-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2589,8 +2589,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/radio-group-demo.tsx",
-    "implementation": "/components/radio-group",
-    "documentation": "/examples/registry/radio-group-demo",
+    "implementation": "/molecules/radio-group",
+    "documentation": "/pages/registry/radio-group-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2606,8 +2606,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/resizable-demo.tsx",
-    "implementation": "/examples/patterns/layout",
-    "documentation": "/examples/registry/resizable-demo",
+    "implementation": "/pages/patterns/layout",
+    "documentation": "/pages/registry/resizable-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2617,8 +2617,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/select-demo.tsx",
-    "implementation": "/components/select",
-    "documentation": "/examples/registry/select-demo",
+    "implementation": "/molecules/select",
+    "documentation": "/pages/registry/select-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2639,8 +2639,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/separator-demo.tsx",
-    "implementation": "/components/divider",
-    "documentation": "/examples/registry/separator-demo",
+    "implementation": "/atoms/divider",
+    "documentation": "/pages/registry/separator-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2650,8 +2650,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/sheet-demo.tsx",
-    "implementation": "/components/bottom-sheet",
-    "documentation": "/examples/registry/sheet-demo",
+    "implementation": "/molecules/bottom-sheet",
+    "documentation": "/pages/registry/sheet-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2682,8 +2682,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/skeleton-demo.tsx",
-    "implementation": "/components/skeleton",
-    "documentation": "/examples/registry/skeleton-demo",
+    "implementation": "/atoms/skeleton",
+    "documentation": "/pages/registry/skeleton-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2693,8 +2693,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/slider-demo.tsx",
-    "implementation": "/components/slider",
-    "documentation": "/examples/registry/slider-demo",
+    "implementation": "/atoms/slider",
+    "documentation": "/pages/registry/slider-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2704,8 +2704,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/sonner-demo.tsx",
-    "implementation": "/components/toast",
-    "documentation": "/examples/registry/sonner-demo",
+    "implementation": "/molecules/toast",
+    "documentation": "/pages/registry/sonner-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2721,8 +2721,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/switch-demo.tsx",
-    "implementation": "/components/switch",
-    "documentation": "/examples/registry/switch-demo",
+    "implementation": "/atoms/switch",
+    "documentation": "/pages/registry/switch-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2732,8 +2732,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/table-demo.tsx",
-    "implementation": "/examples/tasks",
-    "documentation": "/examples/registry/table-demo",
+    "implementation": "/pages/tasks",
+    "documentation": "/pages/registry/table-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2743,8 +2743,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/tabs-demo.tsx",
-    "implementation": "/components/tabs",
-    "documentation": "/examples/registry/tabs-demo",
+    "implementation": "/molecules/tabs",
+    "documentation": "/pages/registry/tabs-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2795,8 +2795,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/text-field-demo.tsx",
-    "implementation": "/components/text-input",
-    "documentation": "/examples/registry/text-field-demo",
+    "implementation": "/atoms/text-input",
+    "documentation": "/pages/registry/text-field-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2812,8 +2812,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/text-field-error-demo.tsx",
-    "implementation": "/components/text-input",
-    "documentation": "/examples/registry/text-field-error-demo",
+    "implementation": "/atoms/text-input",
+    "documentation": "/pages/registry/text-field-error-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2829,8 +2829,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/text-field-textarea-demo.tsx",
-    "implementation": "/components/textarea",
-    "documentation": "/examples/registry/text-field-textarea-demo",
+    "implementation": "/atoms/textarea",
+    "documentation": "/pages/registry/text-field-textarea-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2840,8 +2840,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/timeline-demo.tsx",
-    "implementation": "/components/timeline",
-    "documentation": "/examples/registry/timeline-demo",
+    "implementation": "/molecules/timeline",
+    "documentation": "/pages/registry/timeline-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2851,8 +2851,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/toast-demo.tsx",
-    "implementation": "/components/toast",
-    "documentation": "/examples/registry/toast-demo",
+    "implementation": "/molecules/toast",
+    "documentation": "/pages/registry/toast-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2888,8 +2888,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/toggle-demo.tsx",
-    "implementation": "/components/toggle-group",
-    "documentation": "/examples/registry/toggle-demo",
+    "implementation": "/molecules/toggle-group",
+    "documentation": "/pages/registry/toggle-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2899,8 +2899,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/toggle-group-demo.tsx",
-    "implementation": "/components/toggle-group",
-    "documentation": "/examples/registry/toggle-group-demo",
+    "implementation": "/molecules/toggle-group",
+    "documentation": "/pages/registry/toggle-group-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2926,8 +2926,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/tooltip-demo.tsx",
-    "implementation": "/components/tooltip",
-    "documentation": "/examples/registry/tooltip-demo",
+    "implementation": "/atoms/tooltip",
+    "documentation": "/pages/registry/tooltip-demo",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],

@@ -114,9 +114,9 @@ test('route navigation does not ratchet the heap', async ({ page }) => {
     await probe.forceGc()
     const before = await probe.heapBytes()
     for (let i = 0; i < 12; i += 1) {
-      await page.goto('/components/button')
+      await page.goto('/atoms/button')
       await page.locator('main > *').first().waitFor()
-      await page.goto('/blocks/stat-grid')
+      await page.goto('/organisms/stat-grid')
       await page.locator('main > *').first().waitFor()
       await page.goto('/spec')
       await page.locator('main > *').first().waitFor()
@@ -143,9 +143,9 @@ const BUDGETS: Array<[string, number]> = [
   // [route, budget MB] — calibrated with forced GC, then multiplied.
   ['/', 10 * 1024 * 1024],
   ['/spec', 15 * 1024 * 1024],
-  ['/components/button', 15 * 1024 * 1024],
-  ['/blocks/stat-grid', 15 * 1024 * 1024],
-  ['/examples/tasks/fullscreen', 30 * 1024 * 1024],
+  ['/atoms/button', 15 * 1024 * 1024],
+  ['/organisms/stat-grid', 15 * 1024 * 1024],
+  ['/pages/tasks/fullscreen', 30 * 1024 * 1024],
 ]
 
 for (const [route, budget] of BUDGETS) {

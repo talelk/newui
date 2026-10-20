@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test'
 test('authentication validates credentials and offers a local demo session', async ({
   page,
 }) => {
-  await page.goto('/examples/authentication/fullscreen')
+  await page.goto('/pages/authentication/fullscreen')
   await page.getByRole('button', { name: 'Sign in', exact: true }).click()
   await expect(page.getByRole('alert').first()).toBeVisible()
   await page
@@ -40,7 +40,7 @@ test('business cards validate, add members, update preferences and copy a share 
   context,
 }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
-  await page.goto('/examples/cards/fullscreen')
+  await page.goto('/pages/cards/fullscreen')
   await page.getByRole('button', { name: 'Create demo account' }).click()
   await expect(page.getByRole('alert').first()).toBeVisible()
   await page
@@ -91,8 +91,8 @@ test('business cards validate, add members, update preferences and copy a share 
 })
 
 for (const route of [
-  '/examples/authentication/fullscreen',
-  '/examples/cards/fullscreen',
+  '/pages/authentication/fullscreen',
+  '/pages/cards/fullscreen',
 ]) {
   for (const theme of ['light', 'dark']) {
     test(`${route} is accessible and fits at 390px in ${theme}`, async ({

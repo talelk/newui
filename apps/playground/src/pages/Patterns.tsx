@@ -39,7 +39,7 @@ export function Patterns() {
               <For each={PATTERNS}>
                 {(item) => (
                   <A
-                    href={`/examples/patterns/${item.slug}`}
+                    href={`/pages/patterns/${item.slug}`}
                     class="flex min-h-11 items-center gap-3 rounded-3 p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
                   >
                     <div class="min-w-0 flex-1">
@@ -82,7 +82,7 @@ export function Patterns() {
           <Content />
         </div>
         <A
-          href="/examples/patterns"
+          href="/pages/patterns"
           class="w-fit rounded-3 text-ink-blue-link focus-visible:focus-ring"
         >
           <span

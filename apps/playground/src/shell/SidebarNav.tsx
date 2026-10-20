@@ -83,12 +83,12 @@ export function SidebarNav(props: {
 
   const hasContext = (title: string) =>
     !!props.context &&
-    ['Components', 'Blocks', 'Layouts', 'Charts', 'Editors'].includes(title)
+    ['Atoms', 'Molecules', 'Organisms', 'Templates'].includes(title)
 
   return (
     <>
-      {/* One search per sidebar. The registry sections (Components, Blocks,
-          Layouts, Charts, Editors) bring their own filter for their own names,
+      {/* One search per sidebar. The reference levels (Atoms, Molecules,
+          Organisms, Templates) bring their own filter for their own names,
           and two fields stacked in one column is a question the reader has to
           answer before they can type. */}
       <div

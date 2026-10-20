@@ -1,7 +1,7 @@
 # CodeEditor
 
 CodeMirror 6 for Solid. Install `@newui/code-editor` with its declared peers.
-`/editors/code-editor` provides executable controlled usage and copyable source;
+`/organisms/code-editor` provides executable controlled usage and copyable source;
 `/docs#code-editor` loads the package guide.
 
 ## State and lifecycle

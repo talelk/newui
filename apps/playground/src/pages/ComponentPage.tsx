@@ -12,6 +12,7 @@ import {
 import { Dynamic } from 'solid-js/web'
 import { componentBySlug } from '../generated/components'
 import { STORIES } from '../generated/stories'
+import { ATOMIC } from '../lib/atomic'
 // The globs behind the tables and the story source text live here rather than
 // in this page: Vite 8's dep scan cannot parse `.tsx` files that hold a source
 // glob, so a page hosting one breaks pre-bundling.
@@ -232,14 +233,15 @@ export function ComponentPage(): JSX.Element {
 
   return (
     <>
-      {/* One canonical URL per entry. A layout reached at `/components/...`
-          is the same page under the wrong breadcrumb, which is how duplicate
+      {/* One canonical URL per entry. A template reached at `/atoms/...` is
+          the same page under the wrong breadcrumb, which is how duplicate
           content starts; it says where it lives instead. */}
       <Show when={misplaced()}>
         {(component) => (
           <div class="flex flex-col gap-2">
             <h1 class="text-heading text-ink-gray-9">
-              {component().name} is a {component().kind}
+              {component().name} is {component().atomic === 'atom' ? 'an' : 'a'}{' '}
+              {ATOMIC[component().atomic].singular}
             </h1>
             <p class="text-base text-ink-gray-7">
               Every entry has one section.{' '}
@@ -247,7 +249,7 @@ export function ComponentPage(): JSX.Element {
                 href={hrefOf(component())}
                 class="text-ink-blue-6 underline decoration-dotted"
               >
-                Open {component().name} under {sectionOf(component())}
+                Open {component().name} under {ATOMIC[component().atomic].label}
               </A>
               .
             </p>
@@ -266,7 +268,7 @@ export function ComponentPage(): JSX.Element {
               <p class="text-base text-ink-gray-7">
                 The index lists every documented component —{' '}
                 <A
-                  href="/components"
+                  href="/atoms"
                   class="text-ink-blue-6 underline decoration-dotted"
                 >
                   browse it
@@ -306,7 +308,10 @@ export function ComponentPage(): JSX.Element {
                     {component().name}
                   </h1>
                   <Badge size="sm" theme="gray">
-                    {component().kind === 'block' ? 'block' : component().group}
+                    {ATOMIC[component().atomic].singular}
+                  </Badge>
+                  <Badge size="sm" theme="gray">
+                    {component().group}
                   </Badge>
                   <Show when={component().spec}>
                     <Badge size="sm" theme="blue" label="contract" />

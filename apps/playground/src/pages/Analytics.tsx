@@ -290,8 +290,8 @@ export function Analytics(): JSX.Element {
               document
                 .getElementById('transactions')
                 ?.scrollIntoView({ block: 'start' })
-            if (label === 'Back to examples') navigate('/examples')
-            if (label === 'Component library') navigate('/components')
+            if (label === 'Back to examples') navigate('/pages')
+            if (label === 'Component library') navigate('/atoms')
           }}
           items={[
             { label: 'Overview', icon: 'lucide-chart-no-axes-combined' },

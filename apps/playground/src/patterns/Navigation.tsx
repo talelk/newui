@@ -81,15 +81,15 @@ export default function Navigation() {
             <ul class="mt-2 space-y-1 rounded-5 border border-outline-gray-1 bg-surface-elevation-2 p-3 shadow-sm">
               <For
                 each={[
-                  ['Buttons', '/components/button'],
-                  ['Forms', '/components/text-input'],
-                  ['Overlays', '/components/dialog'],
+                  ['Buttons', '/atoms/button'],
+                  ['Forms', '/atoms/text-input'],
+                  ['Overlays', '/molecules/dialog'],
                 ]}
               >
                 {(entry) => (
                   <li>
                     <A
-                      href={entry[1] ?? '/components'}
+                      href={entry[1] ?? '/atoms'}
                       class="block rounded-3 px-3 py-2 text-ink-blue-link hover:bg-surface-gray-2 focus-visible:focus-ring"
                     >
                       {entry[0]}
@@ -100,7 +100,7 @@ export default function Navigation() {
             </ul>
           </details>
           <A
-            href="/examples/analytics"
+            href="/pages/analytics"
             class="min-w-0 max-w-full break-words rounded-3 px-3 py-2 text-ink-blue-link focus-visible:focus-ring"
           >
             Analytics dashboard

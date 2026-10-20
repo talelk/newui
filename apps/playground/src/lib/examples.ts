@@ -2,7 +2,7 @@
 export const EXAMPLES = [
   {
     name: 'Component recipes',
-    href: '/examples/patterns',
+    href: '/pages/patterns',
     preview: 'Card',
     description:
       'All 68 solid-ui registry examples, translated into newui composition.',
@@ -11,7 +11,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Accounting',
-    href: '/examples/accounting',
+    href: '/pages/accounting',
     preview: 'Chart',
     description:
       'Cashflow, expenses, payroll and a profit report connected to one local ledger.',
@@ -20,7 +20,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Files',
-    href: '/examples/files',
+    href: '/pages/files',
     preview: 'Card',
     description:
       'Folders, favourites, local uploads, previews, downloads and restorable trash.',
@@ -29,7 +29,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Tickets',
-    href: '/examples/tickets',
+    href: '/pages/tickets',
     preview: 'List',
     description:
       'A local helpdesk with service targets, ownership, replies, resolution and bulk actions.',
@@ -38,7 +38,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Deals',
-    href: '/examples/deals',
+    href: '/pages/deals',
     preview: 'Card',
     description:
       'An opportunity board with accessible stage changes, filters, creation and a typed list.',
@@ -47,7 +47,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Mail',
-    href: '/examples/mail',
+    href: '/pages/mail',
     preview: 'List',
     description:
       'Folders, labels, search, unread filters, conversations and a local email composer.',
@@ -56,7 +56,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Compose',
-    href: '/examples/compose',
+    href: '/pages/compose',
     preview: 'Editor',
     description: 'Write, preview, save and publish a local rich-text update.',
     source: 'Frappe ComposeDesktop',
@@ -64,7 +64,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Analytics dashboard',
-    href: '/examples/analytics',
+    href: '/pages/analytics',
     preview: 'Chart',
     description:
       'Revenue, channels, regions, transactions and a clear view of growth.',
@@ -73,7 +73,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Tasks',
-    href: '/examples/tasks',
+    href: '/pages/tasks',
     preview: 'Tasks',
     description:
       'A thousand local tasks with typed tables, validated creation and a virtual feed.',
@@ -82,7 +82,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Cards',
-    href: '/examples/cards',
+    href: '/pages/cards',
     preview: 'Card',
     description:
       'Account, payment, team, sharing, notifications, support, project and cookie compositions.',
@@ -91,7 +91,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Authentication',
-    href: '/examples/authentication',
+    href: '/pages/authentication',
     preview: 'AuthCard',
     description:
       'Validated sign-in, account creation and email-link demo flows.',
@@ -100,7 +100,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Discussions',
-    href: '/examples/discussions',
+    href: '/pages/discussions',
     preview: 'Sidebar',
     description:
       'Community rail, spaces, a filterable feed and workspace settings.',
@@ -109,7 +109,7 @@ export const EXAMPLES = [
   },
   {
     name: 'Settings',
-    href: '/examples/settings',
+    href: '/pages/settings',
     preview: 'Dialog',
     description:
       'Grouped settings navigation with profile, notification and member panels.',

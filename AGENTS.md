@@ -43,6 +43,13 @@ and the starter, in that order. All five have landed: Storybook, `AppLayout` +
 suite and a route budget. `/kit` is the guide (*The ladder*, *Compose a page*,
 *Wire data*, *Start an app*).
 
+The site reads in atomic design's order — foundations · atoms · molecules ·
+organisms · templates · pages — while the packages keep their names. The
+registry records each entry's level in one `atomic` field; `scripts/atomic.ts`
+holds the classification (atoms, organisms, templates; everything else is a
+molecule) and `spec/kit.md` records the URL contract, including the redirects
+from the pre-atomic paths.
+
 - **Primitives:** raw `@zag-js/*` via `useMachine` + `normalizeProps`
   (`packages/ui/src/lib/zag.ts`). Zag supplies keyboard, ARIA and focus.
 - **Styling:** `tv()` recipes replace frappe-ui's hand-written class maps. Only
@@ -70,14 +77,14 @@ build embed.
 
 | path | what it is |
 | --- | --- |
-| `/` `/docs` `/foundations` `/architecture` `/examples/*` | the site, inside `SiteLayout` (masthead · sidebar · content · prev/next). `/architecture` is the ladder written down: five levels, one question each, with counts generated from the registry |
-| `/components` · `/components/<name>` | the component reference, inside `ComponentsLayout` — same chrome, but the sidebar is the filterable index |
-| `/blocks` · `/blocks/<name>` | the same, for `@newui/blocks` |
-| `/layouts` · `/layouts/<name>` | the same, for `@newui/layouts` |
+| `/` `/docs` `/foundations` `/architecture` `/kit` | the site, inside `SiteLayout` (masthead · sidebar · content · prev/next). `/architecture` is atomic design written down: five levels, one question each, with counts generated from the registry |
+| `/atoms` · `/atoms/<name>` | the atoms reference, inside `AtomsLayout` — same chrome, but the sidebar is the filterable index |
+| `/molecules` · `/molecules/<name>` | the same, for molecules (fields, pickers, menus, chart parts) |
+| `/organisms` · `/organisms/<name>` | the same, for organisms: the blocks, the chart widgets, the editors |
+| `/templates` · `/templates/<name>` | the same, for templates (page frames and shells) |
+| `/pages` · `/pages/<slug>` | the pages index and one application preview; `/pages/<slug>/fullscreen` is the bare application viewport |
+| `/components` `/blocks` `/layouts` `/charts` `/editors` `/examples` | the pre-atomic URLs; every one redirects to the level that now owns it |
 | `/spec` | the deterministic page the browser harness drives — no chrome, no network |
-| `/examples/<slug>` · `/examples/<slug>/fullscreen` | one application guide with a persistent responsive preview; a bare application viewport |
-| `/kit` | the guide: the ladder, composing a page, wiring data, starting from the starter |
-| `/charts` · `/editors` | generated chart and editor reference pages |
 
 Storybook is not a site route: it renders the same story modules on its own
 origin, and `pnpm stories` writes the index (`generated/stories.json`) that the
@@ -98,9 +105,13 @@ Three rules keep it fast, and each has a guardrail:
 
 ### The component reference
 
-`/components/<name>` is assembled, not written: the live demo, the prop tables
+`/atoms/<name>`, `/molecules/<name>`, `/organisms/<name>` and
+`/templates/<name>` are assembled, not written: the live demo, the prop tables
 and the contract all come from something that already exists, so adding a
-component to the library and running `pnpm api` + `pnpm site` produces its page.
+component to the library and running `pnpm api` + `pnpm site` produces its page
+on the level its `atomic` field names. The classification lives in
+`scripts/atomic.ts` — three lists (atoms, organisms, templates; everything else
+is a molecule) and the rule above them.
 
 - **`pnpm site`** generates `apps/playground/src/generated/` (committed, like
   `theme.css`): the registry from `api.json` — components *and* blocks, told
@@ -138,7 +149,7 @@ regression suite.
 
 ### Application and reference examples
 
-`/examples` links every application recipe. All eight Frappe recipe families
+`/pages` links every application recipe. All eight Frappe recipe families
 share one documentation destination per family and respond to the actual viewport; solid-ui's five application examples and 68
 registry examples have explicit destinations. `spec/reference-examples.md`
 documents the mapping and acceptance boundaries. `lib/examples.ts` owns the

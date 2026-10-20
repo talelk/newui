@@ -6,7 +6,7 @@ test.use({ reducedMotion: 'reduce' })
 test('application preview preserves editing, comments and its document across all presets', async ({
   page,
 }) => {
-  await page.goto('/examples/tasks?viewport=mobile')
+  await page.goto('/pages/tasks?viewport=mobile')
   const iframe = page.locator('iframe[title="Tasks preview"]')
   const app = page.frameLocator('iframe[title="Tasks preview"]')
   await expect(iframe).toHaveAttribute('width', '390')
@@ -95,7 +95,7 @@ test('application preview preserves editing, comments and its document across al
   )
   await expect(
     page.getByRole('link', { name: 'Open fullscreen' }),
-  ).toHaveAttribute('href', '/examples/tasks/fullscreen')
+  ).toHaveAttribute('href', '/pages/tasks/fullscreen')
   await expect(page).toHaveURL(/viewport=mobile/)
   await page.getByRole('button', { name: 'Source', exact: true }).click()
   await expect(page.getByRole('combobox', { name: 'Source file' })).toHaveValue(
@@ -107,7 +107,7 @@ test('application source includes lazy responsive screens and settings', async (
   page,
 }) => {
   await page.setViewportSize({ width: 320, height: 900 })
-  await page.goto('/examples/discussions')
+  await page.goto('/pages/discussions')
   await page.getByRole('button', { name: 'Source', exact: true }).click()
   const files = page.getByRole('combobox', { name: 'Source file' })
   for (const file of [
@@ -128,7 +128,7 @@ test('application source includes lazy responsive screens and settings', async (
 test('a source download failure leaves the application session usable', async ({
   page,
 }) => {
-  await page.goto('/examples/tasks')
+  await page.goto('/pages/tasks')
   const app = page.frameLocator('iframe[title="Tasks preview"]')
   const search = app.getByRole('searchbox', { name: 'Find tasks', exact: true })
   await search.fill('TASK-1001')
@@ -150,7 +150,7 @@ test('a source download failure leaves the application session usable', async ({
 test('block preview has an exact viewport and keeps its overlays in the frame', async ({
   page,
 }) => {
-  await page.goto('/blocks/auth-card?viewport=tablet')
+  await page.goto('/organisms/auth-card?viewport=tablet')
   const iframe = page.locator('iframe')
   await expect(iframe).toHaveAttribute('width', '768')
   await expect(iframe).toHaveAttribute('height', '900')
@@ -249,7 +249,7 @@ test('sheet touch gestures respect scrolling, cancellation and dismissible', asy
 test('inline source browsing retains the demo and reports clipboard failure', async ({
   page,
 }) => {
-  await page.goto('/components/text-input')
+  await page.goto('/atoms/text-input')
   const input = page.getByRole('textbox', { name: 'Full name' })
   await input.fill('Retain this draft')
   await input.evaluate((element) => {
@@ -273,7 +273,7 @@ test('inline source browsing retains the demo and reports clipboard failure', as
   await page.getByRole('button', { name: 'Source', exact: true }).click()
   await page
     .locator('[data-slot="site-sidebar"]')
-    .getByRole('link', { name: 'Combobox', exact: true })
+    .getByRole('link', { name: 'Textarea', exact: true })
     .click()
-  await expect(page.locator('pre').first()).toContainText('Combobox')
+  await expect(page.locator('pre').first()).toContainText('Textarea')
 })

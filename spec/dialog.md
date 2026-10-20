@@ -5,7 +5,7 @@ Presents a focused modal task.
 ## Usage and anatomy
 
 Import `Dialog` from `@newui/ui`. The executable example and its copyable
-source on `/components/dialog` show the supported composition. Generated prop
+source on `/molecules/dialog` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 
 ## Behavior and accessibility

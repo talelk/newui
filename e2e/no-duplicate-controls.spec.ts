@@ -27,7 +27,7 @@ const RECIPES = [
   'files',
   'accounting',
   'compose',
-  // `/examples/patterns` is excluded: it is the reference gallery, and its
+  // `/pages/patterns` is excluded: it is the reference gallery, and its
   // toolbar carries site-level section nav on purpose. The application recipes
   // are the screens where a duplicated control is always an accident.
 ]
@@ -38,7 +38,7 @@ test.describe('no duplicated controls on the recipe screens', () => {
       page,
     }) => {
       await page.setViewportSize({ width: 1280, height: 900 })
-      await page.goto(`/examples/${recipe}/fullscreen`)
+      await page.goto(`/pages/${recipe}/fullscreen`)
       await expect(page.locator('main *').first()).toBeVisible()
 
       const duplicates = await page.evaluate(() => {

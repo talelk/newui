@@ -5,7 +5,7 @@ test('desktop mail navigation collapses and pane resizing preserves the inbox', 
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
-  await page.goto('/examples/mail/fullscreen')
+  await page.goto('/pages/mail/fullscreen')
   const navigation = page.getByRole('navigation', {
     name: 'Mailboxes',
     exact: true,
@@ -48,7 +48,7 @@ test('account switching preserves each inbox and mobile mailbox sheets navigate'
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/examples/mail/fullscreen')
+  await page.goto('/pages/mail/fullscreen')
   const account = page.getByRole('combobox', { name: 'Mail account' })
   await account.click()
   await page.getByRole('option', { name: 'team@acme.com', exact: true }).click()
@@ -74,7 +74,7 @@ test('account switching preserves each inbox and mobile mailbox sheets navigate'
 test('mail filters, stars, replies, archives and undoes local changes', async ({
   page,
 }) => {
-  await page.goto('/examples/mail/fullscreen')
+  await page.goto('/pages/mail/fullscreen')
   const search = page.getByRole('searchbox', { name: 'Search conversations' })
   await search.fill('launch checklist')
   const starred = page.getByRole('button', {
@@ -138,7 +138,7 @@ test('mail filters, stars, replies, archives and undoes local changes', async ({
 test('mail saves a draft and validates before sending it locally', async ({
   page,
 }) => {
-  await page.goto('/examples/mail/fullscreen')
+  await page.goto('/pages/mail/fullscreen')
   await page.getByRole('button', { name: 'Compose email' }).click()
   await page.getByRole('button', { name: 'Send demo email' }).click()
   await expect(page.getByRole('alert').first()).toBeVisible()
@@ -179,7 +179,7 @@ for (const theme of ['light', 'dark']) {
   }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.setViewportSize({ width: 390, height: 900 })
-    await page.goto('/examples/mail/fullscreen')
+    await page.goto('/pages/mail/fullscreen')
     await page.getByRole('button', { name: theme, exact: true }).click()
     await expect(
       page.getByRole('heading', { name: 'Your inbox, in focus' }),
@@ -214,7 +214,7 @@ for (const theme of ['light', 'dark']) {
 test('forward validates its recipient and creates a separate sent message', async ({
   page,
 }) => {
-  await page.goto('/examples/mail/fullscreen')
+  await page.goto('/pages/mail/fullscreen')
   await page
     .getByRole('button', {
       name: /^Open .*September launch checklist/,

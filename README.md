@@ -21,9 +21,9 @@ pnpm dev
 ```
 
 The playground is the documentation site and visual acceptance surface. Start
-with `/foundations`, browse `/components` and `/blocks`, or open
-`/examples/analytics`. `/examples` contains complete local business workflows;
-`/examples/patterns` maps all 68 solid-ui registry examples to their newui
+with `/foundations`, browse `/atoms` and `/organisms`, or open
+`/pages/analytics`. `/pages` contains complete local business workflows;
+`/pages/patterns` maps all 68 solid-ui registry examples to their newui
 compositions. Every page and live demo loads lazily.
 
 ```sh

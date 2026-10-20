@@ -1,6 +1,6 @@
 # Task workspace
 
-Routes: `/examples/tasks` and `/examples/tasks`. Adapted from
+Routes: `/pages/tasks` and `/pages/tasks`. Adapted from
 Frappe's TasksDesktop/TasksMobile recipes and solid-ui's Tasks application, using
 newui's semantic palette, compact controls and Field contract.
 

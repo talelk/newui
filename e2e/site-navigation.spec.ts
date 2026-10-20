@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { LAYOUTS } from '../apps/playground/src/generated/components'
+import { LADDER_COUNTS } from '../apps/playground/src/generated/counts'
 
 test.use({ reducedMotion: 'reduce' })
 
@@ -7,7 +7,7 @@ test('sidebar rail remembers its preference and reference navigation keeps conte
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
-  await page.goto('/components/button')
+  await page.goto('/atoms/button')
   const sidebar = page.locator('[data-slot="site-sidebar"]')
   await expect(sidebar).toHaveCSS('width', '224px')
   await expect(
@@ -15,12 +15,12 @@ test('sidebar rail remembers its preference and reference navigation keeps conte
   ).toHaveAttribute('aria-current', 'page')
   await expect(
     page.getByRole('navigation', { name: 'Breadcrumbs' }),
-  ).toContainText('Components')
+  ).toContainText('Atoms')
   await page.getByRole('button', { name: 'Collapse sidebar' }).click()
   await expect(sidebar).toHaveCSS('width', '48px')
   // A rail is its section icons: the leaf links are gone, the rows are not.
   await expect(
-    sidebar.getByRole('button', { name: 'Examples', exact: true }),
+    sidebar.getByRole('button', { name: 'Pages', exact: true }),
   ).toBeVisible()
   await page.reload()
   await expect(sidebar).toHaveAttribute('data-collapsed', 'true')
@@ -29,7 +29,7 @@ test('sidebar rail remembers its preference and reference navigation keeps conte
     .getByRole('searchbox', { name: 'Filter', exact: true })
     .fill('TextInput')
   await sidebar.getByRole('link', { name: 'TextInput', exact: true }).click()
-  await expect(page).toHaveURL('/components/text-input')
+  await expect(page).toHaveURL('/atoms/text-input')
   await page
     .getByRole('navigation', { name: 'On this page' })
     .getByRole('link', { name: 'Props', exact: true })
@@ -41,7 +41,7 @@ test('mobile navigation traps focus, restores its trigger and closes after navig
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/components/button')
+  await page.goto('/atoms/button')
   const trigger = page.getByRole('button', { name: 'Open navigation' })
   await trigger.click()
   const drawer = page.getByRole('dialog', { name: 'Documentation navigation' })
@@ -62,11 +62,11 @@ test('mobile navigation traps focus, restores its trigger and closes after navig
   await expect(trigger).toBeFocused()
   await trigger.click()
   // A section row navigates to the section's first page and closes the drawer.
-  await drawer.getByRole('button', { name: 'Examples', exact: true }).click()
-  await expect(page).toHaveURL('/examples')
+  await drawer.getByRole('button', { name: 'Pages', exact: true }).click()
+  await expect(page).toHaveURL('/pages')
   await expect(page.getByRole('dialog')).toBeHidden()
   await expect(
-    page.getByRole('heading', { name: 'Examples', exact: true }),
+    page.getByRole('heading', { name: 'Pages', exact: true }),
   ).toBeVisible()
 })
 
@@ -97,33 +97,33 @@ test('page finder loads reference metadata on demand and supports keyboard selec
   await page.keyboard.press('ArrowDown')
   await page.keyboard.press('ArrowUp')
   await page.keyboard.press('Enter')
-  await expect(page).toHaveURL('/components/date-range-picker')
+  await expect(page).toHaveURL('/molecules/date-range-picker')
 })
 
 test('embedded documentation links leave the frame while application anchors retain the session', async ({
   page,
 }) => {
-  await page.goto('/examples/analytics?viewport=mobile')
+  await page.goto('/pages/analytics?viewport=mobile')
   const app = page.frameLocator('iframe')
   await app.getByRole('button', { name: 'Toggle workspace navigation' }).click()
   // The frame's section nav scrolls inside the frame: the host page (and its
   // URL) does not move, and the section it names is what comes into view.
   await app.getByRole('button', { name: /^Transactions/ }).click()
-  await expect(page).toHaveURL('/examples/analytics?viewport=mobile')
+  await expect(page).toHaveURL('/pages/analytics?viewport=mobile')
   await expect(
     app.getByRole('heading', { name: 'Transactions', exact: true }),
   ).toBeVisible()
   // A documentation link (the breadcrumb back to the workspace index) still
   // leaves the frame: the host navigates and the embed is gone.
   await app.getByRole('link', { name: 'Workspace', exact: true }).click()
-  await expect(page).toHaveURL('/examples')
+  await expect(page).toHaveURL('/pages')
   await expect(page.locator('iframe')).toHaveCount(0)
-  await page.goto('/examples/authentication?viewport=mobile')
+  await page.goto('/pages/authentication?viewport=mobile')
   await app.getByRole('button', { name: 'GitHub demo', exact: true }).click()
   await app
     .getByRole('link', { name: 'Open the dashboard', exact: true })
     .click()
-  await expect(page).toHaveURL('/examples/authentication?viewport=mobile')
+  await expect(page).toHaveURL('/pages/authentication?viewport=mobile')
   await expect(
     app.getByRole('heading', { name: 'Revenue overview', exact: true }),
   ).toBeVisible()
@@ -134,27 +134,25 @@ for (const width of [320, 768]) {
     page,
   }) => {
     await page.setViewportSize({ width, height: 900 })
-    await page.goto('/components')
+    await page.goto('/atoms')
     await page.evaluate(() => {
       document.documentElement.dir = 'rtl'
       document.documentElement.style.fontSize = '200%'
     })
     await expect(
-      page.getByRole('heading', { name: 'Components', exact: true }),
+      page.getByRole('heading', { name: 'Atoms', exact: true }),
     ).toHaveCSS('font-size', '48px')
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth - innerWidth,
       ),
     ).toBeLessThanOrEqual(1)
-    await page
-      .getByRole('searchbox', { name: 'Filter components' })
-      .fill('Button')
+    await page.getByRole('searchbox', { name: 'Filter atoms' }).fill('Button')
     await page
       .locator('main')
       .getByRole('link', { name: /^Button.*part/ })
       .click()
-    await expect(page).toHaveURL('/components/button')
+    await expect(page).toHaveURL('/atoms/button')
   })
 }
 
@@ -162,23 +160,23 @@ test('a reference section opens its own index in the sidebar', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
-  await page.goto('/layouts/app-layout')
+  await page.goto('/templates/app-layout')
   const sidebar = page.locator('[data-slot="site-sidebar"]')
   // The layouts used to fall through to the site tree: no index, and a page
   // filter stacked over nothing. They are a reference section like the rest.
   await expect(
-    sidebar.getByRole('button', { name: 'Layouts', exact: true }),
+    sidebar.getByRole('button', { name: 'Templates', exact: true }),
   ).toHaveAttribute('aria-expanded', 'true')
   await expect(
-    sidebar.getByRole('link', { name: 'All layouts', exact: true }),
+    sidebar.getByRole('link', { name: 'All templates', exact: true }),
   ).toBeVisible()
   await expect(
     sidebar.getByRole('link', { name: 'AppLayout', exact: true }),
   ).toHaveAttribute('aria-current', 'page')
   // The count is the registry's, not a second hand-written list.
   await expect(
-    sidebar.getByRole('button', { name: 'Layouts', exact: true }),
-  ).toContainText(String(LAYOUTS.length))
+    sidebar.getByRole('button', { name: 'Templates', exact: true }),
+  ).toContainText(String(LADDER_COUNTS.templates))
 })
 
 test('the mobile drawer is never a rail, even when the desk is folded', async ({
@@ -188,7 +186,7 @@ test('the mobile drawer is never a rail, even when the desk is folded', async ({
     localStorage.setItem('newui-sidebar-collapsed', 'true'),
   )
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/components/button')
+  await page.goto('/atoms/button')
   await page.getByRole('button', { name: 'Open navigation' }).click()
   const drawer = page.getByRole('dialog', { name: 'Documentation navigation' })
   // The fold is a preference about a column beside the content. A drawer of
@@ -198,7 +196,7 @@ test('the mobile drawer is never a rail, even when the desk is folded', async ({
     drawer.getByRole('link', { name: 'Button', exact: true }),
   ).toBeVisible()
   await expect(
-    drawer.getByRole('button', { name: 'Components', exact: true }),
+    drawer.getByRole('button', { name: 'Atoms', exact: true }),
   ).toBeVisible()
 })
 
@@ -224,36 +222,39 @@ test('the architecture page states the ladder and links every level', async ({
 }) => {
   await page.goto('/architecture')
   await expect(
-    page.getByRole('heading', { name: 'Architecture', level: 1 }),
+    page.getByRole('heading', { name: 'Atomic design', level: 1 }),
   ).toBeVisible()
   for (const level of [
     'Foundations',
-    'Components',
-    'Blocks',
-    'Layouts',
-    'Applications',
+    'Atoms',
+    'Molecules',
+    'Organisms',
+    'Templates',
+    'Pages',
   ]) {
     await expect(
       page.getByRole('heading', { name: level, exact: true, level: 3 }),
     ).toBeVisible()
   }
   await expect(
-    page.getByRole('link', { name: 'Browse layouts', exact: true }),
-  ).toHaveAttribute('href', '/layouts')
+    page.getByRole('link', { name: 'Browse templates', exact: true }),
+  ).toHaveAttribute('href', '/templates')
 })
 
 test('an entry reached from the wrong section says where it lives', async ({
   page,
 }) => {
-  await page.goto('/components/app-layout')
-  // The generated page is shared by five route groups; `/components/app-layout`
-  // is the same content under the wrong breadcrumb, so it points at the one
+  await page.goto('/atoms/app-layout')
+  // The generated page is shared by four route groups; `/atoms/app-layout` is
+  // the same content under the wrong breadcrumb, so it points at the one
   // canonical URL instead of rendering a duplicate.
   await expect(
-    page.getByRole('heading', { name: 'AppLayout is a layout', level: 1 }),
+    page.getByRole('heading', { name: 'AppLayout is a template', level: 1 }),
   ).toBeVisible()
-  await page.getByRole('link', { name: 'Open AppLayout under layouts' }).click()
-  await expect(page).toHaveURL('/layouts/app-layout')
+  await page
+    .getByRole('link', { name: 'Open AppLayout under Templates' })
+    .click()
+  await expect(page).toHaveURL('/templates/app-layout')
 })
 
 test('the command palette links a layout to its own section', async ({
@@ -263,5 +264,5 @@ test('the command palette links a layout to its own section', async ({
   await page.keyboard.press('Meta+k')
   await page.getByRole('combobox', { name: 'Find a page' }).fill('app-layout')
   await page.getByRole('option', { name: /AppLayout/ }).click()
-  await expect(page).toHaveURL('/layouts/app-layout')
+  await expect(page).toHaveURL('/templates/app-layout')
 })

@@ -51,7 +51,8 @@ interface RouteBudget {
  * definition, and splitting the demos into per-component modules re-cut the
  * shared chunks under it (+14 kB: it now fetches the eight chunks it used to
  * find already in the entry). It is the *reference* page, not a page anyone
- * lands on cold; `/components/<name>` is the route a reader arrives at, and that
+ * lands on cold; `/atoms/<name>` or `/molecules/<name>` is the route a reader
+ * arrives at, and that
  * is 66 kB. The `pnpm size` budget in `scripts/size.ts` is what protects a real
  * app's cost.
  *
@@ -62,7 +63,7 @@ interface RouteBudget {
  */
 const ROUTES: RouteBudget[] = [
   {
-    route: '/examples/discussions/fullscreen',
+    route: '/pages/discussions/fullscreen',
     budget: 100,
     viewport: { width: 390, height: 844 },
     unless: 'mobile composition; retained mobile budget',
@@ -81,7 +82,7 @@ const ROUTES: RouteBudget[] = [
     ['cards', 210],
     ['settings', 160],
   ].map(([slug, budget]) => ({
-    route: `/examples/${slug}`,
+    route: `/pages/${slug}`,
     budget: Number(budget),
     unless: 'responsive preview with documentation chrome',
   })),
@@ -96,121 +97,119 @@ const ROUTES: RouteBudget[] = [
     unless: 'prose page: code samples, the file map, no live components',
   },
   {
-    route: '/layouts',
+    route: '/templates',
     budget: 100,
-    unless: 'the layout index, read from the registry',
+    unless: 'the template index, read from the registry',
   },
   {
-    route: '/layouts/app-layout',
+    route: '/templates/app-layout',
     budget: 240,
     unless: 'the frame demo: shell, sidebar, tooltips',
   },
   {
-    route: '/layouts/pane-layout',
+    route: '/templates/pane-layout',
     budget: 110,
     unless: 'the split demo: two panes, badges and a list',
   },
-  { route: '/charts', budget: 90 },
-  { route: '/editors', budget: 90 },
   // 280.0 measured: the shell now carries the ladder's counts, and a budget
   // with no headroom turns the next honest shell addition into a red gate.
-  { route: '/charts/bar-chart', budget: 285 },
-  { route: '/editors/code-editor', budget: 280 },
-  { route: '/blocks/page-toolbar', budget: 190 },
+  { route: '/organisms/bar-chart', budget: 285 },
+  { route: '/organisms/code-editor', budget: 280 },
+  { route: '/organisms/page-toolbar', budget: 190 },
   {
-    route: '/examples/patterns',
+    route: '/pages/patterns',
     budget: 80,
     unless: 'lightweight reference example directory',
   },
   {
-    route: '/examples/patterns/carousel',
+    route: '/pages/patterns/carousel',
     budget: 120,
     unless: 'isolated carousel composition',
   },
   {
-    route: '/examples/patterns/command',
+    route: '/pages/patterns/command',
     budget: 140,
     unless: 'Zag command search and dialog',
   },
   {
-    route: '/examples/patterns/layout',
+    route: '/pages/patterns/layout',
     budget: 100,
     unless: 'native resizable layouts',
   },
   {
-    route: '/examples/patterns/navigation',
+    route: '/pages/patterns/navigation',
     budget: 150,
     unless: 'menus and responsive editors',
   },
   {
-    route: '/examples/patterns/verification',
+    route: '/pages/patterns/verification',
     budget: 100,
     unless: 'validated verification example',
   },
   {
-    route: '/examples/patterns/analytics-widgets',
+    route: '/pages/patterns/analytics-widgets',
     budget: 110,
     unless: 'analytical status and list compositions',
   },
   {
-    route: '/examples/accounting/fullscreen',
+    route: '/pages/accounting/fullscreen',
     budget: 340,
     unless: 'interactive accounting workspace in the shared rail frame',
   },
 
   {
-    route: '/examples/files/fullscreen',
+    route: '/pages/files/fullscreen',
     budget: 170,
     unless: 'interactive files workspace',
   },
 
   {
-    route: '/examples/tickets/fullscreen',
+    route: '/pages/tickets/fullscreen',
     budget: 170,
     unless: 'interactive tickets workspace',
   },
 
   {
-    route: '/examples/deals/fullscreen',
+    route: '/pages/deals/fullscreen',
     budget: 190,
     unless: 'interactive deals workspace in the shared rail frame',
   },
 
   {
-    route: '/examples/mail/fullscreen',
+    route: '/pages/mail/fullscreen',
     budget: 150,
     unless: 'interactive inbox and local composer',
   },
 
   {
-    route: '/examples/compose/fullscreen',
+    route: '/pages/compose/fullscreen',
     budget: 320,
     unless: 'rich-text editor and publication workflow',
   },
 
   {
-    route: '/examples/settings/fullscreen',
+    route: '/pages/settings/fullscreen',
     budget: 100,
     unless: 'isolated settings dialog composition',
   },
   {
-    route: '/examples/cards/fullscreen',
+    route: '/pages/cards/fullscreen',
     budget: 150,
     unless: 'eight interactive business cards',
   },
   {
-    route: '/examples/authentication/fullscreen',
+    route: '/pages/authentication/fullscreen',
     budget: 140,
     unless: 'validated authentication flow',
   },
   {
-    route: '/examples/tasks/fullscreen',
+    route: '/pages/tasks/fullscreen',
     budget: 200,
     unless: 'TanStack task workspace with typed table, forms and virtual feed',
   },
 
   {
-    route: '/examples/analytics/fullscreen',
+    route: '/pages/analytics/fullscreen',
     budget: 345,
     unless: 'full analytics workspace with SVG charts in the shared rail frame',
   },
@@ -222,35 +221,44 @@ const ROUTES: RouteBudget[] = [
   { route: '/docs', budget: 62, unless: 'prose only' },
   { route: '/foundations', budget: 88, unless: 'token swatches' },
   {
-    route: '/components',
+    route: '/atoms',
     budget: 90,
     unless: 'the index: the registry plus its own sidebar',
   },
   {
-    route: '/components/pagination',
+    route: '/molecules',
+    budget: 90,
+    unless: 'the largest level index: same registry, more rows',
+  },
+  {
+    route: '/molecules/pagination',
     budget: 110,
     unless: 'one component: demo + its api slice + its contract',
   },
   {
-    route: '/components/date-picker',
+    route: '/molecules/date-picker',
     budget: 180,
     unless: 'the heaviest single component (its date library)',
   },
-  { route: '/blocks', budget: 170, unless: 'every block on one page' },
   {
-    route: '/components/button',
+    route: '/organisms',
+    budget: 100,
+    unless: 'every organism listed: blocks, chart widgets, editors',
+  },
+  {
+    route: '/atoms/button',
     budget: 220,
     unless: 'the exhaustive matrix — ~45 components on one page',
   },
-  { route: '/components/toast', budget: 120, unless: 'feedback surfaces' },
-  { route: '/examples', budget: 80, unless: 'the examples index' },
+  { route: '/molecules/toast', budget: 120, unless: 'feedback surfaces' },
+  { route: '/pages', budget: 80, unless: 'the examples index' },
   {
     route: '/spec',
     budget: 260,
     unless: 'the determinism harness renders ~45 components on purpose',
   },
   {
-    route: '/examples/discussions/fullscreen',
+    route: '/pages/discussions/fullscreen',
     budget: 140,
     unless: 'a full desktop app screen',
   },

@@ -17,10 +17,10 @@ describe('reference example coverage', () => {
     const root = path.join(process.cwd(), 'apps/playground/src')
     expect(
       Object.keys(APPLICATION_FILES)
-        .map((slug) => `/examples/${slug}`)
+        .map((slug) => `/pages/${slug}`)
         .sort(),
     ).toEqual(
-      EXAMPLES.filter((entry) => entry.href !== '/examples/patterns')
+      EXAMPLES.filter((entry) => entry.href !== '/pages/patterns')
         .map((entry) => entry.href)
         .sort(),
     )
@@ -66,18 +66,13 @@ describe('reference example coverage', () => {
   it('maps every registry example to a shipped destination', () => {
     const shipped = new Set(
       COMPONENTS.filter((entry) => entry.shipped).map(
-        (entry) =>
-          `/${entry.kind === 'block' ? 'blocks' : entry.group === 'Charts' ? 'charts' : entry.group === 'Editors' ? 'editors' : 'components'}/${entry.slug}`,
+        (entry) => `/${entry.atomic}s/${entry.slug}`,
       ),
     )
     for (const entry of EXAMPLES) shipped.add(entry.href)
     for (const pattern of PATTERNS)
-      shipped.add(`/examples/patterns/${pattern.slug}`)
-    for (const route of [
-      '/foundations',
-      '/components/button',
-      '/components/toast',
-    ])
+      shipped.add(`/pages/patterns/${pattern.slug}`)
+    for (const route of ['/foundations', '/atoms/button', '/molecules/toast'])
       shipped.add(route)
     expect(REFERENCE_EXAMPLES).toHaveLength(68)
     expect(new Set(REFERENCE_EXAMPLES.map((entry) => entry.source)).size).toBe(
@@ -112,9 +107,9 @@ describe('reference example coverage', () => {
       'tasks',
       'accounting',
     ]) {
-      expect(routes.has(`/examples/${name}`)).toBe(true)
+      expect(routes.has(`/pages/${name}`)).toBe(true)
       expect(
-        EXAMPLES.filter((entry) => entry.href === `/examples/${name}`),
+        EXAMPLES.filter((entry) => entry.href === `/pages/${name}`),
       ).toHaveLength(1)
     }
   })

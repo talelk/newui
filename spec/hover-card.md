@@ -5,7 +5,7 @@ Shows supplementary information on hover or focus.
 ## Usage and anatomy
 
 Import `HoverCard` from `@newui/ui`. The executable example and its copyable
-source on `/components/hover-card` show the supported composition. Generated prop
+source on `/molecules/hover-card` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 
 ## Behavior and accessibility

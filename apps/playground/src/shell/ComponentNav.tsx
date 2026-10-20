@@ -1,77 +1,39 @@
 import { A, useLocation } from '@solidjs/router'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { COMPONENTS, GROUPS } from '../generated/components'
+import { ATOMIC, type AtomicLevel } from '../lib/atomic'
 import { groupEntries, matchesEntry } from '../lib/catalog'
 import { FilterInput, NAV_ROW, NothingMatches } from './nav-ui'
 
-export type NavKind = 'component' | 'block' | 'layout'
-
 /**
- * The section sidebar for the reference pages: every entry of one kind,
+ * The section sidebar for a reference level: every entry filed under it,
  * grouped, with a filter.
  *
  * It lives inside those routes rather than in the site shell, because the shell
  * is on every route and this index is ~4 kB gzipped that only a reference page
- * can use. That is the same rule that keeps the home page at 52 kB: a page pays
- * for its own furniture.
+ * can use.
  *
- * `kind` is the only difference between the components sidebar and the blocks
- * one — same filter, same grouping, same active state.
+ * `level` is the only difference between the four sidebars — same filter, same
+ * grouping, same active state. Which entries belong to a level is the
+ * registry's `atomic` field, not a package check.
  */
-
-/** The pages in each section that are not generated. */
-export const OVERVIEW: Record<NavKind, { title: string; href: string }[]> = {
-  component: [{ title: 'All components', href: '/components' }],
-  block: [{ title: 'All blocks', href: '/blocks' }],
-  layout: [{ title: 'All layouts', href: '/layouts' }],
-}
-
-/** Which package an entry of each kind comes from. */
-const PACKAGE: Record<NavKind, string> = {
-  component: '@newui/ui',
-  block: '@newui/blocks',
-  layout: '@newui/layouts',
-}
-
-export function ComponentNav(props: { kind: NavKind }): JSX.Element {
+export function ComponentNav(props: { level: AtomicLevel }): JSX.Element {
   const location = useLocation()
-  const base = () => `/${location.pathname.split('/')[1] ?? 'components'}`
+  const meta = () => ATOMIC[props.level]
   const [query, setQuery] = createSignal('')
 
   const visible = createMemo(() =>
-    COMPONENTS.filter(
-      (entry) =>
-        entry.shipped &&
-        entry.kind === props.kind &&
-        (base() === '/charts'
-          ? entry.group === 'Charts'
-          : base() === '/editors'
-            ? entry.group === 'Editors'
-            : entry.package === PACKAGE[props.kind]),
-    )
+    COMPONENTS.filter((entry) => entry.shipped && entry.atomic === props.level)
       .filter((entry) => matchesEntry(entry, query()))
       .slice()
       .sort((a, b) => a.name.localeCompare(b.name)),
   )
 
   const grouped = createMemo(() => groupEntries(visible(), GROUPS))
-
   const current = () => location.pathname.split('/')[2] ?? ''
-  const overview = () =>
-    base() === '/charts' || base() === '/editors'
-      ? [
-          {
-            title: base() === '/charts' ? 'All charts' : 'All editors',
-            href: base(),
-          },
-        ]
-      : OVERVIEW[props.kind]
 
   return (
-    <nav
-      aria-label={props.kind === 'block' ? 'Blocks' : 'Components'}
-      class="flex flex-col gap-4"
-    >
+    <nav aria-label={meta().label} class="flex flex-col gap-4">
       <FilterInput
         label="Filter"
         placeholder="Filter…"
@@ -80,21 +42,17 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
       />
 
       <ul class="flex flex-col gap-0.5">
-        <For each={overview()}>
-          {(item) => (
-            <li>
-              <A
-                href={item.href}
-                aria-current={
-                  location.pathname === item.href ? 'page' : undefined
-                }
-                class={NAV_ROW}
-              >
-                {item.title}
-              </A>
-            </li>
-          )}
-        </For>
+        <li>
+          <A
+            href={meta().href}
+            aria-current={
+              location.pathname === meta().href ? 'page' : undefined
+            }
+            class={NAV_ROW}
+          >
+            All {meta().label.toLowerCase()}
+          </A>
+        </li>
       </ul>
 
       <Show
@@ -112,7 +70,7 @@ export function ComponentNav(props: { kind: NavKind }): JSX.Element {
                   {(entry) => (
                     <li>
                       <A
-                        href={`${base()}/${entry.slug}`}
+                        href={`${meta().href}/${entry.slug}`}
                         aria-current={
                           current() === entry.slug ? 'page' : undefined
                         }

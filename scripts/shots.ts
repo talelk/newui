@@ -11,7 +11,7 @@
  * Usage
  *   pnpm shots                        # every route + story spot-check, both
  *                                     # themes, 1440 + 768 + 390
- *   pnpm shots /blocks /examples      # only these routes
+ *   pnpm shots /organisms /pages      # only these routes
  *   pnpm shots story:Accordion        # only this story, on Storybook's origin
  *   pnpm shots --theme=dark           # one theme
  *   pnpm shots --dir=/tmp/compare     # somewhere else (e.g. a before/after pair)
@@ -85,17 +85,17 @@ const ROUTES = [
   '/',
   '/docs',
   '/foundations',
-  '/components',
-  '/components/button',
-  '/components/toast',
-  '/components/pagination',
-  '/components/date-picker',
-  '/blocks',
-  '/charts',
-  '/editors',
-  '/examples',
+  '/atoms',
+  '/atoms/button',
+  '/molecules',
+  '/molecules/toast',
+  '/molecules/pagination',
+  '/molecules/date-picker',
+  '/organisms',
+  '/templates',
+  '/pages',
   ...EXAMPLES.flatMap((example) =>
-    example.href === '/examples/patterns'
+    example.href === '/pages/patterns'
       ? [example.href]
       : [example.href, `${example.href}/fullscreen`],
   ),

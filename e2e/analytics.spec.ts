@@ -9,7 +9,7 @@ async function choose(page: Page, label: string, option: string) {
 test('analytics filters, sorts, paginates and exports the selected report', async ({
   page,
 }) => {
-  await page.goto('/examples/analytics/fullscreen')
+  await page.goto('/pages/analytics/fullscreen')
   const table = page.locator('#transactions table')
   await expect(table.locator('tbody tr')).toHaveCount(8)
   const first = await table.locator('tbody tr').first().textContent()
@@ -60,7 +60,7 @@ test('analytics filters, sorts, paginates and exports the selected report', asyn
 test('analytics exposes loading, error, retry and keyboard navigation', async ({
   page,
 }) => {
-  await page.goto('/examples/analytics/fullscreen')
+  await page.goto('/pages/analytics/fullscreen')
   await choose(page, 'Preview state', 'Loading')
   await expect(page.getByText('Loading transactions…')).toBeVisible()
   await expect(
@@ -81,7 +81,7 @@ for (const theme of ['light', 'dark']) {
   test(`analytics is accessible in ${theme} and mounted charts follow theme changes`, async ({
     page,
   }) => {
-    await page.goto('/examples/analytics/fullscreen')
+    await page.goto('/pages/analytics/fullscreen')
     await expect(
       page.locator('[data-slot="chart-card"] svg').first(),
     ).toBeVisible()
@@ -110,7 +110,7 @@ for (const width of [320, 390, 768, 1440]) {
     page,
   }) => {
     await page.setViewportSize({ width, height: 900 })
-    await page.goto('/examples/analytics/fullscreen')
+    await page.goto('/pages/analytics/fullscreen')
     await expect(
       page.getByRole('heading', { name: 'Revenue overview' }),
     ).toBeVisible()
@@ -167,9 +167,7 @@ test('mobile documentation navigation is keyboard reachable and closes after nav
     name: 'Documentation navigation',
   })
   await expect(navigation).toBeVisible()
-  await navigation
-    .getByRole('button', { name: 'Examples', exact: true })
-    .click()
+  await navigation.getByRole('button', { name: 'Pages', exact: true }).click()
   await page.getByRole('button', { name: 'Open navigation' }).click()
   await navigation.getByRole('link', { name: 'Analytics dashboard' }).click()
   await expect(
@@ -187,7 +185,7 @@ test('the responsive recipe keeps its primary action usable on narrow screens', 
   page,
 }) => {
   await page.setViewportSize({ width: 320, height: 900 })
-  await page.goto('/examples/discussions/fullscreen')
+  await page.goto('/pages/discussions/fullscreen')
   const action = page.getByRole('button', {
     name: 'New discussion',
     exact: true,
@@ -206,11 +204,11 @@ for (const theme of ['light', 'dark']) {
   }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.setViewportSize({ width: 390, height: 900 })
-    for (const route of ['/', '/components', '/blocks', '/components/button']) {
+    for (const route of ['/', '/atoms', '/organisms', '/atoms/button']) {
       await page.goto(route)
       await expect(page.locator('h1').first()).toBeVisible()
       await page.getByRole('button', { name: theme, exact: true }).click()
-      if (route === '/components/button')
+      if (route === '/atoms/button')
         await expect(
           page.getByRole('button', { name: 'Primary', exact: true }),
         ).toBeVisible()
@@ -223,7 +221,7 @@ for (const theme of ['light', 'dark']) {
 test('receipt updates and undo recalculate the complete report', async ({
   page,
 }) => {
-  await page.goto('/examples/analytics/fullscreen')
+  await page.goto('/pages/analytics/fullscreen')
   const revenue = page
     .locator('[data-slot="number-card"]')
     .first()

@@ -22,10 +22,10 @@ export function NotFound(): JSX.Element {
           Home
         </A>
         <A
-          href="/components/button"
+          href="/atoms/button"
           class="inline-flex h-7 items-center rounded-4 border border-outline-gray-2 px-3 text-base text-ink-gray-8 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring"
         >
-          Components
+          Atoms
         </A>
       </div>
     </div>

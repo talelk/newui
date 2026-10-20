@@ -8,7 +8,7 @@
 <CommandPalette label="Commands">
   <CommandGroup label="Pages">
     <CommandItem
-      value="/components/button"
+      value="/atoms/button"
       icon="lucide-square"
       keywords="button solid outline"
       onSelect={(href) => navigate(href)}

@@ -13,9 +13,9 @@ import { EXAMPLES } from '../lib/examples'
  * surface added in the current push, `beta` an unstable contract (the
  * `/experimental` entry).
  *
- * The order is the ladder (ADR-0012): foundations → components → blocks →
- * layouts → applications. A reader who follows it downwards learns one level,
- * then watches the next level use it.
+ * The order is the ladder (ADR-0012): foundations → atoms → molecules →
+ * organisms → templates → pages. A reader who follows it downwards learns one
+ * level, then watches the next level use it.
  */
 
 export type NavStatus = 'new' | 'beta'
@@ -59,10 +59,15 @@ export const NAV: NavSection[] = [
         description: 'Packages, stylesheet, provider, theme.',
       },
       {
-        title: 'Architecture',
+        title: 'Atomic design',
         href: '/architecture',
         description:
-          'The five levels of the ladder, and the rule between them.',
+          'The five levels, the rule between them, and where the logic layer sits.',
+      },
+      {
+        title: 'Build an app',
+        href: '/kit',
+        description: 'Compose a page, wire data, start from the starter.',
       },
     ],
   },
@@ -78,64 +83,62 @@ export const NAV: NavSection[] = [
     ],
   },
   {
-    title: 'Components',
-    count: level('components'),
+    title: 'Atoms',
+    count: level('atoms'),
     items: [
       {
-        title: 'All components',
-        href: '/components',
-        description: 'Every compound the library exports, by group.',
+        title: 'All atoms',
+        href: '/atoms',
+        description:
+          'One control or mark, with nothing else inside. The smallest unit a page is built from.',
       },
     ],
   },
   {
-    title: 'Blocks',
-    count: level('blocks'),
+    title: 'Molecules',
+    count: level('molecules'),
     items: [
       {
-        title: 'All blocks',
-        href: '/blocks',
-        description: 'Composed sections built from the components.',
+        title: 'All molecules',
+        href: '/molecules',
+        description:
+          'Atoms assembled into one interaction: a field, a picker, a menu, a chart legend.',
       },
     ],
   },
   {
-    title: 'Layouts',
-    count: level('layouts'),
+    title: 'Organisms',
+    count: level('organisms'),
     items: [
       {
-        title: 'All layouts',
-        href: '/layouts',
-        description: 'Page templates: how a page opens.',
+        title: 'All organisms',
+        href: '/organisms',
+        description:
+          'Self-contained regions: sidebars, toolbars, boards, charts, editors.',
       },
     ],
   },
   {
-    title: 'Kit',
+    title: 'Templates',
+    count: level('templates'),
     items: [
       {
-        title: 'Build an app',
-        href: '/kit',
-        description: 'Compose a page, wire data, start from the gated starter.',
+        title: 'All templates',
+        href: '/templates',
+        description:
+          'The arrangement: the frame, the title block, the navigation column.',
       },
     ],
   },
   {
-    title: 'Charts',
-    items: [{ title: 'All charts', href: '/charts' }],
-  },
-  {
-    title: 'Editors',
-    items: [{ title: 'Rich text and code', href: '/editors' }],
-  },
-  {
-    title: 'Examples',
-    count: level('applications'),
+    title: 'Pages',
+    count: level('pages'),
     items: [
       {
         title: 'Overview',
-        href: '/examples',
-        description: 'Whole screens and working local applications.',
+        href: '/pages',
+        description:
+          'Whole screens, wired to real state — the top of the ladder.',
       },
       ...EXAMPLES.map((example) => ({
         title: example.name,
@@ -192,11 +195,10 @@ export function siblingsFor(
 export const SECTION_ICONS: Record<string, string> = {
   Overview: 'lucide-house',
   Foundations: 'lucide-palette',
-  Components: 'lucide-component',
-  Blocks: 'lucide-blocks',
-  Layouts: 'lucide-layout-template',
-  Charts: 'lucide-chart-no-axes-combined',
-  Editors: 'lucide-square-pen',
-  Examples: 'lucide-panels-top-left',
+  Atoms: 'lucide-circle-dot',
+  Molecules: 'lucide-shapes',
+  Organisms: 'lucide-layout-dashboard',
+  Templates: 'lucide-layout-template',
+  Pages: 'lucide-panels-top-left',
   Internals: 'lucide-wrench',
 }

@@ -35,7 +35,7 @@ colours follow semantic tokens. Theme changes redraw mounted charts.
 
 ## Analytics example
 
-`/examples/analytics` is a lazy full-viewport local demo. Region/date filters and
+`/pages/analytics` is a lazy full-viewport local demo. Region/date filters and
 search select one dataset shared by every metric, all charts, transaction rows
 and export. Revenue includes paid transactions only; average order value divides
 by paid transactions; payment success divides paid by all selected transactions.

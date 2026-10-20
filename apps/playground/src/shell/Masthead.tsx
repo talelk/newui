@@ -38,24 +38,24 @@ const TOP_LINKS: { title: string; href: string; section: string }[] = [
     section: 'Overview',
   },
   {
-    title: 'Components',
-    href: sectionHref('Components', '/components'),
-    section: 'Components',
+    title: 'Atoms',
+    href: sectionHref('Atoms', '/atoms'),
+    section: 'Atoms',
   },
   {
-    title: 'Blocks',
-    href: sectionHref('Blocks', '/blocks'),
-    section: 'Blocks',
+    title: 'Organisms',
+    href: sectionHref('Organisms', '/organisms'),
+    section: 'Organisms',
   },
   {
-    title: 'Layouts',
-    href: sectionHref('Layouts', '/layouts'),
-    section: 'Layouts',
+    title: 'Templates',
+    href: sectionHref('Templates', '/templates'),
+    section: 'Templates',
   },
   {
-    title: 'Examples',
-    href: sectionHref('Examples', '/examples'),
-    section: 'Examples',
+    title: 'Pages',
+    href: sectionHref('Pages', '/pages'),
+    section: 'Pages',
   },
 ]
 

@@ -400,7 +400,7 @@ function WorkspaceCard(): JSX.Element {
         </CardDescription>
       </CardHeader>
       <div class="flex flex-wrap gap-2">
-        <Button route="/examples/analytics/fullscreen" variant="outline">
+        <Button route="/pages/analytics/fullscreen" variant="outline">
           Open workspace
         </Button>
         <Button

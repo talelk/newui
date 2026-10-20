@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test'
 test('compose saves and restores a draft, previews, exports and publishes locally', async ({
   page,
 }) => {
-  await page.goto('/examples/compose/fullscreen')
+  await page.goto('/pages/compose/fullscreen')
   const title = page.getByRole('textbox', { name: 'Post title', exact: false })
   await title.fill('September product update')
   await page.getByRole('button', { name: 'Save draft', exact: true }).click()
@@ -32,7 +32,7 @@ test('compose saves and restores a draft, previews, exports and publishes locall
 test('segmented controls reverse horizontal keyboard movement in RTL', async ({
   page,
 }) => {
-  await page.goto('/examples/authentication/fullscreen')
+  await page.goto('/pages/authentication/fullscreen')
   await page.evaluate(() => {
     document.documentElement.dir = 'rtl'
   })
@@ -48,7 +48,7 @@ for (const theme of ['light', 'dark']) {
   test(`mobile compose is accessible in ${theme}`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.setViewportSize({ width: 390, height: 900 })
-    await page.goto('/examples/compose/fullscreen')
+    await page.goto('/pages/compose/fullscreen')
     await expect(
       page.getByRole('heading', { name: 'Compose a post' }),
     ).toBeVisible()
@@ -66,7 +66,7 @@ for (const theme of ['light', 'dark']) {
 test('publication requires content and keeps the draft editable after validation', async ({
   page,
 }) => {
-  await page.goto('/examples/compose/fullscreen')
+  await page.goto('/pages/compose/fullscreen')
   const body = page.getByRole('textbox', { name: 'Post body' })
   await body.fill('')
   await page.getByRole('button', { name: 'Publish demo', exact: true }).click()
@@ -82,7 +82,7 @@ for (const width of [390, 768, 1440]) {
     page,
   }) => {
     await page.setViewportSize({ width, height: 900 })
-    await page.goto('/examples/compose/fullscreen')
+    await page.goto('/pages/compose/fullscreen')
     const body = page.getByRole('textbox', { name: 'Post body' })
     await body.fill('Project brief')
     await body.press('ControlOrMeta+a')

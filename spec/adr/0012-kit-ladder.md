@@ -19,7 +19,7 @@ Four decisions were put to the maintainer and ratified on 2026-10-19:
 | Logic layer | `@newui/data` — newui conventions over TanStack Query/Form/Table/Virtual, plus promoted `DataTable`/`VirtualList`/helpers. Supersedes `spec/tanstack-integration.md` when it lands. |
 | Router | `@solidjs/router` stays the kit's router; the starter encodes its conventions. |
 | Layouts | A new `@newui/layouts` package owns page templates; shell frames stay in `@newui/ui`. |
-| Starter | A buildable `apps/starter`, gated (typecheck, smoke e2e, budget), rendered at `/examples/starter`. A CLI may follow, later. |
+| Starter | A buildable `apps/starter`, gated (typecheck, smoke e2e, budget), rendered at `/pages/starter`. A CLI may follow, later. |
 
 ## Decision
 

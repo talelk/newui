@@ -15,7 +15,7 @@ export function Demo(): JSX.Element {
         title="Sign in to Acme"
         description="Use your work email to continue."
         // Lucide has no brand glyphs: a white-label provider passes its own
-        // mark as a component. These stand-ins keep the demo self-contained.
+        // mark as a component. These stand-ins keep the demo independent.
         providers={[
           { label: 'Continue with SSO', icon: 'lucide-key-round' },
           { label: 'Continue with a passkey', icon: 'lucide-fingerprint' },

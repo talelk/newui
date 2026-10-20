@@ -7,6 +7,7 @@ import {
 import { useNavigate } from '@solidjs/router'
 import { For, type JSX } from 'solid-js'
 import { COMPONENTS } from '../generated/components'
+import { ATOMIC } from '../lib/atomic'
 import { hrefOf } from '../lib/reference-href'
 import { NAV_ORDER } from './nav'
 import { colorScheme, setColorScheme } from './theme'
@@ -60,22 +61,22 @@ export function PageFinder(props: { onClose: () => void }): JSX.Element {
         </For>
       </CommandGroup>
 
-      <CommandGroup label="Components, blocks & layouts">
+      <CommandGroup label="Atoms, molecules, organisms & templates">
         <For each={components}>
           {(entry) => (
             <CommandItem
               value={hrefOf(entry)}
               icon={
-                entry.kind === 'layout'
-                  ? 'lucide-layout-template'
-                  : entry.kind === 'block'
-                    ? 'lucide-layout-dashboard'
-                    : 'lucide-square'
+                entry.atomic === 'atom'
+                  ? 'lucide-circle-dot'
+                  : entry.atomic === 'molecule'
+                    ? 'lucide-shapes'
+                    : entry.atomic === 'organism'
+                      ? 'lucide-layout-dashboard'
+                      : 'lucide-layout-template'
               }
               keywords={`${entry.group} ${entry.parts.join(' ')}`}
-              description={
-                entry.kind === 'component' ? entry.group : entry.kind
-              }
+              description={`${ATOMIC[entry.atomic].singular} · ${entry.group}`}
               onSelect={go}
             >
               {entry.name}

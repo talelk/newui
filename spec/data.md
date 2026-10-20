@@ -187,7 +187,7 @@ composition of it.
   `TABLE_HEAD_CLASS` beside it. Accounting's ledger renders its own semantic
   table and needs only the shell — importing the main entry for it would pull the
   whole TanStack composition into a route that never renders one (measured: 20 kB
-  on `/examples/accounting/fullscreen`).
+  on `/pages/accounting/fullscreen`).
 - The root is `data-slot="data-table"` (it was `example-data-table` while it
   lived in the playground).
 

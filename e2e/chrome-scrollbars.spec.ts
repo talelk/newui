@@ -32,7 +32,7 @@ test.describe('rail chrome carries no scroll containers', () => {
   for (const recipe of RECIPES) {
     test(`/${recipe}: nothing in the rail scrolls`, async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 900 })
-      await page.goto(`/examples/${recipe}/fullscreen`)
+      await page.goto(`/pages/${recipe}/fullscreen`)
       await page.waitForSelector('[data-slot="sidebar-rail"]', {
         timeout: 10_000,
       })

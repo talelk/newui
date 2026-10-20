@@ -34,7 +34,7 @@ test.describe('sidebar collapse', () => {
     page,
   }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
-    await page.goto('/examples/discussions/fullscreen')
+    await page.goto('/pages/discussions/fullscreen')
 
     const nav = page.locator('[data-slot="sidebar"]')
     await expect(nav).toBeVisible()
@@ -49,7 +49,7 @@ test.describe('sidebar collapse', () => {
     page,
   }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
-    await page.goto('/examples/deals/fullscreen')
+    await page.goto('/pages/deals/fullscreen')
 
     const nav = page.locator('[data-slot="sidebar"]')
     await expect(nav).toBeVisible()
@@ -72,7 +72,7 @@ test.describe('sidebar collapse', () => {
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 })
-    await page.goto('/examples/deals/fullscreen')
+    await page.goto('/pages/deals/fullscreen')
 
     await page
       .getByRole('button', { name: 'Toggle workspace navigation' })

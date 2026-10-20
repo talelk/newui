@@ -22,9 +22,7 @@ import { ThemeMenu } from '../shell/ThemeMenu'
  * put.
  */
 function ExampleRail(props: { section: string }): JSX.Element {
-  const apps = EXAMPLES.filter(
-    (example) => example.href !== '/examples/patterns',
-  )
+  const apps = EXAMPLES.filter((example) => example.href !== '/pages/patterns')
   const slugOf = (href: string) => href.split('/').pop() ?? ''
   const isActive = (href: string) =>
     slugOf(href).toLowerCase() === props.section.trim().toLowerCase()
@@ -34,7 +32,7 @@ function ExampleRail(props: { section: string }): JSX.Element {
       <SidebarRailItem
         label="Examples home"
         description="Back to the examples index"
-        route="/examples"
+        route="/pages"
       >
         <img src="/favicon.svg" alt="" class="size-7 rounded-[7px]" />
       </SidebarRailItem>
@@ -80,7 +78,7 @@ export function WorkspacePage(props: {
   return (
     <AppLayout
       breadcrumbs={[
-        { label: 'Workspace', route: '/examples' },
+        { label: 'Workspace', route: '/pages' },
         { label: props.section },
       ]}
       title={props.title}
@@ -92,7 +90,7 @@ export function WorkspacePage(props: {
       sidebar={props.sidebar}
       sidebarFooter={
         <A
-          href="/examples"
+          href="/pages"
           class="block rounded-3 px-3 py-2 text-caption text-ink-gray-7 focus-visible:focus-ring"
         >
           All examples{' '}
@@ -104,7 +102,7 @@ export function WorkspacePage(props: {
       }
       brand={
         <A
-          href="/examples"
+          href="/pages"
           class="flex items-center gap-2 rounded-3 font-semibold focus-visible:focus-ring"
         >
           <img src="/favicon.svg" alt="" class="size-6" />
@@ -124,7 +122,7 @@ export function WorkspacePage(props: {
         <footer class="flex flex-wrap justify-between gap-2 text-caption text-ink-gray-7">
           <span>Local demo data · Built with newui</span>
           <A
-            href="/examples"
+            href="/pages"
             class="rounded-3 text-ink-blue-link focus-visible:focus-ring"
           >
             Explore the examples{' '}

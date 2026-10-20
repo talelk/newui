@@ -5,7 +5,7 @@ test('discussion account actions mutate local communities and retain settings wh
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
-  await page.goto('/examples/discussions/fullscreen')
+  await page.goto('/pages/discussions/fullscreen')
   await page.getByRole('button', { name: 'Settings', exact: true }).click()
   await page.getByRole('tab', { name: 'Communities', exact: true }).click()
   await page.getByRole('button', { name: 'New community', exact: true }).click()
@@ -46,7 +46,7 @@ for (const layout of ['desktop', 'mobile']) {
       width: layout === 'mobile' ? 390 : 1440,
       height: 900,
     })
-    await page.goto('/examples/discussions/fullscreen')
+    await page.goto('/pages/discussions/fullscreen')
     await page
       .getByRole('button', {
         name: layout === 'desktop' ? 'Add new' : 'New discussion',
@@ -107,7 +107,7 @@ for (const layout of ['desktop', 'mobile']) {
 test('workspace settings validates, saves, discards edits and retains notification choice', async ({
   page,
 }) => {
-  await page.goto('/examples/settings/fullscreen')
+  await page.goto('/pages/settings/fullscreen')
   await page.getByRole('button', { name: 'Open settings' }).click()
   await page.getByRole('textbox', { name: 'Display name' }).fill('')
   await page

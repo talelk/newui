@@ -65,7 +65,7 @@ function Example(props: { sidebar?: boolean }): JSX.Element {
         }
         sidebarFooter={
           <a
-            href="/examples"
+            href="/pages"
             class="block rounded-3 px-2 py-1 text-caption text-ink-gray-6"
           >
             All examples ↗

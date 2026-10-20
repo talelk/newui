@@ -1,40 +1,30 @@
 import { Icon } from '@newui/ui'
-import { useLocation } from '@solidjs/router'
+import { A, useLocation } from '@solidjs/router'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
 import { COMPONENTS, GROUPS } from '../generated/components'
+import { ATOMIC, levelOf } from '../lib/atomic'
 import { CatalogList } from '../lib/CatalogList'
 import { groupEntries } from '../lib/catalog'
 import { PageIntro } from '../shell/PageIntro'
 
 /**
- * The component index: every documented compound, grouped, filterable.
+ * One atomic level's index: every entry filed under it, grouped by purpose.
  *
- * The same data drives the sidebar. This page exists for the reader who arrives
- * without knowing a name yet — so it shows the *group*, the parts each component
- * ships, and whether it has a written contract, which is the difference between
- * "look at the props" and "there is a page of reasoning".
+ * The same page serves `/atoms`, `/molecules`, `/organisms` and `/templates`.
+ * The level comes from the path, the entries from the registry's `atomic` field,
+ * and the intro from `lib/atomic.ts` — so "what is an organism" is answered in
+ * one place. A component page's own sidebar reads the same field.
  */
 export function ComponentsIndex(): JSX.Element {
   const location = useLocation()
-  const base = () => `/${location.pathname.split('/')[1] ?? 'components'}`
-  const section = () =>
-    base() === '/charts'
-      ? 'Charts'
-      : base() === '/editors'
-        ? 'Editors'
-        : 'Components'
+  const level = () => levelOf(location.pathname.split('/')[1] ?? '') ?? 'atom'
+  const meta = () => ATOMIC[level()]
   const [query, setQuery] = createSignal('')
 
   const visible = createMemo(() => {
     const needle = query().trim().toLowerCase()
     return COMPONENTS.filter(
-      (entry) =>
-        entry.shipped &&
-        (base() === '/charts'
-          ? entry.group === 'Charts'
-          : base() === '/editors'
-            ? entry.group === 'Editors'
-            : entry.kind === 'component' && entry.package === '@newui/ui'),
+      (entry) => entry.shipped && entry.atomic === level(),
     ).filter((entry) =>
       needle === ''
         ? true
@@ -47,13 +37,37 @@ export function ComponentsIndex(): JSX.Element {
 
   return (
     <>
-      <PageIntro
-        title={section()}
-        description="Controls, demos and API contracts, grouped by purpose."
-      />
+      <PageIntro title={meta().label} description={meta().description} />
+
+      <Show when={level() === 'organism'}>
+        <section
+          class="mb-6 flex flex-col gap-2"
+          aria-label="Copyable site compositions"
+        >
+          <h2 class="text-section">Site compositions</h2>
+          <p class="text-ink-gray-7">
+            Adapted from solid-ui. Copy the source; these are not package
+            exports.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <A
+              href="/organisms/compositions/sidebar-01"
+              class="text-ink-blue-link underline"
+            >
+              Grouped documentation sidebar
+            </A>
+            <A
+              href="/organisms/compositions/demo-sidebar"
+              class="text-ink-blue-link underline"
+            >
+              Application sidebar
+            </A>
+          </div>
+        </section>
+      </Show>
 
       <label class="relative mb-6 flex max-w-sm items-center">
-        <span class="sr-only">Filter components</span>
+        <span class="sr-only">Filter {meta().label.toLowerCase()}</span>
         <Icon
           icon="lucide-search"
           class="pointer-events-none absolute start-2.5 size-4 text-ink-gray-6"
@@ -69,7 +83,7 @@ export function ComponentsIndex(): JSX.Element {
 
       <CatalogList
         sections={grouped()}
-        href={(entry) => `${base()}/${entry.slug}`}
+        href={(entry) => `${meta().href}/${entry.slug}`}
         trailing={(entry) => (
           <>
             <Show when={entry.parts.length > 0}>

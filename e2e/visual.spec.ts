@@ -52,7 +52,7 @@ for (const theme of ['light', 'dark']) {
   for (const width of [390, 768, 1440]) {
     test(`analytics visual ${theme} ${width}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 1000 })
-      await page.goto('/examples/analytics/fullscreen')
+      await page.goto('/pages/analytics/fullscreen')
       await page.getByRole('button', { name: theme, exact: true }).click()
       await expect(
         page.locator('[data-slot="chart-card"] svg').first(),
@@ -66,7 +66,7 @@ for (const theme of ['light', 'dark']) {
     })
   }
   test(`reference and states visual ${theme}`, async ({ page }) => {
-    await page.goto('/components/button')
+    await page.goto('/atoms/button')
     await page.getByRole('button', { name: theme, exact: true }).click()
     await expect(
       page.getByRole('button', { name: 'Solid', exact: true }),

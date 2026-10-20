@@ -56,7 +56,7 @@ export function Authentication(): JSX.Element {
       <div class="relative">
         <div class="absolute inset-x-0 top-0 flex items-center justify-between p-3">
           <A
-            href="/examples"
+            href="/pages"
             class="rounded-3 text-caption text-ink-gray-7 focus-visible:focus-ring"
           >
             <span
@@ -109,7 +109,7 @@ export function Authentication(): JSX.Element {
                     : 'Your local demo session is ready to explore.'}
                 </p>
                 <Button
-                  route="/examples/analytics/fullscreen"
+                  route="/pages/analytics/fullscreen"
                   variant="solid"
                   theme="blue"
                 >

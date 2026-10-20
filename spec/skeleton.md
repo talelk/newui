@@ -5,7 +5,7 @@ Reserves space while content loads.
 ## Usage and anatomy
 
 Import `Skeleton` from `@newui/ui`. The executable example and its copyable
-source on `/components/skeleton` show the supported composition. Generated prop
+source on `/atoms/skeleton` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 
 ## Behavior and accessibility

@@ -18,7 +18,7 @@ import { LADDER } from '../generated/ladder'
  * statically, so the initial chunk is this file plus the shell. The reader
  * is deciding whether to install the library, so the page answers three
  * questions (what is it, what does it cost, where do I go next) and hands
- * off to `/components`, `/blocks` and `/examples`. The one live preview
+ * off to `/atoms`, `/organisms` and `/pages`. The one live preview
  * strip is a separate chunk loaded only when it scrolls into view — real
  * components, paid for only by readers who reach them.
  */
@@ -82,7 +82,7 @@ function PreviewSection(): JSX.Element {
                   then.
                 </span>
                 <A
-                  href="/components"
+                  href="/atoms"
                   class="rounded-3 text-interface text-ink-blue-link underline decoration-dotted focus-visible:focus-ring"
                 >
                   Browse the live components
@@ -151,7 +151,7 @@ export function Home(): JSX.Element {
             href="/architecture"
             class="rounded-3 text-caption text-ink-blue-link focus-visible:focus-ring"
           >
-            How the five levels fit together →
+            How the levels fit together →
           </A>
         </div>
         <ol class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1">

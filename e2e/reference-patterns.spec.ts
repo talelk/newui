@@ -7,7 +7,7 @@ import { hrefOf } from '../apps/playground/src/lib/reference-href'
 test('editor grammar changes preserve edits and read-only prevents writing', async ({
   page,
 }) => {
-  await page.goto('/editors/code-editor')
+  await page.goto('/organisms/code-editor')
   const editor = page.getByRole('textbox', { name: 'Code editor', exact: true })
   await editor.fill('const edited = 42')
   await page.getByRole('combobox', { name: 'Code language' }).click()
@@ -87,7 +87,7 @@ test('all shipped references resolve contracts, source and live demos in both sc
 test('carousel supports buttons, vertical layout and keyboard position', async ({
   page,
 }) => {
-  await page.goto('/examples/patterns/carousel')
+  await page.goto('/pages/patterns/carousel')
   await page.getByRole('button', { name: 'Next slide', exact: true }).click()
   await expect(page.getByRole('status')).toContainText('Slide 2 of 5')
   await page.getByRole('combobox', { name: 'Orientation', exact: true }).click()
@@ -100,7 +100,7 @@ test('carousel supports buttons, vertical layout and keyboard position', async (
 test('command palette searches and opens a destination with the keyboard', async ({
   page,
 }) => {
-  await page.goto('/examples/patterns/command')
+  await page.goto('/pages/patterns/command')
   await page.getByRole('button', { name: 'Open command palette' }).click()
   const search = page.getByRole('combobox', {
     name: 'Command palette search',
@@ -115,7 +115,7 @@ test('command palette searches and opens a destination with the keyboard', async
 test('verification accepts pasted digits and reports errors and success', async ({
   page,
 }) => {
-  await page.goto('/examples/patterns/verification')
+  await page.goto('/pages/patterns/verification')
   await page.getByRole('button', { name: 'Verify code', exact: true }).click()
   await expect(page.getByRole('alert')).toContainText('123456')
   await page
@@ -128,14 +128,14 @@ test('verification accepts pasted digits and reports errors and success', async 
 test('layout resize has native keyboard control and drawer saves shared data', async ({
   page,
 }) => {
-  await page.goto('/examples/patterns/layout')
+  await page.goto('/pages/patterns/layout')
   await page.getByRole('slider', { name: /Left panel width/ }).focus()
   await page.keyboard.press('Home')
   await page.keyboard.press('ArrowRight')
   await expect(
     page.getByText('Left panel width · 26%', { exact: true }),
   ).toBeVisible()
-  await page.goto('/examples/patterns/navigation')
+  await page.goto('/pages/patterns/navigation')
   await page
     .getByRole('button', { name: 'Edit in a drawer', exact: true })
     .click()
@@ -165,7 +165,7 @@ for (const name of [
     }) => {
       await page.emulateMedia({ reducedMotion: 'reduce' })
       await page.setViewportSize({ width: 390, height: 900 })
-      await page.goto(`/examples/patterns/${name}`)
+      await page.goto(`/pages/patterns/${name}`)
       await page.getByRole('button', { name: theme, exact: true }).click()
       await expect(page.locator('h1')).toBeVisible()
       expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])

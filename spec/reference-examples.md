@@ -7,8 +7,8 @@ dependencies. The site owns the examples; packages never import application code
 
 ## Application inventory
 
-Each Frappe family has `/examples/<name>` documentation and a bare
-`/examples/<name>/fullscreen` application. The persistent preview supplies
+Each Frappe family has `/pages/<name>` documentation and a bare
+`/pages/<name>/fullscreen` application. The persistent preview supplies
 390×844, 768×900 and 1440×900 viewports. Layouts share local domain state;
 the mobile variant starts with collapsed workspace navigation. Layout also
 responds to viewport width on either destination.
@@ -24,8 +24,8 @@ responds to viewport width on either destination.
 | Tasks | Validated creation, query lifecycle, table operations, bulk completion, virtual activity | `e2e/tasks.spec.ts` |
 | Accounting | Shared ledger, date filters, cashflow/expenses/payroll/profit report, local mutations and CSV export | `e2e/business-recipes.spec.ts` |
 
-solid-ui's five application examples map to `/examples/analytics`, mail, tasks,
-`/examples/authentication` and `/examples/cards`. The eight card compositions
+solid-ui's five application examples map to `/pages/analytics`, mail, tasks,
+`/pages/authentication` and `/pages/cards`. The eight card compositions
 cover account creation, payments, team membership, sharing, notifications,
 support reports, project information and cookie preferences.
 
@@ -38,7 +38,7 @@ sent to a remote service. Reloading starts a fresh example session.
 
 The checked-out registry contains **68** `.tsx` examples. Their source names and
 destinations live in `apps/playground/src/lib/reference-examples.ts`, and the
-complete linked directory is `/examples/patterns`. The coverage test compares
+complete linked directory is `/pages/patterns`. The coverage test compares
 that inventory with the read-only checkout when it is available, checks every
 destination, and requires an isolated demo for every shipped reference component.
 

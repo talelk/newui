@@ -8,8 +8,8 @@ export function Examples(): JSX.Element {
   return (
     <div class="flex flex-col gap-4">
       <PageIntro
-        title="Examples"
-        description="Working applications and reusable patterns for your next product."
+        title="Pages"
+        description="Whole screens wired to real state: every level of the ladder, used the way a product uses it."
       />
       <div class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1">
         <For each={EXAMPLES}>

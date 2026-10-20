@@ -31,6 +31,7 @@ export function Docs(): JSX.Element {
         { id: 'stylesheet', label: 'Stylesheet' },
         { id: 'provider', label: 'Provider' },
         { id: 'first-component', label: 'A first component' },
+        { id: 'next', label: 'Next' },
       ]}
     />
   ))
@@ -43,39 +44,126 @@ export function Docs(): JSX.Element {
 
       <PageSection id="packages" title="1 · Packages">
         <p class="text-base text-ink-gray-7">
-          Install only what you use.{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @newui/ui
-          </code>{' '}
-          carries the components and the Zag machines;{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @newui/tailwind
-          </code>{' '}
-          carries the tokens and the Tailwind layer;{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @newui/icons
-          </code>{' '}
-          carries the glyph components;{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @newui/blocks
-          </code>{' '}
-          and{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @newui/layouts
-          </code>{' '}
-          carry the composed sections and the page templates (
+          The site is organised by atomic design's levels, and the packages
+          follow them: you install the level you are working at. The full
+          mapping — including where a package ships two levels — is on{' '}
           <A
             href="/architecture"
             class="text-ink-blue-6 underline decoration-dotted"
           >
-            the ladder
+            Atomic design
           </A>
-          );{' '}
+          .
+        </p>
+        <div class="overflow-x-auto rounded-5 border border-outline-gray-1">
+          <table class="w-full border-collapse text-start text-sm">
+            <thead class="bg-surface-gray-1 text-caption text-ink-gray-7">
+              <tr>
+                <th class="p-2 text-start font-medium">Level</th>
+                <th class="p-2 text-start font-medium">Package</th>
+                <th class="p-2 text-start font-medium">What you get</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-outline-gray-1">
+                <td class="p-2">
+                  <A
+                    href="/foundations"
+                    class="text-ink-blue-6 underline decoration-dotted"
+                  >
+                    Foundations
+                  </A>
+                </td>
+                <td class="p-2 font-mono text-xs">
+                  @newui/tailwind · @newui/tokens
+                </td>
+                <td class="p-2 text-ink-gray-7">
+                  the tokens and the Tailwind layer — every class is spelled in
+                  them
+                </td>
+              </tr>
+              <tr class="border-t border-outline-gray-1">
+                <td class="p-2">
+                  <A
+                    href="/atoms"
+                    class="text-ink-blue-6 underline decoration-dotted"
+                  >
+                    Atoms
+                  </A>{' '}
+                  ·{' '}
+                  <A
+                    href="/molecules"
+                    class="text-ink-blue-6 underline decoration-dotted"
+                  >
+                    Molecules
+                  </A>
+                </td>
+                <td class="p-2 font-mono text-xs">@newui/ui · @newui/icons</td>
+                <td class="p-2 text-ink-gray-7">
+                  one control or mark, and the interactions assembled from them;
+                  Zag supplies keyboard, focus and ARIA
+                </td>
+              </tr>
+              <tr class="border-t border-outline-gray-1">
+                <td class="p-2">
+                  <A
+                    href="/organisms"
+                    class="text-ink-blue-6 underline decoration-dotted"
+                  >
+                    Organisms
+                  </A>
+                </td>
+                <td class="p-2 font-mono text-xs">@newui/blocks</td>
+                <td class="p-2 text-ink-gray-7">
+                  independent sections: sidebars, toolbars, filter bars, boards
+                </td>
+              </tr>
+              <tr class="border-t border-outline-gray-1">
+                <td class="p-2">
+                  <A
+                    href="/templates"
+                    class="text-ink-blue-6 underline decoration-dotted"
+                  >
+                    Templates
+                  </A>
+                </td>
+                <td class="p-2 font-mono text-xs">@newui/layouts</td>
+                <td class="p-2 text-ink-gray-7">
+                  page arrangement: the frame, the title block, the navigation
+                  column
+                </td>
+              </tr>
+              <tr class="border-t border-outline-gray-1">
+                <td class="p-2">
+                  <A
+                    href="/pages"
+                    class="text-ink-blue-6 underline decoration-dotted"
+                  >
+                    Pages
+                  </A>
+                </td>
+                <td class="p-2 font-mono text-xs">your app</td>
+                <td class="p-2 text-ink-gray-7">
+                  the screens; every example on this site is one
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-base text-ink-gray-7">
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
             @newui/data
           </code>{' '}
-          carries the logic layer — formatting, selection, undo, downloads —
-          headless, so it costs no component. Add{' '}
+          is the logic layer beside the levels — formatting, selection, undo,
+          downloads, plus the query, form, table and virtual surfaces under
+          their own entries. It is headless, so it costs no component.
+        </p>
+        <Code>{`pnpm add @newui/ui @newui/tailwind @newui/icons
+
+# the composed levels and the logic layer
+pnpm add @newui/blocks @newui/layouts @newui/data`}</Code>
+        <p class="text-base text-ink-gray-7">
+          Add{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
             @newui/charts
           </code>
@@ -89,12 +177,9 @@ export function Docs(): JSX.Element {
           </code>{' '}
           only when a screen needs them — each drags a large dependency with it
           (echarts, TipTap, CodeMirror), which is exactly why they are separate
-          packages.
+          packages. Their widgets are filed as organisms or molecules by
+          composition, not by package.
         </p>
-        <Code>{`pnpm add @newui/ui @newui/tailwind @newui/icons
-
-# the composed layers and the logic layer
-pnpm add @newui/blocks @newui/layouts @newui/data`}</Code>
         <p class="text-base text-ink-gray-7">
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">solid-js</code>{' '}
           is a peer dependency, so your app owns its version.
@@ -178,6 +263,16 @@ function DeleteProject() {
     </>
   )
 }`}</Code>
+      </PageSection>
+
+      <PageSection id="next" title="Next">
+        <p class="text-base text-ink-gray-7">
+          Compose a page and wire data —{' '}
+          <A href="/kit" class="text-ink-blue-6 underline decoration-dotted">
+            Build an app
+          </A>{' '}
+          walks through the levels with the starter's own code.
+        </p>
       </PageSection>
 
       <PackageGuides />

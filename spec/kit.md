@@ -22,7 +22,9 @@ The library is finished up to the block level and undefined above it:
   `createUndo` 3, `format` 4, `CreateDialog` 7.
 - **Atomic design** — tokens → ui → blocks → examples exists implicitly; the
   templates level is missing and the logic level has no home, so nothing tells
-  a consumer which frame to pick or where a repeated pattern graduates to.
+  a consumer which frame to pick or where a repeated pattern graduates to. The
+  site now organises itself by the five levels (see *The site's information
+  architecture* below); the packages keep their own names.
 - **Surface** — `/play` is demo-shaped, not state-shaped: no stories, no
   states, no index a machine can sweep.
 - **Composition** — learned by reading playground source; no starter, no guide.
@@ -34,23 +36,52 @@ copyable app to the parts that already exist.
 
 | Level | Answers | Home | Today |
 | --- | --- | --- | --- |
-| Tokens | what does it look like | `@newui/tokens` + `@newui/tailwind` | shipped |
-| Components (atoms/molecules) | what is this control | `@newui/ui` (+ shell frames) | shipped |
-| Blocks (organisms) | what is this section | `@newui/blocks` | shipped |
-| Layouts (templates) | how does a page open | `@newui/layouts` | shipped (W2, `AppLayout`; page templates next) |
+| Foundations | what does it look like | `@newui/tokens` + `@newui/tailwind` | shipped |
+| Atoms | what is this single element | `@newui/ui` | shipped (20) |
+| Molecules | what is this interaction | `@newui/ui` + `@newui/charts` | shipped (42) |
+| Organisms | what is this section | `@newui/blocks` + chart widgets + editors | shipped (22) |
+| Templates | how does a page open | `@newui/layouts` + `@newui/ui` shells | shipped (6) |
+| Pages | what does the product do | `apps/playground` + `apps/starter` | shipped (12 + the starter) |
 | Logic | how does it behave | `@newui/data` | shipped (helpers, `/query`, `/form`, `/table`, `/virtual`) |
-| App | what do I copy | `apps/starter` + examples | missing |
 | Surface | how do I see any of it | Storybook | shipped (W1) |
 
 Rules (ADR-0012):
 
-1. **Downward-only imports** — `ui ← blocks ← layouts ← apps`; `@newui/data`
-   is headless except its own promoted surfaces; nothing imports an app.
+1. **Downward-only imports** — atoms ← molecules ← organisms ← templates ←
+   pages; `@newui/data` is headless except its own promoted surfaces; nothing
+   imports an app.
+   The *site* files each entry by the same five levels, from the registry's
+   `atomic` field rather than from its package — `scripts/atomic.ts` holds the
+   judgement calls.
 2. **Promote or reuse** — a pattern that appears twice in an example moves a
    level down or is reused from a level above.
 3. **One done-checklist per unit** — implementation, recipe/types, tests +
    a11y, spec, a story with states, a site page, a budget entry, an exports
    pin.
+
+## The site's information architecture
+
+The site is the docs surface, so it reads in atomic design's order rather than
+the package order it was built in:
+
+| Section | URL | What it lists |
+| --- | --- | --- |
+| Foundations | `/foundations` | the token vocabulary |
+| Atoms | `/atoms` · `/atoms/<name>` | 20 single elements |
+| Molecules | `/molecules` · `/molecules/<name>` | 42 interactions |
+| Organisms | `/organisms` · `/organisms/<name>` | 22 sections (blocks, chart widgets, editors) |
+| Templates | `/templates` · `/templates/<name>` | 6 arrangements (page layouts and shells) |
+| Pages | `/pages` · `/pages/<slug>` | the 12 application recipes, plus the starter |
+
+The classification is by *composition*, not by package: `@newui/ui` ships
+organisms (a sidebar) beside atoms, and `@newui/charts` ships molecules (a
+legend) beside organisms (a bar chart). The registry records one `atomic` field
+per entry, `scripts/atomic.ts` decides it, and the tests pin it.
+
+The pre-atomic URLs (`/components`, `/blocks`, `/layouts`, `/charts`,
+`/editors`, `/examples`) are a compatibility surface: every one redirects to
+the level that now owns it, and `/components/<name>` resolves through the
+registry because the name decides whether the entry is an atom or a molecule.
 
 ## W1 — Storybook, the surface
 
@@ -164,9 +195,9 @@ seven-test browser suite drives the collection, the validated create, an
 optimistic status change, a confirmed delete, the filter bar, the demo session
 and the settings form, plus axe and a 390px overflow check. It is not rendered a
 second time inside the docs site: the starter *is* the render, and a facsimile
-on `/examples/starter` would be a copy that drifts — `/kit` documents the copy
-path and links the live surfaces (`/layouts/app-layout`, `/examples/tasks`,
-`/examples/files`).
+on `/pages/starter` would be a copy that drifts — `/kit` documents the copy
+path and links the live surfaces (`/templates/app-layout`, `/pages/tasks`,
+`/pages/files`).
 
 ## W5 — Hardening
 

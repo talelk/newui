@@ -7,48 +7,52 @@ import { PageIntro } from '../shell/PageIntro'
 import { usePageToc } from '../shell/SiteLayout'
 
 /**
- * The ladder, written down.
+ * Atomic design, written down.
  *
- * The site has had four reference sections for a while — components, blocks,
- * layouts, examples — but nothing said *why* they are separate, and the
- * vocabulary ("atomic design") appeared nowhere. A reader could browse every
- * page and never learn that a block may import a component but a component may
- * not import a block, or that the answer to "should this be a block?" is a
- * question about what the thing *is*, not where it happened to be written.
+ * The site is organised by Brad Frost's five levels — atoms, molecules,
+ * organisms, templates, pages — because they answer the question a reader
+ * actually has ("how much is this thing made of?") rather than the question a
+ * package layout answers ("where does this file live?"). The two mostly agree;
+ * the page is honest about where they don't.
  *
  * The counts come from the same generated file the sidebar reads, so this page
  * cannot claim a size the registry disagrees with.
  */
 
-/** Atomic design's vocabulary, mapped once rather than re-explained per level. */
-const VOCABULARY: {
-  atomic: string
-  here: string
-  package: string
+/** Where each level's entries come from. The one place the two axes meet. */
+const PACKAGES: {
+  level: string
+  packages: string
   answers: string
 }[] = [
   {
-    atomic: 'Atoms · molecules',
-    here: 'Components',
-    package: '@newui/ui',
-    answers: 'What is this control?',
+    level: 'Foundations',
+    packages: '@newui/tokens · @newui/tailwind',
+    answers: 'What does it look like?',
   },
   {
-    atomic: 'Organisms',
-    here: 'Blocks',
-    package: '@newui/blocks',
-    answers: 'How does this section open?',
+    level: 'Atoms',
+    packages: '@newui/ui',
+    answers: 'What is this single element?',
   },
   {
-    atomic: 'Templates',
-    here: 'Layouts',
-    package: '@newui/layouts',
+    level: 'Molecules',
+    packages: '@newui/ui · @newui/charts',
+    answers: 'What is this interaction?',
+  },
+  {
+    level: 'Organisms',
+    packages: '@newui/blocks · @newui/charts · @newui/editor',
+    answers: 'What is this section?',
+  },
+  {
+    level: 'Templates',
+    packages: '@newui/layouts · @newui/ui',
     answers: 'How does the page open?',
   },
   {
-    atomic: 'Pages',
-    here: 'Applications',
-    package: 'apps/playground',
+    level: 'Pages',
+    packages: 'apps/playground · apps/starter',
     answers: 'What does the product do?',
   },
 ]
@@ -58,15 +62,23 @@ const RULES: { title: string; body: JSX.Element }[] = [
     title: 'Downward only',
     body: (
       <>
-        A level may import the level below it and nothing above it.{' '}
-        <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-          ui ← blocks ← layouts ← apps
-        </code>
-        . The rule is enforced, not agreed:{' '}
+        A level may import the level below it and nothing above it. The rule is
+        enforced, not agreed:{' '}
         <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
           the-ladder-only-points-down
         </code>{' '}
         fails the architecture gate on the first upward import.
+      </>
+    ),
+  },
+  {
+    title: 'One level per entry',
+    body: (
+      <>
+        An entry is filed once, by what it *is*, and the registry records that
+        as <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">atomic</code>.
+        A chart widget is an organism even though its package calls it a
+        component; the package is where the code lives, not what the thing is.
       </>
     ),
   },
@@ -77,20 +89,6 @@ const RULES: { title: string; body: JSX.Element }[] = [
         A pattern that appears twice moves down a level or is reused from the
         level above. Copying it a third time is how two pages start disagreeing
         about what a filter bar is.
-      </>
-    ),
-  },
-  {
-    title: 'One done-checklist per unit',
-    body: (
-      <>
-        Implementation, recipe and types, tests and a11y, a spec, a story with
-        the states{' '}
-        <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-          spec/states.md
-        </code>{' '}
-        requires, a site page, a budget entry and a changeset. “It renders” is
-        the first line of the checklist, not the last.
       </>
     ),
   },
@@ -148,9 +146,10 @@ export function Architecture(): JSX.Element {
   usePageToc(() => (
     <TableOfContents
       entries={[
-        { id: 'ladder', label: 'The ladder' },
+        { id: 'ladder', label: 'The five levels' },
+        { id: 'classification', label: 'How an entry is filed' },
+        { id: 'packages', label: 'Levels and packages' },
         { id: 'logic', label: 'The logic layer' },
-        { id: 'atomic-design', label: 'Atomic design' },
         { id: 'rules', label: 'The rules' },
       ]}
     />
@@ -159,14 +158,14 @@ export function Architecture(): JSX.Element {
   return (
     <div class="flex flex-col gap-8">
       <PageIntro
-        title="Architecture"
-        description="Five levels, one question each. Every level may import the one below it and nothing above it — that is what keeps a component from knowing what a page is."
+        title="Atomic design"
+        description="Five levels, one question each. Every level may import the one below it and nothing above it — that is what keeps a button from knowing what a page is."
       />
 
       <PageSection
         id="ladder"
-        title="The ladder"
-        description="A component answers what this control is; a block answers how this section opens; a layout answers how the page opens; an application answers what the product does. Read from the bottom up, each level is made of the one below it."
+        title="The five levels"
+        description="Read from the top down: a page is made of templates, a template of organisms, an organism of molecules, a molecule of atoms. The site is organised in this order, and every entry lives on exactly one level."
       >
         <ol class="flex flex-col">
           <For each={LADDER}>
@@ -176,21 +175,113 @@ export function Architecture(): JSX.Element {
       </PageSection>
 
       <PageSection
+        id="classification"
+        title="How an entry is filed"
+        description="One level per entry, decided by composition rather than by package. These are the judgement calls; they live in one file and the registry records the result."
+      >
+        <div class="flex flex-col gap-3 text-base text-ink-gray-7">
+          <p class="max-w-2xl">
+            <strong class="text-ink-gray-8">Atom</strong> — one element or
+            control, with no other kit component inside it: a button, a mark, an
+            input, a label, the scroll viewport itself.
+          </p>
+          <p class="max-w-2xl">
+            <strong class="text-ink-gray-8">Molecule</strong> — one interaction
+            or small unit assembled from atoms: a field, a picker, a menu, a
+            card, a list row, a dialog shell, a chart's legend.
+          </p>
+          <p class="max-w-2xl">
+            <strong class="text-ink-gray-8">Organism</strong> — a independent
+            region of a page: a sidebar, a block, a chart widget, an editor, a
+            full search surface.
+          </p>
+          <p class="max-w-2xl">
+            <strong class="text-ink-gray-8">Template</strong> — the arrangement
+            of a page: a shell or a page layout. It may contain everything below
+            and is the thing a route mounts.
+          </p>
+          <p class="max-w-2xl">
+            The package axis still says where code lives:{' '}
+            <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
+              @newui/charts
+            </code>{' '}
+            ships molecules (a legend) and organisms (a bar chart) in one
+            package, and{' '}
+            <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
+              @newui/ui
+            </code>{' '}
+            ships organisms (a sidebar) beside atoms. Filing by package instead
+            would have hidden that; filing by composition is what makes the
+            levels useful.
+          </p>
+          <p class="max-w-2xl">
+            The classification is in{' '}
+            <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
+              scripts/atomic.ts
+            </code>{' '}
+            — three lists and a default of “molecule”, because anything that
+            composes at all is one.
+          </p>
+        </div>
+      </PageSection>
+
+      <PageSection
+        id="packages"
+        title="Levels and packages"
+        description="The two axes, side by side. Most rows are one package; the rows that are not are the reason the level exists."
+      >
+        <div class="overflow-x-auto rounded-5 border border-outline-gray-1">
+          {/* `table-fixed`: auto layout lets a long answered-question column
+              squeeze the others to a character on a phone. */}
+          <table class="w-full table-fixed border-collapse text-start">
+            <thead class="bg-surface-gray-1 text-caption text-ink-gray-7">
+              <tr>
+                <th scope="col" class="p-3 text-start font-medium">
+                  Level
+                </th>
+                <th scope="col" class="p-3 text-start font-medium">
+                  Package
+                </th>
+                <th scope="col" class="p-3 text-start font-medium">
+                  Answers
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <For each={PACKAGES}>
+                {(row) => (
+                  <tr class="border-t border-outline-gray-1">
+                    <td class="p-3 font-medium text-ink-gray-9">{row.level}</td>
+                    <td class="p-3">
+                      <code class="block text-xs break-words text-ink-gray-7">
+                        {row.packages}
+                      </code>
+                    </td>
+                    <td class="p-3 text-ink-gray-7">{row.answers}</td>
+                  </tr>
+                )}
+              </For>
+            </tbody>
+          </table>
+        </div>
+      </PageSection>
+
+      <PageSection
         id="logic"
         title="The logic layer"
-        description="One rung is not visual. Formatting, selection, undo and downloads behave the same in every app, and no two apps agree on them when they each write their own — so they are a package too."
+        description="One level is not visual. Formatting, selection, undo and downloads behave the same in every app, and no two apps agree on them when they each write their own — so they are a package too."
       >
         <div class="flex flex-col gap-3 text-base text-ink-gray-7">
           <p class="max-w-2xl">
             <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
               @newui/data
             </code>{' '}
-            sits <em>beside</em> the ladder rather than on it: a page uses it
+            sits <em>beside</em> the levels rather than on them: a page uses it
             the way it uses a component, but nothing above it is made of it. It
             is headless by contract — it imports <code>solid-js</code> for
-            signals and nothing from the visual packages — and no component may
-            import it. That is what keeps a control from acquiring an opinion
-            about money.
+            signals and nothing from the visual packages, except its promoted
+            table and virtual list — and no component may import it. That is
+            what keeps a control from acquiring an opinion about money.
           </p>
           <pre class="w-fit max-w-full overflow-x-auto rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
             <code>{`import { createUndo, downloadCsv, optionsOf, usd } from '@newui/data'
@@ -205,59 +296,11 @@ import { DataProvider, createCollection } from '@newui/data/query'`}</code>
       </PageSection>
 
       <PageSection
-        id="atomic-design"
-        title="Atomic design, translated"
-        description="The vocabulary is Brad Frost's; the names here are the ones the packages use. What matters is not the metaphor but the constraint: each row may only build on the rows under it."
-      >
-        <div class="overflow-x-auto rounded-5 border border-outline-gray-1">
-          {/* `table-fixed`: auto layout lets a long answered-question column
-              squeeze the others to a character on a phone. */}
-          <table class="w-full table-fixed border-collapse text-start">
-            <thead class="bg-surface-gray-1 text-caption text-ink-gray-7">
-              <tr>
-                <th scope="col" class="p-3 text-start font-medium">
-                  Atomic design
-                </th>
-                <th scope="col" class="p-3 text-start font-medium">
-                  Here
-                </th>
-                <th
-                  scope="col"
-                  class="hidden p-3 text-start font-medium sm:table-cell"
-                >
-                  Package
-                </th>
-                <th scope="col" class="p-3 text-start font-medium">
-                  Answers
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <For each={VOCABULARY}>
-                {(row) => (
-                  <tr class="border-t border-outline-gray-1">
-                    <td class="p-3 text-ink-gray-7">{row.atomic}</td>
-                    <td class="p-3 font-medium text-ink-gray-9">{row.here}</td>
-                    <td class="hidden p-3 sm:table-cell">
-                      <code class="block text-xs break-words text-ink-gray-7">
-                        {row.package}
-                      </code>
-                    </td>
-                    <td class="p-3 text-ink-gray-7">{row.answers}</td>
-                  </tr>
-                )}
-              </For>
-            </tbody>
-          </table>
-        </div>
-      </PageSection>
-
-      <PageSection
         id="rules"
         title="The rules"
-        description="Three rules hold the ladder together. The first is enforced by a test; the other two are enforced by the done-checklist, because no test can see a copy you did not make."
+        description="Three rules hold the levels together. The first two are enforced by tests; the third is enforced by the done-checklist, because no test can see a copy you did not make."
       >
-        <dl class="grid gap-x-8 gap-y-6 sm:grid-cols-2">
+        <dl class="grid gap-x-8 gap-y-6 sm:grid-cols-3">
           <For each={RULES}>
             {(rule) => (
               <div class="flex flex-col gap-1 border-t border-outline-gray-1 pt-4">
@@ -269,16 +312,15 @@ import { DataProvider, createCollection } from '@newui/data/query'`}</code>
         </dl>
 
         <pre class="w-fit max-w-full overflow-x-auto rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
-          <code>{`@newui/tokens
-  ↓  colour · type · radius · motion
-@newui/ui
-  ↓  controls  (+ icons · tailwind)
-@newui/blocks
-  ↓  sections
-@newui/layouts
+          <code>{`@newui/tokens · @newui/tailwind      foundations
+  ↓  colour · type · radius · motion · controls' classes
+@newui/ui                            atoms · molecules
+  ↓  (+ @newui/icons, organisms: sidebar, overlay surfaces)
+@newui/blocks · charts · editor       organisms
+  ↓  sections and widgets
+@newui/layouts                        templates
   ↓  page frames
-apps/playground
-  ↓  applications`}</code>
+apps/playground · apps/starter        pages`}</code>
         </pre>
       </PageSection>
     </div>

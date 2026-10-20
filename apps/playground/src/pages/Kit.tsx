@@ -39,32 +39,39 @@ const LADDER = [
     answers: 'What does it look like?',
   },
   {
-    level: 'Components',
+    level: 'Atoms',
     package: '@newui/ui',
-    href: '/components',
-    count: `${LADDER_COUNTS.components} compounds`,
-    answers: 'What is this control?',
+    href: '/atoms',
+    count: `${LADDER_COUNTS.atoms} atoms`,
+    answers: 'What is this single element?',
   },
   {
-    level: 'Blocks',
-    package: '@newui/blocks',
-    href: '/blocks',
-    count: `${LADDER_COUNTS.blocks} blocks`,
-    answers: 'How does a section open?',
+    level: 'Molecules',
+    package: '@newui/ui · @newui/charts',
+    href: '/molecules',
+    count: `${LADDER_COUNTS.molecules} molecules`,
+    answers: 'What is this interaction?',
   },
   {
-    level: 'Layouts',
-    package: '@newui/layouts',
-    href: '/layouts',
-    count: `${LADDER_COUNTS.layouts} templates`,
-    answers: 'How does a page open?',
+    level: 'Organisms',
+    package: '@newui/blocks · charts · editor',
+    href: '/organisms',
+    count: `${LADDER_COUNTS.organisms} organisms`,
+    answers: 'What is this section?',
   },
   {
-    level: 'Applications',
+    level: 'Templates',
+    package: '@newui/layouts · @newui/ui',
+    href: '/templates',
+    count: `${LADDER_COUNTS.templates} templates`,
+    answers: 'How does the page open?',
+  },
+  {
+    level: 'Pages',
     package: 'apps/*',
-    href: '/examples',
-    count: `${LADDER_COUNTS.applications} recipes`,
-    answers: 'What does a whole app feel like?',
+    href: '/pages',
+    count: `${LADDER_COUNTS.pages} pages`,
+    answers: 'What does the product do?',
   },
 ] as const
 
@@ -157,9 +164,9 @@ export function Kit(): JSX.Element {
           </table>
         </div>
         <p class="text-base text-ink-gray-7">
-          A page composes layouts, a layout composes blocks, a block composes
-          components, and a component names tokens — never the other way round.
-          The logic layer sits beside the ladder: it answers a question about
+          A page is made of templates, a template of organisms, an organism of
+          molecules, and a molecule of atoms — never the other way round. The
+          logic layer sits beside the ladder: it answers a question about
           behaviour, not about appearance, so it is imported by any level and
           imports none of them.
         </p>
@@ -203,7 +210,7 @@ export function Kit(): JSX.Element {
           order — trail, title, description, actions, content under a fixed
           header — is the part they always do. That split is why{' '}
           <A
-            href="/layouts/app-layout"
+            href="/templates/app-layout"
             class="text-ink-blue-6 underline decoration-dotted"
           >
             AppLayout
@@ -220,14 +227,17 @@ export function Kit(): JSX.Element {
           `}
         </Code>
         <p class="text-base text-ink-gray-7">
-          Blocks answer "how does this section open" — a toolbar, a filter bar,
-          a stat row, a detail header. Browse them at{' '}
-          <A href="/blocks" class="text-ink-blue-6 underline decoration-dotted">
-            Blocks
+          Organisms answer "how does this section open" — a toolbar, a filter
+          bar, a stat row, a detail header. Browse them at{' '}
+          <A
+            href="/organisms"
+            class="text-ink-blue-6 underline decoration-dotted"
+          >
+            Organisms
           </A>
           ; the live page is at{' '}
           <A
-            href="/examples/tasks"
+            href="/pages/tasks"
             class="text-ink-blue-6 underline decoration-dotted"
           >
             Tasks
@@ -398,14 +408,14 @@ pnpm build:starter   # 138 kB gzip: frame, router, data layer, table, forms
           The starter is also where the query, form and table surfaces meet in
           one place — read it beside{' '}
           <A
-            href="/examples/tasks"
+            href="/pages/tasks"
             class="text-ink-blue-6 underline decoration-dotted"
           >
             Tasks
           </A>{' '}
           (a thousand records) and{' '}
           <A
-            href="/examples/files"
+            href="/pages/files"
             class="text-ink-blue-6 underline decoration-dotted"
           >
             Files

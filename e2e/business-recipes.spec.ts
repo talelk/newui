@@ -6,7 +6,7 @@ for (const width of [390, 768, 1440]) {
     page,
   }) => {
     await page.setViewportSize({ width, height: 1000 })
-    await page.goto('/examples/deals/fullscreen')
+    await page.goto('/pages/deals/fullscreen')
 
     // The card itself is the grab target: a press that travels is a drag, a
     // press that does not is a click on whatever is inside it.
@@ -53,7 +53,7 @@ test('mobile tickets use cards, closed queues and local resolution', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/examples/tickets/fullscreen')
+  await page.goto('/pages/tickets/fullscreen')
   const cards = page.getByRole('region', { name: 'Ticket cards' })
   await page.getByRole('searchbox', { name: 'Find tickets' }).fill('TKT-1024')
   await cards.getByRole('checkbox').check()
@@ -69,7 +69,7 @@ test('mobile tickets use cards, closed queues and local resolution', async ({
 test('accounting quarterly aggregation and cash accounts use the selected ledger period', async ({
   page,
 }) => {
-  await page.goto('/examples/accounting/fullscreen')
+  await page.goto('/pages/accounting/fullscreen')
   await page.getByRole('combobox', { name: 'Aggregate', exact: true }).click()
   await page.getByRole('option', { name: 'Quarterly', exact: true }).click()
   await expect(
@@ -90,7 +90,7 @@ test('accounting quarterly aggregation and cash accounts use the selected ledger
 test('deals moves by keyboard, undoes and creates validated opportunities', async ({
   page,
 }) => {
-  await page.goto('/examples/deals/fullscreen')
+  await page.goto('/pages/deals/fullscreen')
   // No pointer at all: the card's own menu moves it between columns.
   await page.getByRole('button', { name: 'Actions for Globex' }).click()
   await page.getByRole('menuitem', { name: 'Won', exact: true }).click()
@@ -122,7 +122,7 @@ test('a recipe with a sidebar offers it as a drawer on a phone', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/examples/tasks/fullscreen')
+  await page.goto('/pages/tasks/fullscreen')
 
   // The frame: a pinned header, and no sidebar beside the content.
   await expect(
@@ -150,7 +150,7 @@ test('a recipe with a sidebar offers it as a drawer on a phone', async ({
 test('tickets replies, assigns, resolves and creates a support request', async ({
   page,
 }) => {
-  await page.goto('/examples/tickets/fullscreen')
+  await page.goto('/pages/tickets/fullscreen')
   await page.getByRole('searchbox', { name: 'Find tickets' }).fill('TKT-1024')
   await page.locator('tbody').getByRole('button').first().click()
   await page
@@ -185,7 +185,7 @@ test('tickets replies, assigns, resolves and creates a support request', async (
 test('files opens folders, creates, uploads, previews, downloads and restores trash', async ({
   page,
 }) => {
-  await page.goto('/examples/files/fullscreen')
+  await page.goto('/pages/files/fullscreen')
   await page.getByRole('button', { name: 'Design assets', exact: true }).click()
   await expect(
     page.getByRole('button', { name: 'Brand guidelines.txt', exact: true }),
@@ -227,7 +227,7 @@ test('files opens folders, creates, uploads, previews, downloads and restores tr
 test('accounting connects date filters, transactions, payroll and exported reports', async ({
   page,
 }) => {
-  await page.goto('/examples/accounting/fullscreen')
+  await page.goto('/pages/accounting/fullscreen')
   await expect(
     page.locator('[data-slot="chart-card"] svg').first(),
   ).toBeVisible()
@@ -267,7 +267,7 @@ test('accounting connects date filters, transactions, payroll and exported repor
 /**
  * Every application recipe that carries its own theme switcher.
  *
- * `/examples/discussions` is the exception: it is a shelled app with its own
+ * `/pages/discussions` is the exception: it is a shelled app with its own
  * chrome (and its own spec), so it has no `light`/`dark` button to press — the
  * loop would be asserting our switcher, not the recipe.
  */
@@ -289,7 +289,7 @@ for (const name of [
     }, async ({ page }) => {
       await page.emulateMedia({ reducedMotion: 'reduce' })
       await page.setViewportSize({ width: 390, height: 900 })
-      await page.goto(`/examples/${name}/fullscreen`)
+      await page.goto(`/pages/${name}/fullscreen`)
       await expect(page.locator('h1')).toBeVisible()
       await page.getByRole('button', { name: theme, exact: true }).click()
       await expect(page.locator('h1')).toBeVisible()

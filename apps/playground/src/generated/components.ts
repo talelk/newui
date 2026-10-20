@@ -12,8 +12,10 @@ export interface ComponentEntry {
   group: string
   package: string
   source: string
-  /** Which level of the ladder this entry sits on. */
+  /** The package level: a component, a block or a layout. */
   kind: 'component' | 'block' | 'layout'
+  /** The atomic level this entry is filed under. */
+  atomic: 'atom' | 'molecule' | 'organism' | 'template'
   parts: string[]
   /** Kebab name of the file in `spec/`, when the component has a contract. */
   spec: string | null
@@ -30,6 +32,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Button",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "ButtonProps"
     ],
@@ -44,6 +47,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/ContextMenu",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "ContextMenuItemProps",
       "ContextMenuRootProps"
@@ -59,6 +63,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Dropdown",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "DropdownProps"
     ],
@@ -73,6 +78,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/KeyboardShortcut",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "KeyboardShortcutProps"
     ],
@@ -87,6 +93,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/KeyboardShortcutsDialog",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "KeyboardShortcutsDialogProps"
     ],
@@ -101,6 +108,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Menu",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "MenuItemProps",
       "MenuRootProps"
@@ -116,6 +124,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/AreaChart.tsx",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "AreaChartProps"
     ],
@@ -130,6 +139,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/BarChart.tsx",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "BarChartProps"
     ],
@@ -144,6 +154,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/ChartBase.tsx",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "ChartBaseProps"
     ],
@@ -158,6 +169,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/ChartCard.tsx",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "ChartCardProps"
     ],
@@ -172,6 +184,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/ChartContainer.tsx",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "ChartContainerProps"
     ],
@@ -186,6 +199,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/ChartLegend.tsx",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "ChartLegendProps"
     ],
@@ -200,6 +214,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/ChartTooltip.tsx",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "ChartTooltipProps",
       "ChartTooltipSlotProps"
@@ -215,6 +230,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/Dashboard.tsx",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "DashboardProps"
     ],
@@ -229,6 +245,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/DonutChart.tsx",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "DonutChartProps"
     ],
@@ -243,6 +260,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/FunnelChart.tsx",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "FunnelChartProps"
     ],
@@ -257,6 +275,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/HeatmapChart.tsx",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "HeatmapChartProps"
     ],
@@ -271,6 +290,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/LineChart.tsx",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "LineChartProps"
     ],
@@ -285,6 +305,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/NumberCard.tsx",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "NumberCardProps"
     ],
@@ -299,6 +320,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/SankeyChart.tsx",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "SankeyChartProps"
     ],
@@ -313,6 +335,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/charts",
     "source": "packages/charts/src/ScatterChart.tsx",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "ScatterChartProps"
     ],
@@ -327,6 +350,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/code-editor",
     "source": "packages/code-editor/src",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "CodeEditorProps"
     ],
@@ -341,6 +365,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/editor",
     "source": "packages/editor/src",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "EditorProps",
       "EditorToolbarProps"
@@ -356,6 +381,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/blocks",
     "source": "packages/blocks/src/FilterBar",
     "kind": "block",
+    "atomic": "organism",
     "parts": [
       "FilterBarProps"
     ],
@@ -370,6 +396,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/blocks",
     "source": "packages/blocks/src/StatGrid",
     "kind": "block",
+    "atomic": "organism",
     "parts": [
       "StatGridProps"
     ],
@@ -384,6 +411,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Accordion",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "AccordionContentProps",
       "AccordionItemProps",
@@ -401,6 +429,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Collapsible",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "CollapsibleContentProps",
       "CollapsibleProps",
@@ -417,6 +446,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/TabButtons",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "TabButtonsProps"
     ],
@@ -431,6 +461,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Tabs",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "TabsContentProps",
       "TabsRootProps",
@@ -447,6 +478,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Avatar",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "AvatarProps"
     ],
@@ -461,6 +493,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Badge",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "BadgeProps"
     ],
@@ -475,6 +508,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Card",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "CardProps"
     ],
@@ -489,6 +523,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Divider",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "DividerProps"
     ],
@@ -503,6 +538,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/EmptyState",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "EmptyStateProps"
     ],
@@ -517,6 +553,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Icon",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "IconProps"
     ],
@@ -531,6 +568,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/ItemListRow",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "ItemListRowProps"
     ],
@@ -545,6 +583,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/List",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "ListCellProps",
       "ListProps",
@@ -561,6 +600,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Timeline",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "TimelineProps"
     ],
@@ -575,6 +615,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Tree",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "TreeRootProps"
     ],
@@ -589,6 +630,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Alert",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "AlertProps"
     ],
@@ -603,6 +645,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Progress",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "ProgressProps"
     ],
@@ -617,6 +660,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/ProgressCircle",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "ProgressCircleProps"
     ],
@@ -631,6 +675,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Skeleton",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "SkeletonProps"
     ],
@@ -645,6 +690,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Spinner",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "SpinnerProps"
     ],
@@ -659,6 +705,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Toast",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [],
     "spec": "toast",
     "shipped": true
@@ -671,6 +718,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Checkbox",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "CheckboxProps"
     ],
@@ -685,6 +733,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Duration",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "DurationProps"
     ],
@@ -699,6 +748,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/ErrorMessage",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "ErrorMessageProps"
     ],
@@ -713,6 +763,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/FormControl",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "FormControlProps",
       "FormControlTextProps"
@@ -728,6 +779,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/FormLabel",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "FormLabelProps"
     ],
@@ -742,6 +794,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/NumberInput",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "NumberInputProps"
     ],
@@ -756,6 +809,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Password",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "PasswordProps"
     ],
@@ -770,6 +824,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/RadioGroup",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "RadioGroupProps"
     ],
@@ -784,6 +839,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Rating",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "RatingProps"
     ],
@@ -798,6 +854,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Slider",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "SliderProps"
     ],
@@ -812,6 +869,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Switch",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "SwitchProps"
     ],
@@ -826,6 +884,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Textarea",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "TextareaProps"
     ],
@@ -840,6 +899,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/TextInput",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "TextInputProps"
     ],
@@ -854,6 +914,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/layouts",
     "source": "packages/layouts/src",
     "kind": "layout",
+    "atomic": "template",
     "parts": [
       "AppLayoutProps"
     ],
@@ -868,6 +929,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/AppShell",
     "kind": "component",
+    "atomic": "template",
     "parts": [
       "AppShellProps",
       "PageBodyProps",
@@ -884,6 +946,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/blocks",
     "source": "packages/blocks/src/AppSidebar",
     "kind": "block",
+    "atomic": "organism",
     "parts": [
       "AppSidebarProps"
     ],
@@ -898,6 +961,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/DesktopShell",
     "kind": "component",
+    "atomic": "template",
     "parts": [
       "DesktopShellProps"
     ],
@@ -912,6 +976,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/blocks",
     "source": "packages/blocks/src/DetailHeader",
     "kind": "block",
+    "atomic": "organism",
     "parts": [
       "DetailHeaderProps"
     ],
@@ -926,6 +991,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/blocks",
     "source": "packages/blocks/src/KanbanBoard",
     "kind": "block",
+    "atomic": "organism",
     "parts": [
       "KanbanBoardProps"
     ],
@@ -940,6 +1006,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/MobileShell",
     "kind": "component",
+    "atomic": "template",
     "parts": [
       "MobileShellProps",
       "PageHeaderMobileProps"
@@ -955,6 +1022,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/blocks",
     "source": "packages/blocks/src/PageToolbar",
     "kind": "block",
+    "atomic": "organism",
     "parts": [
       "PageToolbarProps"
     ],
@@ -969,6 +1037,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/layouts",
     "source": "packages/layouts/src",
     "kind": "layout",
+    "atomic": "template",
     "parts": [
       "PaneLayoutProps"
     ],
@@ -983,6 +1052,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/ResponsiveShell",
     "kind": "component",
+    "atomic": "template",
     "parts": [
       "ResponsiveShellProps"
     ],
@@ -997,6 +1067,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Breadcrumbs",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "BreadcrumbsProps"
     ],
@@ -1011,6 +1082,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/MobileNav",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "MobileNavItemProps",
       "MobileNavProps"
@@ -1026,6 +1098,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Pagination",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "PaginationProps"
     ],
@@ -1040,6 +1113,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Sidebar",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "SidebarCardProps",
       "SidebarCollapseToggleProps",
@@ -1062,6 +1136,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/BottomSheet",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "BottomSheetProps"
     ],
@@ -1076,6 +1151,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/CommandPalette",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "CommandPaletteProps"
     ],
@@ -1090,6 +1166,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Dialog",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "DialogContentProps",
       "DialogFooterProps",
@@ -1107,6 +1184,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/HoverCard",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "HoverCardRootProps",
       "HoverCardTriggerProps"
@@ -1122,6 +1200,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Popover",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "PopoverRootProps"
     ],
@@ -1136,6 +1215,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/ScrollArea",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "ScrollAreaRootProps",
       "ScrollAreaScrollbarProps",
@@ -1152,6 +1232,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Tooltip",
     "kind": "component",
+    "atomic": "atom",
     "parts": [
       "TooltipProps",
       "TooltipRootProps",
@@ -1168,6 +1249,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/blocks",
     "source": "packages/blocks/src/AuthCard",
     "kind": "block",
+    "atomic": "organism",
     "parts": [
       "AuthCardProps"
     ],
@@ -1182,6 +1264,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/SettingsDialog",
     "kind": "component",
+    "atomic": "organism",
     "parts": [
       "SettingsBodyProps",
       "SettingsContentProps",
@@ -1204,6 +1287,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Combobox",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "ComboboxProps"
     ],
@@ -1218,6 +1302,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/DatePicker",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "CalendarViewProps",
       "DatePickerProps"
@@ -1233,6 +1318,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/DateRangePicker",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "DateRangePickerProps"
     ],
@@ -1247,6 +1333,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/DateTimePicker",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "DateTimePickerProps"
     ],
@@ -1261,6 +1348,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/FileUploader",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "FileUploaderProps"
     ],
@@ -1275,6 +1363,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/MultiSelect",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "MultiSelectProps"
     ],
@@ -1289,6 +1378,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/Select",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "SelectProps"
     ],
@@ -1303,6 +1393,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/TimePicker",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "TimePickerProps"
     ],
@@ -1317,6 +1408,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "package": "@newui/ui",
     "source": "packages/ui/src/components/ToggleGroup",
     "kind": "component",
+    "atomic": "molecule",
     "parts": [
       "ToggleGroupItemProps",
       "ToggleGroupProps"
@@ -1332,13 +1424,20 @@ export function componentBySlug(slug: string): ComponentEntry | undefined {
   return COMPONENTS.find((entry) => entry.slug === slug)
 }
 
-/** Only the blocks: what `/blocks` lists and pages through. */
+/** Only the blocks, wherever the atomic index lists them. */
 export const BLOCKS: ComponentEntry[] = COMPONENTS.filter(
   (entry) => entry.kind === 'block',
 )
 
-/** Only the layouts: what `/layouts` lists and pages through. */
+/** Only the layouts: what `/templates` lists among its templates. */
 export const LAYOUTS: ComponentEntry[] = COMPONENTS.filter(
   (entry) => entry.kind === 'layout',
 )
+
+/** One level of the atomic hierarchy: what an index lists and pages through. */
+export function byAtomic(
+  atomic: ComponentEntry['atomic'],
+): ComponentEntry[] {
+  return COMPONENTS.filter((entry) => entry.atomic === atomic)
+}
 

@@ -1,3 +1,4 @@
+import { useNavigate } from '@solidjs/router'
 import {
   createResource,
   createSignal,
@@ -219,6 +220,7 @@ function Preview(props: {
     root.dir = document.documentElement.dir || 'ltr'
     root.style.colorScheme = root.dataset['theme'] ?? 'light'
   }
+  const navigate = useNavigate()
   const loaded = () => {
     releaseDocument?.()
     sync()
@@ -259,15 +261,35 @@ function Preview(props: {
       else if (bounds.top + frameBounds.top < top)
         port.scrollTop -= top - bounds.top - frameBounds.top + 16
     }
+    // A link that leaves the application — the breadcrumb back to the docs, a
+    // "read more" — must move the *host*, not paint the documentation site
+    // inside its own preview frame. An application route (a fullscreen screen)
+    // keeps the session: the preview is there to show the app, not to leave it.
+    const leaveFrame = (event: MouseEvent) => {
+      // The target lives in the frame's realm, so `instanceof` against the
+      // host's `HTMLAnchorElement` is false; duck-type instead.
+      const anchor = (event.target as Element | null)?.closest?.('a[href]')
+      if (!anchor) return
+      const element = anchor as HTMLAnchorElement
+      if (element.target === '_blank' || element.hasAttribute('download'))
+        return
+      const href = anchor.getAttribute('href') ?? ''
+      if (!href.startsWith('/')) return
+      if (href.startsWith('/pages/') && href.endsWith('/fullscreen')) return
+      event.preventDefault()
+      navigate(href)
+    }
     doc?.addEventListener('keydown', keyboard)
     doc?.addEventListener('pointerdown', pointer)
     doc?.addEventListener('focusin', revealFocus)
+    doc?.addEventListener('click', leaveFrame)
     for (const type of ['pointerdown.outside', 'focus.outside'])
       doc?.addEventListener(type, retainOverlay, true)
     releaseDocument = () => {
       doc?.removeEventListener('keydown', keyboard)
       doc?.removeEventListener('pointerdown', pointer)
       doc?.removeEventListener('focusin', revealFocus)
+      doc?.removeEventListener('click', leaveFrame)
       for (const type of ['pointerdown.outside', 'focus.outside'])
         doc?.removeEventListener(type, retainOverlay, true)
     }

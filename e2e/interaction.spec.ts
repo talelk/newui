@@ -175,7 +175,7 @@ test('the isolated story renders a component', async ({ page }) => {
 
 test('the mobile-shell route renders full-screen', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/examples/discussions/fullscreen')
+  await page.goto('/pages/discussions/fullscreen')
   // `MobileShell` is `fixed inset-0`, so it lives on its own route rather than
   // inline in the scrolling site.
   await expect(

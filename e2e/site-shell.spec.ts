@@ -12,7 +12,7 @@ test('the sidebar folds to a rail and back, and remembers', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
-  await page.goto('/components/button')
+  await page.goto('/atoms/button')
 
   const sidebar = page.locator('[data-slot="site-sidebar"]')
   await expect(sidebar).toHaveAttribute('data-collapsed', 'false')
@@ -22,7 +22,7 @@ test('the sidebar folds to a rail and back, and remembers', async ({
   await expect(sidebar).toHaveAttribute('data-collapsed', 'true')
   // A rail: the section names are gone, their icons are not.
   await expect(page.getByText('Documentation', { exact: true })).toBeHidden()
-  await expect(page.getByRole('button', { name: 'Components' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Atoms' })).toBeVisible()
 
   await page.reload()
   await expect(sidebar).toHaveAttribute('data-collapsed', 'true')
@@ -33,7 +33,7 @@ test('the sidebar folds to a rail and back, and remembers', async ({
 
 test('⌘B folds the sidebar, and ⌘K opens the commands', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
-  await page.goto('/components/button')
+  await page.goto('/atoms/button')
 
   const sidebar = page.locator('[data-slot="site-sidebar"]')
   await page.keyboard.press('Meta+b')
@@ -49,7 +49,7 @@ test('⌘B folds the sidebar, and ⌘K opens the commands', async ({ page }) => 
   await expect(page.getByRole('option', { name: /KanbanBoard/ })).toBeVisible()
   await page.keyboard.press('Enter')
 
-  await expect(page).toHaveURL(/\/blocks\/kanban-board$/)
+  await expect(page).toHaveURL(/\/organisms\/kanban-board$/)
   await expect(
     page.getByRole('heading', { name: 'KanbanBoard', level: 1 }),
   ).toBeVisible()
@@ -74,7 +74,7 @@ test('the registry sections bring one filter, not two', async ({ page }) => {
 
   // Components ships its own index filter; the shell's page filter would sit
   // directly above it.
-  await page.goto('/components/button')
+  await page.goto('/atoms/button')
   await expect(sidebar.getByPlaceholder('Filter pages')).toBeHidden()
   await expect(sidebar.getByPlaceholder('Filter…')).toBeVisible()
 

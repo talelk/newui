@@ -5,25 +5,25 @@ import { createSignal, onCleanup, onMount } from 'solid-js'
 const COMMANDS = [
   {
     label: 'Open analytics',
-    value: '/examples/analytics',
+    value: '/pages/analytics',
     group: 'Workspace',
     icon: 'lucide-chart-no-axes-combined',
   },
   {
     label: 'Open tasks',
-    value: '/examples/tasks',
+    value: '/pages/tasks',
     group: 'Workspace',
     icon: 'lucide-list-checks',
   },
   {
     label: 'Open mail',
-    value: '/examples/mail',
+    value: '/pages/mail',
     group: 'Workspace',
     icon: 'lucide-mail',
   },
   {
     label: 'Workspace settings',
-    value: '/examples/settings',
+    value: '/pages/settings',
     group: 'Preferences',
     icon: 'lucide-settings-2',
   },

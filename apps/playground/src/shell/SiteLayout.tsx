@@ -18,7 +18,7 @@ import { SidebarNav } from './SidebarNav'
  * The site frame: masthead, one section sidebar, the content column and the
  * prev/next footer.
  *
- * The sidebar is a slot because a section can bring its own. `/components/*`
+ * The sidebar is a slot because a section can bring its own. `/atoms/*`
  * renders `ComponentNav` — the full index, filter included — while everything
  * else renders the site tree. Only the components routes import the index, so
  * the home page does not pay for a list it never shows.
