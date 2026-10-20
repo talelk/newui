@@ -91,6 +91,11 @@ const ROUTES: RouteBudget[] = [
     unless: 'prose page; the ladder is data, not components',
   },
   {
+    route: '/kit',
+    budget: 90,
+    unless: 'prose page: code samples, the file map, no live components',
+  },
+  {
     route: '/layouts',
     budget: 100,
     unless: 'the layout index, read from the registry',
