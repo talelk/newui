@@ -7636,18 +7636,6 @@
   },
   {
     "package": "@newui/blocks",
-    "name": "createKanbanDrag",
-    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
-    "documentation": "/docs#blocks",
-    "contract": null,
-    "tests": [
-      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
-      "packages/blocks/src/KanbanBoard/drag.test.ts"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
     "name": "DetailAction",
     "implementation": "packages/blocks/src/DetailHeader/DetailHeader.tsx",
     "documentation": "/docs#blocks",
@@ -7676,42 +7664,6 @@
     "contract": "spec/detail-header.md",
     "tests": [
       "packages/blocks/src/DetailHeader/DetailHeader.test.tsx"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
-    "name": "DRIFT_TOLERANCE",
-    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
-    "documentation": "/docs#blocks",
-    "contract": null,
-    "tests": [
-      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
-      "packages/blocks/src/KanbanBoard/drag.test.ts"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
-    "name": "EDGE",
-    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
-    "documentation": "/docs#blocks",
-    "contract": null,
-    "tests": [
-      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
-      "packages/blocks/src/KanbanBoard/drag.test.ts"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
-    "name": "EDGE_SPEED",
-    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
-    "documentation": "/docs#blocks",
-    "contract": null,
-    "tests": [
-      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
-      "packages/blocks/src/KanbanBoard/drag.test.ts"
     ],
     "acceptance": "pending"
   },
@@ -7808,42 +7760,6 @@
   },
   {
     "package": "@newui/blocks",
-    "name": "KanbanDrag",
-    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
-    "documentation": "/docs#blocks",
-    "contract": null,
-    "tests": [
-      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
-      "packages/blocks/src/KanbanBoard/drag.test.ts"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
-    "name": "KanbanDragOptions",
-    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
-    "documentation": "/docs#blocks",
-    "contract": null,
-    "tests": [
-      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
-      "packages/blocks/src/KanbanBoard/drag.test.ts"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
-    "name": "KanbanDragState",
-    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
-    "documentation": "/docs#blocks",
-    "contract": null,
-    "tests": [
-      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
-      "packages/blocks/src/KanbanBoard/drag.test.ts"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
     "name": "KanbanMove",
     "implementation": "packages/blocks/src/KanbanBoard/KanbanBoard.tsx",
     "documentation": "/docs#blocks",
@@ -7856,44 +7772,8 @@
   },
   {
     "package": "@newui/blocks",
-    "name": "KanbanSlot",
-    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
-    "documentation": "/docs#blocks",
-    "contract": null,
-    "tests": [
-      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
-      "packages/blocks/src/KanbanBoard/drag.test.ts"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
     "name": "KanbanTone",
     "implementation": "packages/blocks/src/KanbanBoard/KanbanBoard.tsx",
-    "documentation": "/docs#blocks",
-    "contract": null,
-    "tests": [
-      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
-      "packages/blocks/src/KanbanBoard/drag.test.ts"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
-    "name": "LIFT_DELAY",
-    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
-    "documentation": "/docs#blocks",
-    "contract": null,
-    "tests": [
-      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
-      "packages/blocks/src/KanbanBoard/drag.test.ts"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
-    "name": "MOUSE_THRESHOLD",
-    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
     "documentation": "/docs#blocks",
     "contract": null,
     "tests": [
@@ -7939,18 +7819,6 @@
     "package": "@newui/blocks",
     "name": "placeKanbanItem",
     "implementation": "packages/blocks/src/KanbanBoard/KanbanBoard.tsx",
-    "documentation": "/docs#blocks",
-    "contract": null,
-    "tests": [
-      "packages/blocks/src/KanbanBoard/KanbanBoard.test.tsx",
-      "packages/blocks/src/KanbanBoard/drag.test.ts"
-    ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/blocks",
-    "name": "SETTLE_MS",
-    "implementation": "packages/blocks/src/KanbanBoard/drag.ts",
     "documentation": "/docs#blocks",
     "contract": null,
     "tests": [
