@@ -73,9 +73,26 @@ module.exports = {
     {
       name: 'packages-do-not-reach-apps',
       severity: 'error',
-      comment: 'A shipped package must never import from the playground.',
+      comment:
+        'A shipped package must never import from an app. The playground and the starter are consumers, not libraries.',
       from: { path: '^packages/' },
       to: { path: '^apps/' },
+    },
+    {
+      name: 'the-site-does-not-import-the-starter',
+      severity: 'error',
+      comment:
+        'Two applications share packages, never source. A piece both need belongs in a package.',
+      from: { path: '^apps/playground/' },
+      to: { path: '^apps/starter/' },
+    },
+    {
+      name: 'the-starter-does-not-import-the-site',
+      severity: 'error',
+      comment:
+        'The starter must stay copyable: taking anything from apps/playground would make it depend on the docs site.',
+      from: { path: '^apps/starter/' },
+      to: { path: '^apps/playground/' },
     },
     {
       name: 'site-shell-stays-lean',
