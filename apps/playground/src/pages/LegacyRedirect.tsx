@@ -1,4 +1,4 @@
-import { Navigate, useLocation, useParams } from '@solidjs/router'
+import { Navigate, useLocation } from '@solidjs/router'
 import type { JSX } from 'solid-js'
 import { componentBySlug } from '../generated/components'
 import { hrefOf } from '../lib/reference-href'
@@ -26,16 +26,16 @@ const PREFIX_MOVES = [
 
 export function LegacyRedirect(): JSX.Element {
   const location = useLocation()
-  const params = useParams()
 
   const target = () => {
     const path = location.pathname
 
     if (path === '/components' || path === '/components/') return '/atoms'
     if (path.startsWith('/components/')) {
-      // A splat route hands the remainder over as `*`; the last segment is the
-      // slug even if a stale link carried a trailing path.
-      const rest = params['*'] ?? params['name'] ?? ''
+      // Read the remainder off the path: a splat's param name varies with the
+      // router version, and the URL is the one thing both agree on. The last
+      // segment is the slug even if a stale link carried a trailing path.
+      const rest = path.replace(/^\/components\/?/, '')
       const slug = rest.split('/').filter(Boolean).pop() ?? ''
       const entry = componentBySlug(slug)
       return entry ? hrefOf(entry) : '/atoms'
