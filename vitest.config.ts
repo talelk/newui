@@ -16,6 +16,10 @@ export default defineConfig({
     conditions: ['development', 'browser'],
   },
   test: {
+    // `@tanstack/solid-form` ships its Solid component as an untransformed
+    // `.jsx` dist, which Node's ESM loader rejects; inlining it lets Vite
+    // compile it like our own sources.
+    server: { deps: { inline: ['@tanstack/solid-form'] } },
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],

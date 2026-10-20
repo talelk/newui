@@ -1,7 +1,7 @@
 import { AuthCard } from '@newui/blocks'
+import { createAppForm, Form, fieldError } from '@newui/data/form'
 import { Badge, Button, Password, TabButtons, TextInput } from '@newui/ui'
 import { A } from '@solidjs/router'
-import { createForm } from '@tanstack/solid-form'
 import { createSignal, type JSX, Show } from 'solid-js'
 import { ThemeMenu } from '../shell/ThemeMenu'
 
@@ -9,9 +9,9 @@ export function Authentication(): JSX.Element {
   const [mode, setMode] = createSignal('login')
   const [session, setSession] = createSignal('')
   const [email, setEmail] = createSignal('')
-  const form = createForm(() => ({
+  const { form, submitting } = createAppForm({
     defaultValues: { email: '', password: '', name: '' },
-    onSubmit: async ({ value, formApi }) => {
+    onSubmit: async (value, api) => {
       await new Promise((resolve) => setTimeout(resolve, 160))
       setEmail(value.email)
       setSession(
@@ -21,10 +21,9 @@ export function Authentication(): JSX.Element {
             ? 'Your demo workspace is ready'
             : 'Welcome back',
       )
-      formApi.reset()
+      api.reset()
     },
-  }))
-  const pending = form.useSelector((state) => state.isSubmitting)
+  })
   const validateEmail = (value: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
       ? undefined
@@ -132,14 +131,7 @@ export function Authentication(): JSX.Element {
                 { label: 'Email link', value: 'link' },
               ]}
             />
-            <form
-              noValidate
-              class="flex flex-col gap-4"
-              onSubmit={(event) => {
-                event.preventDefault()
-                void form.handleSubmit()
-              }}
-            >
+            <Form form={form} class="flex flex-col gap-4">
               <Show when={mode() === 'signup'}>
                 <form.Field
                   name="name"
@@ -155,11 +147,7 @@ export function Authentication(): JSX.Element {
                       label="Full name"
                       required
                       value={field().state.value}
-                      error={
-                        field().state.meta.errors.length
-                          ? field().state.meta.errors.join(' ')
-                          : undefined
-                      }
+                      error={fieldError(field())}
                       onInput={(event) =>
                         field().handleChange(event.currentTarget.value)
                       }
@@ -181,11 +169,7 @@ export function Authentication(): JSX.Element {
                     required
                     placeholder="you@company.com"
                     value={field().state.value}
-                    error={
-                      field().state.meta.errors.length
-                        ? field().state.meta.errors.join(' ')
-                        : undefined
-                    }
+                    error={fieldError(field())}
                     onInput={(event) =>
                       field().handleChange(event.currentTarget.value)
                     }
@@ -211,11 +195,7 @@ export function Authentication(): JSX.Element {
                       label="Password"
                       required
                       value={field().state.value}
-                      error={
-                        field().state.meta.errors.length
-                          ? field().state.meta.errors.join(' ')
-                          : undefined
-                      }
+                      error={fieldError(field())}
                       onValueChange={field().handleChange}
                     />
                   )}
@@ -225,7 +205,7 @@ export function Authentication(): JSX.Element {
                 type="submit"
                 variant="solid"
                 theme="blue"
-                loading={pending()}
+                loading={submitting()}
               >
                 {mode() === 'signup'
                   ? 'Create account'
@@ -233,7 +213,7 @@ export function Authentication(): JSX.Element {
                     ? 'Send demo link'
                     : 'Sign in'}
               </Button>
-            </form>
+            </Form>
             <Button
               variant="ghost"
               onClick={() => changeMode(mode() === 'link' ? 'login' : 'link')}

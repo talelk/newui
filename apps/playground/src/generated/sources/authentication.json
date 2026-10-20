@@ -6,9 +6,9 @@
   ],
   "packages": [
     "@newui/blocks",
+    "@newui/data",
     "@newui/ui",
     "@solidjs/router",
-    "@tanstack/solid-form",
     "solid-js"
   ]
 }

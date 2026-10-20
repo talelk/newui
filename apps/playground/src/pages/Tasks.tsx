@@ -1,5 +1,6 @@
 import { FilterBar, StatGrid } from '@newui/blocks'
 import { optionsOf } from '@newui/data'
+import { createAppForm, Form, fieldError } from '@newui/data/form'
 import { createCollection, DataProvider } from '@newui/data/query'
 import {
   Badge,
@@ -14,7 +15,6 @@ import {
   Textarea,
   TextInput,
 } from '@newui/ui'
-import { createForm } from '@tanstack/solid-form'
 import {
   createEffect,
   createMemo,
@@ -108,22 +108,13 @@ function NewTask(props: {
     value.trim().length >= 3
       ? undefined
       : 'Enter a title with at least 3 characters.'
-  const form = createForm(() => ({
+  const { form, submitting } = createAppForm({
     defaultValues: { title: '', priority: 'Medium' },
-    onSubmit: async ({ value }) =>
+    onSubmit: async (value) =>
       props.onSave({ ...value, title: value.title.trim() }),
-  }))
-  const submitting = form.useSelector((state) => state.isSubmitting)
+  })
   return (
-    <form
-      noValidate
-      class="mt-4 flex flex-col gap-4"
-      onSubmit={(event) => {
-        event.preventDefault()
-        event.stopPropagation()
-        void form.handleSubmit()
-      }}
-    >
+    <Form form={form} class="mt-4 flex flex-col gap-4">
       <form.Field
         name="title"
         validators={{
@@ -137,11 +128,7 @@ function NewTask(props: {
             required
             placeholder="What needs to be done?"
             value={field().state.value}
-            error={
-              field().state.meta.errors.length
-                ? field().state.meta.errors.join(' ')
-                : undefined
-            }
+            error={fieldError(field())}
             onInput={(event) => field().handleChange(event.currentTarget.value)}
           />
         )}
@@ -171,7 +158,7 @@ function NewTask(props: {
           Create task
         </Button>
       </div>
-    </form>
+    </Form>
   )
 }
 

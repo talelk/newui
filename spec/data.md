@@ -135,9 +135,36 @@ tasks.remove.mutate({ ids })
 - **`key` is the cache identity** — two panes reading the same collection share
   one request and one update.
 
+## Form — `@newui/data/form`
+
+```ts
+import { createAppForm, fieldError, Form } from '@newui/data/form'
+```
+
+TanStack Form stays the engine — validators, field state, reset. This surface
+adds the three things every page was writing by hand:
+
+- **`createAppForm({ defaultValues, onSubmit })`** returns `{ form, submitting }`.
+  `submitting()` is true while the submit handler's promise is pending, which is
+  exactly what a submit button's `loading` reads. `onSubmit` receives
+  `(value, api)`; `api.reset()` clears the form after a successful submit.
+- **`<Form form={form}>`** is the element, wired: `noValidate` because the kit's
+  field messages are the error UI (the native bubble appears first, says less and
+  disappears on the next keystroke), and `preventDefault` because a real submit
+  in a single-page app navigates.
+- **`fieldError(field)`** turns TanStack's error list into the single `error`
+  string the P5 `Field` contract takes. It accepts strings and `{ message }`
+  issues, so a Standard Schema validator works without a page-level adapter.
+
+The bridge deliberately **does not render fields**. `TextInput`, `Select`,
+`Password` and the rest already own their markup, labels and error region (P5);
+a wrapper that picked one for you would either grow a variant per control or
+take the control as a prop and become a second component tree. The shared call
+shape is `value` / `error={fieldError(field())}` / `handleChange`.
+
 ## Not yet
 
 The promoted surfaces — `DataTable` (TanStack Table) and `VirtualList`
-(TanStack Virtual) — and the TanStack Form bridge still live in the examples.
-They render, so promoting them is a UI decision as much as a data one;
-`spec/tanstack-integration.md` records the current ownership until they move.
+(TanStack Virtual) — still live in the examples. They render, so promoting them
+is a UI decision as much as a data one; `spec/tanstack-integration.md` records
+their current ownership.

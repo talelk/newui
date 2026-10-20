@@ -301,9 +301,6 @@ importers:
       '@solidjs/router':
         specifier: ^1.0.0
         version: 1.0.0(solid-js@1.9.17)
-      '@tanstack/solid-form':
-        specifier: ^1.33.5
-        version: 1.33.5(solid-js@1.9.17)
       '@tanstack/solid-table':
         specifier: ^9.3.1
         version: 9.3.1(solid-js@1.9.17)
@@ -404,6 +401,9 @@ importers:
 
   packages/data:
     dependencies:
+      '@tanstack/solid-form':
+        specifier: ^1.33.5
+        version: 1.33.5(solid-js@1.9.17)
       '@tanstack/solid-query':
         specifier: ^5.104.3
         version: 5.104.3(solid-js@1.9.17)

@@ -142,10 +142,11 @@ documents the mapping and acceptance boundaries. `lib/examples.ts` owns the
 application catalog; `lib/reference-examples.ts` owns the registry mapping.
 Every shipped reference component must have an isolated lazy story.
 
-TanStack Solid Query belongs to `@newui/data/query` (the client, the repository
-contract and the collection mutations); Table, Virtual and Form remain at the
-page layer until their promoted surfaces land. Blocks still import only
-`@newui/ui`; charts and editors stay at the page layer.
+TanStack Solid Query and Form belong to `@newui/data` (`/query`: the client, the
+repository contract and the collection mutations; `/form`: the submit lifecycle
+and the field-error bridge). Table and Virtual remain at the page layer until
+their promoted surfaces land. Blocks still import only `@newui/ui`; charts and
+editors stay at the page layer.
 
 ## Guardrails (enforced by tests, not convention)
 

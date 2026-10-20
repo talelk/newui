@@ -11,6 +11,10 @@
     "./query": {
       "types": "./src/query/index.ts",
       "default": "./src/query/index.ts"
+    },
+    "./form": {
+      "types": "./src/form/index.ts",
+      "default": "./src/form/index.ts"
     }
   },
   "files": [
@@ -27,6 +31,7 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "@tanstack/solid-form": "^1.33.5",
     "@tanstack/solid-query": "^5.104.3"
   }
 }

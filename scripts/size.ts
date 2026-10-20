@@ -117,6 +117,14 @@ const ENTRIES: Entry[] = [
     forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
   },
   {
+    name: 'Data form',
+    file: 'scripts/fixtures/data-form.ts',
+    // 17.5 measured: TanStack Form plus the submit lifecycle. A page that does
+    // not render a form must not pay for the validator engine.
+    budget: 22,
+    forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
+  },
+  {
     name: 'Full barrel',
     file: 'scripts/fixtures/all.ts',
     // Raised 132 → 140 (Combobox), 140 → 172 (DatePicker's

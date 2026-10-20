@@ -1,10 +1,11 @@
 # TanStack Solid adapters in the examples
 
-> **Partly superseded.** The query adapter moved behind
+> **Partly superseded.** The query and form adapters moved behind
 > [`data.md`](data.md) — `@newui/data/query` owns the client, the repository
-> contract and the collection mutations, and Tasks adopts them. Table, Virtual
-> and Form are still example-layer and are recorded here until they are
-> promoted.
+> contract and the collection mutations; `@newui/data/form` owns the submit
+> lifecycle and the field-error bridge. Tasks and Authentication adopt them.
+> Table and Virtual are still example-layer and are recorded here until their
+> promoted surfaces land.
 
 The playground uses four TanStack adapters where they add concrete behaviour.
 They are application dependencies, not `@newui/ui` or `@newui/blocks` dependencies.
