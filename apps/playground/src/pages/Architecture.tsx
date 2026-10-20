@@ -193,7 +193,8 @@ export function Architecture(): JSX.Element {
             about money.
           </p>
           <pre class="w-fit max-w-full overflow-x-auto rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
-            <code>{`import { createUndo, downloadCsv, optionsOf, usd } from '@newui/data'`}</code>
+            <code>{`import { createUndo, downloadCsv, optionsOf, usd } from '@newui/data'
+import { DataProvider, createCollection } from '@newui/data/query'`}</code>
           </pre>
           <p class="max-w-2xl">
             What renders stays in the kit. The examples copied their status
