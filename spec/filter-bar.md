@@ -19,13 +19,14 @@ the view switcher, on one quiet surface.
 ## Behavior
 
 - The controls sit on one surface (`border border-outline-gray-1
-  bg-surface-elevation-1 rounded-5`, `data-slot="filter-bar"`) so they read as a
+  bg-surface-elevation-1 rounded-card`, `data-slot="filter-bar"`) so they read as a
   single toolbar rather than loose fields above the data. This boxed form is
   the one bar shape; a full-bleed page puts the bar inside its own container.
 - Search leads and is the widest target; selects are fixed-width so their labels
   do not jump as values change; the view switcher is pushed to the far end
   because it changes how the data below is *drawn*, not what is in it. On narrow
-  widths the row wraps and search takes the full width.
+  widths search takes the full row, the selects form a two-column grid, and the
+  trailing controls align after them.
 - A filled select takes the filled (`subtle`) `Select` surface, so what is
   filtering the list is visible without opening anything.
 - `Select` here is a value control, not a labelled form field: each one gets an

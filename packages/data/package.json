@@ -3,6 +3,11 @@
   "version": "0.0.0",
   "type": "module",
   "description": "The logic layer: formatting, selection, undo and downloads \u2014 no components.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/talelk/newui.git",
+    "directory": "packages/data"
+  },
   "exports": {
     ".": {
       "types": "./src/index.ts",
@@ -15,22 +20,17 @@
     "./form": {
       "types": "./src/form/index.ts",
       "default": "./src/form/index.ts"
-    },
-    "./table": {
-      "types": "./src/table/index.ts",
-      "default": "./src/table/index.ts"
-    },
-    "./table/scroll": {
-      "types": "./src/table/scroll.ts",
-      "default": "./src/table/scroll.ts"
-    },
-    "./virtual": {
-      "types": "./src/virtual/index.ts",
-      "default": "./src/virtual/index.ts"
     }
   },
   "files": [
-    "src"
+    "src",
+    "skills"
+  ],
+  "keywords": [
+    "tanstack-intent",
+    "agent-skills",
+    "solidjs",
+    "data"
   ],
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"
@@ -43,10 +43,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@newui/ui": "workspace:*",
     "@tanstack/solid-form": "^1.33.5",
-    "@tanstack/solid-query": "^5.104.3",
-    "@tanstack/solid-table": "^9.3.1",
-    "@tanstack/solid-virtual": "^3.13.47"
+    "@tanstack/solid-query": "^5.104.3"
   }
 }

@@ -1,15 +1,9 @@
+import { Button, Divider, Switch, TextInput } from '@newui/atoms'
 import { first, optionsOf } from '@newui/data'
 import { createAppForm, Form, fieldError } from '@newui/data/form'
-import {
-  Alert,
-  Button,
-  Card,
-  Divider,
-  Select,
-  Switch,
-  TextInput,
-} from '@newui/ui'
+import { Alert, Card, Select } from '@newui/molecules'
 import { createSignal, type JSX, Show } from 'solid-js'
+import { emitStarterEvent } from '../devtools/events'
 import { Shell } from '../shell/Shell'
 import { resolved } from '../shell/theme'
 
@@ -32,11 +26,17 @@ export function Settings(): JSX.Element {
       weeklyDigest: true,
       mentions: true,
     },
-    onSubmit: async () => {
+    onSubmit: async (value) => {
       // Stands in for `repository.update` — the point is the lifecycle, not the
       // destination.
       await new Promise((resolve) => setTimeout(resolve, 300))
       setSaved(true)
+      emitStarterEvent('settings:save', {
+        workspace: value.workspace,
+        timezone: value.timezone,
+        weeklyDigest: value.weeklyDigest,
+        mentions: value.mentions,
+      })
     },
   })
 

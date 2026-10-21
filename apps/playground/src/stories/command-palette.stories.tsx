@@ -1,9 +1,5 @@
-import {
-  CommandGroup,
-  CommandItem,
-  CommandPalette,
-  KeyboardShortcut,
-} from '@newui/ui'
+import { KeyboardShortcut } from '@newui/atoms'
+import { CommandGroup, CommandItem, CommandPalette } from '@newui/organisms'
 import { createSignal, type JSX, onMount } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -113,7 +109,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Overlays/CommandPalette',
+  title: 'Organisms/Overlays/CommandPalette',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

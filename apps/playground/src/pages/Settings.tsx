@@ -1,12 +1,6 @@
+import { Avatar, Badge, Button, Switch, TextInput } from '@newui/atoms'
 import { isEmail } from '@newui/data'
-import {
-  Avatar,
-  Badge,
-  Button,
-  SettingsDialog,
-  Switch,
-  TextInput,
-} from '@newui/ui'
+import { SettingsDialog } from '@newui/organisms'
 import { createSignal, type JSX } from 'solid-js'
 import { Notice } from '../examples/Notice'
 import { PageSection } from '../lib/PageSection'

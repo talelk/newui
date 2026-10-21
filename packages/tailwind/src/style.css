@@ -20,19 +20,22 @@
  * the occasional `dark:` edge case. */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* Scan the library's own source so a component's classes always emit.
- *
- * `not` excludes two things that are not component markup:
- *  - the merge config, whose ~500 utility literals are vocabulary, not usage
- *    (scanning it would emit every class it names into every app's CSS);
- *  - test files, whose fixtures are strings too. */
-@source "../../ui/src/**/*.{ts,tsx}";
-@source not "../../ui/src/lib/tw-merge.config.ts";
-@source not "../../ui/src/**/*.test.{ts,tsx}";
+/* Scan every atomic visual package so a component's classes always emit.
+ * `not` excludes the merge config (vocabulary, not usage) and each package's
+ * test fixtures, whose strings are not component markup. */
+@source "../../atoms/src/**/*.{ts,tsx}";
+@source not "../../atoms/src/lib/tw-merge.config.ts";
+@source not "../../atoms/src/**/*.test.{ts,tsx}";
+@source "../../molecules/src/**/*.{ts,tsx}";
+@source not "../../molecules/src/**/*.test.{ts,tsx}";
 @source "../../icons/src/**/*.{ts,tsx}";
-@source "../../blocks/src/**/*.{ts,tsx}";
-@source "../../layouts/src/**/*.{ts,tsx}";
-/* The promoted surfaces (`/table`, `/virtual`) render with `@newui/ui`, so
- * their classes are component markup and must emit like the rest. */
-@source "../../data/src/**/*.{ts,tsx}";
-@source not "../../data/src/**/*.test.{ts,tsx}";
+@source "../../organisms/src/**/*.{ts,tsx}";
+@source not "../../organisms/src/**/*.test.{ts,tsx}";
+@source "../../templates/src/**/*.{ts,tsx}";
+@source not "../../templates/src/**/*.test.{ts,tsx}";
+@source "../../charts/src/**/*.{ts,tsx}";
+@source not "../../charts/src/**/*.test.{ts,tsx}";
+@source "../../editor/src/**/*.{ts,tsx}";
+@source not "../../editor/src/**/*.test.{ts,tsx}";
+@source "../../code-editor/src/**/*.{ts,tsx}";
+@source not "../../code-editor/src/**/*.test.{ts,tsx}";

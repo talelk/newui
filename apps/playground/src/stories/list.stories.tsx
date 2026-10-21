@@ -1,4 +1,5 @@
-import { Badge, List, ListCell, ListRow } from '@newui/ui'
+import { Badge } from '@newui/atoms'
+import { List, ListCell, ListRow } from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -26,7 +27,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Display/List',
+  title: 'Molecules/Display/List',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

@@ -30,10 +30,10 @@ const ROUTES_FILE = readFileSync(
  *
  * Child paths in a nested `<Route>` are **relative to their parent** — that is
  * how @solidjs/router v1 composes a layout — so `path="/"` under
- * `path="/atoms"` is `/components`, and `path="/:name"` under the same
- * parent is `/components/:name`. Reading the literals without resolving them
- * misses that: writing the parent's own path a second time (`/components/:name`
- * under `/components`) silently produced `/components/components/:name` and a
+ * `path="/atoms"` is `/atoms`, and `path="/:name"` under the same
+ * parent is `/atoms/:name`. Reading the literals without resolving them
+ * misses that: writing the parent's own path a second time (`/atoms/:name`
+ * under `/atoms`) silently produces `/atoms/atoms/:name` and a
  * 404 on every generated component page. Hence a scanner rather than a regex.
  */
 function resolvedRoutes(source: string): string[] {
@@ -129,23 +129,7 @@ describe('site structure', () => {
     )
     // The harness route is reached by URL and by test, deliberately not
     // by a nav entry, but it is still listed so it cannot 404.
-    const harness = new Set(['/spec'])
-    // The pre-atomic URLs redirect; they are a compatibility surface, not a
-    // destination a reader should discover from the sidebar.
-    const redirects = new Set([
-      '/components',
-      '/components/*',
-      '/blocks',
-      '/blocks/*',
-      '/layouts',
-      '/layouts/*',
-      '/charts',
-      '/charts/*',
-      '/editors',
-      '/editors/*',
-      '/examples',
-      '/examples/*',
-    ])
+    const harness = new Set(['/spec', '/preview/:name'])
     /** A parameterised route is reachable through its parent: `/atoms/:name`
      * is linked from `/atoms`, which the nav lists. */
     const parentOf = (path: string) =>
@@ -153,13 +137,10 @@ describe('site structure', () => {
         ? path.slice(0, path.lastIndexOf('/'))
         : path
     const unreachable = tablePaths.filter((path) => {
-      if (linked.has(path) || harness.has(path) || redirects.has(path))
-        return false
+      if (linked.has(path) || harness.has(path)) return false
       const parent = path.startsWith('/organisms/compositions/')
         ? '/organisms'
-        : path.startsWith('/pages/registry/')
-          ? '/pages'
-          : parentOf(path)
+        : parentOf(path)
       return parent === path ? true : !linked.has(parent)
     })
     expect(unreachable).toEqual([])
@@ -198,7 +179,7 @@ describe('site structure', () => {
         'utf8',
       )
       expect(source, file).not.toMatch(
-        /from ['"]@newui\/(ui|blocks|charts|editor|code-editor)['"]/,
+        /from ['"]@newui\/(atoms|molecules|organisms|templates|charts|editor|code-editor)['"]/,
       )
     }
   })

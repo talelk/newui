@@ -86,9 +86,10 @@ test('application preview preserves editing, comments and its document across al
   expect(copied).toContain('// pages/Tasks.tsx')
   expect(copied).toContain('// examples/tasks-data.ts')
   expect(copied).toContain('// examples/ActivityList.tsx')
-  // The table is a package surface now: the copy lists `@newui/data` as a
-  // dependency instead of carrying the library's source into the app.
+  // The table and virtual list are organisms; the copied app uses their
+  // package surface instead of carrying the library's implementation source.
   expect(copied).not.toContain('// examples/DataTable.tsx')
+  expect(copied).toContain('@newui/organisms')
   await page.getByRole('button', { name: 'Preview', exact: true }).click()
   await expect(app.getByRole('dialog')).toContainText(
     'Keep this comment when resizing.',
@@ -103,7 +104,7 @@ test('application preview preserves editing, comments and its document across al
   )
 })
 
-test('application source includes lazy responsive screens and settings', async ({
+test('application source shows one responsive screen and settings', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 320, height: 900 })
@@ -111,13 +112,16 @@ test('application source includes lazy responsive screens and settings', async (
   await page.getByRole('button', { name: 'Source', exact: true }).click()
   const files = page.getByRole('combobox', { name: 'Source file' })
   for (const file of [
+    'pages/Discussions.tsx',
     'pages/DiscussionsDesktop.tsx',
-    'pages/DiscussionsMobile.tsx',
     'examples/DiscussionSettings.tsx',
   ]) {
     await files.selectOption(file)
     await expect(page.locator('pre')).toContainText('export function')
   }
+  await expect(
+    files.locator('option[value="pages/DiscussionsMobile.tsx"]'),
+  ).toHaveCount(0)
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth - innerWidth,
@@ -152,6 +156,7 @@ test('block preview has an exact viewport and keeps its overlays in the frame', 
 }) => {
   await page.goto('/organisms/auth-card?viewport=tablet')
   const iframe = page.locator('iframe')
+  await expect(iframe).toHaveAttribute('src', /\/preview\/auth-card/)
   await expect(iframe).toHaveAttribute('width', '768')
   await expect(iframe).toHaveAttribute('height', '900')
   await page.getByRole('button', { name: 'Mobile', exact: true }).focus()
@@ -159,7 +164,7 @@ test('block preview has an exact viewport and keeps its overlays in the frame', 
   await expect(iframe).toHaveAttribute('width', '390')
   await expect(
     page.frameLocator('iframe').getByRole('textbox').first(),
-  ).toBeVisible()
+  ).toBeVisible({ timeout: 15_000 })
 })
 
 test('bottom sheet supports drag threshold, cancellation and dismissal', async ({

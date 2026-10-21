@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "skill": "packages/atoms/skills/newui/SKILL.md",
+  "note": "Prompt-level cases for the newui agent skill. Each case is a realistic request plus the one thing a correct answer must do and the repo file that grounds it. See README.md for how they are run and scored.",
+  "cases": [
+    {
+      "id": "tokens-semantic-activity-feed",
+      "area": "tokens",
+      "prompt": "Add an activity feed panel to the project page. Each row shows an avatar, a line saying who did what, and a muted relative timestamp on the right, separated by hairlines.",
+      "check": "Every colour is a semantic token — `bg-surface-*`, `text-ink-*`, `border-outline-*` (or a bare `border`/`divide-y`) — with no `bg-white`, `bg-gray-*`/`slate-*`/`zinc-*`, no `text-gray-*`/`black`/`white`, and no hard-coded hex/rgb/hsl.",
+      "source": "AGENTS.md"
+    },
+    {
+      "id": "tokens-color-scheme-axis",
+      "area": "tokens",
+      "prompt": "Add a light/dark toggle to the app header. It should remember the user's choice and follow the OS when they pick 'system'.",
+      "check": "Light/dark is driven by `createColorScheme` (the `colorScheme` axis) which flips `data-theme` and persists the choice; it is not expressed as a `theme` prop, and `theme` is never used to mean light/dark.",
+      "source": "CONTEXT.md"
+    },
+    {
+      "id": "state-dialog-open",
+      "area": "state",
+      "prompt": "Add a dialog to the projects page that asks for a new project name and creates it.",
+      "check": "The Dialog's visibility is `open` + `onOpenChange` bound to a signal (or `defaultOpen` for uncontrolled use); there is no `v-model`, `modelValue` or `isOpen` prop.",
+      "source": "spec/adr/0001-solid-no-v-model.md"
+    },
+    {
+      "id": "state-switch-checked",
+      "area": "state",
+      "prompt": "Add a 'Notify me by email' toggle to the notification settings.",
+      "check": "The Switch uses `checked` + `onCheckedChange` to control, or `defaultChecked` uncontrolled — the component does not hold its own signal and there is no `v-model`/`modelValue`.",
+      "source": "spec/switch.md"
+    },
+    {
+      "id": "state-uncontrolled-default",
+      "area": "state",
+      "prompt": "Build a filter popover for the task list. It doesn't need to be driven from outside the component.",
+      "check": "Uncontrolled use is expressed with the `default*` prop (`defaultOpen` / `defaultValue` / `defaultChecked`), not by omitting the prop and reaching into the machine; controlled use still pairs `value` with `onValueChange`.",
+      "source": "spec/adr/0001-solid-no-v-model.md"
+    },
+    {
+      "id": "field-label-prop",
+      "area": "labelling",
+      "prompt": "Add a 'Title' field to the create-project form. It's required.",
+      "check": "The field's label comes from the `label` prop (drawn by `Field`), not from a `placeholder` or a hand-written `<label>`; `required` is passed as a prop, not spelled with a manual asterisk.",
+      "source": "spec/inputs.md"
+    },
+    {
+      "id": "field-error-required",
+      "area": "labelling",
+      "prompt": "The Title field must show 'Title is required' when it's submitted empty, and the message must be announced to screen readers.",
+      "check": "The message is passed through the `error` prop, which renders `role=\"alert\"` and links `aria-errormessage`/`aria-describedby` via `Field` — not a hand-styled error `<div>` with no ARIA wiring.",
+      "source": "spec/inputs.md"
+    },
+    {
+      "id": "field-p5-not-button",
+      "area": "labelling",
+      "prompt": "Add an icon-only 'close' button to the panel header.",
+      "check": "The icon-only button supplies an accessible name (`aria-label`), recognising that P5's labelling contract does not apply to buttons; it does not pass `label` as if the Button were an input.",
+      "source": "spec/inputs.md"
+    },
+    {
+      "id": "choice-combobox-vs-select",
+      "area": "component-choice",
+      "prompt": "Add an assignee picker with a few hundred people. The user should be able to type to narrow the list before picking one.",
+      "check": "This is a `Combobox` (searchable single select: `options`, `value: string | null`, `onValueChange`), not a `Select` (a fixed option list) and not a `multiple` flag.",
+      "source": "spec/combobox.md"
+    },
+    {
+      "id": "choice-multiselect",
+      "area": "component-choice",
+      "prompt": "Add a tags field where a task can carry several labels, each removable.",
+      "check": "This is `MultiSelect` — its own component with `value: string[]` and `onValueChange`, not `Combobox` with a `multiple` flag (P8).",
+      "source": "spec/multiselect.md"
+    },
+    {
+      "id": "choice-dropdown-options",
+      "area": "component-choice",
+      "prompt": "Add an actions menu to each ticket row with Edit, Duplicate and Delete.",
+      "check": "The simple action list is the options-based `Dropdown` (`options` + `onSelect` + trigger `children`); `danger` marks the destructive option. It is not a hand-built menu.",
+      "source": "spec/dropdown.md"
+    },
+    {
+      "id": "choice-menu-compound",
+      "area": "component-choice",
+      "prompt": "Build a menu whose trigger is a custom avatar-and-name button and whose rows contain a checkbox and a shortcut hint.",
+      "check": "A trigger or rows beyond `label`/`icon`/`danger` use the compound `Menu.Root`/`Menu.Trigger`/`Menu.Content`/`Menu.Item`, not `Dropdown` (which is options-only).",
+      "source": "spec/adr/0006-dropdown-is-options-based.md"
+    },
+    {
+      "id": "choice-contextmenu",
+      "area": "component-choice",
+      "prompt": "Let people right-click a file row to get Rename, Download and Delete.",
+      "check": "The right-click menu is `ContextMenu` (Zag's `menu` machine via its `contextTrigger`), not `Menu`/`Dropdown` opened from a button.",
+      "source": "spec/context-menu.md"
+    },
+    {
+      "id": "choice-radio-alias",
+      "area": "component-choice",
+      "prompt": "Add a priority picker with Low / Medium / High, where only one can be chosen.",
+      "check": "The single-choice group is `RadioGroup` imported from `@newui/molecules`.",
+      "source": "spec/README.md"
+    },
+    {
+      "id": "form-type-date",
+      "area": "form-routing",
+      "prompt": "Add a due-date field to the task form. Only a date, no time, and it can be cleared.",
+      "check": "`FormControl type=\"date\"` renders `DatePicker` with `value: string | null` (`YYYY-MM-DD`) plus `onValueChange`; it is not a native `<input type=\"date\">` treated as a text type.",
+      "source": "spec/form.md"
+    },
+    {
+      "id": "form-type-checkbox",
+      "area": "form-routing",
+      "prompt": "Add a 'Done' checkbox to the task form. The state is owned by the form's signal.",
+      "check": "`FormControl type=\"checkbox\"` uses `checked` + `onCheckedChange` (or `defaultChecked`); it does not pass `description`/`error`/`required`, which the resolved control does not support.",
+      "source": "spec/form.md"
+    },
+    {
+      "id": "form-type-select-shape",
+      "area": "form-routing",
+      "prompt": "Add a Status field to the form, rendered from a field definition, with options To do / Doing / Done.",
+      "check": "`FormControl type=\"select\"` passes `options` with `value: string[]` and `onValueChange` (select's own surface), not a scalar `string` value.",
+      "source": "spec/form.md"
+    },
+    {
+      "id": "form-password-component",
+      "area": "form-routing",
+      "prompt": "Add a password field to the login form with a show/hide reveal control.",
+      "check": "`FormControl type=\"password\"` is a plain masked `TextInput`; the reveal toggle is the separate `Password` component, not a hand-rolled toggle.",
+      "source": "spec/form.md"
+    },
+    {
+      "id": "hooks-data-slot",
+      "area": "styling-hooks",
+      "prompt": "Style the highlighted option in a Combobox differently from the rest, and the open state of its trigger.",
+      "check": "Customisation targets `data-slot` / `data-state` (and Zag's `data-highlighted` / `data-disabled`) attributes in CSS, not an `itemClass`/`contentClass`/`triggerClass` prop.",
+      "source": "PHILOSOPHY.md"
+    },
+    {
+      "id": "hooks-class-fallthrough",
+      "area": "styling-hooks",
+      "prompt": "Make this dialog wider than the default.",
+      "check": "Width is set with a utility on the root `class` (merged last through `cn()`), not via a `contentClass`/`contentStyle` or other class-injection prop.",
+      "source": "PHILOSOPHY.md"
+    },
+    {
+      "id": "packaging-root-import",
+      "area": "packaging",
+      "prompt": "Import the components for a new tickets screen.",
+      "check": "Atoms and molecules are imported from their respective root barrels (`@newui/atoms` and `@newui/molecules`); `List` is exported from the `@newui/molecules` root, not a component subpath or a separate package.",
+      "source": "spec/list.md"
+    },
+    {
+      "id": "packaging-style-css",
+      "area": "packaging",
+      "prompt": "Wire the library stylesheet into the app's CSS entry.",
+      "check": "The stylesheet is `@newui/tailwind/style.css`; visual component packages do not export a duplicate `./style.css` subpath.",
+      "source": "spec/kit.md"
+    },
+    {
+      "id": "packaging-charts-package",
+      "area": "packaging",
+      "prompt": "Add a revenue chart to the dashboard.",
+      "check": "The chart comes from the `@newui/charts` workspace package (cost isolation), not a subpath of an atomic package and not a hand-rolled SVG.",
+      "source": "AGENTS.md"
+    },
+    {
+      "id": "zag-createzagapi",
+      "area": "zag",
+      "prompt": "Add a new Zag-backed toggle component to the library.",
+      "check": "The machine is wired with `createZagApi(machine, connect, props)` from `lib/zag` (the connected API is a memo, props an accessor); the component never calls `useMachine` directly.",
+      "source": "spec/adr/0011-zag-via-createzagapi.md"
+    },
+    {
+      "id": "zag-compound-context",
+      "area": "zag",
+      "prompt": "Add a compound `Chip.Root` / `Chip.Item` family backed by a Zag machine.",
+      "check": "The family's shared API uses `createZagContext(name)` — a provider plus a `useApi` hook that throws a named 'must be used within <Name.Root>' error — instead of a bespoke context.",
+      "source": "packages/atoms/src/lib/zag.ts"
+    },
+    {
+      "id": "dialog-imperative-danger",
+      "area": "dialogs",
+      "prompt": "Deleting a workspace is permanent, so confirm it before deleting.",
+      "check": "The confirmation is the imperative `dialog.danger(...)` (awaited, resolving `true`/`false`), with `<DialogHost />` mounted once near the app root — not a hand-mounted `<Dialog>` plus a boolean signal.",
+      "source": "spec/dialog-imperative.md"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { DateRangePicker } from '@newui/ui'
+import { DateRangePicker } from '@newui/molecules'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**
@@ -26,7 +26,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Selection/DateRangePicker',
+  title: 'Molecules/Selection/DateRangePicker',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

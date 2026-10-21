@@ -1,4 +1,4 @@
-import { Badge, Icon } from '@newui/ui'
+import { Badge, Icon } from '@newui/atoms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -24,7 +24,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Display/Badge',
+  title: 'Atoms/Display/Badge',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

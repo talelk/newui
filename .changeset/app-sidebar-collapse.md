@@ -1,5 +1,5 @@
 ---
-'@newui/blocks': minor
+'@newui/organisms': minor
 ---
 
 `AppSidebar` can fold. It now forwards the sidebar's collapse state —

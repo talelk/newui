@@ -11,7 +11,7 @@ bundled its own merge integration on **every** component.
 
 ## Decision
 
-Reimplement those four features in `packages/ui/src/lib/tv.ts`, typed, over the
+Reimplement those four features in `packages/atoms/src/lib/tv.ts`, typed, over the
 `tailwind-merge` engine we do need. `tv`, `cn`, `cx` and `VariantProps` are
 in-house.
 

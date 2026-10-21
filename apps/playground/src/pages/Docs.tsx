@@ -17,7 +17,7 @@ import { usePageToc } from '../shell/SiteLayout'
 
 function Code(props: { children: string }): JSX.Element {
   return (
-    <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
+    <pre class="whitespace-pre-wrap break-words rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
       <code>{props.children}</code>
     </pre>
   )
@@ -90,7 +90,17 @@ export function Docs(): JSX.Element {
                   >
                     Atoms
                   </A>{' '}
-                  ·{' '}
+                </td>
+                <td class="p-2 font-mono text-xs">
+                  @newui/atoms · @newui/icons
+                </td>
+                <td class="p-2 text-ink-gray-7">
+                  single controls and marks; Zag supplies keyboard, focus and
+                  ARIA where a machine is needed
+                </td>
+              </tr>
+              <tr class="border-t border-outline-gray-1">
+                <td class="p-2">
                   <A
                     href="/molecules"
                     class="text-ink-blue-6 underline decoration-dotted"
@@ -98,10 +108,9 @@ export function Docs(): JSX.Element {
                     Molecules
                   </A>
                 </td>
-                <td class="p-2 font-mono text-xs">@newui/ui · @newui/icons</td>
+                <td class="p-2 font-mono text-xs">@newui/molecules</td>
                 <td class="p-2 text-ink-gray-7">
-                  one control or mark, and the interactions assembled from them;
-                  Zag supplies keyboard, focus and ARIA
+                  compound interactions built from atoms: fields, menus, pickers
                 </td>
               </tr>
               <tr class="border-t border-outline-gray-1">
@@ -113,7 +122,7 @@ export function Docs(): JSX.Element {
                     Organisms
                   </A>
                 </td>
-                <td class="p-2 font-mono text-xs">@newui/blocks</td>
+                <td class="p-2 font-mono text-xs">@newui/organisms</td>
                 <td class="p-2 text-ink-gray-7">
                   independent sections: sidebars, toolbars, filter bars, boards
                 </td>
@@ -127,10 +136,9 @@ export function Docs(): JSX.Element {
                     Templates
                   </A>
                 </td>
-                <td class="p-2 font-mono text-xs">@newui/layouts</td>
+                <td class="p-2 font-mono text-xs">@newui/templates</td>
                 <td class="p-2 text-ink-gray-7">
-                  page arrangement: the frame, the title block, the navigation
-                  column
+                  page arrangement: the frame, navigation and page content
                 </td>
               </tr>
               <tr class="border-t border-outline-gray-1">
@@ -155,13 +163,13 @@ export function Docs(): JSX.Element {
             @newui/data
           </code>{' '}
           is the logic layer beside the levels — formatting, selection, undo,
-          downloads, plus the query, form, table and virtual surfaces under
-          their own entries. It is headless, so it costs no component.
+          downloads, and the query/form logic under their own entries. Rendered
+          tables and virtual lists are organisms, not data helpers.
         </p>
-        <Code>{`pnpm add @newui/ui @newui/tailwind @newui/icons
+        <Code>{`pnpm add @newui/atoms @newui/molecules @newui/tailwind @newui/icons
 
 # the composed levels and the logic layer
-pnpm add @newui/blocks @newui/layouts @newui/data`}</Code>
+pnpm add @newui/organisms @newui/templates @newui/data`}</Code>
         <p class="text-base text-ink-gray-7">
           Add{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
@@ -177,8 +185,8 @@ pnpm add @newui/blocks @newui/layouts @newui/data`}</Code>
           </code>{' '}
           only when a screen needs them — each drags a large dependency with it
           (echarts, TipTap, CodeMirror), which is exactly why they are separate
-          packages. Their widgets are filed as organisms or molecules by
-          composition, not by package.
+          packages. Their widgets are filed by composition as organisms or
+          molecules, not by package name.
         </p>
         <p class="text-base text-ink-gray-7">
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">solid-js</code>{' '}
@@ -219,7 +227,8 @@ pnpm add @newui/blocks @newui/layouts @newui/data`}</Code>
           for light/dark: it flips a document attribute, persists the choice and
           follows the OS when you pick <em>system</em>.
         </p>
-        <Code>{`import { createColorScheme, Toaster, UIProvider } from '@newui/ui'
+        <Code>{`import { createColorScheme, UIProvider } from '@newui/atoms'
+import { Toaster } from '@newui/molecules'
 
 export function App() {
   createColorScheme() // optional: light/dark, system-aware
@@ -238,7 +247,8 @@ export function App() {
           Components are compound: the parts you see are subcomponents, and
           their state is a signal you own, never a string you set from outside.
         </p>
-        <Code>{`import { Button, Dialog } from '@newui/ui'
+        <Code>{`import { Button } from '@newui/atoms'
+import { Dialog } from '@newui/molecules'
 import { createSignal } from 'solid-js'
 
 function DeleteProject() {

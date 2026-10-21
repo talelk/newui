@@ -1,15 +1,6 @@
 /** Shipped application examples and their reference lineage, with no runtime UI. */
 export const EXAMPLES = [
   {
-    name: 'Component recipes',
-    href: '/pages/patterns',
-    preview: 'Card',
-    description:
-      'All 68 solid-ui registry examples, translated into newui composition.',
-    source: 'solid-ui component registry',
-    icon: 'lucide-panels-top-left',
-  },
-  {
     name: 'Accounting',
     href: '/pages/accounting',
     preview: 'Chart',
@@ -103,7 +94,7 @@ export const EXAMPLES = [
     href: '/pages/discussions',
     preview: 'Sidebar',
     description:
-      'Community rail, spaces, a filterable feed and workspace settings.',
+      'Community switcher, grouped spaces, a filterable feed and workspace settings.',
     source: 'Frappe DiscussionsDesktop',
     icon: 'lucide-messages-square',
   },

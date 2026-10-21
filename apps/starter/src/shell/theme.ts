@@ -1,4 +1,4 @@
-import { createColorScheme } from '@newui/ui'
+import { createColorScheme } from '@newui/atoms'
 import { createRoot } from 'solid-js'
 
 /**

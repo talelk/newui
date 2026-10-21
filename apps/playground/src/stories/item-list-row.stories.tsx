@@ -1,4 +1,5 @@
-import { Icon, ItemListRow } from '@newui/ui'
+import { Icon } from '@newui/atoms'
+import { ItemListRow } from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -27,7 +28,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Display/ItemListRow',
+  title: 'Molecules/Display/ItemListRow',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

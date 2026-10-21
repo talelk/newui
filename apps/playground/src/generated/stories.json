@@ -2,560 +2,8 @@
   "v": 5,
   "stories": [
     {
-      "id": "blocks-appsidebar--collapsed",
-      "title": "Blocks/AppSidebar",
-      "name": "Collapsed",
-      "exportName": "Collapsed",
-      "importPath": "src/stories/app-sidebar.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "blocks-appsidebar--default",
-      "title": "Blocks/AppSidebar",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/app-sidebar.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "blocks-authcard--default",
-      "title": "Blocks/AuthCard",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/auth-card.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "blocks-detailheader--default",
-      "title": "Blocks/DetailHeader",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/detail-header.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "blocks-filterbar--default",
-      "title": "Blocks/FilterBar",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/filter-bar.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "blocks-kanbanboard--default",
-      "title": "Blocks/KanbanBoard",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/kanban-board.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "blocks-pagetoolbar--default",
-      "title": "Blocks/PageToolbar",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/page-toolbar.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "blocks-statgrid--default",
-      "title": "Blocks/StatGrid",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/stat-grid.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-areachart--default",
-      "title": "Charts/AreaChart",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/area-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-areachart--error",
-      "title": "Charts/AreaChart",
-      "name": "Error",
-      "exportName": "Error",
-      "importPath": "src/stories/area-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-areachart--loading",
-      "title": "Charts/AreaChart",
-      "name": "Loading",
-      "exportName": "Loading",
-      "importPath": "src/stories/area-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-barchart--default",
-      "title": "Charts/BarChart",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/bar-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-barchart--error",
-      "title": "Charts/BarChart",
-      "name": "Error",
-      "exportName": "Error",
-      "importPath": "src/stories/bar-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-barchart--loading",
-      "title": "Charts/BarChart",
-      "name": "Loading",
-      "exportName": "Loading",
-      "importPath": "src/stories/bar-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-chartbase--default",
-      "title": "Charts/ChartBase",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/chart-base.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-chartbase--error",
-      "title": "Charts/ChartBase",
-      "name": "Error",
-      "exportName": "Error",
-      "importPath": "src/stories/chart-base.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-chartbase--loading",
-      "title": "Charts/ChartBase",
-      "name": "Loading",
-      "exportName": "Loading",
-      "importPath": "src/stories/chart-base.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-chartcard--default",
-      "title": "Charts/ChartCard",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/chart-card.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-chartcontainer--default",
-      "title": "Charts/ChartContainer",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/chart-container.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-chartcontainer--empty",
-      "title": "Charts/ChartContainer",
-      "name": "Empty",
-      "exportName": "Empty",
-      "importPath": "src/stories/chart-container.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-chartcontainer--error",
-      "title": "Charts/ChartContainer",
-      "name": "Error",
-      "exportName": "Error",
-      "importPath": "src/stories/chart-container.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-chartcontainer--loading",
-      "title": "Charts/ChartContainer",
-      "name": "Loading",
-      "exportName": "Loading",
-      "importPath": "src/stories/chart-container.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-chartlegend--default",
-      "title": "Charts/ChartLegend",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/chart-legend.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-charttooltip--default",
-      "title": "Charts/ChartTooltip",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/chart-tooltip.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-dashboard--default",
-      "title": "Charts/Dashboard",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/dashboard.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-donutchart--default",
-      "title": "Charts/DonutChart",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/donut-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-donutchart--error",
-      "title": "Charts/DonutChart",
-      "name": "Error",
-      "exportName": "Error",
-      "importPath": "src/stories/donut-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-donutchart--loading",
-      "title": "Charts/DonutChart",
-      "name": "Loading",
-      "exportName": "Loading",
-      "importPath": "src/stories/donut-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-funnelchart--default",
-      "title": "Charts/FunnelChart",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/funnel-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-funnelchart--error",
-      "title": "Charts/FunnelChart",
-      "name": "Error",
-      "exportName": "Error",
-      "importPath": "src/stories/funnel-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-funnelchart--loading",
-      "title": "Charts/FunnelChart",
-      "name": "Loading",
-      "exportName": "Loading",
-      "importPath": "src/stories/funnel-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-heatmapchart--default",
-      "title": "Charts/HeatmapChart",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/heatmap-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-heatmapchart--error",
-      "title": "Charts/HeatmapChart",
-      "name": "Error",
-      "exportName": "Error",
-      "importPath": "src/stories/heatmap-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-heatmapchart--loading",
-      "title": "Charts/HeatmapChart",
-      "name": "Loading",
-      "exportName": "Loading",
-      "importPath": "src/stories/heatmap-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-linechart--default",
-      "title": "Charts/LineChart",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/line-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-linechart--error",
-      "title": "Charts/LineChart",
-      "name": "Error",
-      "exportName": "Error",
-      "importPath": "src/stories/line-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-linechart--loading",
-      "title": "Charts/LineChart",
-      "name": "Loading",
-      "exportName": "Loading",
-      "importPath": "src/stories/line-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-numbercard--default",
-      "title": "Charts/NumberCard",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/number-card.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-numbercard--error",
-      "title": "Charts/NumberCard",
-      "name": "Error",
-      "exportName": "Error",
-      "importPath": "src/stories/number-card.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-numbercard--loading",
-      "title": "Charts/NumberCard",
-      "name": "Loading",
-      "exportName": "Loading",
-      "importPath": "src/stories/number-card.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-sankeychart--default",
-      "title": "Charts/SankeyChart",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/sankey-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-sankeychart--error",
-      "title": "Charts/SankeyChart",
-      "name": "Error",
-      "exportName": "Error",
-      "importPath": "src/stories/sankey-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-sankeychart--loading",
-      "title": "Charts/SankeyChart",
-      "name": "Loading",
-      "exportName": "Loading",
-      "importPath": "src/stories/sankey-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-scatterchart--default",
-      "title": "Charts/ScatterChart",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/scatter-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-scatterchart--error",
-      "title": "Charts/ScatterChart",
-      "name": "Error",
-      "exportName": "Error",
-      "importPath": "src/stories/scatter-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "charts-scatterchart--loading",
-      "title": "Charts/ScatterChart",
-      "name": "Loading",
-      "exportName": "Loading",
-      "importPath": "src/stories/scatter-chart.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-actions-button--default",
-      "title": "Components/Actions/Button",
+      "id": "atoms-actions-button--default",
+      "title": "Atoms/Actions/Button",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/button.stories.tsx",
@@ -566,8 +14,8 @@
       ]
     },
     {
-      "id": "components-actions-button--disabled",
-      "title": "Components/Actions/Button",
+      "id": "atoms-actions-button--disabled",
+      "title": "Atoms/Actions/Button",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/button.stories.tsx",
@@ -578,8 +26,8 @@
       ]
     },
     {
-      "id": "components-actions-button--loading",
-      "title": "Components/Actions/Button",
+      "id": "atoms-actions-button--loading",
+      "title": "Atoms/Actions/Button",
       "name": "Loading",
       "exportName": "Loading",
       "importPath": "src/stories/button.stories.tsx",
@@ -590,44 +38,8 @@
       ]
     },
     {
-      "id": "components-actions-contextmenu--default",
-      "title": "Components/Actions/ContextMenu",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/context-menu.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-actions-contextmenu--open",
-      "title": "Components/Actions/ContextMenu",
-      "name": "Open",
-      "exportName": "Open",
-      "importPath": "src/stories/context-menu.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-actions-dropdown--default",
-      "title": "Components/Actions/Dropdown",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/dropdown.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-actions-keyboardshortcut--default",
-      "title": "Components/Actions/KeyboardShortcut",
+      "id": "atoms-actions-keyboardshortcut--default",
+      "title": "Atoms/Actions/KeyboardShortcut",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/keyboard-shortcut.stories.tsx",
@@ -638,164 +50,8 @@
       ]
     },
     {
-      "id": "components-actions-keyboardshortcutsdialog--default",
-      "title": "Components/Actions/KeyboardShortcutsDialog",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/keyboard-shortcuts-dialog.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-actions-keyboardshortcutsdialog--open",
-      "title": "Components/Actions/KeyboardShortcutsDialog",
-      "name": "Open",
-      "exportName": "Open",
-      "importPath": "src/stories/keyboard-shortcuts-dialog.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-actions-menu--default",
-      "title": "Components/Actions/Menu",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/menu.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-actions-menu--open",
-      "title": "Components/Actions/Menu",
-      "name": "Open",
-      "exportName": "Open",
-      "importPath": "src/stories/menu.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-disclosure-accordion--default",
-      "title": "Components/Disclosure/Accordion",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/accordion.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-disclosure-accordion--disabled",
-      "title": "Components/Disclosure/Accordion",
-      "name": "Disabled",
-      "exportName": "Disabled",
-      "importPath": "src/stories/accordion.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-disclosure-collapsible--default",
-      "title": "Components/Disclosure/Collapsible",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/collapsible.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-disclosure-collapsible--disabled",
-      "title": "Components/Disclosure/Collapsible",
-      "name": "Disabled",
-      "exportName": "Disabled",
-      "importPath": "src/stories/collapsible.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-disclosure-collapsible--open",
-      "title": "Components/Disclosure/Collapsible",
-      "name": "Open",
-      "exportName": "Open",
-      "importPath": "src/stories/collapsible.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-disclosure-tabbuttons--default",
-      "title": "Components/Disclosure/TabButtons",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/tab-buttons.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-disclosure-tabbuttons--disabled",
-      "title": "Components/Disclosure/TabButtons",
-      "name": "Disabled",
-      "exportName": "Disabled",
-      "importPath": "src/stories/tab-buttons.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-disclosure-tabs--default",
-      "title": "Components/Disclosure/Tabs",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/tabs.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-disclosure-tabs--disabled",
-      "title": "Components/Disclosure/Tabs",
-      "name": "Disabled",
-      "exportName": "Disabled",
-      "importPath": "src/stories/tabs.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-display-avatar--default",
-      "title": "Components/Display/Avatar",
+      "id": "atoms-display-avatar--default",
+      "title": "Atoms/Display/Avatar",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/avatar.stories.tsx",
@@ -806,8 +62,8 @@
       ]
     },
     {
-      "id": "components-display-badge--default",
-      "title": "Components/Display/Badge",
+      "id": "atoms-display-badge--default",
+      "title": "Atoms/Display/Badge",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/badge.stories.tsx",
@@ -818,20 +74,8 @@
       ]
     },
     {
-      "id": "components-display-card--default",
-      "title": "Components/Display/Card",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/card.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-display-divider--default",
-      "title": "Components/Display/Divider",
+      "id": "atoms-display-divider--default",
+      "title": "Atoms/Display/Divider",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/divider.stories.tsx",
@@ -842,20 +86,8 @@
       ]
     },
     {
-      "id": "components-display-emptystate--default",
-      "title": "Components/Display/EmptyState",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/empty-state.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-display-icon--default",
-      "title": "Components/Display/Icon",
+      "id": "atoms-display-icon--default",
+      "title": "Atoms/Display/Icon",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/icon.stories.tsx",
@@ -866,104 +98,8 @@
       ]
     },
     {
-      "id": "components-display-itemlistrow--default",
-      "title": "Components/Display/ItemListRow",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/item-list-row.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-display-itemlistrow--disabled",
-      "title": "Components/Display/ItemListRow",
-      "name": "Disabled",
-      "exportName": "Disabled",
-      "importPath": "src/stories/item-list-row.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-display-itemlistrow--selected",
-      "title": "Components/Display/ItemListRow",
-      "name": "Selected",
-      "exportName": "Selected",
-      "importPath": "src/stories/item-list-row.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-display-list--default",
-      "title": "Components/Display/List",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/list.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-display-timeline--default",
-      "title": "Components/Display/Timeline",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/timeline.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-display-tree--default",
-      "title": "Components/Display/Tree",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/tree.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-display-tree--selected",
-      "title": "Components/Display/Tree",
-      "name": "Selected",
-      "exportName": "Selected",
-      "importPath": "src/stories/tree.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-feedback-alert--default",
-      "title": "Components/Feedback/Alert",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/alert.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-feedback-progress--default",
-      "title": "Components/Feedback/Progress",
+      "id": "atoms-feedback-progress--default",
+      "title": "Atoms/Feedback/Progress",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/progress.stories.tsx",
@@ -974,8 +110,8 @@
       ]
     },
     {
-      "id": "components-feedback-progresscircle--default",
-      "title": "Components/Feedback/ProgressCircle",
+      "id": "atoms-feedback-progresscircle--default",
+      "title": "Atoms/Feedback/ProgressCircle",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/progress-circle.stories.tsx",
@@ -986,8 +122,8 @@
       ]
     },
     {
-      "id": "components-feedback-skeleton--default",
-      "title": "Components/Feedback/Skeleton",
+      "id": "atoms-feedback-skeleton--default",
+      "title": "Atoms/Feedback/Skeleton",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/skeleton.stories.tsx",
@@ -998,8 +134,8 @@
       ]
     },
     {
-      "id": "components-feedback-spinner--default",
-      "title": "Components/Feedback/Spinner",
+      "id": "atoms-feedback-spinner--default",
+      "title": "Atoms/Feedback/Spinner",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/spinner.stories.tsx",
@@ -1010,20 +146,8 @@
       ]
     },
     {
-      "id": "components-feedback-toast--default",
-      "title": "Components/Feedback/Toast",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/toast.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-checkbox--default",
-      "title": "Components/Inputs/Checkbox",
+      "id": "atoms-inputs-checkbox--default",
+      "title": "Atoms/Inputs/Checkbox",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/checkbox.stories.tsx",
@@ -1034,8 +158,8 @@
       ]
     },
     {
-      "id": "components-inputs-checkbox--disabled",
-      "title": "Components/Inputs/Checkbox",
+      "id": "atoms-inputs-checkbox--disabled",
+      "title": "Atoms/Inputs/Checkbox",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/checkbox.stories.tsx",
@@ -1046,8 +170,8 @@
       ]
     },
     {
-      "id": "components-inputs-checkbox--invalid",
-      "title": "Components/Inputs/Checkbox",
+      "id": "atoms-inputs-checkbox--invalid",
+      "title": "Atoms/Inputs/Checkbox",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/checkbox.stories.tsx",
@@ -1058,8 +182,8 @@
       ]
     },
     {
-      "id": "components-inputs-duration--default",
-      "title": "Components/Inputs/Duration",
+      "id": "atoms-inputs-duration--default",
+      "title": "Atoms/Inputs/Duration",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/duration.stories.tsx",
@@ -1070,8 +194,8 @@
       ]
     },
     {
-      "id": "components-inputs-duration--disabled",
-      "title": "Components/Inputs/Duration",
+      "id": "atoms-inputs-duration--disabled",
+      "title": "Atoms/Inputs/Duration",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/duration.stories.tsx",
@@ -1082,8 +206,8 @@
       ]
     },
     {
-      "id": "components-inputs-duration--invalid",
-      "title": "Components/Inputs/Duration",
+      "id": "atoms-inputs-duration--invalid",
+      "title": "Atoms/Inputs/Duration",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/duration.stories.tsx",
@@ -1094,8 +218,8 @@
       ]
     },
     {
-      "id": "components-inputs-errormessage--default",
-      "title": "Components/Inputs/ErrorMessage",
+      "id": "atoms-inputs-errormessage--default",
+      "title": "Atoms/Inputs/ErrorMessage",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/error-message.stories.tsx",
@@ -1106,44 +230,8 @@
       ]
     },
     {
-      "id": "components-inputs-formcontrol--default",
-      "title": "Components/Inputs/FormControl",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/form-control.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-formcontrol--disabled",
-      "title": "Components/Inputs/FormControl",
-      "name": "Disabled",
-      "exportName": "Disabled",
-      "importPath": "src/stories/form-control.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-formcontrol--invalid",
-      "title": "Components/Inputs/FormControl",
-      "name": "Invalid",
-      "exportName": "Invalid",
-      "importPath": "src/stories/form-control.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-formlabel--default",
-      "title": "Components/Inputs/FormLabel",
+      "id": "atoms-inputs-formlabel--default",
+      "title": "Atoms/Inputs/FormLabel",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/form-label.stories.tsx",
@@ -1154,8 +242,8 @@
       ]
     },
     {
-      "id": "components-inputs-formlabel--disabled",
-      "title": "Components/Inputs/FormLabel",
+      "id": "atoms-inputs-formlabel--disabled",
+      "title": "Atoms/Inputs/FormLabel",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/form-label.stories.tsx",
@@ -1166,152 +254,8 @@
       ]
     },
     {
-      "id": "components-inputs-numberinput--default",
-      "title": "Components/Inputs/NumberInput",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/number-input.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-numberinput--disabled",
-      "title": "Components/Inputs/NumberInput",
-      "name": "Disabled",
-      "exportName": "Disabled",
-      "importPath": "src/stories/number-input.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-numberinput--invalid",
-      "title": "Components/Inputs/NumberInput",
-      "name": "Invalid",
-      "exportName": "Invalid",
-      "importPath": "src/stories/number-input.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-password--default",
-      "title": "Components/Inputs/Password",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/password.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-password--disabled",
-      "title": "Components/Inputs/Password",
-      "name": "Disabled",
-      "exportName": "Disabled",
-      "importPath": "src/stories/password.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-password--invalid",
-      "title": "Components/Inputs/Password",
-      "name": "Invalid",
-      "exportName": "Invalid",
-      "importPath": "src/stories/password.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-radiogroup--default",
-      "title": "Components/Inputs/RadioGroup",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/radio-group.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-radiogroup--disabled",
-      "title": "Components/Inputs/RadioGroup",
-      "name": "Disabled",
-      "exportName": "Disabled",
-      "importPath": "src/stories/radio-group.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-radiogroup--invalid",
-      "title": "Components/Inputs/RadioGroup",
-      "name": "Invalid",
-      "exportName": "Invalid",
-      "importPath": "src/stories/radio-group.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-rating--default",
-      "title": "Components/Inputs/Rating",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/rating.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-rating--disabled",
-      "title": "Components/Inputs/Rating",
-      "name": "Disabled",
-      "exportName": "Disabled",
-      "importPath": "src/stories/rating.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-rating--invalid",
-      "title": "Components/Inputs/Rating",
-      "name": "Invalid",
-      "exportName": "Invalid",
-      "importPath": "src/stories/rating.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-inputs-slider--default",
-      "title": "Components/Inputs/Slider",
+      "id": "atoms-inputs-slider--default",
+      "title": "Atoms/Inputs/Slider",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/slider.stories.tsx",
@@ -1322,8 +266,8 @@
       ]
     },
     {
-      "id": "components-inputs-slider--disabled",
-      "title": "Components/Inputs/Slider",
+      "id": "atoms-inputs-slider--disabled",
+      "title": "Atoms/Inputs/Slider",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/slider.stories.tsx",
@@ -1334,8 +278,8 @@
       ]
     },
     {
-      "id": "components-inputs-slider--invalid",
-      "title": "Components/Inputs/Slider",
+      "id": "atoms-inputs-slider--invalid",
+      "title": "Atoms/Inputs/Slider",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/slider.stories.tsx",
@@ -1346,8 +290,8 @@
       ]
     },
     {
-      "id": "components-inputs-switch--default",
-      "title": "Components/Inputs/Switch",
+      "id": "atoms-inputs-switch--default",
+      "title": "Atoms/Inputs/Switch",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/switch.stories.tsx",
@@ -1358,8 +302,8 @@
       ]
     },
     {
-      "id": "components-inputs-switch--disabled",
-      "title": "Components/Inputs/Switch",
+      "id": "atoms-inputs-switch--disabled",
+      "title": "Atoms/Inputs/Switch",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/switch.stories.tsx",
@@ -1370,8 +314,8 @@
       ]
     },
     {
-      "id": "components-inputs-switch--invalid",
-      "title": "Components/Inputs/Switch",
+      "id": "atoms-inputs-switch--invalid",
+      "title": "Atoms/Inputs/Switch",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/switch.stories.tsx",
@@ -1382,8 +326,8 @@
       ]
     },
     {
-      "id": "components-inputs-textarea--default",
-      "title": "Components/Inputs/Textarea",
+      "id": "atoms-inputs-textarea--default",
+      "title": "Atoms/Inputs/Textarea",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/textarea.stories.tsx",
@@ -1394,8 +338,8 @@
       ]
     },
     {
-      "id": "components-inputs-textarea--disabled",
-      "title": "Components/Inputs/Textarea",
+      "id": "atoms-inputs-textarea--disabled",
+      "title": "Atoms/Inputs/Textarea",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/textarea.stories.tsx",
@@ -1406,8 +350,8 @@
       ]
     },
     {
-      "id": "components-inputs-textarea--invalid",
-      "title": "Components/Inputs/Textarea",
+      "id": "atoms-inputs-textarea--invalid",
+      "title": "Atoms/Inputs/Textarea",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/textarea.stories.tsx",
@@ -1418,8 +362,8 @@
       ]
     },
     {
-      "id": "components-inputs-textinput--default",
-      "title": "Components/Inputs/TextInput",
+      "id": "atoms-inputs-textinput--default",
+      "title": "Atoms/Inputs/TextInput",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/text-input.stories.tsx",
@@ -1430,8 +374,8 @@
       ]
     },
     {
-      "id": "components-inputs-textinput--disabled",
-      "title": "Components/Inputs/TextInput",
+      "id": "atoms-inputs-textinput--disabled",
+      "title": "Atoms/Inputs/TextInput",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/text-input.stories.tsx",
@@ -1442,8 +386,8 @@
       ]
     },
     {
-      "id": "components-inputs-textinput--invalid",
-      "title": "Components/Inputs/TextInput",
+      "id": "atoms-inputs-textinput--invalid",
+      "title": "Atoms/Inputs/TextInput",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/text-input.stories.tsx",
@@ -1454,260 +398,8 @@
       ]
     },
     {
-      "id": "components-layout-appshell--default",
-      "title": "Components/Layout/AppShell",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/app-shell.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-layout-desktopshell--default",
-      "title": "Components/Layout/DesktopShell",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/desktop-shell.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-layout-mobileshell--default",
-      "title": "Components/Layout/MobileShell",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/mobile-shell.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-layout-responsiveshell--default",
-      "title": "Components/Layout/ResponsiveShell",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/responsive-shell.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-navigation-breadcrumbs--default",
-      "title": "Components/Navigation/Breadcrumbs",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/breadcrumbs.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-navigation-mobilenav--default",
-      "title": "Components/Navigation/MobileNav",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/mobile-nav.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-navigation-pagination--default",
-      "title": "Components/Navigation/Pagination",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/pagination.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-navigation-pagination--disabled",
-      "title": "Components/Navigation/Pagination",
-      "name": "Disabled",
-      "exportName": "Disabled",
-      "importPath": "src/stories/pagination.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-navigation-sidebar--collapsed",
-      "title": "Components/Navigation/Sidebar",
-      "name": "Collapsed",
-      "exportName": "Collapsed",
-      "importPath": "src/stories/sidebar.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-navigation-sidebar--default",
-      "title": "Components/Navigation/Sidebar",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/sidebar.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-bottomsheet--default",
-      "title": "Components/Overlays/BottomSheet",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/bottom-sheet.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-bottomsheet--open",
-      "title": "Components/Overlays/BottomSheet",
-      "name": "Open",
-      "exportName": "Open",
-      "importPath": "src/stories/bottom-sheet.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-commandpalette--default",
-      "title": "Components/Overlays/CommandPalette",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/command-palette.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-commandpalette--empty",
-      "title": "Components/Overlays/CommandPalette",
-      "name": "Empty",
-      "exportName": "Empty",
-      "importPath": "src/stories/command-palette.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-commandpalette--open",
-      "title": "Components/Overlays/CommandPalette",
-      "name": "Open",
-      "exportName": "Open",
-      "importPath": "src/stories/command-palette.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-dialog--default",
-      "title": "Components/Overlays/Dialog",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/dialog.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-dialog--open",
-      "title": "Components/Overlays/Dialog",
-      "name": "Open",
-      "exportName": "Open",
-      "importPath": "src/stories/dialog.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-hovercard--default",
-      "title": "Components/Overlays/HoverCard",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/hover-card.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-hovercard--open",
-      "title": "Components/Overlays/HoverCard",
-      "name": "Open",
-      "exportName": "Open",
-      "importPath": "src/stories/hover-card.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-popover--default",
-      "title": "Components/Overlays/Popover",
-      "name": "Default",
-      "exportName": "Default",
-      "importPath": "src/stories/popover.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-popover--open",
-      "title": "Components/Overlays/Popover",
-      "name": "Open",
-      "exportName": "Open",
-      "importPath": "src/stories/popover.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "components-overlays-scrollarea--default",
-      "title": "Components/Overlays/ScrollArea",
+      "id": "atoms-overlays-scrollarea--default",
+      "title": "Atoms/Overlays/ScrollArea",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/scroll-area.stories.tsx",
@@ -1718,8 +410,8 @@
       ]
     },
     {
-      "id": "components-overlays-tooltip--default",
-      "title": "Components/Overlays/Tooltip",
+      "id": "atoms-overlays-tooltip--default",
+      "title": "Atoms/Overlays/Tooltip",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/tooltip.stories.tsx",
@@ -1730,8 +422,8 @@
       ]
     },
     {
-      "id": "components-overlays-tooltip--open",
-      "title": "Components/Overlays/Tooltip",
+      "id": "atoms-overlays-tooltip--open",
+      "title": "Atoms/Overlays/Tooltip",
       "name": "Open",
       "exportName": "Open",
       "importPath": "src/stories/tooltip.stories.tsx",
@@ -1742,11 +434,11 @@
       ]
     },
     {
-      "id": "components-patterns-settingsdialog--default",
-      "title": "Components/Patterns/SettingsDialog",
+      "id": "molecules-actions-contextmenu--default",
+      "title": "Molecules/Actions/ContextMenu",
       "name": "Default",
       "exportName": "Default",
-      "importPath": "src/stories/settings-dialog.stories.tsx",
+      "importPath": "src/stories/context-menu.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -1754,11 +446,11 @@
       ]
     },
     {
-      "id": "components-patterns-settingsdialog--open",
-      "title": "Components/Patterns/SettingsDialog",
+      "id": "molecules-actions-contextmenu--open",
+      "title": "Molecules/Actions/ContextMenu",
       "name": "Open",
       "exportName": "Open",
-      "importPath": "src/stories/settings-dialog.stories.tsx",
+      "importPath": "src/stories/context-menu.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -1766,8 +458,788 @@
       ]
     },
     {
-      "id": "components-selection-combobox--default",
-      "title": "Components/Selection/Combobox",
+      "id": "molecules-actions-dropdown--default",
+      "title": "Molecules/Actions/Dropdown",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/dropdown.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-actions-keyboardshortcutsdialog--default",
+      "title": "Molecules/Actions/KeyboardShortcutsDialog",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/keyboard-shortcuts-dialog.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-actions-keyboardshortcutsdialog--open",
+      "title": "Molecules/Actions/KeyboardShortcutsDialog",
+      "name": "Open",
+      "exportName": "Open",
+      "importPath": "src/stories/keyboard-shortcuts-dialog.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-actions-menu--default",
+      "title": "Molecules/Actions/Menu",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/menu.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-actions-menu--open",
+      "title": "Molecules/Actions/Menu",
+      "name": "Open",
+      "exportName": "Open",
+      "importPath": "src/stories/menu.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-chartbase--default",
+      "title": "Molecules/ChartBase",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/chart-base.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-chartbase--error",
+      "title": "Molecules/ChartBase",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/chart-base.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-chartbase--loading",
+      "title": "Molecules/ChartBase",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/chart-base.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-chartcard--default",
+      "title": "Molecules/ChartCard",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/chart-card.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-chartcontainer--default",
+      "title": "Molecules/ChartContainer",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/chart-container.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-chartcontainer--empty",
+      "title": "Molecules/ChartContainer",
+      "name": "Empty",
+      "exportName": "Empty",
+      "importPath": "src/stories/chart-container.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-chartcontainer--error",
+      "title": "Molecules/ChartContainer",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/chart-container.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-chartcontainer--loading",
+      "title": "Molecules/ChartContainer",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/chart-container.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-chartlegend--default",
+      "title": "Molecules/ChartLegend",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/chart-legend.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-charttooltip--default",
+      "title": "Molecules/ChartTooltip",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/chart-tooltip.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-disclosure-accordion--default",
+      "title": "Molecules/Disclosure/Accordion",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/accordion.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-disclosure-accordion--disabled",
+      "title": "Molecules/Disclosure/Accordion",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/accordion.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-disclosure-collapsible--default",
+      "title": "Molecules/Disclosure/Collapsible",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/collapsible.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-disclosure-collapsible--disabled",
+      "title": "Molecules/Disclosure/Collapsible",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/collapsible.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-disclosure-collapsible--open",
+      "title": "Molecules/Disclosure/Collapsible",
+      "name": "Open",
+      "exportName": "Open",
+      "importPath": "src/stories/collapsible.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-disclosure-tabbuttons--default",
+      "title": "Molecules/Disclosure/TabButtons",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/tab-buttons.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-disclosure-tabbuttons--disabled",
+      "title": "Molecules/Disclosure/TabButtons",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/tab-buttons.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-disclosure-tabs--default",
+      "title": "Molecules/Disclosure/Tabs",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/tabs.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-disclosure-tabs--disabled",
+      "title": "Molecules/Disclosure/Tabs",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/tabs.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-display-card--default",
+      "title": "Molecules/Display/Card",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/card.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-display-emptystate--default",
+      "title": "Molecules/Display/EmptyState",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/empty-state.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-display-itemlistrow--default",
+      "title": "Molecules/Display/ItemListRow",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/item-list-row.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-display-itemlistrow--disabled",
+      "title": "Molecules/Display/ItemListRow",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/item-list-row.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-display-itemlistrow--selected",
+      "title": "Molecules/Display/ItemListRow",
+      "name": "Selected",
+      "exportName": "Selected",
+      "importPath": "src/stories/item-list-row.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-display-list--default",
+      "title": "Molecules/Display/List",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/list.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-display-timeline--default",
+      "title": "Molecules/Display/Timeline",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/timeline.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-display-tree--default",
+      "title": "Molecules/Display/Tree",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/tree.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-display-tree--selected",
+      "title": "Molecules/Display/Tree",
+      "name": "Selected",
+      "exportName": "Selected",
+      "importPath": "src/stories/tree.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-feedback-alert--default",
+      "title": "Molecules/Feedback/Alert",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/alert.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-feedback-toast--default",
+      "title": "Molecules/Feedback/Toast",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/toast.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-formcontrol--default",
+      "title": "Molecules/Inputs/FormControl",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/form-control.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-formcontrol--disabled",
+      "title": "Molecules/Inputs/FormControl",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/form-control.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-formcontrol--invalid",
+      "title": "Molecules/Inputs/FormControl",
+      "name": "Invalid",
+      "exportName": "Invalid",
+      "importPath": "src/stories/form-control.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-numberinput--default",
+      "title": "Molecules/Inputs/NumberInput",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/number-input.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-numberinput--disabled",
+      "title": "Molecules/Inputs/NumberInput",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/number-input.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-numberinput--invalid",
+      "title": "Molecules/Inputs/NumberInput",
+      "name": "Invalid",
+      "exportName": "Invalid",
+      "importPath": "src/stories/number-input.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-password--default",
+      "title": "Molecules/Inputs/Password",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/password.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-password--disabled",
+      "title": "Molecules/Inputs/Password",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/password.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-password--invalid",
+      "title": "Molecules/Inputs/Password",
+      "name": "Invalid",
+      "exportName": "Invalid",
+      "importPath": "src/stories/password.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-radiogroup--default",
+      "title": "Molecules/Inputs/RadioGroup",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/radio-group.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-radiogroup--disabled",
+      "title": "Molecules/Inputs/RadioGroup",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/radio-group.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-radiogroup--invalid",
+      "title": "Molecules/Inputs/RadioGroup",
+      "name": "Invalid",
+      "exportName": "Invalid",
+      "importPath": "src/stories/radio-group.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-rating--default",
+      "title": "Molecules/Inputs/Rating",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/rating.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-rating--disabled",
+      "title": "Molecules/Inputs/Rating",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/rating.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-rating--invalid",
+      "title": "Molecules/Inputs/Rating",
+      "name": "Invalid",
+      "exportName": "Invalid",
+      "importPath": "src/stories/rating.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-navigation-breadcrumbs--default",
+      "title": "Molecules/Navigation/Breadcrumbs",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/breadcrumbs.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-navigation-pagination--default",
+      "title": "Molecules/Navigation/Pagination",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/pagination.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-navigation-pagination--disabled",
+      "title": "Molecules/Navigation/Pagination",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/pagination.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-numbercard--default",
+      "title": "Molecules/NumberCard",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/number-card.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-numbercard--error",
+      "title": "Molecules/NumberCard",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/number-card.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-numbercard--loading",
+      "title": "Molecules/NumberCard",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/number-card.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-overlays-bottomsheet--default",
+      "title": "Molecules/Overlays/BottomSheet",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/bottom-sheet.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-overlays-bottomsheet--open",
+      "title": "Molecules/Overlays/BottomSheet",
+      "name": "Open",
+      "exportName": "Open",
+      "importPath": "src/stories/bottom-sheet.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-overlays-dialog--default",
+      "title": "Molecules/Overlays/Dialog",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/dialog.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-overlays-dialog--open",
+      "title": "Molecules/Overlays/Dialog",
+      "name": "Open",
+      "exportName": "Open",
+      "importPath": "src/stories/dialog.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-overlays-hovercard--default",
+      "title": "Molecules/Overlays/HoverCard",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/hover-card.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-overlays-hovercard--open",
+      "title": "Molecules/Overlays/HoverCard",
+      "name": "Open",
+      "exportName": "Open",
+      "importPath": "src/stories/hover-card.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-overlays-popover--default",
+      "title": "Molecules/Overlays/Popover",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/popover.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-overlays-popover--open",
+      "title": "Molecules/Overlays/Popover",
+      "name": "Open",
+      "exportName": "Open",
+      "importPath": "src/stories/popover.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-scrolltable--default",
+      "title": "Molecules/ScrollTable",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/scroll-table.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-selection-combobox--default",
+      "title": "Molecules/Selection/Combobox",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/combobox.stories.tsx",
@@ -1778,8 +1250,8 @@
       ]
     },
     {
-      "id": "components-selection-combobox--disabled",
-      "title": "Components/Selection/Combobox",
+      "id": "molecules-selection-combobox--disabled",
+      "title": "Molecules/Selection/Combobox",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/combobox.stories.tsx",
@@ -1790,8 +1262,8 @@
       ]
     },
     {
-      "id": "components-selection-combobox--invalid",
-      "title": "Components/Selection/Combobox",
+      "id": "molecules-selection-combobox--invalid",
+      "title": "Molecules/Selection/Combobox",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/combobox.stories.tsx",
@@ -1802,8 +1274,8 @@
       ]
     },
     {
-      "id": "components-selection-combobox--loading",
-      "title": "Components/Selection/Combobox",
+      "id": "molecules-selection-combobox--loading",
+      "title": "Molecules/Selection/Combobox",
       "name": "Loading",
       "exportName": "Loading",
       "importPath": "src/stories/combobox.stories.tsx",
@@ -1814,8 +1286,8 @@
       ]
     },
     {
-      "id": "components-selection-datepicker--default",
-      "title": "Components/Selection/DatePicker",
+      "id": "molecules-selection-datepicker--default",
+      "title": "Molecules/Selection/DatePicker",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/date-picker.stories.tsx",
@@ -1826,8 +1298,8 @@
       ]
     },
     {
-      "id": "components-selection-datepicker--disabled",
-      "title": "Components/Selection/DatePicker",
+      "id": "molecules-selection-datepicker--disabled",
+      "title": "Molecules/Selection/DatePicker",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/date-picker.stories.tsx",
@@ -1838,8 +1310,8 @@
       ]
     },
     {
-      "id": "components-selection-datepicker--invalid",
-      "title": "Components/Selection/DatePicker",
+      "id": "molecules-selection-datepicker--invalid",
+      "title": "Molecules/Selection/DatePicker",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/date-picker.stories.tsx",
@@ -1850,8 +1322,8 @@
       ]
     },
     {
-      "id": "components-selection-daterangepicker--default",
-      "title": "Components/Selection/DateRangePicker",
+      "id": "molecules-selection-daterangepicker--default",
+      "title": "Molecules/Selection/DateRangePicker",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/date-range-picker.stories.tsx",
@@ -1862,8 +1334,8 @@
       ]
     },
     {
-      "id": "components-selection-daterangepicker--disabled",
-      "title": "Components/Selection/DateRangePicker",
+      "id": "molecules-selection-daterangepicker--disabled",
+      "title": "Molecules/Selection/DateRangePicker",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/date-range-picker.stories.tsx",
@@ -1874,8 +1346,8 @@
       ]
     },
     {
-      "id": "components-selection-daterangepicker--invalid",
-      "title": "Components/Selection/DateRangePicker",
+      "id": "molecules-selection-daterangepicker--invalid",
+      "title": "Molecules/Selection/DateRangePicker",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/date-range-picker.stories.tsx",
@@ -1886,8 +1358,8 @@
       ]
     },
     {
-      "id": "components-selection-datetimepicker--default",
-      "title": "Components/Selection/DateTimePicker",
+      "id": "molecules-selection-datetimepicker--default",
+      "title": "Molecules/Selection/DateTimePicker",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/date-time-picker.stories.tsx",
@@ -1898,8 +1370,8 @@
       ]
     },
     {
-      "id": "components-selection-datetimepicker--disabled",
-      "title": "Components/Selection/DateTimePicker",
+      "id": "molecules-selection-datetimepicker--disabled",
+      "title": "Molecules/Selection/DateTimePicker",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/date-time-picker.stories.tsx",
@@ -1910,8 +1382,8 @@
       ]
     },
     {
-      "id": "components-selection-datetimepicker--invalid",
-      "title": "Components/Selection/DateTimePicker",
+      "id": "molecules-selection-datetimepicker--invalid",
+      "title": "Molecules/Selection/DateTimePicker",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/date-time-picker.stories.tsx",
@@ -1922,8 +1394,8 @@
       ]
     },
     {
-      "id": "components-selection-fileuploader--default",
-      "title": "Components/Selection/FileUploader",
+      "id": "molecules-selection-fileuploader--default",
+      "title": "Molecules/Selection/FileUploader",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/file-uploader.stories.tsx",
@@ -1934,8 +1406,8 @@
       ]
     },
     {
-      "id": "components-selection-fileuploader--disabled",
-      "title": "Components/Selection/FileUploader",
+      "id": "molecules-selection-fileuploader--disabled",
+      "title": "Molecules/Selection/FileUploader",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/file-uploader.stories.tsx",
@@ -1946,8 +1418,8 @@
       ]
     },
     {
-      "id": "components-selection-fileuploader--invalid",
-      "title": "Components/Selection/FileUploader",
+      "id": "molecules-selection-fileuploader--invalid",
+      "title": "Molecules/Selection/FileUploader",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/file-uploader.stories.tsx",
@@ -1958,8 +1430,8 @@
       ]
     },
     {
-      "id": "components-selection-multiselect--default",
-      "title": "Components/Selection/MultiSelect",
+      "id": "molecules-selection-multiselect--default",
+      "title": "Molecules/Selection/MultiSelect",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/multi-select.stories.tsx",
@@ -1970,8 +1442,8 @@
       ]
     },
     {
-      "id": "components-selection-multiselect--disabled",
-      "title": "Components/Selection/MultiSelect",
+      "id": "molecules-selection-multiselect--disabled",
+      "title": "Molecules/Selection/MultiSelect",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/multi-select.stories.tsx",
@@ -1982,8 +1454,8 @@
       ]
     },
     {
-      "id": "components-selection-multiselect--invalid",
-      "title": "Components/Selection/MultiSelect",
+      "id": "molecules-selection-multiselect--invalid",
+      "title": "Molecules/Selection/MultiSelect",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/multi-select.stories.tsx",
@@ -1994,8 +1466,8 @@
       ]
     },
     {
-      "id": "components-selection-multiselect--loading",
-      "title": "Components/Selection/MultiSelect",
+      "id": "molecules-selection-multiselect--loading",
+      "title": "Molecules/Selection/MultiSelect",
       "name": "Loading",
       "exportName": "Loading",
       "importPath": "src/stories/multi-select.stories.tsx",
@@ -2006,8 +1478,8 @@
       ]
     },
     {
-      "id": "components-selection-select--default",
-      "title": "Components/Selection/Select",
+      "id": "molecules-selection-select--default",
+      "title": "Molecules/Selection/Select",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/select.stories.tsx",
@@ -2018,8 +1490,8 @@
       ]
     },
     {
-      "id": "components-selection-select--disabled",
-      "title": "Components/Selection/Select",
+      "id": "molecules-selection-select--disabled",
+      "title": "Molecules/Selection/Select",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/select.stories.tsx",
@@ -2030,8 +1502,8 @@
       ]
     },
     {
-      "id": "components-selection-select--invalid",
-      "title": "Components/Selection/Select",
+      "id": "molecules-selection-select--invalid",
+      "title": "Molecules/Selection/Select",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/select.stories.tsx",
@@ -2042,8 +1514,8 @@
       ]
     },
     {
-      "id": "components-selection-timepicker--default",
-      "title": "Components/Selection/TimePicker",
+      "id": "molecules-selection-timepicker--default",
+      "title": "Molecules/Selection/TimePicker",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/time-picker.stories.tsx",
@@ -2054,8 +1526,8 @@
       ]
     },
     {
-      "id": "components-selection-timepicker--disabled",
-      "title": "Components/Selection/TimePicker",
+      "id": "molecules-selection-timepicker--disabled",
+      "title": "Molecules/Selection/TimePicker",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/time-picker.stories.tsx",
@@ -2066,8 +1538,8 @@
       ]
     },
     {
-      "id": "components-selection-timepicker--invalid",
-      "title": "Components/Selection/TimePicker",
+      "id": "molecules-selection-timepicker--invalid",
+      "title": "Molecules/Selection/TimePicker",
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/time-picker.stories.tsx",
@@ -2078,8 +1550,8 @@
       ]
     },
     {
-      "id": "components-selection-togglegroup--default",
-      "title": "Components/Selection/ToggleGroup",
+      "id": "molecules-selection-togglegroup--default",
+      "title": "Molecules/Selection/ToggleGroup",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/toggle-group.stories.tsx",
@@ -2090,8 +1562,8 @@
       ]
     },
     {
-      "id": "components-selection-togglegroup--disabled",
-      "title": "Components/Selection/ToggleGroup",
+      "id": "molecules-selection-togglegroup--disabled",
+      "title": "Molecules/Selection/ToggleGroup",
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/toggle-group.stories.tsx",
@@ -2102,8 +1574,140 @@
       ]
     },
     {
-      "id": "compositions-demosidebar--default",
-      "title": "Compositions/DemoSidebar",
+      "id": "organisms-appsidebar--collapsed",
+      "title": "Organisms/AppSidebar",
+      "name": "Collapsed",
+      "exportName": "Collapsed",
+      "importPath": "src/stories/app-sidebar.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-appsidebar--default",
+      "title": "Organisms/AppSidebar",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/app-sidebar.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-areachart--default",
+      "title": "Organisms/AreaChart",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/area-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-areachart--error",
+      "title": "Organisms/AreaChart",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/area-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-areachart--loading",
+      "title": "Organisms/AreaChart",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/area-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-authcard--default",
+      "title": "Organisms/AuthCard",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/auth-card.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-barchart--default",
+      "title": "Organisms/BarChart",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/bar-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-barchart--error",
+      "title": "Organisms/BarChart",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/bar-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-barchart--loading",
+      "title": "Organisms/BarChart",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/bar-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-codeeditor--default",
+      "title": "Organisms/CodeEditor",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/code-editor.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-codeeditor--read-only",
+      "title": "Organisms/CodeEditor",
+      "name": "Read Only",
+      "exportName": "ReadOnly",
+      "importPath": "src/stories/code-editor.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-compositions-demosidebar--default",
+      "title": "Organisms/Compositions/DemoSidebar",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/demo-sidebar.stories.tsx",
@@ -2114,8 +1718,152 @@
       ]
     },
     {
-      "id": "compositions-sidebar01--default",
-      "title": "Compositions/Sidebar01",
+      "id": "organisms-dashboard--default",
+      "title": "Organisms/Dashboard",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/dashboard.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-datatable--default",
+      "title": "Organisms/DataTable",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/data-table.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-detailheader--default",
+      "title": "Organisms/DetailHeader",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/detail-header.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-donutchart--default",
+      "title": "Organisms/DonutChart",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/donut-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-donutchart--error",
+      "title": "Organisms/DonutChart",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/donut-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-donutchart--loading",
+      "title": "Organisms/DonutChart",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/donut-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-editor--default",
+      "title": "Organisms/Editor",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/editor.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-editor--read-only",
+      "title": "Organisms/Editor",
+      "name": "Read Only",
+      "exportName": "ReadOnly",
+      "importPath": "src/stories/editor.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-filterbar--default",
+      "title": "Organisms/FilterBar",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/filter-bar.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-funnelchart--default",
+      "title": "Organisms/FunnelChart",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/funnel-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-funnelchart--error",
+      "title": "Organisms/FunnelChart",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/funnel-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-funnelchart--loading",
+      "title": "Organisms/FunnelChart",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/funnel-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-grouped-documentation-sidebar--default",
+      "title": "Organisms/Grouped documentation sidebar",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/sidebar-01.stories.tsx",
@@ -2126,11 +1874,11 @@
       ]
     },
     {
-      "id": "compositions-tasktable--default",
-      "title": "Compositions/TaskTable",
+      "id": "organisms-heatmapchart--default",
+      "title": "Organisms/HeatmapChart",
       "name": "Default",
       "exportName": "Default",
-      "importPath": "src/stories/task-table.stories.tsx",
+      "importPath": "src/stories/heatmap-chart.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -2138,11 +1886,35 @@
       ]
     },
     {
-      "id": "editors-codeeditor--default",
-      "title": "Editors/CodeEditor",
+      "id": "organisms-heatmapchart--error",
+      "title": "Organisms/HeatmapChart",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/heatmap-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-heatmapchart--loading",
+      "title": "Organisms/HeatmapChart",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/heatmap-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-kanbanboard--default",
+      "title": "Organisms/KanbanBoard",
       "name": "Default",
       "exportName": "Default",
-      "importPath": "src/stories/code-editor.stories.tsx",
+      "importPath": "src/stories/kanban-board.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -2150,23 +1922,11 @@
       ]
     },
     {
-      "id": "editors-codeeditor--read-only",
-      "title": "Editors/CodeEditor",
-      "name": "Read Only",
-      "exportName": "ReadOnly",
-      "importPath": "src/stories/code-editor.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "editors-editor--default",
-      "title": "Editors/Editor",
+      "id": "organisms-linechart--default",
+      "title": "Organisms/LineChart",
       "name": "Default",
       "exportName": "Default",
-      "importPath": "src/stories/editor.stories.tsx",
+      "importPath": "src/stories/line-chart.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -2174,11 +1934,11 @@
       ]
     },
     {
-      "id": "editors-editor--read-only",
-      "title": "Editors/Editor",
-      "name": "Read Only",
-      "exportName": "ReadOnly",
-      "importPath": "src/stories/editor.stories.tsx",
+      "id": "organisms-linechart--error",
+      "title": "Organisms/LineChart",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/line-chart.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -2186,11 +1946,23 @@
       ]
     },
     {
-      "id": "layouts-applayout--default",
-      "title": "Layouts/AppLayout",
+      "id": "organisms-linechart--loading",
+      "title": "Organisms/LineChart",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/line-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-navigation-mobilenav--default",
+      "title": "Organisms/Navigation/MobileNav",
       "name": "Default",
       "exportName": "Default",
-      "importPath": "src/stories/app-layout.stories.tsx",
+      "importPath": "src/stories/mobile-nav.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -2198,23 +1970,11 @@
       ]
     },
     {
-      "id": "layouts-applayout--without-navigation",
-      "title": "Layouts/AppLayout",
-      "name": "Without Navigation",
-      "exportName": "WithoutNavigation",
-      "importPath": "src/stories/app-layout.stories.tsx",
-      "tags": [
-        "dev",
-        "test",
-        "manifest"
-      ]
-    },
-    {
-      "id": "layouts-panelayout--default",
-      "title": "Layouts/PaneLayout",
+      "id": "organisms-overlays-commandpalette--default",
+      "title": "Organisms/Overlays/CommandPalette",
       "name": "Default",
       "exportName": "Default",
-      "importPath": "src/stories/pane-layout.stories.tsx",
+      "importPath": "src/stories/command-palette.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -2222,11 +1982,11 @@
       ]
     },
     {
-      "id": "layouts-panelayout--record-open",
-      "title": "Layouts/PaneLayout",
-      "name": "Record Open",
-      "exportName": "RecordOpen",
-      "importPath": "src/stories/pane-layout.stories.tsx",
+      "id": "organisms-overlays-commandpalette--empty",
+      "title": "Organisms/Overlays/CommandPalette",
+      "name": "Empty",
+      "exportName": "Empty",
+      "importPath": "src/stories/command-palette.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -2234,11 +1994,239 @@
       ]
     },
     {
-      "id": "layouts-records-page--default",
-      "title": "Layouts/Records page",
+      "id": "organisms-overlays-commandpalette--open",
+      "title": "Organisms/Overlays/CommandPalette",
+      "name": "Open",
+      "exportName": "Open",
+      "importPath": "src/stories/command-palette.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-pagetoolbar--default",
+      "title": "Organisms/PageToolbar",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/page-toolbar.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-patterns-settingsdialog--default",
+      "title": "Organisms/Patterns/SettingsDialog",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/settings-dialog.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-patterns-settingsdialog--open",
+      "title": "Organisms/Patterns/SettingsDialog",
+      "name": "Open",
+      "exportName": "Open",
+      "importPath": "src/stories/settings-dialog.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-sankeychart--default",
+      "title": "Organisms/SankeyChart",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/sankey-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-sankeychart--error",
+      "title": "Organisms/SankeyChart",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/sankey-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-sankeychart--loading",
+      "title": "Organisms/SankeyChart",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/sankey-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-scatterchart--default",
+      "title": "Organisms/ScatterChart",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/scatter-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-scatterchart--error",
+      "title": "Organisms/ScatterChart",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/scatter-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-scatterchart--loading",
+      "title": "Organisms/ScatterChart",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/scatter-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-sidebar--collapsed",
+      "title": "Organisms/Sidebar",
+      "name": "Collapsed",
+      "exportName": "Collapsed",
+      "importPath": "src/stories/sidebar.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-sidebar--default",
+      "title": "Organisms/Sidebar",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/sidebar.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-statgrid--default",
+      "title": "Organisms/StatGrid",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/stat-grid.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-virtuallist--default",
+      "title": "Organisms/VirtualList",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/virtual-list.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "pages-recordspage--default",
+      "title": "Pages/RecordsPage",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/records-page.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "templates-appshell--collapsed",
+      "title": "Templates/AppShell",
+      "name": "Collapsed",
+      "exportName": "Collapsed",
+      "importPath": "src/stories/app-shell.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "templates-appshell--default",
+      "title": "Templates/AppShell",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/app-shell.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "templates-authlayout--default",
+      "title": "Templates/AuthLayout",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/auth-layout.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "templates-panelayout--default",
+      "title": "Templates/PaneLayout",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/pane-layout.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "templates-panelayout--record-open",
+      "title": "Templates/PaneLayout",
+      "name": "Record Open",
+      "exportName": "RecordOpen",
+      "importPath": "src/stories/pane-layout.stories.tsx",
       "tags": [
         "dev",
         "test",

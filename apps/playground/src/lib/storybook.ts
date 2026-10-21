@@ -6,8 +6,7 @@
  * built site never guesses an origin.
  */
 export const STORYBOOK_BASE =
-  (import.meta.env['VITE_STORYBOOK_BASE'] as string | undefined) ??
-  'http://localhost:6006'
+  import.meta.env.VITE_STORYBOOK_BASE ?? 'http://localhost:6006'
 
 export interface StoryGlobals {
   theme?: 'light' | 'dark'

@@ -173,17 +173,24 @@ test('the isolated story renders a component', async ({ page }) => {
   ).toBe(32)
 })
 
-test('the mobile-shell route renders full-screen', async ({ page }) => {
+test('the full-screen application preview renders without site chrome', async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/pages/discussions/fullscreen')
-  // `MobileShell` is `fixed inset-0`, so it lives on its own route rather than
-  // inline in the scrolling site.
+  // The full-screen app uses the same responsive shell; its docked sidebar is
+  // replaced by the menu trigger at this viewport.
   await expect(
-    page.getByRole('heading', { name: 'Design System', exact: true }),
+    page.getByRole('heading', { name: 'Discussions', exact: true }),
   ).toBeVisible()
-  await expect(page.getByRole('navigation', { name: 'Primary' })).toBeVisible()
+  await expect(page.locator('[data-slot="app-shell-sidebar"]')).toHaveCount(0)
+  const trigger = page.getByRole('button', {
+    name: 'Open application navigation',
+  })
+  await expect(trigger).toBeVisible()
+  await trigger.click()
   await expect(
-    page.getByRole('link', { name: 'Back to playground' }),
+    page.getByRole('dialog', { name: 'Discussions navigation' }),
   ).toBeVisible()
 })
 

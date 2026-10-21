@@ -1,15 +1,17 @@
 {
   "files": [
     "pages/Cards.tsx",
-    "examples/WorkspacePage.tsx",
+    "examples/AppPage.tsx",
     "lib/examples.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts"
   ],
   "packages": [
+    "@newui/atoms",
     "@newui/data",
-    "@newui/layouts",
-    "@newui/ui",
+    "@newui/molecules",
+    "@newui/organisms",
+    "@newui/templates",
     "@solidjs/router",
     "solid-js"
   ]

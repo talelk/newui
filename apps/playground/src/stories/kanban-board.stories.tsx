@@ -1,6 +1,6 @@
-import { KanbanBoard, type KanbanColumn } from '@newui/blocks'
+import { Avatar, Badge } from '@newui/atoms'
 import { usd as money } from '@newui/data'
-import { Avatar, Badge } from '@newui/ui'
+import { KanbanBoard, type KanbanColumn } from '@newui/organisms'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { DemoFrame } from './demo-frame'
@@ -144,7 +144,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Blocks/KanbanBoard',
+  title: 'Organisms/KanbanBoard',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

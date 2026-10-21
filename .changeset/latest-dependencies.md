@@ -1,10 +1,11 @@
 ---
 "@newui/vite": major
-"@newui/ui": patch
+"@newui/atoms": patch
+"@newui/molecules": patch
 "@newui/editor": patch
 "@newui/code-editor": patch
 "@newui/charts": patch
-"@newui/blocks": patch
+"@newui/organisms": patch
 "@newui/icons": patch
 "@newui/tailwind": patch
 ---

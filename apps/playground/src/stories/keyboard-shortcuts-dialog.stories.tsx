@@ -1,4 +1,5 @@
-import { Button, KeyboardShortcutsDialog } from '@newui/ui'
+import { Button } from '@newui/atoms'
+import { KeyboardShortcutsDialog } from '@newui/molecules'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -40,7 +41,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Actions/KeyboardShortcutsDialog',
+  title: 'Molecules/Actions/KeyboardShortcutsDialog',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

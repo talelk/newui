@@ -1,4 +1,4 @@
-import { Tree, type TreeItem } from '@newui/ui'
+import { Tree, type TreeItem } from '@newui/molecules'
 import { For, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -32,7 +32,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Display/Tree',
+  title: 'Molecules/Display/Tree',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

@@ -6,7 +6,7 @@
  * 1. Every prop a spec documents exists. Tables with a `prop` column (under a
  *    `Props` heading, or directly under a heading that names a component, as
  *    in `form.md`) are resolved to the `*Props` types in
- *    `packages/ui/api.json` and every named prop must be a member. Combined
+ *    `api.json` and every named prop must be a member. Combined
  *    rows (`` `a` / `b` ``) are split and each name is checked on its own.
  *    The component a table belongs to comes from, in order: a `part` column,
  *    a dotted sub-heading (`Accordion.Item`), a parenthesised Props heading
@@ -39,7 +39,7 @@ import { Project, ScriptKind, ts } from 'ts-morph'
 
 const ROOT = process.cwd()
 const SPEC_DIR = path.join(ROOT, 'spec')
-const API_FILE = path.join(ROOT, 'packages/ui/api.json')
+const API_FILE = path.join(ROOT, 'api.json')
 
 /**
  * Specs exempt from check 1 because their prop tables are not one component's
@@ -107,9 +107,7 @@ let api: ApiTable
 try {
   api = JSON.parse(readFileSync(API_FILE, 'utf8')) as ApiTable
 } catch {
-  console.error(
-    '[specs:check] packages/ui/api.json is missing. Run `pnpm api`.',
-  )
+  console.error('[specs:check] api.json is missing. Run `pnpm api`.')
   process.exit(1)
 }
 

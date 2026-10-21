@@ -6,19 +6,39 @@
     "dev": "vite --port 4183 --strictPort",
     "build": "vite build",
     "preview": "vite preview --port 4183 --strictPort",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "skills": "node scripts/intent.mjs list",
+    "skills:load": "node scripts/intent.mjs load",
+    "skills:install": "node scripts/intent.mjs install"
+  },
+  "intent": {
+    "skills": [
+      "workspace:@newui/*",
+      "@newui/*"
+    ],
+    "exclude": [
+      "workspace:@newui/*#experimental-*",
+      "@newui/*#experimental-*"
+    ]
   },
   "dependencies": {
-    "@newui/blocks": "workspace:*",
+    "@newui/atoms": "workspace:*",
     "@newui/data": "workspace:*",
-    "@newui/layouts": "workspace:*",
+    "@newui/molecules": "workspace:*",
+    "@newui/organisms": "workspace:*",
     "@newui/tailwind": "workspace:*",
-    "@newui/ui": "workspace:*",
+    "@newui/templates": "workspace:*",
     "@solidjs/router": "^1.0.0",
     "solid-js": "^1.9.17"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/devtools-event-client": "^0.5.0",
+    "@tanstack/devtools-vite": "^0.8.5",
+    "@tanstack/intent": "0.5.6",
+    "@tanstack/solid-devtools": "^0.8.13",
+    "@tanstack/solid-query": "5.104.3",
+    "@tanstack/solid-query-devtools": "5.104.3",
     "tailwindcss": "^4.3.3",
     "vite": "^8.3.4",
     "vite-plugin-solid": "^2.11.14"

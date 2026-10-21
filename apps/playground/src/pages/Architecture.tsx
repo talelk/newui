@@ -32,22 +32,22 @@ const PACKAGES: {
   },
   {
     level: 'Atoms',
-    packages: '@newui/ui',
+    packages: '@newui/atoms',
     answers: 'What is this single element?',
   },
   {
     level: 'Molecules',
-    packages: '@newui/ui · @newui/charts',
+    packages: '@newui/molecules · @newui/charts',
     answers: 'What is this interaction?',
   },
   {
     level: 'Organisms',
-    packages: '@newui/blocks · @newui/charts · @newui/editor',
+    packages: '@newui/organisms · @newui/charts · @newui/editor',
     answers: 'What is this section?',
   },
   {
     level: 'Templates',
-    packages: '@newui/layouts · @newui/ui',
+    packages: '@newui/templates',
     answers: 'How does the page open?',
   },
   {
@@ -208,7 +208,7 @@ export function Architecture(): JSX.Element {
             ships molecules (a legend) and organisms (a bar chart) in one
             package, and{' '}
             <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-              @newui/ui
+              @newui/atoms
             </code>{' '}
             ships organisms (a sidebar) beside atoms. Filing by package instead
             would have hidden that; filing by composition is what makes the
@@ -219,8 +219,7 @@ export function Architecture(): JSX.Element {
             <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
               scripts/atomic.ts
             </code>{' '}
-            — three lists and a default of “molecule”, because anything that
-            composes at all is one.
+            — an exhaustive map: a new public entry has no implicit level.
           </p>
         </div>
       </PageSection>
@@ -279,18 +278,20 @@ export function Architecture(): JSX.Element {
             sits <em>beside</em> the levels rather than on them: a page uses it
             the way it uses a component, but nothing above it is made of it. It
             is headless by contract — it imports <code>solid-js</code> for
-            signals and nothing from the visual packages, except its promoted
-            table and virtual list — and no component may import it. That is
-            what keeps a control from acquiring an opinion about money.
+            signals and nothing from the visual packages — and no component may
+            import it. Tables and virtual lists are organisms; the data package
+            supplies their state, not their pixels. That is what keeps a control
+            from acquiring an opinion about money.
           </p>
-          <pre class="w-fit max-w-full overflow-x-auto rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
+          <pre class="w-fit max-w-full whitespace-pre-wrap break-words rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
             <code>{`import { createUndo, downloadCsv, optionsOf, usd } from '@newui/data'
 import { DataProvider, createCollection } from '@newui/data/query'`}</code>
           </pre>
           <p class="max-w-2xl">
-            What renders stays in the kit. The examples copied their status
-            strip eleven times too, but it renders a banner with buttons —
-            promoting it here would have made the layer lie about itself.
+            What renders stays in the atomic visual packages. The examples
+            copied their status strip eleven times too, but it renders a banner
+            with buttons — promoting it here would have made the layer lie about
+            itself.
           </p>
         </div>
       </PageSection>
@@ -311,14 +312,16 @@ import { DataProvider, createCollection } from '@newui/data/query'`}</code>
           </For>
         </dl>
 
-        <pre class="w-fit max-w-full overflow-x-auto rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
+        <pre class="w-fit max-w-full whitespace-pre-wrap break-words rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
           <code>{`@newui/tokens · @newui/tailwind      foundations
   ↓  colour · type · radius · motion · controls' classes
-@newui/ui                            atoms · molecules
-  ↓  (+ @newui/icons, organisms: sidebar, overlay surfaces)
-@newui/blocks · charts · editor       organisms
+@newui/atoms                         atoms
+  ↓
+@newui/molecules                     molecules
+  ↓
+@newui/organisms · charts · editor    organisms
   ↓  sections and widgets
-@newui/layouts                        templates
+@newui/templates                     templates
   ↓  page frames
 apps/playground · apps/starter        pages`}</code>
         </pre>

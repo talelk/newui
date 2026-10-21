@@ -1,18 +1,19 @@
 {
   "files": [
     "pages/Discussions.tsx",
+    "examples/DiscussionSettings.tsx",
+    "shell/theme.ts",
+    "examples/Notice.tsx",
     "examples/discussion-fixtures.ts",
     "examples/discussions.tsx",
     "examples/CreateDialog.tsx",
-    "pages/DiscussionsDesktop.tsx",
-    "pages/DiscussionsMobile.tsx",
-    "examples/DiscussionSettings.tsx",
-    "shell/theme.ts",
-    "examples/Notice.tsx"
+    "pages/DiscussionsDesktop.tsx"
   ],
   "packages": [
-    "@newui/blocks",
-    "@newui/ui",
+    "@newui/atoms",
+    "@newui/molecules",
+    "@newui/organisms",
+    "@newui/templates",
     "solid-js"
   ]
 }

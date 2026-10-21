@@ -1,8 +1,8 @@
 ---
-'@newui/data': minor
+'@newui/organisms': minor
 ---
 
-`@newui/data/virtual` — the bounded list.
+`@newui/organisms` — the bounded list.
 
 ```tsx
 <VirtualList label="Task activity" items={rows} itemSize={72} height="440px">

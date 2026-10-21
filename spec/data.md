@@ -10,13 +10,13 @@ import { createUndo, downloadCsv, optionsOf, usd } from '@newui/data'
 ## The boundary
 
 `@newui/data` is **headless**. It imports `solid-js` for signals and nothing from
-`@newui/ui`, `@newui/blocks` or `@newui/layouts`, which is enforced by
-dependency-cruiser (`data-is-headless`). The rule in the other direction is just
+`@newui/atoms`, `@newui/molecules`, `@newui/organisms` or `@newui/templates`,
+which is enforced by dependency-cruiser (`data-is-headless`). The rule in the other direction is just
 as strict: no component package may import it (`nothing-below-imports-data`). A
 component that needs to format a number takes that from the app — the kit does
 not acquire an opinion about money.
 
-What renders stays in the kit. `Notice` is the instructive case: the examples
+What renders stays in the atomic visual packages. `Notice` is the instructive case: the examples
 copied it eleven times, and the plan named it here, but it renders a banner with
 buttons — so it is a *component*, and promoting it into a headless package would
 have made the layer lie about itself. It stays a UI component (or an app
@@ -162,64 +162,14 @@ a wrapper that picked one for you would either grow a variant per control or
 take the control as a prop and become a second component tree. The shared call
 shape is `value` / `error={fieldError(field())}` / `handleChange`.
 
-## Table — `@newui/data/table`
+## Rendered collections belong to organisms
 
-```ts
-import { DataTable, type DataTableColumn } from '@newui/data/table'
-```
+`DataTable`, its `ScrollTable` shell and `VirtualList` render UI, so they live in
+`@newui/organisms`, not in this headless package. TanStack Table and Virtual are
+owned there too. Here the query/form logic ends at data and state; organisms
+choose how that state is shown. See `spec/data-table.md`, `spec/scroll-table.md`
+and `spec/virtual-list.md` for those visual contracts.
 
-A collection as a table: search, sort, page, hide columns, select rows, a bulk
-action and an empty state. TanStack Table is the engine; this is the kit's
-composition of it.
-
-- **It renders with `@newui/ui`** — the one carve-out in the headless rule,
-  scoped to `packages/data/src/table/**` in `.dependency-cruiser.cjs`. The table
-  owns the engine, and a component package that carried it would make every
-  `Button` pay for row models.
-- **Selection is a column, not a prop.** With `selectable` (the default) the
-  first column is a checkbox pair; the bulk action renders only while something
-  is selected, and hands the ids to `onRowsAction`.
-- **Column widths are the consumer's.** `DataTableColumn<T>` is TanStack's
-  `ColumnDef` with this table's feature set, so `meta: { align: 'end' }` is the
-  one opinion the kit adds (numeric columns).
-- **`ScrollTable`** is a *separate* entry, `@newui/data/table/scroll`: a
-  focusable, labelled horizontal scroller for a table wider than its column, with
-  `TABLE_HEAD_CLASS` beside it. Accounting's ledger renders its own semantic
-  table and needs only the shell — importing the main entry for it would pull the
-  whole TanStack composition into a route that never renders one (measured: 20 kB
-  on `/pages/accounting/fullscreen`).
-- The root is `data-slot="data-table"` (it was `example-data-table` while it
-  lived in the playground).
-
-## Virtual — `@newui/data/virtual`
-
-```ts
-import { VirtualList } from '@newui/data/virtual'
-```
-
-A bounded DOM for a long list:
-
-```tsx
-<VirtualList label="Task activity" items={rows} itemSize={72} height="440px">
-  {(row) => <Row row={row} />}
-</VirtualList>
-```
-
-- **Fixed row height** (`itemSize`): the virtualiser needs to know where the next
-  row starts without measuring every row, which is the whole point on the lists
-  this is for. `height` is the viewport, `overscan` the rows rendered beyond it.
-- **The scroll region is focusable** (WCAG 2.1.1) and `Home`/`End`/arrows scroll
-  it natively once focused — the same contract as `ScrollArea`, and the reason
-  for the scoped `noNoninteractiveTabindex` carve-out.
-- **Rows declare their position**: `aria-posinset` / `aria-setsize` on each `li`,
-  so a screen reader knows the list's real size even though the DOM holds
-  thirty rows.
-- It renders nothing but the region, the list and the positioned rows — the row's
-  anatomy and any card around it belong to the page, as `ActivityList` shows.
-
-## The surfaces
-
-The root entry is the helpers; `/query`, `/form`, `/table` and `/virtual` are
-the four TanStack adapters, each its own entry point. The playground
-depends on none of the TanStack packages directly; each entry is separately
-budgeted so a page pays only for what it renders.
+The playground imports no TanStack package directly: `@newui/data/query` owns
+Query and `@newui/data/form` owns Form. Render engines are owned by organisms,
+so a page pays for only the surface it renders.

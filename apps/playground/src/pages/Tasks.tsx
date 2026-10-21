@@ -1,21 +1,22 @@
-import { FilterBar, StatGrid } from '@newui/blocks'
+import { Badge, Button, Textarea, TextInput } from '@newui/atoms'
 import { optionsOf } from '@newui/data'
 import { createAppForm, Form, fieldError } from '@newui/data/form'
 import { createCollection, DataProvider } from '@newui/data/query'
-import { DataTable, type DataTableColumn } from '@newui/data/table'
 import {
-  Badge,
   BottomSheet,
-  Button,
   Dialog,
   EmptyState,
-  MobileNav,
-  MobileNavItem,
   Pagination,
   Select,
-  Textarea,
-  TextInput,
-} from '@newui/ui'
+} from '@newui/molecules'
+import {
+  DataTable,
+  type DataTableColumn,
+  FilterBar,
+  MobileNav,
+  MobileNavItem,
+  StatGrid,
+} from '@newui/organisms'
 import {
   createEffect,
   createMemo,
@@ -26,6 +27,8 @@ import {
   untrack,
 } from 'solid-js'
 import { ActivityList } from '../examples/ActivityList'
+import { AppNavigation } from '../examples/AppNavigation'
+import { AppPage } from '../examples/AppPage'
 import { Notice } from '../examples/Notice'
 import {
   createTaskRepository,
@@ -33,8 +36,6 @@ import {
   type TaskRecord,
   type TaskRepository,
 } from '../examples/tasks-data'
-import { WorkspaceNav } from '../examples/WorkspaceNav'
-import { WorkspacePage } from '../examples/WorkspacePage'
 
 const taskColumns = (
   onOpen: (id: string) => void,
@@ -254,7 +255,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
       setNotice(`Created ${value.title}.`)
     })
   return (
-    <WorkspacePage
+    <AppPage
       section="Tasks"
       title={
         scope() === 'all'
@@ -264,8 +265,8 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
             : scope()
       }
       description="Plan the next release, keep work moving, and give every detail a home."
-      sidebar={
-        <WorkspaceNav
+      navigation={() => (
+        <AppNavigation
           label="Task scopes"
           heading="Tasks"
           value={
@@ -302,7 +303,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
             })),
           ]}
         />
-      }
+      )}
       actions={
         <>
           <Button
@@ -807,7 +808,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
           <NewTask onSave={saveTask} />
         </Dialog.Content>
       </Dialog.Root>
-    </WorkspacePage>
+    </AppPage>
   )
 }
 

@@ -1,4 +1,4 @@
-import { Tooltip } from '@newui/ui'
+import { Tooltip } from '@newui/atoms'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -28,7 +28,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Overlays/Tooltip',
+  title: 'Atoms/Overlays/Tooltip',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

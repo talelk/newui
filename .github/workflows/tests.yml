@@ -63,6 +63,10 @@ jobs:
         if: ${{ !cancelled() }}
         run: pnpm refs:check
 
+      - name: Agent Skills validate & stale
+        if: ${{ !cancelled() }}
+        run: pnpm skills:check
+
       - name: Site data is current
         if: ${{ !cancelled() }}
         run: pnpm site:check

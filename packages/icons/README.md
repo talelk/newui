@@ -6,4 +6,4 @@ glyphs hidden from assistive technology. Name an icon-only button on the button
 itself. Avoid importing every glyph into a route; unused exports tree-shake.
 
 The generated surface inventory lists every named glyph and its source. For
-Lucide strings and dynamic components use Icon from @newui/ui.
+Lucide strings and dynamic components use `Icon` from `@newui/atoms`.

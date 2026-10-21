@@ -46,7 +46,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Charts/ChartLegend',
+  title: 'Molecules/ChartLegend',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

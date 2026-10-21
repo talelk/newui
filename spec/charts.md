@@ -33,7 +33,7 @@ copyable source and generated props.
 Charts ship no stylesheet; the chrome below is inline `var(--…)` custom
 properties, so it follows the light/dark axis without a second recipe.
 
-- ChartCard pads at 16px on `surface-elevation-1` with a 10px radius;
+- ChartCard uses the card padding role on `surface-elevation-1` with the 8px card radius;
   `card: false` still leaves only the clipping box.
 - ChartContainer heads the plot with a 1rem/600 `ink-gray-9` title, an
   `ink-gray-7` subtitle and a hairline divider under the header row; the

@@ -1,5 +1,6 @@
 ---
-"@newui/ui": minor
+"@newui/atoms": minor
+"@newui/molecules": minor
 "@newui/code-editor": patch
 "@newui/editor": minor
 ---

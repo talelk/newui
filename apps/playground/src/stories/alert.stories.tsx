@@ -1,4 +1,4 @@
-import { Alert } from '@newui/ui'
+import { Alert } from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -21,7 +21,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Feedback/Alert',
+  title: 'Molecules/Feedback/Alert',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

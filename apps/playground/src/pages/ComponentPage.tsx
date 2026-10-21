@@ -1,4 +1,4 @@
-import { Badge, Button } from '@newui/ui'
+import { Badge, Button } from '@newui/atoms'
 import { A, useLocation, useParams } from '@solidjs/router'
 import {
   createMemo,
@@ -389,7 +389,10 @@ export function ComponentPage(): JSX.Element {
                 >
                   {(entry) => (
                     <Show
-                      when={component().kind === 'block'}
+                      when={
+                        component().atomic === 'organism' ||
+                        component().atomic === 'template'
+                      }
                       fallback={
                         <InlinePreview title={component().name} source={source}>
                           <Suspense
@@ -402,7 +405,7 @@ export function ComponentPage(): JSX.Element {
                     >
                       <ResponsivePreview
                         title={component().name}
-                        story={entry().id}
+                        src={`/preview/${component().slug}`}
                         source={source}
                       />
                     </Show>
@@ -411,7 +414,7 @@ export function ComponentPage(): JSX.Element {
               </PageSection>
 
               <PageSection id="usage" title="Usage">
-                <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4 text-caption">
+                <pre class="whitespace-pre-wrap break-words rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4 text-caption">
                   <code>{`import { ${component().name} } from '${component().package}'`}</code>
                 </pre>
               </PageSection>

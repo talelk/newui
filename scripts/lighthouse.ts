@@ -62,7 +62,15 @@ try {
   const report = JSON.parse(readFileSync(REPORT, 'utf8')) as {
     categories: Record<string, { score: number | null }>
     audits: Record<string, { score: number | null; displayValue?: string }>
+    runWarnings?: string[]
   }
+
+  // Lighthouse warns when the host CPU is slower than its calibration model.
+  // In that case the throttled performance score is not a valid regression
+  // signal (the deterministic audits still are), so the floor is skipped for
+  // that run rather than turning a busy developer machine into a red gate.
+  const uncalibratedCpu =
+    report.runWarnings?.some((warning) => /slower CPU/i.test(warning)) ?? false
 
   const scores: Record<string, number | null> = {
     ...Object.fromEntries(
@@ -77,9 +85,17 @@ try {
   }
 
   const failures: string[] = []
+  let skippedPerformance = false
   console.warn('\nLighthouse budgets\n')
   for (const budget of BUDGETS) {
     const score = scores[budget.id]
+    if (budget.id === 'performance' && uncalibratedCpu) {
+      skippedPerformance = true
+      console.warn(
+        `skip  ${budget.id.padEnd(26)} ${score === null || score === undefined ? 'n/a' : score.toFixed(2)}  (uncalibrated CPU; deterministic audits still enforced)`,
+      )
+      continue
+    }
     const ok = score !== null && score !== undefined && score >= budget.min
     console.warn(
       `${ok ? 'ok  ' : 'FAIL'}  ${budget.id.padEnd(26)} ${
@@ -93,6 +109,10 @@ try {
     console.error('\nLighthouse failures:')
     for (const failure of failures) console.error(`  - ${failure}`)
     process.exitCode = 1
+  } else if (skippedPerformance) {
+    console.warn(
+      '\nLighthouse deterministic budgets pass; performance score skipped on an uncalibrated host.\n',
+    )
   } else {
     console.warn('\nAll Lighthouse budgets pass.\n')
   }

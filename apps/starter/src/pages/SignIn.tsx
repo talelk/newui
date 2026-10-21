@@ -1,10 +1,13 @@
-import { AuthCard } from '@newui/blocks'
+import { Button, TextInput } from '@newui/atoms'
 import { isEmail } from '@newui/data'
 import { createAppForm, Form, fieldError } from '@newui/data/form'
-import { Button, Password, TextInput } from '@newui/ui'
+import { Password } from '@newui/molecules'
+import { AuthCard } from '@newui/organisms'
+import { AuthLayout } from '@newui/templates'
 import { A, useNavigate } from '@solidjs/router'
 import type { JSX } from 'solid-js'
 import { signIn } from '../data/session'
+import { emitStarterEvent } from '../devtools/events'
 
 /**
  * The way in.
@@ -22,6 +25,10 @@ export function SignIn(): JSX.Element {
       // backend (spec/kit.md), so the starter keeps the shape, not the secret.
       await new Promise((resolve) => setTimeout(resolve, 200))
       signIn({ name: 'Rhea Kapoor', email: value.email })
+      emitStarterEvent('session:sign-in', {
+        name: 'Rhea Kapoor',
+        email: value.email,
+      })
       navigate('/')
     },
   })
@@ -32,7 +39,7 @@ export function SignIn(): JSX.Element {
     value.length >= 8 ? undefined : 'Use at least 8 characters.'
 
   return (
-    <div class="grid min-h-dvh place-items-center bg-surface-gray-1 p-4 text-interface text-ink-gray-9">
+    <AuthLayout>
       <AuthCard
         title="Sign in to Acme"
         description="The starter's demo session — no request leaves this page."
@@ -96,6 +103,6 @@ export function SignIn(): JSX.Element {
           </Button>
         </Form>
       </AuthCard>
-    </div>
+    </AuthLayout>
   )
 }

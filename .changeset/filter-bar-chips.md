@@ -1,5 +1,5 @@
 ---
-'@newui/blocks': minor
+'@newui/organisms': minor
 ---
 
 `FilterBar` gains the active-filter row: optional `chips` (active filters

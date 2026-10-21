@@ -1,4 +1,4 @@
-import { Pagination } from '@newui/ui'
+import { Pagination } from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -36,7 +36,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Navigation/Pagination',
+  title: 'Molecules/Navigation/Pagination',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

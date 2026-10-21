@@ -1,16 +1,10 @@
 ---
-'@newui/blocks': minor
+'@newui/organisms': minor
 ---
 
-`@newui/blocks` — composed sections built on `@newui/ui`.
-
-A component answers "what is this control"; a block answers "how does a page
-open". The distinction is why this is a package rather than a folder inside
-`@newui/ui`: a block is opinionated about layout, is meant to be replaceable
-wholesale, and should not be able to move a component's budget.
-
-Seven to start, each with a demo, a contract and a live reference page on the
-site:
+`@newui/organisms` is the composed page-region layer, built on atoms and
+molecules. Its entries answer *what is this section?* and each has a demo,
+contract and generated reference page:
 
 - **`AppSidebar`** — the navigation sidebar a screen opens with. Every reference
   screen was repeating the same twenty lines of `SidebarHeader`/`SidebarLabel`/
@@ -36,11 +30,7 @@ site:
   once on drop: cancelling is discarding a preview, so a controlled board never
   receives a move it did not accept.
 
-`List` also gains `ListHeaderCellSort` (a controlled sortable column header,
-with `aria-sort` and an opacity-revealed glyph so hovering never shifts the
-label) and `ListGroup` (`role="rowgroup"`, optional sticky label), both of which
-the recipes need.
-
-The sites's `check-css` gate now scans `packages/blocks` as well — Tailwind's
-`@source` did not, so every block rendered with only inherited styling until a
-screenshot showed the stat grid stacked one per row.
+The package also contains the sidebar, filter bar, stat grid, board, table,
+virtual list and other page regions. Its dependencies point down to
+`@newui/atoms` and `@newui/molecules`; optional chart/editor engines remain in
+their own packages.

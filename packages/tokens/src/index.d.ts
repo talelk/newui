@@ -27,6 +27,10 @@ export const semanticColors: {
 }
 
 export const radius: Record<string, string>
+export const radiusRoles: Record<
+  'control' | 'card' | 'overlay' | 'pill',
+  string
+>
 
 export const shadows: Record<string, string>
 
@@ -49,6 +53,7 @@ export const fontWeight: Record<string, number>
 export const fontFamily: Record<string, string>
 export const tracking: Record<string, Record<string, Record<string, string>>>
 export const spacing: Record<string, string>
+export const layoutSpacing: Record<string, string>
 export const screens: Record<string, string>
 
 export const cssVariables: CssVariableLayers

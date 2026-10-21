@@ -31,7 +31,7 @@ export const API = {
     },
     {
       "name": "variant",
-      "type": "\"subtle\" | \"outline\" | \"solid\" | \"ghost\" | null | undefined",
+      "type": "\"solid\" | \"subtle\" | \"outline\" | \"ghost\" | null | undefined",
       "optional": true
     },
     {

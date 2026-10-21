@@ -23,7 +23,7 @@ function Code(props: { title?: string; children: string }): JSX.Element {
           {props.title}
         </figcaption>
       </Show>
-      <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
+      <pre class="whitespace-pre-wrap break-words rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
         <code>{props.children.trim()}</code>
       </pre>
     </figure>
@@ -40,28 +40,28 @@ const LADDER = [
   },
   {
     level: 'Atoms',
-    package: '@newui/ui',
+    package: '@newui/atoms',
     href: '/atoms',
     count: `${LADDER_COUNTS.atoms} atoms`,
     answers: 'What is this single element?',
   },
   {
     level: 'Molecules',
-    package: '@newui/ui · @newui/charts',
+    package: '@newui/molecules · @newui/charts',
     href: '/molecules',
     count: `${LADDER_COUNTS.molecules} molecules`,
     answers: 'What is this interaction?',
   },
   {
     level: 'Organisms',
-    package: '@newui/blocks · charts · editor',
+    package: '@newui/organisms · @newui/charts · @newui/editor',
     href: '/organisms',
     count: `${LADDER_COUNTS.organisms} organisms`,
     answers: 'What is this section?',
   },
   {
     level: 'Templates',
-    package: '@newui/layouts · @newui/ui',
+    package: '@newui/templates',
     href: '/templates',
     count: `${LADDER_COUNTS.templates} templates`,
     answers: 'How does the page open?',
@@ -77,7 +77,10 @@ const LADDER = [
 
 const FILES = [
   ['src/App.tsx', 'The provider, the router, the toast host.'],
-  ['src/shell/Shell.tsx', 'AppLayout, the rail, the navigation, the account.'],
+  [
+    'src/shell/Shell.tsx',
+    'AppShell, one sidebar, the tenant and account slots.',
+  ],
   ['src/shell/theme.ts', 'The single light/dark controller.'],
   ['src/data/records.ts', 'The repository: four methods, in memory.'],
   ['src/data/session.ts', 'The demo session — the shape of auth, not auth.'],
@@ -97,6 +100,7 @@ export function Kit(): JSX.Element {
         { id: 'compose', label: 'Compose a page' },
         { id: 'data', label: 'Wire data' },
         { id: 'start', label: 'Start an app' },
+        { id: 'recipes', label: 'Recipes and examples' },
       ]}
     />
   ))
@@ -186,36 +190,38 @@ export function Kit(): JSX.Element {
       <PageSection
         id="compose"
         title="2 · Compose a page"
-        description="AppLayout owns the arrangement; the app owns its chrome."
+        description="AppShell owns the responsive workspace; the app owns the menu data and tenant/account behavior."
       >
         <Code title="src/shell/Shell.tsx — the frame, once">
           {`
-<AppLayout
+<AppShell
   title="Projects, at a glance"
   description="One collection, filtered in the browser."
   breadcrumbs={[{ label: 'Workspace', href: '/' }, { label: 'Projects' }]}
   actions={<Button onClick={() => setOpen(true)}>New project</Button>}
-  rail={<Rail />}
-  sidebar={<Nav />}
   brand={<Brand />}
-  headerActions={<Account />}
+  tenant={<TenantSwitcher />}
+  navigation={groups}
+  settings={<SettingsAction />}
+  account={<AccountMenu />}
 >
   {props.children}
-</AppLayout>
+</AppShell>
           `}
         </Code>
         <p class="text-base text-ink-gray-7">
-          The slots are the API. The rail, the navigation, the brand, the header
-          controls and the footer are the parts two apps never agree on; the
-          order — trail, title, description, actions, content under a fixed
-          header — is the part they always do. That split is why{' '}
+          One sidebar owns identity, tenant, grouped navigation, settings and
+          account. It collapses to icons on a desk and becomes the same expanded
+          menu in a phone drawer. The app provides its destinations and action
+          handlers; it never builds a second rail next to the navigation. That
+          split is why{' '}
           <A
-            href="/templates/app-layout"
+            href="/templates/app-shell"
             class="text-ink-blue-6 underline decoration-dotted"
           >
-            AppLayout
+            AppShell
           </A>{' '}
-          is a layout and not a component.
+          is a template and not a page-specific composition.
         </p>
         <Code title="A page fills the content slot">
           {`
@@ -422,6 +428,25 @@ pnpm build:starter   # 138 kB gzip: frame, router, data layer, table, forms
           </A>{' '}
           (bulk actions and undo).
         </p>
+      </PageSection>
+
+      <PageSection
+        id="recipes"
+        title="5 · Recipes and examples"
+        description="Small compositions are guides, not application pages or new public APIs by default."
+      >
+        <p class="text-base text-ink-gray-7">
+          The example index routes each exported component to its atomic
+          reference page. Techniques without a public component contract—such as
+          a carousel interaction or a verification-code flow—stay in the Kit
+          recipe gallery until they earn a stable API.
+        </p>
+        <A
+          href="/kit/recipes"
+          class="w-fit rounded-control text-ink-blue-link underline decoration-dotted focus-visible:focus-ring"
+        >
+          Browse recipes and reference examples
+        </A>
       </PageSection>
     </article>
   )

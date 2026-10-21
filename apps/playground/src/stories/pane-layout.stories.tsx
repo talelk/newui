@@ -1,5 +1,5 @@
-import { PaneLayout } from '@newui/layouts'
-import { Badge } from '@newui/ui'
+import { Badge } from '@newui/atoms'
+import { PaneLayout } from '@newui/templates'
 import { createSignal, For, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { DemoFrame } from './demo-frame'
@@ -96,7 +96,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Layouts/PaneLayout',
+  title: 'Templates/PaneLayout',
   component: Demo,
   excludeStories: ['Demo'],
   parameters: { layout: 'fullscreen' },

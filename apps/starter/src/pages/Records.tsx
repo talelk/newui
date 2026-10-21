@@ -1,9 +1,14 @@
-import { FilterBar, StatGrid } from '@newui/blocks'
+import { Badge, Button, TextInput } from '@newui/atoms'
 import { count, first, optionsOf, usd } from '@newui/data'
 import { createAppForm, Form, fieldError } from '@newui/data/form'
 import { createCollection } from '@newui/data/query'
-import { DataTable, type DataTableColumn } from '@newui/data/table'
-import { Alert, Badge, Button, Dialog, Select, TextInput } from '@newui/ui'
+import { Alert, Dialog, Select } from '@newui/molecules'
+import {
+  DataTable,
+  type DataTableColumn,
+  FilterBar,
+  StatGrid,
+} from '@newui/organisms'
 import {
   createEffect,
   createMemo,
@@ -20,6 +25,7 @@ import {
   type ProjectStatus,
   projectRepository,
 } from '../data/records'
+import { emitStarterEvent } from '../devtools/events'
 import { Shell } from '../shell/Shell'
 
 const STATUS_THEME: Record<ProjectStatus, 'green' | 'amber' | 'gray'> = {
@@ -65,10 +71,18 @@ export function Records(): JSX.Element {
   const [createOpen, setCreateOpen] = createSignal(false)
   const [editing, setEditing] = createSignal<Project | null>(null)
 
+  const changeStatus = (next: string) => {
+    setStatus(next)
+    emitStarterEvent('filters:status', { status: next })
+  }
+
   const collection = createCollection<Project, NewProject>(() => ({
     key: ['projects'],
     repository: projectRepository,
-    onError: (error) => setNotice({ text: error.message, tone: 'red' }),
+    onError: (error) => {
+      setNotice({ text: error.message, tone: 'red' })
+      emitStarterEvent('query:error', { message: error.message })
+    },
   }))
 
   // The table owns search; the bar owns the filter that outlives a query.
@@ -95,7 +109,15 @@ export function Records(): JSX.Element {
         <button
           type="button"
           class="rounded-3 text-start font-medium text-ink-gray-9 hover:text-ink-blue-7 focus-visible:focus-ring"
-          onClick={() => setEditing(context.row.original)}
+          onClick={() => {
+            const project = context.row.original
+            emitStarterEvent('record:open', {
+              id: project.id,
+              name: project.name,
+              status: project.status,
+            })
+            setEditing(project)
+          }}
         >
           {context.row.original.name}
         </button>
@@ -131,28 +153,48 @@ export function Records(): JSX.Element {
     },
   ]
 
-  const clearFilters = () => setStatus('all')
+  const clearFilters = () => changeStatus('all')
 
   const create = async (input: NewProject) => {
-    await collection.create.mutateAsync(input)
+    const created = await collection.create.mutateAsync(input)
+    emitStarterEvent('record:create', {
+      id: created.id,
+      name: created.name,
+      owner: created.owner,
+      status: created.status,
+      budget: created.budget,
+    })
     setCreateOpen(false)
     setNotice({ text: `${input.name} was created.`, tone: 'green' })
   }
 
   const updateProject = async (project: Project, patch: Partial<Project>) => {
-    await collection.update.mutateAsync({ id: project.id, patch })
+    const updated = await collection.update.mutateAsync({
+      id: project.id,
+      patch,
+    })
+    emitStarterEvent('record:update', {
+      id: updated.id,
+      name: updated.name,
+      status: updated.status,
+    })
     setEditing(null)
     setNotice({ text: `${project.name} was updated.`, tone: 'green' })
   }
 
   const deleteProject = async (project: Project) => {
     await collection.remove.mutateAsync({ ids: [project.id] })
+    emitStarterEvent('record:delete', {
+      id: project.id,
+      name: project.name,
+    })
     setEditing(null)
     setNotice({ text: `${project.name} was deleted.`, tone: 'green' })
   }
 
   const archive = (ids: string[]) => {
     collection.updateMany.mutate({ ids, patch: { status: 'Done' } })
+    emitStarterEvent('record:archive', { ids })
     setNotice({
       text: `${count(ids.length)} project${ids.length === 1 ? '' : 's'} marked done.`,
       tone: 'green',
@@ -239,7 +281,7 @@ export function Records(): JSX.Element {
                 ...optionsOf(PROJECT_STATUSES),
               ],
               value: status(),
-              onValueChange: setStatus,
+              onValueChange: changeStatus,
             },
           ]}
           chips={[
@@ -248,7 +290,7 @@ export function Records(): JSX.Element {
               : [
                   {
                     label: `Status: ${status()}`,
-                    onRemove: () => setStatus('all'),
+                    onRemove: () => changeStatus('all'),
                   },
                 ]),
           ]}

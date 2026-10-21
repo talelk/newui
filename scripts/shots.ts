@@ -19,10 +19,13 @@
  * The examples use local data and avatar initials. A run waits for the local
  * brand image and webfonts to settle before capturing a deterministic view.
  */
+
+import { spawnSync } from 'node:child_process'
 import { mkdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import { chromium, type Page } from 'playwright'
 import { EXAMPLES } from '../apps/playground/src/lib/examples'
+import { PATTERNS } from '../apps/playground/src/lib/reference-examples'
 
 import { startPreview } from './preview-server'
 import { STORYBOOK_PORT, serveStorybook } from './serve-storybook'
@@ -30,6 +33,21 @@ import { STORYBOOK_PORT, serveStorybook } from './serve-storybook'
 const PORT = 4182
 const BASE = `http://localhost:${PORT}`
 const STORYBOOK_BASE = `http://localhost:${STORYBOOK_PORT}`
+
+/**
+ * The site bakes Storybook's origin into its preview iframes at build time.
+ * Rebuild against the static origin this script serves, otherwise the site may
+ * point at the dev server's 6006 and every component/template screenshot is an
+ * empty placeholder.
+ */
+function buildSite(): void {
+  const result = spawnSync('pnpm', ['--filter', 'playground', 'build'], {
+    stdio: 'inherit',
+    env: { ...process.env, VITE_STORYBOOK_BASE: STORYBOOK_BASE },
+  })
+  if (result.status !== 0)
+    throw new Error(`site build failed with code ${result.status}`)
+}
 
 /**
  * The story spot-checks — the families the design loop watches while working
@@ -94,11 +112,12 @@ const ROUTES = [
   '/organisms',
   '/templates',
   '/pages',
-  ...EXAMPLES.flatMap((example) =>
-    example.href === '/pages/patterns'
-      ? [example.href]
-      : [example.href, `${example.href}/fullscreen`],
-  ),
+  '/kit/recipes',
+  ...PATTERNS.map((pattern) => `/kit/recipes/${pattern.slug}`),
+  ...EXAMPLES.flatMap((example) => [
+    example.href,
+    `${example.href}/fullscreen`,
+  ]),
   '/spec',
 ]
 
@@ -127,6 +146,7 @@ function fileName(route: string, theme: string, width: number): string {
   return `${(slug || 'home').replace(/^-/, '')}-${theme}-${width}.png`
 }
 
+buildSite()
 const preview = startPreview(PORT)
 const storybook = serveStorybook({ port: STORYBOOK_PORT })
 

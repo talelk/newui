@@ -1,5 +1,5 @@
-import { AuthCard } from '@newui/blocks'
-import { Button, TextInput } from '@newui/ui'
+import { Button, TextInput } from '@newui/atoms'
+import { AuthCard } from '@newui/organisms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { DemoFrame } from './demo-frame'
@@ -33,7 +33,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Blocks/AuthCard',
+  title: 'Organisms/AuthCard',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

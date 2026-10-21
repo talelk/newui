@@ -1,4 +1,4 @@
-import { cn } from '@newui/ui'
+import { cn } from '@newui/atoms'
 import { createSignal, For, type JSX, Match, Switch } from 'solid-js'
 
 /**
@@ -259,7 +259,7 @@ function CodeBlock(props: { code: string }): JSX.Element {
   const [copied, setCopied] = createSignal(false)
   return (
     <div class="relative">
-      <pre class="overflow-x-auto rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-4 text-sm leading-relaxed text-ink-gray-8">
+      <pre class="whitespace-pre-wrap break-words rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-4 text-sm leading-relaxed text-ink-gray-8">
         <code>{props.code}</code>
       </pre>
       <div class="absolute end-2 top-2">

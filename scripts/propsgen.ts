@@ -1,8 +1,8 @@
 /**
  * API-table generator.
  *
- * Collects every exported `*Props` interface in `@newui/ui` and writes a stable
- * table to `packages/ui/api.json`. `--check` regenerates in memory and fails
+ * Collects every exported `*Props` interface from the atomic and optional domain
+ * packages and writes a stable table to the root `api.json`. `--check` regenerates in memory and fails
  * when the committed table drifts — the frappe-ui `docs:check` gate, rebuilt on
  * the TypeScript AST instead of `vue-component-meta`.
  *
@@ -15,14 +15,14 @@ import { Node, Project, type PropertySignature } from 'ts-morph'
 
 const root = process.cwd()
 const isCheck = process.argv.includes('--check')
-const outFile = path.join(root, 'packages/ui/api.json')
-/** Every package that ships props worth documenting: the components and the
- * blocks composed from them. `api.json` is keyed by source path, so the two are
- * told apart later by that path, not by a second table. */
+const outFile = path.join(root, 'api.json')
+/** Every package that ships component/template props. `api.json` is keyed by
+ * source path, so the site derives each entry's owner from its implementation. */
 const SOURCES = [
-  'packages/ui',
-  'packages/blocks',
-  'packages/layouts',
+  'packages/atoms',
+  'packages/molecules',
+  'packages/organisms',
+  'packages/templates',
   'packages/charts',
   'packages/editor',
   'packages/code-editor',
@@ -37,11 +37,10 @@ interface ApiMember {
 }
 
 const project = new Project({
-  tsConfigFilePath: path.join(root, 'packages/ui/tsconfig.json'),
+  tsConfigFilePath: path.join(root, 'packages/atoms/tsconfig.json'),
 })
-// The tsconfig's `include` is `packages/ui/src`, so a project built from it
-// holds only that package's files. The blocks are added explicitly — they are
-// documented in the same table, told apart by their path.
+// The base project uses the atoms package's strict compiler options; remaining
+// atomic and optional domain packages are added explicitly to the same table.
 project.addSourceFilesAtPaths(
   SOURCES.map((dir) => path.join(dir, '**/*.{ts,tsx}')),
 )
@@ -143,9 +142,7 @@ if (isCheck) {
   try {
     committed = readFileSync(outFile, 'utf8')
   } catch {
-    console.error(
-      '[api:check] packages/ui/api.json is missing. Run `pnpm api`.',
-    )
+    console.error('[api:check] api.json is missing. Run `pnpm api`.')
     process.exit(1)
   }
   if (committed !== serialized) {
@@ -161,5 +158,5 @@ if (isCheck) {
     (sum, entries) => sum + Object.keys(entries).length,
     0,
   )
-  console.warn(`[api] wrote ${count} prop types to packages/ui/api.json`)
+  console.warn(`[api] wrote ${count} prop types to api.json`)
 }

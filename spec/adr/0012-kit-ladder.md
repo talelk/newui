@@ -1,6 +1,6 @@
 # The kit ladder — layouts, logic and the surface
 
-**Status**: accepted
+**Status**: superseded by [ADR-0013](./0013-atomic-packages-and-app-shell.md)
 
 ## Context
 

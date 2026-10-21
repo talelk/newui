@@ -1,4 +1,5 @@
-import { BottomSheet, Button, Switch } from '@newui/ui'
+import { Button, Switch } from '@newui/atoms'
+import { BottomSheet } from '@newui/molecules'
 import { createSignal, For } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -57,7 +58,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Overlays/BottomSheet',
+  title: 'Molecules/Overlays/BottomSheet',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

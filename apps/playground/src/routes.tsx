@@ -1,4 +1,5 @@
-import { Toaster, UIProvider } from '@newui/ui'
+import { UIProvider } from '@newui/atoms'
+import { Toaster } from '@newui/molecules'
 import {
   Route,
   Router,
@@ -66,11 +67,7 @@ const TemplatesLayout = lazy(() =>
   })),
 )
 
-const RegistryExamplePage = page(
-  () => import('./pages/RegistryExamplePage'),
-  'RegistryExamplePage',
-)
-const Patterns = page(() => import('./pages/Patterns'), 'Patterns')
+const KitRecipes = page(() => import('./pages/Patterns'), 'Patterns')
 const Deals = page(() => import('./pages/Deals'), 'Deals')
 const Tickets = page(() => import('./pages/Tickets'), 'Tickets')
 const Files = page(() => import('./pages/Files'), 'Files')
@@ -107,13 +104,10 @@ const CompositionPage = page(
   'CompositionPage',
 )
 const Examples = page(() => import('./pages/Examples'), 'Examples')
-const LegacyRedirect = page(
-  () => import('./pages/LegacyRedirect'),
-  'LegacyRedirect',
-)
 const NotFound = page(() => import('./pages/NotFound'), 'NotFound')
 const Discussions = page(() => import('./pages/Discussions'), 'Discussions')
 const Spec = page(() => import('./pages/Spec'), 'Spec')
+const StoryPreview = page(() => import('./pages/StoryPreview'), 'StoryPreview')
 
 /**
  * Wraps every route: the UI context each overlay and input reads, and the one
@@ -175,9 +169,8 @@ export const ROUTES: { path: string; title: string }[] = [
   { path: '/pages/authentication', title: 'Authentication' },
   { path: '/pages/discussions', title: 'Discussions' },
   { path: '/pages/settings', title: 'Settings' },
-  { path: '/pages/registry/:name', title: 'Registry example' },
-  { path: '/pages/patterns', title: 'Component recipes' },
-  { path: '/pages/patterns/:name', title: 'Reference pattern' },
+  { path: '/kit/recipes', title: 'Recipes and examples' },
+  { path: '/kit/recipes/:name', title: 'Recipe' },
   { path: '/pages/settings/fullscreen', title: 'Settings' },
   { path: '/pages/analytics/fullscreen', title: 'Analytics' },
   { path: '/pages/authentication/fullscreen', title: 'Authentication' },
@@ -190,19 +183,8 @@ export const ROUTES: { path: string; title: string }[] = [
   { path: '/pages/compose/fullscreen', title: 'Compose' },
   { path: '/pages/tasks/fullscreen', title: 'Tasks' },
   { path: '/pages/discussions/fullscreen', title: 'Discussions' },
+  { path: '/preview/:name', title: 'Story preview' },
   { path: '/spec', title: 'Component spec' },
-  { path: '/components', title: 'Redirect' },
-  { path: '/components/*', title: 'Redirect' },
-  { path: '/blocks', title: 'Redirect' },
-  { path: '/blocks/*', title: 'Redirect' },
-  { path: '/layouts', title: 'Redirect' },
-  { path: '/layouts/*', title: 'Redirect' },
-  { path: '/charts', title: 'Redirect' },
-  { path: '/charts/*', title: 'Redirect' },
-  { path: '/editors', title: 'Redirect' },
-  { path: '/editors/*', title: 'Redirect' },
-  { path: '/examples', title: 'Redirect' },
-  { path: '/examples/*', title: 'Redirect' },
 ]
 
 const TITLES = new Map(ROUTES.map((route) => [route.path, route.title]))
@@ -221,8 +203,11 @@ function RouteTitle(): JSX.Element {
     const pathname = location.pathname
     const title = TITLES.get(pathname)
     if (title) document.title = `${title} · newui`
-    else if (
-      /^\/(components|blocks|layouts|charts|editors)\/[^/]+$/.test(pathname)
+    else if (/^\/kit\/recipes\/[^/]+$/.test(pathname)) {
+      const recipe = pathname.split('/').at(-1)?.replaceAll('-', ' ')
+      if (recipe) document.title = `${recipe} · Recipes · newui`
+    } else if (
+      /^\/(atoms|molecules|organisms|templates)\/[^/]+$/.test(pathname)
     ) {
       let current = true
       onCleanup(() => {
@@ -246,14 +231,12 @@ export function AppRoutes(): JSX.Element {
         <Route path="/foundations" component={Foundations} />
         <Route path="/architecture" component={Architecture} />
         <Route path="/kit" component={Kit} />
+        <Route path="/kit/recipes" component={KitRecipes} />
+        <Route path="/kit/recipes/:name" component={KitRecipes} />
 
-        {/* Pages: the top of the ladder. Applications, the solid-ui recipes and
-            the registry examples all live here; `:slug` is the preview page and
-            the `fullscreen` routes below are the bare viewports. */}
+        {/* Pages are complete application workflows; fullscreen routes are
+            those same applications without documentation chrome. */}
         <Route path="/pages" component={Examples} />
-        <Route path="/pages/registry/:name" component={RegistryExamplePage} />
-        <Route path="/pages/patterns" component={Patterns} />
-        <Route path="/pages/patterns/:name" component={Patterns} />
         <Route path="/pages/accounting" component={ApplicationPage} />
         <Route path="/pages/analytics" component={ApplicationPage} />
         <Route path="/pages/authentication" component={ApplicationPage} />
@@ -266,25 +249,6 @@ export function AppRoutes(): JSX.Element {
         <Route path="/pages/tasks" component={ApplicationPage} />
         <Route path="/pages/discussions" component={ApplicationPage} />
         <Route path="/pages/settings" component={ApplicationPage} />
-
-        {/*
-          The pre-atomic URLs. They were public for long enough that dropping
-          them would break every bookmark and every stack-overflow answer; each
-          one redirects, and the component redirects resolve the entry's level
-          rather than guessing a section.
-        */}
-        <Route path="/components" component={LegacyRedirect} />
-        <Route path="/components/*" component={LegacyRedirect} />
-        <Route path="/blocks" component={LegacyRedirect} />
-        <Route path="/blocks/*" component={LegacyRedirect} />
-        <Route path="/layouts" component={LegacyRedirect} />
-        <Route path="/layouts/*" component={LegacyRedirect} />
-        <Route path="/charts" component={LegacyRedirect} />
-        <Route path="/charts/*" component={LegacyRedirect} />
-        <Route path="/editors" component={LegacyRedirect} />
-        <Route path="/editors/*" component={LegacyRedirect} />
-        <Route path="/examples" component={LegacyRedirect} />
-        <Route path="/examples/*" component={LegacyRedirect} />
       </Route>
 
       {/*
@@ -327,6 +291,7 @@ export function AppRoutes(): JSX.Element {
         <Route path="/pages/compose/fullscreen" component={Compose} />
         <Route path="/pages/tasks/fullscreen" component={Tasks} />
         <Route path="/pages/discussions/fullscreen" component={Discussions} />
+        <Route path="/preview/:name" component={StoryPreview} />
         <Route path="/spec" component={Spec} />
         <Route path="*" component={NotFound} />
       </Route>

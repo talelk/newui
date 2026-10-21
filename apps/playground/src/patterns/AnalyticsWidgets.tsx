@@ -1,6 +1,7 @@
+import { Button } from '@newui/atoms'
 import { NumberCard } from '@newui/charts'
 import { count, usd } from '@newui/data'
-import { Alert, Button } from '@newui/ui'
+import { Alert } from '@newui/molecules'
 import { createSignal, For, Show } from 'solid-js'
 
 const CHANNELS = [

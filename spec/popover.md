@@ -4,7 +4,7 @@ Anchors interactive supplementary content to a trigger.
 
 ## Usage and anatomy
 
-Import `Popover` from `@newui/ui`. The executable example and its copyable
+Import `Popover` from `@newui/molecules`. The executable example and its copyable
 source on `/molecules/popover` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

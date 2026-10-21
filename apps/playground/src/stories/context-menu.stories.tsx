@@ -1,4 +1,4 @@
-import { ContextMenu, toast } from '@newui/ui'
+import { ContextMenu, toast } from '@newui/molecules'
 import { createSignal, onMount } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -32,7 +32,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Actions/ContextMenu',
+  title: 'Molecules/Actions/ContextMenu',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

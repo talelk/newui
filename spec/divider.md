@@ -4,7 +4,7 @@ Separates related groups with an optional text label.
 
 ## Usage and anatomy
 
-Import `Divider` from `@newui/ui`. The executable example and its copyable
+Import `Divider` from `@newui/atoms`. The executable example and its copyable
 source on `/atoms/divider` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

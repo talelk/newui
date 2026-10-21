@@ -1,4 +1,4 @@
-import { ErrorMessage } from '@newui/ui'
+import { ErrorMessage } from '@newui/atoms'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**
@@ -17,7 +17,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Inputs/ErrorMessage',
+  title: 'Atoms/Inputs/ErrorMessage',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

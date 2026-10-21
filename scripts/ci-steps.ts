@@ -49,6 +49,11 @@ export const CI_STEPS: CiStep[] = [
     group: 'checks',
   },
   {
+    name: 'Agent Skills validate & stale',
+    command: 'pnpm skills:check',
+    group: 'checks',
+  },
+  {
     name: 'Site data is current',
     command: 'pnpm site:check',
     group: 'checks',

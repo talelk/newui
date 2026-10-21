@@ -1,65 +1,50 @@
-# Specs
+# Contracts
 
-Per-component API contracts. Source-of-truth order:
+Per-reference contracts. Source-of-truth order:
 
-1. `spec/*.md` — current contracts.
+1. `spec/*.md` — current API and behavior contracts.
 2. [`adr/`](./adr/README.md) — decision history.
-3. `../PHILOSOPHY.md` — design rules.
-4. `../CONTEXT.md` — vocabulary.
+3. [`../PHILOSOPHY.md`](../PHILOSOPHY.md) — design rules.
+4. [`../CONTEXT.md`](../CONTEXT.md) — shared vocabulary.
 
-A contract accepted later supersedes older text. Shipped code is evidence of
-what a contract says, never the contract itself.
+## Atomic design
 
-## Foundations
+- [`kit.md`](kit.md) — the atomic package graph, the three templates, and the
+  site/story contract.
+- [`states.md`](states.md) — states every shipped reference story must show.
+- [`visual-system.md`](visual-system.md) — typography, control sizing, surfaces,
+  states and motion.
+- [`reference-examples.md`](reference-examples.md) — page and recipe inventory.
+- [`migrations.md`](migrations.md) — breaking API and package moves, including
+  the atomic package split.
 
-- [The construction kit](kit.md) — the ladder, workstreams and the ratified decisions (plan of record).
-- [States](states.md) — the required-state contract every shipped component's story file is checked against.
-- [Visual system](visual-system.md) — typography, control sizing, surfaces, states and motion.
-- [Reference examples](reference-examples.md) — application and component example inventory.
-- [TanStack integration](tanstack-integration.md) — what is left at the example layer now that the query adapter lives in `@newui/data`.
+The site indexes the component contracts by atomic level: `/atoms`,
+`/molecules`, `/organisms` and `/templates`. The implementation package is
+named in each contract's import example; the atomic level is not inferred from
+the package name.
 
-## Components
+## Organisms and templates
 
-- `inputs.md` — the shared labelling contract and the input family.
-- `form.md` — FormControl, FormLabel, ErrorMessage (the public form primitives).
-- `password.md` — Password (TextInput + reveal toggle).
-- `combobox.md` — Combobox (searchable single select).
-- `dropdown.md` — Dropdown (options-based action menu).
-- `multiselect.md` — MultiSelect (searchable multi-valued select).
-- `datepicker.md` — DatePicker (single date).
-- `date-range-picker.md` — DateRangePicker (date range).
-- `datetime-picker.md` — DateTimePicker (date + time).
-- `duration.md` — Duration (number + unit value control).
-- `bottom-sheet.md` — BottomSheet (bottom-anchored modal sheet).
-- `context-menu.md` — ContextMenu (right-click menu).
-- `breadcrumbs.md` — Breadcrumbs (navigation trail).
-- `item-list-row.md` — ItemListRow (selectable list row).
-- `keyboard-shortcut.md` — KeyboardShortcut + KeyboardShortcutsDialog.
-- `sidebar.md` — Sidebar, rail, sections, cards.
-- `timepicker.md` — TimePicker (time list).
-- `dialog.md` — Dialog parts, `dismissible`, imperative `dialog.*` (pending).
-- `dialog-imperative.md` — `dialog.confirm` / `dialog.danger` / `dialog.prompt` + `DialogHost`.
-- `select.md` — Select with the shared Field contract.
-- `number-input.md`, `slider.md` — numeric entry and range selection.
-- `card.md`, `tabs.md`, `tab-buttons.md` — card and tab-family visual contracts.
-- `switch.md` — Switch (Zag-backed).
-- `button.md` — Button variants, sizes, icon form.
+- [`app-sidebar.md`](app-sidebar.md) — the one grouped sidebar organism.
+- [`filter-bar.md`](filter-bar.md), [`stat-grid.md`](stat-grid.md),
+  [`detail-header.md`](detail-header.md), [`page-toolbar.md`](page-toolbar.md)
+  — reusable page regions.
+- [`kanban-board.md`](kanban-board.md), [`data-table.md`](data-table.md),
+  [`virtual-list.md`](virtual-list.md) — data-heavy organisms.
+- [`app-shell.md`](app-shell.md), [`pane-layout.md`](pane-layout.md),
+  [`auth-layout.md`](auth-layout.md) — the three templates.
+- [`data.md`](data.md) — headless data helpers, query and form logic.
 
-## Packaging decisions
+## Atoms and molecules
 
-- `Radio` is an alias of `RadioGroup` (frappe-ui's naming); `Dropdown` is an
-  options-based component, not the `Menu` alias it used to be.
-- `List` stays at the package root: it does not meet P15's three bars (cost
-  isolation, extensible registry, name collision), so no `@newui/list` subpath.
-- See [`adr/`](./adr/README.md) for the full decision record (packaging,
-  no-`v-model`, in-house `tv`, pruned `tw-merge`, contrast shifts, …).
+Each control has a file named by its slug (`button.md`, `dialog.md`,
+`date-picker.md`, …). Input controls share the contract in [`inputs.md`](inputs.md)
+and [`form.md`](form.md); their concrete per-control behavior stays in the
+individual contract. `scroll-table.md` documents the table scroll molecule.
 
-## Parity with frappe-ui
+## Decision history
 
-- `design-deltas-inputs.md`, `design-deltas-display.md`,
-  `design-deltas-overlays.md` — per-component visual deltas against frappe-ui,
-  classified `match` / `intentional` / `unintended`. Intentional deltas are the
-  WCAG-AA colour shifts (ADR-0005).
-- `migrations.md` — breaking changes and how to move off them.
-
-Specs are added as components land.
+ADRs explain why a decision was made; when a later accepted contract disagrees,
+the current `spec/*.md` wins. Design-delta audits and example refresh notes are
+historical records, not supported import paths. ADR-0013 supersedes the earlier
+package and shell mapping in ADR-0012.

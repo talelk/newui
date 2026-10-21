@@ -1,4 +1,4 @@
-import { FilterBar, StatGrid } from '@newui/blocks'
+import { Badge, Button, Switch } from '@newui/atoms'
 import {
   AreaChart,
   ChartCard,
@@ -12,17 +12,17 @@ import {
   optionsOf,
   usdK,
 } from '@newui/data'
-import type { DataTableColumn } from '@newui/data/table'
-import { ScrollTable, TABLE_HEAD_CLASS } from '@newui/data/table/scroll'
 import {
-  Badge,
-  Button,
   DateRangePicker,
   type DateRangeValue,
-  Switch,
+  ScrollTable,
+  TABLE_HEAD_CLASS,
   TabButtons,
-} from '@newui/ui'
+} from '@newui/molecules'
+import type { DataTableColumn } from '@newui/organisms'
+import { FilterBar, StatGrid } from '@newui/organisms'
 import { createMemo, createSignal, For, type JSX, lazy, Show } from 'solid-js'
+import { AppPage } from '../examples/AppPage'
 import {
   aggregateCashflow,
   CATEGORIES,
@@ -32,19 +32,18 @@ import {
   type Transaction,
 } from '../examples/accounting-data'
 import { Notice } from '../examples/Notice'
-import { WorkspacePage } from '../examples/WorkspacePage'
 
 const AccountingDialogs = lazy(() => import('./accounting/AccountingDialogs'))
 
 const ExpenseChart = lazy(() => import('./accounting/ExpenseChart'))
 
 const TransactionTable = lazy(() =>
-  import('@newui/data/table').then((module) => ({
+  import('@newui/organisms').then((module) => ({
     default: module.DataTable<Transaction>,
   })),
 )
 const EmployeeTable = lazy(() =>
-  import('@newui/data/table').then((module) => ({
+  import('@newui/organisms').then((module) => ({
     default: module.DataTable<Employee>,
   })),
 )
@@ -208,7 +207,7 @@ export function Accounting(): JSX.Element {
       ])
   }
   return (
-    <WorkspacePage
+    <AppPage
       title="Know where your business stands"
       section="Accounting"
       description="A clear view of cash, costs and the people behind your business. All figures are local demonstration data."
@@ -612,6 +611,6 @@ export function Accounting(): JSX.Element {
           nextId={() => nextId++}
         />
       </Show>
-    </WorkspacePage>
+    </AppPage>
   )
 }

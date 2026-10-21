@@ -1,5 +1,5 @@
+import { Icon } from '@newui/atoms'
 import { CircleCheckIcon } from '@newui/icons'
-import { Icon } from '@newui/ui'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**
@@ -19,7 +19,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Display/Icon',
+  title: 'Atoms/Display/Icon',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

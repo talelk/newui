@@ -124,12 +124,10 @@ test('a recipe with a sidebar offers it as a drawer on a phone', async ({
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/pages/tasks/fullscreen')
 
-  // The frame: a pinned header, and no sidebar beside the content.
-  await expect(
-    page.getByRole('button', { name: 'Open navigation' }),
-  ).toBeHidden()
+  // The frame has one menu trigger; the docked sidebar is absent at this width.
+  await expect(page.locator('[data-slot="app-shell-sidebar"]')).toHaveCount(0)
   const trigger = page.getByRole('button', {
-    name: 'Toggle workspace navigation',
+    name: 'Open application navigation',
   })
   await expect(trigger).toBeVisible()
 

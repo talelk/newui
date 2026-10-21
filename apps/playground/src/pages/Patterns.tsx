@@ -5,6 +5,8 @@ import { PATTERNS, REFERENCE_EXAMPLES } from '../lib/reference-examples'
 import { PageIntro } from '../shell/PageIntro'
 
 const modules = {
+  forms: lazy(() => import('../patterns/Forms')),
+  overlays: lazy(() => import('../patterns/Overlays')),
   carousel: lazy(() => import('../patterns/Carousel')),
   command: lazy(() => import('../patterns/Command')),
   layout: lazy(() => import('../patterns/Layout')),
@@ -22,10 +24,10 @@ export function Patterns() {
   return (
     <div class="flex min-w-0 flex-col gap-8">
       <PageIntro
-        title={pattern()?.title ?? 'Component recipes'}
+        title={pattern()?.title ?? 'Recipes and examples'}
         description={
           pattern()?.description ??
-          'The solid-ui registry, translated into newui composition. Each destination is a working example with its own lazy module.'
+          'Small, working compositions and registry examples, linked to the public atoms, molecules and organisms they demonstrate.'
         }
       />
       <Show
@@ -39,7 +41,7 @@ export function Patterns() {
               <For each={PATTERNS}>
                 {(item) => (
                   <A
-                    href={`/pages/patterns/${item.slug}`}
+                    href={`/kit/recipes/${item.slug}`}
                     class="flex min-h-11 items-center gap-3 rounded-3 p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
                   >
                     <div class="min-w-0 flex-1">
@@ -82,14 +84,14 @@ export function Patterns() {
           <Content />
         </div>
         <A
-          href="/pages/patterns"
+          href="/kit/recipes"
           class="w-fit rounded-3 text-ink-blue-link focus-visible:focus-ring"
         >
           <span
             aria-hidden="true"
             class="lucide-arrow-left inline-block size-4 align-middle"
           />{' '}
-          All component recipes
+          All recipes
         </A>
       </Show>
     </div>

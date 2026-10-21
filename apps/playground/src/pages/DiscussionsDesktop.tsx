@@ -1,20 +1,7 @@
-import { AppSidebar, FilterBar, PageToolbar } from '@newui/blocks'
-import {
-  AppShell,
-  Avatar,
-  Badge,
-  Button,
-  Dropdown,
-  Icon,
-  List,
-  ListCell,
-  ListRow,
-  Menu,
-  PageBody,
-  SidebarRail,
-  SidebarRailItem,
-  Tooltip,
-} from '@newui/ui'
+import { Avatar, Badge, Button, Icon, Tooltip } from '@newui/atoms'
+import { Dropdown, List, ListCell, ListRow, Menu } from '@newui/molecules'
+import { FilterBar, PageToolbar, SidebarItem } from '@newui/organisms'
+import { AppShell } from '@newui/templates'
 import {
   createMemo,
   createSignal,
@@ -29,9 +16,9 @@ import {
 } from '../examples/discussions'
 
 /**
- * Frappe-inspired desktop workspace: community rail, spaces, local discussion
- * creation/search/replies and grouped settings, framed inside the docs site.
- * Example data and edits stay in this route's memory.
+ * Frappe-inspired responsive workspace: a tenant/community switcher and all
+ * navigation live in the AppShell's one sidebar. Example data and edits stay in
+ * this route's memory.
  */
 
 interface Community {
@@ -161,269 +148,265 @@ export function DiscussionsDesktop(props: {
   }
 
   return (
-    <div class="flex flex-col gap-4">
-      {/* PageToolbar's title is a span by design; this standalone screen
-        still owes the document its one heading. */}
-      <h1 class="sr-only">Discussions</h1>
-      <div class="min-h-screen overflow-hidden rounded-6 border border-outline-gray-1 shadow-md">
-        <AppShell
-          class="max-md:[&_[data-slot=sidebar-rail]]:hidden max-md:[&_[data-slot=sidebar]]:hidden"
-          rail={
-            <SidebarRail class="border-r border-outline-gray-1">
-              <SidebarRailItem label="Home" route="/">
-                <img
-                  src="/favicon.svg"
-                  alt=""
-                  class="size-7 rounded-[7px]"
-                  width="28"
-                  height="28"
-                />
-              </SidebarRailItem>
-
-              <div class="flex w-full flex-1 flex-col items-center gap-3 pt-3">
-                <For each={COMMUNITIES}>
-                  {(item) => (
-                    <SidebarRailItem
-                      label={item.name}
-                      icon={item.icon}
-                      active={community() === item.id}
-                      badge={item.unread}
-                      badgeStyle="count"
-                      onClick={() => setCommunity(item.id)}
-                    />
-                  )}
-                </For>
-              </div>
-
-              {/* Bottom cluster: the extra gap keeps the utility items and the
-                account avatar from crowding each other at the foot of the rail. */}
-              <div class="flex flex-col items-center gap-2.5">
-                {/* The FilterBar search box owns the `/` shortcut, so the
-                  rail entry no longer reaches for it by id. */}
-                <SidebarRailItem
-                  label="Search"
-                  variant="ghost"
-                  icon="lucide-search"
-                />
-                <SidebarRailItem
-                  label="Settings"
-                  variant="ghost"
-                  icon="lucide-settings"
-                  onClick={() => setSettingsOpen(true)}
-                />
-                <AccountMenu
-                  onOpenSettings={() => setSettingsOpen(true)}
-                  onLogout={() => {
-                    discussions.setQuery('')
-                    discussions.setSelected(undefined)
-                    setNotice(
-                      'Local session cleared. No external account is connected.',
-                    )
-                  }}
-                />
-              </div>
-            </SidebarRail>
-          }
-          sidebar={
-            /* No logo here: the rail already shows the active community's
-              avatar, so a header logo would just duplicate it. */
-            <AppSidebar
-              class="border-r border-outline-gray-1"
-              title={
-                COMMUNITIES.find((item) => item.id === community())?.name ??
-                'Design'
-              }
-              subtitle="18 members"
-              showLogo={false}
-              headerActions={
-                <div class="flex items-center gap-1">
-                  <Dropdown
-                    options={[
-                      {
-                        label: 'Invite people',
-                        value: 'invite',
-                        icon: 'lucide-user-plus',
-                      },
-                      {
-                        label: 'Community settings',
-                        value: 'settings',
-                        icon: 'lucide-settings-2',
-                      },
-                    ]}
-                    onSelect={() => setSettingsOpen(true)}
-                  >
-                    <span class="sr-only">Community actions</span>
-                  </Dropdown>
-                </div>
-              }
-              groups={[
-                {
-                  items: [
-                    { label: 'Home', icon: 'lucide-house' },
-                    { label: 'Search', icon: 'lucide-search' },
-                  ],
-                },
-                {
-                  label: 'Spaces',
-                  // The sort belongs to the group it reorders, not to the
-                  // header that acts on the whole community.
-                  action: (
-                    <Button
-                      variant="ghost"
-                      size="xs"
-                      icon="lucide-arrow-up-down"
-                      onClick={() => setSpacesReversed((value) => !value)}
-                      aria-label="Sort spaces"
-                    />
-                  ),
-                  items: (spacesReversed()
-                    ? [...SPACES].reverse()
-                    : SPACES
-                  ).map((item) => ({
-                    label: item.name,
-                    icon: item.icon,
-                    ...(item.unread ? { count: item.unread } : {}),
-                    active: space() === item.name,
-                    onClick: () => setSpace(item.name),
-                  })),
-                },
-              ]}
-            />
-          }
-        >
-          <PageToolbar
-            title={space()}
-            menu={SPACE_ACTIONS.map((action) => ({
-              label: action.label,
-              icon: action.icon,
-              onClick: () => spaceAction(action.value),
+    <>
+      <AppShell
+        title="Discussions"
+        description="A community workspace with one sidebar, grouped spaces and account utilities."
+        mobileTitle="Discussions"
+        navLabel="Discussions navigation"
+        brand={
+          <a
+            href="/pages/discussions"
+            class="flex min-h-10 items-center gap-2 rounded-3 px-2 font-semibold focus-visible:focus-ring"
+          >
+            <img src="/favicon.svg" alt="" class="size-6 rounded-[6px]" />
+            <span>Frappe Community</span>
+          </a>
+        }
+        brandCollapsed={
+          <a
+            href="/pages/discussions"
+            aria-label="Frappe Community home"
+            class="grid size-10 place-items-center rounded-3 focus-visible:focus-ring"
+          >
+            <img src="/favicon.svg" alt="" class="size-7 rounded-[6px]" />
+          </a>
+        }
+        tenant={
+          <Dropdown
+            options={COMMUNITIES.map((item) => ({
+              label: item.name,
+              value: item.id,
+              icon: item.icon,
             }))}
-            action={{ label: 'Add new', onClick: discussions.start }}
-          />
-
-          <PageBody>
-            <div class="mb-4">
-              <FilterBar
-                query={{
-                  placeholder: 'Search discussions…',
-                  value: discussions.query(),
-                  onInput: discussions.setQuery,
-                }}
-                tabs={{
-                  value: feedTab(),
-                  onValueChange: setFeedTab,
-                  options: [
-                    { label: 'Unread', value: 'Unread' },
-                    { label: 'All', value: 'All' },
-                  ],
-                }}
-                chips={[
-                  ...(feedTab() === 'Unread'
-                    ? [
-                        {
-                          label: 'Unread only',
-                          onRemove: () => setFeedTab('All'),
-                        },
-                      ]
-                    : []),
-                  ...(discussions.query()
-                    ? [
-                        {
-                          label: `Search: ${discussions.query()}`,
-                          onRemove: () => discussions.setQuery(''),
-                        },
-                      ]
-                    : []),
-                ]}
-                resultCount={visibleDiscussions().length}
-                onClearAll={() => {
-                  discussions.setQuery('')
-                  setFeedTab('All')
-                }}
+            onSelect={setCommunity}
+          >
+            <span class="flex min-w-0 items-center gap-2">
+              <span
+                class={`size-4 shrink-0 ${COMMUNITIES.find((item) => item.id === community())?.icon ?? 'lucide-shapes'}`}
+                aria-hidden="true"
               />
-            </div>
-            <Show when={notice()}>
-              <p role="status" class="mb-3 text-caption text-ink-gray-7">
-                {notice()}
-              </p>
-            </Show>
+              <span class="truncate">
+                {COMMUNITIES.find((item) => item.id === community())?.name ??
+                  'Design'}
+              </span>
+            </span>
+          </Dropdown>
+        }
+        tenantCollapsed={
+          <Dropdown
+            options={COMMUNITIES.map((item) => ({
+              label: item.name,
+              value: item.id,
+              icon: item.icon,
+            }))}
+            onSelect={setCommunity}
+          >
+            <span class="grid size-9 place-items-center">
+              <span class="sr-only">Choose community</span>
+              <span
+                class={`size-4 ${COMMUNITIES.find((item) => item.id === community())?.icon ?? 'lucide-shapes'}`}
+                aria-hidden="true"
+              />
+            </span>
+          </Dropdown>
+        }
+        navigation={[
+          {
+            label: 'Community',
+            items: COMMUNITIES.map((item) => ({
+              label: item.name,
+              icon: item.icon,
+              active: community() === item.id,
+              ...(item.unread ? { count: item.unread } : {}),
+              onClick: () => setCommunity(item.id),
+            })),
+          },
+          {
+            label: 'Spaces',
+            action: (
+              <Button
+                variant="ghost"
+                size="xs"
+                icon="lucide-arrow-up-down"
+                onClick={() => setSpacesReversed((value) => !value)}
+                aria-label="Sort spaces"
+              />
+            ),
+            items: (spacesReversed() ? [...SPACES].reverse() : SPACES).map(
+              (item) => ({
+                label: item.name,
+                icon: item.icon,
+                ...(item.unread ? { count: item.unread } : {}),
+                active: space() === item.name,
+                onClick: () => setSpace(item.name),
+              }),
+            ),
+          },
+        ]}
+        settings={
+          <SidebarItem
+            label="Settings"
+            icon="lucide-settings"
+            onClick={() => setSettingsOpen(true)}
+          >
+            Settings
+          </SidebarItem>
+        }
+        account={
+          <AccountMenu
+            onOpenSettings={() => setSettingsOpen(true)}
+            onLogout={() => {
+              discussions.setQuery('')
+              discussions.setSelected(undefined)
+              setNotice(
+                'Local session cleared. No external account is connected.',
+              )
+            }}
+          />
+        }
+        accountCollapsed={
+          <AccountMenu
+            onOpenSettings={() => setSettingsOpen(true)}
+            onLogout={() => {
+              discussions.setQuery('')
+              discussions.setSelected(undefined)
+              setNotice(
+                'Local session cleared. No external account is connected.',
+              )
+            }}
+          />
+        }
+      >
+        <PageToolbar
+          title={space()}
+          menu={SPACE_ACTIONS.map((action) => ({
+            label: action.label,
+            icon: action.icon,
+            onClick: () => spaceAction(action.value),
+          }))}
+          action={{ label: 'New discussion', onClick: discussions.start }}
+        />
 
-            {/* `-mx-3` lets the row hover surface bleed past the text edge, so the
+        <div class="flex flex-col gap-4">
+          <div class="mb-4">
+            <FilterBar
+              query={{
+                placeholder: 'Search discussions…',
+                value: discussions.query(),
+                onInput: discussions.setQuery,
+              }}
+              tabs={{
+                value: feedTab(),
+                onValueChange: setFeedTab,
+                options: [
+                  { label: 'Unread', value: 'Unread' },
+                  { label: 'All', value: 'All' },
+                ],
+              }}
+              chips={[
+                ...(feedTab() === 'Unread'
+                  ? [
+                      {
+                        label: 'Unread only',
+                        onRemove: () => setFeedTab('All'),
+                      },
+                    ]
+                  : []),
+                ...(discussions.query()
+                  ? [
+                      {
+                        label: `Search: ${discussions.query()}`,
+                        onRemove: () => discussions.setQuery(''),
+                      },
+                    ]
+                  : []),
+              ]}
+              resultCount={visibleDiscussions().length}
+              onClearAll={() => {
+                discussions.setQuery('')
+                setFeedTab('All')
+              }}
+            />
+          </div>
+          <Show when={notice()}>
+            <p role="status" class="mb-3 text-caption text-ink-gray-7">
+              {notice()}
+            </p>
+          </Show>
+
+          {/* `-mx-3` lets the row hover surface bleed past the text edge, so the
               content stays aligned with the container. */}
-            <List class="-mx-3">
-              <For each={visibleDiscussions()}>
-                {(discussion) => (
-                  <ListRow height="h-15">
-                    <ListCell>
-                      <Avatar label={discussion.author} size="2xl" />
-                    </ListCell>
-                    <ListCell>
-                      <div class="min-w-0 flex-1">
-                        {/* The sized text sits in an inner span so it keeps its own
+          <List class="-mx-3">
+            <For each={visibleDiscussions()}>
+              {(discussion) => (
+                <ListRow height="h-15">
+                  <ListCell>
+                    <Avatar label={discussion.author} size="2xl" />
+                  </ListCell>
+                  <ListCell>
+                    <div class="min-w-0 flex-1">
+                      {/* The sized text sits in an inner span so it keeps its own
                           line-height; `leading-none` together with `truncate`
                           would shear off descenders. */}
-                        <div class="truncate leading-none text-ink-gray-8">
-                          <span
-                            class={
-                              discussion.unread
-                                ? 'text-base-semibold'
-                                : 'text-base'
-                            }
+                      <div class="truncate leading-none text-ink-gray-8">
+                        <span
+                          class={
+                            discussion.unread
+                              ? 'text-base-semibold'
+                              : 'text-base'
+                          }
+                        >
+                          <button
+                            type="button"
+                            class="max-w-full truncate rounded-3 text-start focus-visible:focus-ring-blue"
+                            onClick={() => discussions.open(discussion)}
                           >
-                            <button
-                              type="button"
-                              class="max-w-full truncate rounded-3 text-start focus-visible:focus-ring-blue"
-                              onClick={() => discussions.open(discussion)}
-                            >
-                              {discussion.title}
-                            </button>
-                          </span>
-                        </div>
-                        <div class="mt-1.5 flex min-w-0 items-center text-base text-ink-gray-7">
-                          <Icon
-                            icon="lucide-reply"
-                            class="mr-1 size-4 shrink-0"
-                          />
-                          <span class="shrink-0">
-                            {discussion.author}:&nbsp;
-                          </span>
-                          <span class="truncate">{discussion.excerpt}</span>
-                        </div>
+                            {discussion.title}
+                          </button>
+                        </span>
                       </div>
-                    </ListCell>
-                    <ListCell class="justify-end">
-                      <div>
-                        <div class="text-right text-sm whitespace-nowrap text-ink-gray-7">
-                          {discussion.lastActivity}
-                        </div>
-                        <div class="mt-1.5 flex items-center justify-end">
-                          <Show
-                            when={discussion.unread}
-                            fallback={<Badge>{discussion.comments + 1}</Badge>}
-                          >
-                            <Tooltip text={`${discussion.unread} unread`}>
-                              <Badge theme="amber" variant="solid" size="sm">
-                                {discussion.unread}
-                              </Badge>
-                            </Tooltip>
-                          </Show>
-                        </div>
+                      <div class="mt-1.5 flex min-w-0 items-center text-base text-ink-gray-7">
+                        <Icon
+                          icon="lucide-reply"
+                          class="mr-1 size-4 shrink-0"
+                        />
+                        <span class="shrink-0">{discussion.author}:&nbsp;</span>
+                        <span class="truncate">{discussion.excerpt}</span>
                       </div>
-                    </ListCell>
-                  </ListRow>
-                )}
-              </For>
-            </List>
-            <Show when={!visibleDiscussions().length}>
-              <p class="py-8 text-center text-ink-gray-7">
-                No discussions match this space and filter.
-              </p>
-            </Show>
-          </PageBody>
-        </AppShell>
-
-        <DiscussionDialogs store={discussions} />
-      </div>
-    </div>
+                    </div>
+                  </ListCell>
+                  <ListCell class="justify-end">
+                    <div>
+                      <div class="text-right text-sm whitespace-nowrap text-ink-gray-7">
+                        {discussion.lastActivity}
+                      </div>
+                      <div class="mt-1.5 flex items-center justify-end">
+                        <Show
+                          when={discussion.unread}
+                          fallback={<Badge>{discussion.comments + 1}</Badge>}
+                        >
+                          <Tooltip text={`${discussion.unread} unread`}>
+                            <Badge theme="amber" variant="solid" size="sm">
+                              {discussion.unread}
+                            </Badge>
+                          </Tooltip>
+                        </Show>
+                      </div>
+                    </div>
+                  </ListCell>
+                </ListRow>
+              )}
+            </For>
+          </List>
+          <Show when={!visibleDiscussions().length}>
+            <p class="py-8 text-center text-ink-gray-7">
+              No discussions match this space and filter.
+            </p>
+          </Show>
+        </div>
+      </AppShell>
+      <DiscussionDialogs store={discussions} />
+    </>
   )
 }

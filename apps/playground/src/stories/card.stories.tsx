@@ -1,12 +1,12 @@
+import { Button } from '@newui/atoms'
 import {
-  Button,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@newui/ui'
+} from '@newui/molecules'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -38,7 +38,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Display/Card',
+  title: 'Molecules/Display/Card',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

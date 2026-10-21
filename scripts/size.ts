@@ -78,25 +78,30 @@ const ENTRIES: Entry[] = [
     forbid: ['"slider"', '"toast"'],
   },
   {
-    name: 'Blocks barrel',
-    file: 'scripts/fixtures/blocks.ts',
-    // All six blocks: ~73 kB, because a composed section drags the components
-    // it composes — the sidebar brings `ScrollArea` and the tooltip, the
-    // toolbar brings the menu, the filter bar brings `Select`. The `forbid` list
-    // is the assertion that matters: a block may not carry a machine it never
-    // reaches for, and nothing here may pull the charts or the editor in.
-    budget: 80,
+    name: 'Atoms barrel',
+    file: 'scripts/fixtures/atoms.ts',
+    budget: 140,
+    forbid: ['"chart"', '"editor"'],
+  },
+  {
+    name: 'Molecules barrel',
+    file: 'scripts/fixtures/molecules.ts',
+    budget: 140,
+    forbid: ['"chart"', '"editor"'],
+  },
+  {
+    name: 'Organisms barrel',
+    file: 'scripts/fixtures/organisms.ts',
+    // Organisms compose controls, and the table/list own their optional render
+    // engines. The `forbid` list keeps chart/editor payloads out.
+    budget: 180,
     forbid: ['"slider"', '"toast"', '"tree-view"', '"date-picker"'],
   },
   {
-    name: 'Layouts barrel',
-    file: 'scripts/fixtures/layouts.ts',
-    // Both layouts: a frame that composes `ResponsiveShell` (and so the
-    // sidebar's folding column, its tooltips and the mobile bar) plus a
-    // two-pane split that is its own thing. 36.4 measured after the frame grew
-    // a rail; the level is meant to grow, so the headroom is deliberate. What
-    // matters is the `forbid` list: none of this may reach a chart or an editor.
-    budget: 44,
+    name: 'Templates barrel',
+    file: 'scripts/fixtures/templates.ts',
+    // The three templates: the integrated AppShell, split pane and auth frame.
+    budget: 100,
     forbid: ['"slider"', '"toast"', '"tree-view"', '"date-picker"', '"chart"'],
   },
   {
@@ -125,35 +130,12 @@ const ENTRIES: Entry[] = [
     forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
   },
   {
-    name: 'Data table',
-    file: 'scripts/fixtures/data-table.ts',
-    // 37.6 measured: TanStack Table is the heaviest dependency the kit owns,
-    // which is exactly why the surface lives here and not in `@newui/ui`.
-    budget: 42,
-    forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
-  },
-  {
-    name: 'Data virtual',
-    file: 'scripts/fixtures/data-virtual.ts',
-    // 20.0 measured: TanStack Virtual plus the scroll region around it. The
-    // headroom is deliberate — a budget at exactly the measured number turns
-    // the next honest addition into a red gate.
-    budget: 24,
-    forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
-  },
-  {
-    name: 'Full barrel',
+    name: 'Atomic barrel',
     file: 'scripts/fixtures/all.ts',
-    // Raised 132 → 140 (Combobox), 140 → 172 (DatePicker's
-    // `@internationalized/date`), 172 → 210 (the mobile/settings/tree/
-    // file-upload/time-picker/context-menu batch), 210 → 225 (the frappe-ui
-    // surface-parity pass: toggle/selection/display/overlay props), 225 → 245
-    // (the disclosure/pagination/empty-state/timeline/toggle-group/
-    // progress-circle batch: seven components, ~14 kB of recipe and machine
-    // wiring). The barrel is every component by definition; that `Button`-only
-    // stays under 11 kB — with the new machines named in its `forbid` list — is
-    // the tree-shaking guard for all of them.
-    budget: 245,
+    // The full core is an upper bound; regular consumers import only the levels
+    // they use. The per-level entries above guard those costs, and `Button only`
+    // is the leaf tree-shaking assertion.
+    budget: 300,
   },
 ]
 

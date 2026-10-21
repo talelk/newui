@@ -6,8 +6,11 @@ import { Markdown } from './markdown'
 import { packageGuideSources as sources } from './package-guide-sources'
 
 const packages = [
-  'ui',
-  'blocks',
+  'atoms',
+  'molecules',
+  'organisms',
+  'templates',
+  'data',
   'charts',
   'editor',
   'code-editor',

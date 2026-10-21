@@ -1,4 +1,4 @@
-import { Duration } from '@newui/ui'
+import { Duration } from '@newui/atoms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -15,7 +15,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Inputs/Duration',
+  title: 'Atoms/Inputs/Duration',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

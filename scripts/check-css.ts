@@ -12,13 +12,16 @@
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
-import { twMergeConfig } from '../packages/ui/src/lib/tw-merge.config'
+import { twMergeConfig } from '../packages/atoms/src/lib/tw-merge.config'
 
 const REPO = process.cwd()
-const UI_SRC = path.join(REPO, 'packages/ui/src')
-const BLOCKS_SRC = path.join(REPO, 'packages/blocks/src')
-const LAYOUTS_SRC = path.join(REPO, 'packages/layouts/src')
-const DATA_SRC = path.join(REPO, 'packages/data/src')
+const ATOMS_SRC = path.join(REPO, 'packages/atoms/src')
+const MOLECULES_SRC = path.join(REPO, 'packages/molecules/src')
+const ORGANISMS_SRC = path.join(REPO, 'packages/organisms/src')
+const TEMPLATES_SRC = path.join(REPO, 'packages/templates/src')
+const CHARTS_SRC = path.join(REPO, 'packages/charts/src')
+const EDITOR_SRC = path.join(REPO, 'packages/editor/src')
+const CODE_EDITOR_SRC = path.join(REPO, 'packages/code-editor/src')
 const APP_SRC = path.join(REPO, 'apps/playground/src')
 const DIST = path.join(REPO, 'apps/playground/dist')
 
@@ -123,18 +126,87 @@ function escapeClass(token: string): string {
   return token.replace(/[./[\]()%#!:,&*+>~'"]/g, (char) => `\\${char}`)
 }
 
+/** Find the end of a balanced JavaScript brace expression, ignoring strings. */
+function closingBrace(source: string, opening: number): number {
+  let depth = 0
+  let quote = ''
+  let escaped = false
+  let lineComment = false
+  let blockComment = false
+
+  for (let index = opening; index < source.length; index += 1) {
+    const char = source[index] ?? ''
+    const next = source[index + 1] ?? ''
+
+    if (lineComment) {
+      if (char === '\n') lineComment = false
+      continue
+    }
+    if (blockComment) {
+      if (char === '*' && next === '/') {
+        blockComment = false
+        index += 1
+      }
+      continue
+    }
+    if (quote) {
+      if (escaped) escaped = false
+      else if (char === '\\') escaped = true
+      else if (char === quote) quote = ''
+      continue
+    }
+
+    if (char === '/' && next === '/') {
+      lineComment = true
+      index += 1
+    } else if (char === '/' && next === '*') {
+      blockComment = true
+      index += 1
+    } else if (char === "'" || char === '"' || char === '`') {
+      quote = char
+    } else if (char === '{') {
+      depth += 1
+    } else if (char === '}') {
+      depth -= 1
+      if (depth === 0) return index
+    }
+  }
+
+  return source.length - 1
+}
+
+/** CSS property names/values are not Tailwind class tokens. */
+function withoutStyleObjects(source: string): string {
+  const startPattern = /(?:\bstyle\s*=\s*|:\s*JSX\.CSSProperties\s*=\s*)\{/g
+  let output = ''
+  let cursor = 0
+
+  for (const match of source.matchAll(startPattern)) {
+    const start = match.index
+    if (start < cursor) continue
+    const opening = start + match[0].lastIndexOf('{')
+    const end = closingBrace(source, opening) + 1
+    output += `${source.slice(cursor, start)}${source.slice(start, opening)}${' '.repeat(end - opening)}`
+    cursor = end
+  }
+
+  return output + source.slice(cursor)
+}
+
 const TOKEN_RE = /^[a-z][a-z0-9./-]*$/
 const missing = new Map<string, string>()
 
-// Every package that ships class names: the components, the blocks and layouts
-// composed from them, and the data layer's promoted surfaces. Their classes are
-// scanned by `style.css`'s `@source`, so a missing rule there is a real defect —
-// the component renders unstyled.
+// Every package that ships visual class names. Their classes are scanned by
+// `style.css`'s `@source`, so a missing rule is a real defect — an organism or
+// template would render unstyled.
 for (const file of [
-  ...walk(UI_SRC),
-  ...walk(BLOCKS_SRC),
-  ...walk(LAYOUTS_SRC),
-  ...walk(DATA_SRC),
+  ...walk(ATOMS_SRC),
+  ...walk(MOLECULES_SRC),
+  ...walk(ORGANISMS_SRC),
+  ...walk(TEMPLATES_SRC),
+  ...walk(CHARTS_SRC),
+  ...walk(EDITOR_SRC),
+  ...walk(CODE_EDITOR_SRC),
 ]) {
   // Not component markup: the config is vocabulary, and its own literals are
   // excluded from the Tailwind scan by `@source not`.
@@ -144,7 +216,7 @@ for (const file of [
   )
     continue
 
-  const source = readFileSync(file, 'utf8')
+  const source = withoutStyleObjects(readFileSync(file, 'utf8'))
   for (const match of source.matchAll(/(.{0,24})['"`]([^'"`\n]*)['"`]/g)) {
     if (/(?:data|aria)-[a-z-]+=$/.test(match[1] ?? '')) continue
     for (const raw of (match[2] ?? '').split(/\s+/)) {

@@ -22,10 +22,62 @@ test('the starter loads its collection inside the app frame', async ({
   ).toBeVisible()
   await expect(rows(page)).toHaveCount(8)
   await expect(page.getByText('24 results')).toBeVisible()
-  // The rail lists applications, the sidebar lists destinations: one Projects.
+  // One integrated sidebar contains the starter's workspace destinations.
   await expect(
     page.getByRole('navigation', { name: 'Starter navigation' }).first(),
   ).toBeVisible()
+})
+
+test('the app shell is one collapsed sidebar at desktop width', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 })
+  await page.goto(`${STARTER}/`)
+  const sidebar = page.locator('[data-slot="app-shell-sidebar"]')
+  await expect(sidebar).toBeVisible()
+  await expect(page.locator('[data-slot="app-shell-drawer"]')).toBeHidden()
+  await expect(sidebar).toContainText('Acme workspace')
+  await expect(sidebar).toContainText('Acme · Production')
+  await expect(sidebar).toContainText('Settings')
+  await expect(sidebar).toContainText('Guest')
+  await expect(page.locator('[data-slot="sidebar-rail"]')).toHaveCount(0)
+
+  await sidebar.getByRole('button', { name: 'Collapse' }).click()
+  await expect(sidebar).toHaveCSS('width', '56px')
+  await expect(sidebar.getByRole('link', { name: 'Projects' })).toHaveAttribute(
+    'aria-label',
+    'Projects',
+  )
+  await expect(
+    sidebar.getByRole('button', { name: 'Choose tenant' }),
+  ).toBeVisible()
+})
+
+test('the same sidebar opens expanded as a mobile drawer with its tenant picker', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto(`${STARTER}/`)
+  await expect(page.locator('[data-slot="app-shell-sidebar"]')).toHaveCount(0)
+  await expect(page.locator('[data-slot="app-shell-drawer"]')).toBeHidden()
+  await page
+    .getByRole('button', { name: 'Open application navigation' })
+    .click()
+  const drawer = page.getByRole('dialog', { name: 'Starter navigation' })
+  await expect(drawer).toBeVisible()
+  await expect(drawer).toContainText('Acme workspace')
+  await expect(drawer).toContainText('Projects')
+  await expect(drawer).toContainText('Settings')
+  await expect(drawer).toContainText('Guest')
+  await expect(page.locator('[data-slot="sidebar-rail"]')).toHaveCount(0)
+
+  await drawer.getByRole('button', { name: /Acme · Production/ }).click()
+  await page.getByRole('menuitem', { name: 'Acme · Staging' }).click()
+  await expect(drawer).toBeVisible()
+  await expect(drawer).toContainText('Projects')
+
+  await drawer.getByRole('button', { name: 'Close navigation' }).click()
+  await expect(drawer).toBeHidden()
 })
 
 test('creates a project through the validated form', async ({ page }) => {
@@ -114,7 +166,8 @@ test('signs in through the demo session and out again', async ({ page }) => {
   await form.locator('input[type="password"]').fill('supersecret')
   await form.getByRole('button', { name: 'Sign in' }).click()
   await expect(page).toHaveURL(`${STARTER}/`)
-  await page.getByRole('button', { name: 'Sign out' }).click()
+  await page.getByRole('button', { name: 'Rhea Kapoor' }).click()
+  await page.getByRole('menuitem', { name: 'Sign out' }).click()
   await expect(page).toHaveURL(`${STARTER}/sign-in`)
 })
 
@@ -132,6 +185,24 @@ test('saves the settings form', async ({ page }) => {
   await name.fill('Acme Labs')
   await page.getByRole('button', { name: 'Save settings' }).click()
   await expect(page.getByText('Settings saved.')).toBeVisible()
+})
+
+test('the production starter ships no devtools UI or source annotations', async ({
+  page,
+}) => {
+  await page.goto(`${STARTER}/`)
+  await expect(
+    page.getByRole('heading', { name: 'Projects, at a glance' }),
+  ).toBeVisible()
+
+  // `@tanstack/devtools-vite` defaults to removing the adapter import, its JSX
+  // and the panel imports from a build. A trigger or a `data-tsd-source`
+  // attribute in the production bundle means that stripping regressed.
+  await expect(
+    page.getByRole('button', { name: 'Open TanStack Devtools' }),
+  ).toHaveCount(0)
+  await expect(page.getByText('Acme runtime')).toHaveCount(0)
+  await expect(page.locator('[data-tsd-source]')).toHaveCount(0)
 })
 
 test('the starter is accessible and does not overflow a phone', async ({

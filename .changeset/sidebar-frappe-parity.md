@@ -1,11 +1,11 @@
 ---
-'@newui/ui': minor
-'@newui/blocks': minor
+'@newui/atoms': minor
+'@newui/molecules': minor
+'@newui/organisms': minor
 ---
 
-Sidebar family reaches frappe-ui parity. `SidebarItem` and
-`SidebarRailItem` gain `route`/`href` link rendering (route wins, `onClick`
-still fires for router interception) and mark the active row with
+Sidebar family reaches frappe-ui parity. `SidebarItem` gains `route`/`href`
+link rendering (route wins, `onClick` still fires for router interception) and marks the active row with
 `aria-current="page"`. `SidebarItem` gains an `icon` prop (used when
 `prefix` is unset), derives its collapsed tooltip label from string
 children, and renders `suffix` beside the link instead of inside it, so a

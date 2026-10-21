@@ -48,10 +48,7 @@ for (const layout of ['desktop', 'mobile']) {
     })
     await page.goto('/pages/discussions/fullscreen')
     await page
-      .getByRole('button', {
-        name: layout === 'desktop' ? 'Add new' : 'New discussion',
-        exact: true,
-      })
+      .getByRole('button', { name: 'New discussion', exact: true })
       .click()
     await page
       .getByRole('button', { name: 'Post discussion', exact: true })
@@ -67,14 +64,9 @@ for (const layout of ['desktop', 'mobile']) {
       .getByRole('button', { name: 'Post discussion', exact: true })
       .click()
     await expect(page.getByRole('dialog')).toBeHidden()
-    if (layout === 'mobile')
-      await page.getByRole('button', { name: 'Search', exact: true }).click()
-    // Desktop searches through the FilterBar (a searchbox); mobile keeps a
-    // labelled TextInput (a textbox).
+    // One shell, one search: the workspace bar on both widths.
     await page
-      .getByRole(layout === 'mobile' ? 'textbox' : 'searchbox', {
-        name: 'Search discussions',
-      })
+      .getByRole('searchbox', { name: /Search discussions/ })
       .fill('October release')
     await page
       .getByRole('button', { name: 'Plan the October release', exact: true })
@@ -93,10 +85,16 @@ for (const layout of ['desktop', 'mobile']) {
     await page.keyboard.press('Escape')
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])
     if (layout === 'mobile') {
+      // The one shell keeps the spaces in the drawer on a phone: opening it
+      // and switching space is the mobile path the old bottom-nav page owned.
       await page
-        .getByRole('button', { name: 'Notifications', exact: true })
+        .getByRole('button', { name: 'Open application navigation' })
         .click()
-      await page.getByRole('button', { name: 'Mark all as read' }).click()
+      await page
+        .getByRole('button', { name: 'Announcements', exact: true })
+        .click()
+      // The switched space has no matches for the still-active search, which
+      // is exactly what proves the drawer switch took effect.
       await expect(
         page.getByText('No discussions match this space and filter.'),
       ).toBeVisible()

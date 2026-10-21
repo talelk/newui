@@ -1,6 +1,7 @@
-import { AppSidebar } from '@newui/blocks'
-import { Button } from '@newui/ui'
-import { createSignal, Show } from 'solid-js'
+import { Button } from '@newui/atoms'
+import { Dropdown } from '@newui/molecules'
+import { AppSidebar } from '@newui/organisms'
+import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 const ITEMS = [
@@ -11,7 +12,7 @@ const ITEMS = [
   { label: 'Settings', icon: 'lucide-settings' },
 ]
 
-/** Application sidebar composition on the AppSidebar block. */
+/** One application sidebar with its tenant, sections and pinned utilities. */
 
 /**
  * The demo the stories render, and the site's inline embed
@@ -22,22 +23,60 @@ export function Demo() {
   const [destination, setDestination] = createSignal('Home')
   return (
     <div class="flex min-h-screen bg-surface-base">
-      <Show when={open()}>
-        <AppSidebar
-          title="Application"
-          showLogo={false}
-          width="11rem"
-          groups={[
-            {
-              items: ITEMS.map((item) => ({
-                ...item,
-                active: destination() === item.label,
-                onClick: () => setDestination(item.label),
-              })),
-            },
-          ]}
-        />
-      </Show>
+      <AppSidebar
+        brand={
+          <span class="flex min-h-10 items-center gap-2 px-2 font-semibold">
+            Acme
+          </span>
+        }
+        brandCollapsed={
+          <span class="grid size-10 place-items-center font-bold">
+            <span class="sr-only">Acme</span>A
+          </span>
+        }
+        tenant={
+          <Dropdown
+            options={[
+              { label: 'Acme · Production', value: 'prod' },
+              { label: 'Acme · Staging', value: 'staging' },
+            ]}
+          >
+            <span>Acme · Production</span>
+          </Dropdown>
+        }
+        tenantCollapsed={
+          <Dropdown
+            options={[
+              { label: 'Acme · Production', value: 'prod' },
+              { label: 'Acme · Staging', value: 'staging' },
+            ]}
+          >
+            <span>
+              <span class="sr-only">Choose tenant</span>A
+            </span>
+          </Dropdown>
+        }
+        width="11rem"
+        collapsed={!open()}
+        onCollapsedChange={(value) => setOpen(!value)}
+        groups={[
+          {
+            label: 'Workspace',
+            items: ITEMS.map((item) => ({
+              ...item,
+              active: destination() === item.label,
+              onClick: () => setDestination(item.label),
+            })),
+          },
+        ]}
+        settings={<span class="px-2 py-2 text-sm">Workspace settings</span>}
+        account={<span class="px-2 py-2 text-sm">Rhea Kapoor</span>}
+        accountCollapsed={
+          <span class="grid size-8 place-items-center rounded-full bg-surface-blue-2">
+            <span class="sr-only">Rhea Kapoor</span>R
+          </span>
+        }
+      />
       <main class="min-w-0 flex-1 p-4">
         <Button
           aria-label="Toggle sidebar"
@@ -55,7 +94,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Compositions/DemoSidebar',
+  title: 'Organisms/Compositions/DemoSidebar',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

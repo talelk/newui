@@ -1,4 +1,4 @@
-import { Select } from '@newui/ui'
+import { Select } from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -21,7 +21,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Selection/Select',
+  title: 'Molecules/Selection/Select',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

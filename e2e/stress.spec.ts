@@ -37,7 +37,7 @@ const LAYOUT_STORIES = [
   'DetailHeader',
   'Combobox',
   'DatePicker',
-  'TaskTable',
+  'DataTable',
   'Tree',
   'Dashboard',
 ]

@@ -1,6 +1,8 @@
-import { AppSidebar } from '@newui/blocks'
-import { Breadcrumbs, Button, Select, TextInput } from '@newui/ui'
-import { createMemo, createSignal, Show } from 'solid-js'
+import { Button, TextInput } from '@newui/atoms'
+import { Select } from '@newui/molecules'
+import { SidebarItem } from '@newui/organisms'
+import { AppShell } from '@newui/templates'
+import { createMemo, createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 const sections = [
@@ -22,14 +24,8 @@ const sections = [
   },
 ]
 
-/** Grouped documentation sidebar on AppSidebar, adapted from solid-ui sidebar-01. */
-
-/**
- * The demo the stories render, and the site's inline embed
- * (`excludeStories` keeps it out of the story index).
- */
+/** Grouped documentation navigation inside the unified AppShell. */
 export function Demo() {
-  const [open, setOpen] = createSignal(true)
   const [version, setVersion] = createSignal('1.0.1')
   const [query, setQuery] = createSignal('')
   const [current, setCurrent] = createSignal('Data Fetching')
@@ -52,74 +48,96 @@ export function Demo() {
       }))
       .filter((section) => section.items.length > 0),
   )
+
   return (
-    <div class="flex min-h-screen bg-surface-base">
-      {/* The rail is desktop furniture: below `lg` it would out-width the
-          viewport and force the page sideways, so it folds away (the header
-          button still toggles it). */}
-      <Show when={open()}>
-        <div class="flex w-60 shrink-0 flex-col border-e border-outline-gray-1 max-lg:hidden">
-          <div class="flex flex-col gap-3 border-b border-outline-gray-1 p-3">
-            <Select
-              label="Documentation version"
-              value={[version()]}
-              options={['1.0.1', '1.1.0-alpha.0', '2.0.0-beta.1'].map(
-                (value) => ({ value, label: value }),
-              )}
-              onValueChange={(value) => setVersion(value[0] ?? '1.0.1')}
-            />
-            <TextInput
-              type="search"
-              label="Search documentation"
-              value={query()}
-              onInput={(event) => setQuery(event.currentTarget.value)}
-            />
-          </div>
-          <AppSidebar
-            title="Documentation"
-            showLogo={false}
-            width="100%"
-            class="min-h-0 flex-1 border-e-0"
-            groups={groups()}
+    <AppShell
+      title={current()}
+      description="Grouped documentation navigation in one responsive application shell."
+      breadcrumbs={[
+        { label: group() ?? 'Documentation' },
+        { label: current() },
+      ]}
+      brand={
+        <span class="flex min-h-10 items-center gap-2 px-2 font-semibold">
+          <span
+            aria-hidden="true"
+            class="lucide-book-open size-5 text-ink-blue-6"
           />
-        </div>
-      </Show>
-      <main class="min-w-0 flex-1">
-        <header class="flex flex-wrap items-center gap-3 border-b border-outline-gray-1 p-4">
-          <Button
-            icon="lucide-panel-left"
-            aria-label="Toggle sidebar"
-            aria-expanded={open()}
-            onClick={() => setOpen(!open())}
+          Documentation
+        </span>
+      }
+      brandCollapsed={
+        <span class="grid size-10 place-items-center">
+          <span class="sr-only">Documentation</span>
+          <span
+            aria-hidden="true"
+            class="lucide-book-open size-5 text-ink-blue-6"
           />
-          <Breadcrumbs
-            items={[
-              { label: group() ?? 'Documentation' },
-              { label: current() },
-            ]}
-          />
-        </header>
-        <section class="p-4">
-          <p class="text-caption text-ink-gray-7">Version {version()}</p>
-          <h1 class="mt-3 text-heading">{current()}</h1>
-          <p class="mt-3">
-            The selected documentation section and version are local to this
-            preview.
-          </p>
-        </section>
-      </main>
-    </div>
+        </span>
+      }
+      tenant={
+        <Select
+          aria-label="Documentation version"
+          value={[version()]}
+          options={['1.0.1', '1.1.0-alpha.0', '2.0.0-beta.1'].map((value) => ({
+            value,
+            label: value,
+          }))}
+          onValueChange={(value) => setVersion(value[0] ?? '1.0.1')}
+        />
+      }
+      tenantCollapsed={
+        <Button
+          variant="ghost"
+          icon="lucide-git-branch"
+          aria-label={`Documentation version ${version()}`}
+        />
+      }
+      sidebarSearch={
+        <TextInput
+          type="search"
+          label="Search documentation"
+          value={query()}
+          onInput={(event) => setQuery(event.currentTarget.value)}
+        />
+      }
+      navigation={groups()}
+      settings={
+        <SidebarItem label="Settings" icon="lucide-settings">
+          Settings
+        </SidebarItem>
+      }
+      account={
+        <SidebarItem label="Documentation profile" icon="lucide-user-round">
+          Documentation profile
+        </SidebarItem>
+      }
+      actions={
+        <Button variant="outline" iconLeft="lucide-panel-left">
+          Collapse is built into the sidebar
+        </Button>
+      }
+    >
+      <section class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4">
+        <p class="text-caption text-ink-gray-7">Version {version()}</p>
+        <h2 class="mt-2 text-section">{current()}</h2>
+        <p class="mt-3 text-ink-gray-7">
+          Select a section from the grouped menu. It remains one navigation
+          surface when the desktop sidebar collapses or opens on mobile.
+        </p>
+      </section>
+    </AppShell>
   )
 }
 
 const meta = {
-  title: 'Compositions/Sidebar01',
+  title: 'Organisms/Grouped documentation sidebar',
   component: Demo,
   excludeStories: ['Demo'],
+  parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Demo>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** The live demo, exactly as the reference page embeds it. */
 export const Default: Story = {}

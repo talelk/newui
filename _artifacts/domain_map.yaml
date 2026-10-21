@@ -1,0 +1,50 @@
+library:
+  name: newui
+domains:
+  - name: UI composition
+    slug: ui
+    description: Choosing and composing the visual ladder, styling with semantic tokens, and keeping labels, overlays and accessibility consistent.
+  - name: Data and forms
+    slug: data
+    description: Turning repositories into cached collections, optimistic mutations, and TanStack Form submit lifecycles.
+skills:
+  - name: newui
+    slug: newui
+    domain: ui
+    description: Build user interfaces with the newui SolidJS component library (a SolidJS port of frappe-ui on Zag + Tailwind CSS v4). Use when scaffolding SolidJS pages, forms, dialogs, lists, or any UI that should look and feel like a Frappe product, when the user mentions newui, @newui/atoms, or asks to use newui components, tokens, or conventions.
+    type: core
+    packages:
+      - '@newui/atoms'
+    covers:
+      - atoms
+      - molecules
+      - organisms
+      - templates
+      - semantic tokens
+      - labelling and field errors
+      - overlay open state
+    tasks:
+      - Build a SolidJS page from newui atoms, molecules, organisms and templates
+      - Choose between Select, Combobox and MultiSelect for a picker
+      - Wire labels, descriptions and field errors through the shared Field contract
+      - Style with semantic surface, ink and outline tokens in light and dark themes
+      - Control overlays with open and onOpenChange instead of v-model
+  - name: newui-data
+    slug: newui-data
+    domain: data
+    description: Use the headless newui data layer for SolidJS collections, repository queries, optimistic mutations, TanStack Query caching and form submit lifecycles. Use when a page needs to load a list, create/update/delete records, share a cache, or wire TanStack Form through the kit's Form and field-error contract.
+    type: core
+    packages:
+      - '@newui/data'
+    covers:
+      - createCollection
+      - DataProvider
+      - optimistic update and remove
+      - createAppForm
+      - Form and fieldError
+    tasks:
+      - Load a repository-backed list through createCollection and render its pending, error and rows state
+      - Create, update or remove records with optimistic mutations that roll back on failure
+      - Wire a page form to TanStack Form through createAppForm, Form and fieldError
+      - Share one QueryClient between panes with DataProvider
+gaps: []

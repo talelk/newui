@@ -1,4 +1,5 @@
-import { AppSidebar } from '@newui/blocks'
+import { Dropdown } from '@newui/molecules'
+import { AppSidebar, SidebarItem } from '@newui/organisms'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { DemoFrame } from './demo-frame'
@@ -11,9 +12,38 @@ function Example(props: {
   return (
     <DemoFrame medium>
       <AppSidebar
-        title="Acme support"
-        subtitle="18 members"
-        showLogo={false}
+        brand={
+          <span class="flex min-h-10 items-center gap-2 px-2 font-semibold">
+            Acme support
+          </span>
+        }
+        brandCollapsed={
+          <span class="grid size-10 place-items-center font-bold">
+            <span class="sr-only">Acme support</span>A
+          </span>
+        }
+        tenant={
+          <Dropdown
+            options={[
+              { label: 'Acme · Production', value: 'prod' },
+              { label: 'Acme · Staging', value: 'staging' },
+            ]}
+          >
+            <span>Acme · Production</span>
+          </Dropdown>
+        }
+        tenantCollapsed={
+          <Dropdown
+            options={[
+              { label: 'Acme · Production', value: 'prod' },
+              { label: 'Acme · Staging', value: 'staging' },
+            ]}
+          >
+            <span>
+              <span class="sr-only">Choose tenant</span>A
+            </span>
+          </Dropdown>
+        }
         collapsed={props.collapsed}
         onCollapsedChange={props.onCollapsedChange}
         groups={[
@@ -36,6 +66,21 @@ function Example(props: {
             ],
           },
         ]}
+        settings={
+          <SidebarItem label="Settings" icon="lucide-settings">
+            Settings
+          </SidebarItem>
+        }
+        account={
+          <SidebarItem label="Rhea Kapoor" icon="lucide-user-round">
+            Rhea Kapoor
+          </SidebarItem>
+        }
+        accountCollapsed={
+          <SidebarItem label="Rhea Kapoor" icon="lucide-user-round">
+            Rhea Kapoor
+          </SidebarItem>
+        }
       />
     </DemoFrame>
   )
@@ -50,7 +95,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Blocks/AppSidebar',
+  title: 'Organisms/AppSidebar',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>
@@ -61,7 +106,7 @@ type Story = StoryObj<typeof meta>
 /** The live demo, exactly as the reference page embeds it. */
 export const Default: Story = {}
 
-/** Collapsed: the sidebar folds to its rail before any interaction. */
+/** Collapsed: the integrated sidebar folds to labelled icons before interaction. */
 export const Collapsed: Story = {
   render: () => {
     const [collapsed, setCollapsed] = createSignal(true)

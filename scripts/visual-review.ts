@@ -19,8 +19,8 @@
  * is flagged (used by the nightly design loop, not by PR CI).
  *
  * Usage:
- *   pnpm review /blocks/stat-grid
- *   pnpm review --theme=dark /components/date-picker /spec
+ *   pnpm review /organisms/stat-grid
+ *   pnpm review --theme=dark /molecules/date-picker /spec
  *   NEWUI_VLM_ENDPOINT=http://localhost:8000/v1 NEWUI_VLM_MODEL=Qwen/Qwen3-VL pnpm review /spec --require
  */
 import { mkdirSync, writeFileSync } from 'node:fs'

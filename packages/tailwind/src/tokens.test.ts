@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
+import { layoutSpacing, radiusRoles } from '@newui/tokens'
 import { describe, expect, it } from 'vitest'
 
 /**
@@ -15,7 +16,15 @@ import { describe, expect, it } from 'vitest'
  *     only). Brand customization and dark mode both depend on this.
  */
 const REPO = process.cwd()
-const UI_SRC = path.join(REPO, 'packages/ui/src')
+const VISUAL_SRCS = [
+  'atoms',
+  'molecules',
+  'organisms',
+  'templates',
+  'charts',
+  'editor',
+  'code-editor',
+].map((pkg) => path.join(REPO, `packages/${pkg}/src`))
 const THEME_CSS = path.join(REPO, 'packages/tailwind/src/generated/theme.css')
 
 const themeCss = readFileSync(THEME_CSS, 'utf8')
@@ -63,7 +72,7 @@ function walk(dir: string, out: string[] = []): string[] {
   return out
 }
 
-const files = walk(UI_SRC)
+const files = VISUAL_SRCS.flatMap((dir) => walk(dir))
 
 function scan(regex: RegExp): Map<string, string> {
   const found = new Map<string, string>()
@@ -77,6 +86,13 @@ function scan(regex: RegExp): Map<string, string> {
 }
 
 describe('token discipline', () => {
+  it('emits the semantic layout spacing and radius roles', () => {
+    for (const name of Object.keys(layoutSpacing))
+      expect(themeCss).toContain(`--spacing-${name}:`)
+    for (const name of Object.keys(radiusRoles))
+      expect(themeCss).toContain(`--radius-${name}:`)
+  })
+
   it('only references semantic tokens that exist in the theme', () => {
     const semanticUse = new RegExp(
       `${COLOR_UTILITIES}-(${SEMANTIC_PREFIX}-[a-z0-9-]+)`,

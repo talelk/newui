@@ -38,7 +38,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Charts/FunnelChart',
+  title: 'Organisms/FunnelChart',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

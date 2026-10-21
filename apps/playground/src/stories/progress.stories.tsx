@@ -1,4 +1,4 @@
-import { Progress } from '@newui/ui'
+import { Progress } from '@newui/atoms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -18,7 +18,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Feedback/Progress',
+  title: 'Atoms/Feedback/Progress',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

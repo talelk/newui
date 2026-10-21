@@ -1,5 +1,5 @@
 ---
-'@newui/blocks': patch
+'@newui/organisms': patch
 ---
 
 `AuthCard` now sits on a card surface: the centred column gains

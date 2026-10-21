@@ -1,4 +1,4 @@
-import { HoverCard } from '@newui/ui'
+import { HoverCard } from '@newui/molecules'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -30,7 +30,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Overlays/HoverCard',
+  title: 'Molecules/Overlays/HoverCard',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

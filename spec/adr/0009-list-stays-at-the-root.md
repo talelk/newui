@@ -5,12 +5,12 @@
 ## Context
 
 frappe-ui exposes `frappe-ui/list` as a subpath (with its own structural
-`style.css`). This library has no `@newui/ui/list`; `List` and its parts are
-exported from the root barrel.
+`style.css`). `List` and its parts are exported from the `@newui/molecules`
+root barrel; no component-specific subpath is needed.
 
 ## Decision
 
-Keep `List` at the root. Do not add a `@newui/ui/list` subpath.
+Keep `List` at the `@newui/molecules` root. Do not add a component subpath.
 
 ## Rationale
 
@@ -22,8 +22,7 @@ second `publint` surface for no measured benefit.
 
 ## Consequences
 
-- Importing `List` pulls the same `@newui/ui` chunk as everything else. If a
-  consumer needs isolation, the answer is the package split (ADR-0004), not a
-  subpath.
+- Importing `List` pulls the molecules package; isolation is provided by the
+  atomic package boundary (ADR-0013), not a per-component subpath.
 - Revisit only if `List` grows a dependency the rest of the library should not
   carry.

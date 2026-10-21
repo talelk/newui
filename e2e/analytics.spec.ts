@@ -193,9 +193,11 @@ test('the responsive recipe keeps its primary action usable on narrow screens', 
   await expect(action).toBeInViewport()
   const box = await action.boundingBox()
   expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(320)
-  await expect(
-    page.getByRole('button', { name: 'Spaces', exact: true }),
-  ).toBeVisible()
+  await page
+    .getByRole('button', { name: 'Open application navigation' })
+    .click()
+  const drawer = page.getByRole('dialog', { name: 'Discussions navigation' })
+  await expect(drawer.getByText('Spaces', { exact: true })).toBeVisible()
 })
 
 for (const theme of ['light', 'dark']) {

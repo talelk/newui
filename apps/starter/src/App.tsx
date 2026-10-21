@@ -1,13 +1,17 @@
+import { Button } from '@newui/atoms'
 import { DataProvider } from '@newui/data/query'
-import { Button, Toaster } from '@newui/ui'
+import { Toaster } from '@newui/molecules'
 import { Route, Router } from '@solidjs/router'
+import { TanStackDevtools } from '@tanstack/solid-devtools'
+import { SolidQueryDevtoolsPanel } from '@tanstack/solid-query-devtools'
 import type { JSX } from 'solid-js'
+import { StarterDevtoolsPanel } from './devtools/StarterDevtoolsPanel'
 import { Records } from './pages/Records'
 import { Settings } from './pages/Settings'
 import { SignIn } from './pages/SignIn'
 
 /**
- * The app, and the three decisions that make it one.
+ * The app, and the four decisions that make it one.
  *
  * 1. **One data provider** at the root: every screen shares a cache, and the
  *    provider clears it when the app unmounts.
@@ -16,6 +20,8 @@ import { SignIn } from './pages/SignIn'
  *    a large app splits them (the playground's `routes.tsx` shows how).
  * 3. **The toast host** is mounted once, beside the router, so a mutation can
  *    report from anywhere.
+ * 4. **Devtools mount once**, beside them, in development only: the library
+ *    query panel and the starter's typed event panel.
  */
 function NotFound(): JSX.Element {
   return (
@@ -44,6 +50,29 @@ export function App(): JSX.Element {
         <Route path="*" component={NotFound} />
       </Router>
       <Toaster />
+      {/*
+       * One adapter mount for the whole app. The library panel inspects the
+       * query cache; the product panel reads the typed event log in
+       * `src/devtools/events.ts`. In a production build
+       * `@tanstack/devtools-vite` removes this element and every devtools
+       * import above, so neither panel (nor the event panel's module) ships.
+       */}
+      <TanStackDevtools
+        eventBusConfig={{ connectToServerBus: true }}
+        plugins={[
+          {
+            id: 'tanstack-query',
+            name: 'TanStack Query',
+            render: <SolidQueryDevtoolsPanel style={{ height: '100%' }} />,
+          },
+          {
+            id: 'acme-runtime',
+            name: 'Acme runtime',
+            defaultOpen: true,
+            render: <StarterDevtoolsPanel />,
+          },
+        ]}
+      />
     </DataProvider>
   )
 }

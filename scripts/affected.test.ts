@@ -14,8 +14,8 @@ const names = (files: string[]) =>
 
 describe('affected gate routing', () => {
   it('routes a component change to component gates, not to Lighthouse', () => {
-    const picked = names(['packages/ui/src/components/Button/Button.tsx'])
-    expect(picked).toContain('Type-check (@newui/ui)')
+    const picked = names(['packages/atoms/src/atoms/Button/Button.tsx'])
+    expect(picked).toContain('Type-check (@newui/atoms)')
     expect(picked).toContain('Tests (changed files)')
     expect(picked).toContain('API table is current')
     expect(picked).not.toContain('Lighthouse budgets')
@@ -48,13 +48,23 @@ describe('affected gate routing', () => {
     )
   })
 
+  it('routes skill and artifact changes to the skills gate', () => {
+    for (const file of [
+      'packages/atoms/skills/newui/SKILL.md',
+      '_artifacts/skill_tree.yaml',
+      'skills/README.md',
+    ]) {
+      expect(names([file])).toContain('Agent Skills validate & stale')
+    }
+  })
+
   it('runs the sweep only for merge-config, tokens or sweep changes', () => {
-    expect(names(['packages/ui/src/lib/tw-merge.config.ts'])).toContain(
+    expect(names(['packages/atoms/src/lib/tw-merge.config.ts'])).toContain(
       'tw-merge sweep (all-pairs equivalence)',
     )
-    expect(
-      names(['packages/ui/src/components/Button/Button.tsx']),
-    ).not.toContain('tw-merge sweep (all-pairs equivalence)')
+    expect(names(['packages/atoms/src/atoms/Button/Button.tsx'])).not.toContain(
+      'tw-merge sweep (all-pairs equivalence)',
+    )
   })
 
   it('falls back to the full pipeline for unclaimable paths', () => {
@@ -64,7 +74,7 @@ describe('affected gate routing', () => {
   })
 
   it('runs cheap invariant gates for any diff', () => {
-    const picked = names(['packages/ui/src/lib/tv.ts'])
+    const picked = names(['packages/atoms/src/lib/tv.ts'])
     expect(picked).toContain('Lint & format (Biome)')
     expect(picked).toContain('Reference paths exist')
   })

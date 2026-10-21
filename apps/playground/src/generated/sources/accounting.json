@@ -1,22 +1,23 @@
 {
   "files": [
     "pages/Accounting.tsx",
-    "examples/accounting-data.ts",
-    "examples/Notice.tsx",
-    "examples/WorkspacePage.tsx",
+    "examples/AppPage.tsx",
     "lib/examples.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",
+    "examples/accounting-data.ts",
+    "examples/Notice.tsx",
     "pages/accounting/AccountingDialogs.tsx",
     "examples/CreateDialog.tsx",
     "pages/accounting/ExpenseChart.tsx"
   ],
   "packages": [
-    "@newui/blocks",
+    "@newui/atoms",
     "@newui/charts",
     "@newui/data",
-    "@newui/layouts",
-    "@newui/ui",
+    "@newui/molecules",
+    "@newui/organisms",
+    "@newui/templates",
     "@solidjs/router",
     "solid-js"
   ]

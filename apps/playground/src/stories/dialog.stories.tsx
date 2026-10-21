@@ -1,4 +1,4 @@
-import { Dialog } from '@newui/ui'
+import { Dialog } from '@newui/molecules'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -38,7 +38,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Overlays/Dialog',
+  title: 'Molecules/Overlays/Dialog',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

@@ -60,11 +60,14 @@ export default defineConfig({
     {
       // The starter is a second application: a separate origin, so its smoke
       // tests can run the real frame, router and data layer rather than a
-      // facsimile inside the docs site.
-      command: 'pnpm --filter starter dev --port 4183 --strictPort',
+      // facsimile inside the docs site. Serve the production bundle: a Vite
+      // dev server compiles on first request, and nine smoke tests hitting a
+      // cold one under a loaded runner time out before the first paint.
+      command:
+        'pnpm build:starter && pnpm --filter starter preview --port 4183 --strictPort',
       url: 'http://localhost:4183/',
       reuseExistingServer: !process.env.CI,
-      timeout: 120_000,
+      timeout: 180_000,
     },
     {
       // The story build is the other half of the surface: `iframe.html?id=…`

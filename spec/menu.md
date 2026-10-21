@@ -4,7 +4,7 @@ Presents a keyboard-navigable list of actions.
 
 ## Usage and anatomy
 
-Import `Menu` from `@newui/ui`. The executable example and its copyable
+Import `Menu` from `@newui/molecules`. The executable example and its copyable
 source on `/molecules/menu` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

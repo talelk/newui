@@ -1,4 +1,4 @@
-import { Button, TextInput } from '@newui/ui'
+import { Button, TextInput } from '@newui/atoms'
 import { createSignal, For, Show } from 'solid-js'
 
 export default function Verification() {

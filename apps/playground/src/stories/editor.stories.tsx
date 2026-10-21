@@ -18,7 +18,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Editors/Editor',
+  title: 'Organisms/Editor',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

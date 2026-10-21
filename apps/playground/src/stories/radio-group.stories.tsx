@@ -1,4 +1,4 @@
-import { RadioGroup } from '@newui/ui'
+import { RadioGroup } from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -23,7 +23,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Inputs/RadioGroup',
+  title: 'Molecules/Inputs/RadioGroup',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

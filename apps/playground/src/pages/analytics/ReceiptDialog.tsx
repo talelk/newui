@@ -1,5 +1,6 @@
+import { Badge, Button } from '@newui/atoms'
 import { usd as money } from '@newui/data'
-import { Badge, Button, Dialog } from '@newui/ui'
+import { Dialog } from '@newui/molecules'
 import { type JSX, Show } from 'solid-js'
 import type { Transaction } from './data'
 

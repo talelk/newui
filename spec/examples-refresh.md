@@ -1,5 +1,9 @@
 # Examples refresh — execution blueprint
 
+> Historical implementation plan. The shell APIs and package names below
+> predate the atomic refactor; use `kit.md`, `migrations.md` and the component
+> contracts for current behavior.
+
 Decision-complete plan to refresh every playground example and site page onto
 the Slices 0–4 surfaces (Sidebase shell, Tremor KPI/filter/chart polish),
 deduplicate playground-local scaffolding, and land Slice 5 (Home, TOC,
@@ -435,4 +439,3 @@ exists, ~11 notice copies, 8 chart-demo bodies, 4 formatters and 4
 download copies collapse into single playground-local modules, and
 Home/TOC/AuthCard close the Slice-5 ledger in
 `spec/redesign-progress.md`.
-

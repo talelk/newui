@@ -4,7 +4,7 @@ Provides persistent mobile destinations.
 
 ## Usage and anatomy
 
-Import `MobileNav` from `@newui/ui`. The executable example and its copyable
+Import `MobileNav` from `@newui/organisms`. The executable example and its copyable
 source on `/organisms/mobile-nav` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

@@ -78,7 +78,14 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    exclude: ['@newui/ui', '@newui/tailwind', '@newui/tokens'],
+    exclude: [
+      '@newui/atoms',
+      '@newui/molecules',
+      '@newui/organisms',
+      '@newui/templates',
+      '@newui/tailwind',
+      '@newui/tokens',
+    ],
   },
   server: {
     fs: {

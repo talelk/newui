@@ -1,4 +1,4 @@
-import { FilterBar } from '@newui/blocks'
+import { FilterBar } from '@newui/organisms'
 import { createMemo, createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -103,7 +103,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Blocks/FilterBar',
+  title: 'Organisms/FilterBar',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

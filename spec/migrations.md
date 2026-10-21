@@ -60,9 +60,31 @@ Colours intentionally differ from frappe-ui where WCAG AA required it
 ## Migrating from frappe-ui
 
 Not automated. The component names line up almost one-for-one (`RadioGroup`
-aliases `Radio`, `UIProvider` is `FrappeUIProvider`, `AppShell` is
-`DesktopShell`); the state model (no `v-model`) and the packaging model
-(workspace packages, ADR-0004) are the real differences.
+aliases `Radio`, `UIProvider` is `FrappeUIProvider`); the state model (no
+`v-model`) and package model are the real differences. In newui, imports follow
+the atomic owner: atoms from `@newui/atoms`, compound interactions from
+`@newui/molecules`, page regions from `@newui/organisms`, and the three page
+templates from `@newui/templates`.
+
+## Atomic package and shell break
+
+The pre-atomic packages are removed without aliases or redirects:
+
+| Former package/API | Current destination |
+| --- | --- |
+| `@newui/ui` | split by component into `@newui/atoms`, `@newui/molecules`, and `@newui/organisms` |
+| `@newui/blocks` | `@newui/organisms` |
+| `@newui/layouts` | `@newui/templates` |
+| former `AppShell` from `@newui/ui` | the new, distinct `AppShell` template from `@newui/templates` |
+| `DataTable`, `VirtualList` from `@newui/data` | `@newui/organisms` |
+| `ScrollTable` from `@newui/data` | `@newui/molecules` |
+| `AppLayout`, `DesktopShell`, `MobileShell`, `ResponsiveShell`, rail APIs | removed; use the single responsive `AppShell` |
+
+`AppShell` composes one sidebar model at both viewport sizes: a collapsible,
+docked sidebar on desktop and the same expanded navigation in a mobile modal
+drawer. Supply brand, tenant, grouped navigation, settings and account content
+through its props. See [ADR-0013](./adr/0013-atomic-packages-and-app-shell.md)
+and [the kit contract](./kit.md).
 
 ## Analytics visual system (next major)
 

@@ -20,4 +20,5 @@ Statuses: `accepted`, `superseded by ADR-XXXX`, `proposed`.
 | [0009](./0009-list-stays-at-the-root.md) | `List` stays at the package root |
 | [0010](./0010-tailwind-v4.md) | Tailwind v4, not v3 |
 | [0011](./0011-zag-via-createzagapi.md) | Zag primitives only via `createZagApi`/`createZagContext` |
-| [0012](./0012-kit-ladder.md) | The kit ladder: `@newui/layouts`, `@newui/data`, Storybook, the starter |
+| [0012](./0012-kit-ladder.md) | Original kit ladder: layouts, logic, Storybook and starter (superseded) |
+| [0013](./0013-atomic-packages-and-app-shell.md) | Atomic packages, exactly three templates, one responsive AppShell sidebar |

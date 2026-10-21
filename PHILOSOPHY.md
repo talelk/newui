@@ -27,7 +27,7 @@ use an axis-named string enum (`size="md"`, `align="end"`), never a generic
 
 **P5. Every input control exposes the same labelling contract** — `label`,
 `description`, `error`, `required` — implemented once by `Field`
-(`packages/ui/src/lib/field.tsx`), which owns the ids and ARIA wiring.
+(`packages/atoms/src/lib/field.tsx`), which owns the ids and ARIA wiring.
 
 ## Composition
 

@@ -8,7 +8,7 @@
  *     group it belongs to. Read from `api.json` (the prop interfaces) so a
  *     component cannot exist without appearing in the site.
  *  2. **Per-component API slices** — the prop tables for one component as its
- *     own module, so `/components/pagination` loads ~1 kB instead of the 111 kB
+ *     own module, so `/molecules/pagination` loads ~1 kB instead of the 111 kB
  *     `api.json`. One file per slug; the page resolves its own slice through a
  *     glob, so nothing imports them all.
  *  3. **Source manifests and acceptance inventories** — paths to application
@@ -37,7 +37,7 @@ import { semanticColors } from '../packages/tokens/src/index.js'
 import { atomicOf } from './atomic'
 
 const root = process.cwd()
-const apiFile = path.join(root, 'packages/ui/api.json')
+const apiFile = path.join(root, 'api.json')
 const outDir = path.join(root, 'apps/playground/src/generated')
 const apiOutDir = path.join(outDir, 'api')
 const isCheck = process.argv.includes('--check')
@@ -96,7 +96,6 @@ const FAMILIES: Record<string, string> = {
   ListHeader: 'List',
   ListHeaderCell: 'List',
   MobileNavItem: 'MobileNav',
-  PageHeaderMobile: 'MobileShell',
   SettingsSidebar: 'SettingsDialog',
   SettingsNavGroup: 'SettingsDialog',
   SettingsNavItem: 'SettingsDialog',
@@ -108,8 +107,6 @@ const FAMILIES: Record<string, string> = {
   SidebarHeader: 'Sidebar',
   SidebarItem: 'Sidebar',
   SidebarLabel: 'Sidebar',
-  SidebarRail: 'Sidebar',
-  SidebarRailItem: 'Sidebar',
   SidebarCollapseToggle: 'Sidebar',
   SidebarSection: 'Sidebar',
   SidebarCard: 'Sidebar',
@@ -211,11 +208,8 @@ const GROUPS: Record<string, string> = {
   Pagination: 'Navigation',
   Sidebar: 'Navigation',
   AppShell: 'Layout',
-  ResponsiveShell: 'Layout',
-  AppLayout: 'Layout',
   PaneLayout: 'Layout',
-  DesktopShell: 'Layout',
-  MobileShell: 'Layout',
+  AuthLayout: 'Layout',
   MobileNav: 'Navigation',
   Dialog: 'Overlays',
   BottomSheet: 'Overlays',
@@ -224,20 +218,22 @@ const GROUPS: Record<string, string> = {
   Tooltip: 'Overlays',
   ScrollArea: 'Overlays',
   SettingsDialog: 'Patterns',
-  // Blocks — composed sections rather than single controls.
+  // Organisms — composed page regions rather than single controls.
   AppSidebar: 'Layout',
   PageToolbar: 'Layout',
   DetailHeader: 'Layout',
   KanbanBoard: 'Layout',
   FilterBar: 'Data',
   StatGrid: 'Data',
+  DataTable: 'Data',
+  ScrollTable: 'Data',
+  VirtualList: 'Data',
   AuthCard: 'Patterns',
   Alert: 'Feedback',
   Progress: 'Feedback',
   ProgressCircle: 'Feedback',
   Spinner: 'Feedback',
   Skeleton: 'Feedback',
-  LoadingText: 'Feedback',
   Toast: 'Feedback',
 }
 
@@ -264,25 +260,22 @@ function kebab(value: string): string {
     .toLowerCase()
 }
 
-/** part name → the component it belongs to, and the package it came from. */
+/** part name → component, package entrypoint and source. */
 const partsByComponent = new Map<string, string[]>()
-const packageOf = new Map<string, 'component' | 'block' | 'layout'>()
 const importOf = new Map<string, string>()
+const sourceOf = new Map<string, string>()
 for (const [file, parts] of Object.entries(api)) {
-  const kind = file.includes('/layouts/')
-    ? 'layout'
-    : file.includes('/blocks/')
-      ? 'block'
-      : 'component'
+  const pkg = file.split('/')[1]
+  const packageName = pkg ? `@newui/${pkg}` : '@newui/atoms'
+  const source = path.relative(root, path.dirname(path.join(root, file)))
   for (const part of Object.keys(parts)) {
     const component = componentOf(part)
     if (!component) continue
     const list = partsByComponent.get(component) ?? []
     list.push(part)
     partsByComponent.set(component, list)
-    packageOf.set(component, kind)
-    const pkg = file.split('/')[1]
-    importOf.set(component, `@newui/${pkg}`)
+    importOf.set(component, packageName)
+    sourceOf.set(component, source)
   }
 }
 
@@ -294,18 +287,70 @@ const specSlugs = new Set(
     .map((file) => file.replace(/\.md$/, '')),
 )
 
-/** Exported names the barrels actually ship, so a stray interface cannot invent one. */
+/** Follow the package barrels to the actual declarations they expose. */
 function barrelExports(file: string): Set<string> {
-  const source = readFileSync(path.join(root, file), 'utf8')
-  return new Set(
+  const exported = new Set<string>()
+  const visited = new Set<string>()
+  const resolve = (base: string): string | undefined =>
     [
-      ...source.matchAll(/^export \* from '\.\/(?:components\/)?([^']+)'/gm),
-    ].map((match) => match[1] ?? ''),
-  )
+      base,
+      `${base}.ts`,
+      `${base}.tsx`,
+      path.join(base, 'index.ts'),
+      path.join(base, 'index.tsx'),
+    ].find((candidate) => existsSync(candidate) && statSync(candidate).isFile())
+
+  const visit = (filename: string) => {
+    const resolved = resolve(filename)
+    if (!resolved || visited.has(resolved)) return
+    visited.add(resolved)
+    const source = readFileSync(resolved, 'utf8')
+    const directory = path.dirname(resolved)
+    for (const match of source.matchAll(
+      /^export\s+\*\s+from\s+['"]([^'"]+)['"]/gm,
+    )) {
+      const specifier = match[1]
+      if (specifier?.startsWith('.')) visit(path.resolve(directory, specifier))
+    }
+    for (const match of source.matchAll(
+      /^export\s*\{([^}]+)\}\s*(?:from\s+['"]([^'"]+)['"])?/gm,
+    )) {
+      const members = match[1] ?? ''
+      const specifier = match[2]
+      if (specifier?.startsWith('.')) {
+        visit(path.resolve(directory, specifier))
+      } else {
+        for (const member of members.split(',')) {
+          const name = member
+            .trim()
+            .split(/\s+as\s+/)
+            .at(-1)
+            ?.trim()
+          if (name && name !== 'type')
+            exported.add(name.replace(/^type\s+/, ''))
+        }
+      }
+    }
+    for (const match of source.matchAll(
+      /^export\s+(?:declare\s+)?(?:async\s+)?(?:function|const|let|var|class|interface|type|enum)\s+([A-Za-z_$][\w$]*)/gm,
+    )) {
+      if (match[1]) exported.add(match[1])
+    }
+  }
+
+  visit(path.join(root, file))
+  return exported
 }
-const exported = barrelExports('packages/ui/src/index.ts')
-const exportedBlocks = barrelExports('packages/blocks/src/index.ts')
-const exportedLayouts = barrelExports('packages/layouts/src/index.ts')
+
+const exportedByPackage = new Map<string, Set<string>>([
+  ['@newui/atoms', barrelExports('packages/atoms/src/index.ts')],
+  ['@newui/molecules', barrelExports('packages/molecules/src/index.ts')],
+  ['@newui/organisms', barrelExports('packages/organisms/src/index.ts')],
+  ['@newui/templates', barrelExports('packages/templates/src/index.ts')],
+  ['@newui/charts', barrelExports('packages/charts/src/index.ts')],
+  ['@newui/editor', barrelExports('packages/editor/src/index.ts')],
+  ['@newui/code-editor', barrelExports('packages/code-editor/src/index.ts')],
+])
 
 const SPEC_ALIASES: Record<string, string> = {
   DatePicker: 'datepicker',
@@ -335,18 +380,14 @@ const SPEC_ALIASES: Record<string, string> = {
   SankeyChart: 'charts',
   NumberCard: 'charts',
 }
-for (const name of [...exported, ...exportedBlocks]) {
-  if (GROUPS[name] && !partsByComponent.has(name)) {
-    partsByComponent.set(name, [])
-    packageOf.set(name, exportedBlocks.has(name) ? 'block' : 'component')
-    importOf.set(
-      name,
-      exportedBlocks.has(name)
-        ? '@newui/blocks'
-        : exportedLayouts.has(name)
-          ? '@newui/layouts'
-          : '@newui/ui',
-    )
+for (const [packageName, exported] of exportedByPackage) {
+  for (const name of exported) {
+    if (GROUPS[name] && !partsByComponent.has(name)) {
+      partsByComponent.set(name, [])
+      importOf.set(name, packageName)
+      const sourcePackage = packageName.replace('@newui/', '')
+      sourceOf.set(name, `packages/${sourcePackage}/src`)
+    }
   }
 }
 /**
@@ -412,38 +453,21 @@ const entries = [...partsByComponent.keys()]
     description: purposeFor(component),
     slug: kebab(component),
     group: GROUPS[component] as string,
-    package: importOf.get(component) ?? '@newui/ui',
+    package: importOf.get(component) ?? '@newui/atoms',
     source:
-      importOf.get(component) === '@newui/ui'
-        ? `packages/ui/src/components/${component}`
-        : importOf.get(component) === '@newui/blocks'
-          ? `packages/blocks/src/${component}`
-          : importOf.get(component) === '@newui/charts'
-            ? `packages/charts/src/${component}.tsx`
-            : `packages/${importOf.get(component)?.replace('@newui/', '')}/src`,
-    /** The package level, as `kind`: a component, a block or a layout. */
-    kind: packageOf.get(component) ?? 'component',
-    /**
-     * The atomic level: what the unit *is*, not which package it comes from.
-     * See `scripts/atomic.ts` for the rule and the judgement calls.
-     */
-    atomic: atomicOf({
-      name: component,
-      kind: packageOf.get(component) ?? 'component',
-      group: GROUPS[component] as string,
-    }),
+      sourceOf.get(component) ??
+      `packages/${(importOf.get(component) ?? '@newui/atoms').replace('@newui/', '')}/src`,
+    /** One level, assigned exhaustively by `scripts/atomic.ts`. */
+    atomic: atomicOf(component),
     parts: (partsByComponent.get(component) ?? []).sort(),
     spec: specSlugs.has(SPEC_ALIASES[component] ?? kebab(component))
       ? (SPEC_ALIASES[component] ?? kebab(component))
       : null,
-    /** A page exists only for something a barrel exports. */
+    /** A page exists only for something its owning package barrel exports. */
     shipped:
-      importOf.get(component) !== '@newui/ui' &&
-      importOf.get(component) !== '@newui/blocks'
-        ? true
-        : packageOf.get(component) === 'block'
-          ? exportedBlocks.has(component)
-          : exported.has(component),
+      exportedByPackage
+        .get(importOf.get(component) ?? '@newui/atoms')
+        ?.has(component) ?? false,
   }))
   .sort((a, b) => {
     const byGroup = GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group)
@@ -470,8 +494,6 @@ export interface ComponentEntry {
   group: string
   package: string
   source: string
-  /** The package level: a component, a block or a layout. */
-  kind: 'component' | 'block' | 'layout'
   /** The atomic level this entry is filed under. */
   atomic: 'atom' | 'molecule' | 'organism' | 'template'
   parts: string[]
@@ -490,16 +512,6 @@ export const GROUPS = ${JSON.stringify(
 export function componentBySlug(slug: string): ComponentEntry | undefined {
   return COMPONENTS.find((entry) => entry.slug === slug)
 }
-
-/** Only the blocks, wherever the atomic index lists them. */
-export const BLOCKS: ComponentEntry[] = COMPONENTS.filter(
-  (entry) => entry.kind === 'block',
-)
-
-/** Only the layouts: what \`/templates\` lists among its templates. */
-export const LAYOUTS: ComponentEntry[] = COMPONENTS.filter(
-  (entry) => entry.kind === 'layout',
-)
 
 /** One level of the atomic hierarchy: what an index lists and pages through. */
 export function byAtomic(
@@ -560,9 +572,7 @@ const semanticTokenCount = Object.values(semanticColors.light).reduce(
   (total, category) => total + Object.keys(category).length,
   0,
 )
-const applications = EXAMPLES.filter(
-  (example) => example.href !== '/pages/patterns',
-)
+const applications = EXAMPLES
 
 const ladder = `/**
  * Generated by \`pnpm site\`. Do not edit.
@@ -608,7 +618,7 @@ export const LADDER: LadderLevel[] = ${JSON.stringify(
       title: 'Atoms',
       question: 'What is this single element?',
       unit: 'atom',
-      package: '@newui/ui',
+      package: '@newui/atoms',
       count: entries.filter((entry) => entry.atomic === 'atom').length,
       href: '/atoms',
       blurb:
@@ -619,7 +629,7 @@ export const LADDER: LadderLevel[] = ${JSON.stringify(
       title: 'Molecules',
       question: 'What is this interaction?',
       unit: 'molecule',
-      package: '@newui/ui · @newui/charts',
+      package: '@newui/molecules · @newui/charts',
       count: entries.filter((entry) => entry.atomic === 'molecule').length,
       href: '/molecules',
       blurb:
@@ -630,7 +640,7 @@ export const LADDER: LadderLevel[] = ${JSON.stringify(
       title: 'Organisms',
       question: 'What is this section?',
       unit: 'organism',
-      package: '@newui/blocks · @newui/charts · @newui/editor',
+      package: '@newui/organisms · @newui/charts · @newui/editor',
       count: entries.filter((entry) => entry.atomic === 'organism').length,
       href: '/organisms',
       blurb:
@@ -641,7 +651,7 @@ export const LADDER: LadderLevel[] = ${JSON.stringify(
       title: 'Templates',
       question: 'How does the page open?',
       unit: 'template',
-      package: '@newui/layouts · @newui/ui',
+      package: '@newui/templates',
       count: entries.filter((entry) => entry.atomic === 'template').length,
       href: '/templates',
       blurb:
@@ -694,7 +704,7 @@ write(path.join(outDir, 'counts.ts'), counts)
 // Reconcile actual exported declarations, including compound parts and helpers.
 // A documented destination is inventory evidence, never behavior acceptance.
 const project = new Project({
-  tsConfigFilePath: path.join(root, 'packages/ui/tsconfig.json'),
+  tsConfigFilePath: path.join(root, 'packages/atoms/tsconfig.json'),
 })
 
 // Follow the actual local source graph, including lazy layouts and type imports.
@@ -770,8 +780,10 @@ for (const [slug, entry] of Object.entries(APPLICATION_FILES)) {
   )
 }
 const packages = [
-  'ui',
-  'blocks',
+  'atoms',
+  'molecules',
+  'organisms',
+  'templates',
   'charts',
   'editor',
   'code-editor',
@@ -827,16 +839,9 @@ const inventory = packages.flatMap((pkg) => {
           entry.package === `@newui/${pkg}` &&
           (entry.name === name ||
             entry.parts.includes(name) ||
-            implementation?.includes(`/components/${entry.name}/`)),
+            implementation?.includes(`/${entry.name}/`)),
       )
-      const section =
-        family?.kind === 'block'
-          ? 'blocks'
-          : family?.group === 'Charts'
-            ? 'charts'
-            : family?.group === 'Editors'
-              ? 'editors'
-              : 'components'
+      const section = family ? `${family.atomic}s` : 'organisms'
       return {
         package: `@newui/${pkg}`,
         name,
@@ -914,7 +919,7 @@ const references: ReferenceSurface[] = [
   ...['sidebar-01/index', 'demo-sidebar'].map((name) => ({
     source: `references/solid-ui-main/apps/docs/src/registry/block/${name}.tsx`,
     implementation: `apps/playground/src/stories/${name.split('/')[0]}.stories.tsx`,
-    documentation: `/blocks/compositions/${name.split('/')[0]}`,
+    documentation: `/organisms/compositions/${name.split('/')[0]}`,
     tests: ['e2e/responsive-preview.spec.ts'],
     acceptance: 'pending' as const,
   })),

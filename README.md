@@ -23,8 +23,9 @@ pnpm dev
 The playground is the documentation site and visual acceptance surface. Start
 with `/foundations`, browse `/atoms` and `/organisms`, or open
 `/pages/analytics`. `/pages` contains complete local business workflows;
-`/pages/patterns` maps all 68 solid-ui registry examples to their newui
-compositions. Every page and live demo loads lazily.
+`/kit/recipes` collects small examples outside the application catalog, while
+the 68 solid-ui registry examples link to the atomic component or recipe they
+demonstrate. Every page and live demo loads lazily.
 
 ```sh
 pnpm storybook
@@ -40,15 +41,18 @@ a demo is written once.
 | Package | Responsibility |
 | --- | --- |
 | `@newui/tokens`, `@newui/tailwind` | Framework-neutral tokens and generated CSS |
-| `@newui/ui`, `@newui/icons` | Accessible Solid controls and glyphs |
-| `@newui/blocks` | Composed application sections, depending only on UI |
+| `@newui/atoms`, `@newui/molecules` | Single controls/marks and compound interactions |
+| `@newui/organisms` | Application regions, sidebar, table and virtual list |
+| `@newui/templates` | Exactly three page templates: `AppShell`, `PaneLayout`, `AuthLayout` |
+| `@newui/icons` | Frappe glyphs as Solid components |
+| `@newui/data` | Headless format/selection/undo/download, query and form logic |
 | `@newui/charts` | Theme-aware ECharts SVG wrappers and accessible data fallbacks |
 | `@newui/editor`, `@newui/code-editor` | TipTap and CodeMirror integrations |
 | `@newui/vite` | Frappe development integration |
 
-TanStack Table, Virtual, Query and Form are used in the application examples.
-They add no dependencies to the component or blocks packages. Reference checkouts
-remain read-only and are never shipped as runtime code.
+TanStack Table and Virtual belong to the organism package; Query and Form belong
+to the headless data package. Applications import the atomic layer they use.
+Reference checkouts remain read-only and are never shipped as runtime code.
 
 ## Contracts and validation
 
@@ -57,8 +61,7 @@ Read [AGENTS.md](AGENTS.md), [PHILOSOPHY.md](PHILOSOPHY.md),
 The [construction kit](spec/kit.md), [states](spec/states.md),
 [visual system](spec/visual-system.md),
 [migration notes](spec/migrations.md),
-[reference inventory](spec/reference-examples.md) and
-[TanStack integration](spec/tanstack-integration.md) describe the redesign.
+[reference inventory](spec/reference-examples.md) describe the redesign.
 
 ```sh
 pnpm verify           # identical local and CI pipeline

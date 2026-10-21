@@ -1,4 +1,4 @@
-import { TextInput } from '@newui/ui'
+import { TextInput } from '@newui/atoms'
 import { render, screen } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
 import { createSignal } from 'solid-js'

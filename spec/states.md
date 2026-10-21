@@ -49,7 +49,7 @@ these, so the index is predictable and the harness can address a state by id
 | `Open` | the overlay/popup/disclosure is open as the story renders |
 | `Selected` | the row/node is chosen, distinct from hover and focus |
 | `ReadOnly` | the value is visible and not editable |
-| `Collapsed` | the sidebar is folded to its rail |
+| `Collapsed` | the integrated sidebar folds to labelled icons |
 
 Choose the narrowest state that matches the prop: an `error` prop is `Invalid`
 on a field, `Error` on a chart or container; an `open` prop on an overlay is
@@ -127,7 +127,7 @@ tags, so they never reach the index the sweeps read.)
 - **Overlays** get `Open`: a closed trigger proves nothing about the panel.
 - **Charts** get `Loading` and `Error`; the shared `ChartContainer` also gets
   `Empty`, because that is where the designed empty state lives.
-- **Shells and navigation** get `Collapsed` / `Disabled`, the modes the machine
+- **The AppShell and navigation sidebar** get `Collapsed`, the mode the shell
   owns rather than the page.
 - **Editors** get `ReadOnly`, the state that separates "visible" from
   "editable" before permissions are wired.

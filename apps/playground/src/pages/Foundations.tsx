@@ -1,5 +1,11 @@
-import { radius, semanticColors } from '@newui/tokens'
-import { Button, Dialog, Switch } from '@newui/ui'
+import { Button, Switch } from '@newui/atoms'
+import { Dialog } from '@newui/molecules'
+import {
+  layoutSpacing,
+  radius,
+  radiusRoles,
+  semanticColors,
+} from '@newui/tokens'
 import { For } from 'solid-js'
 import { PageSection } from '../lib/PageSection'
 import { TableOfContents } from '../lib/TableOfContents'
@@ -23,6 +29,8 @@ export function Foundations() {
     <TableOfContents
       entries={[
         { id: 'semantic-colors', label: 'Semantic colors' },
+        { id: 'color-scheme', label: 'Color scheme' },
+        { id: 'layout-rhythm', label: 'Layout rhythm' },
         { id: 'radius', label: 'Radius' },
         { id: 'typography-roles', label: 'Typography roles' },
         { id: 'numbered-typography', label: 'Numbered typography' },
@@ -60,22 +68,121 @@ export function Foundations() {
         </For>
       </PageSection>
 
-      <PageSection id="radius" title="Radius">
-        <div class="flex flex-wrap items-end gap-3">
-          <For each={Object.entries(radius)}>
-            {([key, value]) => (
-              <div class="flex flex-col items-center gap-1">
+      <PageSection id="color-scheme" title="Color scheme">
+        <div class="grid gap-control-gap sm:grid-cols-2">
+          <div class="flex flex-col gap-control-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad">
+            <span class="text-caption text-ink-gray-6">Light</span>
+            <div class="rounded-control bg-surface-base p-control-pad text-ink-gray-9">
+              Surface base · ink gray 9
+            </div>
+          </div>
+          <div
+            data-theme="dark"
+            class="flex flex-col gap-control-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad"
+          >
+            <span class="text-caption text-ink-gray-6">Dark</span>
+            <div class="rounded-control bg-surface-base p-control-pad text-ink-gray-9">
+              Surface base · ink gray 9
+            </div>
+          </div>
+        </div>
+        <p class="mt-field-gap text-caption text-ink-gray-7">
+          Surfaces, ink, outlines and native controls follow the persisted
+          light, dark or system preference set in the masthead.
+        </p>
+      </PageSection>
+
+      <PageSection
+        id="layout-rhythm"
+        title="Layout rhythm"
+        description="Named spacing roles map page gutters, sections, cards, fields and controls onto the shared 4px base scale."
+      >
+        <div class="grid gap-control-gap sm:grid-cols-2 xl:grid-cols-3">
+          <For each={Object.entries(layoutSpacing)}>
+            {([name, value]) => (
+              <div class="flex min-w-0 flex-col gap-control-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad-compact">
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class="min-w-0 break-words text-sm-medium">{name}</span>
+                  <span class="shrink-0 font-mono text-xs text-ink-gray-7">
+                    {value}
+                  </span>
+                </div>
                 <div
-                  class="size-14 border border-outline-gray-3 bg-surface-gray-3"
-                  style={{ 'border-radius': `var(--radius-${key})` }}
+                  aria-hidden="true"
+                  class="h-2 max-w-full rounded-full bg-surface-blue-6"
+                  style={{ width: value }}
                 />
-                <span class="text-2xs text-ink-gray-7">
-                  {key} · {value}
-                </span>
               </div>
             )}
           </For>
         </div>
+        <p class="mt-section-gap text-caption text-ink-gray-7">
+          Use the compact gutter on narrow screens, the page gutter at standard
+          widths, and the wide gutter when a content frame has room to breathe.
+          Controls and fields use smaller internal gaps than sections.
+        </p>
+        <div class="mt-field-gap grid gap-card-gap sm:grid-cols-3">
+          <div class="grid aspect-video place-content-center rounded-card border border-outline-blue-1 bg-surface-blue-1 p-card-pad text-center">
+            <span class="text-sm-medium text-ink-blue-8">16 : 9</span>
+            <span class="mt-1 text-caption text-ink-gray-7">
+              Stable media ratio
+            </span>
+          </div>
+          <div class="grid gap-control-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad sm:col-span-2 sm:grid-cols-2">
+            <div class="rounded-control bg-surface-gray-2 p-control-pad text-caption">
+              Grid cell
+            </div>
+            <div class="rounded-control bg-surface-gray-2 p-control-pad text-caption">
+              Grid cell
+            </div>
+            <div class="rounded-control bg-surface-gray-2 p-control-pad text-caption sm:col-span-2">
+              A full-width cell in the same 4px rhythm
+            </div>
+          </div>
+        </div>
+      </PageSection>
+
+      <PageSection id="radius" title="Radius">
+        <p class="mb-field-gap text-caption text-ink-gray-7">
+          Components use four semantic roles; the numbered scale remains
+          available for specialized geometry.
+        </p>
+        <div class="grid gap-control-gap sm:grid-cols-2 xl:grid-cols-4">
+          <For each={Object.entries(radiusRoles)}>
+            {([key, value]) => (
+              <div class="flex items-center gap-field-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad-compact">
+                <div
+                  class="size-12 shrink-0 border border-outline-gray-3 bg-surface-gray-3"
+                  style={{ 'border-radius': `var(--radius-${key})` }}
+                />
+                <div class="min-w-0">
+                  <p class="text-sm-medium">{key}</p>
+                  <p class="text-caption text-ink-gray-7">{value}</p>
+                </div>
+              </div>
+            )}
+          </For>
+        </div>
+        <details class="mt-field-gap">
+          <summary class="cursor-pointer rounded-control py-control-pad text-caption text-ink-blue-link focus-visible:focus-ring">
+            Show the primitive radius scale
+          </summary>
+          <div class="flex flex-wrap items-end gap-control-gap pt-control-pad">
+            <For each={Object.entries(radius)}>
+              {([key, value]) => (
+                <div class="flex flex-col items-center gap-control-gap">
+                  <div
+                    class="size-14 border border-outline-gray-3 bg-surface-gray-3"
+                    style={{ 'border-radius': `var(--radius-${key})` }}
+                  />
+                  <span class="text-2xs text-ink-gray-7">
+                    {key} · {value}
+                  </span>
+                </div>
+              )}
+            </For>
+          </div>
+        </details>
       </PageSection>
 
       <PageSection id="typography-roles" title="Typography roles">

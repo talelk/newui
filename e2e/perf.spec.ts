@@ -8,8 +8,8 @@ import { expect, test } from '@playwright/test'
  * no longer renders cheaply) without being flaky on shared CI hardware.
  *
  * The LCP/list budgets were raised when the library roughly doubled: `/spec`
- * deliberately renders ~35 components, so it loads the whole `@newui/ui` chunk
- * by design. The real per-component cost is the gzip budget in `scripts/size.ts`
+ * deliberately renders ~35 components, so it loads the core atomic chunks by
+ * design. The real per-component cost is the gzip budget in `scripts/size.ts`
  * (enforced separately); this stays a tripwire for a genuine slowdown.
  */
 test('page metrics: LCP and CLS within budget', async ({ page }) => {

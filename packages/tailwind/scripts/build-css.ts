@@ -16,6 +16,7 @@ import {
   cssVariables,
   fontSize,
   fontWeight,
+  layoutSpacing,
   radius,
   semanticColors,
   shadows,
@@ -85,6 +86,10 @@ for (const [key, value] of Object.entries(radius)) {
 
 comment('spacing scale — every half step and integer 1..128')
 for (const [key, value] of Object.entries(spacing)) {
+  decl(`--spacing-${key}`, value)
+}
+comment('semantic layout rhythm — shared component and page roles')
+for (const [key, value] of Object.entries(layoutSpacing)) {
   decl(`--spacing-${key}`, value)
 }
 

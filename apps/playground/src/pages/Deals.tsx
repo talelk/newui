@@ -1,15 +1,19 @@
+import { Avatar, Badge, Button, TextInput } from '@newui/atoms'
+import { createUndo, first, usd as money, optionsOf } from '@newui/data'
+import { DatePicker, Select } from '@newui/molecules'
 import {
+  DataTable,
+  type DataTableColumn,
   FilterBar,
   KanbanBoard,
   type KanbanColumn,
   type KanbanMove,
   type KanbanTone,
   StatGrid,
-} from '@newui/blocks'
-import { createUndo, first, usd as money, optionsOf } from '@newui/data'
-import { DataTable, type DataTableColumn } from '@newui/data/table'
-import { Avatar, Badge, Button, DatePicker, Select, TextInput } from '@newui/ui'
+} from '@newui/organisms'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
+import { AppNavigation } from '../examples/AppNavigation'
+import { AppPage } from '../examples/AppPage'
 import { CreateDialog } from '../examples/CreateDialog'
 import {
   type Deal,
@@ -20,8 +24,6 @@ import {
   type Stage,
 } from '../examples/deals-data'
 import { Notice } from '../examples/Notice'
-import { WorkspaceNav } from '../examples/WorkspaceNav'
-import { WorkspacePage } from '../examples/WorkspacePage'
 
 export function Deals(): JSX.Element {
   const [deals, setDeals] = createSignal(initialDeals)
@@ -155,7 +157,7 @@ export function Deals(): JSX.Element {
     { accessorKey: 'due', header: 'Close date' },
   ]
   return (
-    <WorkspacePage
+    <AppPage
       title="Build a healthier pipeline"
       section="Deals"
       description="Every opportunity, a clear next step. Move from first conversation to a confident close."
@@ -169,8 +171,8 @@ export function Deals(): JSX.Element {
           New deal
         </Button>
       }
-      sidebar={
-        <WorkspaceNav
+      navigation={() => (
+        <AppNavigation
           label="Deals navigation"
           value={nav()}
           onChange={setNav}
@@ -191,7 +193,7 @@ export function Deals(): JSX.Element {
             ],
           }}
         />
-      }
+      )}
     >
       <div class="hidden sm:block">
         <StatGrid
@@ -424,6 +426,6 @@ export function Deals(): JSX.Element {
           </>
         )}
       />
-    </WorkspacePage>
+    </AppPage>
   )
 }

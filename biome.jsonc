@@ -51,7 +51,7 @@
       // accident: a region that scrolls and cannot be reached from the keyboard
       // is the defect `scrollable-region-focusable` names. The lint rule assumes
       // `tabindex` on a non-interactive element is a mistake; here it is the fix.
-      "includes": ["packages/ui/src/components/ScrollArea/**"],
+      "includes": ["packages/atoms/src/atoms/ScrollArea/**"],
       "linter": {
         "rules": { "a11y": { "noNoninteractiveTabindex": "off" } }
       }
@@ -60,17 +60,16 @@
       // Same contract as ScrollArea: a region that scrolls and cannot be
       // reached from the keyboard cannot be read past its first screen
       // (WCAG 2.1.1). The virtual list is that region.
-      "includes": ["packages/data/src/virtual/**"],
+      "includes": ["packages/organisms/src/organisms/VirtualList/**"],
       "linter": {
         "rules": { "a11y": { "noNoninteractiveTabindex": "off" } }
       }
     },
     {
-      // The drawer's backdrop click. The keyboard path is the `<dialog>`'s own
-      // Escape, which the element already owns — there is no second keyboard
-      // affordance to add, and a key handler on the backdrop would be a
-      // duplicate that fires on Enter anywhere in the panel.
-      "includes": ["packages/ui/src/components/ResponsiveShell/**"],
+      // AppShell closes the native modal drawer when a navigation/control
+      // click bubbles through it. Escape and focus restoration are owned by
+      // `<dialog>`; a key handler on the panel would duplicate its semantics.
+      "includes": ["packages/templates/src/templates/AppShell.tsx"],
       "linter": {
         "rules": { "a11y": { "useKeyWithClickEvents": "off" } }
       }
@@ -82,7 +81,7 @@
       // pattern avoids — a focusable option would pull focus out of the field
       // the moment you arrow down. `useSemanticElements` has nothing to offer
       // either: the options are rich rows rebuilt on every keystroke.
-      "includes": ["packages/ui/src/components/CommandPalette/**"],
+      "includes": ["packages/organisms/src/organisms/CommandPalette/**"],
       "linter": {
         "rules": {
           "a11y": {
@@ -98,7 +97,7 @@
       // `aria-valuenow`, a tab stop and arrow keys. `useSemanticElements`
       // suggests `<hr>`, which is a static rule — it carries no value, takes no
       // focus and has no keyboard handler, so there is nothing to suggest.
-      "includes": ["packages/layouts/src/PaneLayout/**"],
+      "includes": ["packages/templates/src/templates/PaneLayout/**"],
       "linter": {
         "rules": { "a11y": { "useSemanticElements": "off" } }
       }
@@ -145,8 +144,8 @@
       // and stay unfocusable on purpose (focus never leaves the field), which
       // is the same carve-out the CommandPalette documents above.
       "includes": [
-        "packages/ui/src/components/Combobox/**",
-        "packages/ui/src/components/MultiSelect/**"
+        "packages/molecules/src/molecules/Combobox/**",
+        "packages/molecules/src/molecules/MultiSelect/**"
       ],
       "linter": {
         "rules": {

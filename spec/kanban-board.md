@@ -1,6 +1,6 @@
 # KanbanBoard
 
-`KanbanBoard` — columns of cards you drag between them, from `@newui/blocks`.
+`KanbanBoard` — columns of cards you drag between them, from `@newui/organisms`.
 
 ## Props
 

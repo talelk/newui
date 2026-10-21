@@ -61,7 +61,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Charts/ChartBase',
+  title: 'Molecules/ChartBase',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

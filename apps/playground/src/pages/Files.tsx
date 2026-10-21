@@ -1,23 +1,20 @@
-import { FilterBar } from '@newui/blocks'
+import { Badge, Button, TextInput } from '@newui/atoms'
 import { NumberCard } from '@newui/charts'
 import { downloadBlob, first, optionsOf, bytes as size } from '@newui/data'
-import { DataTable, type DataTableColumn } from '@newui/data/table'
 import {
-  Badge,
   BottomSheet,
   Breadcrumbs,
-  Button,
   Dialog,
   EmptyState,
   Select,
-  TextInput,
-} from '@newui/ui'
+} from '@newui/molecules'
+import { DataTable, type DataTableColumn, FilterBar } from '@newui/organisms'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
+import { AppNavigation } from '../examples/AppNavigation'
+import { AppPage } from '../examples/AppPage'
 import { CreateDialog } from '../examples/CreateDialog'
 import { INITIAL, type WorkspaceFile } from '../examples/files-data'
 import { Notice } from '../examples/Notice'
-import { WorkspaceNav } from '../examples/WorkspaceNav'
-import { WorkspacePage } from '../examples/WorkspacePage'
 
 export function Files(): JSX.Element {
   const [items, setItems] = createSignal(INITIAL)
@@ -183,9 +180,9 @@ export function Files(): JSX.Element {
     },
   ]
   return (
-    <WorkspacePage
-      sidebar={
-        <WorkspaceNav
+    <AppPage
+      navigation={() => (
+        <AppNavigation
           label="File views"
           value={section()}
           onChange={(value) => {
@@ -224,7 +221,7 @@ export function Files(): JSX.Element {
             },
           ]}
         />
-      }
+      )}
       title="A home for your team's work"
       section="Files"
       description="Keep documents, assets and ideas organised. Explore folders, share context and find what matters."
@@ -617,6 +614,6 @@ export function Files(): JSX.Element {
           </Show>
         </Dialog.Content>
       </Dialog.Root>
-    </WorkspacePage>
+    </AppPage>
   )
 }

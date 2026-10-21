@@ -1,5 +1,6 @@
+import { Button, Switch } from '@newui/atoms'
 import { CodeEditor, type CodeEditorLanguage } from '@newui/code-editor'
-import { Button, Select, Switch } from '@newui/ui'
+import { Select } from '@newui/molecules'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -52,7 +53,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Editors/CodeEditor',
+  title: 'Organisms/CodeEditor',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

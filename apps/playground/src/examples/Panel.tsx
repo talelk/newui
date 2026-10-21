@@ -1,4 +1,4 @@
-import { card } from '@newui/ui'
+import { card } from '@newui/molecules'
 import { type JSX, Show } from 'solid-js'
 
 /**

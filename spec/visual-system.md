@@ -12,12 +12,13 @@ Role utilities are `text-interface`, `text-caption`, `text-heading` (24/30),
 Existing numbered utilities remain available. Metrics use tabular numerals.
 Controls use xs=24, sm=28, md=32, lg=40px, default sm. Text entry defaults to
 outline; Button remains neutral/subtle. Primary actions explicitly use solid/blue.
-Controls have 6px radii, cards 10px, overlays 12px. Layout follows a 4px rhythm,
-12px card padding (data cards — StatGrid stats and chart cards — pad at 16px;
-see `spec/stat-grid.md` and `spec/charts.md`), 16px section gaps and 8px control-group gaps. Dialogs retain
+Controls have 6px radii, cards 8px, overlays 12px. Layout follows a 4px rhythm,
+12px compact card padding and 16px standard card padding (data cards — StatGrid
+stats and chart cards — keep the same card role; see `spec/stat-grid.md` and
+`spec/charts.md`), 24px section gaps and 8px control-group gaps. Dialogs retain
 16px padding. Mobile navigation and primary icon actions retain 40–44px touch
-targets. Borders define cards; floating surfaces
-use restrained shadows. Short transitions respect reduced motion.
+targets. Borders define cards; floating surfaces use restrained shadows. Short
+transitions respect reduced motion.
 
 ## Colour and states
 
@@ -50,6 +51,21 @@ pixel sizes are the default computed sizes, not a restriction on user scaling.
 Text-zoom checks assert that rendered font sizes actually double. Chart defaults
 use 12px labels and scale with the root font; accessible data tables remain
 available. Metric values and headings may wrap at enlarged text sizes.
+
+### Layout rhythm and surfaces
+
+Spacing uses the shared 4px scale through named roles rather than one-off
+values: `control-gap` (8px), `control-pad` (8px), `field-gap` (12px),
+`card-gap` (16px), `card-pad-compact` (12px), `card-pad` (16px),
+`card-pad-wide` (20px), `section-gap` (24px), `page-gutter-compact` (16px),
+`page-gutter` (24px), `page-gutter-wide` (32px) and `page-stack` (32px).
+Page shells use the compact gutter on narrow screens and the page gutter at
+standard widths; cards use the compact or normal pad, not an arbitrary `p-4`.
+
+Radius has four semantic roles over the primitive scale: `control` 6px,
+`card` 8px, `overlay` 12px and `pill` fully rounded. The numbered radius scale
+remains available for specialized geometry, but recipes use the role names so
+surfaces stay aligned as the scale evolves.
 
 ## Documentation navigation
 

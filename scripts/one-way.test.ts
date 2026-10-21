@@ -1,14 +1,4 @@
-/**
- * One way to do data, forms, tables and lists.
- *
- * `spec/kit.md`'s W3 acceptance is an economic claim: the examples adopt the
- * logic layer and *their local copies are deleted*. A grep is the honest gate
- * for that — a page that quietly re-adds `@tanstack/solid-table`, or a second
- * `DataTable` under `examples/`, is the duplication the phase existed to end.
- *
- * The dependency graph and the bundle budgets catch the cost; this catches the
- * intent.
- */
+/** Atomic-package import and headless-data boundaries, pinned by test. */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
@@ -17,9 +7,13 @@ const ROOT = process.cwd()
 const SKIP = new Set(['node_modules', 'dist', 'storybook-static', '.git'])
 const SOURCE = /\.(ts|tsx)$/
 const TEST = /\.(test|spec)\.(ts|tsx)$/
-const ADAPTERS = /from '@tanstack\/solid-(query|form|table|virtual)'/
-/** Only the package that owns the adapters may name them. */
-const OWNER = 'packages/data/src/'
+const ADAPTERS = /from '@tanstack\/solid-(query|form|table|virtual)'/g
+const OWNER: Record<string, string> = {
+  query: 'packages/data/src/',
+  form: 'packages/data/src/',
+  table: 'packages/organisms/src/',
+  virtual: 'packages/organisms/src/',
+}
 
 function walk(dir: string, out: string[] = []): string[] {
   for (const entry of readdirSync(dir)) {
@@ -40,11 +34,12 @@ const files = [
 
 describe('the logic layer is the only way in', () => {
   it('no app or other package imports a TanStack adapter directly', () => {
-    const offenders = files.filter(
-      (file) =>
-        !file.startsWith(OWNER) &&
-        ADAPTERS.test(readFileSync(path.join(ROOT, file), 'utf8')),
-    )
+    const offenders = files.flatMap((file) => {
+      const source = readFileSync(path.join(ROOT, file), 'utf8')
+      return [...source.matchAll(ADAPTERS)]
+        .filter((match) => !file.startsWith(OWNER[match[1] ?? '']))
+        .map(() => file)
+    })
     expect(offenders).toEqual([])
   })
 
@@ -61,7 +56,7 @@ describe('the logic layer is the only way in', () => {
       path.join(ROOT, 'apps/playground/src/examples/ActivityList.tsx'),
       'utf8',
     )
-    expect(activity).toContain("from '@newui/data/virtual'")
+    expect(activity).toContain("from '@newui/organisms'")
     expect(activity).not.toContain('@tanstack/solid-virtual')
   })
 
@@ -72,7 +67,7 @@ describe('the logic layer is the only way in', () => {
     )
     expect(records).toContain("from '@newui/data/query'")
     expect(records).toContain("from '@newui/data/form'")
-    expect(records).toContain("from '@newui/data/table'")
+    expect(records).toContain("from '@newui/organisms'")
     expect(records).not.toMatch(/import .* from '@tanstack\//)
   })
 })

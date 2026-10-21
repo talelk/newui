@@ -1,4 +1,4 @@
-import { Menu } from '@newui/ui'
+import { Menu } from '@newui/molecules'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -30,7 +30,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Actions/Menu',
+  title: 'Molecules/Actions/Menu',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

@@ -105,7 +105,7 @@ test('embedded documentation links leave the frame while application anchors ret
 }) => {
   await page.goto('/pages/analytics?viewport=mobile')
   const app = page.frameLocator('iframe')
-  await app.getByRole('button', { name: 'Toggle workspace navigation' }).click()
+  await app.getByRole('button', { name: 'Open application navigation' }).click()
   // The frame's section nav scrolls inside the frame: the host page (and its
   // URL) does not move, and the section it names is what comes into view.
   await app.getByRole('button', { name: /^Transactions/ }).click()
@@ -160,7 +160,7 @@ test('a reference section opens its own index in the sidebar', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
-  await page.goto('/templates/app-layout')
+  await page.goto('/templates/app-shell')
   const sidebar = page.locator('[data-slot="site-sidebar"]')
   // The layouts used to fall through to the site tree: no index, and a page
   // filter stacked over nothing. They are a reference section like the rest.
@@ -171,7 +171,7 @@ test('a reference section opens its own index in the sidebar', async ({
     sidebar.getByRole('link', { name: 'All templates', exact: true }),
   ).toBeVisible()
   await expect(
-    sidebar.getByRole('link', { name: 'AppLayout', exact: true }),
+    sidebar.getByRole('link', { name: 'AppShell', exact: true }),
   ).toHaveAttribute('aria-current', 'page')
   // The count is the registry's, not a second hand-written list.
   await expect(
@@ -244,17 +244,17 @@ test('the architecture page states the ladder and links every level', async ({
 test('an entry reached from the wrong section says where it lives', async ({
   page,
 }) => {
-  await page.goto('/atoms/app-layout')
-  // The generated page is shared by four route groups; `/atoms/app-layout` is
+  await page.goto('/molecules/app-shell')
+  // The generated page is shared by four route groups; `/molecules/app-shell` is
   // the same content under the wrong breadcrumb, so it points at the one
   // canonical URL instead of rendering a duplicate.
   await expect(
-    page.getByRole('heading', { name: 'AppLayout is a template', level: 1 }),
+    page.getByRole('heading', { name: 'AppShell is a template', level: 1 }),
   ).toBeVisible()
   await page
-    .getByRole('link', { name: 'Open AppLayout under Templates' })
+    .getByRole('link', { name: 'Open AppShell under Templates' })
     .click()
-  await expect(page).toHaveURL('/templates/app-layout')
+  await expect(page).toHaveURL('/templates/app-shell')
 })
 
 test('the command palette links a layout to its own section', async ({
@@ -262,7 +262,7 @@ test('the command palette links a layout to its own section', async ({
 }) => {
   await page.goto('/')
   await page.keyboard.press('Meta+k')
-  await page.getByRole('combobox', { name: 'Find a page' }).fill('app-layout')
-  await page.getByRole('option', { name: /AppLayout/ }).click()
-  await expect(page).toHaveURL('/templates/app-layout')
+  await page.getByRole('combobox', { name: 'Find a page' }).fill('app-shell')
+  await page.getByRole('option', { name: /AppShell/ }).click()
+  await expect(page).toHaveURL('/templates/app-shell')
 })

@@ -1,0 +1,157 @@
+import { Avatar } from '@newui/atoms'
+import { Dropdown } from '@newui/molecules'
+import { SidebarItem } from '@newui/organisms'
+import { AppShell } from '@newui/templates'
+import { A } from '@solidjs/router'
+import { createMemo, createSignal, type JSX } from 'solid-js'
+import { EXAMPLES } from '../lib/examples'
+import { ThemeMenu } from '../shell/ThemeMenu'
+
+/**
+ * The page-level composition used by the application recipes.
+ *
+ * It is intentionally not another template: all frame behavior lives in
+ * `@newui/templates/AppShell`. This file supplies this site's Acme brand,
+ * tenant picker, shared menu footer and user identity; each page supplies its
+ * own grouped navigation and content.
+ */
+export function AppPage(props: {
+  title: string
+  description: string
+  section: string
+  /** Custom sidebar list; a render function so it can read `useSidebar`. */
+  navigation?: () => JSX.Element
+  actions?: JSX.Element
+  children: JSX.Element
+}): JSX.Element {
+  const [tenant, setTenant] = createSignal('production')
+  const applicationNavigation = createMemo(() => [
+    {
+      label: 'Applications',
+      // Settings is not an application: the pinned footer action below already
+      // owns it. Listing it here too gave every page two "Settings" links.
+      items: EXAMPLES.filter(
+        (example) => example.href !== '/pages/settings',
+      ).map((example) => ({
+        label: example.name,
+        icon: example.icon,
+        route: `${example.href}/fullscreen`,
+        active: example.name.toLowerCase() === props.section.toLowerCase(),
+      })),
+    },
+  ])
+  const tenantOptions = [
+    {
+      label: 'Acme · Production',
+      value: 'production',
+      icon: 'lucide-building-2',
+    },
+    { label: 'Acme · Staging', value: 'staging', icon: 'lucide-flask-conical' },
+  ]
+
+  return (
+    <AppShell
+      title={props.title}
+      description={props.description}
+      breadcrumbs={[
+        { label: 'Workspace', route: '/pages' },
+        { label: props.section },
+      ]}
+      mobileTitle={props.section}
+      actions={props.actions}
+      navLabel={`${props.section} navigation`}
+      brand={
+        <A
+          href="/pages"
+          class="flex min-h-10 items-center gap-2 rounded-3 px-2 font-semibold focus-visible:focus-ring"
+        >
+          <img src="/favicon.svg" alt="" class="size-6 rounded-[6px]" />
+          <span>Acme workspace</span>
+        </A>
+      }
+      brandCollapsed={
+        <A
+          href="/pages"
+          aria-label="Acme workspace home"
+          class="grid size-10 place-items-center rounded-3 focus-visible:focus-ring"
+        >
+          <img src="/favicon.svg" alt="" class="size-7 rounded-[6px]" />
+        </A>
+      }
+      tenant={
+        <Dropdown options={tenantOptions} onSelect={setTenant}>
+          <span class="flex min-w-0 items-center gap-2">
+            <span
+              class="lucide-building-2 size-4 shrink-0"
+              aria-hidden="true"
+            />
+            <span class="truncate">
+              {tenant() === 'staging' ? 'Acme · Staging' : 'Acme · Production'}
+            </span>
+          </span>
+        </Dropdown>
+      }
+      tenantCollapsed={
+        <Dropdown options={tenantOptions} onSelect={setTenant}>
+          <span class="grid size-9 place-items-center">
+            <span class="sr-only">Choose tenant</span>
+            <span class="lucide-building-2 size-4" aria-hidden="true" />
+          </span>
+        </Dropdown>
+      }
+      navigation={props.navigation ? undefined : applicationNavigation()}
+      navigationContent={props.navigation}
+      settings={
+        <SidebarItem
+          label="Settings"
+          icon="lucide-settings"
+          route="/pages/settings"
+        >
+          Settings
+        </SidebarItem>
+      }
+      account={
+        <Dropdown
+          options={[
+            {
+              label: 'Account settings',
+              value: 'account',
+              icon: 'lucide-user-round-cog',
+            },
+            {
+              label: 'Sign out (demo)',
+              value: 'sign-out',
+              icon: 'lucide-log-out',
+            },
+          ]}
+        >
+          <span class="flex min-w-0 items-center gap-2">
+            <Avatar size="xs" theme="blue" label="Rhea Kapoor" />
+            <span class="truncate">Rhea Kapoor</span>
+          </span>
+        </Dropdown>
+      }
+      accountCollapsed={
+        <Dropdown
+          options={[
+            {
+              label: 'Account settings',
+              value: 'account',
+              icon: 'lucide-user-round-cog',
+            },
+            {
+              label: 'Sign out (demo)',
+              value: 'sign-out',
+              icon: 'lucide-log-out',
+            },
+          ]}
+        >
+          <Avatar size="xs" theme="blue" label="Rhea Kapoor" />
+        </Dropdown>
+      }
+      headerActions={<ThemeMenu />}
+    >
+      {props.children}
+    </AppShell>
+  )
+}

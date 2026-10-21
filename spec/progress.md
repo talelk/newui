@@ -4,7 +4,7 @@ Reports a determinate value or ongoing activity.
 
 ## Usage and anatomy
 
-Import `Progress` from `@newui/ui`. The executable example and its copyable
+Import `Progress` from `@newui/atoms`. The executable example and its copyable
 source on `/atoms/progress` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

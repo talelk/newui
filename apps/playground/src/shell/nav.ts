@@ -69,6 +69,12 @@ export const NAV: NavSection[] = [
         href: '/kit',
         description: 'Compose a page, wire data, start from the starter.',
       },
+      {
+        title: 'Recipes',
+        href: '/kit/recipes',
+        description:
+          'Small compositions and reference examples linked to their atomic owner.',
+      },
     ],
   },
   {

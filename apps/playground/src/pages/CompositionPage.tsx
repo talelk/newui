@@ -8,7 +8,10 @@ import { storySources as sources } from '../lib/story-sources'
 import { PageIntro } from '../shell/PageIntro'
 
 const compositions: Record<string, { title: string; demo: string }> = {
-  'sidebar-01': { title: 'Grouped documentation sidebar', demo: 'Sidebar01' },
+  'sidebar-01': {
+    title: 'Grouped documentation sidebar',
+    demo: 'Grouped documentation sidebar',
+  },
   'demo-sidebar': { title: 'Application sidebar', demo: 'DemoSidebar' },
 }
 export function CompositionPage() {
@@ -26,7 +29,7 @@ export function CompositionPage() {
             {(story) => (
               <ResponsivePreview
                 title={item().title}
-                story={story().id}
+                src={`/preview/${story().id}`}
                 source={() =>
                   sources[`../stories/${params['name']}.stories.tsx`]?.() ??
                   Promise.resolve('')

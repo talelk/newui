@@ -139,8 +139,8 @@ export function Home(): JSX.Element {
           business software. Built with SolidJS, accessible by design, and ready
           for your data.
         </p>
-        <pre class="w-fit max-w-full overflow-x-auto rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
-          <code>pnpm add @newui/ui @newui/tailwind</code>
+        <pre class="w-fit max-w-full whitespace-pre-wrap break-words rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
+          <code>pnpm add @newui/atoms @newui/molecules @newui/tailwind</code>
         </pre>
       </header>
 

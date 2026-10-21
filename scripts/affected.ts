@@ -109,19 +109,26 @@ const RULES: Rule[] = [
   },
   {
     match: 'API table',
-    paths: [/^packages\/ui\/src/, /api\.json/, /propsgen/],
+    paths: [
+      /^packages\/(atoms|molecules|organisms|templates|charts|editor|code-editor)\/src/,
+      /(^|\/)api\.json$/,
+      /propsgen/,
+    ],
   },
   {
     match: 'Spec props',
-    paths: [/^spec\//, /^packages\/ui\/src/, /check-specs/],
+    paths: [
+      /^spec\//,
+      /^packages\/(atoms|molecules|organisms|templates|charts|editor|code-editor)\/src/,
+      /check-specs/,
+    ],
   },
   {
     match: 'Site data',
     paths: [
       /^apps\/playground\/src\/generated/,
       /sitegen/,
-      /^packages\/ui\/src\/components/,
-      /^packages\/blocks\/src/,
+      /^packages\/(atoms|molecules|organisms|templates|charts|editor|code-editor)\/src/,
     ],
   },
   {
@@ -147,23 +154,37 @@ const RULES: Rule[] = [
     ],
   },
   { match: 'Reference paths', always: true },
+  {
+    match: 'Agent Skills',
+    paths: [
+      /^packages\/[^/]+\/(skills|package\.json)/,
+      /^_artifacts\//,
+      /^skills\//,
+      /^AGENTS\.md$/,
+      /^package\.json$/,
+      /^apps\/starter\/(package\.json|AGENTS\.md|scripts\/intent\.mjs|README\.md)$/,
+    ],
+  },
   { match: 'Bundle budget', paths: [/^packages\//] },
   { match: 'Build packages', paths: [/^packages\//] },
   {
     match: 'Build playground',
-    paths: [/^apps\/playground/, /^packages\/(ui|blocks|tailwind|tokens)\//],
+    paths: [
+      /^apps\/playground/,
+      /^packages\/(atoms|molecules|organisms|templates|charts|editor|code-editor|tailwind|tokens)\//,
+    ],
   },
   {
     match: 'Build starter',
     paths: [
       /^apps\/starter/,
-      /^packages\/(ui|blocks|layouts|data|tailwind|tokens)\//,
+      /^packages\/(atoms|molecules|organisms|templates|data|tailwind|tokens)\//,
     ],
   },
   {
     match: 'CSS emission',
     paths: [
-      /^packages\/(ui|blocks|tailwind|tokens)\//,
+      /^packages\/(atoms|molecules|organisms|templates|tailwind|tokens)\//,
       /^apps\/playground\/(src\/(stories|pages)|\.storybook)/,
       /^apps\/starter/,
       /tailwind/,
@@ -174,7 +195,7 @@ const RULES: Rule[] = [
     paths: [
       /^apps\/playground/,
       /^apps\/starter/,
-      /^packages\/(ui|blocks|charts|data)\//,
+      /^packages\/(atoms|molecules|organisms|templates|charts|editor|code-editor|data)\//,
     ],
   },
   {
@@ -183,7 +204,10 @@ const RULES: Rule[] = [
   },
   {
     match: 'Component browser tests',
-    paths: [/^packages\/ui\/src\/components/, /\.browser\.test\./],
+    paths: [
+      /^packages\/(atoms|molecules|organisms|templates)\/src\/(atoms|molecules|organisms|templates)/,
+      /\.browser\.test\./,
+    ],
     scopeable: false,
   },
   {

@@ -1,4 +1,4 @@
-import { FilterBar } from '@newui/blocks'
+import { Badge, Button, Switch } from '@newui/atoms'
 import {
   AreaChart,
   BarChart,
@@ -17,8 +17,8 @@ import {
   usd as money,
   usdK,
 } from '@newui/data'
-import { DataTable, type DataTableColumn } from '@newui/data/table'
-import { Alert, Badge, Button, Select, Switch } from '@newui/ui'
+import { Alert, Select } from '@newui/molecules'
+import { DataTable, type DataTableColumn, FilterBar } from '@newui/organisms'
 import { useNavigate } from '@solidjs/router'
 import {
   createMemo,
@@ -29,9 +29,9 @@ import {
   Show,
   Suspense,
 } from 'solid-js'
+import { AppNavigation } from '../examples/AppNavigation'
+import { AppPage } from '../examples/AppPage'
 import { Notice } from '../examples/Notice'
-import { WorkspaceNav } from '../examples/WorkspaceNav'
-import { WorkspacePage } from '../examples/WorkspacePage'
 import {
   channelSeries,
   comparisonSeries,
@@ -260,7 +260,7 @@ export function Analytics(): JSX.Element {
   ])
 
   return (
-    <WorkspacePage
+    <AppPage
       section="Analytics"
       title="Revenue overview"
       description="A clear view of how your business is growing."
@@ -275,8 +275,8 @@ export function Analytics(): JSX.Element {
           Export report
         </Button>
       }
-      sidebar={
-        <WorkspaceNav
+      navigation={() => (
+        <AppNavigation
           label="Analytics sections"
           heading="Workspace"
           value={nav()}
@@ -304,7 +304,7 @@ export function Analytics(): JSX.Element {
             { label: 'Component library', icon: 'lucide-shapes' },
           ]}
         />
-      }
+      )}
     >
       <FilterBar
         query={{
@@ -575,6 +575,6 @@ export function Analytics(): JSX.Element {
           </Suspense>
         )}
       </Show>
-    </WorkspacePage>
+    </AppPage>
   )
 }

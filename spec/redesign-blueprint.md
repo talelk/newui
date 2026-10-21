@@ -6,10 +6,12 @@
 > A hand-authored blueprint in `docs/` would never enter history. `spec/`
 > is the committed contract layer (`spec/*.md` > ADRs > PHILOSOPHY > CONTEXT).
 
-Status: implemented as separate slice diffs on the working tree (guardrails,
-shell, blocks, FilterBar/StatGrid, chart chrome, site pages); see the closing
-section of `spec/redesign-progress.md` for what landed, measured sizes and the
-items still open. This document remains the plan of record.
+> Historical implementation plan. Its package paths, API assumptions and task
+> status predate the atomic refactor; current architecture is specified by
+> `kit.md` and ADR-0013.
+
+Status: implemented and superseded. This file records the earlier site and
+visual-system pass; it is not the current architecture or plan of record.
 
 ## Decisions already made (do not re-litigate)
 
@@ -254,4 +256,3 @@ Validate: full gate — `pnpm verify` (all 20 steps in
 
 Every slice also: `git status` clean of collateral generated files except
 the intended `api.json`/`generated/*` in Slice 5.
-

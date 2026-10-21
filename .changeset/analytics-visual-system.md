@@ -1,9 +1,10 @@
 ---
-"@newui/ui": major
+"@newui/atoms": major
+"@newui/molecules": major
 "@newui/tokens": minor
 "@newui/tailwind": major
 "@newui/charts": major
-"@newui/blocks": major
+"@newui/organisms": major
 "@newui/editor": minor
 "@newui/code-editor": minor
 ---

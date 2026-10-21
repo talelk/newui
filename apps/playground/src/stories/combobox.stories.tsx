@@ -1,4 +1,4 @@
-import { Combobox } from '@newui/ui'
+import { Combobox } from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -25,7 +25,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Selection/Combobox',
+  title: 'Molecules/Selection/Combobox',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

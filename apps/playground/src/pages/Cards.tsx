@@ -1,22 +1,24 @@
-import { isEmail } from '@newui/data'
 import {
   Avatar,
   Badge,
   Button,
+  Checkbox,
+  Icon,
+  Switch,
+  Textarea,
+  TextInput,
+} from '@newui/atoms'
+import { isEmail } from '@newui/data'
+import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-  Checkbox,
-  Icon,
   RadioGroup,
   Select,
-  Switch,
-  Textarea,
-  TextInput,
-} from '@newui/ui'
+} from '@newui/molecules'
 import { createSignal, For, type JSX, Show } from 'solid-js'
-import { WorkspacePage } from '../examples/WorkspacePage'
+import { AppPage } from '../examples/AppPage'
 
 function CreateAccount(): JSX.Element {
   const [name, setName] = createSignal('')
@@ -462,7 +464,7 @@ function CookieSettings(): JSX.Element {
 
 export function Cards(): JSX.Element {
   return (
-    <WorkspacePage
+    <AppPage
       section="Cards"
       title="Small surfaces. Useful patterns."
       description="Eight everyday compositions, built from the same compact controls and semantic surfaces."
@@ -482,6 +484,6 @@ export function Cards(): JSX.Element {
           <CookieSettings />
         </div>
       </section>
-    </WorkspacePage>
+    </AppPage>
   )
 }

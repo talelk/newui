@@ -1,17 +1,6 @@
-import {
-  Avatar,
-  Button,
-  Dialog,
-  Icon,
-  List,
-  ListCell,
-  ListRow,
-  Select,
-  SettingsDialog,
-  Switch,
-  Textarea,
-  TextInput,
-} from '@newui/ui'
+import { Avatar, Button, Icon, Switch, Textarea, TextInput } from '@newui/atoms'
+import { Dialog, List, ListCell, ListRow, Select } from '@newui/molecules'
+import { SettingsDialog } from '@newui/organisms'
 import { createEffect, createSignal, For, type JSX, Show } from 'solid-js'
 import { colorScheme, setColorScheme } from '../shell/theme'
 import { Notice } from './Notice'

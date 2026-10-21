@@ -1,0 +1,31 @@
+{
+  "name": "@newui/templates",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "The three page templates: AppShell, PaneLayout and AuthLayout.",
+  "exports": {
+    ".": {
+      "solid": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@newui/atoms": "workspace:*",
+    "@newui/molecules": "workspace:*",
+    "@newui/organisms": "workspace:*"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.9.0"
+  },
+  "devDependencies": {
+    "solid-js": "^1.9.0"
+  },
+  "sideEffects": false
+}

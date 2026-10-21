@@ -1,21 +1,22 @@
 {
   "files": [
     "pages/Analytics.tsx",
-    "examples/Notice.tsx",
-    "examples/WorkspaceNav.tsx",
-    "examples/WorkspacePage.tsx",
+    "examples/AppNavigation.tsx",
+    "examples/AppPage.tsx",
     "lib/examples.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",
+    "examples/Notice.tsx",
     "pages/analytics/data.ts",
     "pages/analytics/ReceiptDialog.tsx"
   ],
   "packages": [
-    "@newui/blocks",
+    "@newui/atoms",
     "@newui/charts",
     "@newui/data",
-    "@newui/layouts",
-    "@newui/ui",
+    "@newui/molecules",
+    "@newui/organisms",
+    "@newui/templates",
     "@solidjs/router",
     "solid-js"
   ]

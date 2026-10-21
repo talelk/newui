@@ -1,4 +1,5 @@
-import { BottomSheet, Button, Dialog, Menu, TextInput } from '@newui/ui'
+import { Button, TextInput } from '@newui/atoms'
+import { BottomSheet, Dialog, Menu } from '@newui/molecules'
 import { A } from '@solidjs/router'
 import { createSignal, For } from 'solid-js'
 import { Notice } from '../examples/Notice'

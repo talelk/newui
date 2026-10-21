@@ -5,35 +5,56 @@
 export const API = {
   "AppSidebarProps": [
     {
-      "name": "title",
+      "name": "brand",
       "type": "JSX.Element",
       "optional": false
     },
     {
-      "name": "subtitle",
+      "name": "brandCollapsed",
       "type": "JSX.Element",
       "optional": true
     },
     {
-      "name": "logo",
-      "type": "IconProp",
+      "name": "tenant",
+      "type": "JSX.Element",
       "optional": true
     },
     {
-      "name": "showLogo",
-      "type": "boolean",
+      "name": "tenantCollapsed",
+      "type": "JSX.Element",
       "optional": true
     },
     {
-      "name": "headerActions",
+      "name": "search",
       "type": "JSX.Element",
       "optional": true,
-      "description": "Rendered on the trailing edge of the header — a menu, usually."
+      "description": "Optional fixed control below the tenant and above the scrolling groups."
     },
     {
       "name": "groups",
       "type": "AppSidebarGroup[]",
-      "optional": false
+      "optional": true
+    },
+    {
+      "name": "children",
+      "type": "JSX.Element | (() => JSX.Element)",
+      "optional": true,
+      "description": "Advanced navigation composition, still inside this single sidebar."
+    },
+    {
+      "name": "settings",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "account",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "accountCollapsed",
+      "type": "JSX.Element",
+      "optional": true
     },
     {
       "name": "width",
@@ -41,16 +62,14 @@ export const API = {
       "optional": true
     },
     {
-      "name": "collapsible",
-      "type": "SidebarProps['collapsible']",
-      "optional": true,
-      "description": "Allows the sidebar to fold to its rail, with the toggle at its foot. Default `true`."
+      "name": "collapsedWidth",
+      "type": "SidebarProps['collapsedWidth']",
+      "optional": true
     },
     {
       "name": "collapsed",
       "type": "SidebarProps['collapsed']",
-      "optional": true,
-      "description": "Controlled collapsed state. Unset: the sidebar tracks its own."
+      "optional": true
     },
     {
       "name": "onCollapsedChange",
@@ -58,10 +77,14 @@ export const API = {
       "optional": true
     },
     {
-      "name": "collapsedWidth",
-      "type": "SidebarProps['collapsedWidth']",
-      "optional": true,
-      "description": "Collapsed width as a CSS length. Default `3rem`."
+      "name": "collapsible",
+      "type": "SidebarProps['collapsible']",
+      "optional": true
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "optional": true
     },
     {
       "name": "class",

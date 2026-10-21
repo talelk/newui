@@ -1,1 +1,1 @@
-export { DatePicker } from '../../packages/ui/src/index'
+export { DatePicker } from '../../packages/molecules/src/index'

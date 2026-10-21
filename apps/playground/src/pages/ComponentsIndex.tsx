@@ -1,4 +1,4 @@
-import { Icon } from '@newui/ui'
+import { Icon } from '@newui/atoms'
 import { A, useLocation } from '@solidjs/router'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
 import { COMPONENTS, GROUPS } from '../generated/components'

@@ -1,4 +1,4 @@
-import { MobileNav, MobileNavItem } from '@newui/ui'
+import { MobileNav, MobileNavItem } from '@newui/organisms'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -33,7 +33,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Navigation/MobileNav',
+  title: 'Organisms/Navigation/MobileNav',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

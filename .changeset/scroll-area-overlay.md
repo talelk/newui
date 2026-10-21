@@ -1,5 +1,6 @@
 ---
-'@newui/ui': patch
+'@newui/atoms': patch
+'@newui/molecules': patch
 ---
 
 `ScrollArea`'s scrollbar is an overlay, and it knows when to leave.

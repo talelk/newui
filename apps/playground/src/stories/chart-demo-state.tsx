@@ -1,4 +1,4 @@
-import { Button } from '@newui/ui'
+import { Button } from '@newui/atoms'
 import { type Accessor, createMemo, createSignal, type JSX } from 'solid-js'
 
 /**

@@ -27,7 +27,7 @@ const RECIPES = [
   'files',
   'accounting',
   'compose',
-  // `/pages/patterns` is excluded: it is the reference gallery, and its
+  // `/kit/recipes` is excluded: it is the reference gallery, and its
   // toolbar carries site-level section nav on purpose. The application recipes
   // are the screens where a duplicated control is always an accident.
 ]

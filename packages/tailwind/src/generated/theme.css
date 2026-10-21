@@ -725,6 +725,10 @@
   --radius-9: 100px;
   --radius-full: 9999px;
   --radius-none: 0px;
+  --radius-control: 6px;
+  --radius-card: 8px;
+  --radius-overlay: 12px;
+  --radius-pill: 9999px;
 
   /* spacing scale — every half step and integer 1..128 */
   --spacing-1: 0.25rem;
@@ -875,6 +879,20 @@
   --spacing-17.5: 4.375rem;
   --spacing-18.5: 4.625rem;
   --spacing-19.5: 4.875rem;
+
+  /* semantic layout rhythm — shared component and page roles */
+  --spacing-control-gap: 0.5rem;
+  --spacing-control-pad: 0.5rem;
+  --spacing-field-gap: 0.75rem;
+  --spacing-card-gap: 1rem;
+  --spacing-card-pad-compact: 0.75rem;
+  --spacing-card-pad: 1rem;
+  --spacing-card-pad-wide: 1.25rem;
+  --spacing-section-gap: 1.5rem;
+  --spacing-page-gutter-compact: 1rem;
+  --spacing-page-gutter: 1.5rem;
+  --spacing-page-gutter-wide: 2rem;
+  --spacing-page-stack: 2rem;
 
   /* elevation — shadow-<step> resolves the runtime elevation var */
   --shadow-sm: var(--elevation-sm);

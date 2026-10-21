@@ -33,7 +33,7 @@ const SURFACE: JSX.CSSProperties = {
   'z-index': '100',
   'pointer-events': 'none',
   'max-width': '20rem',
-  'border-radius': '0.5rem',
+  'border-radius': 'var(--radius-card)',
   border: '1px solid var(--outline-gray-1)',
   'background-color': 'var(--surface-elevation-2)',
   padding: '0.625rem 0.75rem',

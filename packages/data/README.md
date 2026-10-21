@@ -8,9 +8,9 @@ import { createUndo, downloadCsv, usd, optionsOf } from '@newui/data'
 ```
 
 The package is **headless** — it imports `solid-js` for signals and nothing from
-`@newui/ui`, so a page can use it without paying for a component, and a
-component can never reach up into it. What renders stays in the kit; this level
-only answers *how it behaves*.
+the visual packages, so a page can use it without paying for a component, and a
+component can never reach up into it. What renders stays in the atomic packages;
+this level only answers *how it behaves*.
 
 The first four surfaces are the ones the examples had already copied:
 
@@ -40,7 +40,8 @@ cache in. `DataProvider` owns the client (and clears it on unmount);
 `createCollection` returns one list query and four mutations, each refreshing
 the list on settle so a mutation and the Refresh button cannot disagree.
 
-TanStack Query is a dependency of this package; the app does not depend on it
-directly. The promoted `DataTable`/`VirtualList` (TanStack Table/Virtual) and
-the Form bridge are still at the page layer — `spec/data.md` is the contract for
-what has shipped.
+TanStack Query and Form are dependencies of this package; the app does not
+depend on them directly. Rendered `DataTable` and `VirtualList` are organisms
+and `ScrollTable` is a molecule. This package supplies their headless data
+behavior, not their rendered surface; `spec/data.md` is the contract for what
+has shipped.

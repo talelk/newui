@@ -1,1 +1,2 @@
-export { Button, Dialog } from '../../packages/ui/src/index'
+export { Button } from '../../packages/atoms/src/index'
+export { Dialog } from '../../packages/molecules/src/index'

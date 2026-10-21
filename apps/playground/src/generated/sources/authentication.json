@@ -5,9 +5,11 @@
     "shell/theme.ts"
   ],
   "packages": [
-    "@newui/blocks",
+    "@newui/atoms",
     "@newui/data",
-    "@newui/ui",
+    "@newui/molecules",
+    "@newui/organisms",
+    "@newui/templates",
     "@solidjs/router",
     "solid-js"
   ]

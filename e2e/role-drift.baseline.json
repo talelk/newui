@@ -1,5 +1,4 @@
 [
-  "app-shell||||||light — backgroundColor",
   "badge||||||light — backgroundColor",
   "badge||||||light — borderTopWidth",
   "badge||||||light — color",
@@ -66,12 +65,9 @@
   "scroll-area-viewport||||||light — paddingTop",
   "scroll-area||||||light — borderTopLeftRadius",
   "scroll-area||||||light — borderTopWidth",
-  "select-trigger|||state=closed|||light — paddingLeft",
-  "select-trigger|||state=closed|||light — paddingRight",
   "separator||||||light — color",
   "sidebar-item||||||light — backgroundColor",
   "sidebar-item||||||light — color",
-  "sidebar-rail-item|subtle||state=closed|||light — backgroundColor",
   "tab-trigger|||state=active|||light — borderTopLeftRadius",
   "tab-trigger|||state=inactive|||light — borderTopLeftRadius",
   "text-input|outline|sm|||disabled|light — paddingRight",

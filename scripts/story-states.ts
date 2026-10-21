@@ -65,6 +65,7 @@ export const REQUIRED_STATES: Record<string, string[]> = {
   Tree: ['Selected'],
   Sidebar: ['Collapsed'],
   AppSidebar: ['Collapsed'],
+  AppShell: ['Collapsed'],
 
   // Editors — a read-only document is the state an app must distinguish from
   // an editable one before wiring permissions.

@@ -1,8 +1,8 @@
 ---
-'@newui/blocks': patch
+'@newui/organisms': patch
 ---
 
-`@newui/blocks` stops exporting the Kanban board's drag engine.
+`@newui/organisms` stops exporting the Kanban board's drag engine.
 
 `export *` from `KanbanBoard/index.ts` made `createKanbanDrag` and six tuning
 constants (`EDGE_SPEED`, `LIFT_DELAY`, `SETTLE_MS`, …) public API, so changing a
@@ -12,5 +12,5 @@ use (`KanbanColumn`, `KanbanMove`, `KanbanTone`, `KanbanBoardProps`). The
 board's own tests import the drag module directly, which is where an internal
 belongs.
 
-Found by the new `packages/blocks/src/exports.test.ts`, which pins the composed
-layer's surface by name the way `@newui/ui` already did.
+Found by `packages/organisms/src/exports.test.ts`, which pins the composed
+layer's surface by name alongside the other atomic package export tests.

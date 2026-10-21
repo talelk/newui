@@ -1,19 +1,19 @@
-import { FilterBar } from '@newui/blocks'
-import { createUndo, isEmail, optionsOf } from '@newui/data'
-import { PaneLayout } from '@newui/layouts'
 import {
   Avatar,
   Badge,
-  BottomSheet,
   Button,
   Checkbox,
-  Select,
   Switch,
-  TabButtons,
   Textarea,
   TextInput,
-} from '@newui/ui'
+} from '@newui/atoms'
+import { createUndo, isEmail, optionsOf } from '@newui/data'
+import { BottomSheet, Select, TabButtons } from '@newui/molecules'
+import { FilterBar } from '@newui/organisms'
+import { PaneLayout } from '@newui/templates'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
+import { AppNavigation } from '../examples/AppNavigation'
+import { AppPage } from '../examples/AppPage'
 import { CreateDialog } from '../examples/CreateDialog'
 import {
   filterMail,
@@ -24,8 +24,6 @@ import {
   patchMail,
 } from '../examples/mail-data'
 import { Notice } from '../examples/Notice'
-import { WorkspaceNav } from '../examples/WorkspaceNav'
-import { WorkspacePage } from '../examples/WorkspacePage'
 
 const FOLDERS = [
   'Inbox',
@@ -174,7 +172,7 @@ export function Mail(): JSX.Element {
     Personal: 'lucide-user',
   }
   const MailboxItems = () => (
-    <WorkspaceNav
+    <AppNavigation
       label="Mailboxes"
       value={folder()}
       onChange={(item) => {
@@ -194,7 +192,7 @@ export function Mail(): JSX.Element {
     />
   )
   return (
-    <WorkspacePage
+    <AppPage
       title="Your inbox, in focus"
       section="Mail"
       description="A clear home for conversations, updates and the work that happens between them."
@@ -263,7 +261,7 @@ export function Mail(): JSX.Element {
         onDismiss={() => setNotice('')}
       />
       <div class="flex min-h-[640px] min-w-0 overflow-hidden rounded-5 border border-outline-gray-1 bg-surface-elevation-1">
-        {/* `MailboxItems` renders the `Mailboxes` nav itself (WorkspaceNav);
+        {/* `MailboxItems` renders the `Mailboxes` nav itself (AppNavigation);
           these wrappers only place it. */}
         <div
           class="hidden w-40 shrink-0 border-b border-outline-gray-1 p-3 xl:border-b-0 xl:border-e"
@@ -695,6 +693,6 @@ export function Mail(): JSX.Element {
           </>
         )}
       />
-    </WorkspacePage>
+    </AppPage>
   )
 }

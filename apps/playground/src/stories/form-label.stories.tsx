@@ -1,4 +1,4 @@
-import { FormLabel, TextInput } from '@newui/ui'
+import { FormLabel, TextInput } from '@newui/atoms'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**
@@ -15,7 +15,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Inputs/FormLabel',
+  title: 'Atoms/Inputs/FormLabel',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

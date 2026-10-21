@@ -4,6 +4,7 @@
 > [visual-system contract](visual-system.md) and component contracts supersede
 > the old density, radius and colour targets below. The original comparison is
 > retained as reference evidence.
+> Package paths below predate the atomic split; see current component contracts.
 
 A visual/design parity audit of the action/overlay family: **Button, Dropdown,
 Menu, ContextMenu, Dialog, BottomSheet, Popover, HoverCard, Tooltip, Toast,

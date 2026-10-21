@@ -1,4 +1,4 @@
-import { Divider } from '@newui/ui'
+import { Divider } from '@newui/atoms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -17,7 +17,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Display/Divider',
+  title: 'Atoms/Display/Divider',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

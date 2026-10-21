@@ -94,9 +94,9 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
       aria-label={props['aria-label'] ?? props.title}
       style={{
         margin: '0',
-        padding: '16px',
+        padding: 'var(--spacing-card-pad)',
         border: '1px solid var(--outline-gray-1)',
-        'border-radius': '10px',
+        'border-radius': 'var(--radius-card)',
         background: 'var(--surface-elevation-1)',
         color: 'var(--ink-gray-9)',
       }}

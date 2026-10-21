@@ -1,4 +1,4 @@
-import { Textarea } from '@newui/ui'
+import { Textarea } from '@newui/atoms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -15,7 +15,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Inputs/Textarea',
+  title: 'Atoms/Inputs/Textarea',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

@@ -1,4 +1,4 @@
-import { DetailHeader } from '@newui/blocks'
+import { DetailHeader } from '@newui/organisms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -22,7 +22,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Blocks/DetailHeader',
+  title: 'Organisms/DetailHeader',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

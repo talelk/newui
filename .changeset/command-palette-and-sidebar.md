@@ -1,5 +1,6 @@
 ---
-'@newui/ui': minor
+'@newui/atoms': minor
+'@newui/molecules': minor
 ---
 
 `CommandPalette`, and a sidebar that folds.

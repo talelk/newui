@@ -1,4 +1,4 @@
-import { ScrollArea } from '@newui/ui'
+import { ScrollArea } from '@newui/atoms'
 import { For, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -20,7 +20,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Overlays/ScrollArea',
+  title: 'Atoms/Overlays/ScrollArea',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

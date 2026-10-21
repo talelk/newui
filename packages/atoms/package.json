@@ -1,0 +1,54 @@
+{
+  "name": "@newui/atoms",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Atomic controls and shared UI runtime primitives for newui.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/talelk/newui.git",
+    "directory": "packages/atoms"
+  },
+  "exports": {
+    ".": {
+      "solid": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./internal": {
+      "solid": "./src/lib/index.ts",
+      "types": "./src/lib/index.ts",
+      "default": "./src/lib/index.ts"
+    }
+  },
+  "files": [
+    "src",
+    "skills"
+  ],
+  "keywords": [
+    "tanstack-intent",
+    "agent-skills",
+    "solidjs",
+    "ui"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@internationalized/date": "^3.12.4",
+    "@zag-js/dialog": "^1.46.0",
+    "@zag-js/progress": "^1.46.0",
+    "@zag-js/scroll-area": "^1.46.0",
+    "@zag-js/slider": "^1.46.0",
+    "@zag-js/solid": "^1.46.0",
+    "@zag-js/switch": "^1.46.0",
+    "@zag-js/tooltip": "^1.46.0",
+    "tailwind-merge": "^3.7.0"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.9.0"
+  },
+  "devDependencies": {
+    "solid-js": "^1.9.17"
+  },
+  "sideEffects": false
+}

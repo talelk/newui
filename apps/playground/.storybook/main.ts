@@ -53,7 +53,10 @@ const config: StorybookConfig = {
       // Workspace packages are served as source, as in `vite.config.ts`.
       exclude: [
         ...(vite.optimizeDeps?.exclude ?? []),
-        '@newui/ui',
+        '@newui/atoms',
+        '@newui/molecules',
+        '@newui/organisms',
+        '@newui/templates',
         '@newui/tailwind',
         '@newui/tokens',
       ],

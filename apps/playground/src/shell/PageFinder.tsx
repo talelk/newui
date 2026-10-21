@@ -1,9 +1,5 @@
-import {
-  CommandGroup,
-  CommandItem,
-  CommandPalette,
-  KeyboardShortcut,
-} from '@newui/ui'
+import { KeyboardShortcut } from '@newui/atoms'
+import { CommandGroup, CommandItem, CommandPalette } from '@newui/organisms'
 import { useNavigate } from '@solidjs/router'
 import { For, type JSX } from 'solid-js'
 import { COMPONENTS } from '../generated/components'

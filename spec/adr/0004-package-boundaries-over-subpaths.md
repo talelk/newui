@@ -10,9 +10,11 @@ library could mirror that or split into workspace packages.
 
 ## Decision
 
-Split into workspace packages: `@newui/tokens`, `@newui/tailwind`,
-`@newui/icons`, `@newui/ui`, `@newui/charts`, `@newui/editor`,
-`@newui/code-editor`, `@newui/vite`. `@newui/ui` exports **only** `.`.
+Split into workspace packages. The core visual ladder is `@newui/atoms`,
+`@newui/molecules`, `@newui/organisms` and `@newui/templates`; foundations,
+headless data and optional chart/editor integrations have their own packages.
+Each package exports its documented root surface; styling is provided by
+`@newui/tailwind/style.css`, not a component-package subpath.
 
 ## Rationale
 
@@ -24,9 +26,9 @@ are only expressible because the boundaries are real packages.
 
 ## Consequences
 
-- Consumers install exactly what they use (`@newui/charts` does not drag
-  `@newui/ui`'s Zag machines into a chart-only app).
+- Consumers install exactly what they use (`@newui/charts` does not drag the
+  atomic component packages into a chart-only app).
 - We do **not** mirror `./vitepress` (a docs theme is app code) or
   `./experimental`.
-- Deliberate non-mirror: no `./style.css` subpath on `@newui/ui`; the stylesheet
-  is `@newui/tailwind/style.css`.
+- Deliberate non-mirror: no `./style.css` subpath on a component package; the
+  stylesheet is `@newui/tailwind/style.css`.

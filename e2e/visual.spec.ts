@@ -94,3 +94,28 @@ for (const theme of ['light', 'dark']) {
     })
   })
 }
+
+test('collapsed application sidebar keeps one aligned content column', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/pages/analytics/fullscreen')
+  const sidebar = page.locator('[data-slot="app-shell-sidebar"]')
+  const content = page.locator('[data-slot="app-shell-content"]')
+  await expect(sidebar).toBeVisible()
+  await expect(page).toHaveScreenshot('app-shell-expanded.png', RASTERISATION)
+
+  await sidebar.getByRole('button', { name: 'Collapse' }).click()
+  await expect(sidebar).toHaveCSS('width', '56px')
+  await expect
+    .poll(() =>
+      content.evaluate((element) => element.getBoundingClientRect().left),
+    )
+    .toBe(56)
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    ),
+  ).toBeLessThanOrEqual(1)
+  await expect(page).toHaveScreenshot('app-shell-collapsed.png', RASTERISATION)
+})

@@ -28,15 +28,15 @@ export const API = {
       "optional": true
     },
     {
-      "name": "class",
-      "type": "string",
-      "optional": true
-    },
-    {
       "name": "size",
       "type": "InputSize",
       "optional": true,
       "default": "sm"
+    },
+    {
+      "name": "class",
+      "type": "string",
+      "optional": true
     },
     {
       "name": "prefix",

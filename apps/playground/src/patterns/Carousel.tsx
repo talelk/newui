@@ -1,4 +1,5 @@
-import { Button, Select, Switch } from '@newui/ui'
+import { Button, Switch } from '@newui/atoms'
+import { Select } from '@newui/molecules'
 import {
   createEffect,
   createSignal,

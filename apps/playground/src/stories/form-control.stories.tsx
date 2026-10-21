@@ -1,4 +1,4 @@
-import { FormControl } from '@newui/ui'
+import { FormControl } from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -26,7 +26,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Inputs/FormControl',
+  title: 'Molecules/Inputs/FormControl',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

@@ -1,1 +1,1 @@
-export { cn } from '../../packages/ui/src/lib/tv'
+export { cn } from '../../packages/atoms/src/lib/tv'

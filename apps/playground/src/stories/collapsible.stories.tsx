@@ -1,4 +1,4 @@
-import { Collapsible } from '@newui/ui'
+import { Collapsible } from '@newui/molecules'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -20,7 +20,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Disclosure/Collapsible',
+  title: 'Molecules/Disclosure/Collapsible',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

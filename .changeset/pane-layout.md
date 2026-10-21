@@ -1,5 +1,5 @@
 ---
-'@newui/layouts': minor
+'@newui/templates': minor
 ---
 
 `PaneLayout` — two panes side by side, with a draggable divider.

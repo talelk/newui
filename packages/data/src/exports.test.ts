@@ -1,9 +1,8 @@
 /**
  * The logic layer's public surface, asserted by name and by entry point.
  *
- * `@newui/ui` has pinned its names since the beginning; the data package grew
- * five entries (`/query`, `/form`, `/table`, `/table/scroll`, `/virtual`) one at
- * a time, which is exactly the shape an accidental `export *` or a stray
+ * The data package has three entries (`.`, `/query`, `/form`), which is exactly
+ * the shape an accidental `export *` or a stray
  * re-export slips into. An entry's cost is part of its contract — 0.77 kB for
  * the helpers, 15.5 for the query — so a new name on an entry is a decision, not
  * a detail.
@@ -14,17 +13,11 @@ import { describe, expect, it } from 'vitest'
 import * as form from './form'
 import * as root from './index'
 import * as query from './query'
-import * as table from './table'
-import * as scroll from './table/scroll'
-import * as virtual from './virtual'
 
 const ENTRIES = {
   '.': root,
   './query': query,
   './form': form,
-  './table': table,
-  './table/scroll': scroll,
-  './virtual': virtual,
 } as const
 
 const SURFACE: Record<keyof typeof ENTRIES, string[]> = {
@@ -50,11 +43,6 @@ const SURFACE: Record<keyof typeof ENTRIES, string[]> = {
     'createListQuery',
   ],
   './form': ['Form', 'createAppForm', 'fieldError'],
-  './table': ['DataTable'],
-  // One module, one entry, one chunk: `ScrollTable` must not ride along with
-  // the table engine (see `spec/data.md` and the accounting route budget).
-  './table/scroll': ['ScrollTable', 'TABLE_HEAD_CLASS'],
-  './virtual': ['VirtualList'],
 }
 
 const manifest = JSON.parse(

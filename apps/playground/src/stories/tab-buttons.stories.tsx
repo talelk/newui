@@ -1,4 +1,4 @@
-import { TabButtons } from '@newui/ui'
+import { TabButtons } from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -27,7 +27,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Disclosure/TabButtons',
+  title: 'Molecules/Disclosure/TabButtons',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

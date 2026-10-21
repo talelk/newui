@@ -19,10 +19,10 @@ describe('reference example coverage', () => {
       Object.keys(APPLICATION_FILES)
         .map((slug) => `/pages/${slug}`)
         .sort(),
-    ).toEqual(
-      EXAMPLES.filter((entry) => entry.href !== '/pages/patterns')
-        .map((entry) => entry.href)
-        .sort(),
+    ).toEqual(EXAMPLES.map((entry) => entry.href).sort())
+    expect(EXAMPLES).toHaveLength(12)
+    expect(EXAMPLES.every((entry) => entry.href.startsWith('/pages/'))).toBe(
+      true,
     )
     for (const [slug, entry] of Object.entries(APPLICATION_FILES)) {
       const manifest = JSON.parse(
@@ -70,8 +70,7 @@ describe('reference example coverage', () => {
       ),
     )
     for (const entry of EXAMPLES) shipped.add(entry.href)
-    for (const pattern of PATTERNS)
-      shipped.add(`/pages/patterns/${pattern.slug}`)
+    for (const pattern of PATTERNS) shipped.add(`/kit/recipes/${pattern.slug}`)
     for (const route of ['/foundations', '/atoms/button', '/molecules/toast'])
       shipped.add(route)
     expect(REFERENCE_EXAMPLES).toHaveLength(68)
@@ -79,8 +78,13 @@ describe('reference example coverage', () => {
       68,
     )
     expect(
-      REFERENCE_EXAMPLES.filter((entry) => !shipped.has(entry.implementation)),
+      REFERENCE_EXAMPLES.filter(
+        (entry) => !shipped.has(entry.implementation.split('#')[0] ?? ''),
+      ),
     ).toEqual([])
+    expect(
+      REFERENCE_EXAMPLES.every((entry) => entry.href === entry.implementation),
+    ).toBe(true)
   })
   // Reference checkouts are optional consumer inputs; CI need not fetch them.
   it.skipIf(!existsSync(source))(

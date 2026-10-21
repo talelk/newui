@@ -1,4 +1,5 @@
-import { Button, Combobox, Dialog, KeyboardShortcut } from '@newui/ui'
+import { Button, KeyboardShortcut } from '@newui/atoms'
+import { Combobox, Dialog } from '@newui/molecules'
 import { useNavigate } from '@solidjs/router'
 import { createSignal, onCleanup, onMount } from 'solid-js'
 

@@ -40,7 +40,7 @@ export const LADDER: LadderLevel[] = [
     "title": "Atoms",
     "question": "What is this single element?",
     "unit": "atom",
-    "package": "@newui/ui",
+    "package": "@newui/atoms",
     "count": 20,
     "href": "/atoms",
     "blurb": "One control or mark, with nothing else inside: a Button, an input, a Badge, the scroll viewport itself."
@@ -50,7 +50,7 @@ export const LADDER: LadderLevel[] = [
     "title": "Molecules",
     "question": "What is this interaction?",
     "unit": "molecule",
-    "package": "@newui/ui · @newui/charts",
+    "package": "@newui/molecules · @newui/charts",
     "count": 42,
     "href": "/molecules",
     "blurb": "Atoms assembled into one interaction: a field, a picker, a menu, a card, a chart legend."
@@ -60,8 +60,8 @@ export const LADDER: LadderLevel[] = [
     "title": "Organisms",
     "question": "What is this section?",
     "unit": "organism",
-    "package": "@newui/blocks · @newui/charts · @newui/editor",
-    "count": 22,
+    "package": "@newui/organisms · @newui/charts · @newui/editor",
+    "count": 24,
     "href": "/organisms",
     "blurb": "Self-contained regions of a page: a sidebar, a filter bar, a board, a chart, an editor."
   },
@@ -70,8 +70,8 @@ export const LADDER: LadderLevel[] = [
     "title": "Templates",
     "question": "How does the page open?",
     "unit": "template",
-    "package": "@newui/layouts · @newui/ui",
-    "count": 6,
+    "package": "@newui/templates",
+    "count": 3,
     "href": "/templates",
     "blurb": "The arrangement: a frame, a title block, a navigation column, and where the content scrolls."
   },

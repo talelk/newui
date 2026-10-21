@@ -64,9 +64,9 @@ interface RouteBudget {
 const ROUTES: RouteBudget[] = [
   {
     route: '/pages/discussions/fullscreen',
-    budget: 100,
+    budget: 160,
     viewport: { width: 390, height: 844 },
-    unless: 'mobile composition; retained mobile budget',
+    unless: 'the responsive AppShell drawer at mobile width',
   },
   ...[
     ['tasks', 260],
@@ -77,7 +77,7 @@ const ROUTES: RouteBudget[] = [
     ['accounting', 390],
     ['compose', 380],
     ['discussions', 200],
-    ['analytics', 390],
+    ['analytics', 420],
     ['authentication', 200],
     ['cards', 210],
     ['settings', 160],
@@ -102,14 +102,19 @@ const ROUTES: RouteBudget[] = [
     unless: 'the template index, read from the registry',
   },
   {
-    route: '/templates/app-layout',
+    route: '/templates/app-shell',
     budget: 240,
-    unless: 'the frame demo: shell, sidebar, tooltips',
+    unless: 'the responsive shell demo: sidebar, drawer and tenant controls',
   },
   {
     route: '/templates/pane-layout',
     budget: 110,
     unless: 'the split demo: two panes, badges and a list',
+  },
+  {
+    route: '/preview/app-shell',
+    budget: 160,
+    unless: 'the same-origin isolated template preview',
   },
   // 280.0 measured: the shell now carries the ladder's counts, and a budget
   // with no headroom turns the next honest shell addition into a red gate.
@@ -117,62 +122,67 @@ const ROUTES: RouteBudget[] = [
   { route: '/organisms/code-editor', budget: 280 },
   { route: '/organisms/page-toolbar', budget: 190 },
   {
-    route: '/pages/patterns',
-    budget: 80,
-    unless: 'lightweight reference example directory',
+    route: '/kit/recipes',
+    budget: 100,
+    unless: 'the recipe index and source examples directory',
   },
+  { route: '/kit/recipes/forms', budget: 120 },
+  { route: '/kit/recipes/overlays', budget: 130 },
   {
-    route: '/pages/patterns/carousel',
+    route: '/kit/recipes/carousel',
     budget: 120,
     unless: 'isolated carousel composition',
   },
   {
-    route: '/pages/patterns/command',
+    route: '/kit/recipes/command',
     budget: 140,
     unless: 'Zag command search and dialog',
   },
   {
-    route: '/pages/patterns/layout',
+    route: '/kit/recipes/layout',
     budget: 100,
     unless: 'native resizable layouts',
   },
   {
-    route: '/pages/patterns/navigation',
+    route: '/kit/recipes/navigation',
     budget: 150,
     unless: 'menus and responsive editors',
   },
   {
-    route: '/pages/patterns/verification',
+    route: '/kit/recipes/verification',
     budget: 100,
     unless: 'validated verification example',
   },
   {
-    route: '/pages/patterns/analytics-widgets',
+    route: '/kit/recipes/analytics-widgets',
     budget: 110,
     unless: 'analytical status and list compositions',
   },
   {
     route: '/pages/accounting/fullscreen',
-    budget: 340,
-    unless: 'interactive accounting workspace in the shared rail frame',
+    budget: 380,
+    unless: 'interactive accounting workspace in the shared AppShell frame',
   },
 
+  // The atomic package split and integrated AppShell add the real shared
+  // navigation to each full-screen app. These ceilings are based on current
+  // browser measurements with room for normal route-level changes.
   {
     route: '/pages/files/fullscreen',
-    budget: 170,
+    budget: 200,
     unless: 'interactive files workspace',
   },
 
   {
     route: '/pages/tickets/fullscreen',
-    budget: 170,
+    budget: 195,
     unless: 'interactive tickets workspace',
   },
 
   {
     route: '/pages/deals/fullscreen',
-    budget: 190,
-    unless: 'interactive deals workspace in the shared rail frame',
+    budget: 220,
+    unless: 'interactive deals workspace in the shared AppShell frame',
   },
 
   {
@@ -183,7 +193,7 @@ const ROUTES: RouteBudget[] = [
 
   {
     route: '/pages/compose/fullscreen',
-    budget: 320,
+    budget: 350,
     unless: 'rich-text editor and publication workflow',
   },
 
@@ -204,14 +214,15 @@ const ROUTES: RouteBudget[] = [
   },
   {
     route: '/pages/tasks/fullscreen',
-    budget: 200,
+    budget: 225,
     unless: 'TanStack task workspace with typed table, forms and virtual feed',
   },
 
   {
     route: '/pages/analytics/fullscreen',
-    budget: 345,
-    unless: 'full analytics workspace with SVG charts in the shared rail frame',
+    budget: 420,
+    unless:
+      'full analytics workspace with SVG charts in the shared AppShell frame',
   },
   {
     route: '/',
@@ -243,7 +254,7 @@ const ROUTES: RouteBudget[] = [
   {
     route: '/organisms',
     budget: 100,
-    unless: 'every organism listed: blocks, chart widgets, editors',
+    unless: 'every organism listed: page regions, chart widgets and editors',
   },
   {
     route: '/atoms/button',
@@ -259,8 +270,8 @@ const ROUTES: RouteBudget[] = [
   },
   {
     route: '/pages/discussions/fullscreen',
-    budget: 140,
-    unless: 'a full desktop app screen',
+    budget: 160,
+    unless: 'a full-screen desktop application using the responsive AppShell',
   },
 ]
 

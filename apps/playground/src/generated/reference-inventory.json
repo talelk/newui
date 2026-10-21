@@ -1054,7 +1054,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/accordion-demo.tsx",
     "implementation": "/molecules/accordion",
-    "documentation": "/pages/registry/accordion-demo",
+    "documentation": "/molecules/accordion",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1096,7 +1096,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/alert-demo.tsx",
     "implementation": "/molecules/alert",
-    "documentation": "/pages/registry/alert-demo",
+    "documentation": "/molecules/alert",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1107,7 +1107,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/alert-dialog-demo.tsx",
     "implementation": "/molecules/dialog",
-    "documentation": "/pages/registry/alert-dialog-demo",
+    "documentation": "/molecules/dialog",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1124,7 +1124,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/area-chart-demo.tsx",
     "implementation": "/organisms/area-chart",
-    "documentation": "/pages/registry/area-chart-demo",
+    "documentation": "/organisms/area-chart",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1134,8 +1134,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/aspect-ratio-demo.tsx",
-    "implementation": "/pages/patterns/layout",
-    "documentation": "/pages/registry/aspect-ratio-demo",
+    "implementation": "/foundations#layout-rhythm",
+    "documentation": "/foundations#layout-rhythm",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1146,7 +1146,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/avatar-demo.tsx",
     "implementation": "/atoms/avatar",
-    "documentation": "/pages/registry/avatar-demo",
+    "documentation": "/atoms/avatar",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1156,8 +1156,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/badge-delta-demo.tsx",
-    "implementation": "/pages/patterns/analytics-widgets",
-    "documentation": "/pages/registry/badge-delta-demo",
+    "implementation": "/kit/recipes/analytics-widgets",
+    "documentation": "/kit/recipes/analytics-widgets",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1168,7 +1168,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/badge-demo.tsx",
     "implementation": "/atoms/badge",
-    "documentation": "/pages/registry/badge-demo",
+    "documentation": "/atoms/badge",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1179,7 +1179,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/bar-chart-demo.tsx",
     "implementation": "/organisms/bar-chart",
-    "documentation": "/pages/registry/bar-chart-demo",
+    "documentation": "/organisms/bar-chart",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1189,8 +1189,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/bar-list-demo.tsx",
-    "implementation": "/pages/patterns/analytics-widgets",
-    "documentation": "/pages/registry/bar-list-demo",
+    "implementation": "/kit/recipes/analytics-widgets",
+    "documentation": "/kit/recipes/analytics-widgets",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1201,7 +1201,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/breadcrumb-demo.tsx",
     "implementation": "/molecules/breadcrumbs",
-    "documentation": "/pages/registry/breadcrumb-demo",
+    "documentation": "/molecules/breadcrumbs",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1233,7 +1233,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/button-demo.tsx",
     "implementation": "/atoms/button",
-    "documentation": "/pages/registry/button-demo",
+    "documentation": "/atoms/button",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1275,7 +1275,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/calendar-demo.tsx",
     "implementation": "/molecules/date-picker",
-    "documentation": "/pages/registry/calendar-demo",
+    "documentation": "/molecules/date-picker",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1346,8 +1346,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/callout-demo.tsx",
-    "implementation": "/pages/patterns/analytics-widgets",
-    "documentation": "/pages/registry/callout-demo",
+    "implementation": "/kit/recipes/analytics-widgets",
+    "documentation": "/kit/recipes/analytics-widgets",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1358,7 +1358,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/card-demo.tsx",
     "implementation": "/molecules/card",
-    "documentation": "/pages/registry/card-demo",
+    "documentation": "/molecules/card",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1374,8 +1374,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-api-demo.tsx",
-    "implementation": "/pages/patterns/carousel",
-    "documentation": "/pages/registry/carousel-api-demo",
+    "implementation": "/kit/recipes/carousel",
+    "documentation": "/kit/recipes/carousel",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1391,8 +1391,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-demo.tsx",
-    "implementation": "/pages/patterns/carousel",
-    "documentation": "/pages/registry/carousel-demo",
+    "implementation": "/kit/recipes/carousel",
+    "documentation": "/kit/recipes/carousel",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1408,8 +1408,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-orientation-demo.tsx",
-    "implementation": "/pages/patterns/carousel",
-    "documentation": "/pages/registry/carousel-orientation-demo",
+    "implementation": "/kit/recipes/carousel",
+    "documentation": "/kit/recipes/carousel",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1425,8 +1425,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-plugin-demo.tsx",
-    "implementation": "/pages/patterns/carousel",
-    "documentation": "/pages/registry/carousel-plugin-demo",
+    "implementation": "/kit/recipes/carousel",
+    "documentation": "/kit/recipes/carousel",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1442,8 +1442,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-size-demo.tsx",
-    "implementation": "/pages/patterns/carousel",
-    "documentation": "/pages/registry/carousel-size-demo",
+    "implementation": "/kit/recipes/carousel",
+    "documentation": "/kit/recipes/carousel",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1459,8 +1459,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/carousel-spacing-demo.tsx",
-    "implementation": "/pages/patterns/carousel",
-    "documentation": "/pages/registry/carousel-spacing-demo",
+    "implementation": "/kit/recipes/carousel",
+    "documentation": "/kit/recipes/carousel",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1477,7 +1477,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/checkbox-demo.tsx",
     "implementation": "/atoms/checkbox",
-    "documentation": "/pages/registry/checkbox-demo",
+    "documentation": "/atoms/checkbox",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1488,7 +1488,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/checkbox-indeterminate-demo.tsx",
     "implementation": "/atoms/checkbox",
-    "documentation": "/pages/registry/checkbox-indeterminate-demo",
+    "documentation": "/atoms/checkbox",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1499,7 +1499,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/collapsible-demo.tsx",
     "implementation": "/molecules/collapsible",
-    "documentation": "/pages/registry/collapsible-demo",
+    "documentation": "/molecules/collapsible",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1516,7 +1516,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/combobox-demo.tsx",
     "implementation": "/molecules/combobox",
-    "documentation": "/pages/registry/combobox-demo",
+    "documentation": "/molecules/combobox",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1542,8 +1542,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/command-demo.tsx",
-    "implementation": "/pages/patterns/command",
-    "documentation": "/pages/registry/command-demo",
+    "implementation": "/organisms/command-palette",
+    "documentation": "/organisms/command-palette",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1589,8 +1589,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/command-dialog-demo.tsx",
-    "implementation": "/pages/patterns/command",
-    "documentation": "/pages/registry/command-dialog-demo",
+    "implementation": "/organisms/command-palette",
+    "documentation": "/organisms/command-palette",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1637,7 +1637,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/context-menu-demo.tsx",
     "implementation": "/molecules/context-menu",
-    "documentation": "/pages/registry/context-menu-demo",
+    "documentation": "/molecules/context-menu",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1718,8 +1718,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/data-table-demo.tsx",
-    "implementation": "/pages/tasks",
-    "documentation": "/pages/registry/data-table-demo",
+    "implementation": "/organisms/data-table",
+    "documentation": "/organisms/data-table",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1791,7 +1791,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/date-picker-demo.tsx",
     "implementation": "/molecules/date-picker",
-    "documentation": "/pages/registry/date-picker-demo",
+    "documentation": "/molecules/date-picker",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1873,7 +1873,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/date-range-demo.tsx",
     "implementation": "/molecules/date-range-picker",
-    "documentation": "/pages/registry/date-range-demo",
+    "documentation": "/molecules/date-range-picker",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1964,8 +1964,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/delta-bar-demo.tsx",
-    "implementation": "/pages/patterns/analytics-widgets",
-    "documentation": "/pages/registry/delta-bar-demo",
+    "implementation": "/kit/recipes/analytics-widgets",
+    "documentation": "/kit/recipes/analytics-widgets",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -1976,7 +1976,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/dialog-demo.tsx",
     "implementation": "/molecules/dialog",
-    "documentation": "/pages/registry/dialog-demo",
+    "documentation": "/molecules/dialog",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2008,7 +2008,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/drawer-demo.tsx",
     "implementation": "/molecules/bottom-sheet",
-    "documentation": "/pages/registry/drawer-demo",
+    "documentation": "/molecules/bottom-sheet",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2039,8 +2039,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/drawer-dialog.tsx",
-    "implementation": "/pages/patterns/navigation",
-    "documentation": "/pages/registry/drawer-dialog",
+    "implementation": "/kit/recipes/navigation",
+    "documentation": "/kit/recipes/navigation",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2077,7 +2077,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/dropdown-menu-demo.tsx",
     "implementation": "/molecules/dropdown",
-    "documentation": "/pages/registry/dropdown-menu-demo",
+    "documentation": "/molecules/dropdown",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2158,8 +2158,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/flex-demo.tsx",
-    "implementation": "/pages/patterns/layout",
-    "documentation": "/pages/registry/flex-demo",
+    "implementation": "/foundations#layout-rhythm",
+    "documentation": "/foundations#layout-rhythm",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2169,8 +2169,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/grid-demo.tsx",
-    "implementation": "/pages/patterns/layout",
-    "documentation": "/pages/registry/grid-demo",
+    "implementation": "/foundations#layout-rhythm",
+    "documentation": "/foundations#layout-rhythm",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2181,7 +2181,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/hover-card-demo.tsx",
     "implementation": "/molecules/hover-card",
-    "documentation": "/pages/registry/hover-card-demo",
+    "documentation": "/molecules/hover-card",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2197,8 +2197,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/menubar-demo.tsx",
-    "implementation": "/pages/patterns/navigation",
-    "documentation": "/pages/registry/menubar-demo",
+    "implementation": "/kit/recipes/navigation",
+    "documentation": "/kit/recipes/navigation",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2394,8 +2394,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/mode-toggle.tsx",
-    "implementation": "/foundations",
-    "documentation": "/pages/registry/mode-toggle",
+    "implementation": "/foundations#color-scheme",
+    "documentation": "/foundations#color-scheme",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2431,8 +2431,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/navigation-menu-demo.tsx",
-    "implementation": "/pages/patterns/navigation",
-    "documentation": "/pages/registry/navigation-menu-demo",
+    "implementation": "/kit/recipes/navigation",
+    "documentation": "/kit/recipes/navigation",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2479,7 +2479,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/number-field-demo.tsx",
     "implementation": "/molecules/number-input",
-    "documentation": "/pages/registry/number-field-demo",
+    "documentation": "/molecules/number-input",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2505,8 +2505,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/otp-field-demo.tsx",
-    "implementation": "/pages/patterns/verification",
-    "documentation": "/pages/registry/otp-field-demo",
+    "implementation": "/kit/recipes/verification",
+    "documentation": "/kit/recipes/verification",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2523,7 +2523,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/pagination-demo.tsx",
     "implementation": "/molecules/pagination",
-    "documentation": "/pages/registry/pagination-demo",
+    "documentation": "/molecules/pagination",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2540,7 +2540,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/pie-chart-demo.tsx",
     "implementation": "/organisms/donut-chart",
-    "documentation": "/pages/registry/pie-chart-demo",
+    "documentation": "/organisms/donut-chart",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2551,7 +2551,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/popover-demo.tsx",
     "implementation": "/molecules/popover",
-    "documentation": "/pages/registry/popover-demo",
+    "documentation": "/molecules/popover",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2568,7 +2568,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/progress-circle-demo.tsx",
     "implementation": "/atoms/progress-circle",
-    "documentation": "/pages/registry/progress-circle-demo",
+    "documentation": "/atoms/progress-circle",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2579,7 +2579,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/progress-demo.tsx",
     "implementation": "/atoms/progress",
-    "documentation": "/pages/registry/progress-demo",
+    "documentation": "/atoms/progress",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2590,7 +2590,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/radio-group-demo.tsx",
     "implementation": "/molecules/radio-group",
-    "documentation": "/pages/registry/radio-group-demo",
+    "documentation": "/molecules/radio-group",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2606,8 +2606,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/resizable-demo.tsx",
-    "implementation": "/pages/patterns/layout",
-    "documentation": "/pages/registry/resizable-demo",
+    "implementation": "/templates/pane-layout",
+    "documentation": "/templates/pane-layout",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2618,7 +2618,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/select-demo.tsx",
     "implementation": "/molecules/select",
-    "documentation": "/pages/registry/select-demo",
+    "documentation": "/molecules/select",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2640,7 +2640,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/separator-demo.tsx",
     "implementation": "/atoms/divider",
-    "documentation": "/pages/registry/separator-demo",
+    "documentation": "/atoms/divider",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2651,7 +2651,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/sheet-demo.tsx",
     "implementation": "/molecules/bottom-sheet",
-    "documentation": "/pages/registry/sheet-demo",
+    "documentation": "/molecules/bottom-sheet",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2683,7 +2683,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/skeleton-demo.tsx",
     "implementation": "/atoms/skeleton",
-    "documentation": "/pages/registry/skeleton-demo",
+    "documentation": "/atoms/skeleton",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2694,7 +2694,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/slider-demo.tsx",
     "implementation": "/atoms/slider",
-    "documentation": "/pages/registry/slider-demo",
+    "documentation": "/atoms/slider",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2705,7 +2705,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/sonner-demo.tsx",
     "implementation": "/molecules/toast",
-    "documentation": "/pages/registry/sonner-demo",
+    "documentation": "/molecules/toast",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2722,7 +2722,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/switch-demo.tsx",
     "implementation": "/atoms/switch",
-    "documentation": "/pages/registry/switch-demo",
+    "documentation": "/atoms/switch",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2732,8 +2732,8 @@
   },
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/table-demo.tsx",
-    "implementation": "/pages/tasks",
-    "documentation": "/pages/registry/table-demo",
+    "implementation": "/organisms/data-table",
+    "documentation": "/organisms/data-table",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2744,7 +2744,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/tabs-demo.tsx",
     "implementation": "/molecules/tabs",
-    "documentation": "/pages/registry/tabs-demo",
+    "documentation": "/molecules/tabs",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2796,7 +2796,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/text-field-demo.tsx",
     "implementation": "/atoms/text-input",
-    "documentation": "/pages/registry/text-field-demo",
+    "documentation": "/atoms/text-input",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2813,7 +2813,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/text-field-error-demo.tsx",
     "implementation": "/atoms/text-input",
-    "documentation": "/pages/registry/text-field-error-demo",
+    "documentation": "/atoms/text-input",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2830,7 +2830,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/text-field-textarea-demo.tsx",
     "implementation": "/atoms/textarea",
-    "documentation": "/pages/registry/text-field-textarea-demo",
+    "documentation": "/atoms/textarea",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2841,7 +2841,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/timeline-demo.tsx",
     "implementation": "/molecules/timeline",
-    "documentation": "/pages/registry/timeline-demo",
+    "documentation": "/molecules/timeline",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2852,7 +2852,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/toast-demo.tsx",
     "implementation": "/molecules/toast",
-    "documentation": "/pages/registry/toast-demo",
+    "documentation": "/molecules/toast",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2889,7 +2889,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/toggle-demo.tsx",
     "implementation": "/molecules/toggle-group",
-    "documentation": "/pages/registry/toggle-demo",
+    "documentation": "/molecules/toggle-group",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2900,7 +2900,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/toggle-group-demo.tsx",
     "implementation": "/molecules/toggle-group",
-    "documentation": "/pages/registry/toggle-group-demo",
+    "documentation": "/molecules/toggle-group",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2927,7 +2927,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/example/tooltip-demo.tsx",
     "implementation": "/atoms/tooltip",
-    "documentation": "/pages/registry/tooltip-demo",
+    "documentation": "/atoms/tooltip",
     "tests": [
       "e2e/reference-patterns.spec.ts"
     ],
@@ -2944,7 +2944,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/block/sidebar-01/index.tsx",
     "implementation": "apps/playground/src/stories/sidebar-01.stories.tsx",
-    "documentation": "/blocks/compositions/sidebar-01",
+    "documentation": "/organisms/compositions/sidebar-01",
     "tests": [
       "e2e/responsive-preview.spec.ts"
     ],
@@ -2971,7 +2971,7 @@
   {
     "source": "references/solid-ui-main/apps/docs/src/registry/block/demo-sidebar.tsx",
     "implementation": "apps/playground/src/stories/demo-sidebar.stories.tsx",
-    "documentation": "/blocks/compositions/demo-sidebar",
+    "documentation": "/organisms/compositions/demo-sidebar",
     "tests": [
       "e2e/responsive-preview.spec.ts"
     ],

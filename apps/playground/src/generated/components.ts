@@ -12,8 +12,6 @@ export interface ComponentEntry {
   group: string
   package: string
   source: string
-  /** The package level: a component, a block or a layout. */
-  kind: 'component' | 'block' | 'layout'
   /** The atomic level this entry is filed under. */
   atomic: 'atom' | 'molecule' | 'organism' | 'template'
   parts: string[]
@@ -29,9 +27,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "An action control.",
     "slug": "button",
     "group": "Actions",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Button",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Button",
     "atomic": "atom",
     "parts": [
       "ButtonProps"
@@ -44,9 +41,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A menu that opens at the pointer when the user right-clicks inside its trigger area.",
     "slug": "context-menu",
     "group": "Actions",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/ContextMenu",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/ContextMenu",
     "atomic": "molecule",
     "parts": [
       "ContextMenuItemProps",
@@ -60,9 +56,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "An options-based action menu.",
     "slug": "dropdown",
     "group": "Actions",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Dropdown",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Dropdown",
     "atomic": "molecule",
     "parts": [
       "DropdownProps"
@@ -75,9 +70,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Draws a key combination as <kbd> glyphs.",
     "slug": "keyboard-shortcut",
     "group": "Actions",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/KeyboardShortcut",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/KeyboardShortcut",
     "atomic": "atom",
     "parts": [
       "KeyboardShortcutProps"
@@ -90,9 +84,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Shows discoverable keyboard commands in a modal reference.",
     "slug": "keyboard-shortcuts-dialog",
     "group": "Actions",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/KeyboardShortcutsDialog",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/KeyboardShortcutsDialog",
     "atomic": "molecule",
     "parts": [
       "KeyboardShortcutsDialogProps"
@@ -105,9 +98,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Presents a keyboard-navigable list of actions.",
     "slug": "menu",
     "group": "Actions",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Menu",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Menu",
     "atomic": "molecule",
     "parts": [
       "MenuItemProps",
@@ -122,8 +114,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "area-chart",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/AreaChart.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "organism",
     "parts": [
       "AreaChartProps"
@@ -137,8 +128,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "bar-chart",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/BarChart.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "organism",
     "parts": [
       "BarChartProps"
@@ -152,8 +142,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "chart-base",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/ChartBase.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "molecule",
     "parts": [
       "ChartBaseProps"
@@ -167,8 +156,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "chart-card",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/ChartCard.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "molecule",
     "parts": [
       "ChartCardProps"
@@ -182,8 +170,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "chart-container",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/ChartContainer.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "molecule",
     "parts": [
       "ChartContainerProps"
@@ -197,8 +184,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "chart-legend",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/ChartLegend.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "molecule",
     "parts": [
       "ChartLegendProps"
@@ -212,8 +198,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "chart-tooltip",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/ChartTooltip.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "molecule",
     "parts": [
       "ChartTooltipProps",
@@ -228,8 +213,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "dashboard",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/Dashboard.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "organism",
     "parts": [
       "DashboardProps"
@@ -243,8 +227,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "donut-chart",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/DonutChart.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "organism",
     "parts": [
       "DonutChartProps"
@@ -258,8 +241,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "funnel-chart",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/FunnelChart.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "organism",
     "parts": [
       "FunnelChartProps"
@@ -273,8 +255,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "heatmap-chart",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/HeatmapChart.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "organism",
     "parts": [
       "HeatmapChartProps"
@@ -288,8 +269,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "line-chart",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/LineChart.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "organism",
     "parts": [
       "LineChartProps"
@@ -303,8 +283,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "number-card",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/NumberCard.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "molecule",
     "parts": [
       "NumberCardProps"
@@ -318,8 +297,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "sankey-chart",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/SankeyChart.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "organism",
     "parts": [
       "SankeyChartProps"
@@ -333,8 +311,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "slug": "scatter-chart",
     "group": "Charts",
     "package": "@newui/charts",
-    "source": "packages/charts/src/ScatterChart.tsx",
-    "kind": "component",
+    "source": "packages/charts/src",
     "atomic": "organism",
     "parts": [
       "ScatterChartProps"
@@ -349,7 +326,6 @@ export const COMPONENTS: ComponentEntry[] = [
     "group": "Editors",
     "package": "@newui/code-editor",
     "source": "packages/code-editor/src",
-    "kind": "component",
     "atomic": "organism",
     "parts": [
       "CodeEditorProps"
@@ -364,7 +340,6 @@ export const COMPONENTS: ComponentEntry[] = [
     "group": "Editors",
     "package": "@newui/editor",
     "source": "packages/editor/src",
-    "kind": "component",
     "atomic": "organism",
     "parts": [
       "EditorProps",
@@ -374,13 +349,26 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "DataTable",
+    "description": "A collection rendered as an accessible, searchable, sortable, paginated table.",
+    "slug": "data-table",
+    "group": "Data",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/DataTable",
+    "atomic": "organism",
+    "parts": [
+      "DataTableProps"
+    ],
+    "spec": "data-table",
+    "shipped": true
+  },
+  {
     "name": "FilterBar",
     "description": "The row of controls above a list: search, one or two selects, and the view switcher, on one quiet surface.",
     "slug": "filter-bar",
     "group": "Data",
-    "package": "@newui/blocks",
-    "source": "packages/blocks/src/FilterBar",
-    "kind": "block",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/FilterBar",
     "atomic": "organism",
     "parts": [
       "FilterBarProps"
@@ -389,13 +377,26 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "ScrollTable",
+    "description": "A labelled horizontal scroll region for wide semantic tables.",
+    "slug": "scroll-table",
+    "group": "Data",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/ScrollTable",
+    "atomic": "molecule",
+    "parts": [
+      "ScrollTableProps"
+    ],
+    "spec": "scroll-table",
+    "shipped": true
+  },
+  {
     "name": "StatGrid",
     "description": "A row of KPI cards.",
     "slug": "stat-grid",
     "group": "Data",
-    "package": "@newui/blocks",
-    "source": "packages/blocks/src/StatGrid",
-    "kind": "block",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/StatGrid",
     "atomic": "organism",
     "parts": [
       "StatGridProps"
@@ -404,13 +405,26 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "VirtualList",
+    "description": "A fixed-row list that keeps a bounded number of records in the DOM.",
+    "slug": "virtual-list",
+    "group": "Data",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/VirtualList",
+    "atomic": "organism",
+    "parts": [
+      "VirtualListProps"
+    ],
+    "spec": "virtual-list",
+    "shipped": true
+  },
+  {
     "name": "Accordion",
     "description": "A set of collapsible sections, over Zag's accordion machine.",
     "slug": "accordion",
     "group": "Disclosure",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Accordion",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Accordion",
     "atomic": "molecule",
     "parts": [
       "AccordionContentProps",
@@ -426,9 +440,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "One disclosure: a trigger and the panel it shows or hides, over Zag's collapsible machine.",
     "slug": "collapsible",
     "group": "Disclosure",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Collapsible",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Collapsible",
     "atomic": "molecule",
     "parts": [
       "CollapsibleContentProps",
@@ -443,9 +456,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A segmented choice without panels.",
     "slug": "tab-buttons",
     "group": "Disclosure",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/TabButtons",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/TabButtons",
     "atomic": "molecule",
     "parts": [
       "TabButtonsProps"
@@ -458,9 +470,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Tabs.Root, Tabs.List, Tabs.Trigger and Tabs.Content compose a Zag tab interface.",
     "slug": "tabs",
     "group": "Disclosure",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Tabs",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Tabs",
     "atomic": "molecule",
     "parts": [
       "TabsContentProps",
@@ -475,9 +486,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Identifies a person using an image, initials from label, or an icon.",
     "slug": "avatar",
     "group": "Display",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Avatar",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Avatar",
     "atomic": "atom",
     "parts": [
       "AvatarProps"
@@ -490,9 +500,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Displays a short status or category.",
     "slug": "badge",
     "group": "Display",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Badge",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Badge",
     "atomic": "atom",
     "parts": [
       "BadgeProps"
@@ -505,9 +514,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Card composes a bordered surface with CardHeader, CardTitle, CardDescription, CardContent and CardFooter.",
     "slug": "card",
     "group": "Display",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Card",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Card",
     "atomic": "molecule",
     "parts": [
       "CardProps"
@@ -520,9 +528,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Separates related groups with an optional text label.",
     "slug": "divider",
     "group": "Display",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Divider",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Divider",
     "atomic": "atom",
     "parts": [
       "DividerProps"
@@ -535,9 +542,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "What a list, table or panel shows when it has nothing to show.",
     "slug": "empty-state",
     "group": "Display",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/EmptyState",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/EmptyState",
     "atomic": "molecule",
     "parts": [
       "EmptyStateProps"
@@ -550,9 +556,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Renders a named Lucide glyph or a supplied Solid component.",
     "slug": "icon",
     "group": "Display",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Icon",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Icon",
     "atomic": "atom",
     "parts": [
       "IconProps"
@@ -565,9 +570,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A single row of a menu or list, with a prefix, a label and a suffix.",
     "slug": "item-list-row",
     "group": "Display",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/ItemListRow",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/ItemListRow",
     "atomic": "molecule",
     "parts": [
       "ItemListRowProps"
@@ -580,9 +584,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Composes aligned rows and cells for structured content.",
     "slug": "list",
     "group": "Display",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/List",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/List",
     "atomic": "molecule",
     "parts": [
       "ListCellProps",
@@ -597,9 +600,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A vertical run of events, oldest first, with a rail drawn between the markers rather than through them.",
     "slug": "timeline",
     "group": "Display",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Timeline",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Timeline",
     "atomic": "molecule",
     "parts": [
       "TimelineProps"
@@ -612,9 +614,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A hierarchical tree view with expand/collapse and selection.",
     "slug": "tree",
     "group": "Display",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Tree",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Tree",
     "atomic": "molecule",
     "parts": [
       "TreeRootProps"
@@ -627,9 +628,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Presents contextual feedback with an optional action and dismissal.",
     "slug": "alert",
     "group": "Feedback",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Alert",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Alert",
     "atomic": "molecule",
     "parts": [
       "AlertProps"
@@ -642,9 +642,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Reports a determinate value or ongoing activity.",
     "slug": "progress",
     "group": "Feedback",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Progress",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Progress",
     "atomic": "atom",
     "parts": [
       "ProgressProps"
@@ -657,9 +656,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A determinate ring: a full-circle track and a value drawn as a dash offset on a second circle of the same geometry, so the fill always starts at…",
     "slug": "progress-circle",
     "group": "Feedback",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/ProgressCircle",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/ProgressCircle",
     "atomic": "atom",
     "parts": [
       "ProgressCircleProps"
@@ -672,9 +670,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Reserves space while content loads.",
     "slug": "skeleton",
     "group": "Feedback",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Skeleton",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Skeleton",
     "atomic": "atom",
     "parts": [
       "SkeletonProps"
@@ -687,9 +684,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Shows ongoing activity in a compact space.",
     "slug": "spinner",
     "group": "Feedback",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Spinner",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Spinner",
     "atomic": "atom",
     "parts": [
       "SpinnerProps"
@@ -698,26 +694,12 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
-    "name": "Toast",
-    "description": "Transient notifications, mounted once via the Toaster.",
-    "slug": "toast",
-    "group": "Feedback",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Toast",
-    "kind": "component",
-    "atomic": "molecule",
-    "parts": [],
-    "spec": "toast",
-    "shipped": true
-  },
-  {
     "name": "Checkbox",
     "description": "A native boolean input with controlled/uncontrolled checked state and indeterminate presentation.",
     "slug": "checkbox",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Checkbox",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Checkbox",
     "atomic": "atom",
     "parts": [
       "CheckboxProps"
@@ -730,9 +712,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A duration value control.",
     "slug": "duration",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Duration",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Duration",
     "atomic": "atom",
     "parts": [
       "DurationProps"
@@ -745,9 +726,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "The inline error half of the labelling contract (P5).",
     "slug": "error-message",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/ErrorMessage",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/ErrorMessage",
     "atomic": "atom",
     "parts": [
       "ErrorMessageProps"
@@ -760,9 +740,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Wires a label, control and error together (P5).",
     "slug": "form-control",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/FormControl",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/FormControl",
     "atomic": "molecule",
     "parts": [
       "FormControlProps",
@@ -776,9 +755,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "The label half of the shared labelling contract (P5).",
     "slug": "form-label",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/FormLabel",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/FormLabel",
     "atomic": "atom",
     "parts": [
       "FormLabelProps"
@@ -791,9 +769,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A Zag numeric spinbutton.",
     "slug": "number-input",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/NumberInput",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/NumberInput",
     "atomic": "molecule",
     "parts": [
       "NumberInputProps"
@@ -806,9 +783,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A masked text field with a reveal toggle.",
     "slug": "password",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Password",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Password",
     "atomic": "molecule",
     "parts": [
       "PasswordProps"
@@ -821,9 +797,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A Zag group of native radio inputs, with orientation, disabled options and bounded or wrapping arrow navigation.",
     "slug": "radio-group",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/RadioGroup",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/RadioGroup",
     "atomic": "molecule",
     "parts": [
       "RadioGroupProps"
@@ -836,9 +811,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A Zag radiogroup with whole/half-star values, controlled/uncontrolled state and optional custom glyphs.",
     "slug": "rating",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Rating",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Rating",
     "atomic": "molecule",
     "parts": [
       "RatingProps"
@@ -851,9 +825,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A Zag slider with a controlled value/onValueChange or an uncontrolled defaultValue, expressed as a number array.",
     "slug": "slider",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Slider",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Slider",
     "atomic": "atom",
     "parts": [
       "SliderProps"
@@ -866,9 +839,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A Zag-backed boolean control.",
     "slug": "switch",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Switch",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Switch",
     "atomic": "atom",
     "parts": [
       "SwitchProps"
@@ -881,9 +853,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Multi-line text value with the shared labelling contract.",
     "slug": "textarea",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Textarea",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Textarea",
     "atomic": "atom",
     "parts": [
       "TextareaProps"
@@ -896,9 +867,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Single-line text value with the shared labelling contract.",
     "slug": "text-input",
     "group": "Inputs",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/TextInput",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/TextInput",
     "atomic": "atom",
     "parts": [
       "TextInputProps"
@@ -907,45 +877,26 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
-    "name": "AppLayout",
-    "description": "The application frame: a title block, a navigation column, and a content area that scrolls inside the viewport rather than with it.",
-    "slug": "app-layout",
-    "group": "Layout",
-    "package": "@newui/layouts",
-    "source": "packages/layouts/src",
-    "kind": "layout",
-    "atomic": "template",
-    "parts": [
-      "AppLayoutProps"
-    ],
-    "spec": "app-layout",
-    "shipped": true
-  },
-  {
     "name": "AppShell",
-    "description": "Composes a desktop workspace without owning navigation state.",
+    "description": "The one responsive application frame: one integrated sidebar and the page it opens.",
     "slug": "app-shell",
     "group": "Layout",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/AppShell",
-    "kind": "component",
+    "package": "@newui/templates",
+    "source": "packages/templates/src/templates",
     "atomic": "template",
     "parts": [
-      "AppShellProps",
-      "PageBodyProps",
-      "PageHeaderProps"
+      "AppShellProps"
     ],
     "spec": "app-shell",
     "shipped": true
   },
   {
     "name": "AppSidebar",
-    "description": "The navigation sidebar a screen opens with, from @newui/blocks.",
+    "description": "The single navigation organism an application shell needs: app identity and tenant at the top, a grouped menu, utilities and account at the bottom.",
     "slug": "app-sidebar",
     "group": "Layout",
-    "package": "@newui/blocks",
-    "source": "packages/blocks/src/AppSidebar",
-    "kind": "block",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/AppSidebar",
     "atomic": "organism",
     "parts": [
       "AppSidebarProps"
@@ -954,18 +905,17 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
-    "name": "DesktopShell",
-    "description": "The desktop app frame: an optional icon rail, an optional navigation sidebar, and a content column beside them.",
-    "slug": "desktop-shell",
+    "name": "AuthLayout",
+    "description": "A public-access frame for sign-in, sign-up and recovery screens.",
+    "slug": "auth-layout",
     "group": "Layout",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/DesktopShell",
-    "kind": "component",
+    "package": "@newui/templates",
+    "source": "packages/templates/src/templates",
     "atomic": "template",
     "parts": [
-      "DesktopShellProps"
+      "AuthLayoutProps"
     ],
-    "spec": "desktop-shell",
+    "spec": "auth-layout",
     "shipped": true
   },
   {
@@ -973,9 +923,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "The top of a record page: where it sits, what it is, what state it is in, and what you can do to it.",
     "slug": "detail-header",
     "group": "Layout",
-    "package": "@newui/blocks",
-    "source": "packages/blocks/src/DetailHeader",
-    "kind": "block",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/DetailHeader",
     "atomic": "organism",
     "parts": [
       "DetailHeaderProps"
@@ -985,12 +934,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "KanbanBoard",
-    "description": "Columns of cards you drag between them, from @newui/blocks.",
+    "description": "Columns of cards you drag between them, from @newui/organisms.",
     "slug": "kanban-board",
     "group": "Layout",
-    "package": "@newui/blocks",
-    "source": "packages/blocks/src/KanbanBoard",
-    "kind": "block",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/KanbanBoard",
     "atomic": "organism",
     "parts": [
       "KanbanBoardProps"
@@ -999,29 +947,12 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
-    "name": "MobileShell",
-    "description": "The mobile app frame: a pinned header, a natively-scrolling body and a bottom navigation bar.",
-    "slug": "mobile-shell",
-    "group": "Layout",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/MobileShell",
-    "kind": "component",
-    "atomic": "template",
-    "parts": [
-      "MobileShellProps",
-      "PageHeaderMobileProps"
-    ],
-    "spec": "mobile-shell",
-    "shipped": true
-  },
-  {
     "name": "PageToolbar",
     "description": "The page header: a title, an optional title menu, and the actions.",
     "slug": "page-toolbar",
     "group": "Layout",
-    "package": "@newui/blocks",
-    "source": "packages/blocks/src/PageToolbar",
-    "kind": "block",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/PageToolbar",
     "atomic": "organism",
     "parts": [
       "PageToolbarProps"
@@ -1034,9 +965,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Two panes side by side, with a draggable divider.",
     "slug": "pane-layout",
     "group": "Layout",
-    "package": "@newui/layouts",
-    "source": "packages/layouts/src",
-    "kind": "layout",
+    "package": "@newui/templates",
+    "source": "packages/templates/src/templates/PaneLayout",
     "atomic": "template",
     "parts": [
       "PaneLayoutProps"
@@ -1045,28 +975,12 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
-    "name": "ResponsiveShell",
-    "description": "One navigation, two frames: the docked AppShell where there is room for two columns, the MobileShell where there is not, with the sidebar becoming…",
-    "slug": "responsive-shell",
-    "group": "Layout",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/ResponsiveShell",
-    "kind": "component",
-    "atomic": "template",
-    "parts": [
-      "ResponsiveShellProps"
-    ],
-    "spec": "responsive-shell",
-    "shipped": true
-  },
-  {
     "name": "Breadcrumbs",
     "description": "A trail showing where the current page sits in a hierarchy and letting the user step back to a parent.",
     "slug": "breadcrumbs",
     "group": "Navigation",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Breadcrumbs",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Breadcrumbs",
     "atomic": "molecule",
     "parts": [
       "BreadcrumbsProps"
@@ -1079,9 +993,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Provides persistent mobile destinations.",
     "slug": "mobile-nav",
     "group": "Navigation",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/MobileNav",
-    "kind": "component",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/MobileNav",
     "atomic": "organism",
     "parts": [
       "MobileNavItemProps",
@@ -1095,9 +1008,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Page navigation for a long list, over Zag's pagination machine.",
     "slug": "pagination",
     "group": "Navigation",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Pagination",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Pagination",
     "atomic": "molecule",
     "parts": [
       "PaginationProps"
@@ -1107,12 +1019,11 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "Sidebar",
-    "description": "The desktop navigation rail: a labelled sidebar with a header, items, an optional collapsed rail, collapsible sections and status cards.",
+    "description": "The collapsible navigation organism used inside AppSidebar.",
     "slug": "sidebar",
     "group": "Navigation",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Sidebar",
-    "kind": "component",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/Sidebar",
     "atomic": "organism",
     "parts": [
       "SidebarCardProps",
@@ -1121,8 +1032,6 @@ export const COMPONENTS: ComponentEntry[] = [
       "SidebarItemProps",
       "SidebarLabelProps",
       "SidebarProps",
-      "SidebarRailItemProps",
-      "SidebarRailProps",
       "SidebarSectionProps"
     ],
     "spec": "sidebar",
@@ -1133,9 +1042,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A bottom-anchored modal sheet: a grab handle, an optional title, and a scrollable body, capped at 90dvh.",
     "slug": "bottom-sheet",
     "group": "Overlays",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/BottomSheet",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/BottomSheet",
     "atomic": "molecule",
     "parts": [
       "BottomSheetProps"
@@ -1148,9 +1056,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "⌘K, a query, and a list of things you can do.",
     "slug": "command-palette",
     "group": "Overlays",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/CommandPalette",
-    "kind": "component",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/CommandPalette",
     "atomic": "organism",
     "parts": [
       "CommandPaletteProps"
@@ -1163,9 +1070,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Presents a focused modal task.",
     "slug": "dialog",
     "group": "Overlays",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Dialog",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Dialog",
     "atomic": "molecule",
     "parts": [
       "DialogContentProps",
@@ -1181,9 +1087,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Shows supplementary information on hover or focus.",
     "slug": "hover-card",
     "group": "Overlays",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/HoverCard",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/HoverCard",
     "atomic": "molecule",
     "parts": [
       "HoverCardRootProps",
@@ -1197,9 +1102,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Anchors interactive supplementary content to a trigger.",
     "slug": "popover",
     "group": "Overlays",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Popover",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Popover",
     "atomic": "molecule",
     "parts": [
       "PopoverRootProps"
@@ -1212,9 +1116,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Provides a bounded scroll viewport with custom scrollbars.",
     "slug": "scroll-area",
     "group": "Overlays",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/ScrollArea",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/ScrollArea",
     "atomic": "atom",
     "parts": [
       "ScrollAreaRootProps",
@@ -1229,9 +1132,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "Labels supplementary information on hover and keyboard focus.",
     "slug": "tooltip",
     "group": "Overlays",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Tooltip",
-    "kind": "component",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Tooltip",
     "atomic": "atom",
     "parts": [
       "TooltipProps",
@@ -1246,9 +1148,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "The centred card a sign-in, sign-up or reset screen is.",
     "slug": "auth-card",
     "group": "Patterns",
-    "package": "@newui/blocks",
-    "source": "packages/blocks/src/AuthCard",
-    "kind": "block",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/AuthCard",
     "atomic": "organism",
     "parts": [
       "AuthCardProps"
@@ -1261,9 +1162,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A dialog for app settings: a sidebar of grouped tabs on the left, the selected panel on the right.",
     "slug": "settings-dialog",
     "group": "Patterns",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/SettingsDialog",
-    "kind": "component",
+    "package": "@newui/organisms",
+    "source": "packages/organisms/src/organisms/SettingsDialog",
     "atomic": "organism",
     "parts": [
       "SettingsBodyProps",
@@ -1284,9 +1184,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A searchable single select.",
     "slug": "combobox",
     "group": "Selection",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Combobox",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Combobox",
     "atomic": "molecule",
     "parts": [
       "ComboboxProps"
@@ -1299,9 +1198,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A single-date picker.",
     "slug": "date-picker",
     "group": "Selection",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/DatePicker",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/DatePicker",
     "atomic": "molecule",
     "parts": [
       "CalendarViewProps",
@@ -1315,9 +1213,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A range picker.",
     "slug": "date-range-picker",
     "group": "Selection",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/DateRangePicker",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/DateRangePicker",
     "atomic": "molecule",
     "parts": [
       "DateRangePickerProps"
@@ -1330,9 +1227,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A date + time picker.",
     "slug": "date-time-picker",
     "group": "Selection",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/DateTimePicker",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/DateTimePicker",
     "atomic": "molecule",
     "parts": [
       "DateTimePickerProps"
@@ -1345,9 +1241,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A drag-and-drop file picker.",
     "slug": "file-uploader",
     "group": "Selection",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/FileUploader",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/FileUploader",
     "atomic": "molecule",
     "parts": [
       "FileUploaderProps"
@@ -1360,9 +1255,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A searchable multi-valued select.",
     "slug": "multi-select",
     "group": "Selection",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/MultiSelect",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/MultiSelect",
     "atomic": "molecule",
     "parts": [
       "MultiSelectProps"
@@ -1375,9 +1269,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A Zag value selector over fixed options, with optional icon, description and disabled state per option.",
     "slug": "select",
     "group": "Selection",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/Select",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Select",
     "atomic": "molecule",
     "parts": [
       "SelectProps"
@@ -1390,9 +1283,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A time input that opens a popover list of selectable times.",
     "slug": "time-picker",
     "group": "Selection",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/TimePicker",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/TimePicker",
     "atomic": "molecule",
     "parts": [
       "TimePickerProps"
@@ -1405,9 +1297,8 @@ export const COMPONENTS: ComponentEntry[] = [
     "description": "A row of independent on/off cells that read as one control: text alignment, a view switcher, a density picker.",
     "slug": "toggle-group",
     "group": "Selection",
-    "package": "@newui/ui",
-    "source": "packages/ui/src/components/ToggleGroup",
-    "kind": "component",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/ToggleGroup",
     "atomic": "molecule",
     "parts": [
       "ToggleGroupItemProps",
@@ -1423,16 +1314,6 @@ export const GROUPS = ["Actions","Charts","Editors","Data","Disclosure","Display
 export function componentBySlug(slug: string): ComponentEntry | undefined {
   return COMPONENTS.find((entry) => entry.slug === slug)
 }
-
-/** Only the blocks, wherever the atomic index lists them. */
-export const BLOCKS: ComponentEntry[] = COMPONENTS.filter(
-  (entry) => entry.kind === 'block',
-)
-
-/** Only the layouts: what `/templates` lists among its templates. */
-export const LAYOUTS: ComponentEntry[] = COMPONENTS.filter(
-  (entry) => entry.kind === 'layout',
-)
 
 /** One level of the atomic hierarchy: what an index lists and pages through. */
 export function byAtomic(

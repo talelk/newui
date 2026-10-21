@@ -1,22 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-/**
- * No phantom scrollbars in the chrome.
- *
- * The rail taught this one: its icon items are 28px and the rail's content box
- * measures 27px under subpixel layout, so a container that declares only
- * `overflow-y: auto` got a real *horizontal* scrollbar for that half pixel —
- * with arrow buttons — across the middle of the rail. Nothing was wrong on
- * purpose; the bar was noise.
- *
- * The invariant is exactly what draws the bar: an element is a scroll container
- * for an axis when its computed overflow is `auto`/`scroll` and it overflows
- * that axis. In the rails that must never be true. (`overflow-x: clip` is the
- * fix, and it keeps the predicate false while `scrollWidth` still reports the
- * content's true extent — which is why the assert is on the pair, not on
- * `scrollWidth` alone.)
- */
-
+/** The single application sidebar may scroll vertically, never horizontally. */
 const RECIPES = [
   'tasks',
   'mail',
@@ -28,43 +12,38 @@ const RECIPES = [
   'compose',
 ]
 
-test.describe('rail chrome carries no scroll containers', () => {
+test.describe('application sidebar chrome', () => {
   for (const recipe of RECIPES) {
-    test(`/${recipe}: nothing in the rail scrolls`, async ({ page }) => {
+    test(`/${recipe}: one sidebar without horizontal scrollbars`, async ({
+      page,
+    }) => {
       await page.setViewportSize({ width: 1280, height: 900 })
       await page.goto(`/pages/${recipe}/fullscreen`)
-      await page.waitForSelector('[data-slot="sidebar-rail"]', {
-        timeout: 10_000,
-      })
+      const sidebar = page.locator('[data-slot="app-shell-sidebar"]')
+      await expect(sidebar).toBeVisible()
+      await expect(sidebar.locator('[data-slot="sidebar"]')).toHaveCount(1)
+      await expect(page.locator('[data-slot="sidebar-rail"]')).toHaveCount(0)
 
-      const scrollable = await page.evaluate(() => {
-        const rail = document.querySelector('[data-slot="sidebar-rail"]')
-        if (!rail) return ['no rail found — the recipe lost its chrome']
-        const bad: string[] = []
-        for (const el of [rail, ...rail.querySelectorAll('*')]) {
-          const style = getComputedStyle(el)
-          const overflowX = style.overflowX
-          const overflowY = style.overflowY
-          const isScroll = (value: string) =>
-            value === 'auto' || value === 'scroll'
-          const box = el.getBoundingClientRect()
-          if (!box.width && !box.height) continue
-          if (isScroll(overflowX) && el.scrollWidth > el.clientWidth + 1)
-            bad.push(
-              `${el.tagName.toLowerCase()}[${el.getAttribute('data-slot') ?? ''}] x:${overflowX} ${el.scrollWidth}>${el.clientWidth}`,
+      const horizontalOverflow = await sidebar.evaluate((root) => {
+        const offenders: string[] = []
+        for (const element of [root, ...root.querySelectorAll('*')]) {
+          const style = getComputedStyle(element)
+          const box = element.getBoundingClientRect()
+          if (
+            box.width > 0 &&
+            box.height > 0 &&
+            ['auto', 'scroll'].includes(style.overflowX) &&
+            element.scrollWidth > element.clientWidth + 1
+          ) {
+            offenders.push(
+              `${element.tagName.toLowerCase()}[${element.getAttribute('data-slot') ?? ''}] ${element.scrollWidth}>${element.clientWidth}`,
             )
-          if (isScroll(overflowY) && el.scrollHeight > el.clientHeight + 1)
-            bad.push(
-              `${el.tagName.toLowerCase()}[${el.getAttribute('data-slot') ?? ''}] y:${overflowY} ${el.scrollHeight}>${el.clientHeight}`,
-            )
+          }
         }
-        return bad
+        return offenders
       })
 
-      expect(
-        scrollable,
-        `scrollable elements in the rail on ${recipe}`,
-      ).toEqual([])
+      expect(horizontalOverflow).toEqual([])
     })
   }
 })

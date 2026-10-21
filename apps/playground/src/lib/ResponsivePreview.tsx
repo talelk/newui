@@ -182,10 +182,20 @@ function Preview(props: {
   const [dir, setDir] = createSignal<StoryGlobals['dir']>(
     document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr',
   )
-  const frameSrc = () =>
-    props.story
-      ? storyUrl(props.story, { theme: theme(), dir: dir() })
-      : props.src
+  const frameSrc = () => {
+    if (props.story)
+      return storyUrl(props.story, { theme: theme(), dir: dir() })
+    if (!props.src) return undefined
+    const url = new URL(props.src, location.origin)
+    // The isolated story document reads the theme/direction from its query.
+    // Application previews already mirror the host document through `sync`,
+    // and their fullscreen links must stay exactly as the app wrote them.
+    if (url.origin !== location.origin || !url.pathname.startsWith('/preview/'))
+      return props.src
+    url.searchParams.set('theme', theme() ?? 'light')
+    url.searchParams.set('dir', dir() ?? 'ltr')
+    return `${url.pathname}${url.search}${url.hash}`
+  }
   let frame: HTMLIFrameElement | undefined
   let stage: HTMLDivElement | undefined
   const [stageWidth, setStageWidth] = createSignal(0)

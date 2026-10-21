@@ -7,7 +7,8 @@ import type { ComponentEntry } from '../generated/components'
  * by what it *is* (an atom, a molecule, an organism, a template), which the
  * registry records once in `entry.atomic`. Kept here rather than repeated in the
  * palette, the page and the harness — the three drifted once already
- * (`/templates/app-layout` rendered a layout under the wrong breadcrumb).
+ * (a template entry rendered under the wrong breadcrumb when its path was
+ * maintained separately from the registry).
  */
 export type ReferenceSection = 'atoms' | 'molecules' | 'organisms' | 'templates'
 

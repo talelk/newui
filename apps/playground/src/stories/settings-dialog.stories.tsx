@@ -1,4 +1,5 @@
-import { Button, SettingsDialog, Switch } from '@newui/ui'
+import { Button, Switch } from '@newui/atoms'
+import { SettingsDialog } from '@newui/organisms'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -59,7 +60,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Patterns/SettingsDialog',
+  title: 'Organisms/Patterns/SettingsDialog',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

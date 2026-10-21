@@ -12,7 +12,7 @@ same four props with identical semantics (P5):
 
 ## Implementation
 
-`Field` (`packages/ui/src/lib/field.tsx`) owns the wiring: it generates the
+`Field` (`packages/atoms/src/lib/field.tsx`) owns the wiring: it generates the
 control id, label id, description id and error id, and exposes them through
 context so a control reads `useField()` rather than re-deriving ids.
 

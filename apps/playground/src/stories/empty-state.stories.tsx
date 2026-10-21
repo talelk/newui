@@ -1,4 +1,5 @@
-import { Button, EmptyState } from '@newui/ui'
+import { Button } from '@newui/atoms'
+import { EmptyState } from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -21,7 +22,7 @@ export function Demo(): JSX.Element {
 }
 
 const meta = {
-  title: 'Components/Display/EmptyState',
+  title: 'Molecules/Display/EmptyState',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

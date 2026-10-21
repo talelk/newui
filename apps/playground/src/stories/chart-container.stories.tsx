@@ -1,5 +1,5 @@
+import { Button } from '@newui/atoms'
 import { ChartCard, ChartContainer, ChartLegend } from '@newui/charts'
-import { Button } from '@newui/ui'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -85,7 +85,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Charts/ChartContainer',
+  title: 'Molecules/ChartContainer',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

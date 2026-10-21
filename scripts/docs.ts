@@ -2,7 +2,7 @@
  * Static docs generator.
  *
  * No framework, no dependency: it renders the per-component contracts in
- * `spec/*.md` and the generated `packages/ui/api.json` prop tables into a
+ * `spec/*.md` and the generated `api.json` prop tables into a
  * self-contained site under `docs/`. Run with `pnpm docs`.
  *
  * The Markdown subset is deliberately small — headings, fenced code, tables,
@@ -13,7 +13,7 @@ import path from 'node:path'
 
 const root = process.cwd()
 const specDir = path.join(root, 'spec')
-const apiFile = path.join(root, 'packages/ui/api.json')
+const apiFile = path.join(root, 'api.json')
 const outDir = path.join(root, 'docs')
 
 interface ApiMember {
@@ -334,7 +334,7 @@ const overview = `# newui
 A SolidJS component library — a port of frappe-ui on SolidJS + Zag + Tailwind CSS v4.
 
 This site is generated from \`spec/*.md\` (the per-component contracts) and
-\`packages/ui/api.json\` (the prop tables). Regenerate with \`pnpm docs\`.
+\`api.json\` (the prop tables). Regenerate with \`pnpm docs\`.
 
 ## Components
 
@@ -384,7 +384,7 @@ const apiSections = Object.entries(api)
 
 const apiDoc = `# API tables
 
-Generated from \`packages/ui/api.json\`. A prop marked * is required.
+Generated from \`api.json\`. A prop marked * is required.
 
 ${apiSections}
 `

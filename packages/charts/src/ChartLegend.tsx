@@ -87,7 +87,7 @@ function LegendEntry(props: {
         'font-size': '0.75rem',
         'line-height': '1rem',
         border: 'none',
-        'border-radius': '9999px',
+        'border-radius': 'var(--radius-pill)',
         background: 'transparent',
         cursor: 'pointer',
         color: 'var(--ink-gray-7)',
@@ -100,7 +100,7 @@ function LegendEntry(props: {
           width: '14px',
           height: '3px',
           'flex-shrink': '0',
-          'border-radius': '9999px',
+          'border-radius': 'var(--radius-pill)',
           'background-color': props.item.color,
           opacity: props.item.hidden ? '0.3' : '1',
         }}

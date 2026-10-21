@@ -1,8 +1,14 @@
-import { FilterBar, StatGrid } from '@newui/blocks'
+import { Button } from '@newui/atoms'
 import { usd } from '@newui/data'
-import { DataTable, type DataTableColumn } from '@newui/data/table'
-import { AppLayout } from '@newui/layouts'
-import { Button, SidebarItem, SidebarRail, SidebarRailItem } from '@newui/ui'
+import { Dropdown } from '@newui/molecules'
+import {
+  DataTable,
+  type DataTableColumn,
+  FilterBar,
+  SidebarItem,
+  StatGrid,
+} from '@newui/organisms'
+import { AppShell } from '@newui/templates'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -77,7 +83,7 @@ const COLUMNS: DataTableColumn<Project>[] = [
 export function Demo(): JSX.Element {
   const [status, setStatus] = createSignal('All statuses')
   return (
-    <AppLayout
+    <AppShell
       title="Projects, at a glance"
       description="One collection, filtered and sorted in the browser."
       breadcrumbs={[{ label: 'Workspace', href: '/' }, { label: 'Projects' }]}
@@ -87,37 +93,35 @@ export function Demo(): JSX.Element {
         </Button>
       }
       navLabel="Starter navigation"
-      rail={
-        <SidebarRail>
-          <SidebarRailItem label="Projects" icon="lucide-folders" active />
-        </SidebarRail>
-      }
-      sidebar={
-        <nav aria-label="Starter navigation" class="flex flex-col gap-0.5">
-          <SidebarItem label="Projects" icon="lucide-folders" active>
-            Projects
-          </SidebarItem>
-          <SidebarItem label="Settings" icon="lucide-settings-2">
-            Settings
-          </SidebarItem>
-        </nav>
-      }
+      navigation={[
+        {
+          label: 'Workspace',
+          items: [{ label: 'Projects', icon: 'lucide-folders', active: true }],
+        },
+      ]}
       brand={
-        <span class="flex items-center gap-2 font-semibold">
+        <span class="flex min-h-10 items-center gap-2 px-2 font-semibold">
           <span
             aria-hidden="true"
             class="lucide-boxes size-5 text-ink-blue-6"
           />
           Acme
-          <span class="hidden font-normal text-ink-gray-6 sm:inline">
-            / Projects
-          </span>
         </span>
       }
-      headerActions={
-        <span class="grid size-7 place-items-center rounded-full bg-surface-blue-2 text-caption text-ink-blue-8">
-          RK
-        </span>
+      tenant={
+        <Dropdown options={[{ label: 'Acme · Production', value: 'prod' }]}>
+          Acme · Production
+        </Dropdown>
+      }
+      settings={
+        <SidebarItem label="Settings" icon="lucide-settings">
+          Settings
+        </SidebarItem>
+      }
+      account={
+        <SidebarItem label="Rhea Kapoor" icon="lucide-user-round">
+          Rhea Kapoor
+        </SidebarItem>
       }
       footer={
         <footer class="flex flex-wrap justify-between gap-2 text-caption text-ink-gray-6">
@@ -182,12 +186,12 @@ export function Demo(): JSX.Element {
           recordsLabel="projects"
         />
       </div>
-    </AppLayout>
+    </AppShell>
   )
 }
 
 const meta = {
-  title: 'Layouts/Records page',
+  title: 'Pages/RecordsPage',
   component: Demo,
   excludeStories: ['Demo'],
   parameters: { layout: 'fullscreen' },

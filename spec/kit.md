@@ -1,232 +1,105 @@
-# The construction kit — plan of record
+# Atomic design kit
 
-Status: accepted 2026-10-19 (ratified; see
-[ADR-0012](./adr/0012-kit-ladder.md) for the decision record). This file is the
-scope contract for the kit work: the Storybook surface, `@newui/layouts`,
-`@newui/data` and the starter. Where it and an older spec disagree about the
-kit's shape, this file wins; per-component contracts stay in their own specs.
+Status: accepted. This is the current package, template and site contract. Older
+ADRs and visual audits remain history; they do not describe the supported API.
 
-## Why
+## The visual ladder
 
-The library is finished up to the block level and undefined above it:
-
-- **Layout** — the frames exist (`AppShell`, `ResponsiveShell`, `Sidebar`,
-  `MobileNav`) but nothing owns the page. `ExampleFrame` is playground-local,
-  nine pages depend on it, and each page hand-rolls its header/toolbar/body.
-  `spec/examples-refresh.md` documents that `PageToolbar`, `DetailHeader` and
-  `AppSidebar` cannot absorb those compositions.
-- **Logic** — no one way to do anything. TanStack appears in four files
-  (`DataTable`, `ActivityList`, Tasks, Authentication) and
-  `spec/tanstack-integration.md` calls it an application dependency; everyone
-  else hand-rolls signals and local repositories. `Notice` is copied 11 times,
-  `createUndo` 3, `format` 4, `CreateDialog` 7.
-- **Atomic design** — tokens → ui → blocks → examples exists implicitly; the
-  templates level is missing and the logic level has no home, so nothing tells
-  a consumer which frame to pick or where a repeated pattern graduates to. The
-  site now organises itself by the five levels (see *The site's information
-  architecture* below); the packages keep their own names.
-- **Surface** — `/play` is demo-shaped, not state-shaped: no stories, no
-  states, no index a machine can sweep.
-- **Composition** — learned by reading playground source; no starter, no guide.
-
-The plan is not a redo. It adds the two missing levels, the surface and the
-copyable app to the parts that already exist.
-
-## The ladder
-
-| Level | Answers | Home | Today |
+| Level | Question | Package / surface | Current inventory |
 | --- | --- | --- | --- |
-| Foundations | what does it look like | `@newui/tokens` + `@newui/tailwind` | shipped |
-| Atoms | what is this single element | `@newui/ui` | shipped (20) |
-| Molecules | what is this interaction | `@newui/ui` + `@newui/charts` | shipped (42) |
-| Organisms | what is this section | `@newui/blocks` + chart widgets + editors | shipped (22) |
-| Templates | how does a page open | `@newui/layouts` + `@newui/ui` shells | shipped (6) |
-| Pages | what does the product do | `apps/playground` + `apps/starter` | shipped (12 + the starter) |
-| Logic | how does it behave | `@newui/data` | shipped (helpers, `/query`, `/form`, `/table`, `/virtual`) |
-| Surface | how do I see any of it | Storybook | shipped (W1) |
+| Foundations | What does it look like? | `@newui/tokens`, `@newui/tailwind`, `@newui/icons` | tokens and glyphs |
+| Atoms | What is this single element? | `@newui/atoms` | 20 references |
+| Molecules | What is this interaction? | `@newui/molecules` | 42 references |
+| Organisms | What is this page region? | `@newui/organisms` | 24 references |
+| Templates | How does the page open? | `@newui/templates` | exactly 3 templates |
+| Pages | What does the product do? | applications in `apps/*` | 12 recipes plus starter |
 
-Rules (ADR-0012):
+`@newui/charts`, `@newui/editor` and `@newui/code-editor` remain separately
+installable domain add-ons. Their entries are classified by composition in the
+atomic reference, while their package boundaries keep ECharts, TipTap and
+CodeMirror optional. `@newui/data` is the headless logic branch beside the
+visual ladder; it owns helpers, Query and Form, not rendered tables or lists.
 
-1. **Downward-only imports** — atoms ← molecules ← organisms ← templates ←
-   pages; `@newui/data` is headless except its own promoted surfaces; nothing
-   imports an app.
-   The *site* files each entry by the same five levels, from the registry's
-   `atomic` field rather than from its package — `scripts/atomic.ts` holds the
-   judgement calls.
-2. **Promote or reuse** — a pattern that appears twice in an example moves a
-   level down or is reused from a level above.
-3. **One done-checklist per unit** — implementation, recipe/types, tests +
-   a11y, spec, a story with states, a site page, a budget entry, an exports
-   pin.
+## Package graph
 
-## The site's information architecture
+The source tree and public package names follow the dependency direction:
 
-The site is the docs surface, so it reads in atomic design's order rather than
-the package order it was built in:
+```text
+@newui/tokens / @newui/tailwind / @newui/icons
+                 ↓
+@newui/atoms → @newui/molecules
+                    ↓
+               @newui/organisms
+                    ↓
+               @newui/templates
+                    ↓
+             apps/playground / apps/starter
 
-| Section | URL | What it lists |
-| --- | --- | --- |
-| Foundations | `/foundations` | the token vocabulary |
-| Atoms | `/atoms` · `/atoms/<name>` | 20 single elements |
-| Molecules | `/molecules` · `/molecules/<name>` | 42 interactions |
-| Organisms | `/organisms` · `/organisms/<name>` | 22 sections (blocks, chart widgets, editors) |
-| Templates | `/templates` · `/templates/<name>` | 6 arrangements (page layouts and shells) |
-| Pages | `/pages` · `/pages/<slug>` | the 12 application recipes, plus the starter |
+@newui/data ─────────────────→ apps/*
+```
 
-The classification is by *composition*, not by package: `@newui/ui` ships
-organisms (a sidebar) beside atoms, and `@newui/charts` ships molecules (a
-legend) beside organisms (a bar chart). The registry records one `atomic` field
-per entry, `scripts/atomic.ts` decides it, and the tests pin it.
+Core organism exports include `AppSidebar`, `FilterBar`, `StatGrid`,
+`KanbanBoard`, `DataTable` and `VirtualList`. The rendered table and virtual
+list moved here from `@newui/data`, making data headless again. `ScrollTable` is
+a molecule: it is a labelled horizontal scroll wrapper, not a table engine.
 
-The pre-atomic URLs (`/components`, `/blocks`, `/layouts`, `/charts`,
-`/editors`, `/examples`) are a compatibility surface: every one redirects to
-the level that now owns it, and `/components/<name>` resolves through the
-registry because the name decides whether the entry is an atom or a molecule.
+The registry has one explicit `atomic` level per entry in
+[`scripts/atomic.ts`](../scripts/atomic.ts). It is exhaustive: a public entry
+without a classification fails `pnpm site`; extra classification entries fail
+the atomic tests. Package ownership and atomic level are related but not
+identical—for example, the charts add-on contains both molecule-level chart
+parts and organism-level chart widgets.
 
-## W1 — Storybook, the surface
+## The three templates
 
-Hosted in `apps/playground` (`.storybook/`, `storybook@10.6.2` +
-`storybook-solidjs-vite@10.7.2`, `@storybook/addon-a11y`). The 91 demo files in
-`src/demos/` (plus two shared helpers) are absorbed as
-`src/stories/*.stories.tsx`; each file keeps a non-story `Demo` export for the
-site's inline embeds and exposes its states as stories. The generated
-`src/generated/stories.ts` replaces `demos.tsx`; `/play` is deleted.
+`@newui/templates` exports exactly:
 
-- **Taxonomy** — `Components/<group>/<Name>`, `Blocks/<Name>`, `Charts/<Name>`,
-  `Editors/<Name>`, `Compositions/<Name>`.
-- **States** — every input-like component shows its disabled/invalid/loading
-  states; every overlay shows open/closed; data surfaces show
-  loading/empty/error. The contract is `spec/states.md`; the coverage is
-  checked by `pnpm stories:check` plus the browser sweep.
-- **Sweep** — every story in `index.json` is a unit (a `no-sweep` tag is the
-  rare escape hatch) for the design-contract, coherence, a11y and memory specs;
-  screenshots drive story URLs. Storybook serves on its own origin (6006 dev,
-  6007 static) so embeds and the harness do not share the site's route space.
-- **Acceptance** — `/play` gone; docs embeds read stories; `stories:check`
-  green in CI; sweeps pass at max coverage within budget.
+1. **`AppShell`** — the only application shell. It owns one responsive sidebar:
+   brand/logo, tenant slot, multi-section icon navigation, collapse-to-icons,
+   settings and user/account slots at the bottom. At desktop it docks and
+   collapses to labelled icons; on mobile that same expanded menu is a modal
+   drawer. There is no rail/sidebar split and no separate desktop/mobile shell.
+2. **`PaneLayout`** — a resizable two-pane content arrangement inside a shell.
+   It does not add another app frame.
+3. **`AuthLayout`** — a centered public-access frame, with an optional desktop
+   context panel. `AuthCard` remains an organism; auth/session behavior remains
+   app-owned.
 
-**Status (2026-10-19).** Landed. The 91 demos are absorbed into 91 story files;
-the generated index holds 182 stories (91 `Default` plus 89 state stories), and
-`spec/states.md` + `scripts/story-states.ts` are enforced by
-`pnpm stories`/`stories:check`. `/play` is deleted; the site's reference pages,
-`pnpm shots`, `docs:build` and the browser harness all read story URLs.
-Design-contract (one load per story, measured narrow-first), coherence, a11y,
-stress and the memory tripwires drive every story; `no-sweep` is the escape
-hatch. The per-state axe sweep found real defects — legend labels, the
-palette's empty listbox and group contrast, the combobox loading rows, the
-file-uploader label, a focusable scroll viewport, and the sidebar's card/clipped
-section header in the rail — fixed in this slice with tests. W2 (`layouts`)
-is next.
+Deals, Tickets, the other workspace recipes, Discussions and the starter use
+`AppShell`. Mail composes `PaneLayout` inside it. Sign-in pages use
+`AuthLayout`. The old `AppLayout`, `AppShell` primitive, `DesktopShell`,
+`MobileShell`, `ResponsiveShell`, rail APIs and old package names are removed;
+there are no compatibility wrappers or redirects.
 
-## W2 — `@newui/layouts`, the template level
+## Pages, docs and stories
 
-Extracts `ExampleFrame` into `AppLayout` (rail · sidebar · folding column ·
-title block · mobile bar, `ResponsiveShell` underneath), then ships the page
-templates the examples justify:
+The site indexes and Storybook taxonomy use `Atoms`, `Molecules`, `Organisms`
+and `Templates`; complete applications are under `Pages`. The separate
+`/kit/recipes` guide holds combinations that teach a technique but are not yet
+public components. Registry examples with an existing API link to its atomic
+reference page instead of gaining a page-level duplicate. `pnpm stories:check`
+pins one `Default` story per shipped reference entry and the state contract in
+[`states.md`](./states.md).
 
-| Layout | Justified by | Status |
-| --- | --- | --- |
-| `AppLayout` | the nine framed examples | **shipped** — the frame moved, and the visual suite changed no snapshot |
-| `ListPage` — header, actions, filters slot, content, bulk footer | Deals, Tickets, Files, Mail, Tasks | **waiting on a consumer** |
-| `DetailPage` — record header, tabs, body, side panel | Tickets, Deals, Files | **waiting on a consumer** |
-| `SettingsPage` — grouped nav + panels | Settings, Discussions | not started |
-| `AuthPage` — centered `AuthCard` frame | Authentication | not started |
-| `DashboardPage` — stat grid + chart grid | Analytics, Accounting | not started |
-| `PaneLayout` — a list pane beside a record, divider included | Mail (Files and Discussions preview in dialogs) | **shipped** — Mail's hand-rolled grid, CSS variable and toolbar slider are gone |
+`/architecture` explains the levels and package graph; `/kit` shows how to
+compose them and wire data; `/kit/recipes` holds the non-public recipe gallery;
+`apps/starter` is the working copyable composition. Component and template
+previews render the same story `Demo` through the bare same-origin
+`/preview/<name>` document, so the site's live demo and viewport preview work
+without a Storybook process; Storybook remains the isolated review surface and
+the explicit “Open in Storybook” destination. The old package routes are
+deleted rather than redirected—the docs, command palette, generated registry,
+stories and tests link only to the new paths.
 
-**Why `ListPage` and `DetailPage` wait.** Their slots would duplicate controls
-that already own them: `FilterBar` owns the count and the clear-all, `DataTable`
-owns the row-selection bulk bar, and our record views are dialogs rather than
-pages — so a `ListPage` today would be a template with nothing to template.
-`PaneLayout` shipped once Mail's split was compared with the others: Files
-previews in a dialog and Discussions is a list plus dialogs, so the honest API is
-two panes and a divider — not the three-pane workspace the plan imagined.
+## Rules and gates
 
-The remaining templates (`SettingsPage`, `AuthPage`, `DashboardPage`) are
-arrangement over blocks that already exist, and `spec/examples-refresh.md` says
-why `PageToolbar`, `DetailHeader` and `AppSidebar` could not absorb those
-compositions. They wait for the same reason the first two did: a template with
-nothing to template is worse than none.
-
-The block friction this exposes is fixed additively: `PageToolbar` gains
-description/multi-action, `DetailHeader` richer actions, `AppSidebar`
-group/action slots — so templates compose blocks instead of re-implementing
-them. Acceptance: no example hand-rolls a frame or header, `ExampleFrame` is
-deleted, and every layout has a story, a spec, a site page and a budget entry,
-with example behaviour unchanged (e2e green).
-
-## W3 — `@newui/data`, the logic layer
-
-One headless package that says how apps behave:
-
-- **Async state** — query-client bootstrap, a repository contract
-  (`list/get/create/update/remove`), and `createListQuery` / mutation wrappers
-  over TanStack Query with optimistic updates, rollback, notice and undo.
-- **Forms** — a bridge from TanStack Form to the P5 `Field` contract and a
-  submit lifecycle tied to mutations.
-- **Promoted surfaces** — `DataTable` and `VirtualList`, plus the pure helpers
-  (`format`, `download`, `select`, `undo`, `Notice`) currently copied per page.
-
-Acceptance: exactly one way to do data/forms/tables/lists in the repo; the
-examples adopt it and their local copies are deleted; `spec/data.md` replaces
-`spec/tanstack-integration.md`.
-
-**Status.** The helpers, the query surface and the form surface have shipped:
-`DataProvider`, `createDataClient`, the `Repository` contract and
-`createCollection` (one list query with optimistic, reversible mutations); then
-`createAppForm`, `Form` and `fieldError` over TanStack Form. Tasks and
-Authentication adopt them — neither imports TanStack Query or Form, creates a
-client, or maps a field's error list by hand. The promoted
-`DataTable` shipped at `@newui/data/table` and `VirtualList` at
-`@newui/data/virtual`; the playground depends on no TanStack package directly.
-
-## W4 — Composition: starter and guides
-
-`apps/starter` is a buildable, gated skeleton — app frame, list page, detail
-dialog, settings, auth, data wired — assembled only from public kit surfaces,
-with a smoke e2e, typecheck and budget entry. `/kit` is the guide (*The ladder*,
-*Compose a page*, *Wire data*, *Start an app*), and Storybook's composed recipes
-fill layouts with real blocks. A `create-newui` CLI is explicitly parked; the
-starter comes first.
-
-**Status.** Shipped. `apps/starter` runs on its own origin (4183), is measured
-beside the site's routes (`pnpm budget`, 138 kB gzip against 170), and a
-seven-test browser suite drives the collection, the validated create, an
-optimistic status change, a confirmed delete, the filter bar, the demo session
-and the settings form, plus axe and a 390px overflow check. It is not rendered a
-second time inside the docs site: the starter *is* the render, and a facsimile
-on `/pages/starter` would be a copy that drifts — `/kit` documents the copy
-path and links the live surfaces (`/templates/app-layout`, `/pages/tasks`,
-`/pages/files`).
-
-## W5 — Hardening
-
-Dependency rules per level in `.dependency-cruiser.cjs`, exports/manifest pins,
-size and route budgets per new package, knip, nav/site updates, changesets and
-spec contracts. Every phase lands through the existing gates; nothing gets a
-bypass.
-
-## Sequence
-
-| Phase | Work | Gate |
-| --- | --- | --- |
-| 0 | ADR-0012 + this file + dependency rules drafted | `pnpm specs:check`, `refs:check` |
-| 1 | W1 Storybook: spike → foundation → absorb → states → max coverage | spike numbers reported before bulk conversion; sweeps green at max coverage |
-| 2 | W2 layouts: `AppLayout` extraction → templates → block fixes → migrate examples | e2e green, budgets unchanged, stories/specs/site pages present |
-| 3 | W3 data: bootstrap → repository/mutation → form bridge → promote surfaces → adopt | one-way check (grep-level) + examples migrated |
-| 4 | W4 starter + guides | starter typecheck + smoke e2e + budget; docs build |
-| 5 | W5 rules, budgets, docs | `pnpm verify` |
-
-Phases 2 and 3 are independent and may overlap; both touch the examples, so
-the merge points are the list-content slot and the table.
-
-## Constraints
-
-- **Additive only** to shipped packages (P13); shells stay in `@newui/ui`.
-- **Everything opt-in** — new packages are tree-shakable with size budgets;
-  importing a layout must not pull every template.
-- **Not an app framework** — no Frappe API client, no auth backend, no HTTP
-  stack in this pass; the kit stays local-first and apps bring their data.
-- No token or component redesign; no router change (ADR-0012).
-- New demos may surface peer-role drift in the coherence sweep: fix it or
-  baseline it deliberately, never silently.
+- Dependencies point down the atomic graph. `@newui/data` imports no visual
+  package; charts and editor engines remain optional.
+- Every public package has an explicit exports test and manifest check.
+- Every reference entry has a contract, isolated story, generated props and a
+  measured budget. No generated registry entry can invent a package export.
+- `AppShell` has unit/browser coverage for desktop collapse, mobile drawer,
+  tenant/menu interaction, fixed footer actions, focus, and no rail/sidebar
+  duplication.
+- The full `pnpm verify` pipeline remains the acceptance gate; no refactor
+  bypasses type, a11y, CSS, bundle, route, Storybook or browser checks.

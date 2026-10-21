@@ -40,7 +40,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Charts/BarChart',
+  title: 'Organisms/BarChart',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

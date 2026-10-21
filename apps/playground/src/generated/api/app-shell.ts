@@ -5,55 +5,130 @@
 export const API = {
   "AppShellProps": [
     {
-      "name": "rail",
+      "name": "brand",
       "type": "JSX.Element",
-      "optional": true,
-      "description": "Narrow icon rail on the far left."
+      "optional": false,
+      "description": "Brand/logo at the top of the sidebar."
     },
     {
-      "name": "sidebar",
+      "name": "brandCollapsed",
       "type": "JSX.Element",
       "optional": true,
-      "description": "Navigation sidebar."
+      "description": "Compact mark used when the sidebar is icon-only. Defaults to `brand`."
     },
     {
-      "name": "class",
-      "type": "string",
+      "name": "tenant",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Tenant/workspace switcher, usually a `Dropdown`."
+    },
+    {
+      "name": "tenantCollapsed",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Compact tenant action when collapsed (usually the tenant logo)."
+    },
+    {
+      "name": "sidebarSearch",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Optional search/filter control, pinned above the scrolling menu."
+    },
+    {
+      "name": "navigation",
+      "type": "AppSidebarGroup[]",
+      "optional": true,
+      "description": "The labelled sections and icon rows of the one navigation sidebar."
+    },
+    {
+      "name": "navigationContent",
+      "type": "JSX.Element | (() => JSX.Element)",
+      "optional": true,
+      "description": "Advanced navigation content, rendered inside the same sidebar."
+    },
+    {
+      "name": "settings",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Settings action pinned to the bottom of the sidebar."
+    },
+    {
+      "name": "account",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "User/account control pinned below settings."
+    },
+    {
+      "name": "accountCollapsed",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Compact account icon control, shown while collapsed."
+    },
+    {
+      "name": "collapsed",
+      "type": "boolean",
+      "optional": true,
+      "description": "Controlled desktop icon-collapse state. Unset: shell owns it."
+    },
+    {
+      "name": "onCollapsedChange",
+      "type": "(collapsed: boolean) => void",
       "optional": true
+    },
+    {
+      "name": "navLabel",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible names of the sidebar and mobile drawer."
+    },
+    {
+      "name": "title",
+      "type": "JSX.Element",
+      "optional": false,
+      "description": "Main page title, rendered as the document's h1."
+    },
+    {
+      "name": "description",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "breadcrumbs",
+      "type": "BreadcrumbItem[]",
+      "optional": true
+    },
+    {
+      "name": "actions",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "headerActions",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Header actions shared by desktop and the mobile bar."
+    },
+    {
+      "name": "mobileTitle",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Title shown in the compact mobile bar. Defaults to `title`."
     },
     {
       "name": "children",
       "type": "JSX.Element",
-      "optional": true
-    }
-  ],
-  "PageBodyProps": [
+      "optional": false,
+      "description": "Content below the page heading."
+    },
     {
-      "name": "width",
-      "type": "string",
+      "name": "footer",
+      "type": "JSX.Element",
       "optional": true,
-      "description": "Content max width, e.g. `max-w-[940px]`."
+      "description": "Content below the page body, inside the page scroller."
     },
     {
       "name": "class",
       "type": "string",
-      "optional": true
-    },
-    {
-      "name": "children",
-      "type": "JSX.Element",
-      "optional": true
-    }
-  ],
-  "PageHeaderProps": [
-    {
-      "name": "class",
-      "type": "string",
-      "optional": true
-    },
-    {
-      "name": "children",
-      "type": "JSX.Element",
       "optional": true
     }
   ]

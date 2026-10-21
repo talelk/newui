@@ -1,3 +1,15 @@
+<!-- intent-maintainer:start -->
+## Library Skill Maintenance
+
+Use the repository’s installed Intent. If it is unavailable, report the missing dependency instead of downloading a replacement.
+Before substantial library source, documentation, examples, tests, or skill work, run `pnpm exec intent meta generate-skill` and follow the packaged maintainer procedure.
+Use the current request and repository evidence. For initial skills, propose a useful batch and reuse any scope already agreed with the maintainer.
+Before handing off a skill batch or library change, run `pnpm exec intent maintainer review --json`. Follow the maintainer procedure to update affected guidance, run task checks, and record completed review outcomes. Report an evidence-backed no-op or missing evidence explicitly.
+Create and incrementally maintain domain_map.yaml, skill_spec.md, and skill_tree.yaml in the established artifact location for every skill batch. Preserve prior tasks, maintainer decisions, and remaining work.
+Keep maintainer decisions and changes in the repository; do not require the user to repeat the procedure in later sessions.
+Use intent maintainer setup to initialize missing records, maintainer add to register skills, maintainer status to identify work, and maintainer sync to update generated metadata. Finish with intent maintainer check.
+<!-- intent-maintainer:end -->
+
 # newui
 
 A SolidJS component library — the equivalent of `frappe-ui` rebuilt on
@@ -14,6 +26,8 @@ Ship tier: prod.
 2. `PHILOSOPHY.md` — API design rules (ported from frappe-ui, P1–P15).
 3. `CONTEXT.md` — shared vocabulary (variant/theme, open, dismissible, …).
 4. `spec/*.md` — per-component API contracts.
+5. [`skills/README.md`](./skills/README.md) — how versioned Agent Skills ship
+   with the packages and how consumers discover them.
 
 When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 
@@ -24,10 +38,11 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 | tokens | `@newui/tokens` | framework-neutral token data + CSS-var generator |
 | tailwind | `@newui/tailwind` | v4 `@theme`/`@utility`/plugins, `style.css` |
 | icons | `@newui/icons` | Frappe's glyphs as Solid components |
-| components | `@newui/ui` | Solid compounds over Zag; `tv()` recipes |
-| blocks | `@newui/blocks` | composed sections built on `@newui/ui` |
-| layouts | `@newui/layouts` | page templates built on the components and blocks |
-| data | `@newui/data` | the logic layer: formatting, selection, undo, downloads; `/query` adds the client, repository and collection mutations (headless) |
+| atoms | `@newui/atoms` | single controls/marks and shared runtime foundations |
+| molecules | `@newui/molecules` | compound interactions built from atoms |
+| organisms | `@newui/organisms` | page regions: sidebar, filter bar, board, table, virtual list |
+| templates | `@newui/templates` | `AppShell`, `PaneLayout`, `AuthLayout` |
+| data | `@newui/data` | headless formatting, selection, undo, downloads, query and form logic |
 | code editor | `@newui/code-editor` | CodeMirror 6 Solid component |
 | rich text | `@newui/editor` | TipTap 3 Solid editor + toolbar |
 | charts | `@newui/charts` | echarts Solid wrappers (SVG renderer) |
@@ -35,23 +50,20 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 | site | `apps/playground` | the docs site, Storybook's host, and the visual acceptance surface |
 | starter | `apps/starter` | the gated application skeleton — the copyable composition of every level |
 
-The kit's direction is [`spec/kit.md`](./spec/kit.md) (ADR-0012): the ladder
-gains layouts (`@newui/layouts`), logic (`@newui/data`), the Storybook surface
-and the starter, in that order. All five have landed: Storybook, `AppLayout` +
-`PaneLayout`, the helpers plus the query/form/table/virtual surfaces, and
-`apps/starter` — a real app, gated by typecheck, CSS emission, a browser smoke
-suite and a route budget. `/kit` is the guide (*The ladder*, *Compose a page*,
-*Wire data*, *Start an app*).
+The kit's direction is [`spec/kit.md`](./spec/kit.md) and
+[`ADR-0013`](./spec/adr/0013-atomic-packages-and-app-shell.md): foundations →
+atoms → molecules → organisms → templates → pages, with the headless data layer
+beside the visual ladder. `@newui/templates` has exactly three supported
+templates; `@newui/data` owns no rendered table/list surface. `apps/starter` is
+the copyable, gated page composition; `/kit` is its guide.
 
-The site reads in atomic design's order — foundations · atoms · molecules ·
-organisms · templates · pages — while the packages keep their names. The
-registry records each entry's level in one `atomic` field; `scripts/atomic.ts`
-holds the classification (atoms, organisms, templates; everything else is a
-molecule) and `spec/kit.md` records the URL contract, including the redirects
-from the pre-atomic paths.
+The packages and site read in atomic design's order. Every registry entry has
+one explicit `atomic` classification in `scripts/atomic.ts`; missing or extra
+names fail generation. The old `@newui/ui`, `@newui/blocks` and
+`@newui/layouts` packages and their shell APIs are removed, not re-exported.
 
 - **Primitives:** raw `@zag-js/*` via `useMachine` + `normalizeProps`
-  (`packages/ui/src/lib/zag.ts`). Zag supplies keyboard, ARIA and focus.
+  (`packages/atoms/src/lib/zag.ts`). Zag supplies keyboard, ARIA and focus.
 - **Styling:** `tv()` recipes replace frappe-ui's hand-written class maps. Only
   two color axes exist — `variant` + `theme` (P4).
 - **State:** no `v-model`. Use `open`/`onOpenChange` (overlays) via
@@ -67,8 +79,8 @@ from the pre-atomic paths.
 The playground became the documentation site; it keeps every harness route it
 had, hosts Storybook, and stays the surface the design work is reviewed on.
 
-Storybook is the isolated surface (`spec/kit.md`, W1): every component, block,
-chart and composition has one story file, `src/stories/<name>.stories.tsx`,
+Storybook is the isolated surface (`spec/kit.md`): every shipped reference
+entry, chart and composition has one story file, `src/stories/<name>.stories.tsx`,
 with a non-story `Demo` (the site's inline embed) plus `Default` and the states
 [`spec/states.md`](./spec/states.md) requires. `pnpm storybook` serves it on
 **6006**; the built static output (`pnpm storybook:build`) answers on **6007**
@@ -77,13 +89,13 @@ build embed.
 
 | path | what it is |
 | --- | --- |
-| `/` `/docs` `/foundations` `/architecture` `/kit` | the site, inside `SiteLayout` (masthead · sidebar · content · prev/next). `/architecture` is atomic design written down: five levels, one question each, with counts generated from the registry |
+| `/` `/docs` `/foundations` `/architecture` `/kit` `/kit/recipes` | the site, inside `SiteLayout` (masthead · sidebar · content · prev/next). `/architecture` is atomic design written down: five levels, one question each, with counts generated from the registry; `/kit/recipes` is the non-public composition gallery |
 | `/atoms` · `/atoms/<name>` | the atoms reference, inside `AtomsLayout` — same chrome, but the sidebar is the filterable index |
 | `/molecules` · `/molecules/<name>` | the same, for molecules (fields, pickers, menus, chart parts) |
-| `/organisms` · `/organisms/<name>` | the same, for organisms: the blocks, the chart widgets, the editors |
+| `/organisms` · `/organisms/<name>` | the same, for organisms: page regions, chart widgets and editors |
 | `/templates` · `/templates/<name>` | the same, for templates (page frames and shells) |
 | `/pages` · `/pages/<slug>` | the pages index and one application preview; `/pages/<slug>/fullscreen` is the bare application viewport |
-| `/components` `/blocks` `/layouts` `/charts` `/editors` `/examples` | the pre-atomic URLs; every one redirects to the level that now owns it |
+| `/preview/<name>` | a bare same-origin story document used by the component/template preview iframe and fullscreen link; not a site destination |
 | `/spec` | the deterministic page the browser harness drives — no chrome, no network |
 
 Storybook is not a site route: it renders the same story modules on its own
@@ -130,17 +142,16 @@ is a molecule) and the rule above them.
 - The shell imports no component; only the reference routes import the index.
   That keeps the home page independent of the component registry and stories.
 
-### Blocks
+### Organisms
 
-`@newui/blocks` is the composed layer: a component answers *what is this
-control*, a block answers *how does a page open*. Seven so far — `AppSidebar`,
-`PageToolbar`, `FilterBar`, `DetailHeader`, `StatGrid`, `AuthCard`,
-`KanbanBoard` — each with a story file, a contract in `spec/`, a generated page and a
-budget entry (`scripts/size.ts`, "Blocks barrel").
+`@newui/organisms` is the composed layer: a component answers *what is this
+control*, an organism answers *what is this page region*. The API includes
+`AppSidebar`, `FilterBar`, `StatGrid`, `AuthCard`, `KanbanBoard`, `DataTable` and
+`VirtualList`; each has a story, a contract and a generated atomic-level page.
 
-A block may only import `@newui/ui`. If one needs a chart or an editor it belongs
-in that package's surface, not here — which is also why `pnpm size` asserts the
-blocks entry cannot reach the slider, the toast or the date picker.
+Organisms may import atoms and molecules, but never templates. Large chart and
+editor engines stay optional in their domain packages and are classified in the
+organism level; `pnpm size` budgets those entries separately.
 
 `pnpm shots` writes screenshots for every route × theme × width, plus the story
 spot-checks on Storybook's origin, into `test-results/shots/` (gitignored,
@@ -149,19 +160,20 @@ regression suite.
 
 ### Application and reference examples
 
-`/pages` links every application recipe. All eight Frappe recipe families
-share one documentation destination per family and respond to the actual viewport; solid-ui's five application examples and 68
-registry examples have explicit destinations. `spec/reference-examples.md`
+`/pages` links complete application workflows only. All eight Frappe recipe
+families share one documentation destination per family and respond to the
+actual viewport; the solid-ui application examples have explicit destinations.
+The 68 registry examples link to the atomic page that owns their public API, and
+non-component recipes live under `/kit/recipes`. `spec/reference-examples.md`
 documents the mapping and acceptance boundaries. `lib/examples.ts` owns the
 application catalog; `lib/reference-examples.ts` owns the registry mapping.
 Every shipped reference component must have an isolated lazy story.
 
-TanStack Solid Query and Form belong to `@newui/data` (`/query`: the client, the
-repository contract and the collection mutations; `/form`: the submit lifecycle
-and the field-error bridge; `/table` and `/virtual`: the promoted surfaces, the
-only entries allowed to import `@newui/ui`). The playground depends on no
-TanStack package directly. Blocks still import only `@newui/ui`; charts and
-editors stay at the page layer.
+TanStack Solid Query and Form belong to `@newui/data` (`/query`: client,
+repository and collection mutations; `/form`: submit lifecycle and field-error
+bridge). Rendered tables and virtual lists belong to `@newui/organisms`. The
+playground depends on no TanStack package directly. Charts and editors remain
+optional organism-level packages.
 
 ## Guardrails (enforced by tests, not convention)
 
@@ -180,7 +192,7 @@ editors stay at the page layer.
   `noPropertyAccessFromIndexSignature`, `noImplicitOverride`, `noImplicitReturns`
   and `allowUnreachableCode: false`. (`exactOptionalPropertyTypes` is off: it
   fights passing `T | undefined` into `{ x?: T }` for little benefit here.)
-- **Merge correctness** (`packages/ui/src/lib/tw-merge.test.ts`): two layers.
+- **Merge correctness** (`packages/atoms/src/lib/tw-merge.test.ts`): two layers.
   An **axis-independence invariant** — utilities on different CSS properties
   (`p-2`+`px-4`, `border-2`+`border-t-transparent`, `size-4`+`w-8`) must both
   survive, while a same-axis override must not — and an **all-pairs equivalence
@@ -204,12 +216,18 @@ editors stay at the page layer.
   respected.
 - **Theme vocabulary** (`packages/tailwind/src/generated.test.ts`): the tokens
   overlays and shells depend on must be emitted.
-- **Public surface** (`packages/ui/src/exports.test.ts`) and **manifest**
+- **Public surface** (`packages/*/src/exports.test.ts`) and **manifest**
   (`package.test.ts`) pin the exported names and `exports` targets.
 - **API tables** — `pnpm api` / `pnpm api:check`.
 - **Spec contracts** (`pnpm specs:check`, `scripts/check-specs.ts`): every prop
   a `spec/*.md` table documents must exist in `api.json`, and every fenced
   `ts`/`tsx` sample must parse — a renamed prop fails here, not in a reader's code.
+- **Agent Skills** (`pnpm skills:check`, `@tanstack/intent`): each package-owned
+  `skills/**/SKILL.md` is validated for frontmatter, links, examples and the
+  publish allowlist; `intent stale` reports version/source/coverage signals as
+  advisory review prompts, never as proof that guidance is wrong. Consumers
+  scan static files and apply `intent.skills`/`intent.exclude`; hooks are
+  convenience, not a security boundary.
 - **a11y** — axe in the component tests (`*.a11y.test.tsx`) and, with real CSS,
   in the browser harness.
 - **Contrast contract** (`packages/tailwind/src/contrast.test.ts`): every
@@ -243,7 +261,7 @@ editors stay at the page layer.
   route table must describe the same paths in both directions, and every page
   import in `routes.tsx` must be lazy. A sidebar link with no route and a route
   nobody can reach are both caught.
-- **Disposal** (`packages/ui/src/lib/disposal.test.tsx`): mount/unmount 100
+- **Disposal** (`packages/molecules/src/disposal.test.tsx`): mount/unmount 100
   overlays and assert `document.body` is unchanged — no node or listener leak.
 - **Browser harness** (`e2e/`, `pnpm test:e2e`, Playwright's pinned Chromium): axe on
   real CSS (colour contrast), keyboard/focus-visible/focus-trap, tabs/select/
@@ -313,20 +331,21 @@ editors stay at the page layer.
 - **Lighthouse**: `pnpm lighthouse` runs Lighthouse (throttled mobile) against
   the built playground and enforces budgets — accessibility / best-practices /
   SEO / CLS / console-errors / render-blocking must be perfect, the performance
-  *score* only has a floor (it is noisy under throttling). The library's real
-  cost is the bundle budget below, not this score.
+  *score* only has a floor (it is noisy under throttling). When Lighthouse
+  explicitly reports a host CPU below its calibration model, the score floor is
+  skipped for that run; the deterministic audits and bundle budgets still run.
+  The library's real cost is the bundle budget below, not this score.
 - **App-level, not library**: the site inlines its single CSS file
   (`inlineCss` in `apps/playground/vite.config.ts`, removing a render-blocking
   round trip) and code-splits every route with dynamic imports. A library must
   not do either — consumers own their asset pipeline.
-- **Measured checkpoint** (ladder pass, re-measured with `pnpm size` +
-  `pnpm budget`): `cn()` 6.40 kB · `Button` 8.68 kB · `Button + Dialog`
-  30.08 kB · full barrel 228.48 kB · blocks barrel 77.67 kB · layouts barrel
-  36.35 kB (gzip, `solid-js` external). Site: home (`/`) 56.6 kB, analytics
-  fullscreen 338.1 kB, tasks fullscreen 181.4 kB, accounting fullscreen
-  332.9 kB — every entry and route within its budget. Treat these as checkpoint
-  measurements; `pnpm size` and `pnpm budget` provide current evidence and
-  enforce the limits.
+- **Measured checkpoint** (`pnpm size`, gzip with `solid-js` external): `cn()`
+  6.51 kB · `Button` 8.80 kB · `Button + Dialog` 29.85 kB · atoms 12.72 kB ·
+  molecules 73.44 kB · organisms 114.41 kB · templates 43.10 kB · full atomic
+  barrel 268.17 kB. Current route measurements (`pnpm budget`): home 57.0 kB,
+  analytics fullscreen 381.1 kB, tasks fullscreen 203.2 kB and accounting
+  fullscreen 347.2 kB; all are within the measured route budgets. These are
+  checkpoints, not substitutes for running `pnpm size` and `pnpm budget`.
 - **Removed `tailwind-variants`** (it bundled its own merge integration) in
   favour of an in-house `tv`/`cn`/`cx` in `lib/tv.ts`: `Button` went 34.3 →
   16.3 kB. The resolver is typed (`VariantProps<typeof recipe>` recovers the
@@ -356,7 +375,7 @@ editors stay at the page layer.
 ## Theming
 
 - Light/dark is the `colorScheme` axis, owned by `createColorScheme`
-  (`packages/ui/src/lib/color-scheme.ts`): it persists the choice, tracks the OS
+  (`packages/atoms/src/lib/color-scheme.ts`): it persists the choice, tracks the OS
   live, flips `data-theme`, sets the CSS `color-scheme` property (so native
   scrollbars/controls match), and suppresses transitions for two frames around a
   swap. Never use `theme` to mean light/dark.
@@ -373,7 +392,7 @@ pnpm storybook:build # static Storybook build (storybook-static/)
 pnpm storybook:serve # serve the static build (6007; harness, shots, docs)
 pnpm stories        # regenerate generated/stories.json + stories.ts from Storybook's index
 pnpm stories:check  # fail on stale index or a missing required state (spec/states.md)
-pnpm build          # build all packages
+pnpm build          # regenerate the Tailwind theme CSS
 pnpm build:starter  # build the starter app
 pnpm shots          # screenshots: every route × theme × width + story spot-checks
 pnpm review /spec   # advisory visual review of live routes (test-results/review)
@@ -389,10 +408,14 @@ pnpm verify         # run the whole CI pipeline locally (same steps as CI)
 pnpm verify:affected # only the gates the dirty files can break (scripts/affected.ts)
 pnpm verify:checks  # the fast gates only
 pnpm verify:e2e     # the browser harness only
-pnpm api            # regenerate packages/ui/api.json
+pnpm api            # regenerate the root api.json
 pnpm api:check      # fail if the API table is stale
 pnpm test:sweep     # tw-merge all-pairs equivalence (routed by affected, not by pnpm test)
 pnpm refs:check     # every references/… path mentioned in docs exists
+pnpm skills:check   # validate Agent Skills, then report conservative staleness
+pnpm skills:validate # SKILL.md structure, examples and package publishing entries
+pnpm skills:stale   # advisory version/source/coverage signals
+pnpm skills:version # set metadata.library_version from each owning package
 pnpm docs:build     # render spec/*.md + api.json into a static docs/ site
 pnpm css            # regenerate @theme + tokens CSS   (run after token changes)
 pnpm changeset      # add a changeset
@@ -405,7 +428,7 @@ pnpm changeset      # add a changeset
 - Accessibility is part of done: keyboard, focus, ARIA (P12).
 - A component is not done until it has: `Root.tsx`, `recipe.ts`, `types`, a
   `.test.tsx` (logic/ARIA) and, where it renders, a `recipe.test.ts`.
-- Public surface changes are listed in `packages/ui/src/exports.test.ts`.
+- Public surface changes are listed in each atomic package's `src/exports.test.ts`.
 
 ## Do not
 

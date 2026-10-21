@@ -34,34 +34,41 @@ create page-local demo state. Files retain selected `File` objects in memory;
 downloads preserve their contents. No email, credential, transaction or file is
 sent to a remote service. Reloading starts a fresh example session.
 
-## Individual solid-ui registry examples
+## Registry examples and recipes
 
-The checked-out registry contains **68** `.tsx` examples. Their source names and
-destinations live in `apps/playground/src/lib/reference-examples.ts`, and the
-complete linked directory is `/pages/patterns`. The coverage test compares
-that inventory with the read-only checkout when it is available, checks every
-destination, and requires an isolated demo for every shipped reference component.
+The checked-out solid-ui registry contains **68** `.tsx` examples. Each example
+has one canonical destination in `apps/playground/src/lib/reference-examples.ts`.
+When a public component owns the behavior, the destination is its atomic
+reference page (for example, `DataTable` → `/organisms/data-table`). Complete
+application workflows remain under `/pages`; the recipe gallery lives under
+`/kit/recipes`, not in the page catalog. The coverage test compares source names
+with the read-only checkout when available and checks that every destination is
+valid.
 
 Existing controls retain newui names: TextInput/Textarea for text fields,
-NumberInput for number fields, Divider for separator, BottomSheet for sheet and
-drawer, and the existing toast service for toast/sonner examples. Data table
-examples use the private application table composition; charts use `@newui/charts`.
+NumberInput for number fields, Divider for separator, BottomSheet for mobile
+sheets and the existing toast service for toast/sonner examples. Charts use
+`@newui/charts`.
 
-Additional isolated patterns cover:
+Non-component recipes cover:
 
 - Carousel orientation, size, spacing, position API and optional playback. Native
   scroll snapping owns the track; automatic playback pauses for interaction and
   reduced motion. Only the track scrolls during button/keyboard navigation.
 - Inline command search and a keyboard-opened command dialog, built on Combobox.
-- Aspect ratio, flex, grid and adjustable panels with a native keyboard-operable
-  range control. Panel resizing introduces no library or persistent cookie.
+- Adjustable panels with a native keyboard-operable range control. Panel
+  resizing introduces no library or persistent cookie. Aspect-ratio, flex and
+  grid examples are linked from the Foundations layout-rhythm section.
 - Grouped navigation, menu actions, dialog and drawer forms.
 - A single paste-friendly numeric verification field with a six-cell visual
   readout, validation and demo resend feedback.
 - Delta badges, change bars, ranked bar lists and dismissible analytical callouts.
+- A multi-step setup form with validation, review and completion states.
+- Confirmation, edit-form and mobile-sheet overlay examples.
 
-These are application compositions, not additional public component vocabulary.
-Each pattern loads through its own dynamic import.
+These remain Kit recipes until a pattern earns a stable public API. They load
+through separate dynamic imports and do not inflate the Pages catalog or invent
+component vocabulary.
 
 ## Acceptance boundaries
 

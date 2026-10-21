@@ -91,10 +91,23 @@ export const semanticColors = {
 // ---------- RADIUS ----------
 
 /**
- * Numbered radius scale `0`–`9` plus `none` and `full`, in px. The named
- * aliases (`sm`, `md`, `lg`, …) were removed in 1.0.0 — see ADR-0006.
+ * Numbered radius scale `0`–`9` plus `none` and `full`, in px, extended with
+ * the semantic `control`, `card`, `overlay` and `pill` roles. The roles are the
+ * component vocabulary; the numbered steps remain for specialized geometry.
  */
-export const radius = radiusTokens
+/**
+ * Stable component roles mapped onto the primitive radius scale. Components
+ * use these names so changing a surface family does not require editing every
+ * recipe independently.
+ */
+export const radiusRoles = {
+  control: radiusTokens[3],
+  card: radiusTokens[4],
+  overlay: radiusTokens[6],
+  pill: radiusTokens.full,
+}
+
+export const radius = { ...radiusTokens, ...radiusRoles }
 
 // ---------- SHADOWS ----------
 
@@ -231,6 +244,25 @@ export const spacing = Object.fromEntries(
     .sort((a, b) => a - b)
     .map((n) => [n, `${n * 0.25}rem`]),
 )
+
+/**
+ * Semantic layout rhythm over the numeric 4px spacing scale. These roles are
+ * the shared vocabulary for page gutters, sections, cards, fields and controls.
+ */
+export const layoutSpacing = {
+  'control-gap': '0.5rem',
+  'control-pad': '0.5rem',
+  'field-gap': '0.75rem',
+  'card-gap': '1rem',
+  'card-pad-compact': '0.75rem',
+  'card-pad': '1rem',
+  'card-pad-wide': '1.25rem',
+  'section-gap': '1.5rem',
+  'page-gutter-compact': '1rem',
+  'page-gutter': '1.5rem',
+  'page-gutter-wide': '2rem',
+  'page-stack': '2rem',
+}
 
 /** Breakpoint minimums. Not in the Figma export — decided in code. */
 export const screens = {

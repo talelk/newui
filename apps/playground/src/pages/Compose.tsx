@@ -1,21 +1,18 @@
+import { Badge, Button, Textarea, TextInput } from '@newui/atoms'
 import { downloadText } from '@newui/data'
 import { Editor, EditorToolbar } from '@newui/editor'
 import {
   Alert,
-  Badge,
-  Button,
   DatePicker,
   Dialog,
   MultiSelect,
   Select,
   TabButtons,
-  Textarea,
-  TextInput,
-} from '@newui/ui'
+} from '@newui/molecules'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
+import { AppPage } from '../examples/AppPage'
 import { Notice } from '../examples/Notice'
 import { Panel } from '../examples/Panel'
-import { WorkspacePage } from '../examples/WorkspacePage'
 import { Markdown } from '../lib/markdown'
 
 const INITIAL_BODY =
@@ -102,7 +99,7 @@ export function Compose(): JSX.Element {
       'text/markdown;charset=utf-8',
     )
   return (
-    <WorkspacePage
+    <AppPage
       section="Compose"
       title="Compose a post"
       description="Shape your ideas, review the details, and share a clear update with your team."
@@ -315,6 +312,6 @@ export function Compose(): JSX.Element {
           </Dialog.Footer>
         </Dialog.Content>
       </Dialog.Root>
-    </WorkspacePage>
+    </AppPage>
   )
 }

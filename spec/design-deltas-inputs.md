@@ -4,6 +4,7 @@
 > [visual-system contract](visual-system.md) and component contracts supersede
 > the old density, radius and colour targets below. The original comparison is
 > retained as reference evidence.
+> Package paths below predate the atomic split; see current component contracts.
 
 A visual/design parity audit of the input components in `@newui/ui` against
 their frappe-ui originals (`frappe-ui-main/src/components/`). This is an

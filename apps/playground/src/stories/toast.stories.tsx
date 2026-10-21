@@ -1,4 +1,5 @@
-import { Button, toast } from '@newui/ui'
+import { Button } from '@newui/atoms'
+import { toast } from '@newui/molecules'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**
@@ -34,7 +35,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Feedback/Toast',
+  title: 'Molecules/Feedback/Toast',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

@@ -1,5 +1,5 @@
+import { Button } from '@newui/atoms'
 import { ChartTooltip } from '@newui/charts'
-import { Button } from '@newui/ui'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -61,7 +61,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Charts/ChartTooltip',
+  title: 'Molecules/ChartTooltip',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

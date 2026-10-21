@@ -17,7 +17,7 @@
 - **KPI anatomy is label-first, one layout only:** a header row (optional icon
   in a tinted `size-8 rounded-4 bg-surface-gray-2` square, the label, and the
   delta pill) → the value (`text-metric`, tabular) → the `hint` as a baseline
-  caption. Cards pad at `p-4` and keep `rounded-5`.
+  caption. Cards use the card padding role (`p-card-pad`, 16px) and `rounded-card` (8px).
 - **The delta is a tinted pill** (`rounded-full px-1.5`, tabular), coloured by
   `good`: `bg-surface-green-2 text-ink-green-8` / `bg-surface-red-2
   text-ink-red-8`, gray when flat. The `ink-*-8` step is deliberate: it is the

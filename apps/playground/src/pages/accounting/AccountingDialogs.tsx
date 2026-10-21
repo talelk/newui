@@ -1,4 +1,5 @@
-import { DatePicker, Select, TextInput } from '@newui/ui'
+import { TextInput } from '@newui/atoms'
+import { DatePicker, Select } from '@newui/molecules'
 import { createSignal } from 'solid-js'
 import {
   CATEGORIES,

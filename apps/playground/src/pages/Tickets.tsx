@@ -1,17 +1,15 @@
-import { FilterBar, StatGrid } from '@newui/blocks'
+import { Badge, Button, Checkbox, Textarea, TextInput } from '@newui/atoms'
 import { optionsOf } from '@newui/data'
-import { DataTable, type DataTableColumn } from '@newui/data/table'
+import { Dialog, EmptyState, Select } from '@newui/molecules'
 import {
-  Badge,
-  Button,
-  Checkbox,
-  Dialog,
-  EmptyState,
-  Select,
-  Textarea,
-  TextInput,
-} from '@newui/ui'
+  DataTable,
+  type DataTableColumn,
+  FilterBar,
+  StatGrid,
+} from '@newui/organisms'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
+import { AppNavigation } from '../examples/AppNavigation'
+import { AppPage } from '../examples/AppPage'
 import { CreateDialog } from '../examples/CreateDialog'
 import { Notice } from '../examples/Notice'
 import {
@@ -22,8 +20,6 @@ import {
   type Status,
   type Ticket,
 } from '../examples/tickets-data'
-import { WorkspaceNav } from '../examples/WorkspaceNav'
-import { WorkspacePage } from '../examples/WorkspacePage'
 
 export function Tickets(): JSX.Element {
   /**
@@ -140,10 +136,10 @@ export function Tickets(): JSX.Element {
     { accessorKey: 'agent', header: 'Assigned to' },
   ]
   return (
-    <WorkspacePage
-      sidebar={
+    <AppPage
+      navigation={() => (
         <div class="flex flex-col gap-4">
-          <WorkspaceNav
+          <AppNavigation
             label="Tickets navigation"
             value={screen()}
             onChange={setScreen}
@@ -170,7 +166,7 @@ export function Tickets(): JSX.Element {
             }}
           />
         </div>
-      }
+      )}
       title="Support that feels human"
       section="Tickets"
       description="Keep every customer conversation moving, with clear ownership and service targets."
@@ -594,6 +590,6 @@ export function Tickets(): JSX.Element {
           </>
         )}
       />
-    </WorkspacePage>
+    </AppPage>
   )
 }

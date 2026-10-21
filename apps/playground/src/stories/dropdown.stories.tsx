@@ -1,4 +1,4 @@
-import { Dropdown, toast } from '@newui/ui'
+import { Dropdown, toast } from '@newui/molecules'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**
@@ -21,7 +21,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Components/Actions/Dropdown',
+  title: 'Molecules/Actions/Dropdown',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

@@ -17,40 +17,14 @@ test.use({ reducedMotion: 'reduce' })
  * surface in both themes; the story sweep covers every state on its own.
  */
 
-/**
- * Findings that block a sweep: serious/critical axe violations, minus the
- * documented exceptions below.
- *
- * `sidebar-rail-item` renders avatar initials (`AC`) as its visible text while
- * its accessible name is the organisation they stand for (`Acme, 3 unread`).
- * WCAG 2.5.3's "label in name" is about text labels; deriving the name from the
- * initials would name the control `AC`. The exemption is one rule on one
- * pattern — every other rule still runs inside these items, and the rule keeps
- * running on everything else.
- */
-const EXEMPT_NODES: Array<{ rule: string; htmlIncludes: string }> = [
-  {
-    rule: 'label-content-name-mismatch',
-    htmlIncludes: 'data-slot="sidebar-rail-item"',
-  },
-]
-
+/** Findings that block a sweep: all serious and critical axe violations. */
 function seriousFindings(results: AxeResults): string[] {
   return results.violations
     .filter(
       (violation) =>
         violation.impact === 'serious' || violation.impact === 'critical',
     )
-    .flatMap((violation) => {
-      const exempt = EXEMPT_NODES.filter((entry) => entry.rule === violation.id)
-      const nodes = violation.nodes.filter(
-        (node) =>
-          !exempt.some((entry) =>
-            (node.html ?? '').includes(entry.htmlIncludes),
-          ),
-      )
-      return nodes.length > 0 ? [`${violation.id} (${nodes.length})`] : []
-    })
+    .map((violation) => `${violation.id} (${violation.nodes.length})`)
 }
 
 /**

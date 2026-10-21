@@ -2,19 +2,20 @@
   "files": [
     "pages/Tasks.tsx",
     "examples/ActivityList.tsx",
-    "examples/Notice.tsx",
-    "examples/tasks-data.ts",
-    "examples/WorkspaceNav.tsx",
-    "examples/WorkspacePage.tsx",
+    "examples/AppNavigation.tsx",
+    "examples/AppPage.tsx",
     "lib/examples.ts",
     "shell/ThemeMenu.tsx",
-    "shell/theme.ts"
+    "shell/theme.ts",
+    "examples/Notice.tsx",
+    "examples/tasks-data.ts"
   ],
   "packages": [
-    "@newui/blocks",
+    "@newui/atoms",
     "@newui/data",
-    "@newui/layouts",
-    "@newui/ui",
+    "@newui/molecules",
+    "@newui/organisms",
+    "@newui/templates",
     "@solidjs/router",
     "solid-js"
   ]

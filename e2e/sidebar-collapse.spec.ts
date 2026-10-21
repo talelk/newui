@@ -17,11 +17,11 @@ const widthOf = (locator: import('@playwright/test').Locator) =>
   locator.evaluate((el) => el.getBoundingClientRect().width)
 
 test.describe('sidebar collapse', () => {
-  test('the component demo folds to its rail', async ({ page }) => {
+  test('the component demo collapses to icons', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 })
     await gotoStory(page, storyIdFor('Sidebar'))
 
-    const nav = page.locator('[data-slot="sidebar"]')
+    const nav = page.locator('[data-slot="sidebar"]').first()
     await expect(nav).toBeVisible()
     expect(await widthOf(nav)).toBeGreaterThan(200)
 
@@ -36,7 +36,9 @@ test.describe('sidebar collapse', () => {
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.goto('/pages/discussions/fullscreen')
 
-    const nav = page.locator('[data-slot="sidebar"]')
+    const nav = page.locator(
+      '[data-slot="app-shell-sidebar"] [data-slot="sidebar"]',
+    )
     await expect(nav).toBeVisible()
     expect(await widthOf(nav)).toBeGreaterThan(200)
 
@@ -45,23 +47,40 @@ test.describe('sidebar collapse', () => {
     await expect.poll(() => widthOf(nav), { timeout: 2000 }).toBeLessThan(64)
   })
 
-  test('an example workspace sidebar folds, by button and by Ctrl+B', async ({
+  test('an example workspace sidebar folds and expands by button', async ({
     page,
   }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.goto('/pages/deals/fullscreen')
 
-    const nav = page.locator('[data-slot="sidebar"]')
+    const nav = page.locator(
+      '[data-slot="app-shell-sidebar"] [data-slot="sidebar"]',
+    )
     await expect(nav).toBeVisible()
     const column = nav.locator('..')
+    const content = page.locator('[data-slot="app-shell-content"]')
     expect(await widthOf(column)).toBeGreaterThan(180)
+    await expect(nav.getByText('Pinned views', { exact: true })).toBeVisible()
 
     await page.getByRole('button', { name: 'Collapse', exact: true }).click()
     await expect(nav).toHaveAttribute('data-state', 'collapsed')
+    await expect(nav.getByText('Pinned views', { exact: true })).toHaveCount(0)
+    await expect(nav.getByText('Notifications', { exact: true })).toHaveClass(
+      /sr-only/,
+    )
     await expect.poll(() => widthOf(column), { timeout: 2000 }).toBeLessThan(90)
+    await expect
+      .poll(() =>
+        content.evaluate((element) => element.getBoundingClientRect().left),
+      )
+      .toBeCloseTo(56, 0)
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth - window.innerWidth,
+      ),
+    ).toBeLessThanOrEqual(1)
 
-    // Back open by keyboard, then folded again — the shortcut the fix is for.
-    await page.keyboard.press('Control+b')
+    await page.getByRole('button', { name: 'Expand', exact: true }).click()
     await expect(nav).toHaveAttribute('data-state', 'expanded')
     await expect
       .poll(() => widthOf(column), { timeout: 2000 })
@@ -75,9 +94,9 @@ test.describe('sidebar collapse', () => {
     await page.goto('/pages/deals/fullscreen')
 
     await page
-      .getByRole('button', { name: 'Toggle workspace navigation' })
+      .getByRole('button', { name: 'Open application navigation' })
       .click()
-    const drawer = page.locator('[data-slot="responsive-shell-drawer"]')
+    const drawer = page.locator('[data-slot="app-shell-drawer"]')
     await expect(drawer).toBeVisible()
 
     const nav = drawer.locator('[data-slot="sidebar"]')
@@ -86,7 +105,10 @@ test.describe('sidebar collapse', () => {
       drawer.getByRole('button', { name: 'Deals', exact: true }),
     ).toBeVisible()
     await expect(
-      drawer.getByRole('button', { name: 'Collapse', exact: true }),
-    ).toBeHidden()
+      drawer.getByRole('button', { name: 'Close navigation', exact: true }),
+    ).toBeVisible()
+    await expect(drawer.getByRole('button', { name: 'Collapse' })).toHaveCount(
+      0,
+    )
   })
 })
