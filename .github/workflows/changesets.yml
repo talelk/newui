@@ -1,8 +1,9 @@
 name: Changesets
 
 # The release path: on every push to `main`, keep a "Version Packages" PR open.
-# Merging it bumps versions and publishes. Local equivalent: `pnpm changeset`,
-# then `pnpm version` / `pnpm release`.
+# Merging it bumps versions; when `NPM_PUBLISH` is enabled it also publishes via
+# npm trusted publishing. Local equivalent: `pnpm changeset`, then `pnpm version`
+# / `pnpm release`.
 
 on:
   push:
