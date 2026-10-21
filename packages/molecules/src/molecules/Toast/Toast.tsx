@@ -170,7 +170,10 @@ export function ToastRegion(props: {
       <div
         {...api().getGroupProps()}
         data-slot="toast-region"
-        class={cn('pointer-events-none z-50 flex flex-col gap-2', props.class)}
+        class={cn(
+          'pointer-events-none z-overlay flex flex-col gap-2',
+          props.class,
+        )}
       >
         <For each={api().getToasts()}>
           {(item) => <ToastItem toast={item} parent={groupService} />}

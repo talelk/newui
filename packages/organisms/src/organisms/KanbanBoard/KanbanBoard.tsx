@@ -484,9 +484,9 @@ export function KanbanBoard<T extends { id: string }>(
             {/* The lifted card: fixed, inert and out of hit-testing, so the
                 pointer sees the board underneath it. */}
             <div
-              class="pointer-events-none fixed top-0 left-0 z-50 will-change-transform"
+              class="pointer-events-none fixed top-0 left-0 z-overlay will-change-transform"
               classList={{
-                'transition-transform duration-150 ease-out': state().settling,
+                'transition-transform duration-base ease-out': state().settling,
               }}
               style={{
                 width: `${state().width}px`,

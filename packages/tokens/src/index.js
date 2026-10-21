@@ -368,3 +368,6 @@ export const cssVariables = mergeLayers(
   effectVariables(),
   radiusVariables(),
 )
+
+/** Stacking and motion scales — the semantic layers components name. */
+export { duration, easing, zIndex } from './tokens/layers.js'

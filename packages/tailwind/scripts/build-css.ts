@@ -14,6 +14,8 @@ import { fileURLToPath } from 'node:url'
 import {
   colors,
   cssVariables,
+  duration,
+  easing,
   fontSize,
   fontWeight,
   layoutSpacing,
@@ -22,6 +24,7 @@ import {
   shadows,
   spacing,
   tracking,
+  zIndex,
 } from '@newui/tokens'
 
 const here = dirname(fileURLToPath(import.meta.url))
@@ -136,6 +139,21 @@ decl('--font-sans', "'InterVar', ui-sans-serif, system-ui, sans-serif")
 
 comment('line-heights — leading-tighter pins single-line chrome to 1.15')
 decl('--leading-tighter', '1.15')
+
+comment(
+  'stacking — z-raised/floating/overlay/top; components name the layer, never a number',
+)
+for (const [key, value] of Object.entries(zIndex)) {
+  decl(`--z-${key}`, String(value))
+}
+
+comment('motion — duration-fast/base/slow and the standard ease')
+for (const [key, value] of Object.entries(duration)) {
+  decl(`--duration-${key}`, value)
+}
+for (const [key, value] of Object.entries(easing)) {
+  decl(`--ease-${key}`, value)
+}
 
 lines.push('}')
 lines.push('')

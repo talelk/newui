@@ -1382,4 +1382,16 @@
 
   /* line-heights — leading-tighter pins single-line chrome to 1.15 */
   --leading-tighter: 1.15;
+
+  /* stacking — z-raised/floating/overlay/top; components name the layer, never a number */
+  --z-raised: 10;
+  --z-floating: 20;
+  --z-overlay: 50;
+  --z-top: 100;
+
+  /* motion — duration-fast/base/slow and the standard ease */
+  --duration-fast: 100ms;
+  --duration-base: 150ms;
+  --duration-slow: 300ms;
+  --ease-standard: cubic-bezier(0.65, 0, 0.35, 1);
 }

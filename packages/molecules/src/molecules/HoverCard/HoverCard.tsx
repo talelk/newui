@@ -75,7 +75,7 @@ const Content: ParentComponent<PartProps> = (props) => {
         <div
           {...api().getPositionerProps()}
           data-slot="hover-card-positioner"
-          class="z-[100]"
+          class="z-top"
         >
           <div
             {...api().getContentProps()}

@@ -108,13 +108,13 @@ const Content: ParentComponent<PartProps> = (props) => {
         <div
           {...api().getPositionerProps()}
           data-slot="popover-positioner"
-          class="z-[100]"
+          class="z-top"
         >
           <div
             {...api().getContentProps()}
             data-slot="popover-content"
             class={cn(
-              'relative z-50 rounded-overlay bg-surface-elevation-2 text-ink-gray-9 shadow-2xl ring-1 ring-outline-gray-1',
+              'relative z-overlay rounded-overlay bg-surface-elevation-2 text-ink-gray-9 shadow-2xl ring-1 ring-outline-gray-1',
               'focus-visible:outline-none',
               props.class,
             )}

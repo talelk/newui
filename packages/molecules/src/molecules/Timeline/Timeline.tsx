@@ -74,7 +74,7 @@ export function Timeline(props: TimelineProps): JSX.Element {
                 <span
                   data-slot="timeline-marker"
                   class={cn(
-                    'relative z-10 mt-0.5 grid size-6 shrink-0 place-items-center rounded-full',
+                    'relative z-raised mt-0.5 grid size-6 shrink-0 place-items-center rounded-full',
                     TONE[tone()],
                   )}
                 >

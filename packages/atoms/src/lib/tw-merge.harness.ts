@@ -3,9 +3,11 @@ import path from 'node:path'
 import { extendTailwindMerge } from 'tailwind-merge'
 import { twMerge } from './tw-merge'
 import {
+  isLength,
   layoutSpacingNames,
   radiusRoleNames,
   twMergeConfig,
+  zLayerNames,
 } from './tw-merge.config'
 
 /**
@@ -47,6 +49,10 @@ const isOurShadow = (value: string) =>
   ['', 'base', 'sm', 'md', 'lg', 'xl', '2xl', 'none'].includes(value)
 const isOurLeading = (value: string) =>
   /^(none|tighter|tight|snug|normal|relaxed|loose|\d+)$/.test(value)
+const isOurZ = (value: string) =>
+  /^\d+$/.test(value) || zLayerNames.includes(value)
+const isOurDuration = (value: string) =>
+  isLength(value) || ['fast', 'base', 'slow'].includes(value)
 
 export const reference = extendTailwindMerge({
   extend: {
@@ -73,6 +79,9 @@ export const reference = extendTailwindMerge({
       'rounded-bl': [{ 'rounded-bl': [isOurRadius] }],
       shadow: [{ shadow: [isOurShadow] }],
       leading: [{ leading: [isOurLeading] }],
+      // The stacking scale's named layers sit on the same axis as `z-<n>`.
+      z: [{ z: [isOurZ] }],
+      duration: [{ duration: [isOurDuration] }],
     },
   },
 })

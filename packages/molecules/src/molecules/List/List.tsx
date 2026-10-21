@@ -250,7 +250,7 @@ export const ListGroup: ParentComponent<ListGroupProps> = (props) => {
           data-slot="list-group-header"
           class={cn(
             'flex h-8 items-center text-sm-medium leading-tighter text-ink-gray-6',
-            local.sticky && 'sticky top-0 z-10 bg-surface-base',
+            local.sticky && 'sticky top-0 z-raised bg-surface-base',
           )}
         >
           {local.label}

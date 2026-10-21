@@ -201,7 +201,7 @@ export function PaneLayout(props: PaneLayoutProps): JSX.Element {
             aria-valuenow={Math.round(split())}
             aria-valuemin={min()}
             aria-valuemax={max()}
-            class="absolute inset-y-0 -end-2 -start-2 z-10 cursor-col-resize rounded-3 focus-visible:focus-ring"
+            class="absolute inset-y-0 -end-2 -start-2 z-raised cursor-col-resize rounded-3 focus-visible:focus-ring"
             onPointerDown={beginDrag}
             onPointerMove={moveDrag}
             onPointerUp={endDrag}

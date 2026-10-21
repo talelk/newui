@@ -95,7 +95,7 @@ function SwitchControl(props: SwitchProps): JSX.Element {
           ? 'h-4 w-[26px] border-2'
           : 'h-3.5 w-[24px] border-2'
     return cn(
-      'relative inline-flex shrink-0 items-center rounded-full border-transparent transition-colors duration-100 ease-in-out',
+      'relative inline-flex shrink-0 items-center rounded-full border-transparent transition-colors duration-fast ease-in-out',
       // Padded rows show the ring on the surface (`[&:has(:focus-visible)]`),
       // so the control's own ring is suppressed there.
       !local.padded && 'data-[focus-visible]:focus-ring-blue',
@@ -113,7 +113,7 @@ function SwitchControl(props: SwitchProps): JSX.Element {
 
   const thumbClasses = () =>
     cn(
-      'pointer-events-none inline-block rounded-full bg-surface-base shadow ring-0 transition duration-100 ease-in-out motion-reduce:transition-none',
+      'pointer-events-none inline-block rounded-full bg-surface-base shadow ring-0 transition duration-fast ease-in-out motion-reduce:transition-none',
       size() === 'md'
         ? 'size-3.5 data-[state=checked]:translate-x-3'
         : size() === 'sm'

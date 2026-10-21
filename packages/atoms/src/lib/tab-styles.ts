@@ -181,7 +181,7 @@ export function tabPillClasses(opts: {
             : 'h-8 gap-2 px-2.5 py-1.5'
 
   return [
-    'inline-flex box-border shrink-0 select-none items-center justify-center whitespace-nowrap outline-none transition-[background-color,color,box-shadow] duration-150 ease-out motion-reduce:transition-none',
+    'inline-flex box-border shrink-0 select-none items-center justify-center whitespace-nowrap outline-none transition-[background-color,color,box-shadow] duration-base ease-out motion-reduce:transition-none',
     'text-base leading-tighter',
     active ? 'text-ink-gray-8' : 'text-ink-gray-6',
     size === 'md' && variant !== 'underline' && variant !== 'subtle'

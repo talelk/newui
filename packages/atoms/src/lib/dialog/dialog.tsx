@@ -202,17 +202,17 @@ function ImperativeDialog(props: { request: DialogRequest }): JSX.Element {
         <div
           {...api().getBackdropProps()}
           data-slot="dialog-backdrop"
-          class="fixed inset-0 z-50 bg-black-overlay-200 dark:bg-black-overlay-700"
+          class="fixed inset-0 z-overlay bg-black-overlay-200 dark:bg-black-overlay-700"
         />
         <div
           {...api().getPositionerProps()}
           data-slot="dialog-positioner"
-          class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4"
+          class="fixed inset-0 z-overlay flex items-center justify-center overflow-y-auto p-4"
         >
           <div
             {...api().getContentProps()}
             data-slot="dialog-content"
-            class="relative z-50 w-full max-w-md rounded-7 bg-surface-elevation-1 p-4 text-ink-gray-9 shadow-xl focus-visible:outline-none"
+            class="relative z-overlay w-full max-w-md rounded-7 bg-surface-elevation-1 p-4 text-ink-gray-9 shadow-xl focus-visible:outline-none"
           >
             <Show when={options().title}>
               <h2

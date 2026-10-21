@@ -120,12 +120,12 @@ export function BottomSheet(props: BottomSheetProps): JSX.Element {
         <div
           {...api().getBackdropProps()}
           data-slot="bottom-sheet-backdrop"
-          class="fixed inset-0 z-50 bg-black-overlay-200 dark:bg-black-overlay-700"
+          class="fixed inset-0 z-overlay bg-black-overlay-200 dark:bg-black-overlay-700"
         />
         <div
           {...api().getPositionerProps()}
           data-slot="bottom-sheet-positioner"
-          class="fixed inset-0 z-50 flex items-end justify-center"
+          class="fixed inset-0 z-overlay flex items-end justify-center"
         >
           <div
             {...api().getContentProps()}
@@ -162,7 +162,7 @@ export function BottomSheet(props: BottomSheetProps): JSX.Element {
             role="dialog"
             aria-label={local.title ? undefined : 'Bottom sheet'}
             class={cn(
-              'relative z-50 flex max-h-[90dvh] w-full max-w-2xl flex-col rounded-t-overlay border border-outline-gray-1 bg-surface-elevation-2 text-ink-gray-9 shadow-lg',
+              'relative z-overlay flex max-h-[90dvh] w-full max-w-2xl flex-col rounded-t-overlay border border-outline-gray-1 bg-surface-elevation-2 text-ink-gray-9 shadow-lg',
               'focus-visible:outline-none',
               local.class,
             )}

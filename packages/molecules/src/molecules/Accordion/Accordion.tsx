@@ -194,7 +194,7 @@ export const AccordionTrigger: ParentComponent<AccordionTriggerProps> = (
         {...triggerProps()}
         data-slot="accordion-trigger"
         class={cn(
-          'group flex flex-1 cursor-pointer items-center gap-2 rounded-4 px-2 py-3 text-start text-base font-medium text-ink-gray-8 transition-colors duration-150',
+          'group flex flex-1 cursor-pointer items-center gap-2 rounded-4 px-2 py-3 text-start text-base font-medium text-ink-gray-8 transition-colors duration-base',
           'hover:text-ink-gray-9',
           'focus-visible:focus-ring',
           // Zag marks the trigger with the native `disabled` attribute (not a

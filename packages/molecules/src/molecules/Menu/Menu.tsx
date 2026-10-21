@@ -72,7 +72,7 @@ const Content: ParentComponent<PartProps> = (props) => {
         <div
           {...api().getPositionerProps()}
           data-slot="menu-positioner"
-          class="z-50"
+          class="z-overlay"
         >
           <div
             {...api().getContentProps()}

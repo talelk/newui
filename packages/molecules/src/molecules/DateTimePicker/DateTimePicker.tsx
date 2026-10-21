@@ -309,7 +309,7 @@ function DateTimePickerControl(props: ControlProps): JSX.Element {
           <div
             {...api().getPositionerProps()}
             data-slot="date-time-picker-positioner"
-            class="z-50"
+            class="z-overlay"
           >
             <div
               {...api().getContentProps()}

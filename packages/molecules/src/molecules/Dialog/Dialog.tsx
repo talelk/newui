@@ -303,14 +303,14 @@ const Content: ParentComponent<DialogContentProps> = (props) => {
         <div
           {...api().getBackdropProps()}
           data-slot="dialog-backdrop"
-          class="fixed inset-0 z-50 bg-black-overlay-200 dark:bg-black-overlay-700"
+          class="fixed inset-0 z-overlay bg-black-overlay-200 dark:bg-black-overlay-700"
         />
         <div
           {...api().getPositionerProps()}
           data-slot="dialog-positioner"
           data-position={position()}
           class={cn(
-            'fixed inset-0 z-50 flex justify-center overflow-y-auto p-4',
+            'fixed inset-0 z-overlay flex justify-center overflow-y-auto p-4',
             position() === 'top' ? 'items-start pt-[20vh]' : 'items-center',
           )}
         >
@@ -319,7 +319,7 @@ const Content: ParentComponent<DialogContentProps> = (props) => {
             data-slot="dialog-content"
             data-size={size()}
             class={cn(
-              'relative z-50 w-full overflow-hidden rounded-overlay border border-outline-gray-1 bg-surface-elevation-1 text-ink-gray-9 shadow-xl',
+              'relative z-overlay w-full overflow-hidden rounded-overlay border border-outline-gray-1 bg-surface-elevation-1 text-ink-gray-9 shadow-xl',
               'focus-visible:outline-none',
               SIZE[size()],
               props.bare ? '' : 'p-card-pad',

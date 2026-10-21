@@ -180,7 +180,7 @@ export function DataTable<T extends { id: string }>(
             <summary class="cursor-pointer rounded-3 border border-outline-gray-2 px-3 py-1.5 text-interface focus-visible:focus-ring">
               Columns
             </summary>
-            <div class="absolute end-0 z-20 mt-2 flex min-w-44 flex-col gap-2 rounded-6 border border-outline-gray-1 bg-surface-elevation-2 p-3 shadow-md">
+            <div class="absolute end-0 z-floating mt-2 flex min-w-44 flex-col gap-2 rounded-6 border border-outline-gray-1 bg-surface-elevation-2 p-3 shadow-md">
               <For
                 each={table
                   .getAllLeafColumns()

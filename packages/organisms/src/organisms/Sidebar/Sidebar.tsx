@@ -119,7 +119,7 @@ export const Sidebar: ParentComponent<SidebarProps> = (props) => {
             : (local.width ?? '15rem'),
         }}
         class={cn(
-          'flex h-full shrink-0 flex-col overflow-x-hidden bg-surface-sidebar transition-[width] duration-300 ease-in-out',
+          'flex h-full shrink-0 flex-col overflow-x-hidden bg-surface-sidebar transition-[width] duration-slow ease-in-out',
           local.class,
         )}
       >
@@ -509,7 +509,7 @@ export function SidebarCollapseToggle(
       prefix={
         <span
           class={cn(
-            'lucide-panel-right-open size-4 transition-transform duration-300',
+            'lucide-panel-right-open size-4 transition-transform duration-slow',
             collapsed() && 'rotate-180',
           )}
           aria-hidden="true"
@@ -574,7 +574,7 @@ export function SidebarSection(props: SidebarSectionProps): JSX.Element {
             // while the fade/slide still animates.
             inert={sidebarCollapsed()}
             class={cn(
-              'text-sm leading-tighter text-ink-gray-6 transition-all duration-300',
+              'text-sm leading-tighter text-ink-gray-6 transition-all duration-slow',
               sidebarCollapsed()
                 ? 'w-0 overflow-hidden opacity-0'
                 : 'w-auto opacity-100',
@@ -591,7 +591,7 @@ export function SidebarSection(props: SidebarSectionProps): JSX.Element {
                 {local.label}
                 <span
                   class={cn(
-                    'lucide-chevron-right size-4 text-ink-gray-6 transition-transform duration-300',
+                    'lucide-chevron-right size-4 text-ink-gray-6 transition-transform duration-slow',
                     !collapsed() && 'rotate-90',
                   )}
                   aria-hidden="true"

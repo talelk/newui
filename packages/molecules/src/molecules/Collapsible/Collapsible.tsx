@@ -87,7 +87,7 @@ export const CollapsibleTrigger: ParentComponent<CollapsibleTriggerProps> = (
       {...api().getTriggerProps()}
       data-slot="collapsible-trigger"
       class={cn(
-        'group flex cursor-pointer items-center gap-2 rounded-4 px-2 py-1.5 text-start text-base-medium text-ink-gray-8 transition-colors duration-150',
+        'group flex cursor-pointer items-center gap-2 rounded-4 px-2 py-1.5 text-start text-base-medium text-ink-gray-8 transition-colors duration-base',
         'hover:bg-surface-gray-2',
         'focus-visible:focus-ring',
         'disabled:cursor-not-allowed disabled:text-ink-gray-4 disabled:hover:bg-transparent',

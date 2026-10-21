@@ -367,7 +367,7 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
           <div
             {...api().getPositionerProps()}
             data-slot="multiselect-positioner"
-            class="z-50"
+            class="z-overlay"
           >
             {/*
               The panel is presentation and the listbox owns only the rows: a

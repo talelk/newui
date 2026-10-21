@@ -155,7 +155,7 @@ export function Divider(props: DividerProps): JSX.Element {
             variant={action().variant ?? 'outline'}
             theme={action().theme ?? 'gray'}
             size={action().size ?? 'sm'}
-            class="relative z-10"
+            class="relative z-raised"
             onClick={() => action().onClick?.()}
           >
             {action().label}

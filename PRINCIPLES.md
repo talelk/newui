@@ -82,6 +82,11 @@ or a name collision — not "it feels big".
 
 - Color utilities resolve runtime `var(--surface-*)` / `var(--ink-*)` /
   `var(--outline-*)`, so dark mode flips with no `dark:` variant.
+- Stacking and speed are named, never numbered: `z-raised` / `z-floating` /
+  `z-overlay` / `z-top` and `duration-fast` / `duration-base` / `duration-slow`
+  resolve `@theme` scales owned by `@newui/tokens`. A component hard-coding
+  `z-50` or `duration-150` is a bug; the one exception is the 200ms the
+  disclosure chevron shares with the `disclosure-panel` utility.
 - Recipes are `tv()` definitions with `compoundVariants`; state is `disabled:`
   and `data-[state=…]:` variants, not JS class swaps.
 - Class order is authored in the recipe (no class-sorting tool).

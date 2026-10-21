@@ -236,7 +236,7 @@ function SelectControl(props: SelectProps): JSX.Element {
           <div
             {...api().getPositionerProps()}
             data-slot="select-positioner"
-            class="z-50"
+            class="z-overlay"
           >
             <div
               {...api().getContentProps()}

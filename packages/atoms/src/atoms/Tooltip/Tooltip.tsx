@@ -94,7 +94,7 @@ export function TooltipContent(props: TooltipContentProps): JSX.Element {
         <div
           {...api().getPositionerProps()}
           data-slot="tooltip-positioner"
-          class="z-[100]"
+          class="z-top"
         >
           <div
             {...api().getContentProps()}

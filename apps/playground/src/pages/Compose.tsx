@@ -188,7 +188,7 @@ export function Compose(): JSX.Element {
                 aria-label="Post body"
                 class="compose-editor"
               >
-                <EditorToolbar class="sticky top-14 z-20 sm:static" />
+                <EditorToolbar class="sticky top-14 z-floating sm:static" />
               </Editor>
             </Show>
           </div>

@@ -93,7 +93,7 @@ const Scrollbar: ParentComponent<ScrollAreaScrollbarProps> = (props) => {
         // so the content stays flush to the edge. It hides itself when its axis
         // does not overflow — the machine reports that as `data-overflow-*`, and
         // without this a perfectly short list still wears a gray strip.
-        'group z-20 flex touch-none select-none bg-transparent p-0.5 transition-opacity duration-150 ease-out',
+        'group z-floating flex touch-none select-none bg-transparent p-0.5 transition-opacity duration-base ease-out',
         horizontal()
           ? 'h-2.5 w-full flex-row data-[overflow-x=false]:hidden'
           : 'h-full w-2.5 flex-col data-[overflow-y=false]:hidden',
@@ -109,7 +109,7 @@ const Scrollbar: ParentComponent<ScrollAreaScrollbarProps> = (props) => {
         class={cn(
           // Fades in with the pointer or a scroll, and only then accepts a drag
           // — an invisible thumb that still grabs is a dead 10px strip.
-          'relative flex-1 rounded-full bg-surface-gray-5 opacity-0 transition-opacity duration-150 ease-out',
+          'relative flex-1 rounded-full bg-surface-gray-5 opacity-0 transition-opacity duration-base ease-out',
           'group-data-[hover]:pointer-events-auto group-data-[dragging]:pointer-events-auto',
           'group-data-[hover]:opacity-100 group-data-[scrolling]:opacity-100 group-data-[dragging]:opacity-100',
           horizontal() ? 'h-full' : 'w-full',

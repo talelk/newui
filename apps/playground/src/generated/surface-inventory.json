@@ -956,6 +956,33 @@
   },
   {
     "package": "@newui/atoms",
+    "name": "Heading",
+    "implementation": "packages/atoms/src/atoms/Heading/Heading.tsx",
+    "documentation": "/docs#atoms",
+    "contract": null,
+    "tests": [],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/atoms",
+    "name": "HeadingLevel",
+    "implementation": "packages/atoms/src/atoms/Heading/Heading.tsx",
+    "documentation": "/docs#atoms",
+    "contract": null,
+    "tests": [],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/atoms",
+    "name": "HeadingProps",
+    "implementation": "packages/atoms/src/atoms/Heading/Heading.tsx",
+    "documentation": "/docs#atoms",
+    "contract": null,
+    "tests": [],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/atoms",
     "name": "Icon",
     "implementation": "packages/atoms/src/atoms/Icon/Icon.tsx",
     "documentation": "/atoms/icon",
@@ -1748,6 +1775,15 @@
   },
   {
     "package": "@newui/atoms",
+    "name": "Text",
+    "implementation": "packages/atoms/src/atoms/Text/Text.tsx",
+    "documentation": "/docs#atoms",
+    "contract": null,
+    "tests": [],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/atoms",
     "name": "Textarea",
     "implementation": "packages/atoms/src/atoms/Textarea/Textarea.tsx",
     "documentation": "/atoms/textarea",
@@ -1792,6 +1828,33 @@
       "packages/atoms/src/atoms/TextInput/TextInput.browser.test.tsx",
       "packages/atoms/src/atoms/TextInput/TextInput.test.tsx"
     ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/atoms",
+    "name": "TextProps",
+    "implementation": "packages/atoms/src/atoms/Text/Text.tsx",
+    "documentation": "/docs#atoms",
+    "contract": null,
+    "tests": [],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/atoms",
+    "name": "TextSize",
+    "implementation": "packages/atoms/src/atoms/Text/Text.tsx",
+    "documentation": "/docs#atoms",
+    "contract": null,
+    "tests": [],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/atoms",
+    "name": "TextWeight",
+    "implementation": "packages/atoms/src/atoms/Text/Text.tsx",
+    "documentation": "/docs#atoms",
+    "contract": null,
+    "tests": [],
     "acceptance": "pending"
   },
   {
@@ -13516,6 +13579,24 @@
   },
   {
     "package": "@newui/tokens",
+    "name": "duration",
+    "implementation": "packages/tokens/src/index.d.ts",
+    "documentation": "/docs#tokens",
+    "contract": null,
+    "tests": [],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/tokens",
+    "name": "easing",
+    "implementation": "packages/tokens/src/index.d.ts",
+    "documentation": "/docs#tokens",
+    "contract": null,
+    "tests": [],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/tokens",
     "name": "focusRing",
     "implementation": "packages/tokens/src/index.d.ts",
     "documentation": "/docs#tokens",
@@ -13625,6 +13706,15 @@
   {
     "package": "@newui/tokens",
     "name": "tracking",
+    "implementation": "packages/tokens/src/index.d.ts",
+    "documentation": "/docs#tokens",
+    "contract": null,
+    "tests": [],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/tokens",
+    "name": "zIndex",
     "implementation": "packages/tokens/src/index.d.ts",
     "documentation": "/docs#tokens",
     "contract": null,

@@ -35,11 +35,17 @@ const LAYOUT_SPACING = new Set([
 ])
 const RADIUS_ROLES = new Set(['control', 'card', 'overlay', 'pill'])
 
+/** The stacking scale (`@utility z-<name>`); one merge axis with `z-<n>`. */
+const Z_LAYERS = new Set(['raised', 'floating', 'overlay', 'top'])
+
 /** Semantic layout spacing names; shared with the merge sweep's reference. */
 export const layoutSpacingNames = [...LAYOUT_SPACING]
 
 /** Semantic radius names; shared with the merge sweep's reference. */
 export const radiusRoleNames = [...RADIUS_ROLES]
+
+/** Stacking layer names; shared with the merge sweep's reference. */
+export const zLayerNames = [...Z_LAYERS]
 
 /** Our type scale: `2xs`…`11xl` and `p-…`, each with an optional weight. */
 const SIZE =
@@ -60,7 +66,7 @@ const WEIGHTS = [
 const isFontWeight = (value: string) =>
   WEIGHTS.includes(value) || isArbitrary(value)
 
-const isLength = (value: string) =>
+export const isLength = (value: string) =>
   /^-?(\d+(\.\d+)?|px|full|auto|min|max|fit|screen|svw|lvw|dvw|svh|lvh|dvh)$/.test(
     value,
   ) ||
@@ -197,7 +203,7 @@ export const twMergeConfig = {
     right: [{ right: [isLength] }],
     bottom: [{ bottom: [isLength] }],
     left: [{ left: [isLength] }],
-    z: [{ z: [isNumber] }, 'z-auto'],
+    z: [{ z: [isNumber, ...zLayerNames] }, 'z-auto'],
     order: [{ order: [isOrder] }],
     'grid-cols': [{ 'grid-cols': [isGridTemplate] }],
     'grid-rows': [{ 'grid-rows': [isGridTemplate] }],
@@ -520,7 +526,7 @@ export const twMergeConfig = {
 
     // ---- transition / animation ----
     transition: ['transition', 'transition-none', { transition: [() => true] }],
-    duration: [{ duration: [isLength] }],
+    duration: [{ duration: [isLength, 'fast', 'base', 'slow'] }],
     ease: [{ ease: [() => true] }],
     delay: [{ delay: [isLength] }],
     animate: [{ animate: [() => true] }],

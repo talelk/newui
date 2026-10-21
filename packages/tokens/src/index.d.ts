@@ -57,3 +57,7 @@ export const layoutSpacing: Record<string, string>
 export const screens: Record<string, string>
 
 export const cssVariables: CssVariableLayers
+
+export const zIndex: Record<string, number>
+export const duration: Record<string, string>
+export const easing: Record<string, string>

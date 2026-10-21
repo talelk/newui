@@ -2,12 +2,15 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import {
   colors,
+  duration,
+  easing,
   fontSize,
   radius,
   semanticColors,
   shadows,
   spacing,
   tracking,
+  zIndex,
 } from '@newui/tokens'
 import { describe, expect, it } from 'vitest'
 
@@ -123,6 +126,16 @@ describe('generated theme parity with @newui/tokens', () => {
 
   it('emits every derived text-size token', () => {
     const missing = [...expectedText()].filter((name) => !defined.has(name))
+    expect(missing).toEqual([])
+  })
+
+  it('emits the stacking and motion scales', () => {
+    const expected = [
+      ...Object.keys(zIndex).map((key) => `--z-${key}`),
+      ...Object.keys(duration).map((key) => `--duration-${key}`),
+      ...Object.keys(easing).map((key) => `--ease-${key}`),
+    ]
+    const missing = expected.filter((name) => !defined.has(name))
     expect(missing).toEqual([])
   })
 })
