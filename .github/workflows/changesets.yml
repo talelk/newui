@@ -30,7 +30,9 @@ jobs:
       - uses: actions/setup-node@v7.1.0
         with:
           node-version: '24'
-          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+          # Release builds should not restore a mutable dependency cache.
+          package-manager-cache: false
 
       - name: Install
         run: pnpm install --frozen-lockfile
