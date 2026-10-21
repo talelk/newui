@@ -57,11 +57,14 @@ jobs:
             echo "No Version Packages pull request to release."
             exit 1
           fi
+          echo "number=$PR" >> "$GITHUB_OUTPUT"
           STATE=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json state --jq .state)
           if [ "$STATE" != "OPEN" ]; then
             echo "PR #$PR is $STATE; nothing to merge."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
+          echo "skip=false" >> "$GITHUB_OUTPUT"
           BRANCH=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json headRefName --jq .headRefName)
           BASE=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json baseRefName --jq .baseRefName)
           DRAFT=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)
@@ -69,38 +72,52 @@ jobs:
             echo "PR #$PR is not the Version Packages PR (branch=$BRANCH base=$BASE draft=$DRAFT)."
             exit 1
           fi
-          echo "number=$PR" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v7.0.1
+        if: steps.pr.outputs.skip != 'true'
+        with:
+          ref: main
+          fetch-depth: 0
 
       - name: Wait for every pull request check
+        if: steps.pr.outputs.skip != 'true'
         env:
           PR: ${{ steps.pr.outputs.number }}
         run: gh pr checks "$PR" --repo "$GITHUB_REPOSITORY" --watch --interval 10
 
       - name: Merge the Version Packages PR
+        if: steps.pr.outputs.skip != 'true'
         env:
           PR: ${{ steps.pr.outputs.number }}
         run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch
 
-      - uses: actions/checkout@v7.0.1
-        with:
-          ref: main
-          fetch-depth: 0
+      - name: Update the checked-out main branch
+        if: steps.pr.outputs.skip != 'true'
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
 
       - uses: pnpm/action-setup@v6.1.0
+        if: steps.pr.outputs.skip != 'true'
 
       - uses: actions/setup-node@v7.1.0
+        if: steps.pr.outputs.skip != 'true'
         with:
           node-version: '24'
           package-manager-cache: false
 
       - name: Install
+        if: steps.pr.outputs.skip != 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Publish through npm trusted publishing
+        if: steps.pr.outputs.skip != 'true'
         run: pnpm run release
 
       - name: Push release tags
+        if: steps.pr.outputs.skip != 'true'
         run: git push origin --tags
 
       - name: Refresh Pages with the released version
+        if: steps.pr.outputs.skip != 'true'
         run: gh workflow run pages.yml --ref main --repo "$GITHUB_REPOSITORY"
