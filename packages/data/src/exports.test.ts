@@ -1,7 +1,8 @@
 /**
  * The logic layer's public surface, asserted by name and by entry point.
  *
- * The data package has three entries (`.`, `/query`, `/form`), which is exactly
+ * The data package has four entries (`.`, `/query`, `/form`, `/resource`),
+ * which is exactly
  * the shape an accidental `export *` or a stray
  * re-export slips into. An entry's cost is part of its contract — 0.77 kB for
  * the helpers, 15.5 for the query — so a new name on an entry is a decision, not
@@ -13,11 +14,13 @@ import { describe, expect, it } from 'vitest'
 import * as form from './form'
 import * as root from './index'
 import * as query from './query'
+import * as resource from './resource'
 
 const ENTRIES = {
   '.': root,
   './query': query,
   './form': form,
+  './resource': resource,
 } as const
 
 const SURFACE: Record<keyof typeof ENTRIES, string[]> = {
@@ -43,6 +46,26 @@ const SURFACE: Record<keyof typeof ENTRIES, string[]> = {
     'createListQuery',
   ],
   './form': ['Form', 'createAppForm', 'fieldError'],
+  './resource': [
+    'RequestError',
+    'createDocumentResource',
+    'createIdbStore',
+    'createListResource',
+    'createLocalStore',
+    'createRealtime',
+    'createResource',
+    'getConfig',
+    'isAbortError',
+    'normalizeError',
+    'request',
+    'resetConfig',
+    'setConfig',
+    'useCall',
+    'useDoc',
+    'useDoctype',
+    'useList',
+    'useNewDoc',
+  ],
 }
 
 const manifest = JSON.parse(
@@ -69,6 +92,14 @@ describe('@newui/data', () => {
     // validator; every value it exports is a function over plain data.
     for (const value of Object.values(root)) {
       expect(typeof value).toBe('function')
+    }
+  })
+
+  it('keeps the Frappe resource client off the root', () => {
+    // The DocType fetching layer is app-specific cost (fetch + IndexedDB +
+    // realtime multiplexer); it must stay behind its earned subpath.
+    for (const name of ['useDoc', 'useDoctype', 'frappeRequest', 'request']) {
+      expect(name in root).toBe(false)
     }
   })
 })

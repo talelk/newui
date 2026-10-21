@@ -130,6 +130,15 @@ const ENTRIES: Entry[] = [
     forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
   },
   {
+    name: 'Data resource',
+    file: 'scripts/fixtures/data-resource.ts',
+    // The Frappe DocType client: fetch + IndexedDB + realtime multiplexer.
+    // App-specific cost, behind its earned subpath — atoms must never
+    // re-export it.
+    budget: 12,
+    forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
+  },
+  {
     name: 'Atomic barrel',
     file: 'scripts/fixtures/all.ts',
     // The full core is an upper bound; regular consumers import only the levels

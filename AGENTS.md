@@ -42,7 +42,7 @@ When docs disagree: `spec/*.md` > ADRs > `PRINCIPLES.md` > `CONTEXT.md`.
 | molecules | `@newui/molecules` | compound interactions built from atoms |
 | organisms | `@newui/organisms` | page regions: sidebar, filter bar, board, table, virtual list |
 | templates | `@newui/templates` | `AppShell`, `PaneLayout`, `AuthLayout` |
-| data | `@newui/data` | headless formatting, selection, undo, downloads, query and form logic |
+| data | `@newui/data` | headless formatting, selection, undo, downloads, query and form logic; `/resource` owns the Frappe DocType client |
 | code editor | `@newui/code-editor` | CodeMirror 6 Solid component |
 | rich text | `@newui/editor` | TipTap 3 Solid editor + toolbar |
 | charts | `@newui/charts` | echarts Solid wrappers (SVG renderer) |
@@ -171,9 +171,11 @@ Every shipped reference component must have an isolated lazy story.
 
 TanStack Solid Query and Form belong to `@newui/data` (`/query`: client,
 repository and collection mutations; `/form`: submit lifecycle and field-error
-bridge). Rendered tables and virtual lists belong to `@newui/organisms`. The
-playground depends on no TanStack package directly. Charts and editors remain
-optional organism-level packages.
+bridge), and the Frappe DocType client lives behind `@newui/data/resource` —
+app-specific fetching never ships through `@newui/atoms`. Rendered tables and
+virtual lists belong to `@newui/organisms`. The playground depends on no
+TanStack package directly. Charts and editors remain optional organism-level
+packages.
 
 ## Guardrails (enforced by tests, not convention)
 
@@ -216,6 +218,10 @@ optional organism-level packages.
   respected.
 - **Theme vocabulary** (`packages/tailwind/src/generated.test.ts`): the tokens
   overlays and shells depend on must be emitted.
+- **Vocabulary conformance** (`scripts/vocabulary.test.ts`): every `theme`/
+  `tone`/`variant`/`side`/`align` prop in `api.json` must stay inside the union
+  `CONTEXT.md` declares for the term — the rule layer's machine copy, so a new
+  color name or a narrowed `side` fails `pnpm test`, not review.
 - **Public surface** (`packages/*/src/exports.test.ts`) and **manifest**
   (`package.test.ts`) pin the exported names and `exports` targets.
 - **API tables** — `pnpm api` / `pnpm api:check`.

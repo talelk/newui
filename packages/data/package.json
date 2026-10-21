@@ -2,7 +2,7 @@
   "name": "@newui/data",
   "version": "0.0.0",
   "type": "module",
-  "description": "The logic layer: formatting, selection, undo and downloads — no components.",
+  "description": "The logic layer: formatting, selection, undo and downloads \u2014 no components.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/talelk/newui.git",
@@ -20,6 +20,10 @@
     "./form": {
       "types": "./src/form/index.ts",
       "default": "./src/form/index.ts"
+    },
+    "./resource": {
+      "types": "./src/resource/index.ts",
+      "default": "./src/resource/index.ts"
     }
   },
   "files": [

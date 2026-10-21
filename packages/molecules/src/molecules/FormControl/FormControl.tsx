@@ -260,26 +260,23 @@ export type FormControlProps =
   | FormControlTimeProps
   | FormControlDateTimeProps
 
-function renderSelect(props: FormControlSelectProps): JSX.Element {
-  const shared = {
-    options: props.options,
-    placeholder: props.placeholder,
-    label: props.label,
-    'aria-label': props['aria-label'],
-    disabled: props.disabled,
-    name: props.name,
-    class: props.class,
-  }
-  return props.multiple ? (
+// Spread keeps the props proxy intact — a materialized object would freeze
+// the values at first read. The `type` key is inert: Select ignores it.
+function renderSelectSingle(props: FormControlSelectSingleProps): JSX.Element {
+  return (
     <Select
-      {...shared}
-      multiple
+      {...props}
       value={props.value}
       onValueChange={props.onValueChange}
     />
-  ) : (
+  )
+}
+
+function renderSelectMulti(props: FormControlSelectMultiProps): JSX.Element {
+  return (
     <Select
-      {...shared}
+      {...props}
+      multiple
       value={props.value}
       onValueChange={props.onValueChange}
     />
@@ -491,8 +488,11 @@ function renderText(props: FormControlTextProps): JSX.Element {
 export function FormControl(props: FormControlProps): JSX.Element {
   return (
     <Switch>
+      <Match when={props.type === 'select' && props.multiple === true}>
+        {renderSelectMulti(props as FormControlSelectMultiProps)}
+      </Match>
       <Match when={props.type === 'select'}>
-        {renderSelect(props as FormControlSelectProps)}
+        {renderSelectSingle(props as FormControlSelectSingleProps)}
       </Match>
       <Match when={props.type === 'combobox'}>
         {renderCombobox(props as FormControlComboboxProps)}

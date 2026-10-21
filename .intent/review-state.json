@@ -1,0 +1,757 @@
+{
+  "schemaVersion": 1,
+  "baseline": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+  "items": {
+    "skill:packages/atoms/skills/newui/SKILL.md": {
+      "fingerprint": "cbf27b375bc472c9a239fa35b6b30e3f25df9d71cb999b04249fd13780aaa395",
+      "snapshot": {
+        "AGENTS.md": "0d09c9b341d46a399e11cc6c9b25dd65244cc86d7d9497586b9a858b1f22b9be",
+        "CONTEXT.md": "d47a8b20fdfa3a66735ad1eab4d6e56738c2c68409388c308f80bfdb13f2b5b2",
+        "PRINCIPLES.md": "a7c57bca3bc82630e31d4ef7f9d83797e72ce7f2e0629f83368eb5fe86771e82",
+        "packages/atoms/skills/newui/SKILL.md": "83157879c5b1709c34fc72731fb32df94d72fec29af27a8b77a13c3cbd5ee2cd",
+        "packages/atoms/src/atoms/Button/Button.tsx": "1ef4dbc4d96bbcd715fcfa29d21f23984f272497d422192891ec729c013f5196",
+        "packages/atoms/src/lib/color-scheme.ts": "796e2c8f84dc12be6c6a343d0342c14902c4a2d4e84ee89b2c0278843b9847db",
+        "packages/atoms/src/lib/field.tsx": "1f55044d6ceaa002be298ff72ffb5eebb678f465cde39d17fb9159bf52eff834",
+        "packages/molecules/src/molecules/Combobox/Combobox.tsx": "fc012e353788974499ed53370c4f77147ea12ddfeb588f887fca137e97307b34",
+        "packages/molecules/src/molecules/Dialog/Dialog.tsx": "58485b1028b76cf57b049537e5dd90bc34eda812b8d3eebd49b6b7640d84e2f5",
+        "packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx": "331e56aeb9fa7c9a3daa00415c439078f1b4931f806514a7efacc4120826f073",
+        "packages/tailwind/src/style.css": "4fdab4a876ac053e4b3ce71258e706766fb7fbbdbe55c0a3bf519cf7c2b2e521",
+        "skills/README.md": "f4d200dbb4176720ceb99d91ae25f5b5002c227f0b7eeb44a890e372dd913435",
+        "spec/adr/0001-solid-no-v-model.md": "382711862fd907c2a30d4e141b26013396fac7f598a2f802e169a3016258ea96",
+        "spec/inputs.md": "c4bc011628cf4b6ceedfc5b6100a452317592ce1a88de8ce42ca3460c47fdde1"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: AGENTS.md, CONTEXT.md, PRINCIPLES.md, packages/atoms/skills/newui/SKILL.md, packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx, spec/adr/0001-solid-no-v-model.md, spec/inputs.md at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "skill:packages/data/skills/newui-data/SKILL.md": {
+      "fingerprint": "bf526eecf29c177e2fd582a6fef86c62d0a1c61f4f3bfa504f192fd0165c4ea6",
+      "snapshot": {
+        "packages/data/README.md": "4e6c56882f1b5309b7727a47f81bd76be4938412ad3037e2b3bb8a2119e93284",
+        "packages/data/skills/newui-data/SKILL.md": "e9a140f595771abedf543660d7e7c60787f343942033a42344c95d49a263a86b",
+        "packages/data/src/form/form.tsx": "4b39b6d7197883fcab9ee6f930e42d1db6e5a0d77f6f7aab14a1e7a85593927b",
+        "packages/data/src/query/client.tsx": "0b1ca717361318d037e67478cf239371bf0ca234a546fb4a40a8db55ac21b1cf",
+        "packages/data/src/query/collection.ts": "e6ee06565af3384b09e9ac9e0e895e97749bef3d8631253f3460a0a294248329",
+        "packages/data/src/query/repository.ts": "70dfb4734db19f52e6f3efe193f5c94aeae04b28f175e9f36ac8b56836a2b73b",
+        "skills/README.md": "f4d200dbb4176720ceb99d91ae25f5b5002c227f0b7eeb44a890e372dd913435",
+        "spec/data.md": "fd050fec887e1f952279766c70e12fe8e36a67968564476438de8b191653ec14"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/README.md at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "planning:_artifacts": {
+      "fingerprint": "250e8ded162ae2f6f3a9a19431bd71ec836044cda11925400cdcb03b7da564a5",
+      "snapshot": {
+        "AGENTS.md": "0d09c9b341d46a399e11cc6c9b25dd65244cc86d7d9497586b9a858b1f22b9be",
+        "CONTEXT.md": "d47a8b20fdfa3a66735ad1eab4d6e56738c2c68409388c308f80bfdb13f2b5b2",
+        "PRINCIPLES.md": "a7c57bca3bc82630e31d4ef7f9d83797e72ce7f2e0629f83368eb5fe86771e82",
+        "_artifacts/domain_map.yaml": "6da0f6d73a23f8caaed513a1d0f75caab582cd03e679480d5a7fe70024eac3e7",
+        "_artifacts/skill_spec.md": "0ed752dcfb875f1e6d5b10ff5c7add7efc30d1e3dd019256a6d5bf7a46715a85",
+        "_artifacts/skill_tree.yaml": "af480acb3d70f2fadc2c59f7d589d59f3c90adc86d8dff6ca8b6efd8bb692393",
+        "packages/atoms/skills/newui/SKILL.md": "83157879c5b1709c34fc72731fb32df94d72fec29af27a8b77a13c3cbd5ee2cd",
+        "packages/atoms/src/atoms/Button/Button.tsx": "1ef4dbc4d96bbcd715fcfa29d21f23984f272497d422192891ec729c013f5196",
+        "packages/atoms/src/lib/color-scheme.ts": "796e2c8f84dc12be6c6a343d0342c14902c4a2d4e84ee89b2c0278843b9847db",
+        "packages/atoms/src/lib/field.tsx": "1f55044d6ceaa002be298ff72ffb5eebb678f465cde39d17fb9159bf52eff834",
+        "packages/data/README.md": "4e6c56882f1b5309b7727a47f81bd76be4938412ad3037e2b3bb8a2119e93284",
+        "packages/data/skills/newui-data/SKILL.md": "e9a140f595771abedf543660d7e7c60787f343942033a42344c95d49a263a86b",
+        "packages/data/src/form/form.tsx": "4b39b6d7197883fcab9ee6f930e42d1db6e5a0d77f6f7aab14a1e7a85593927b",
+        "packages/data/src/query/client.tsx": "0b1ca717361318d037e67478cf239371bf0ca234a546fb4a40a8db55ac21b1cf",
+        "packages/data/src/query/collection.ts": "e6ee06565af3384b09e9ac9e0e895e97749bef3d8631253f3460a0a294248329",
+        "packages/data/src/query/repository.ts": "70dfb4734db19f52e6f3efe193f5c94aeae04b28f175e9f36ac8b56836a2b73b",
+        "packages/molecules/src/molecules/Combobox/Combobox.tsx": "fc012e353788974499ed53370c4f77147ea12ddfeb588f887fca137e97307b34",
+        "packages/molecules/src/molecules/Dialog/Dialog.tsx": "58485b1028b76cf57b049537e5dd90bc34eda812b8d3eebd49b6b7640d84e2f5",
+        "packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx": "331e56aeb9fa7c9a3daa00415c439078f1b4931f806514a7efacc4120826f073",
+        "packages/tailwind/src/style.css": "4fdab4a876ac053e4b3ce71258e706766fb7fbbdbe55c0a3bf519cf7c2b2e521",
+        "skills/README.md": "f4d200dbb4176720ceb99d91ae25f5b5002c227f0b7eeb44a890e372dd913435",
+        "spec/adr/0001-solid-no-v-model.md": "382711862fd907c2a30d4e141b26013396fac7f598a2f802e169a3016258ea96",
+        "spec/data.md": "fd050fec887e1f952279766c70e12fe8e36a67968564476438de8b191653ec14",
+        "spec/inputs.md": "c4bc011628cf4b6ceedfc5b6100a452317592ce1a88de8ce42ca3460c47fdde1"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: AGENTS.md, CONTEXT.md, PRINCIPLES.md, _artifacts/domain_map.yaml, _artifacts/skill_spec.md, _artifacts/skill_tree.yaml, packages/atoms/skills/newui/SKILL.md, packages/data/README.md, packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx, spec/adr/0001-solid-no-v-model.md, spec/inputs.md at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:README.md": {
+      "fingerprint": "8b838d1f97d04eb0258c07a9e7dfbb0558f16eeca64d4fe567ab37f041d2dc6f",
+      "snapshot": {
+        "README.md": "22927b442f92b9204b6c027fde5b4eac3429b2a689ade119d90ca7f24a63503a"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: README.md at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:apps/playground/src/generated/surface-inventory.json": {
+      "fingerprint": "9a20acf82a76ed60d6753d4030fd359c85fec39a85611ce0393f80b322857122",
+      "snapshot": {
+        "apps/playground/src/generated/surface-inventory.json": "befcbb765e5d16a66485e32f1dffeb5e1c99974f3e86bc8cb68ac80ff98cbfbe"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: apps/playground/src/generated/surface-inventory.json at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/index.ts": {
+      "fingerprint": "12f2d8f9d6e62e6a9dfe106b9d960e7afa3f9387ab41c0939dedd42297125927",
+      "snapshot": {
+        "packages/atoms/src/lib/index.ts": "6220c2db3985974624907ab359db2ffc8c28a1f19eb030c48442e4e91544cbac"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/index.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/client.test.ts": {
+      "fingerprint": "1dd8ad501097c7da6d3f8b56f8c03a0f15ecbd9fce839c1781a5223b7f1115ff",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/client.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/client.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/client.ts": {
+      "fingerprint": "82cbcad92adc04b2f8b506cae7ccfb2f0bbf02890a7ee6eb97f926ccb44c6732",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/client.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/client.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/document.test.ts": {
+      "fingerprint": "4ebe569325bb2440a60021b027fd311bfe3beec00db3920044362e1f8c589d68",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/document.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/document.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/document.ts": {
+      "fingerprint": "4c0d9c8dc0523cba24101114d75cc300cc52d1c74f571e960f3b4202c48eae14",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/document.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/document.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/idb.test.ts": {
+      "fingerprint": "6a1beaa7bd648779fd6e8ac8d0e26df309fc47d0fc560be924f51544abedcaac",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/idb.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/idb.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/idb.ts": {
+      "fingerprint": "fd7dfd704a2993aea9dce77b6e8253a302aab35501a5d5bcfda0970b437fb765",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/idb.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/idb.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/index.ts": {
+      "fingerprint": "7307211fb9203fbdee1c4db0772f8df789434d1b1072a6b10a391df1d3edbc5c",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/index.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/index.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/list.test.ts": {
+      "fingerprint": "7d758854dc2ce965230bdb0da640f915b75453cdf70c2d50bc50785c8917184f",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/list.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/list.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/list.ts": {
+      "fingerprint": "ad1903964b6b4c4a46ba7071acca860632d97634801af7bad912a797c078296d",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/list.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/list.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/local.test.ts": {
+      "fingerprint": "3cb184ca82707844d81a489ed673f3bbba5ff02939dee12f7b1cbf2edd53e409",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/local.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/local.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/local.ts": {
+      "fingerprint": "5b7138b1face2154c5f983645be482c11068c834d993e93e71e4cbb025f0a7cf",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/local.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/local.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/realtime.test.ts": {
+      "fingerprint": "489c7384b0b2456a0c5bebdc2498b52c51584156b740633e299f787345270e03",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/realtime.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/realtime.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/realtime.ts": {
+      "fingerprint": "782b8da16824b25b56139d23c40fa32ff3e083e69777ed4678ba8227d5727425",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/realtime.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/realtime.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/resource.test.ts": {
+      "fingerprint": "8472dbbe17190b00349bb4ba38eb2c113b32d64c0a44a804c946169df8bec75d",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/resource.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/resource.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/resource.ts": {
+      "fingerprint": "af324375cf841a7a2ba0a14372978e0819492013a4592b699221b692c7410d06",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/resource.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/resource.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/useCall.test.ts": {
+      "fingerprint": "12a4966d4cb21d834c768c12a2828806d82b6de73e5c58c775fe5839a10c2e55",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/useCall.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/useCall.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/useCall.ts": {
+      "fingerprint": "4e28eaccf307ac5c15038ca40c8a4ee0bd58a62e3a209d0347a4ff667b697604",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/useCall.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/useCall.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/useDoc.test.ts": {
+      "fingerprint": "c81afded0b04fa1efb85cf3b2b9046fe4abecf9f1e0663024f2cd407bbe462a2",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/useDoc.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/useDoc.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/useDoc.ts": {
+      "fingerprint": "7faa67bc51c09e4338bae2b87097d44ee122bdc8c9cbd4ef5736a40ad74f9579",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/useDoc.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/useDoc.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/useDoctype.test.ts": {
+      "fingerprint": "193fe3207112e074c3cad770ea6af8454f2b36f51829b07bb161da9ce1f8677e",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/useDoctype.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/useDoctype.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/useDoctype.ts": {
+      "fingerprint": "c7849ed377e21d36a7726b034b07a691eedcc02ba833bb47078ea0adde96b6a5",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/useDoctype.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/useDoctype.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/useList.test.ts": {
+      "fingerprint": "a74fc95589933b75331dcfec9a6997d14fe8942f6635fb878059a74decff694c",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/useList.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/useList.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/useList.ts": {
+      "fingerprint": "3e02ca344d043e8845de4546ea287119d0d3e3350142693aadd7f2211050f3d2",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/useList.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/useList.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/useNewDoc.test.ts": {
+      "fingerprint": "9c6ac8ce402e3d63644ce00ebfc21195668f11c4744aea89aba0a00b90f38994",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/useNewDoc.test.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/useNewDoc.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/atoms/src/lib/resource/useNewDoc.ts": {
+      "fingerprint": "465fb348cdd5bdd050c73b5638782c42251745460c413b655756d4ca9c74f249",
+      "snapshot": {
+        "packages/atoms/src/lib/resource/useNewDoc.ts": null
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/atoms/src/lib/resource/useNewDoc.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/exports.test.ts": {
+      "fingerprint": "65a4c0abfea43eee01adf2e2651caaf28639c993bcf7a0702dbfa5996eb49395",
+      "snapshot": {
+        "packages/data/src/exports.test.ts": "a071560ffd145203e25f085609d71b10c260b18bdc87cef0cc1cdaedf64c2867"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/exports.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/client.test.ts": {
+      "fingerprint": "afa759b0a33005c80d4baf59d7b9b57c53c80bfefab721090507f088efee8a13",
+      "snapshot": {
+        "packages/data/src/resource/client.test.ts": "ac3585b61f667b91ca56d95e57b9006e1fb95c848b86d5f0c3582d145cf5e499"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/client.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/client.ts": {
+      "fingerprint": "1d97e0539763a590fa6ad86265cc7120fff015e2adfc550b39b2728ea694454e",
+      "snapshot": {
+        "packages/data/src/resource/client.ts": "2e53536e10260c903d134ccd72b500ce6e00658564170bd51f58905668d0578d"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/client.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/document.test.ts": {
+      "fingerprint": "d25a0081fc26a29a4da7c21ba5b50697b9814f8fdfdfcf99997bd5d9a197cffb",
+      "snapshot": {
+        "packages/data/src/resource/document.test.ts": "8866cf31eaceb4361e6bd37a4eb9abb73c13993585327bad95b97c5333c4c40e"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/document.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/document.ts": {
+      "fingerprint": "4f06765eaaf9509ddbc76c3a8605d248919dd6374e975e658c4b2e586bbfc37e",
+      "snapshot": {
+        "packages/data/src/resource/document.ts": "88409236e97655199a847a9e377e07b4f38da6aaea830c1f28967c22758a1dfd"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/document.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/idb.test.ts": {
+      "fingerprint": "80847ddf717c90c602d42c6a0d02626855e7d7a004aab116b1eaf35d98150cd8",
+      "snapshot": {
+        "packages/data/src/resource/idb.test.ts": "85ee7ec0c134282d88a40eb1c1e53d241e94ce47182b709c7f57844854158714"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/idb.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/idb.ts": {
+      "fingerprint": "ce5c6682eb2700d5c603f499b5c38e2c7b4c59c15788f488155ae1b430bb6ebf",
+      "snapshot": {
+        "packages/data/src/resource/idb.ts": "ac3290b69847fb152a397e7f4be4d51280abac5599dd712cc16ee922ef3ba52a"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/idb.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/index.ts": {
+      "fingerprint": "dc31acb40e57b798730798e23c555f3eab7331d5ce432f886f17cc2b86309ba3",
+      "snapshot": {
+        "packages/data/src/resource/index.ts": "b1791c945fcefa85087d07b4a231025a9ce5cb351e95083b090b3be94afdd16a"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/index.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/list.test.ts": {
+      "fingerprint": "db381e78ac304929aa41f68cfd6a65a8cabe430cda766e824c67350044ac8f59",
+      "snapshot": {
+        "packages/data/src/resource/list.test.ts": "4be2378b90ae03881df6dbf4e33bb999b235400d843933866d0dd5c5d22ca6a6"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/list.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/list.ts": {
+      "fingerprint": "71fb0465b2dfb177be8e83571eee1d4629e60c989c1440cd8d64ef37d4f0ed1f",
+      "snapshot": {
+        "packages/data/src/resource/list.ts": "6ee8b2890fed1b979ebfc42953eb87ec0ac51ca212bb97f577ccb824531c1814"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/list.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/local.test.ts": {
+      "fingerprint": "e94f743332d90a4e6bf13c707850fff3b7900b9853db3e2fa71e489dee15930c",
+      "snapshot": {
+        "packages/data/src/resource/local.test.ts": "af433f37e37598475f192ef2002a2fad3842eef04a80790320f9db3be99dbecc"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/local.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/local.ts": {
+      "fingerprint": "65b98c70d97d868ea2b7de8bbe687aa121f925a12af2b5414af8a90ffca946c0",
+      "snapshot": {
+        "packages/data/src/resource/local.ts": "9c363e1a59f1154d939b2bea4e3cbc04a4d2050b7abbcd56fcad05ca78d4b4fb"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/local.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/realtime.test.ts": {
+      "fingerprint": "28fe7dba90f5749440894895061762b4265110182281ebfdde75184ce2f072b4",
+      "snapshot": {
+        "packages/data/src/resource/realtime.test.ts": "ba4894bc8e1d3898dc76b257b982cfb8f4500754a1cb61d1c38dc399f0b30df0"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/realtime.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/realtime.ts": {
+      "fingerprint": "f9059fb669affa72c8be05a6852980de3f4977a3f710615aad4e6a30d417f920",
+      "snapshot": {
+        "packages/data/src/resource/realtime.ts": "b83b391a3a61b26a06d778a0722983b4ab51adc44b7155c7fb2b0aa1eed8b88a"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/realtime.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/resource.test.ts": {
+      "fingerprint": "fdc6fef16cd99328b6d15a85f6e3d23c1f4e60dce3c60b746dcee8310d326d1d",
+      "snapshot": {
+        "packages/data/src/resource/resource.test.ts": "b28b8806737ee039fe6fa6bdb563d48ca7e6bde226b57fef9c56bdf6628a38d4"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/resource.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/resource.ts": {
+      "fingerprint": "da7c8bdf68817e1d5d82435d42908d45cabc65baa571065b1b02b77e9018bd8e",
+      "snapshot": {
+        "packages/data/src/resource/resource.ts": "29be1c571cda3caaadf735e5e45af87cb2fc53ace4b3f2de05dafa29d71f92a0"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/resource.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/useCall.test.ts": {
+      "fingerprint": "f3d1a62be440fdbf9b6e0377c7f2cbe76c042465dca5df81f02071e8f91582c5",
+      "snapshot": {
+        "packages/data/src/resource/useCall.test.ts": "7bd280b97e7f7d1f7611e3c786aa7c7c8ad395f4078f9b7187b67afaf32ba1f5"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/useCall.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/useCall.ts": {
+      "fingerprint": "623066d5f2cfecb38c3ebee085d4ce728bf5cbc310e7fb34c5093ad59753f8a6",
+      "snapshot": {
+        "packages/data/src/resource/useCall.ts": "30bb1262b1eb8b575b0fb39f4c643cdb0458579ccf572e1f915b59b1915dc977"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/useCall.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/useDoc.test.ts": {
+      "fingerprint": "27be4ac5dfbb5229fd62493bb628d4779e00f177dc2ccd795ab76368a5ad2374",
+      "snapshot": {
+        "packages/data/src/resource/useDoc.test.ts": "d50a019b001b598a5ed27ce82506d413128659671a06a9e2f1c1eaed88594799"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/useDoc.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/useDoc.ts": {
+      "fingerprint": "0e6a2c5473a701cd278627e4a0435fc9c72d9ef6342847647f06805530aa54ac",
+      "snapshot": {
+        "packages/data/src/resource/useDoc.ts": "a01e6417299d8173c21dae0763126b01ec88732ee6cc21b9319730823df4b071"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/useDoc.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/useDoctype.test.ts": {
+      "fingerprint": "4ff4f09f038af093ea46910f9668e014b92b408949da7039bf265a602703ae2f",
+      "snapshot": {
+        "packages/data/src/resource/useDoctype.test.ts": "6d62c6cf4695b45dc410c095acb451e7923a6bf9272d2742f579c200b8da6739"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/useDoctype.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/useDoctype.ts": {
+      "fingerprint": "7ebbc678f430e5b742283f896a8b3695f720798089bf150579d12624d11139d8",
+      "snapshot": {
+        "packages/data/src/resource/useDoctype.ts": "7dcbd71784b1dc9c949f9ba4bed8bcbaf8ddfa44dcc07471a70baf2c84763977"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/useDoctype.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/useList.test.ts": {
+      "fingerprint": "17f29692950440f9e5c6427eecf9deb45c80d58792a22b4dea07f45b0c1954c3",
+      "snapshot": {
+        "packages/data/src/resource/useList.test.ts": "13147979c5862292e767084f69b778bdc91ec846eeef532b12eeb049e77b535f"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/useList.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/useList.ts": {
+      "fingerprint": "609689c8a9ce35c2fe15ca6086fea86cd48482b5fb1cfbad79480b188758322c",
+      "snapshot": {
+        "packages/data/src/resource/useList.ts": "810a7e854abd624c9d675774a4ee1cdcc149f9534d8f0d5edc186420ad385a77"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/useList.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/useNewDoc.test.ts": {
+      "fingerprint": "18be2b5f5121ac42f1d36942e1b5e3612b621af032c0c9cddcd73f569d4523c9",
+      "snapshot": {
+        "packages/data/src/resource/useNewDoc.test.ts": "065751f96c4a0087e91856d4ec5056b5365f1e610a66042777351524bdb7b3f9"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/useNewDoc.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:packages/data/src/resource/useNewDoc.ts": {
+      "fingerprint": "de418a113ac145f12b442774e406e740c4bf077b0468c86d8d13c8b937340119",
+      "snapshot": {
+        "packages/data/src/resource/useNewDoc.ts": "1b75701fabdcd027503e8ab0ab9106a2a41599c9a65da219c0e9646e7dd7d694"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: packages/data/src/resource/useNewDoc.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:scripts/fixtures/data-resource.ts": {
+      "fingerprint": "f1ec45b831ed89b0c7077f1eac74a895e83f90bddbfdcfb7c15c0086f6b8d525",
+      "snapshot": {
+        "scripts/fixtures/data-resource.ts": "119ae9f1f7b8977c16c41d9ce46e21c4dfb935950abbad2cfa88f8d007dc1c1f"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: scripts/fixtures/data-resource.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    },
+    "source:scripts/size.ts": {
+      "fingerprint": "5c43c9ad659320cc78dccd388f84fc996454970609e901cb6c678854480da400",
+      "snapshot": {
+        "scripts/size.ts": "7a14752fd7c28a5abeba519a6673700c1cee668f8b3d5b29c3091c6cf5da3bdc"
+      },
+      "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
+      "outcome": "no-change",
+      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "evidence": [
+        "Changed: scripts/size.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
+      ]
+    }
+  }
+}

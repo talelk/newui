@@ -46,7 +46,7 @@ a demo is written once.
 | `@newui/organisms` | Application regions, sidebar, table and virtual list |
 | `@newui/templates` | Exactly three page templates: `AppShell`, `PaneLayout`, `AuthLayout` |
 | `@newui/icons` | The icon set as Solid components |
-| `@newui/data` | Headless format/selection/undo/download, query and form logic |
+| `@newui/data` | Headless format/selection/undo/download, query and form logic; `/resource` is the Frappe DocType client |
 | `@newui/charts` | Theme-aware ECharts SVG wrappers and accessible data fallbacks |
 | `@newui/editor`, `@newui/code-editor` | TipTap and CodeMirror integrations |
 | `@newui/vite` | Development integration: dev-server proxy, icons and DocType types |

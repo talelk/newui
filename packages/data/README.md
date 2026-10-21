@@ -45,3 +45,11 @@ depend on them directly. Rendered `DataTable` and `VirtualList` are organisms
 and `ScrollTable` is a molecule. This package supplies their headless data
 behavior, not their rendered surface; `spec/data.md` is the contract for what
 has shipped.
+
+## Resource — `@newui/data/resource`
+
+The Frappe DocType client: `request`/`frappeRequest` transport with
+`setConfig`, document and list hooks (`useDoc`, `useDoctype`, `useList`,
+`useNewDoc`, `useCall`), an IndexedDB cache, and a shared WebSocket realtime
+multiplexer. It lives behind its own entry so importing `usd` never pulls a
+fetch stack, and it is app-specific — generic query needs belong on `/query`.
