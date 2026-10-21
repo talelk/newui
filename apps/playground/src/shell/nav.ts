@@ -59,6 +59,11 @@ export const NAV: NavSection[] = [
         description: 'Packages, stylesheet, provider, theme.',
       },
       {
+        title: 'Changelog',
+        href: '/changelog',
+        description: 'Released versions and the pending changesets.',
+      },
+      {
         title: 'Atomic design',
         href: '/architecture',
         description:

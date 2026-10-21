@@ -9,6 +9,7 @@ import {
   Show,
   Suspense,
 } from 'solid-js'
+import { LIBRARY_VERSION } from '../generated/changelog'
 import { assetUrl, stripBase } from '../lib/base'
 import { NAV, sectionFor } from './nav'
 import { NAV_ROW } from './nav-ui'
@@ -131,6 +132,13 @@ export function Masthead(props: {
         >
           <img src={assetUrl('favicon.svg')} alt="" class="size-6 rounded-3" />
           <span class="hidden font-semibold sm:inline">newui</span>
+        </A>
+        <A
+          href="/changelog"
+          aria-label={`Version ${LIBRARY_VERSION} — changelog`}
+          class="hidden shrink-0 rounded-full border border-outline-gray-1 px-1.5 py-0.5 text-caption text-ink-gray-6 hover:bg-surface-gray-1 hover:text-ink-gray-8 focus-visible:focus-ring sm:block"
+        >
+          v{LIBRARY_VERSION}
         </A>
         <nav
           aria-label="Breadcrumbs"

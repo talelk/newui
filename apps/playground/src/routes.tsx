@@ -86,6 +86,7 @@ const Analytics = page(() => import('./pages/Analytics'), 'Analytics')
 const Home = page(() => import('./pages/Home'), 'Home')
 const Docs = page(() => import('./pages/Docs'), 'Docs')
 const Foundations = page(() => import('./pages/Foundations'), 'Foundations')
+const Changelog = page(() => import('./pages/Changelog'), 'Changelog')
 const Architecture = page(() => import('./pages/Architecture'), 'Architecture')
 const Kit = page(() => import('./pages/Kit'), 'Kit')
 const ComponentsIndex = page(
@@ -146,6 +147,7 @@ export const ROUTES: { path: string; title: string }[] = [
   { path: '/', title: 'Introduction' },
   { path: '/docs', title: 'Installation' },
   { path: '/foundations', title: 'Design tokens' },
+  { path: '/changelog', title: 'Changelog' },
   { path: '/architecture', title: 'Atomic design' },
   { path: '/kit', title: 'Build an app' },
   { path: '/atoms', title: 'Atoms' },
@@ -230,6 +232,7 @@ export function AppRoutes(): JSX.Element {
         <Route path="/" component={Home} />
         <Route path="/docs" component={Docs} />
         <Route path="/foundations" component={Foundations} />
+        <Route path="/changelog" component={Changelog} />
         <Route path="/architecture" component={Architecture} />
         <Route path="/kit" component={Kit} />
         <Route path="/kit/recipes" component={KitRecipes} />
