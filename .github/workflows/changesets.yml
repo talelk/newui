@@ -51,3 +51,6 @@ jobs:
           publish-script: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Flip this repository variable to true after the first publish and
+          # the per-package Trusted Publisher setup.
+          NPM_PUBLISH: ${{ vars.NPM_PUBLISH }}
