@@ -2483,6 +2483,26 @@
       }
     ]
   },
+  "packages/atoms/src/atoms/Heading/Heading.tsx": {
+    "HeadingProps": [
+      {
+        "name": "level",
+        "type": "HeadingLevel",
+        "optional": true,
+        "description": "Semantic heading level, rendered as `h1`–`h3`. `1` is the page title\n(24px), `2`/`3` are section titles (18px)."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ]
+  },
   "packages/atoms/src/atoms/Icon/Icon.tsx": {
     "IconProps": [
       {
@@ -2897,6 +2917,32 @@
         "name": "class",
         "type": "string",
         "optional": true
+      }
+    ]
+  },
+  "packages/atoms/src/atoms/Text/Text.tsx": {
+    "TextProps": [
+      {
+        "name": "size",
+        "type": "TextSize",
+        "optional": true,
+        "description": "Paragraph size. The scale matches the `text-p-*` tokens; `base` is body\ncopy."
+      },
+      {
+        "name": "weight",
+        "type": "TextWeight",
+        "optional": true,
+        "description": "Weight composite. Omitted = the scale's regular weight."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
       }
     ]
   },

@@ -204,6 +204,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'organisms-grouped-documentation-sidebar--default',
     load: () => import('../stories/sidebar-01.stories'),
   },
+  "Heading": {
+    id: 'atoms-display-heading--default',
+    load: () => import('../stories/heading.stories'),
+  },
   "HeatmapChart": {
     id: 'organisms-heatmapchart--default',
     load: () => import('../stories/heatmap-chart.stories'),
@@ -355,6 +359,10 @@ export const STORIES: Record<string, StoryEntry> = {
   "Tabs": {
     id: 'molecules-disclosure-tabs--default',
     load: () => import('../stories/tabs.stories'),
+  },
+  "Text": {
+    id: 'atoms-display-text--default',
+    load: () => import('../stories/text.stories'),
   },
   "Textarea": {
     id: 'atoms-inputs-textarea--default',

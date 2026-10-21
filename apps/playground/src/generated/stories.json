@@ -86,11 +86,35 @@
       ]
     },
     {
+      "id": "atoms-display-heading--default",
+      "title": "Atoms/Display/Heading",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/heading.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "atoms-display-icon--default",
       "title": "Atoms/Display/Icon",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/icon.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "atoms-display-text--default",
+      "title": "Atoms/Display/Text",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/text.stories.tsx",
       "tags": [
         "dev",
         "test",
