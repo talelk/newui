@@ -75,7 +75,7 @@ export function Docs(): JSX.Element {
                   </A>
                 </td>
                 <td class="p-2 font-mono text-xs">
-                  @newui/tailwind · @newui/tokens
+                  @talelk/newui-tailwind · @talelk/newui-tokens
                 </td>
                 <td class="p-2 text-ink-gray-7">
                   the tokens and the Tailwind layer — every class is spelled in
@@ -92,7 +92,7 @@ export function Docs(): JSX.Element {
                   </A>{' '}
                 </td>
                 <td class="p-2 font-mono text-xs">
-                  @newui/atoms · @newui/icons
+                  @talelk/newui-atoms · @talelk/newui-icons
                 </td>
                 <td class="p-2 text-ink-gray-7">
                   single controls and marks; Zag supplies keyboard, focus and
@@ -108,7 +108,7 @@ export function Docs(): JSX.Element {
                     Molecules
                   </A>
                 </td>
-                <td class="p-2 font-mono text-xs">@newui/molecules</td>
+                <td class="p-2 font-mono text-xs">@talelk/newui-molecules</td>
                 <td class="p-2 text-ink-gray-7">
                   compound interactions built from atoms: fields, menus, pickers
                 </td>
@@ -122,7 +122,7 @@ export function Docs(): JSX.Element {
                     Organisms
                   </A>
                 </td>
-                <td class="p-2 font-mono text-xs">@newui/organisms</td>
+                <td class="p-2 font-mono text-xs">@talelk/newui-organisms</td>
                 <td class="p-2 text-ink-gray-7">
                   independent sections: sidebars, toolbars, filter bars, boards
                 </td>
@@ -136,7 +136,7 @@ export function Docs(): JSX.Element {
                     Templates
                   </A>
                 </td>
-                <td class="p-2 font-mono text-xs">@newui/templates</td>
+                <td class="p-2 font-mono text-xs">@talelk/newui-templates</td>
                 <td class="p-2 text-ink-gray-7">
                   page arrangement: the frame, navigation and page content
                 </td>
@@ -160,28 +160,28 @@ export function Docs(): JSX.Element {
         </div>
         <p class="text-base text-ink-gray-7">
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @newui/data
+            @talelk/newui-data
           </code>{' '}
           is the logic layer beside the levels — formatting, selection, undo,
           downloads, and the query/form logic under their own entries. Rendered
           tables and virtual lists are organisms, not data helpers.
         </p>
-        <Code>{`pnpm add @newui/atoms @newui/molecules @newui/tailwind @newui/icons
+        <Code>{`pnpm add @talelk/newui-atoms @talelk/newui-molecules @talelk/newui-tailwind @talelk/newui-icons
 
 # the composed levels and the logic layer
-pnpm add @newui/organisms @newui/templates @newui/data`}</Code>
+pnpm add @talelk/newui-organisms @talelk/newui-templates @talelk/newui-data`}</Code>
         <p class="text-base text-ink-gray-7">
           Add{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @newui/charts
+            @talelk/newui-charts
           </code>
           ,{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @newui/editor
+            @talelk/newui-editor
           </code>{' '}
           or{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @newui/code-editor
+            @talelk/newui-code-editor
           </code>{' '}
           only when a screen needs them — each drags a large dependency with it
           (echarts, TipTap, CodeMirror), which is exactly why they are separate
@@ -203,7 +203,7 @@ pnpm add @newui/organisms @newui/templates @newui/data`}</Code>
           the library scans its own source, your app scans yours.
         </p>
         <Code>{`/* app.css */
-@import '@newui/tailwind/style.css';
+@import '@talelk/newui-tailwind/style.css';
 
 @source "../index.html";
 @source "./**/*.{ts,tsx}";`}</Code>
@@ -227,8 +227,8 @@ pnpm add @newui/organisms @newui/templates @newui/data`}</Code>
           for light/dark: it flips a document attribute, persists the choice and
           follows the OS when you pick <em>system</em>.
         </p>
-        <Code>{`import { createColorScheme, UIProvider } from '@newui/atoms'
-import { Toaster } from '@newui/molecules'
+        <Code>{`import { createColorScheme, UIProvider } from '@talelk/newui-atoms'
+import { Toaster } from '@talelk/newui-molecules'
 
 export function App() {
   createColorScheme() // optional: light/dark, system-aware
@@ -247,8 +247,8 @@ export function App() {
           Components are compound: the parts you see are subcomponents, and
           their state is a signal you own, never a string you set from outside.
         </p>
-        <Code>{`import { Button } from '@newui/atoms'
-import { Dialog } from '@newui/molecules'
+        <Code>{`import { Button } from '@talelk/newui-atoms'
+import { Dialog } from '@talelk/newui-molecules'
 import { createSignal } from 'solid-js'
 
 function DeleteProject() {

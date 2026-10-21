@@ -72,7 +72,7 @@ const manifest = JSON.parse(
   readFileSync(path.join(process.cwd(), 'packages/data/package.json'), 'utf8'),
 ) as { exports: Record<string, unknown> }
 
-describe('@newui/data', () => {
+describe('@talelk/newui-data', () => {
   it('publishes exactly the entries this test pins', () => {
     expect(Object.keys(manifest.exports).sort()).toEqual(
       Object.keys(ENTRIES).sort(),

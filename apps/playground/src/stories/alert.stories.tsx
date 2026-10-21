@@ -1,4 +1,4 @@
-import { Alert } from '@newui/molecules'
+import { Alert } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

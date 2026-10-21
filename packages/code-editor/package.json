@@ -1,5 +1,5 @@
 {
-  "name": "@newui/code-editor",
+  "name": "@talelk/newui-code-editor",
   "version": "0.1.0",
   "type": "module",
   "description": "A CodeMirror 6 code editor as a Solid component, themed with the newui design tokens.",

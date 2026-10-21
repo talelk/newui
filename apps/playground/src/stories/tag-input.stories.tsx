@@ -1,4 +1,4 @@
-import { TagInput } from '@newui/molecules'
+import { TagInput } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'

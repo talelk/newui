@@ -1,4 +1,4 @@
-import { cn, Icon, type IconProp } from '@newui/atoms'
+import { cn, Icon, type IconProp } from '@talelk/newui-atoms'
 import { For, type JSX, Show } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 

@@ -1,4 +1,4 @@
-# @newui/organisms
+# @talelk/newui-organisms
 
 ## 1.0.0
 
@@ -17,19 +17,19 @@
   labels. All input families share Field help/error wiring without remounting
   uncontrolled state when validation appears. Settings tabs support vertical
   arrow, Home and End navigation.
-- 0d87bbb: Clean break to the atomic public API. The `@newui/ui`, `@newui/blocks` and
-  `@newui/layouts` packages are removed; consumers import atoms, molecules,
+- 0d87bbb: Clean break to the atomic public API. The `@talelk/newui-ui`, `@talelk/newui-blocks` and
+  `@talelk/newui-layouts` packages are removed; consumers import atoms, molecules,
   organisms and templates from the new package names. No compatibility barrels,
   deprecated shell adapters or legacy route redirects are shipped.
   
-  `@newui/templates` now exposes exactly `AppShell`, `PaneLayout` and
+  `@talelk/newui-templates` now exposes exactly `AppShell`, `PaneLayout` and
   `AuthLayout`. `AppShell` owns one responsive sidebar with tenant, grouped
   navigation and pinned settings/account controls; split rail/sidebar composition
   is removed. `DataTable`, `ScrollTable` and `VirtualList` move from the logic
-  package into the atomic visual packages, leaving `@newui/data` headless.
+  package into the atomic visual packages, leaving `@talelk/newui-data` headless.
 - 436c6ec: Remove the dead `PageToolbarTab` type export. It was exported from
   `PageToolbar` but never used by the component (tabs are composed with
-  `Tabs`/`TabButtons` from `@newui/atoms` beside the toolbar, not through a
+  `Tabs`/`TabButtons` from `@talelk/newui-atoms` beside the toolbar, not through a
   toolbar prop) and had no consumers. This is a breaking change only for
   code importing the unused type; delete the import.
 - e02769b: The final template API is a clean break from the intermediate
@@ -49,7 +49,7 @@
   rendered a bare `Sidebar` with no visible fold control: ⌘B worked, but
   nothing on screen said so. Items without an `icon` fold to a tooltip-only
   row, as `SidebarItem` already specifies.
-- 02c12c3: `@newui/organisms` is the composed page-region layer, built on atoms and
+- 02c12c3: `@talelk/newui-organisms` is the composed page-region layer, built on atoms and
   molecules. Its entries answer *what is this section?* and each has a demo,
   contract and generated reference page:
   
@@ -79,7 +79,7 @@
   
   The package also contains the sidebar, filter bar, stat grid, board, table,
   virtual list and other page regions. Its dependencies point down to
-  `@newui/atoms` and `@newui/molecules`; optional chart/editor engines remain in
+  `@talelk/newui-atoms` and `@talelk/newui-molecules`; optional chart/editor engines remain in
   their own packages.
 - 6fda044: Default control sizing is now sm (28px), including buttons, text entry, selectors,
   date/time triggers, tabs, toggle groups and pagination. Explicit md remains 32px;
@@ -88,24 +88,24 @@
   padding="md" for the previous 16px. Chart cards, editor toolbar commands and blocks use compact spacing.
   Page, section, metric and hero typography now follow 24/30, 18/24, 28/32 and
   36/40px respectively. Existing semantic colors and dialog padding are retained.
-- 4b90ba3: `@newui/organisms` — the promoted table surface.
+- 4b90ba3: `@talelk/newui-organisms` — the promoted table surface.
   
   ```ts
-  import { DataTable, type DataTableColumn } from '@newui/organisms'
+  import { DataTable, type DataTableColumn } from '@talelk/newui-organisms'
   ```
   
   The collection→table composition six example pages had converged on, moved out
   of the playground: search, sorting, pagination, column visibility, row selection
   with a bulk action and an empty state.
   
-  TanStack Table is the engine and the reason the surface lives in `@newui/data`
-  rather than `@newui/atoms`: a component package carrying a table engine would make
-  every `Button` pay for row models. It renders with `@newui/atoms` — the single
+  TanStack Table is the engine and the reason the surface lives in `@talelk/newui-data`
+  rather than `@talelk/newui-atoms`: a component package carrying a table engine would make
+  every `Button` pay for row models. It renders with `@talelk/newui-atoms` — the single
   carve-out from the layer's headless rule, scoped to `packages/data/src/table/**`
   in the dependency rules.
   
   `ScrollTable` (the focusable scroll shell for a table wider than its column) has
-  its own entry, `@newui/organisms/scroll`, so a page that renders a semantic
+  its own entry, `@talelk/newui-organisms/scroll`, so a page that renders a semantic
   table of its own does not pull the TanStack composition in: importing both from
   one entry added 20 kB to the accounting route, because rollup puts them in one
   chunk.
@@ -113,7 +113,7 @@
   Measured at 37.6 kB gzip on its own entry, budgeted, with a `forbid` list that
   proves it drags no dialog, chart or editor with it. `data-slot` is now
   `data-table` (it was `example-data-table` while it lived in the playground).
-- 09d4eda: `@newui/organisms` — the bounded list.
+- 09d4eda: `@talelk/newui-organisms` — the bounded list.
   
   ```tsx
   <VirtualList label="Task activity" items={rows} itemSize={72} height="440px">
@@ -131,7 +131,7 @@
   anatomy and the card around it stay with the page, as the task activity stream
   shows. 20 kB gzip on its own budgeted entry.
   
-  With this, all four TanStack adapters are behind `@newui/data`: Query, Form,
+  With this, all four TanStack adapters are behind `@talelk/newui-data`: Query, Form,
   Table and Virtual. The playground no longer depends on any of them directly.
 - 436c6ec: `FilterBar` gains the active-filter row: optional `chips` (active filters
   restated as removable pills), `resultCount` (stated under the bar and announced
@@ -155,7 +155,7 @@
   `bg-surface-elevation-1`, a one-step border, `rounded-6`, `shadow-sm` and
   `p-6` padding over the plain page background, and the description and footer
   move to `text-ink-gray-7`. Visual change only; no API delta.
-- ffeac69: `@newui/organisms` stops exporting the Kanban board's drag engine.
+- ffeac69: `@talelk/newui-organisms` stops exporting the Kanban board's drag engine.
   
   `export *` from `KanbanBoard/index.ts` made `createKanbanDrag` and six tuning
   constants (`EDGE_SPEED`, `LIFT_DELAY`, `SETTLE_MS`, …) public API, so changing a
@@ -181,7 +181,7 @@
   `string[]` contract. `FormControl`'s `type="select"` follows the same split.
   `FilterBar` selects pass scalars instead of wrapping values in arrays. See
   `spec/migrations.md`.
-- ba4540f: Stacking and motion become named scales from `@newui/tokens`: `z-raised`,
+- ba4540f: Stacking and motion become named scales from `@talelk/newui-tokens`: `z-raised`,
   `z-floating`, `z-overlay`, `z-top`, `duration-fast/base/slow` and
   `ease-standard` resolve `@theme` variables instead of components hard-coding
   `z-50`, `z-[100]` and numeric durations. Computed values are unchanged. The
@@ -202,5 +202,5 @@
 - Updated dependencies [ba4540f]
 - Updated dependencies [de468fe]
 - Updated dependencies [7b85ab4]
-  - @newui/atoms@1.0.0
-  - @newui/molecules@1.0.0
+  - @talelk/newui-atoms@1.0.0
+  - @talelk/newui-molecules@1.0.0

@@ -1,5 +1,5 @@
-import { Button, Textarea, TextInput } from '@newui/atoms'
-import { Dialog } from '@newui/molecules'
+import { Button, Textarea, TextInput } from '@talelk/newui-atoms'
+import { Dialog } from '@talelk/newui-molecules'
 import { createMemo, createSignal, For, Show } from 'solid-js'
 import { CreateDialog } from './CreateDialog'
 

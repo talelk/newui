@@ -1,4 +1,4 @@
-import { ScrollTable, ScrollTableHead } from '@newui/molecules'
+import { ScrollTable, ScrollTableHead } from '@talelk/newui-molecules'
 import { For } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

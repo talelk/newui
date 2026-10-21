@@ -1,4 +1,4 @@
-import { VirtualList } from '@newui/organisms'
+import { VirtualList } from '@talelk/newui-organisms'
 import type { JSX } from 'solid-js'
 
 export interface ActivityRecord {
@@ -12,7 +12,7 @@ export interface ActivityRecord {
  * The task feed: a bounded DOM over the thousand seeded records.
  *
  * The virtualiser, the focusable scroll region and the ARIA row positions are
- * `@newui/organisms`; this keeps the row's own anatomy (who, what, which
+ * `@talelk/newui-organisms`; this keeps the row's own anatomy (who, what, which
  * record) and the card around it.
  */
 export function ActivityList(props: { rows: ActivityRecord[] }): JSX.Element {

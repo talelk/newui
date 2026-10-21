@@ -1,4 +1,4 @@
-import { ContextMenu, toast } from '@newui/molecules'
+import { ContextMenu, toast } from '@talelk/newui-molecules'
 import { createSignal, onMount } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

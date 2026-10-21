@@ -1,4 +1,4 @@
-import { Button } from '@newui/atoms'
+import { Button } from '@talelk/newui-atoms'
 import { type Accessor, createMemo, createSignal, type JSX } from 'solid-js'
 
 /**
@@ -10,7 +10,7 @@ import { type Accessor, createMemo, createSignal, type JSX } from 'solid-js'
  * function and receives an accessor for the resolved state — an accessor,
  * not a snapshot, so toggling updates the mounted chart in place. This module imports `Button`
  * only — never a chart — or every per-file demo chunk would drag all of
- * `@newui/charts` behind it.
+ * `@talelk/newui-charts` behind it.
  */
 
 /** The monthly series the cartesian demos share. */

@@ -1,4 +1,4 @@
-import { Tooltip } from '@newui/atoms'
+import { Tooltip } from '@talelk/newui-atoms'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

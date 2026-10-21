@@ -1,4 +1,4 @@
-import { HoverCard } from '@newui/molecules'
+import { HoverCard } from '@talelk/newui-molecules'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

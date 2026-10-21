@@ -1,10 +1,10 @@
-# @newui/templates
+# @talelk/newui-templates
 
 Exactly three templates: one responsive workspace `AppShell`, a two-pane
 `PaneLayout`, and a centered `AuthLayout`.
 
 ```tsx
-import { AppShell, PaneLayout } from '@newui/templates'
+import { AppShell, PaneLayout } from '@talelk/newui-templates'
 
 <AppShell
   brand={<Brand />}
@@ -22,5 +22,5 @@ import { AppShell, PaneLayout } from '@newui/templates'
 logo, tenant switcher, routes and account actions. There is no separate rail,
 desktop shell, mobile shell or alternate app layout.
 
-The package depends downward on `@newui/atoms`, `@newui/molecules` and
-`@newui/organisms`.
+The package depends downward on `@talelk/newui-atoms`, `@talelk/newui-molecules` and
+`@talelk/newui-organisms`.

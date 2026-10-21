@@ -4,7 +4,7 @@ Presents a focused modal task.
 
 ## Usage and anatomy
 
-Import `Dialog` from `@newui/molecules`. The executable example and its copyable
+Import `Dialog` from `@talelk/newui-molecules`. The executable example and its copyable
 source on `/molecules/dialog` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

@@ -35,32 +35,32 @@ When docs disagree: `spec/*.md` > ADRs > `PRINCIPLES.md` > `CONTEXT.md`.
 
 | Layer | Package | Notes |
 | --- | --- | --- |
-| tokens | `@newui/tokens` | framework-neutral token data + CSS-var generator |
-| tailwind | `@newui/tailwind` | v4 `@theme`/`@utility`/plugins, `style.css` |
-| icons | `@newui/icons` | the icon set as Solid components |
-| atoms | `@newui/atoms` | single controls/marks and shared runtime foundations |
-| molecules | `@newui/molecules` | compound interactions built from atoms |
-| organisms | `@newui/organisms` | page regions: sidebar, filter bar, board, table, virtual list |
-| templates | `@newui/templates` | `AppShell`, `PaneLayout`, `AuthLayout` |
-| data | `@newui/data` | headless formatting, selection, undo, downloads, query and form logic; `/resource` owns the Frappe DocType client |
-| code editor | `@newui/code-editor` | CodeMirror 6 Solid component |
-| rich text | `@newui/editor` | TipTap 3 Solid editor + toolbar |
-| charts | `@newui/charts` | echarts Solid wrappers (SVG renderer) |
-| vite | `@newui/vite` | dev-server proxy · lucide auto-import · DocType types |
+| tokens | `@talelk/newui-tokens` | framework-neutral token data + CSS-var generator |
+| tailwind | `@talelk/newui-tailwind` | v4 `@theme`/`@utility`/plugins, `style.css` |
+| icons | `@talelk/newui-icons` | the icon set as Solid components |
+| atoms | `@talelk/newui-atoms` | single controls/marks and shared runtime foundations |
+| molecules | `@talelk/newui-molecules` | compound interactions built from atoms |
+| organisms | `@talelk/newui-organisms` | page regions: sidebar, filter bar, board, table, virtual list |
+| templates | `@talelk/newui-templates` | `AppShell`, `PaneLayout`, `AuthLayout` |
+| data | `@talelk/newui-data` | headless formatting, selection, undo, downloads, query and form logic; `/resource` owns the Frappe DocType client |
+| code editor | `@talelk/newui-code-editor` | CodeMirror 6 Solid component |
+| rich text | `@talelk/newui-editor` | TipTap 3 Solid editor + toolbar |
+| charts | `@talelk/newui-charts` | echarts Solid wrappers (SVG renderer) |
+| vite | `@talelk/newui-vite` | dev-server proxy · lucide auto-import · DocType types |
 | site | `apps/playground` | the docs site, Storybook's host, and the visual acceptance surface |
 | starter | `apps/starter` | the gated application skeleton — the copyable composition of every level |
 
 The kit's direction is [`spec/kit.md`](./spec/kit.md) and
 [`ADR-0013`](./spec/adr/0013-atomic-packages-and-app-shell.md): foundations →
 atoms → molecules → organisms → templates → pages, with the headless data layer
-beside the visual ladder. `@newui/templates` has exactly three supported
-templates; `@newui/data` owns no rendered table/list surface. `apps/starter` is
+beside the visual ladder. `@talelk/newui-templates` has exactly three supported
+templates; `@talelk/newui-data` owns no rendered table/list surface. `apps/starter` is
 the copyable, gated page composition; `/kit` is its guide.
 
 The packages and site read in atomic design's order. Every registry entry has
 one explicit `atomic` classification in `scripts/atomic.ts`; missing or extra
-names fail generation. The old `@newui/ui`, `@newui/blocks` and
-`@newui/layouts` packages and their shell APIs are removed, not re-exported.
+names fail generation. The old `@talelk/newui-ui`, `@talelk/newui-blocks` and
+`@talelk/newui-layouts` packages and their shell APIs are removed, not re-exported.
 
 - **Primitives:** raw `@zag-js/*` via `useMachine` + `normalizeProps`
   (`packages/atoms/src/lib/zag.ts`). Zag supplies keyboard, ARIA and focus.
@@ -145,7 +145,7 @@ is a molecule) and the rule above them.
 
 ### Organisms
 
-`@newui/organisms` is the composed layer: a component answers *what is this
+`@talelk/newui-organisms` is the composed layer: a component answers *what is this
 control*, an organism answers *what is this page region*. The API includes
 `AppSidebar`, `FilterBar`, `StatGrid`, `AuthCard`, `KanbanBoard`, `DataTable` and
 `VirtualList`; each has a story, a contract and a generated atomic-level page.
@@ -170,11 +170,11 @@ documents the mapping and acceptance boundaries. `lib/examples.ts` owns the
 application catalog; `lib/reference-examples.ts` owns the registry mapping.
 Every shipped reference component must have an isolated lazy story.
 
-TanStack Solid Query and Form belong to `@newui/data` (`/query`: client,
+TanStack Solid Query and Form belong to `@talelk/newui-data` (`/query`: client,
 repository and collection mutations; `/form`: submit lifecycle and field-error
-bridge), and the Frappe DocType client lives behind `@newui/data/resource` —
-app-specific fetching never ships through `@newui/atoms`. Rendered tables and
-virtual lists belong to `@newui/organisms`. The playground depends on no
+bridge), and the Frappe DocType client lives behind `@talelk/newui-data/resource` —
+app-specific fetching never ships through `@talelk/newui-atoms`. Rendered tables and
+virtual lists belong to `@talelk/newui-organisms`. The playground depends on no
 TanStack package directly. Charts and editors remain optional organism-level
 packages.
 
@@ -187,7 +187,7 @@ packages.
   `style` prop. Two linters is a cost; not checking these is worse.
 - **Architecture** — `dependency-cruiser` (`pnpm arch`,
   `.dependency-cruiser.cjs`): no cycles, `lib/` must not depend on `components/`,
-  `@newui/tokens` is a leaf, packages never import from `apps/`, nothing imports
+  `@talelk/newui-tokens` is a leaf, packages never import from `apps/`, nothing imports
   from `dist/`.
 - **Package correctness** — `publint --strict` (`pnpm packages:check`) validates
   every package's `exports`, `files` and conditions for consumers, and

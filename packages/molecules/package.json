@@ -1,8 +1,8 @@
 {
-  "name": "@newui/molecules",
+  "name": "@talelk/newui-molecules",
   "version": "1.0.0",
   "type": "module",
-  "description": "Compound controls and interactions built from @newui/atoms.",
+  "description": "Compound controls and interactions built from @talelk/newui-atoms.",
   "exports": {
     ".": {
       "solid": "./src/index.ts",
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@internationalized/date": "^3.12.4",
-    "@newui/atoms": "workspace:*",
+    "@talelk/newui-atoms": "workspace:*",
     "@zag-js/accordion": "^1.46.0",
     "@zag-js/collapsible": "^1.46.0",
     "@zag-js/collection": "^1.46.0",

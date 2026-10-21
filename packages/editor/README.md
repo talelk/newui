@@ -1,4 +1,4 @@
-# @newui/editor
+# @talelk/newui-editor
 
 A [TipTap](https://tiptap.dev/) (ProseMirror) rich-text editor as a Solid
 component, themed with the newui semantic tokens so it follows the light/dark
@@ -7,7 +7,7 @@ component, themed with the newui semantic tokens so it follows the light/dark
 ## Binding
 
 TipTap has no official Solid binding. This package is a thin wrapper over
-`@tiptap/core` directly, matching `@newui/code-editor`'s CodeMirror wrapper. That
+`@tiptap/core` directly, matching `@talelk/newui-code-editor`'s CodeMirror wrapper. That
 keeps the library's own `value`/`onValueChange` contract, a stable lifecycle
 (`onMount` create / `onCleanup` destroy — prop changes never rebuild the editor),
 and narrow external writes that do not re-enter `onValueChange`.
@@ -15,13 +15,13 @@ and narrow external writes that do not re-enter `onValueChange`.
 ## Install
 
 ```sh
-pnpm add @newui/editor solid-js
+pnpm add @talelk/newui-editor solid-js
 ```
 
 ## Usage
 
 ```tsx
-import { Editor, EditorToolbar } from '@newui/editor'
+import { Editor, EditorToolbar } from '@talelk/newui-editor'
 import { createSignal } from 'solid-js'
 
 function Note() {
@@ -147,7 +147,7 @@ otherwise only warn and keep both in the schema). Pass any TipTap extension the
 built-ins don't cover:
 
 ```tsx
-import { Editor } from '@newui/editor'
+import { Editor } from '@talelk/newui-editor'
 import { Highlight } from '@tiptap/extension-highlight'
 
 <Editor extensions={[Highlight]} />

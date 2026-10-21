@@ -1,4 +1,4 @@
-import { HeatmapChart } from '@newui/charts'
+import { HeatmapChart } from '@talelk/newui-charts'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { ChartDemoControls } from './chart-demo-state'
 

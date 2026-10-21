@@ -33,35 +33,36 @@ function Code(props: { title?: string; children: string }): JSX.Element {
 const LADDER = [
   {
     level: 'Foundations',
-    package: '@newui/tailwind',
+    package: '@talelk/newui-tailwind',
     href: '/foundations',
     count: `${LADDER_COUNTS.foundations} tokens`,
     answers: 'What does it look like?',
   },
   {
     level: 'Atoms',
-    package: '@newui/atoms',
+    package: '@talelk/newui-atoms',
     href: '/atoms',
     count: `${LADDER_COUNTS.atoms} atoms`,
     answers: 'What is this single element?',
   },
   {
     level: 'Molecules',
-    package: '@newui/molecules · @newui/charts',
+    package: '@talelk/newui-molecules · @talelk/newui-charts',
     href: '/molecules',
     count: `${LADDER_COUNTS.molecules} molecules`,
     answers: 'What is this interaction?',
   },
   {
     level: 'Organisms',
-    package: '@newui/organisms · @newui/charts · @newui/editor',
+    package:
+      '@talelk/newui-organisms · @talelk/newui-charts · @talelk/newui-editor',
     href: '/organisms',
     count: `${LADDER_COUNTS.organisms} organisms`,
     answers: 'What is this section?',
   },
   {
     level: 'Templates',
-    package: '@newui/templates',
+    package: '@talelk/newui-templates',
     href: '/templates',
     count: `${LADDER_COUNTS.templates} templates`,
     answers: 'How does the page open?',
@@ -159,7 +160,7 @@ export function Kit(): JSX.Element {
                   </A>
                 </td>
                 <td class="p-2 font-mono text-xs text-ink-gray-7">
-                  @newui/data
+                  @talelk/newui-data
                 </td>
                 <td class="p-2 text-ink-gray-7">How does it behave?</td>
                 <td class="p-2 text-end text-ink-gray-7">1 + 4 entries</td>
@@ -307,7 +308,7 @@ collection.remove.mutate({ ids })
         <p class="text-base text-ink-gray-7">
           Forms are the same idea: TanStack Form stays the engine, and{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @newui/data/form
+            @talelk/newui-data/form
           </code>{' '}
           adds the submit lifecycle and the field-error bridge. A submit button
           reads{' '}
@@ -396,8 +397,8 @@ pnpm build:starter   # 138 kB gzip: frame, router, data layer, table, forms
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
             apps/starter
           </code>{' '}
-          out of the repository, rename its `package.json`, point the `@newui/*`
-          dependencies at the published versions, and replace{' '}
+          out of the repository, rename its `package.json`, point the
+          `@talelk/newui-*` dependencies at the published versions, and replace{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
             src/data/records.ts
           </code>{' '}

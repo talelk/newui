@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, Switch } from '@newui/atoms'
+import { Avatar, Badge, Button, Switch } from '@talelk/newui-atoms'
 import { createSignal, type JSX } from 'solid-js'
 
 /**

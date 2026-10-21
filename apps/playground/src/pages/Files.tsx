@@ -1,14 +1,18 @@
-import { Badge, Button, TextInput } from '@newui/atoms'
-import { NumberCard } from '@newui/charts'
-import { downloadBlob, optionsOf, bytes as size } from '@newui/data'
+import { Badge, Button, TextInput } from '@talelk/newui-atoms'
+import { NumberCard } from '@talelk/newui-charts'
+import { downloadBlob, optionsOf, bytes as size } from '@talelk/newui-data'
 import {
   BottomSheet,
   Breadcrumbs,
   Dialog,
   EmptyState,
   Select,
-} from '@newui/molecules'
-import { DataTable, type DataTableColumn, FilterBar } from '@newui/organisms'
+} from '@talelk/newui-molecules'
+import {
+  DataTable,
+  type DataTableColumn,
+  FilterBar,
+} from '@talelk/newui-organisms'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { AppNavigation } from '../examples/AppNavigation'
 import { AppPage } from '../examples/AppPage'

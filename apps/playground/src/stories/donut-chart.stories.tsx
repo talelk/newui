@@ -1,4 +1,4 @@
-import { ChartCard, ChartLegend, DonutChart } from '@newui/charts'
+import { ChartCard, ChartLegend, DonutChart } from '@talelk/newui-charts'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { ChartDemoControls, STAGE_ACTIVITY } from './chart-demo-state'
 

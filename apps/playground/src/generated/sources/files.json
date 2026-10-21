@@ -12,13 +12,13 @@
     "examples/Notice.tsx"
   ],
   "packages": [
-    "@newui/atoms",
-    "@newui/charts",
-    "@newui/data",
-    "@newui/molecules",
-    "@newui/organisms",
-    "@newui/templates",
     "@solidjs/router",
+    "@talelk/newui-atoms",
+    "@talelk/newui-charts",
+    "@talelk/newui-data",
+    "@talelk/newui-molecules",
+    "@talelk/newui-organisms",
+    "@talelk/newui-templates",
     "solid-js"
   ]
 }

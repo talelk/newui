@@ -1,5 +1,5 @@
 {
-  "name": "@newui/organisms",
+  "name": "@talelk/newui-organisms",
   "version": "1.0.0",
   "type": "module",
   "description": "Application regions, sidebars, tables and widgets built from atoms and molecules.",
@@ -17,8 +17,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@newui/atoms": "workspace:*",
-    "@newui/molecules": "workspace:*",
+    "@talelk/newui-atoms": "workspace:*",
+    "@talelk/newui-molecules": "workspace:*",
     "@tanstack/solid-table": "^9.3.1",
     "@tanstack/solid-virtual": "^3.13.47"
   },

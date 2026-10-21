@@ -89,7 +89,7 @@ test('application preview preserves editing, comments and its document across al
   // The table and virtual list are organisms; the copied app uses their
   // package surface instead of carrying the library's implementation source.
   expect(copied).not.toContain('// examples/DataTable.tsx')
-  expect(copied).toContain('@newui/organisms')
+  expect(copied).toContain('@talelk/newui-organisms')
   await page.getByRole('button', { name: 'Preview', exact: true }).click()
   await expect(app.getByRole('dialog')).toContainText(
     'Keep this comment when resizing.',

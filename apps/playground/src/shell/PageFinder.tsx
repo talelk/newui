@@ -1,6 +1,10 @@
-import { KeyboardShortcut } from '@newui/atoms'
-import { CommandGroup, CommandItem, CommandPalette } from '@newui/organisms'
 import { useNavigate } from '@solidjs/router'
+import { KeyboardShortcut } from '@talelk/newui-atoms'
+import {
+  CommandGroup,
+  CommandItem,
+  CommandPalette,
+} from '@talelk/newui-organisms'
 import { For, type JSX } from 'solid-js'
 import { COMPONENTS } from '../generated/components'
 import { ATOMIC } from '../lib/atomic'

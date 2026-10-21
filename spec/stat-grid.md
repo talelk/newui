@@ -39,5 +39,5 @@
 
 ## Not yet
 
-No sparkline and no trend chart. A stat that needs one wants the `@newui/charts`
+No sparkline and no trend chart. A stat that needs one wants the `@talelk/newui-charts`
 `NumberCard`, which is a chart package's job, not a block's.

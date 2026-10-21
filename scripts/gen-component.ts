@@ -171,7 +171,7 @@ TODO Keyboard, focus and ARIA (P12). Styling hooks: \`data-slot\` /
 
 writeFileSync(
   path.join(root, `apps/playground/src/stories/${kebab}.stories.tsx`),
-  `import { ${NAME} } from '@newui/${PACKAGE}'
+  `import { ${NAME} } from '@talelk/newui-${PACKAGE}'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -206,7 +206,7 @@ export const Default: Story = {}
 writeFileSync(
   path.join(root, `.changeset/${kebab}-new.md`),
   `---
-"@newui/${PACKAGE}": minor
+"@talelk/newui-${PACKAGE}": minor
 ---
 
 New \`${NAME}\` ${LEVEL}. TODO one line on what it does and its vocabulary.

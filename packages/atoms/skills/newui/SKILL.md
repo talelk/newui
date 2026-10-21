@@ -3,12 +3,12 @@ name: newui
 description: Build user interfaces with the newui SolidJS component library on
   Zag + Tailwind CSS v4. Use when scaffolding SolidJS pages, forms, dialogs,
   lists, or any UI that should look and feel consistent and product-ready, when
-  the user mentions newui, @newui/atoms, or asks to use newui components,
+  the user mentions newui, @talelk/newui-atoms, or asks to use newui components,
   tokens, or conventions.
 metadata:
   type: core
   domain: ui
-  library: '@newui/atoms'
+  library: '@talelk/newui-atoms'
   library_version: '1.0.0'
 sources:
   - talelk/newui:AGENTS.md
@@ -34,8 +34,8 @@ styling with the library's **semantic Tailwind tokens**.
 ## Quick start
 
 ```tsx no-check
-import { Button } from '@newui/atoms'
-import { Dialog, FormControl } from '@newui/molecules'
+import { Button } from '@talelk/newui-atoms'
+import { Dialog, FormControl } from '@talelk/newui-molecules'
 import { createSignal } from 'solid-js'
 
 export function CreateTask() {
@@ -70,11 +70,11 @@ here. Open the file you need before writing markup.
 
 | Writing this | Open this first |
 | --- | --- |
-| an atom's implementation and props | `node_modules/@newui/atoms/src/atoms/<Name>/<Name>.tsx` |
-| a molecule's implementation and props | `node_modules/@newui/molecules/src/molecules/<Name>/<Name>.tsx` |
-| an organism or template pattern | `node_modules/@newui/organisms/src/organisms/` or `node_modules/@newui/templates/src/templates/` |
-| semantic tokens and utilities | `node_modules/@newui/tailwind/src/style.css` |
-| collections, mutations and forms | load the `newui-data` skill from `@newui/data` |
+| an atom's implementation and props | `node_modules/@talelk/newui-atoms/src/atoms/<Name>/<Name>.tsx` |
+| a molecule's implementation and props | `node_modules/@talelk/newui-molecules/src/molecules/<Name>/<Name>.tsx` |
+| an organism or template pattern | `node_modules/@talelk/newui-organisms/src/organisms/` or `node_modules/@talelk/newui-templates/src/templates/` |
+| semantic tokens and utilities | `node_modules/@talelk/newui-tailwind/src/style.css` |
+| collections, mutations and forms | load the `newui-data` skill from `@talelk/newui-data` |
 
 ## Non-negotiables
 

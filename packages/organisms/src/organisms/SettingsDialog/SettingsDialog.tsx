@@ -1,5 +1,9 @@
-import { cn, createControllableSignal, createId } from '@newui/atoms/internal'
-import { Dialog } from '@newui/molecules'
+import {
+  cn,
+  createControllableSignal,
+  createId,
+} from '@talelk/newui-atoms/internal'
+import { Dialog } from '@talelk/newui-molecules'
 import {
   type Accessor,
   createContext,

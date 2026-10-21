@@ -1,4 +1,4 @@
-import { MobileNav, MobileNavItem } from '@newui/organisms'
+import { MobileNav, MobileNavItem } from '@talelk/newui-organisms'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

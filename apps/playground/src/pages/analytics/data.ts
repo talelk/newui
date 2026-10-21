@@ -1,4 +1,4 @@
-import { csvText } from '@newui/data'
+import { csvText } from '@talelk/newui-data'
 
 export interface Transaction {
   id: string

@@ -6,11 +6,11 @@ import {
   Switch,
   Textarea,
   TextInput,
-} from '@newui/atoms'
-import { createUndo, isEmail, optionsOf } from '@newui/data'
-import { BottomSheet, Select, TabButtons } from '@newui/molecules'
-import { FilterBar } from '@newui/organisms'
-import { PaneLayout } from '@newui/templates'
+} from '@talelk/newui-atoms'
+import { createUndo, isEmail, optionsOf } from '@talelk/newui-data'
+import { BottomSheet, Select, TabButtons } from '@talelk/newui-molecules'
+import { FilterBar } from '@talelk/newui-organisms'
+import { PaneLayout } from '@talelk/newui-templates'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { AppNavigation } from '../examples/AppNavigation'
 import { AppPage } from '../examples/AppPage'

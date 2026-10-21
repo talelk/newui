@@ -1,4 +1,4 @@
-import { FileUploader } from '@newui/molecules'
+import { FileUploader } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

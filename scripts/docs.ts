@@ -457,7 +457,7 @@ const textNames = [...themeVars.keys()]
 
 const foundationsHtml = `
 <h1>Foundations</h1>
-<p>Generated from <code>@newui/tokens</code> into
+<p>Generated from <code>@talelk/newui-tokens</code> into
 <code>packages/tailwind/src/generated/</code>. Swatches resolve the runtime
 custom properties, so they flip with <code>data-theme="dark"</code>.</p>
 ${colorGroups

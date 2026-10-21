@@ -1,4 +1,4 @@
-import { ChartLegend } from '@newui/charts'
+import { ChartLegend } from '@talelk/newui-charts'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

@@ -35,12 +35,12 @@ column. Every KPI/filter/chart pattern below is Tremor-derived.
   `--chart-*` in charts). Never raw palette steps, hex, rgb/hsl literals.
 - No class-injection or style-injection public props added anywhere (P10).
   Existing `class?: string` fallthroughs on blocks stay; none are added.
-- Shell (`apps/playground/src/shell/*.tsx`) imports no `@newui/*` statically;
+- Shell (`apps/playground/src/shell/*.tsx`) imports no `@talelk/newui-*` statically;
   only `shell/theme.ts` `createColorScheme` singleton and lazy `PageFinder`.
   Enforced by `routes.test.ts` + `.dependency-cruiser.cjs` `site-shell-stays-lean`.
 - Every playground route stays lazy via `page()`/`import()` in `routes.tsx`.
-- Blocks import only `@newui/ui`; charts ship no stylesheet (inline
-  `CSSProperties` + `var(--…)` stays the mechanism in `@newui/charts`).
+- Blocks import only `@talelk/newui-ui`; charts ship no stylesheet (inline
+  `CSSProperties` + `var(--…)` stays the mechanism in `@talelk/newui-charts`).
 - Never edit `references/`, generated `apps/playground/src/generated/*`,
   or `packages/ui/api.json` by hand (`pnpm site` / `pnpm api` own them).
 - Taste: no purple/indigo accents — remove `theme='violet'`
@@ -70,11 +70,11 @@ Goal: make Slices 1–5 machine-checkable before any markup moves.
    dialog-imperative, toast. Note 45/82 specs have no `## Props` table —
    those assert only that the spec defers to generated tables.
 3. Add token-vocabulary derivation test: derive expected `--color-*`
-   names from `@newui/tokens` exactly as `build-css.ts:42-96` does
+   names from `@talelk/newui-tokens` exactly as `build-css.ts:42-96` does
    (`--color-${cat}-${name}`, overlay, ramps, `--radius-*`, `--shadow-*`,
    `--text-*`); replace the hard-coded 14-token list in `generated.test.ts`.
    Import tokens via the vitest alias as `contrast.test.ts` does (root
-   `import('@newui/tokens')` fails — workspace package is not linked at root).
+   `import('@talelk/newui-tokens')` fails — workspace package is not linked at root).
 4. Add `tv()` tripwire: call a real recipe (`button` from
    `Button/recipe.ts:133`) and assert outputs per axis. `TvFn.__variants`
    is type-only (`tv.ts:46`) — axes cannot be introspected at runtime;
@@ -90,7 +90,7 @@ then `pnpm verify:checks`. Expect zero visual diff (`pnpm shots` optional).
 
 ## Slice 1 — Site shell chrome (Sidebase density, markup/classes only)
 
-All files keep zero static `@newui/ui` imports. No route/table changes.
+All files keep zero static `@talelk/newui-ui` imports. No route/table changes.
 
 | file | change |
 | --- | --- |
@@ -110,7 +110,7 @@ Shell bundle must not grow: every route pays for shell weight.
 
 ## Slice 2 — AppSidebar + shell blocks polish (recipe/markup only)
 
-No prop changes. Blocks keep importing only `@newui/ui`.
+No prop changes. Blocks keep importing only `@talelk/newui-ui`.
 
 | file | change |
 | --- | --- |
@@ -166,7 +166,7 @@ footer/sparkline in Slice 5. Rules:
 - Cards must not be identical-by-construction: width follows content via
   the existing `columns 2|3|4` grid; no new radius (keep `rounded-5`).
 
-Converge, don't duplicate: `@newui/charts` `NumberCard` keeps sparklines
+Converge, don't duplicate: `@talelk/newui-charts` `NumberCard` keeps sparklines
 (blocks cannot import charts). StatGrid never grows a chart; a stat that
 needs a sparkline links out to a NumberCard example. Document this in
 `spec/stat-grid.md` (it already points sparkline → NumberCard).
@@ -175,7 +175,7 @@ Validate: `pnpm vitest run packages/blocks/src/StatGrid`,
 contrast check on both delta pill pairs (`pnpm test` runs
 `contrast.test.ts`), `pnpm shots` for the stat-grid demo (light+dark).
 
-## Slice 4 — Chart-card chrome (`@newui/charts`, inline styles only)
+## Slice 4 — Chart-card chrome (`@talelk/newui-charts`, inline styles only)
 
 Charts ship no stylesheet; all values stay `var(--surface/ink/outline-*)`
 + `--chart-*`. No Tailwind classes, no `tv()` in this package.
@@ -200,7 +200,7 @@ Site pages (components allowed; stay behind `page()` lazy chunks):
 
 | file | change |
 | --- | --- |
-| `pages/Home.tsx` | Biggest rewrite. Remove eyebrow+centered-hero+2CTA shape, hand-drawn fake dashboard, nested metric cards (`:110-171` today), identical PILLARS grid. Keep zero `@newui/ui` imports (cheapest route, `:7`). New shape: left-aligned H1 + install command + three hand-offs (Components/Blocks/Examples) as a divided list, not cards. Real hierarchy: `text-hero` H1, body `text-ink-gray-7` minimum. |
+| `pages/Home.tsx` | Biggest rewrite. Remove eyebrow+centered-hero+2CTA shape, hand-drawn fake dashboard, nested metric cards (`:110-171` today), identical PILLARS grid. Keep zero `@talelk/newui-ui` imports (cheapest route, `:7`). New shape: left-aligned H1 + install command + three hand-offs (Components/Blocks/Examples) as a divided list, not cards. Real hierarchy: `text-hero` H1, body `text-ink-gray-7` minimum. |
 | `pages/Docs.tsx`, `pages/Foundations.tsx` | Adopt `PageIntro`; add per-page TOC via Slice-1 slot (anchors generated from headings, scrollspy optional). |
 | `pages/ComponentsIndex.tsx`, `pages/BlocksIndex.tsx`, `pages/Examples.tsx` | Keep divided lists (not card grids); drop tracked uppercase group labels; keep "N parts / Has a contract" metadata. |
 | `pages/ComponentPage.tsx` | `theme='violet' → 'gray'` (`:204`); Preview/Code tabs per demo (reuse `ResponsivePreview` SourcePanel copy); TOC for Contract/Props sections. Usage import line stays. |
@@ -227,7 +227,7 @@ Validate: full gate — `pnpm verify` (all 20 steps in
 
 ## What NOT to change
 
-- Tokens & theme generation (`@newui/tokens`, `build-css.ts`, `theme.css`):
+- Tokens & theme generation (`@talelk/newui-tokens`, `build-css.ts`, `theme.css`):
   no values, no new families. Any exception restarts this blueprint.
 - Public APIs in Slices 0–4: `pnpm api:check` and `exports.test.ts` must
   pass byte-identical. No renamed/removed props ever; Slice 5 additive only.

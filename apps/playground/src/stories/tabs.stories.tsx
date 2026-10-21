@@ -1,4 +1,4 @@
-import { Tabs } from '@newui/molecules'
+import { Tabs } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

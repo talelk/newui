@@ -1,5 +1,5 @@
-import { Button, Switch } from '@newui/atoms'
-import { BottomSheet } from '@newui/molecules'
+import { Button, Switch } from '@talelk/newui-atoms'
+import { BottomSheet } from '@talelk/newui-molecules'
 import { createSignal, For } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

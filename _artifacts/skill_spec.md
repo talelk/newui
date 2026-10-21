@@ -20,10 +20,10 @@ the visual guidance, the data guidance, or both, at the installed version.
 
 ## Coverage and decisions
 
-- The UI skill is owned by `@newui/atoms`, the package every visual page
+- The UI skill is owned by `@talelk/newui-atoms`, the package every visual page
   installs first. It names the sibling packages to inspect for molecules,
   organisms, templates and tokens instead of duplicating their APIs.
-- The data skill is owned by `@newui/data` and is loaded only when the task
+- The data skill is owned by `@talelk/newui-data` and is loaded only when the task
   needs a collection, cache, mutation or form lifecycle.
 - Both skills point at installed package source, not repository-only specs.
   The `sources` frontmatter keeps the maintainer trail back to `spec/` and the

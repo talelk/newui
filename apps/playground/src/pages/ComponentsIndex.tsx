@@ -1,5 +1,5 @@
-import { Icon } from '@newui/atoms'
 import { A, useLocation } from '@solidjs/router'
+import { Icon } from '@talelk/newui-atoms'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
 import { COMPONENTS, GROUPS } from '../generated/components'
 import { ATOMIC, levelOf } from '../lib/atomic'

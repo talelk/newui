@@ -1,11 +1,11 @@
-import { Icon } from '@newui/atoms'
+import { Icon } from '@talelk/newui-atoms'
 import {
   cn,
   createId,
   createZagApi,
   createZagContext,
   tv,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/pagination'
 import {
   type Accessor,

@@ -1,4 +1,4 @@
-import { Dashboard, NumberCard } from '@newui/charts'
+import { Dashboard, NumberCard } from '@talelk/newui-charts'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**

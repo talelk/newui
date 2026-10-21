@@ -1,5 +1,5 @@
-import { Button } from '@newui/atoms'
-import { toast } from '@newui/molecules'
+import { Button } from '@talelk/newui-atoms'
+import { toast } from '@talelk/newui-molecules'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**

@@ -1,5 +1,5 @@
-import { TextInput } from '@newui/atoms'
 import { render, screen } from '@solidjs/testing-library'
+import { TextInput } from '@talelk/newui-atoms'
 import userEvent from '@testing-library/user-event'
 import { createSignal } from 'solid-js'
 import { describe, expect, it, vi } from 'vitest'

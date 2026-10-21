@@ -1,5 +1,5 @@
 import { DateFormatter, type DateValue } from '@internationalized/date'
-import type { InputSize, InputVariant } from '@newui/atoms'
+import type { InputSize, InputVariant } from '@talelk/newui-atoms'
 import {
   cn,
   createId,
@@ -11,7 +11,7 @@ import {
   toDate,
   toValueArray,
   useField,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/date-picker'
 import { For, type JSX, Show, splitProps } from 'solid-js'
 

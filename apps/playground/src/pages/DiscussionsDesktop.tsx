@@ -1,7 +1,13 @@
-import { Avatar, Badge, Button, Icon, Tooltip } from '@newui/atoms'
-import { Dropdown, List, ListCell, ListRow, Menu } from '@newui/molecules'
-import { FilterBar, PageToolbar, SidebarItem } from '@newui/organisms'
-import { AppShell } from '@newui/templates'
+import { Avatar, Badge, Button, Icon, Tooltip } from '@talelk/newui-atoms'
+import {
+  Dropdown,
+  List,
+  ListCell,
+  ListRow,
+  Menu,
+} from '@talelk/newui-molecules'
+import { FilterBar, PageToolbar, SidebarItem } from '@talelk/newui-organisms'
+import { AppShell } from '@talelk/newui-templates'
 import {
   createMemo,
   createSignal,

@@ -1,7 +1,7 @@
 # Charts
 
-`@newui/charts` renders analytical data with SVG ECharts and semantic tokens.
-Install `@newui/charts` and its declared peers, then import only the wrappers you
+`@talelk/newui-charts` renders analytical data with SVG ECharts and semantic tokens.
+Install `@talelk/newui-charts` and its declared peers, then import only the wrappers you
 use. Each chart has an isolated executable example under `/organisms` with complete
 copyable source and generated props.
 

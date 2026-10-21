@@ -4,7 +4,7 @@
  *   src/generated/tokens.css  — runtime custom properties (`:root` + dark)
  *   src/generated/theme.css   — the Tailwind v4 `@theme` block
  *
- * Everything here reads from `@newui/tokens`, so the utility vocabulary is a
+ * Everything here reads from `@talelk/newui-tokens`, so the utility vocabulary is a
  * pure function of the token data. Nothing about colors, radius, type, spacing
  * or elevation is hand-listed anywhere.
  */
@@ -25,7 +25,7 @@ import {
   spacing,
   tracking,
   zIndex,
-} from '@newui/tokens'
+} from '@talelk/newui-tokens'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const outDir = resolve(here, '../src/generated')
@@ -161,9 +161,9 @@ lines.push('')
 writeFileSync(resolve(outDir, 'theme.css'), lines.join('\n'))
 
 // ---------------------------------------------------------------------------
-// runtime tokens (delegated to @newui/tokens)
+// runtime tokens (delegated to @talelk/newui-tokens)
 // ---------------------------------------------------------------------------
-const { tokensCss } = await import('@newui/tokens/css')
+const { tokensCss } = await import('@talelk/newui-tokens/css')
 writeFileSync(resolve(outDir, 'tokens.css'), tokensCss())
 
 // A tiny summary to confirm what was generated.

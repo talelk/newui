@@ -6,9 +6,9 @@
     "shell/PageIntro.tsx"
   ],
   "packages": [
-    "@newui/atoms",
-    "@newui/data",
-    "@newui/organisms",
+    "@talelk/newui-atoms",
+    "@talelk/newui-data",
+    "@talelk/newui-organisms",
     "solid-js"
   ]
 }

@@ -1,7 +1,7 @@
-import { Button } from '@newui/atoms'
-import { NumberCard } from '@newui/charts'
-import { count, usd } from '@newui/data'
-import { Alert } from '@newui/molecules'
+import { Button } from '@talelk/newui-atoms'
+import { NumberCard } from '@talelk/newui-charts'
+import { count, usd } from '@talelk/newui-data'
+import { Alert } from '@talelk/newui-molecules'
 import { createSignal, For, Show } from 'solid-js'
 
 const CHANNELS = [

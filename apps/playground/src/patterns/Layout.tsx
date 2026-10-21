@@ -1,4 +1,4 @@
-import { Button } from '@newui/atoms'
+import { Button } from '@talelk/newui-atoms'
 import { createSignal, For } from 'solid-js'
 
 export default function Layout() {

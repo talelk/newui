@@ -1,6 +1,6 @@
 # Editor
 
-TipTap 3 rich text for Solid. Install `@newui/editor` with its declared peers,
+TipTap 3 rich text for Solid. Install `@talelk/newui-editor` with its declared peers,
 then import Editor and EditorToolbar. `/organisms/editor` provides executable
 usage and source; `/docs#editor` loads the package guide.
 

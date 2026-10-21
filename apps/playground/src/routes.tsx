@@ -1,11 +1,11 @@
-import { UIProvider } from '@newui/atoms'
-import { Toaster } from '@newui/molecules'
 import {
   Route,
   Router,
   type RouteSectionProps,
   useLocation,
 } from '@solidjs/router'
+import { UIProvider } from '@talelk/newui-atoms'
+import { Toaster } from '@talelk/newui-molecules'
 import {
   type Component,
   createEffect,

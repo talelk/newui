@@ -1,5 +1,5 @@
-import { Button, type IconProp } from '@newui/atoms'
-import { Dropdown } from '@newui/molecules'
+import { Button, type IconProp } from '@talelk/newui-atoms'
+import { Dropdown } from '@talelk/newui-molecules'
 import { type JSX, Show } from 'solid-js'
 
 export interface PageToolbarAction {

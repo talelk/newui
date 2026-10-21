@@ -1,7 +1,7 @@
-import { Button } from '@newui/atoms'
-import { Dropdown } from '@newui/molecules'
-import { SidebarItem } from '@newui/organisms'
-import { AppShell } from '@newui/templates'
+import { Button } from '@talelk/newui-atoms'
+import { Dropdown } from '@talelk/newui-molecules'
+import { SidebarItem } from '@talelk/newui-organisms'
+import { AppShell } from '@talelk/newui-templates'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

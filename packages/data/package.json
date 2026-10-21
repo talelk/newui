@@ -1,5 +1,5 @@
 {
-  "name": "@newui/data",
+  "name": "@talelk/newui-data",
   "version": "1.0.0",
   "type": "module",
   "description": "The logic layer: formatting, selection, undo and downloads — no components.",

@@ -4,7 +4,7 @@ Reserves space while content loads.
 
 ## Usage and anatomy
 
-Import `Skeleton` from `@newui/atoms`. The executable example and its copyable
+Import `Skeleton` from `@talelk/newui-atoms`. The executable example and its copyable
 source on `/atoms/skeleton` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

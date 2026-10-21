@@ -1,23 +1,23 @@
-# @newui/data
+# @talelk/newui-data
 
 ## 1.0.0
 
 ### Major Changes
 
-- 0d87bbb: Clean break to the atomic public API. The `@newui/ui`, `@newui/blocks` and
-  `@newui/layouts` packages are removed; consumers import atoms, molecules,
+- 0d87bbb: Clean break to the atomic public API. The `@talelk/newui-ui`, `@talelk/newui-blocks` and
+  `@talelk/newui-layouts` packages are removed; consumers import atoms, molecules,
   organisms and templates from the new package names. No compatibility barrels,
   deprecated shell adapters or legacy route redirects are shipped.
   
-  `@newui/templates` now exposes exactly `AppShell`, `PaneLayout` and
+  `@talelk/newui-templates` now exposes exactly `AppShell`, `PaneLayout` and
   `AuthLayout`. `AppShell` owns one responsive sidebar with tenant, grouped
   navigation and pinned settings/account controls; split rail/sidebar composition
   is removed. `DataTable`, `ScrollTable` and `VirtualList` move from the logic
-  package into the atomic visual packages, leaving `@newui/data` headless.
+  package into the atomic visual packages, leaving `@talelk/newui-data` headless.
 
 ### Minor Changes
 
-- c47db72: `@newui/data/form` — the submit lifecycle and the field-error bridge.
+- c47db72: `@talelk/newui-data/form` — the submit lifecycle and the field-error bridge.
   
   Tasks and Authentication each repeated the same six lines around every field:
   wire `value`, unwrap `meta.errors` into a string, handle submit with
@@ -45,7 +45,7 @@
   labels and error region. The bridge is the shared call shape, not a second
   component tree. Its own entry point keeps the validator engine out of pages that
   do not render a form (17.5 kB, budgeted, separate from the 0.77 kB helpers).
-- 1f70e3f: `@newui/data` — the logic layer, starting with the pure helpers.
+- 1f70e3f: `@talelk/newui-data` — the logic layer, starting with the pure helpers.
   
   The examples had already converged on four helpers and then copied each of them
   per page: formatting (four `Intl` USD copies), select plumbing, one-step undo
@@ -58,15 +58,15 @@
   `undo` · `createUndo`
   `download` · `downloadBlob`, `downloadText`, `csvText`, `downloadCsv`
   
-  Twenty-five example files now import `@newui/data`; the local modules are
+  Twenty-five example files now import `@talelk/newui-data`; the local modules are
   deleted. The async shapes (repository, queries, forms, promoted table and list)
   are the next slice — `spec/data.md` is the contract for what has shipped and
   says why `Notice` did *not* move here: it renders, so it is a component.
-- 3745084: `@newui/data/query` — the async surface: one client, one repository contract,
+- 3745084: `@talelk/newui-data/query` — the async surface: one client, one repository contract,
   one collection.
   
   ```ts
-  import { DataProvider, createCollection } from '@newui/data/query'
+  import { DataProvider, createCollection } from '@talelk/newui-data/query'
   ```
   
   - **`DataProvider`** owns the query client and clears it on unmount; pass a

@@ -1,5 +1,5 @@
-import { Textarea } from '@newui/atoms'
 import { render } from '@solidjs/testing-library'
+import { Textarea } from '@talelk/newui-atoms'
 import axe, { type AxeResults } from 'axe-core'
 import { describe, expect, it } from 'vitest'
 import { Collapsible } from './Collapsible'

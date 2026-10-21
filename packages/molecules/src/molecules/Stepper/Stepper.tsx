@@ -1,4 +1,4 @@
-import { cn, createControllableSignal } from '@newui/atoms/internal'
+import { cn, createControllableSignal } from '@talelk/newui-atoms/internal'
 import { For, type JSX, Show } from 'solid-js'
 
 export interface StepperStep {

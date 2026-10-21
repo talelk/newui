@@ -78,7 +78,7 @@ module.exports = {
       name: 'tokens-is-a-leaf',
       severity: 'error',
       comment:
-        '@newui/tokens is framework-neutral design data; it imports nothing.',
+        '@talelk/newui-tokens is framework-neutral design data; it imports nothing.',
       from: { path: '^packages/tokens/' },
       to: { pathNot: '^packages/tokens', dependencyTypesNot: ['core'] },
     },

@@ -1,5 +1,5 @@
-import { Icon } from '@newui/atoms'
-import { CircleCheckIcon } from '@newui/icons'
+import { Icon } from '@talelk/newui-atoms'
+import { CircleCheckIcon } from '@talelk/newui-icons'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**

@@ -1,4 +1,4 @@
-# @newui/tokens
+# @talelk/newui-tokens
 
 ## 0.1.0
 
@@ -24,7 +24,7 @@
   padding="md" for the previous 16px. Chart cards, editor toolbar commands and blocks use compact spacing.
   Page, section, metric and hero typography now follow 24/30, 18/24, 28/32 and
   36/40px respectively. Existing semantic colors and dialog padding are retained.
-- ba4540f: Stacking and motion become named scales from `@newui/tokens`: `z-raised`,
+- ba4540f: Stacking and motion become named scales from `@talelk/newui-tokens`: `z-raised`,
   `z-floating`, `z-overlay`, `z-top`, `duration-fast/base/slow` and
   `ease-standard` resolve `@theme` variables instead of components hard-coding
   `z-50`, `z-[100]` and numeric durations. Computed values are unchanged. The
@@ -41,7 +41,7 @@
   one-digit ramp shades (`var(--blue-6)`), but the ramps are keyed by Tailwind's
   `50…950` scale (`--blue-600`). Nothing named `--blue-6` exists, so every
   `--chart-*` was guaranteed-invalid and every consumer — the whole
-  `@newui/charts` family, `bg-chart-*` swatches — fell back to `transparent`.
+  `@talelk/newui-charts` family, `bg-chart-*` swatches — fell back to `transparent`.
   The pointers now name the real steps, and a token test asserts that every
   `--a: var(--b)` in the generated stylesheet names a declared token.
 

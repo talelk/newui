@@ -1,4 +1,4 @@
-import type { InputSize, InputVariant } from '@newui/atoms'
+import type { InputSize, InputVariant } from '@talelk/newui-atoms'
 import {
   cn,
   createControllableSignal,
@@ -10,7 +10,7 @@ import {
   Portal,
   popupFieldVariants,
   useField,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/popover'
 import {
   createMemo,

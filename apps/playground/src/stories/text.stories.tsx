@@ -1,4 +1,4 @@
-import { Text } from '@newui/atoms'
+import { Text } from '@talelk/newui-atoms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

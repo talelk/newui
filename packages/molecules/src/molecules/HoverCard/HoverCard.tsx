@@ -5,7 +5,7 @@ import {
   createZagApi,
   createZagContext,
   Portal,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/hover-card'
 import { type Component, type JSX, type ParentComponent, Show } from 'solid-js'
 import { Dynamic } from 'solid-js/web'

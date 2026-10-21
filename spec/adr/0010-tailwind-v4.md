@@ -10,7 +10,7 @@ This library targets Tailwind CSS **v4**.
 
 Tailwind v4. The token layer is a **generated** `@theme` (`theme.css`) plus
 `:root`/`[data-theme=dark]` custom properties (`tokens.css`), produced from
-`@newui/tokens` by `packages/tailwind/scripts/build-css.ts`.
+`@talelk/newui-tokens` by `packages/tailwind/scripts/build-css.ts`.
 
 ## Rationale
 

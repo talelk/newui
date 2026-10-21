@@ -179,7 +179,7 @@ describe('site structure', () => {
         'utf8',
       )
       expect(source, file).not.toMatch(
-        /from ['"]@newui\/(atoms|molecules|organisms|templates|charts|editor|code-editor)['"]/,
+        /from ['"]@talelk\/(atoms|molecules|organisms|templates|charts|editor|code-editor)['"]/,
       )
     }
   })

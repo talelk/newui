@@ -1,5 +1,5 @@
-import { Icon, type IconProp } from '@newui/atoms'
-import { cn } from '@newui/atoms/internal'
+import { Icon, type IconProp } from '@talelk/newui-atoms'
+import { cn } from '@talelk/newui-atoms/internal'
 import { For, type JSX, Show, splitProps } from 'solid-js'
 
 export type TimelineTone = 'gray' | 'blue' | 'green' | 'amber' | 'red'

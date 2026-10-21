@@ -6,9 +6,9 @@ tenant at the top, a grouped menu, utilities and account at the bottom.
 ## Composition
 
 ```tsx
-import { AppSidebar } from '@newui/organisms'
-import { Dropdown } from '@newui/molecules'
-import { SidebarItem } from '@newui/organisms'
+import { AppSidebar } from '@talelk/newui-organisms'
+import { Dropdown } from '@talelk/newui-molecules'
+import { SidebarItem } from '@talelk/newui-organisms'
 
 <AppSidebar
   brand={<Brand />}

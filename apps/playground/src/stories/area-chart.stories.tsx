@@ -1,4 +1,4 @@
-import { AreaChart, ChartCard } from '@newui/charts'
+import { AreaChart, ChartCard } from '@talelk/newui-charts'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { ChartDemoControls, MONTHLY_ACTIVITY } from './chart-demo-state'
 

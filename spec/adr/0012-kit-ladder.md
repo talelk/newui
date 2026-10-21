@@ -16,9 +16,9 @@ Four decisions were put to the maintainer and ratified on 2026-10-19:
 
 | Decision | Value |
 | --- | --- |
-| Logic layer | `@newui/data` — newui conventions over TanStack Query/Form/Table/Virtual, plus promoted `DataTable`/`VirtualList`/helpers. Supersedes `spec/tanstack-integration.md` when it lands. |
+| Logic layer | `@talelk/newui-data` — newui conventions over TanStack Query/Form/Table/Virtual, plus promoted `DataTable`/`VirtualList`/helpers. Supersedes `spec/tanstack-integration.md` when it lands. |
 | Router | `@solidjs/router` stays the kit's router; the starter encodes its conventions. |
-| Layouts | A new `@newui/layouts` package owns page templates; shell frames stay in `@newui/ui`. |
+| Layouts | A new `@talelk/newui-layouts` package owns page templates; shell frames stay in `@talelk/newui-ui`. |
 | Starter | A buildable `apps/starter`, gated (typecheck, smoke e2e, budget), rendered at `/pages/starter`. A CLI may follow, later. |
 
 ## Decision
@@ -27,15 +27,15 @@ One ladder, five levels above tokens, with one home each:
 
 | Level | Answers | Home |
 | --- | --- | --- |
-| Components | what is this control | `@newui/ui` (incl. shell frames) |
-| Blocks | what is this section | `@newui/blocks` |
-| Layouts | how does a page open | `@newui/layouts` |
-| Logic | how does it behave | `@newui/data` |
+| Components | what is this control | `@talelk/newui-ui` (incl. shell frames) |
+| Blocks | what is this section | `@talelk/newui-blocks` |
+| Layouts | how does a page open | `@talelk/newui-layouts` |
+| Logic | how does it behave | `@talelk/newui-data` |
 | App | what do I copy | `apps/starter` + the examples |
 
 with three rules:
 
-1. **Downward-only imports.** `ui ← blocks ← layouts ← apps`; `@newui/data`
+1. **Downward-only imports.** `ui ← blocks ← layouts ← apps`; `@talelk/newui-data`
    imports nothing from ui/blocks/layouts except the promoted surfaces it owns;
    charts/editor/code-editor attach at the block/layout level; nothing imports
    an app. Enforced in `.dependency-cruiser.cjs`.
@@ -54,7 +54,7 @@ browser harness sweeps every story.
 - The block level already proved the pattern: composed pieces with a spec,
   a demo and a budget. Layouts and logic are the same method one level up.
 - New packages keep the ladder physical and enforceable (ADR-0004), and keep
-  `@newui/ui`'s barrel from absorbing async/table costs it does not own.
+  `@talelk/newui-ui`'s barrel from absorbing async/table costs it does not own.
 - TanStack behind newui conventions gives one way to do data without owning a
   query engine; the wrappers are the contract, the engine is replaceable.
 - Keeping `@solidjs/router` avoids a second ecosystem and a migration of the
@@ -70,7 +70,7 @@ browser harness sweeps every story.
 - Additive only to shipped APIs (P13); layouts compose `PageToolbar`,
   `DetailHeader` and `AppSidebar`, so those gain optional props rather than
   being re-implemented in the playground.
-- `spec/tanstack-integration.md` is superseded when `@newui/data` lands; the
+- `spec/tanstack-integration.md` is superseded when `@talelk/newui-data` lands; the
   examples migrate and their local copies (`Notice`, `undo`, `format`,
   `CreateDialog`, `DataTable`) are deleted.
 - Storybook becomes a required surface: `pnpm stories:check` fails when

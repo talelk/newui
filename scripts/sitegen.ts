@@ -269,7 +269,7 @@ const importOf = new Map<string, string>()
 const sourceOf = new Map<string, string>()
 for (const [file, parts] of Object.entries(api)) {
   const pkg = file.split('/')[1]
-  const packageName = pkg ? `@newui/${pkg}` : '@newui/atoms'
+  const packageName = pkg ? `@talelk/newui-${pkg}` : '@talelk/newui-atoms'
   const source = path.relative(root, path.dirname(path.join(root, file)))
   for (const part of Object.keys(parts)) {
     const component = componentOf(part)
@@ -346,13 +346,16 @@ function barrelExports(file: string): Set<string> {
 }
 
 const exportedByPackage = new Map<string, Set<string>>([
-  ['@newui/atoms', barrelExports('packages/atoms/src/index.ts')],
-  ['@newui/molecules', barrelExports('packages/molecules/src/index.ts')],
-  ['@newui/organisms', barrelExports('packages/organisms/src/index.ts')],
-  ['@newui/templates', barrelExports('packages/templates/src/index.ts')],
-  ['@newui/charts', barrelExports('packages/charts/src/index.ts')],
-  ['@newui/editor', barrelExports('packages/editor/src/index.ts')],
-  ['@newui/code-editor', barrelExports('packages/code-editor/src/index.ts')],
+  ['@talelk/newui-atoms', barrelExports('packages/atoms/src/index.ts')],
+  ['@talelk/newui-molecules', barrelExports('packages/molecules/src/index.ts')],
+  ['@talelk/newui-organisms', barrelExports('packages/organisms/src/index.ts')],
+  ['@talelk/newui-templates', barrelExports('packages/templates/src/index.ts')],
+  ['@talelk/newui-charts', barrelExports('packages/charts/src/index.ts')],
+  ['@talelk/newui-editor', barrelExports('packages/editor/src/index.ts')],
+  [
+    '@talelk/newui-code-editor',
+    barrelExports('packages/code-editor/src/index.ts'),
+  ],
 ])
 
 const SPEC_ALIASES: Record<string, string> = {
@@ -388,7 +391,7 @@ for (const [packageName, exported] of exportedByPackage) {
     if (GROUPS[name] && !partsByComponent.has(name)) {
       partsByComponent.set(name, [])
       importOf.set(name, packageName)
-      const sourcePackage = packageName.replace('@newui/', '')
+      const sourcePackage = packageName.replace('@talelk/newui-', '')
       sourceOf.set(name, `packages/${sourcePackage}/src`)
     }
   }
@@ -456,10 +459,10 @@ const entries = [...partsByComponent.keys()]
     description: purposeFor(component),
     slug: kebab(component),
     group: GROUPS[component] as string,
-    package: importOf.get(component) ?? '@newui/atoms',
+    package: importOf.get(component) ?? '@talelk/newui-atoms',
     source:
       sourceOf.get(component) ??
-      `packages/${(importOf.get(component) ?? '@newui/atoms').replace('@newui/', '')}/src`,
+      `packages/${(importOf.get(component) ?? '@talelk/newui-atoms').replace('@talelk/newui-', '')}/src`,
     /** One level, assigned exhaustively by `scripts/atomic.ts`. */
     atomic: atomicOf(component),
     parts: (partsByComponent.get(component) ?? []).sort(),
@@ -469,7 +472,7 @@ const entries = [...partsByComponent.keys()]
     /** A page exists only for something its owning package barrel exports. */
     shipped:
       exportedByPackage
-        .get(importOf.get(component) ?? '@newui/atoms')
+        .get(importOf.get(component) ?? '@talelk/newui-atoms')
         ?.has(component) ?? false,
   }))
   .sort((a, b) => {
@@ -597,11 +600,11 @@ const pending = readdirSync(path.join(root, '.changeset'))
     const source = readFileSync(path.join(root, '.changeset', file), 'utf8')
     const frontmatter = source.match(/^---\n([\s\S]*?)\n---/)?.[1] ?? ''
     const bumps = [
-      ...frontmatter.matchAll(/^"@newui\/([a-z-]+)": (major|minor|patch)$/gm),
+      ...frontmatter.matchAll(/^"@talelk\/([a-z-]+)": (major|minor|patch)$/gm),
     ]
     const summary = source.slice(source.indexOf('---', 3) + 3).trim()
     return bumps.map((bump) => ({
-      package: `@newui/${bump[1]}`,
+      package: `@talelk/newui-${bump[1]}`,
       bump: bump[2],
       summary,
       file,
@@ -699,7 +702,7 @@ export const LADDER: LadderLevel[] = ${JSON.stringify(
       title: 'Foundations',
       question: 'What does it look like?',
       unit: 'token',
-      package: '@newui/tokens',
+      package: '@talelk/newui-tokens',
       count: semanticTokenCount,
       href: '/foundations',
       blurb:
@@ -710,7 +713,7 @@ export const LADDER: LadderLevel[] = ${JSON.stringify(
       title: 'Atoms',
       question: 'What is this single element?',
       unit: 'atom',
-      package: '@newui/atoms',
+      package: '@talelk/newui-atoms',
       count: entries.filter((entry) => entry.atomic === 'atom').length,
       href: '/atoms',
       blurb:
@@ -721,7 +724,7 @@ export const LADDER: LadderLevel[] = ${JSON.stringify(
       title: 'Molecules',
       question: 'What is this interaction?',
       unit: 'molecule',
-      package: '@newui/molecules · @newui/charts',
+      package: '@talelk/newui-molecules · @talelk/newui-charts',
       count: entries.filter((entry) => entry.atomic === 'molecule').length,
       href: '/molecules',
       blurb:
@@ -732,7 +735,8 @@ export const LADDER: LadderLevel[] = ${JSON.stringify(
       title: 'Organisms',
       question: 'What is this section?',
       unit: 'organism',
-      package: '@newui/organisms · @newui/charts · @newui/editor',
+      package:
+        '@talelk/newui-organisms · @talelk/newui-charts · @talelk/newui-editor',
       count: entries.filter((entry) => entry.atomic === 'organism').length,
       href: '/organisms',
       blurb:
@@ -743,7 +747,7 @@ export const LADDER: LadderLevel[] = ${JSON.stringify(
       title: 'Templates',
       question: 'How does the page open?',
       unit: 'template',
-      package: '@newui/templates',
+      package: '@talelk/newui-templates',
       count: entries.filter((entry) => entry.atomic === 'template').length,
       href: '/templates',
       blurb:
@@ -928,14 +932,14 @@ const inventory = packages.flatMap((pkg) => {
         : null
       const family = entries.find(
         (entry) =>
-          entry.package === `@newui/${pkg}` &&
+          entry.package === `@talelk/newui-${pkg}` &&
           (entry.name === name ||
             entry.parts.includes(name) ||
             implementation?.includes(`/${entry.name}/`)),
       )
       const section = family ? `${family.atomic}s` : 'organisms'
       return {
-        package: `@newui/${pkg}`,
+        package: `@talelk/newui-${pkg}`,
         name,
         implementation,
         documentation: family ? `/${section}/${family.slug}` : `/docs#${pkg}`,

@@ -1,4 +1,4 @@
-import { Dropdown, toast } from '@newui/molecules'
+import { Dropdown, toast } from '@talelk/newui-molecules'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**

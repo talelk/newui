@@ -1,19 +1,19 @@
-# @newui/templates
+# @talelk/newui-templates
 
 ## 1.0.0
 
 ### Major Changes
 
-- 0d87bbb: Clean break to the atomic public API. The `@newui/ui`, `@newui/blocks` and
-  `@newui/layouts` packages are removed; consumers import atoms, molecules,
+- 0d87bbb: Clean break to the atomic public API. The `@talelk/newui-ui`, `@talelk/newui-blocks` and
+  `@talelk/newui-layouts` packages are removed; consumers import atoms, molecules,
   organisms and templates from the new package names. No compatibility barrels,
   deprecated shell adapters or legacy route redirects are shipped.
   
-  `@newui/templates` now exposes exactly `AppShell`, `PaneLayout` and
+  `@talelk/newui-templates` now exposes exactly `AppShell`, `PaneLayout` and
   `AuthLayout`. `AppShell` owns one responsive sidebar with tenant, grouped
   navigation and pinned settings/account controls; split rail/sidebar composition
   is removed. `DataTable`, `ScrollTable` and `VirtualList` move from the logic
-  package into the atomic visual packages, leaving `@newui/data` headless.
+  package into the atomic visual packages, leaving `@talelk/newui-data` headless.
 - d48ae8c: The template package now has exactly three public compositions: `AppShell`,
   `PaneLayout` and `AuthLayout`. `AppShell` replaces the intermediate `AppLayout`
   API and is the only application frame. Its one responsive sidebar owns app
@@ -58,7 +58,7 @@
 
 ### Patch Changes
 
-- ba4540f: Stacking and motion become named scales from `@newui/tokens`: `z-raised`,
+- ba4540f: Stacking and motion become named scales from `@talelk/newui-tokens`: `z-raised`,
   `z-floating`, `z-overlay`, `z-top`, `duration-fast/base/slow` and
   `ease-standard` resolve `@theme` variables instead of components hard-coding
   `z-50`, `z-[100]` and numeric durations. Computed values are unchanged. The
@@ -88,6 +88,6 @@
 - Updated dependencies [ba4540f]
 - Updated dependencies [de468fe]
 - Updated dependencies [7b85ab4]
-  - @newui/atoms@1.0.0
-  - @newui/molecules@1.0.0
-  - @newui/organisms@1.0.0
+  - @talelk/newui-atoms@1.0.0
+  - @talelk/newui-molecules@1.0.0
+  - @talelk/newui-organisms@1.0.0

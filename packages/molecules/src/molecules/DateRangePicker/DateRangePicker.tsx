@@ -12,7 +12,7 @@ import {
   toRangeArray,
   toRangeValue,
   useField,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/date-picker'
 import { type JSX, Show, splitProps } from 'solid-js'
 import type {

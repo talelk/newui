@@ -1,4 +1,4 @@
-import { DetailHeader } from '@newui/organisms'
+import { DetailHeader } from '@talelk/newui-organisms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

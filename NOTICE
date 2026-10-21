@@ -39,7 +39,7 @@ Portions adapted from Tremor (https://github.com/tremorlabs/tremor) are used
 under the Apache License 2.0; that license is the LICENSE file in this
 repository. Tremor is copyright Tremor Labs and contributors.
 
-The Inter font files shipped in @newui/tailwind are Copyright (c) 2016 The
+The Inter font files shipped in @talelk/newui-tailwind are Copyright (c) 2016 The
 Inter Project Authors (https://github.com/rsms/inter) and are licensed under
 the SIL Open Font License, Version 1.1. The full font license is included at
 packages/tailwind/src/fonts/Inter/LICENSE.txt.

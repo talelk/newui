@@ -1,4 +1,4 @@
-import type { Repository } from '@newui/data/query'
+import type { Repository } from '@talelk/newui-data/query'
 
 /**
  * The starter's data seam.

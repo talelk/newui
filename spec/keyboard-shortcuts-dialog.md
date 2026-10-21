@@ -4,7 +4,7 @@ Shows discoverable keyboard commands in a modal reference.
 
 ## Usage and anatomy
 
-Import `KeyboardShortcutsDialog` from `@newui/molecules`. The executable example and its copyable
+Import `KeyboardShortcutsDialog` from `@talelk/newui-molecules`. The executable example and its copyable
 source on `/molecules/keyboard-shortcuts-dialog` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

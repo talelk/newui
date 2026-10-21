@@ -1,4 +1,4 @@
-import { DateRangePicker } from '@newui/molecules'
+import { DateRangePicker } from '@talelk/newui-molecules'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**

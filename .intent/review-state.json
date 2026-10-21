@@ -22,7 +22,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: AGENTS.md, CONTEXT.md, PRINCIPLES.md, packages/atoms/skills/newui/SKILL.md, packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx, spec/adr/0001-solid-no-v-model.md, spec/inputs.md at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -41,7 +41,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/README.md at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -76,7 +76,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: AGENTS.md, CONTEXT.md, PRINCIPLES.md, _artifacts/domain_map.yaml, _artifacts/skill_spec.md, _artifacts/skill_tree.yaml, packages/atoms/skills/newui/SKILL.md, packages/data/README.md, packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx, spec/adr/0001-solid-no-v-model.md, spec/inputs.md at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -88,7 +88,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: README.md at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -100,7 +100,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: apps/playground/src/generated/surface-inventory.json at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -112,7 +112,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/index.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -124,7 +124,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/client.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -136,7 +136,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/client.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -148,7 +148,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/document.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -160,7 +160,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/document.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -172,7 +172,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/idb.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -184,7 +184,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/idb.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -196,7 +196,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/index.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -208,7 +208,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/list.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -220,7 +220,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/list.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -232,7 +232,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/local.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -244,7 +244,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/local.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -256,7 +256,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/realtime.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -268,7 +268,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/realtime.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -280,7 +280,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/resource.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -292,7 +292,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/resource.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -304,7 +304,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/useCall.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -316,7 +316,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/useCall.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -328,7 +328,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/useDoc.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -340,7 +340,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/useDoc.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -352,7 +352,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/useDoctype.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -364,7 +364,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/useDoctype.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -376,7 +376,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/useList.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -388,7 +388,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/useList.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -400,7 +400,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/useNewDoc.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -412,7 +412,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/atoms/src/lib/resource/useNewDoc.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -424,7 +424,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/exports.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -436,7 +436,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/client.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -448,7 +448,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/client.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -460,7 +460,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/document.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -472,7 +472,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/document.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -484,7 +484,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/idb.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -496,7 +496,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/idb.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -508,7 +508,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/index.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -520,7 +520,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/list.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -532,7 +532,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/list.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -544,7 +544,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/local.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -556,7 +556,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/local.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -568,7 +568,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/realtime.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -580,7 +580,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/realtime.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -592,7 +592,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/resource.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -604,7 +604,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/resource.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -616,7 +616,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/useCall.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -628,7 +628,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/useCall.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -640,7 +640,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/useDoc.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -652,7 +652,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/useDoc.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -664,7 +664,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/useDoctype.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -676,7 +676,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/useDoctype.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -688,7 +688,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/useList.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -700,7 +700,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/useList.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -712,7 +712,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/useNewDoc.test.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -724,7 +724,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: packages/data/src/resource/useNewDoc.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -736,7 +736,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: scripts/fixtures/data-resource.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]
@@ -748,7 +748,7 @@
       },
       "head": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
       "outcome": "no-change",
-      "reason": "resource layer moved from @newui/atoms to @newui/data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
+      "reason": "resource layer moved from @talelk/newui-atoms to @talelk/newui-data/resource: neither skill documents the Frappe DocType client (grep over both SKILL.md files), no consumer outside the moved module imported it, and the data skill's subpath entries (query, form) are unchanged; size/arch/exports gates re-run green",
       "evidence": [
         "Changed: scripts/size.ts at f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84"
       ]

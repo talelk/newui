@@ -12,7 +12,7 @@ import {
   Textarea,
   TextInput,
   Tooltip,
-} from '@newui/atoms'
+} from '@talelk/newui-atoms'
 import {
   Accordion,
   Alert,
@@ -41,8 +41,8 @@ import {
   Toaster,
   ToggleGroup,
   toast,
-} from '@newui/molecules'
-import { Sidebar, SidebarItem } from '@newui/organisms'
+} from '@talelk/newui-molecules'
+import { Sidebar, SidebarItem } from '@talelk/newui-organisms'
 import { createEffect, For, type JSX, onMount } from 'solid-js'
 
 /**

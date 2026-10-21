@@ -3,7 +3,7 @@ export type {
   TabsEdge,
   TabsSize,
   TabsVariant,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 export {
   Tabs,
   type TabsContentProps,

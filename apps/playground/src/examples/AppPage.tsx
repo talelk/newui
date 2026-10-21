@@ -1,8 +1,8 @@
-import { Avatar } from '@newui/atoms'
-import { Dropdown } from '@newui/molecules'
-import { SidebarItem } from '@newui/organisms'
-import { AppShell } from '@newui/templates'
 import { A } from '@solidjs/router'
+import { Avatar } from '@talelk/newui-atoms'
+import { Dropdown } from '@talelk/newui-molecules'
+import { SidebarItem } from '@talelk/newui-organisms'
+import { AppShell } from '@talelk/newui-templates'
 import { createMemo, createSignal, type JSX } from 'solid-js'
 import { assetUrl } from '../lib/base'
 import { EXAMPLES } from '../lib/examples'
@@ -12,7 +12,7 @@ import { ThemeMenu } from '../shell/ThemeMenu'
  * The page-level composition used by the application recipes.
  *
  * It is intentionally not another template: all frame behavior lives in
- * `@newui/templates/AppShell`. This file supplies this site's Acme brand,
+ * `@talelk/newui-templates/AppShell`. This file supplies this site's Acme brand,
  * tenant picker, shared menu footer and user identity; each page supplies its
  * own grouped navigation and content.
  */

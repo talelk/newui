@@ -1,6 +1,6 @@
-import { Badge, Button } from '@newui/atoms'
-import { usd as money } from '@newui/data'
-import { Dialog } from '@newui/molecules'
+import { Badge, Button } from '@talelk/newui-atoms'
+import { usd as money } from '@talelk/newui-data'
+import { Dialog } from '@talelk/newui-molecules'
 import { type JSX, Show } from 'solid-js'
 import type { Transaction } from './data'
 

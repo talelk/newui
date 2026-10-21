@@ -1,4 +1,4 @@
-import { cn } from '@newui/atoms/internal'
+import { cn } from '@talelk/newui-atoms/internal'
 import { For, type JSX, Show, splitProps } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 

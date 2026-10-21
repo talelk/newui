@@ -5,7 +5,7 @@ A fixed-row list that keeps a bounded number of records in the DOM.
 ## Usage
 
 ```tsx
-import { VirtualList } from '@newui/organisms'
+import { VirtualList } from '@talelk/newui-organisms'
 
 <VirtualList label="Task activity" items={rows} itemSize={72} height="440px">
   {(row) => <ActivityRow row={row} />}

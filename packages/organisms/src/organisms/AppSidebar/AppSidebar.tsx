@@ -1,4 +1,4 @@
-import { type IconProp, ScrollArea } from '@newui/atoms'
+import { type IconProp, ScrollArea } from '@talelk/newui-atoms'
 import { For, type JSX, Show } from 'solid-js'
 import {
   Sidebar,

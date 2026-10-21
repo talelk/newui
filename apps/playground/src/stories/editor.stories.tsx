@@ -1,4 +1,4 @@
-import { Editor, EditorToolbar, type EditorValue } from '@newui/editor'
+import { Editor, EditorToolbar, type EditorValue } from '@talelk/newui-editor'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

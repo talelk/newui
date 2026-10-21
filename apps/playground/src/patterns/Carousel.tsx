@@ -1,5 +1,5 @@
-import { Button, Switch } from '@newui/atoms'
-import { Select } from '@newui/molecules'
+import { Button, Switch } from '@talelk/newui-atoms'
+import { Select } from '@talelk/newui-molecules'
 import {
   createEffect,
   createSignal,

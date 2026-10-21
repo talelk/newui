@@ -1,5 +1,5 @@
-import { Button } from '@newui/atoms'
-import { PageToolbar } from '@newui/organisms'
+import { Button } from '@talelk/newui-atoms'
+import { PageToolbar } from '@talelk/newui-organisms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { DemoFrame } from './demo-frame'

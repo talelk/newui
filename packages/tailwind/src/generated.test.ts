@@ -11,11 +11,11 @@ import {
   spacing,
   tracking,
   zIndex,
-} from '@newui/tokens'
+} from '@talelk/newui-tokens'
 import { describe, expect, it } from 'vitest'
 
 /**
- * Generator parity: `@newui/tokens` data ↔ generated `@theme`.
+ * Generator parity: `@talelk/newui-tokens` data ↔ generated `@theme`.
  *
  * `scripts/build-css.ts` derives `theme.css` from the token data, so the
  * expected vocabulary is derived here the same way instead of hand-listed.
@@ -100,7 +100,7 @@ function expectedText(): Set<string> {
   return names
 }
 
-describe('generated theme parity with @newui/tokens', () => {
+describe('generated theme parity with @talelk/newui-tokens', () => {
   it('emits every derived --color-* token', () => {
     const missing = [...expectedColors()].filter((name) => !defined.has(name))
     expect(missing).toEqual([])

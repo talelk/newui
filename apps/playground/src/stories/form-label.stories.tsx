@@ -1,4 +1,4 @@
-import { FormLabel, TextInput } from '@newui/atoms'
+import { FormLabel, TextInput } from '@talelk/newui-atoms'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**

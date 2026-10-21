@@ -25,7 +25,7 @@ After:
 
 ## Vite 8 tooling
 
-`@newui/vite` now targets Vite `^8.3.4`. Upgrade consumer applications from Vite 6
+`@talelk/newui-vite` now targets Vite `^8.3.4`. Upgrade consumer applications from Vite 6
 before adopting this package update. The workspace uses Vite 8's Rolldown build
 and Oxc minifier; existing bundle and route budgets remain unchanged.
 
@@ -81,12 +81,12 @@ The pre-atomic packages are removed without aliases or redirects:
 
 | Former package/API | Current destination |
 | --- | --- |
-| `@newui/ui` | split by component into `@newui/atoms`, `@newui/molecules`, and `@newui/organisms` |
-| `@newui/blocks` | `@newui/organisms` |
-| `@newui/layouts` | `@newui/templates` |
-| former `AppShell` from `@newui/ui` | the new, distinct `AppShell` template from `@newui/templates` |
-| `DataTable`, `VirtualList` from `@newui/data` | `@newui/organisms` |
-| `ScrollTable` from `@newui/data` | `@newui/molecules` |
+| `@talelk/newui-ui` | split by component into `@talelk/newui-atoms`, `@talelk/newui-molecules`, and `@talelk/newui-organisms` |
+| `@talelk/newui-blocks` | `@talelk/newui-organisms` |
+| `@talelk/newui-layouts` | `@talelk/newui-templates` |
+| former `AppShell` from `@talelk/newui-ui` | the new, distinct `AppShell` template from `@talelk/newui-templates` |
+| `DataTable`, `VirtualList` from `@talelk/newui-data` | `@talelk/newui-organisms` |
+| `ScrollTable` from `@talelk/newui-data` | `@talelk/newui-molecules` |
 | `AppLayout`, `DesktopShell`, `MobileShell`, `ResponsiveShell`, rail APIs | removed; use the single responsive `AppShell` |
 
 `AppShell` composes one sidebar model at both viewport sizes: a collapsible,

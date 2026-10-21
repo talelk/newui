@@ -95,10 +95,13 @@ describe('Agent Skills packages', () => {
     ) as {
       intent?: { skills?: unknown; exclude?: unknown }
     }
-    expect(manifest.intent?.skills).toEqual(['workspace:@newui/*', '@newui/*'])
+    expect(manifest.intent?.skills).toEqual([
+      'workspace:@talelk/newui-*',
+      '@talelk/newui-*',
+    ])
     expect(manifest.intent?.exclude).toEqual([
-      'workspace:@newui/*#experimental-*',
-      '@newui/*#experimental-*',
+      'workspace:@talelk/newui-*#experimental-*',
+      '@talelk/newui-*#experimental-*',
     ])
     expect(existsSync(join(ROOT, 'apps/starter/scripts/intent.mjs'))).toBe(true)
   })

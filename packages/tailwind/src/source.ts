@@ -3,7 +3,7 @@
  * these into its own `@source` list (Tailwind v4 scans sources declared in
  * CSS, not a JS config):
  *
- *   @source '@newui/tailwind/source';
+ *   @source '@talelk/newui-tailwind/source';
  */
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'

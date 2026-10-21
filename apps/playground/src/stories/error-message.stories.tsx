@@ -1,4 +1,4 @@
-import { ErrorMessage } from '@newui/atoms'
+import { ErrorMessage } from '@talelk/newui-atoms'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**

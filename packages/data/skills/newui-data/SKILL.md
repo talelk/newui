@@ -8,7 +8,7 @@ description: Use the headless newui data layer for SolidJS collections,
 metadata:
   type: core
   domain: data
-  library: '@newui/data'
+  library: '@talelk/newui-data'
   library_version: '1.0.0'
 sources:
   - talelk/newui:spec/data.md
@@ -29,7 +29,7 @@ needs components.
 ## Wire the client once
 
 ```tsx no-check
-import { DataProvider } from '@newui/data/query'
+import { DataProvider } from '@talelk/newui-data/query'
 
 export function App() {
   return <DataProvider>{/* router and pages */}</DataProvider>
@@ -46,7 +46,7 @@ A repository is the only place that knows where records come from. A collection
 turns it into one cached list and four optimistic mutations.
 
 ```tsx
-import { createCollection } from '@newui/data/query'
+import { createCollection } from '@talelk/newui-data/query'
 
 const projects = createCollection<Project, NewProject>(() => ({
   key: ['projects'],
@@ -74,7 +74,7 @@ projects.remove.mutateAsync({ ids })
 ## Forms
 
 ```tsx no-check
-import { createAppForm, fieldError, Form } from '@newui/data/form'
+import { createAppForm, fieldError, Form } from '@talelk/newui-data/form'
 
 const { form, submitting } = createAppForm({
   defaultValues: { name: '' },

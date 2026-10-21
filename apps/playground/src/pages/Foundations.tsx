@@ -1,11 +1,11 @@
-import { Button, Switch } from '@newui/atoms'
-import { Dialog } from '@newui/molecules'
+import { Button, Switch } from '@talelk/newui-atoms'
+import { Dialog } from '@talelk/newui-molecules'
 import {
   layoutSpacing,
   radius,
   radiusRoles,
   semanticColors,
-} from '@newui/tokens'
+} from '@talelk/newui-tokens'
 import { For } from 'solid-js'
 import { PageSection } from '../lib/PageSection'
 import { TableOfContents } from '../lib/TableOfContents'

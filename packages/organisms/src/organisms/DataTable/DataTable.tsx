@@ -1,5 +1,9 @@
-import { Button, Checkbox, TextInput } from '@newui/atoms'
-import { Pagination, ScrollTable, ScrollTableHead } from '@newui/molecules'
+import { Button, Checkbox, TextInput } from '@talelk/newui-atoms'
+import {
+  Pagination,
+  ScrollTable,
+  ScrollTableHead,
+} from '@talelk/newui-molecules'
 import {
   type ColumnDef,
   columnFilteringFeature,
@@ -81,8 +85,8 @@ export interface DataTableProps<T extends { id: string }> {
  * A collection as a table: search, sort, page, hide columns, select rows.
  *
  * TanStack Table is the engine; this is the kit's composition of it. The surface
- * lives in `@newui/organisms`: it composes controls and owns the TanStack Table
- * engine. The headless `@newui/data` package remains independent of rendering.
+ * lives in `@talelk/newui-organisms`: it composes controls and owns the TanStack Table
+ * engine. The headless `@talelk/newui-data` package remains independent of rendering.
  */
 export function DataTable<T extends { id: string }>(
   props: DataTableProps<T>,

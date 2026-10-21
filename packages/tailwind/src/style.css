@@ -1,6 +1,6 @@
 /* The single stylesheet an app imports.
  *
- *   @import '@newui/tailwind/style.css';
+ *   @import '@talelk/newui-tailwind/style.css';
  *
  * Everything below is generated or framework-neutral; nothing here is
  * app-specific. The consuming app adds its own `@source` globs. */

@@ -1,6 +1,6 @@
-import { Badge, Button, Textarea, TextInput } from '@newui/atoms'
-import { downloadText } from '@newui/data'
-import { Editor, EditorToolbar } from '@newui/editor'
+import { Badge, Button, Textarea, TextInput } from '@talelk/newui-atoms'
+import { downloadText } from '@talelk/newui-data'
+import { Editor, EditorToolbar } from '@talelk/newui-editor'
 import {
   Alert,
   DatePicker,
@@ -8,7 +8,7 @@ import {
   MultiSelect,
   Select,
   TabButtons,
-} from '@newui/molecules'
+} from '@talelk/newui-molecules'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
 import { AppPage } from '../examples/AppPage'
 import { Notice } from '../examples/Notice'

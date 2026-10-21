@@ -11,10 +11,10 @@
     "lib/base.ts"
   ],
   "packages": [
-    "@newui/atoms",
-    "@newui/molecules",
-    "@newui/organisms",
-    "@newui/templates",
+    "@talelk/newui-atoms",
+    "@talelk/newui-molecules",
+    "@talelk/newui-organisms",
+    "@talelk/newui-templates",
     "solid-js"
   ]
 }

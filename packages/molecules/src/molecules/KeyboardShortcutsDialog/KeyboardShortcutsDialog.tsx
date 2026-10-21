@@ -4,8 +4,8 @@ import {
   KeyboardShortcut,
   parseCombo,
   TextInput,
-} from '@newui/atoms'
-import { cn, createDisclosure } from '@newui/atoms/internal'
+} from '@talelk/newui-atoms'
+import { cn, createDisclosure } from '@talelk/newui-atoms/internal'
 import {
   createEffect,
   createMemo,

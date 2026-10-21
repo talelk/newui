@@ -1,4 +1,4 @@
-@import "@newui/tailwind/style.css";
+@import "@talelk/newui-tailwind/style.css";
 
 @source "../index.html";
 @source "./**/*.{ts,tsx}";

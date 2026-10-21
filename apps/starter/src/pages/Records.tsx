@@ -1,14 +1,14 @@
-import { Badge, Button, TextInput } from '@newui/atoms'
-import { count, optionsOf, usd } from '@newui/data'
-import { createAppForm, Form, fieldError } from '@newui/data/form'
-import { createCollection } from '@newui/data/query'
-import { Alert, Dialog, Select } from '@newui/molecules'
+import { Badge, Button, TextInput } from '@talelk/newui-atoms'
+import { count, optionsOf, usd } from '@talelk/newui-data'
+import { createAppForm, Form, fieldError } from '@talelk/newui-data/form'
+import { createCollection } from '@talelk/newui-data/query'
+import { Alert, Dialog, Select } from '@talelk/newui-molecules'
 import {
   DataTable,
   type DataTableColumn,
   FilterBar,
   StatGrid,
-} from '@newui/organisms'
+} from '@talelk/newui-organisms'
 import {
   createEffect,
   createMemo,

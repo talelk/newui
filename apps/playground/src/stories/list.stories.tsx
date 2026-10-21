@@ -1,5 +1,5 @@
-import { Badge } from '@newui/atoms'
-import { List, ListCell, ListRow } from '@newui/molecules'
+import { Badge } from '@talelk/newui-atoms'
+import { List, ListCell, ListRow } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

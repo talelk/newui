@@ -1,5 +1,5 @@
-import { Button, Icon, TextInput } from '@newui/atoms'
-import { Select, type SelectOption, TabButtons } from '@newui/molecules'
+import { Button, Icon, TextInput } from '@talelk/newui-atoms'
+import { Select, type SelectOption, TabButtons } from '@talelk/newui-molecules'
 import { For, type JSX, onCleanup, onMount, Show } from 'solid-js'
 
 export interface FilterOption {

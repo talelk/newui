@@ -1,5 +1,5 @@
-import { Dropdown } from '@newui/molecules'
-import { AppSidebar, SidebarItem } from '@newui/organisms'
+import { Dropdown } from '@talelk/newui-molecules'
+import { AppSidebar, SidebarItem } from '@talelk/newui-organisms'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { DemoFrame } from './demo-frame'

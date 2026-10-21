@@ -1,5 +1,5 @@
-import { Badge, Button, type ButtonTheme } from '@newui/atoms'
-import { type BreadcrumbItem, Breadcrumbs } from '@newui/molecules'
+import { Badge, Button, type ButtonTheme } from '@talelk/newui-atoms'
+import { type BreadcrumbItem, Breadcrumbs } from '@talelk/newui-molecules'
 import { For, type JSX, Show } from 'solid-js'
 
 export interface DetailAction {

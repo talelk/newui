@@ -4,7 +4,7 @@ Displays a short status or category.
 
 ## Usage and anatomy
 
-Import `Badge` from `@newui/atoms`. The executable example and its copyable
+Import `Badge` from `@talelk/newui-atoms`. The executable example and its copyable
 source on `/atoms/badge` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

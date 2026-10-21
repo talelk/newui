@@ -18,7 +18,7 @@ const PUBLIC = [
   'placeKanbanItem',
 ]
 
-describe('@newui/organisms', () => {
+describe('@talelk/newui-organisms', () => {
   it('exports exactly the page-region APIs', () => {
     expect(Object.keys(organisms)).toEqual(expect.arrayContaining(PUBLIC))
     expect(Object.keys(organisms)).not.toContain('SidebarRail')

@@ -1,4 +1,4 @@
-import { Tree, type TreeItem } from '@newui/molecules'
+import { Tree, type TreeItem } from '@talelk/newui-molecules'
 import { For, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

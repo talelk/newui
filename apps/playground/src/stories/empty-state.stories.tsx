@@ -1,5 +1,5 @@
-import { Button } from '@newui/atoms'
-import { EmptyState } from '@newui/molecules'
+import { Button } from '@talelk/newui-atoms'
+import { EmptyState } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

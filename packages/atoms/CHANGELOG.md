@@ -1,7 +1,7 @@
-# @newui/atoms
+# @talelk/newui-atoms
 
 This history predates the atomic package split. New atoms are released under
-`@newui/atoms`; molecules and page regions are now separate packages.
+`@talelk/newui-atoms`; molecules and page regions are now separate packages.
 
 ## 1.0.0
 
@@ -20,16 +20,16 @@ This history predates the atomic package split. New atoms are released under
   labels. All input families share Field help/error wiring without remounting
   uncontrolled state when validation appears. Settings tabs support vertical
   arrow, Home and End navigation.
-- 0d87bbb: Clean break to the atomic public API. The `@newui/ui`, `@newui/blocks` and
-  `@newui/layouts` packages are removed; consumers import atoms, molecules,
+- 0d87bbb: Clean break to the atomic public API. The `@talelk/newui-ui`, `@talelk/newui-blocks` and
+  `@talelk/newui-layouts` packages are removed; consumers import atoms, molecules,
   organisms and templates from the new package names. No compatibility barrels,
   deprecated shell adapters or legacy route redirects are shipped.
   
-  `@newui/templates` now exposes exactly `AppShell`, `PaneLayout` and
+  `@talelk/newui-templates` now exposes exactly `AppShell`, `PaneLayout` and
   `AuthLayout`. `AppShell` owns one responsive sidebar with tenant, grouped
   navigation and pinned settings/account controls; split rail/sidebar composition
   is removed. `DataTable`, `ScrollTable` and `VirtualList` move from the logic
-  package into the atomic visual packages, leaving `@newui/data` headless.
+  package into the atomic visual packages, leaving `@talelk/newui-data` headless.
 
 ### Minor Changes
 
@@ -127,7 +127,7 @@ This history predates the atomic package split. New atoms are released under
   the native elements for known, directly-rendered data. `ScrollTable` composes
   the same shared header class from `control-styles`, so the two cannot drift.
   `ScrollTable`'s root and head gain `data-slot` hooks.
-- ba4540f: Stacking and motion become named scales from `@newui/tokens`: `z-raised`,
+- ba4540f: Stacking and motion become named scales from `@talelk/newui-tokens`: `z-raised`,
   `z-floating`, `z-overlay`, `z-top`, `duration-fast/base/slow` and
   `ease-standard` resolve `@theme` variables instead of components hard-coding
   `z-50`, `z-[100]` and numeric durations. Computed values are unchanged. The

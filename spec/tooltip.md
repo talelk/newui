@@ -4,7 +4,7 @@ Labels supplementary information on hover and keyboard focus.
 
 ## Usage and anatomy
 
-Import `Tooltip` from `@newui/atoms`. The executable example and its copyable
+Import `Tooltip` from `@talelk/newui-atoms`. The executable example and its copyable
 source on `/atoms/tooltip` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

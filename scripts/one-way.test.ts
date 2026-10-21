@@ -56,7 +56,7 @@ describe('the logic layer is the only way in', () => {
       path.join(ROOT, 'apps/playground/src/examples/ActivityList.tsx'),
       'utf8',
     )
-    expect(activity).toContain("from '@newui/organisms'")
+    expect(activity).toContain("from '@talelk/newui-organisms'")
     expect(activity).not.toContain('@tanstack/solid-virtual')
   })
 
@@ -65,9 +65,9 @@ describe('the logic layer is the only way in', () => {
       path.join(ROOT, 'apps/starter/src/pages/Records.tsx'),
       'utf8',
     )
-    expect(records).toContain("from '@newui/data/query'")
-    expect(records).toContain("from '@newui/data/form'")
-    expect(records).toContain("from '@newui/organisms'")
+    expect(records).toContain("from '@talelk/newui-data/query'")
+    expect(records).toContain("from '@talelk/newui-data/form'")
+    expect(records).toContain("from '@talelk/newui-organisms'")
     expect(records).not.toMatch(/import .* from '@tanstack\//)
   })
 })

@@ -1,4 +1,4 @@
-import { cn, tv, type VariantProps } from '@newui/atoms/internal'
+import { cn, tv, type VariantProps } from '@talelk/newui-atoms/internal'
 import { type JSX, type ParentComponent, splitProps } from 'solid-js'
 
 export const card = tv({

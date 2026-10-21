@@ -6,7 +6,7 @@ import {
   SidebarLabel,
   SidebarSearch,
   SidebarSection,
-} from '@newui/organisms'
+} from '@talelk/newui-organisms'
 import { createSignal, For } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { DemoFrame } from './demo-frame'

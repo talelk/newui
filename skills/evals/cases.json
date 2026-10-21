@@ -98,7 +98,7 @@
       "id": "choice-radio-alias",
       "area": "component-choice",
       "prompt": "Add a priority picker with Low / Medium / High, where only one can be chosen.",
-      "check": "The single-choice group is `RadioGroup` imported from `@newui/molecules`.",
+      "check": "The single-choice group is `RadioGroup` imported from `@talelk/newui-molecules`.",
       "source": "spec/README.md"
     },
     {
@@ -147,21 +147,21 @@
       "id": "packaging-root-import",
       "area": "packaging",
       "prompt": "Import the components for a new tickets screen.",
-      "check": "Atoms and molecules are imported from their respective root barrels (`@newui/atoms` and `@newui/molecules`); `List` is exported from the `@newui/molecules` root, not a component subpath or a separate package.",
+      "check": "Atoms and molecules are imported from their respective root barrels (`@talelk/newui-atoms` and `@talelk/newui-molecules`); `List` is exported from the `@talelk/newui-molecules` root, not a component subpath or a separate package.",
       "source": "spec/list.md"
     },
     {
       "id": "packaging-style-css",
       "area": "packaging",
       "prompt": "Wire the library stylesheet into the app's CSS entry.",
-      "check": "The stylesheet is `@newui/tailwind/style.css`; visual component packages do not export a duplicate `./style.css` subpath.",
+      "check": "The stylesheet is `@talelk/newui-tailwind/style.css`; visual component packages do not export a duplicate `./style.css` subpath.",
       "source": "spec/kit.md"
     },
     {
       "id": "packaging-charts-package",
       "area": "packaging",
       "prompt": "Add a revenue chart to the dashboard.",
-      "check": "The chart comes from the `@newui/charts` workspace package (cost isolation), not a subpath of an atomic package and not a hand-rolled SVG.",
+      "check": "The chart comes from the `@talelk/newui-charts` workspace package (cost isolation), not a subpath of an atomic package and not a hand-rolled SVG.",
       "source": "AGENTS.md"
     },
     {

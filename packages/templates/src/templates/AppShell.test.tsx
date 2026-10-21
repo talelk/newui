@@ -1,5 +1,5 @@
-import { SidebarItem } from '@newui/organisms'
 import { render, screen, waitFor } from '@solidjs/testing-library'
+import { SidebarItem } from '@talelk/newui-organisms'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { AppShell } from './AppShell'

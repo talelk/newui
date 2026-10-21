@@ -1,5 +1,5 @@
 /**
- * `@newui/vite` — the Vite plugin for newui apps.
+ * `@talelk/newui-vite` — the Vite plugin for newui apps.
  *
  * Three concerns, each also exported on its own:
  *
@@ -7,7 +7,7 @@
  * 2. {@link lucideIcons} — optional `~icons/lucide/*` + bare-tag auto-import.
  * 3. {@link doctypeTypes} / {@link generateDocTypes} — typed DocTypes.
  *
- *   import { newuiVite } from '@newui/vite'
+ *   import { newuiVite } from '@talelk/newui-vite'
  *   export default defineConfig({ plugins: [newuiVite(), solid()] })
  */
 import type { Plugin } from 'vite'

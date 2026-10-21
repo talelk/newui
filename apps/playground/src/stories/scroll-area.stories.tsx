@@ -1,4 +1,4 @@
-import { ScrollArea } from '@newui/atoms'
+import { ScrollArea } from '@talelk/newui-atoms'
 import { For, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

@@ -1,5 +1,5 @@
-import { TextInput } from '@newui/atoms'
-import { DatePicker, Select } from '@newui/molecules'
+import { TextInput } from '@talelk/newui-atoms'
+import { DatePicker, Select } from '@talelk/newui-molecules'
 import { createSignal } from 'solid-js'
 import {
   CATEGORIES,

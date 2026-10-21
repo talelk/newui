@@ -30,7 +30,7 @@ export const LADDER: LadderLevel[] = [
     "title": "Foundations",
     "question": "What does it look like?",
     "unit": "token",
-    "package": "@newui/tokens",
+    "package": "@talelk/newui-tokens",
     "count": 384,
     "href": "/foundations",
     "blurb": "Colour, type, radius, elevation, focus and motion — the vocabulary every class is spelled in."
@@ -40,7 +40,7 @@ export const LADDER: LadderLevel[] = [
     "title": "Atoms",
     "question": "What is this single element?",
     "unit": "atom",
-    "package": "@newui/atoms",
+    "package": "@talelk/newui-atoms",
     "count": 22,
     "href": "/atoms",
     "blurb": "One control or mark, with nothing else inside: a Button, an input, a Badge, the scroll viewport itself."
@@ -50,7 +50,7 @@ export const LADDER: LadderLevel[] = [
     "title": "Molecules",
     "question": "What is this interaction?",
     "unit": "molecule",
-    "package": "@newui/molecules · @newui/charts",
+    "package": "@talelk/newui-molecules · @talelk/newui-charts",
     "count": 45,
     "href": "/molecules",
     "blurb": "Atoms assembled into one interaction: a field, a picker, a menu, a card, a chart legend."
@@ -60,7 +60,7 @@ export const LADDER: LadderLevel[] = [
     "title": "Organisms",
     "question": "What is this section?",
     "unit": "organism",
-    "package": "@newui/organisms · @newui/charts · @newui/editor",
+    "package": "@talelk/newui-organisms · @talelk/newui-charts · @talelk/newui-editor",
     "count": 24,
     "href": "/organisms",
     "blurb": "Self-contained regions of a page: a sidebar, a filter bar, a board, a chart, an editor."
@@ -70,7 +70,7 @@ export const LADDER: LadderLevel[] = [
     "title": "Templates",
     "question": "How does the page open?",
     "unit": "template",
-    "package": "@newui/templates",
+    "package": "@talelk/newui-templates",
     "count": 3,
     "href": "/templates",
     "blurb": "The arrangement: a frame, a title block, a navigation column, and where the content scrolls."

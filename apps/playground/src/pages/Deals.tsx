@@ -1,6 +1,6 @@
-import { Avatar, Badge, Button, TextInput } from '@newui/atoms'
-import { createUndo, usd as money, optionsOf } from '@newui/data'
-import { DatePicker, Select } from '@newui/molecules'
+import { Avatar, Badge, Button, TextInput } from '@talelk/newui-atoms'
+import { createUndo, usd as money, optionsOf } from '@talelk/newui-data'
+import { DatePicker, Select } from '@talelk/newui-molecules'
 import {
   DataTable,
   type DataTableColumn,
@@ -10,7 +10,7 @@ import {
   type KanbanMove,
   type KanbanTone,
   StatGrid,
-} from '@newui/organisms'
+} from '@talelk/newui-organisms'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
 import { AppNavigation } from '../examples/AppNavigation'
 import { AppPage } from '../examples/AppPage'

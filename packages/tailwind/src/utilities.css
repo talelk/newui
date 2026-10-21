@@ -31,7 +31,7 @@
 }
 
 /* Stacking and motion scales. The numbers live in `@theme` (`--z-*`,
- * `--duration-*`, generated from `@newui/tokens`); these utilities are the
+ * `--duration-*`, generated from `@talelk/newui-tokens`); these utilities are the
  * named vocabulary components use, so a layer change is a token edit and the
  * merge config can treat the names as one axis. */
 @utility z-raised {

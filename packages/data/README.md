@@ -1,10 +1,10 @@
-# @newui/data
+# @talelk/newui-data
 
 The logic layer: the things every app does the same way and no two agree on
 when they write them themselves.
 
 ```ts
-import { createUndo, downloadCsv, usd, optionsOf } from '@newui/data'
+import { createUndo, downloadCsv, usd, optionsOf } from '@talelk/newui-data'
 ```
 
 The package is **headless** — it imports `solid-js` for signals and nothing from
@@ -24,7 +24,7 @@ The first four surfaces are the ones the examples had already copied:
 ## Query
 
 ```tsx
-import { DataProvider, createCollection } from '@newui/data/query'
+import { DataProvider, createCollection } from '@talelk/newui-data/query'
 
 const tasks = createCollection(() => ({
   key: ['tasks'],
@@ -46,7 +46,7 @@ and `ScrollTable` is a molecule. This package supplies their headless data
 behavior, not their rendered surface; `spec/data.md` is the contract for what
 has shipped.
 
-## Resource — `@newui/data/resource`
+## Resource — `@talelk/newui-data/resource`
 
 The Frappe DocType client: `request`/`frappeRequest` transport with
 `setConfig`, document and list hooks (`useDoc`, `useDoctype`, `useList`,

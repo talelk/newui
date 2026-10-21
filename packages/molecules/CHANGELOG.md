@@ -1,4 +1,4 @@
-# @newui/molecules
+# @talelk/newui-molecules
 
 ## 1.0.0
 
@@ -17,16 +17,16 @@
   labels. All input families share Field help/error wiring without remounting
   uncontrolled state when validation appears. Settings tabs support vertical
   arrow, Home and End navigation.
-- 0d87bbb: Clean break to the atomic public API. The `@newui/ui`, `@newui/blocks` and
-  `@newui/layouts` packages are removed; consumers import atoms, molecules,
+- 0d87bbb: Clean break to the atomic public API. The `@talelk/newui-ui`, `@talelk/newui-blocks` and
+  `@talelk/newui-layouts` packages are removed; consumers import atoms, molecules,
   organisms and templates from the new package names. No compatibility barrels,
   deprecated shell adapters or legacy route redirects are shipped.
   
-  `@newui/templates` now exposes exactly `AppShell`, `PaneLayout` and
+  `@talelk/newui-templates` now exposes exactly `AppShell`, `PaneLayout` and
   `AuthLayout`. `AppShell` owns one responsive sidebar with tenant, grouped
   navigation and pinned settings/account controls; split rail/sidebar composition
   is removed. `DataTable`, `ScrollTable` and `VirtualList` move from the logic
-  package into the atomic visual packages, leaving `@newui/data` headless.
+  package into the atomic visual packages, leaving `@talelk/newui-data` headless.
 - ca458aa: `Select` single mode (the default) takes `value: string | null` and reports
   `onValueChange` with a scalar, matching `Combobox`; `multiple` keeps the
   `string[]` contract. `FormControl`'s `type="select"` follows the same split.
@@ -130,7 +130,7 @@
   
   The thumb fades in on pointer hover, while scrolling, and while dragging, with a
   150ms transition either way.
-- ba4540f: Stacking and motion become named scales from `@newui/tokens`: `z-raised`,
+- ba4540f: Stacking and motion become named scales from `@talelk/newui-tokens`: `z-raised`,
   `z-floating`, `z-overlay`, `z-top`, `duration-fast/base/slow` and
   `ease-standard` resolve `@theme` variables instead of components hard-coding
   `z-50`, `z-[100]` and numeric durations. Computed values are unchanged. The
@@ -148,4 +148,4 @@
 - Updated dependencies [436c6ec]
 - Updated dependencies [ba4540f]
 - Updated dependencies [7b85ab4]
-  - @newui/atoms@1.0.0
+  - @talelk/newui-atoms@1.0.0

@@ -1,4 +1,4 @@
-# @newui/icons
+# @talelk/newui-icons
 
 ## 0.0.1
 

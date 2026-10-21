@@ -1,4 +1,9 @@
-import { cn, createId, createZagApi, Portal } from '@newui/atoms/internal'
+import {
+  cn,
+  createId,
+  createZagApi,
+  Portal,
+} from '@talelk/newui-atoms/internal'
 import * as zagToast from '@zag-js/toast'
 import { For, type JSX, Show } from 'solid-js'
 

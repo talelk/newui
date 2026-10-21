@@ -13,21 +13,21 @@
   },
   "intent": {
     "skills": [
-      "workspace:@newui/*",
-      "@newui/*"
+      "workspace:@talelk/newui-*",
+      "@talelk/newui-*"
     ],
     "exclude": [
-      "workspace:@newui/*#experimental-*",
-      "@newui/*#experimental-*"
+      "workspace:@talelk/newui-*#experimental-*",
+      "@talelk/newui-*#experimental-*"
     ]
   },
   "dependencies": {
-    "@newui/atoms": "workspace:*",
-    "@newui/data": "workspace:*",
-    "@newui/molecules": "workspace:*",
-    "@newui/organisms": "workspace:*",
-    "@newui/tailwind": "workspace:*",
-    "@newui/templates": "workspace:*",
+    "@talelk/newui-atoms": "workspace:*",
+    "@talelk/newui-data": "workspace:*",
+    "@talelk/newui-molecules": "workspace:*",
+    "@talelk/newui-organisms": "workspace:*",
+    "@talelk/newui-tailwind": "workspace:*",
+    "@talelk/newui-templates": "workspace:*",
     "@solidjs/router": "^1.0.0",
     "solid-js": "^1.9.17"
   },

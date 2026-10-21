@@ -1,5 +1,5 @@
-import { Button, Switch } from '@newui/atoms'
-import { SettingsDialog } from '@newui/organisms'
+import { Button, Switch } from '@talelk/newui-atoms'
+import { SettingsDialog } from '@talelk/newui-organisms'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

@@ -12,7 +12,7 @@ below is one reviewable diff.
 
 Status: implemented in the working tree (helpers H1–H16, Slices A–F).
 The deferred items have since landed in the limits pass: `PageToolbarTab`
-is deleted (§3, major changeset for `@newui/blocks`), Home embeds real
+is deleted (§3, major changeset for `@talelk/newui-blocks`), Home embeds real
 component previews as a scroll-loaded chunk (§4D), Analytics runs on
 `DataTable`, reference pages render one Props table (the spec contract
 drops its copy at render time only), and the TOC tracks the section being
@@ -35,7 +35,7 @@ relative to the repo root unless prefixed `apps/playground/src/`
 - Shell (`pg/shell/*`) imports no component: plain markup + the
   `createColorScheme` singleton (`pg/shell/theme.ts`) only. Every route
   stays lazy via `page()`/`import()` in `pg/routes.tsx:31-49`. Blocks
-  import only `@newui/ui`. Never edit `references/`, `pg/generated/*`,
+  import only `@talelk/newui-ui`. Never edit `references/`, `pg/generated/*`,
   `packages/ui/api.json`, or `pnpm-lock.yaml` by hand.
 - Taste: no violet/indigo accents or gradients, no gradient headline text,
   no cream page bg, no glow/glass, no `hover:scale-105`, no left-border
@@ -57,7 +57,7 @@ can leak into the shell chunk. Create in slice order; each lands with its
 first consumer in the same diff (no orphan helpers).
 
 > **Since this was written:** H2–H5 are no longer playground helpers. They are
-> the first surfaces of `@newui/data` (`spec/data.md`), importable by any app and
+> the first surfaces of `@talelk/newui-data` (`spec/data.md`), importable by any app and
 > headless by contract; the example copies are deleted. H1 stayed an example
 > composition — it renders, so it is a component, and it belongs in the kit or in
 > the app, not in the logic layer.
@@ -75,8 +75,8 @@ first consumer in the same diff (no orphan helpers).
 | H9 | `pg/lib/PageSection.tsx` | `<PageSection id title description?>` (`scroll-mt-16`, `text-section` h2) | Local defs Docs:13-20 · Foundations:6-12 · Settings:12-27; ComponentPage sections :267,315,321,326. Also the anchor source for TOC (§4). Patterns keep inline h2 (demo surface) — adopt opportunistically only |
 | H10 | `pg/lib/CatalogList.tsx` | `<CatalogList sections>` (A + CatalogIcon only) | Same ~35-line block ComponentsIndex:74-111 · BlocksIndex:54-92 |
 | H11 | `pg/lib/catalog.ts` | `groupEntries(entries, query)` pure fn | ComponentNav:31-39,44-68 · ComponentsIndex:25-50 · BlocksIndex:18-24 (all lazy; ComponentNav loads via lazy ReferenceLayout, routes.tsx:40-49) |
-| H12 | `pg/shell/nav-ui.tsx` | `NAV_ROW` class const + `<FilterInput>` plain markup (lucide span, **no `@newui/*` import** — shell rule) | Nav-row class ×5: SidebarNav:122,179 · ComponentNav:110,142 · Masthead:159; search inputs SidebarNav:64-80 · ComponentNav:86-99; `Nothing matches` SidebarNav:90 · ComponentNav:123. ComponentsIndex keeps its own page-level input or drops to the same span markup |
-| H13 | `pg/demos/chart-demo-state.tsx` | `<ChartDemoControls>` + `MONTHLY_ACTIVITY`; chart passed as **children**; imports `Button` only — must NOT import `@newui/charts` components or every per-file demo chunk drags all charts | 8 near-identical demos (area/bar/line/donut/funnel/heatmap/sankey/scatter-chart.tsx:1-39; diff area↔bar = 2 lines); variant chart-container:4-35 |
+| H12 | `pg/shell/nav-ui.tsx` | `NAV_ROW` class const + `<FilterInput>` plain markup (lucide span, **no `@talelk/newui-*` import** — shell rule) | Nav-row class ×5: SidebarNav:122,179 · ComponentNav:110,142 · Masthead:159; search inputs SidebarNav:64-80 · ComponentNav:86-99; `Nothing matches` SidebarNav:90 · ComponentNav:123. ComponentsIndex keeps its own page-level input or drops to the same span markup |
+| H13 | `pg/demos/chart-demo-state.tsx` | `<ChartDemoControls>` + `MONTHLY_ACTIVITY`; chart passed as **children**; imports `Button` only — must NOT import `@talelk/newui-charts` components or every per-file demo chunk drags all charts | 8 near-identical demos (area/bar/line/donut/funnel/heatmap/sankey/scatter-chart.tsx:1-39; diff area↔bar = 2 lines); variant chart-container:4-35 |
 | H14 | `pg/demos/demo-frame.tsx` | `<DemoFrame tall?>` (`rounded-6 border-outline-gray-2` wrapper) | Block demos ×3 + variant: app-sidebar · page-toolbar · auth-card · kanban-board (`h-[26rem]`) |
 | H15 | `pg/lib/TableOfContents.tsx` | `<TableOfContents entries={[{id,label}]} />` plain anchors, `aria-label="On this page"`; scrollspy optional, decided: **no scrollspy in this pass** | TOC suppliers §4. Lives in `lib/` (lazy page chunks), never imported by `shell/` eagerly — pages pass it through the existing `toc` slot |
 | H16 (P2, optional) | `pg/examples/CreateDialog.tsx` | Dialog shell only (`open/attempted/error` scaffold); fields stay local | Scaffold ×7: Deals:347-443 · Files:490 · Tickets:479 · AccountingDialogs:31,121 · Mail:661 · discussions:134. Only if H1–H15 land cleanly |
@@ -149,7 +149,7 @@ FilterBar API change. Residual selects use H5.
 - [ ] **Files** (currently no blocks): filter (`:268-302`) → FilterBar
   `query`, `selects`=[Type], `tabs`=Grid/List, `children`=Sort, chips
   type/query, `resultCount`, `onClearAll`. Hand breadcrumb nav
-  (`:303-333`) → `Breadcrumbs` (`@newui/ui` index:7). Storage
+  (`:303-333`) → `Breadcrumbs` (`@talelk/newui-ui` index:7). Storage
   Progress+caption (`:468-489`) → `NumberCard target=10485760
   format=bytes` (H3; progress anatomy per
   `packages/charts/src/NumberCard.tsx:188`). Dashed empty state
@@ -286,7 +286,7 @@ That keeps every `routes.test.ts` expectation valid without edits.
   Accounting's never-displaying preset Select (§2), and the dead
   exported `PageToolbarTab` (`packages/blocks/…/PageToolbar.tsx:4`,
   zero other uses) — the last is a public-API removal: changeset
-  (major for `@newui/blocks` per changeset rules) + `pnpm api &&
+  (major for `@talelk/newui-blocks` per changeset rules) + `pnpm api &&
   pnpm site` in the same diff, or defer it; never delete silently.
 - **Kept hand-rolled on purpose**: ComponentPage `ApiTable`
   (`:42-101`) and Accounting P&L table (static content; TanStack
@@ -302,7 +302,7 @@ Docs/Foundations already adopt PageIntro — `Docs.tsx:34`,
 
 ### Slice D — Home rewrite (`pg/pages/Home.tsx`, 228 lines)
 
-Still open (progress:446-450). Keep zero `@newui/ui` imports (cheapest
+Still open (progress:446-450). Keep zero `@talelk/newui-ui` imports (cheapest
 route, `:7-10`) and the left-aligned H1. Remove: the hand-drawn fake
 dashboard with nested metric cards and inline SVG chart (`:110-171`),
 and the identical 2×2 PILLARS card grid (`:14-45,186-208`). New
@@ -358,7 +358,7 @@ shadow-sm p-6`; page stays `bg-surface-base`; description/footer
 `text-ink-gray-6 → gray-7` (`:48,74`). Same diff: `spec/auth-card.md`
 behaviour note (spec currently promises only measure/h1/divider),
 `pg/demos/auth-card.tsx` review (H14 frame), Authentication page
-adoption (§2). Changeset: patch for `@newui/blocks` (visual change,
+adoption (§2). Changeset: patch for `@talelk/newui-blocks` (visual change,
 no API delta); `pnpm api:check` must pass unchanged — that is the
 proof no API drifted. Do not run `pnpm api`/`pnpm site` unless the
 check says otherwise.
@@ -390,14 +390,14 @@ check says otherwise.
   `pg/routes.tsx`; no static page/component import enters routes or
   shell. `routes.test.ts` + depcruise `site-shell-stays-lean` are
   the enforcers — do not weaken them.
-- **Shell rule**: `pg/shell/*` gains no `@newui/*` import; H12 is
+- **Shell rule**: `pg/shell/*` gains no `@talelk/newui-*` import; H12 is
   plain markup + string constants; the `createColorScheme` singleton
   (`pg/shell/theme.ts`) remains the only runtime import.
 - **Budgets**: `pnpm size` entry budgets and `pnpm budget` route
   budgets are not raised to make a slice fit. The two gated
   adoptions (Analytics→DataTable, Cards sparkline) are abandoned,
   not budgeted around, if they overflow.
-- **Blocks boundary**: blocks keep importing only `@newui/ui`;
+- **Blocks boundary**: blocks keep importing only `@talelk/newui-ui`;
   TanStack Table/Virtual/Query/Form stay at the playground page
   layer; charts/editors are composed in pages, never in blocks.
 - **Tokens/theme generation, Zag machines, KanbanBoard internals**:

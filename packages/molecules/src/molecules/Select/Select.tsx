@@ -1,5 +1,5 @@
-import type { InputSize, InputVariant } from '@newui/atoms'
-import { Icon, type IconProp } from '@newui/atoms'
+import type { InputSize, InputVariant } from '@talelk/newui-atoms'
+import { Icon, type IconProp } from '@talelk/newui-atoms'
 import {
   cn,
   createId,
@@ -8,7 +8,7 @@ import {
   Portal,
   popupFieldVariants,
   useField,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import { ListCollection } from '@zag-js/collection'
 import * as zag from '@zag-js/select'
 import { createMemo, For, type JSX, Show, splitProps } from 'solid-js'

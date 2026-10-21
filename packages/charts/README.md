@@ -1,4 +1,4 @@
-# @newui/charts
+# @talelk/newui-charts
 
 Solid wrappers over [echarts](https://echarts.apache.org/), drawn with the
 **SVG renderer** and themed with the newui chart tokens. Bar, line, area,
@@ -14,7 +14,7 @@ no second option and no reconfiguration.
 ## Install
 
 ```sh
-pnpm add @newui/charts echarts solid-js
+pnpm add @talelk/newui-charts echarts solid-js
 ```
 
 `echarts` is a direct dependency; `solid-js` is a peer.
@@ -22,7 +22,7 @@ pnpm add @newui/charts echarts solid-js
 ## Usage
 
 ```tsx
-import { BarChart, DonutChart, LineChart, NumberCard } from '@newui/charts'
+import { BarChart, DonutChart, LineChart, NumberCard } from '@talelk/newui-charts'
 
 const sales = [
   { month: 'Jan', revenue: 120, costs: 80 },

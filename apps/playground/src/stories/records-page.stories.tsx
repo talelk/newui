@@ -1,14 +1,14 @@
-import { Button } from '@newui/atoms'
-import { usd } from '@newui/data'
-import { Dropdown } from '@newui/molecules'
+import { Button } from '@talelk/newui-atoms'
+import { usd } from '@talelk/newui-data'
+import { Dropdown } from '@talelk/newui-molecules'
 import {
   DataTable,
   type DataTableColumn,
   FilterBar,
   SidebarItem,
   StatGrid,
-} from '@newui/organisms'
-import { AppShell } from '@newui/templates'
+} from '@talelk/newui-organisms'
+import { AppShell } from '@talelk/newui-templates'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

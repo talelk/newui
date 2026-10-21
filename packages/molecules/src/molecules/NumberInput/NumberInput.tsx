@@ -4,7 +4,7 @@ import {
   createZagApi,
   Field,
   useField,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/number-input'
 import { type JSX, splitProps } from 'solid-js'
 

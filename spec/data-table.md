@@ -5,7 +5,7 @@ A collection rendered as an accessible, searchable, sortable, paginated table.
 ## Usage
 
 ```tsx
-import { DataTable, type DataTableColumn } from '@newui/organisms'
+import { DataTable, type DataTableColumn } from '@talelk/newui-organisms'
 
 <DataTable
   title="Projects"
@@ -45,5 +45,5 @@ a whole data region.
   externally filtered row set resets the current page.
 - Column alignment is set with `meta: { align: 'end' }` for numeric columns.
 - The root is `data-slot="data-table"` for stable browser-level integration.
-- `ScrollTable` is a separate molecule at `@newui/molecules`; importing it does
+- `ScrollTable` is a separate molecule at `@talelk/newui-molecules`; importing it does
   not import the table engine into a route that renders its own semantic table.

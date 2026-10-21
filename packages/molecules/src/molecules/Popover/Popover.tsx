@@ -6,7 +6,7 @@ import {
   createZagContext,
   mergeProps,
   Portal,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/popover'
 import { type JSX, type ParentComponent, Show, splitProps } from 'solid-js'
 

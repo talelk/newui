@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
-import { layoutSpacing, radiusRoles } from '@newui/tokens'
+import { layoutSpacing, radiusRoles } from '@talelk/newui-tokens'
 import { describe, expect, it } from 'vitest'
 
 /**

@@ -1,5 +1,9 @@
-import { KeyboardShortcut } from '@newui/atoms'
-import { CommandGroup, CommandItem, CommandPalette } from '@newui/organisms'
+import { KeyboardShortcut } from '@talelk/newui-atoms'
+import {
+  CommandGroup,
+  CommandItem,
+  CommandPalette,
+} from '@talelk/newui-organisms'
 import { createSignal, type JSX, onMount } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

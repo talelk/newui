@@ -1,4 +1,4 @@
-import { FunnelChart } from '@newui/charts'
+import { FunnelChart } from '@talelk/newui-charts'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { ChartDemoControls, STAGE_ACTIVITY } from './chart-demo-state'
 

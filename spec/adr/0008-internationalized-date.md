@@ -25,7 +25,7 @@ budget.
 
 ## Consequences
 
-- `@newui/molecules` depends on `@internationalized/date` and
+- `@talelk/newui-molecules` depends on `@internationalized/date` and
   `@zag-js/date-picker`.
 - The barrel budget grew and a `DatePicker only` entry guards the cost.
 - `DateTimePicker`/`DateRangePicker` would be separate components (P8).

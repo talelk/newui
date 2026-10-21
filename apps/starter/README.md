@@ -58,10 +58,10 @@ depends on and excludes future experimental skills:
 ```json
 {
   "intent": {
-    "skills": ["workspace:@newui/*", "@newui/*"],
+    "skills": ["workspace:@talelk/newui-*", "@talelk/newui-*"],
     "exclude": [
-      "workspace:@newui/*#experimental-*",
-      "@newui/*#experimental-*"
+      "workspace:@talelk/newui-*#experimental-*",
+      "@talelk/newui-*#experimental-*"
     ]
   }
 }
@@ -69,7 +69,7 @@ depends on and excludes future experimental skills:
 
 ```sh
 pnpm --filter starter skills
-pnpm --filter starter skills:load @newui/atoms#newui
+pnpm --filter starter skills:load @talelk/newui-atoms#newui
 ```
 
 `skills` scans installed dependencies as static files — it never imports or runs
@@ -84,7 +84,7 @@ versioning and the conservative stale checks.
 ## Using it
 
 Copy `apps/starter` out of the repository, rename its `package.json`, point the
-`@newui/*` dependencies at the published versions, and replace
+`@talelk/newui-*` dependencies at the published versions, and replace
 `src/data/records.ts` with your API. Nothing above that file changes.
 
 It deliberately leaves out an auth backend, an HTTP client and

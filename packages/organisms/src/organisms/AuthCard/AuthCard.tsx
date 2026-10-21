@@ -1,4 +1,4 @@
-import { Button, Divider } from '@newui/atoms'
+import { Button, Divider } from '@talelk/newui-atoms'
 import { For, type JSX, Show } from 'solid-js'
 
 export interface AuthProvider {

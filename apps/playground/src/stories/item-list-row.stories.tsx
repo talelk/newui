@@ -1,5 +1,5 @@
-import { Icon } from '@newui/atoms'
-import { ItemListRow } from '@newui/molecules'
+import { Icon } from '@talelk/newui-atoms'
+import { ItemListRow } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

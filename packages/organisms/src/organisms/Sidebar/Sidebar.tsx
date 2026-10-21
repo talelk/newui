@@ -5,13 +5,13 @@ import {
   TooltipContent,
   TooltipRoot,
   TooltipTrigger,
-} from '@newui/atoms'
+} from '@talelk/newui-atoms'
 import {
   cn,
   createControllableSignal,
   createId,
   createMediaQuery,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import {
   type Accessor,
   type Component,

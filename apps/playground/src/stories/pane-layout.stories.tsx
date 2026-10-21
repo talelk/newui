@@ -1,5 +1,5 @@
-import { Badge } from '@newui/atoms'
-import { PaneLayout } from '@newui/templates'
+import { Badge } from '@talelk/newui-atoms'
+import { PaneLayout } from '@talelk/newui-templates'
 import { createSignal, For, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { DemoFrame } from './demo-frame'

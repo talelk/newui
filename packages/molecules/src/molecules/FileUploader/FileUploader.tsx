@@ -1,11 +1,11 @@
-import { Progress } from '@newui/atoms'
+import { Progress } from '@talelk/newui-atoms'
 import {
   cn,
   createId,
   createZagApi,
   Field,
   useField,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/file-upload'
 import { For, type JSX, Show, splitProps } from 'solid-js'
 

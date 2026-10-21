@@ -73,7 +73,7 @@ Trusted Publisher is required before OIDC can publish it. Bootstrap once:
    npm login
    pnpm publish:stage
    ```
-2. On npmjs.com, add a **Trusted Publisher** for every `@newui/*` package:
+2. On npmjs.com, add a **Trusted Publisher** for every `@talelk/newui-*` package:
    GitHub Actions, owner `talelk`, repository `newui`, workflow
    `changesets.yml`, and allow direct `npm publish`.
 3. Set the repository variable `NPM_PUBLISH=true`. The release script is gated
@@ -87,15 +87,15 @@ automatically through OIDC; no `NPM_TOKEN` secret is required or used.
 
 | Package | Responsibility |
 | --- | --- |
-| `@newui/tokens`, `@newui/tailwind` | Framework-neutral tokens and generated CSS |
-| `@newui/atoms`, `@newui/molecules` | Single controls/marks and compound interactions |
-| `@newui/organisms` | Application regions, sidebar, table and virtual list |
-| `@newui/templates` | Exactly three page templates: `AppShell`, `PaneLayout`, `AuthLayout` |
-| `@newui/icons` | The icon set as Solid components |
-| `@newui/data` | Headless format/selection/undo/download, query and form logic; `/resource` is the Frappe DocType client |
-| `@newui/charts` | Theme-aware ECharts SVG wrappers and accessible data fallbacks |
-| `@newui/editor`, `@newui/code-editor` | TipTap and CodeMirror integrations |
-| `@newui/vite` | Development integration: dev-server proxy, icons and DocType types |
+| `@talelk/newui-tokens`, `@talelk/newui-tailwind` | Framework-neutral tokens and generated CSS |
+| `@talelk/newui-atoms`, `@talelk/newui-molecules` | Single controls/marks and compound interactions |
+| `@talelk/newui-organisms` | Application regions, sidebar, table and virtual list |
+| `@talelk/newui-templates` | Exactly three page templates: `AppShell`, `PaneLayout`, `AuthLayout` |
+| `@talelk/newui-icons` | The icon set as Solid components |
+| `@talelk/newui-data` | Headless format/selection/undo/download, query and form logic; `/resource` is the Frappe DocType client |
+| `@talelk/newui-charts` | Theme-aware ECharts SVG wrappers and accessible data fallbacks |
+| `@talelk/newui-editor`, `@talelk/newui-code-editor` | TipTap and CodeMirror integrations |
+| `@talelk/newui-vite` | Development integration: dev-server proxy, icons and DocType types |
 
 TanStack Table and Virtual belong to the organism package; Query and Form belong
 to the headless data package. Applications import the atomic layer they use.

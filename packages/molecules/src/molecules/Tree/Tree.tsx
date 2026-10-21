@@ -3,7 +3,7 @@ import {
   createId,
   createZagApi,
   createZagContext,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import type { TreeCollection } from '@zag-js/collection'
 import * as zag from '@zag-js/tree-view'
 import {

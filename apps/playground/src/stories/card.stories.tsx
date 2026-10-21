@@ -1,4 +1,4 @@
-import { Button } from '@newui/atoms'
+import { Button } from '@talelk/newui-atoms'
 import {
   Card,
   CardContent,
@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@newui/molecules'
+} from '@talelk/newui-molecules'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

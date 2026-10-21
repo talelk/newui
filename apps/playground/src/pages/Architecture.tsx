@@ -27,27 +27,28 @@ const PACKAGES: {
 }[] = [
   {
     level: 'Foundations',
-    packages: '@newui/tokens · @newui/tailwind',
+    packages: '@talelk/newui-tokens · @talelk/newui-tailwind',
     answers: 'What does it look like?',
   },
   {
     level: 'Atoms',
-    packages: '@newui/atoms',
+    packages: '@talelk/newui-atoms',
     answers: 'What is this single element?',
   },
   {
     level: 'Molecules',
-    packages: '@newui/molecules · @newui/charts',
+    packages: '@talelk/newui-molecules · @talelk/newui-charts',
     answers: 'What is this interaction?',
   },
   {
     level: 'Organisms',
-    packages: '@newui/organisms · @newui/charts · @newui/editor',
+    packages:
+      '@talelk/newui-organisms · @talelk/newui-charts · @talelk/newui-editor',
     answers: 'What is this section?',
   },
   {
     level: 'Templates',
-    packages: '@newui/templates',
+    packages: '@talelk/newui-templates',
     answers: 'How does the page open?',
   },
   {
@@ -203,12 +204,12 @@ export function Architecture(): JSX.Element {
           <p class="max-w-2xl">
             The package axis still says where code lives:{' '}
             <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-              @newui/charts
+              @talelk/newui-charts
             </code>{' '}
             ships molecules (a legend) and organisms (a bar chart) in one
             package, and{' '}
             <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-              @newui/atoms
+              @talelk/newui-atoms
             </code>{' '}
             ships organisms (a sidebar) beside atoms. Filing by package instead
             would have hidden that; filing by composition is what makes the
@@ -273,7 +274,7 @@ export function Architecture(): JSX.Element {
         <div class="flex flex-col gap-3 text-base text-ink-gray-7">
           <p class="max-w-2xl">
             <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-              @newui/data
+              @talelk/newui-data
             </code>{' '}
             sits <em>beside</em> the levels rather than on them: a page uses it
             the way it uses a component, but nothing above it is made of it. It
@@ -284,8 +285,8 @@ export function Architecture(): JSX.Element {
             from acquiring an opinion about money.
           </p>
           <pre class="w-fit max-w-full whitespace-pre-wrap break-words rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
-            <code>{`import { createUndo, downloadCsv, optionsOf, usd } from '@newui/data'
-import { DataProvider, createCollection } from '@newui/data/query'`}</code>
+            <code>{`import { createUndo, downloadCsv, optionsOf, usd } from '@talelk/newui-data'
+import { DataProvider, createCollection } from '@talelk/newui-data/query'`}</code>
           </pre>
           <p class="max-w-2xl">
             What renders stays in the atomic visual packages. The examples
@@ -313,15 +314,15 @@ import { DataProvider, createCollection } from '@newui/data/query'`}</code>
         </dl>
 
         <pre class="w-fit max-w-full whitespace-pre-wrap break-words rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
-          <code>{`@newui/tokens · @newui/tailwind      foundations
+          <code>{`@talelk/newui-tokens · @talelk/newui-tailwind      foundations
   ↓  colour · type · radius · motion · controls' classes
-@newui/atoms                         atoms
+@talelk/newui-atoms                         atoms
   ↓
-@newui/molecules                     molecules
+@talelk/newui-molecules                     molecules
   ↓
-@newui/organisms · charts · editor    organisms
+@talelk/newui-organisms · charts · editor    organisms
   ↓  sections and widgets
-@newui/templates                     templates
+@talelk/newui-templates                     templates
   ↓  page frames
 apps/playground · apps/starter        pages`}</code>
         </pre>

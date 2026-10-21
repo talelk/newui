@@ -4,7 +4,7 @@ Provides a bounded scroll viewport with custom scrollbars.
 
 ## Usage and anatomy
 
-Import `ScrollArea` from `@newui/atoms`. The executable example and its copyable
+Import `ScrollArea` from `@talelk/newui-atoms`. The executable example and its copyable
 source on `/atoms/scroll-area` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

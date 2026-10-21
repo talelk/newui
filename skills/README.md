@@ -50,10 +50,10 @@ and exclusions:
 ```json
 {
   "intent": {
-    "skills": ["workspace:@newui/*", "@newui/*"],
+    "skills": ["workspace:@talelk/newui-*", "@talelk/newui-*"],
     "exclude": [
-      "workspace:@newui/*#experimental-*",
-      "@newui/*#experimental-*"
+      "workspace:@talelk/newui-*#experimental-*",
+      "@talelk/newui-*#experimental-*"
     ]
   }
 }
@@ -61,11 +61,11 @@ and exclusions:
 
 ```sh
 pnpm --filter starter skills                 # list permitted skills
-pnpm --filter starter skills:load @newui/atoms#newui
+pnpm --filter starter skills:load @talelk/newui-atoms#newui
 ```
 
 `skills:load` prints the matching `SKILL.md`; an agent loads only the skill that
-matches the task. `@newui/atoms` covers visual composition; `@newui/data` covers
+matches the task. `@talelk/newui-atoms` covers visual composition; `@talelk/newui-data` covers
 collections, mutations and forms.
 
 Discovery reads `package.json` and static `skills/**/SKILL.md` files. It never

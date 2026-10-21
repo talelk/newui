@@ -1,4 +1,4 @@
-# @newui/vite
+# @talelk/newui-vite
 
 Vite plugins for newui apps. Three concerns, each usable on its own:
 
@@ -17,7 +17,7 @@ Requires Vite 8.3.4 or later in the Vite 8 release line.
 // vite.config.ts
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
-import { newuiVite } from '@newui/vite'
+import { newuiVite } from '@talelk/newui-vite'
 
 export default defineConfig({
   plugins: [
@@ -41,7 +41,7 @@ export default defineConfig({
 directly:
 
 ```ts
-import { frappeProxy, lucideIcons, generateDocTypes } from '@newui/vite'
+import { frappeProxy, lucideIcons, generateDocTypes } from '@talelk/newui-vite'
 ```
 
 ### Proxy
@@ -76,7 +76,7 @@ of its own. Pass `lucideIcons: false` (the default) if your app uses newui's
 From a script:
 
 ```ts
-import { generateDocTypes } from '@newui/vite'
+import { generateDocTypes } from '@talelk/newui-vite'
 
 await generateDocTypes({
   doctypes: ['Task', 'Task Item'],

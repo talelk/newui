@@ -1,4 +1,4 @@
-import { Icon, type IconProp } from '@newui/atoms'
+import { Icon, type IconProp } from '@talelk/newui-atoms'
 import {
   type BrowserTabBase,
   browserTabCardClasses,
@@ -18,7 +18,7 @@ import {
   tabRadiusClasses,
   tabShellClasses,
   tabTrackClasses,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/tabs'
 import {
   type Accessor,

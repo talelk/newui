@@ -1,6 +1,6 @@
-import { Button, KeyboardShortcut } from '@newui/atoms'
-import { Combobox, Dialog } from '@newui/molecules'
 import { useNavigate } from '@solidjs/router'
+import { Button, KeyboardShortcut } from '@talelk/newui-atoms'
+import { Combobox, Dialog } from '@talelk/newui-molecules'
 import { createSignal, onCleanup, onMount } from 'solid-js'
 
 const COMMANDS = [

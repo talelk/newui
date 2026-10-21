@@ -1,4 +1,4 @@
-import { FilterBar } from '@newui/organisms'
+import { FilterBar } from '@talelk/newui-organisms'
 import { createMemo, createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

@@ -1,6 +1,6 @@
-import { Icon, type IconProp } from '@newui/atoms'
-import { cn } from '@newui/atoms/internal'
-import { Dialog } from '@newui/molecules'
+import { Icon, type IconProp } from '@talelk/newui-atoms'
+import { cn } from '@talelk/newui-atoms/internal'
+import { Dialog } from '@talelk/newui-molecules'
 import {
   type Accessor,
   createContext,

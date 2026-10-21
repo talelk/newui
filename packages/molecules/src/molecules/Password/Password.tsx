@@ -7,8 +7,8 @@ import {
   TooltipContent,
   TooltipRoot,
   TooltipTrigger,
-} from '@newui/atoms'
-import { createControllableSignal } from '@newui/atoms/internal'
+} from '@talelk/newui-atoms'
+import { createControllableSignal } from '@talelk/newui-atoms/internal'
 import { createSignal, type JSX, splitProps } from 'solid-js'
 
 export interface PasswordProps

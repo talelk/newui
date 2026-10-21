@@ -1,4 +1,4 @@
-import { Timeline } from '@newui/molecules'
+import { Timeline } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

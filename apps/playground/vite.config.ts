@@ -82,12 +82,12 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: [
-      '@newui/atoms',
-      '@newui/molecules',
-      '@newui/organisms',
-      '@newui/templates',
-      '@newui/tailwind',
-      '@newui/tokens',
+      '@talelk/newui-atoms',
+      '@talelk/newui-molecules',
+      '@talelk/newui-organisms',
+      '@talelk/newui-templates',
+      '@talelk/newui-tailwind',
+      '@talelk/newui-tokens',
     ],
   },
   server: {

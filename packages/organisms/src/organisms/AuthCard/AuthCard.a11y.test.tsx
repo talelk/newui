@@ -1,5 +1,5 @@
-import { Button, TextInput } from '@newui/atoms'
 import { render } from '@solidjs/testing-library'
+import { Button, TextInput } from '@talelk/newui-atoms'
 import axe, { type AxeResults } from 'axe-core'
 import { describe, expect, it } from 'vitest'
 import { AuthCard } from './AuthCard'

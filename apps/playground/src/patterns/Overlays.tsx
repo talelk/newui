@@ -1,5 +1,5 @@
-import { Button, TextInput } from '@newui/atoms'
-import { BottomSheet, Dialog } from '@newui/molecules'
+import { Button, TextInput } from '@talelk/newui-atoms'
+import { BottomSheet, Dialog } from '@talelk/newui-molecules'
 import { createSignal, Show } from 'solid-js'
 
 /** Enterprise overlay examples using the existing Dialog and BottomSheet APIs. */

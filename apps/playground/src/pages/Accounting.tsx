@@ -1,26 +1,26 @@
-import { Badge, Button, Switch } from '@newui/atoms'
+import { Badge, Button, Switch } from '@talelk/newui-atoms'
 import {
   AreaChart,
   ChartCard,
   ChartLegend,
   paletteColors,
   useChartTokens,
-} from '@newui/charts'
+} from '@talelk/newui-charts'
 import {
   usd as currency,
   downloadCsv as downloadCSV,
   optionsOf,
   usdK,
-} from '@newui/data'
+} from '@talelk/newui-data'
 import {
   DateRangePicker,
   type DateRangeValue,
   ScrollTable,
   ScrollTableHead,
   TabButtons,
-} from '@newui/molecules'
-import type { DataTableColumn } from '@newui/organisms'
-import { FilterBar, StatGrid } from '@newui/organisms'
+} from '@talelk/newui-molecules'
+import type { DataTableColumn } from '@talelk/newui-organisms'
+import { FilterBar, StatGrid } from '@talelk/newui-organisms'
 import { createMemo, createSignal, For, type JSX, lazy, Show } from 'solid-js'
 import { AppPage } from '../examples/AppPage'
 import {
@@ -38,12 +38,12 @@ const AccountingDialogs = lazy(() => import('./accounting/AccountingDialogs'))
 const ExpenseChart = lazy(() => import('./accounting/ExpenseChart'))
 
 const TransactionTable = lazy(() =>
-  import('@newui/organisms').then((module) => ({
+  import('@talelk/newui-organisms').then((module) => ({
     default: module.DataTable<Transaction>,
   })),
 )
 const EmployeeTable = lazy(() =>
-  import('@newui/organisms').then((module) => ({
+  import('@talelk/newui-organisms').then((module) => ({
     default: module.DataTable<Employee>,
   })),
 )

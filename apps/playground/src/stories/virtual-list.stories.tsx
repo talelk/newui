@@ -1,4 +1,4 @@
-import { VirtualList } from '@newui/organisms'
+import { VirtualList } from '@talelk/newui-organisms'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 const ROWS = Array.from({ length: 250 }, (_, index) => ({

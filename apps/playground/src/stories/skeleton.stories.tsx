@@ -1,4 +1,4 @@
-import { Skeleton } from '@newui/atoms'
+import { Skeleton } from '@talelk/newui-atoms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

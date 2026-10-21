@@ -1,4 +1,4 @@
-import { Button } from '@newui/atoms'
+import { Button } from '@talelk/newui-atoms'
 import { type JSX, Show } from 'solid-js'
 
 /**

@@ -1,4 +1,4 @@
-import { Rating } from '@newui/molecules'
+import { Rating } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

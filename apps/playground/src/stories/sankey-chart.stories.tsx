@@ -1,4 +1,4 @@
-import { SankeyChart } from '@newui/charts'
+import { SankeyChart } from '@talelk/newui-charts'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { ChartDemoControls } from './chart-demo-state'
 

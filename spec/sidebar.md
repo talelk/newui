@@ -12,7 +12,7 @@ import {
   SidebarLabel,
   SidebarSection,
   SidebarCollapseToggle,
-} from '@newui/organisms'
+} from '@talelk/newui-organisms'
 
 <Sidebar ariaLabel="Workspace navigation">
   <SidebarHeader title="Workspace" subtitle="Production" />

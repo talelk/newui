@@ -1,4 +1,4 @@
-# @newui/editor
+# @talelk/newui-editor
 
 ## 0.1.0
 

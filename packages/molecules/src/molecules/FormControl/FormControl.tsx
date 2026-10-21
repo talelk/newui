@@ -4,7 +4,7 @@ import {
   type InputVariant,
   Textarea,
   TextInput,
-} from '@newui/atoms'
+} from '@talelk/newui-atoms'
 import { type JSX, Match, Switch } from 'solid-js'
 import { Combobox, type ComboboxOption } from '../Combobox'
 import { DatePicker } from '../DatePicker'

@@ -1,4 +1,4 @@
-import { tableHeadClass } from '@newui/atoms/internal'
+import { tableHeadClass } from '@talelk/newui-atoms/internal'
 import type { JSX, ParentComponent } from 'solid-js'
 
 /**

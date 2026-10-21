@@ -1,10 +1,10 @@
-import { Icon, type IconProp } from '@newui/atoms'
+import { Icon, type IconProp } from '@talelk/newui-atoms'
 import {
   cn,
   createId,
   createZagApi,
   createZagContext,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/accordion'
 import {
   type Accessor,

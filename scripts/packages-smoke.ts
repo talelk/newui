@@ -19,7 +19,7 @@ const PACKAGES = readdirSync(packagesDir).filter((name) => {
   const manifest = path.join(packagesDir, name, 'package.json')
   try {
     const pkg = JSON.parse(readFileSync(manifest, 'utf8'))
-    return pkg.private !== true && pkg.name?.startsWith('@newui/')
+    return pkg.private !== true && pkg.name?.startsWith('@talelk/newui-')
   } catch {
     return false
   }

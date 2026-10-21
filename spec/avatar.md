@@ -4,7 +4,7 @@ Identifies a person using an image, initials from label, or an icon.
 
 ## Usage and anatomy
 
-Import `Avatar` from `@newui/atoms`. The executable example and its copyable
+Import `Avatar` from `@talelk/newui-atoms`. The executable example and its copyable
 source on `/atoms/avatar` show the supported composition. Generated prop
 tables on that page list every declared property, callback and optional flag.
 

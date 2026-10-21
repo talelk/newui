@@ -1,5 +1,5 @@
-import { Button } from '@newui/atoms'
-import { Dialog } from '@newui/molecules'
+import { Button } from '@talelk/newui-atoms'
+import { Dialog } from '@talelk/newui-molecules'
 import { createSignal, type JSX } from 'solid-js'
 
 /**

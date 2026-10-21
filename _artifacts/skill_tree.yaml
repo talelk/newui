@@ -14,7 +14,7 @@ skills:
         description: "Build user interfaces with the newui SolidJS component library on
           Zag + Tailwind CSS v4. Use when scaffolding SolidJS pages, forms,
           dialogs, lists, or any UI that should look and feel consistent and
-          product-ready, when the user mentions newui, @newui/atoms, or asks to
+          product-ready, when the user mentions newui, @talelk/newui-atoms, or asks to
           use newui components, tokens, or conventions.",
         sources:
           [
@@ -62,29 +62,29 @@ distribution:
   mode: none
 coverage:
   ignored_packages:
-    - name: '@newui/charts'
+    - name: '@talelk/newui-charts'
       reason: optional organism-level chart package; its API is covered by source and
         stories, not the core UI skill
-    - name: '@newui/code-editor'
+    - name: '@talelk/newui-code-editor'
       reason: optional organism-level editor add-on; its API is covered by source and
         stories
-    - name: '@newui/editor'
+    - name: '@talelk/newui-editor'
       reason: optional organism-level rich-text add-on; its API is covered by source
         and stories
-    - name: '@newui/icons'
+    - name: '@talelk/newui-icons'
       reason: glyph names are implementation detail of the UI skill's icon convention
-    - name: '@newui/molecules'
+    - name: '@talelk/newui-molecules'
       reason: covered by the newui UI skill, which routes molecules to their installed
         source
-    - name: '@newui/organisms'
+    - name: '@talelk/newui-organisms'
       reason: covered by the newui UI skill, which routes organisms to their installed
         source
-    - name: '@newui/tailwind'
+    - name: '@talelk/newui-tailwind'
       reason: covered by the newui UI skill's semantic-token rules
-    - name: '@newui/templates'
+    - name: '@talelk/newui-templates'
       reason: covered by the newui UI skill, which routes templates to their installed
         source
-    - name: '@newui/tokens'
+    - name: '@talelk/newui-tokens'
       reason: covered by the newui UI skill's semantic-token rules
-    - name: '@newui/vite'
+    - name: '@talelk/newui-vite'
       reason: development build integration, not runtime guidance

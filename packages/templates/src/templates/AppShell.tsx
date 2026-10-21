@@ -1,7 +1,12 @@
-import { Button, createMediaQuery, UIProvider, useUI } from '@newui/atoms'
-import { closeDialog, showDialog } from '@newui/atoms/internal'
-import { type BreadcrumbItem, Breadcrumbs } from '@newui/molecules'
-import { AppSidebar, type AppSidebarGroup } from '@newui/organisms'
+import {
+  Button,
+  createMediaQuery,
+  UIProvider,
+  useUI,
+} from '@talelk/newui-atoms'
+import { closeDialog, showDialog } from '@talelk/newui-atoms/internal'
+import { type BreadcrumbItem, Breadcrumbs } from '@talelk/newui-molecules'
+import { AppSidebar, type AppSidebarGroup } from '@talelk/newui-organisms'
 import {
   createEffect,
   createSignal,

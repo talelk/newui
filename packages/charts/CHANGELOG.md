@@ -1,4 +1,4 @@
-# @newui/charts
+# @talelk/newui-charts
 
 ## 1.0.0
 

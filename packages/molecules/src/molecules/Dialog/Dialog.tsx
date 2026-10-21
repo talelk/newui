@@ -5,7 +5,7 @@ import {
   type ButtonVariant,
   Icon,
   type IconProp,
-} from '@newui/atoms'
+} from '@talelk/newui-atoms'
 import {
   cn,
   createDisclosure,
@@ -14,7 +14,7 @@ import {
   createZagContext,
   mergeProps,
   Portal,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/dialog'
 import {
   createSignal,

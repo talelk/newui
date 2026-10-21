@@ -1,5 +1,10 @@
-import { Icon, TooltipContent, TooltipRoot, TooltipTrigger } from '@newui/atoms'
-import { cn } from '@newui/atoms/internal'
+import {
+  Icon,
+  TooltipContent,
+  TooltipRoot,
+  TooltipTrigger,
+} from '@talelk/newui-atoms'
+import { cn } from '@talelk/newui-atoms/internal'
 import { type JSX, type ParentComponent, Show, splitProps } from 'solid-js'
 
 const DEFAULT_COLUMNS = 'auto minmax(0, 1fr) auto'

@@ -1,4 +1,4 @@
-# @newui/code-editor
+# @talelk/newui-code-editor
 
 A [CodeMirror 6](https://codemirror.net/) code editor as a Solid component.
 Framework-agnostic, themed with the newui semantic tokens so it follows the
@@ -7,13 +7,13 @@ light/dark `colorScheme` axis with no reconfiguration.
 ## Install
 
 ```sh
-pnpm add @newui/code-editor solid-js
+pnpm add @talelk/newui-code-editor solid-js
 ```
 
 ## Usage
 
 ```tsx
-import { CodeEditor } from '@newui/code-editor'
+import { CodeEditor } from '@talelk/newui-code-editor'
 import { createSignal } from 'solid-js'
 
 function Query() {

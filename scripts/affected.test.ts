@@ -15,7 +15,7 @@ const names = (files: string[]) =>
 describe('affected gate routing', () => {
   it('routes a component change to component gates, not to Lighthouse', () => {
     const picked = names(['packages/atoms/src/atoms/Button/Button.tsx'])
-    expect(picked).toContain('Type-check (@newui/atoms)')
+    expect(picked).toContain('Type-check (@talelk/newui-atoms)')
     expect(picked).toContain('Tests (changed files)')
     expect(picked).toContain('API table is current')
     expect(picked).not.toContain('Lighthouse budgets')

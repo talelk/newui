@@ -1,5 +1,5 @@
-import type { InputSize } from '@newui/atoms'
-import { cn, tv } from '@newui/atoms/internal'
+import type { InputSize } from '@talelk/newui-atoms'
+import { cn, tv } from '@talelk/newui-atoms/internal'
 import { type Component, type JSX, Show, splitProps } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 

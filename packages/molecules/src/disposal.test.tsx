@@ -1,5 +1,5 @@
-import { Switch } from '@newui/atoms'
 import { cleanup, render } from '@solidjs/testing-library'
+import { Switch } from '@talelk/newui-atoms'
 import { describe, expect, it } from 'vitest'
 import { Dialog, Popover } from './index'
 

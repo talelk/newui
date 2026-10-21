@@ -5,9 +5,9 @@ The one responsive application frame: one integrated sidebar and the page it ope
 ## Usage
 
 ```tsx
-import { AppShell } from '@newui/templates'
-import { SidebarItem } from '@newui/organisms'
-import { Dropdown } from '@newui/molecules'
+import { AppShell } from '@talelk/newui-templates'
+import { SidebarItem } from '@talelk/newui-organisms'
+import { Dropdown } from '@talelk/newui-molecules'
 
 <AppShell
   title="Projects"

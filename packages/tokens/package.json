@@ -1,5 +1,5 @@
 {
-  "name": "@newui/tokens",
+  "name": "@talelk/newui-tokens",
   "version": "0.1.0",
   "type": "module",
   "description": "Framework-neutral design tokens (colors, radius, typography, spacing, elevation, focus).",

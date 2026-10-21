@@ -1,5 +1,5 @@
-import { Button, Switch, TextInput } from '@newui/atoms'
-import { Alert, Card } from '@newui/molecules'
+import { Button, Switch, TextInput } from '@talelk/newui-atoms'
+import { Alert, Card } from '@talelk/newui-molecules'
 import { createSignal, For, Show } from 'solid-js'
 
 const STEPS = ['Workspace', 'Team', 'Review']

@@ -1,5 +1,5 @@
-import { Button, TextInput } from '@newui/atoms'
-import { AuthCard } from '@newui/organisms'
+import { Button, TextInput } from '@talelk/newui-atoms'
+import { AuthCard } from '@talelk/newui-organisms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { DemoFrame } from './demo-frame'

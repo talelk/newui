@@ -1,4 +1,4 @@
-import { DataTable } from '@newui/organisms'
+import { DataTable } from '@talelk/newui-organisms'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { seedTasks } from '../examples/tasks-data'

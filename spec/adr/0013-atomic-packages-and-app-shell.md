@@ -4,8 +4,8 @@
 
 ## Context
 
-The first kit ladder added `@newui/blocks` and `@newui/layouts`, while atoms,
-molecules and several page frames remained together in `@newui/ui`. The app
+The first kit ladder added `@talelk/newui-blocks` and `@talelk/newui-layouts`, while atoms,
+molecules and several page frames remained together in `@talelk/newui-ui`. The app
 shell also separated a navigation sidebar from a desktop rail and distinct
 desktop/mobile shell APIs. That structure made the published packages disagree
 with the atomic levels the reference site was teaching, and made every app
@@ -19,9 +19,9 @@ packages.
 ## Decision
 
 1. **Make the core package names match the atomic ladder.** The supported visual
-   packages are `@newui/atoms`, `@newui/molecules`, `@newui/organisms` and
-   `@newui/templates`. `@newui/data` remains headless. The former
-   `@newui/ui`, `@newui/blocks` and `@newui/layouts` packages are removed without
+   packages are `@talelk/newui-atoms`, `@talelk/newui-molecules`, `@talelk/newui-organisms` and
+   `@talelk/newui-templates`. `@talelk/newui-data` remains headless. The former
+   `@talelk/newui-ui`, `@talelk/newui-blocks` and `@talelk/newui-layouts` packages are removed without
    compatibility aliases or deprecated entrypoints.
 2. **Keep rendered surfaces in the visual ladder.** `DataTable` and
    `VirtualList` are organisms; `ScrollTable` is a molecule. Data owns logic,
@@ -60,7 +60,7 @@ packages.
   compatibility package or redirects are published.
 - Every package boundary is pinned by manifests, exports tests, dependency
   rules, type checks, budgets and CI routing.
-- `@newui/templates` exports only the three supported templates.
+- `@talelk/newui-templates` exports only the three supported templates.
 - `AppShell` and the starter are acceptance surfaces for desktop collapse,
   mobile drawer behavior, tenant/menu interaction, keyboard/focus behavior and
   absence of a rail/sidebar duplicate.

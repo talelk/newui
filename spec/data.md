@@ -1,16 +1,16 @@
-# @newui/data
+# @talelk/newui-data
 
 The logic layer: the things every application does the same way, and no two
 applications agree on when they each write them from scratch.
 
 ```ts
-import { createUndo, downloadCsv, optionsOf, usd } from '@newui/data'
+import { createUndo, downloadCsv, optionsOf, usd } from '@talelk/newui-data'
 ```
 
 ## The boundary
 
-`@newui/data` is **headless**. It imports `solid-js` for signals and nothing from
-`@newui/atoms`, `@newui/molecules`, `@newui/organisms` or `@newui/templates`,
+`@talelk/newui-data` is **headless**. It imports `solid-js` for signals and nothing from
+`@talelk/newui-atoms`, `@talelk/newui-molecules`, `@talelk/newui-organisms` or `@talelk/newui-templates`,
 which is enforced by dependency-cruiser (`data-is-headless`). The rule in the other direction is just
 as strict: no component package may import it (`nothing-below-imports-data`). A
 component that needs to format a number takes that from the app — the kit does
@@ -55,13 +55,13 @@ composition) until it earns its own surface.
   turn as the synthetic click, which is what every browser this kit targets
   accepts; a deferred revoke would leak a URL per download.
 
-## Query — `@newui/data/query`
+## Query — `@talelk/newui-data/query`
 
 The query surface is a separate entry point, so a page that only formats a
 number never pays for a cache.
 
 ```ts
-import { DataProvider, createCollection } from '@newui/data/query'
+import { DataProvider, createCollection } from '@talelk/newui-data/query'
 ```
 
 ### `DataProvider` and `createDataClient`
@@ -135,10 +135,10 @@ tasks.remove.mutate({ ids })
 - **`key` is the cache identity** — two panes reading the same collection share
   one request and one update.
 
-## Form — `@newui/data/form`
+## Form — `@talelk/newui-data/form`
 
 ```ts
-import { createAppForm, fieldError, Form } from '@newui/data/form'
+import { createAppForm, fieldError, Form } from '@talelk/newui-data/form'
 ```
 
 TanStack Form stays the engine — validators, field state, reset. This surface
@@ -165,11 +165,11 @@ shape is `value` / `error={fieldError(field())}` / `handleChange`.
 ## Rendered collections belong to organisms
 
 `DataTable`, its `ScrollTable` shell and `VirtualList` render UI, so they live in
-`@newui/organisms`, not in this headless package. TanStack Table and Virtual are
+`@talelk/newui-organisms`, not in this headless package. TanStack Table and Virtual are
 owned there too. Here the query/form logic ends at data and state; organisms
 choose how that state is shown. See `spec/data-table.md`, `spec/scroll-table.md`
 and `spec/virtual-list.md` for those visual contracts.
 
-The playground imports no TanStack package directly: `@newui/data/query` owns
-Query and `@newui/data/form` owns Form. Render engines are owned by organisms,
+The playground imports no TanStack package directly: `@talelk/newui-data/query` owns
+Query and `@talelk/newui-data/form` owns Form. Render engines are owned by organisms,
 so a page pays for only the surface it renders.

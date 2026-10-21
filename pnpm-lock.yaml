@@ -271,37 +271,37 @@ importers:
 
   apps/playground:
     dependencies:
-      '@newui/atoms':
+      '@talelk/newui-atoms':
         specifier: workspace:*
         version: link:../../packages/atoms
-      '@newui/charts':
+      '@talelk/newui-charts':
         specifier: workspace:*
         version: link:../../packages/charts
-      '@newui/code-editor':
+      '@talelk/newui-code-editor':
         specifier: workspace:*
         version: link:../../packages/code-editor
-      '@newui/data':
+      '@talelk/newui-data':
         specifier: workspace:*
         version: link:../../packages/data
-      '@newui/editor':
+      '@talelk/newui-editor':
         specifier: workspace:*
         version: link:../../packages/editor
-      '@newui/icons':
+      '@talelk/newui-icons':
         specifier: workspace:*
         version: link:../../packages/icons
-      '@newui/molecules':
+      '@talelk/newui-molecules':
         specifier: workspace:*
         version: link:../../packages/molecules
-      '@newui/organisms':
+      '@talelk/newui-organisms':
         specifier: workspace:*
         version: link:../../packages/organisms
-      '@newui/tailwind':
+      '@talelk/newui-tailwind':
         specifier: workspace:*
         version: link:../../packages/tailwind
-      '@newui/templates':
+      '@talelk/newui-templates':
         specifier: workspace:*
         version: link:../../packages/templates
-      '@newui/tokens':
+      '@talelk/newui-tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
       '@solidjs/router':
@@ -335,22 +335,22 @@ importers:
 
   apps/starter:
     dependencies:
-      '@newui/atoms':
+      '@talelk/newui-atoms':
         specifier: workspace:*
         version: link:../../packages/atoms
-      '@newui/data':
+      '@talelk/newui-data':
         specifier: workspace:*
         version: link:../../packages/data
-      '@newui/molecules':
+      '@talelk/newui-molecules':
         specifier: workspace:*
         version: link:../../packages/molecules
-      '@newui/organisms':
+      '@talelk/newui-organisms':
         specifier: workspace:*
         version: link:../../packages/organisms
-      '@newui/tailwind':
+      '@talelk/newui-tailwind':
         specifier: workspace:*
         version: link:../../packages/tailwind
-      '@newui/templates':
+      '@talelk/newui-templates':
         specifier: workspace:*
         version: link:../../packages/templates
       '@solidjs/router':
@@ -560,7 +560,7 @@ importers:
       '@internationalized/date':
         specifier: ^3.12.4
         version: 3.12.4
-      '@newui/atoms':
+      '@talelk/newui-atoms':
         specifier: workspace:*
         version: link:../atoms
       '@zag-js/accordion':
@@ -627,10 +627,10 @@ importers:
 
   packages/organisms:
     dependencies:
-      '@newui/atoms':
+      '@talelk/newui-atoms':
         specifier: workspace:*
         version: link:../atoms
-      '@newui/molecules':
+      '@talelk/newui-molecules':
         specifier: workspace:*
         version: link:../molecules
       '@tanstack/solid-table':
@@ -646,7 +646,7 @@ importers:
 
   packages/tailwind:
     dependencies:
-      '@newui/tokens':
+      '@talelk/newui-tokens':
         specifier: workspace:*
         version: link:../tokens
     devDependencies:
@@ -665,13 +665,13 @@ importers:
 
   packages/templates:
     dependencies:
-      '@newui/atoms':
+      '@talelk/newui-atoms':
         specifier: workspace:*
         version: link:../atoms
-      '@newui/molecules':
+      '@talelk/newui-molecules':
         specifier: workspace:*
         version: link:../molecules
-      '@newui/organisms':
+      '@talelk/newui-organisms':
         specifier: workspace:*
         version: link:../organisms
     devDependencies:

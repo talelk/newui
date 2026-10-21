@@ -1,4 +1,4 @@
-import type { InputSize, InputVariant } from '@newui/atoms'
+import type { InputSize, InputVariant } from '@talelk/newui-atoms'
 import {
   cn,
   createControllableSignal,
@@ -6,7 +6,7 @@ import {
   Field,
   fieldSizes,
   useField,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import { For, type JSX, splitProps } from 'solid-js'
 
 export type TagInputSize = InputSize

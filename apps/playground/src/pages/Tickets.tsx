@@ -1,12 +1,18 @@
-import { Badge, Button, Checkbox, Textarea, TextInput } from '@newui/atoms'
-import { optionsOf } from '@newui/data'
-import { Dialog, EmptyState, Select } from '@newui/molecules'
+import {
+  Badge,
+  Button,
+  Checkbox,
+  Textarea,
+  TextInput,
+} from '@talelk/newui-atoms'
+import { optionsOf } from '@talelk/newui-data'
+import { Dialog, EmptyState, Select } from '@talelk/newui-molecules'
 import {
   DataTable,
   type DataTableColumn,
   FilterBar,
   StatGrid,
-} from '@newui/organisms'
+} from '@talelk/newui-organisms'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { AppNavigation } from '../examples/AppNavigation'
 import { AppPage } from '../examples/AppPage'

@@ -19,7 +19,7 @@ export function Changelog(): JSX.Element {
     <div class="mx-auto w-full max-w-3xl px-4 py-8">
       <PageIntro
         title="Changelog"
-        description={`The kit leads at @newui/atoms v${LIBRARY_VERSION}. Pending changesets are queued for the next release; each package keeps its full history.`}
+        description={`The kit leads at @talelk/newui-atoms v${LIBRARY_VERSION}. Pending changesets are queued for the next release; each package keeps its full history.`}
       />
 
       <section aria-labelledby="pending-heading" class="mt-8">

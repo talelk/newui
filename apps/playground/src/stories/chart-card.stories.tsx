@@ -1,4 +1,4 @@
-import { BarChart, ChartCard } from '@newui/charts'
+import { BarChart, ChartCard } from '@talelk/newui-charts'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /**

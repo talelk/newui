@@ -10,11 +10,11 @@ to one release. This library splits that surface into workspace packages.
 
 ## Decision
 
-Split into workspace packages. The core visual ladder is `@newui/atoms`,
-`@newui/molecules`, `@newui/organisms` and `@newui/templates`; foundations,
+Split into workspace packages. The core visual ladder is `@talelk/newui-atoms`,
+`@talelk/newui-molecules`, `@talelk/newui-organisms` and `@talelk/newui-templates`; foundations,
 headless data and optional chart/editor integrations have their own packages.
 Each package exports its documented root surface; styling is provided by
-`@newui/tailwind/style.css`, not a component-package subpath.
+`@talelk/newui-tailwind/style.css`, not a component-package subpath.
 
 ## Rationale
 
@@ -26,8 +26,8 @@ are only expressible because the boundaries are real packages.
 
 ## Consequences
 
-- Consumers install exactly what they use (`@newui/charts` does not drag the
+- Consumers install exactly what they use (`@talelk/newui-charts` does not drag the
   atomic component packages into a chart-only app).
 - A docs theme and experimental surfaces stay out of the published packages.
 - Deliberate non-mirror: no `./style.css` subpath on a component package; the
-  stylesheet is `@newui/tailwind/style.css`.
+  stylesheet is `@talelk/newui-tailwind/style.css`.

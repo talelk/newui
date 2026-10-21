@@ -20,7 +20,7 @@
     "apps/playground": {
       "entry": ["index.html"],
       "project": "src/**/*.{ts,tsx}",
-      "ignoreDependencies": ["@newui/tailwind", "tailwindcss"]
+      "ignoreDependencies": ["@talelk/newui-tailwind", "tailwindcss"]
     }
   },
   "ignoreDependencies": ["lighthouse"],

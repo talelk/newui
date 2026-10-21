@@ -1,5 +1,5 @@
-import { Button } from '@newui/atoms'
-import { ChartCard, ChartContainer, ChartLegend } from '@newui/charts'
+import { Button } from '@talelk/newui-atoms'
+import { ChartCard, ChartContainer, ChartLegend } from '@talelk/newui-charts'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

@@ -46,7 +46,7 @@ valid.
 Existing controls retain newui names: TextInput/Textarea for text fields,
 NumberInput for number fields, Divider for separator, BottomSheet for mobile
 sheets and the existing toast service for toast examples. Charts use
-`@newui/charts`.
+`@talelk/newui-charts`.
 
 Non-component recipes cover:
 

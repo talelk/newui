@@ -5,8 +5,8 @@ A public-access frame for sign-in, sign-up and recovery screens.
 ## Usage
 
 ```tsx
-import { AuthLayout } from '@newui/templates'
-import { AuthCard } from '@newui/organisms'
+import { AuthLayout } from '@talelk/newui-templates'
+import { AuthCard } from '@talelk/newui-organisms'
 
 <AuthLayout brand={<Brand /> }>
   <AuthCard title="Sign in" description="Welcome back">

@@ -4,7 +4,7 @@ import {
   createId,
   createZagApi,
   Portal,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/dialog'
 import { createEffect, type JSX, onCleanup, Show, splitProps } from 'solid-js'
 

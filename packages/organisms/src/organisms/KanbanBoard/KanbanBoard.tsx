@@ -5,8 +5,8 @@ import {
   type IconProp,
   Portal,
   ScrollArea,
-} from '@newui/atoms'
-import { Card, Menu } from '@newui/molecules'
+} from '@talelk/newui-atoms'
+import { Card, Menu } from '@talelk/newui-molecules'
 import {
   createEffect,
   createMemo,

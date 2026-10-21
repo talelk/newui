@@ -1,4 +1,4 @@
-import { MultiSelect } from '@newui/molecules'
+import { MultiSelect } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

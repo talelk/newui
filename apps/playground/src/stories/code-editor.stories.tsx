@@ -1,6 +1,6 @@
-import { Button, Switch } from '@newui/atoms'
-import { CodeEditor, type CodeEditorLanguage } from '@newui/code-editor'
-import { Select } from '@newui/molecules'
+import { Button, Switch } from '@talelk/newui-atoms'
+import { CodeEditor, type CodeEditorLanguage } from '@talelk/newui-code-editor'
+import { Select } from '@talelk/newui-molecules'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

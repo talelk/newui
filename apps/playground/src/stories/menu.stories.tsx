@@ -1,4 +1,4 @@
-import { Menu } from '@newui/molecules'
+import { Menu } from '@talelk/newui-molecules'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

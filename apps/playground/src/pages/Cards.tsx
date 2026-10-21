@@ -7,8 +7,8 @@ import {
   Switch,
   Textarea,
   TextInput,
-} from '@newui/atoms'
-import { isEmail } from '@newui/data'
+} from '@talelk/newui-atoms'
+import { isEmail } from '@talelk/newui-data'
 import {
   Card,
   CardDescription,
@@ -16,7 +16,7 @@ import {
   CardTitle,
   RadioGroup,
   Select,
-} from '@newui/molecules'
+} from '@talelk/newui-molecules'
 import { createSignal, For, type JSX, Show } from 'solid-js'
 import { AppPage } from '../examples/AppPage'
 

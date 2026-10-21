@@ -1,7 +1,7 @@
 import type { JSX } from 'solid-js'
 
 /**
- * The public vocabulary of `@newui/charts`, ported from `frappe-ui`'s chart
+ * The public vocabulary of `@talelk/newui-charts`, ported from `frappe-ui`'s chart
  * family. The prop shapes are kept close to the Vue originals so a chart reads
  * the same way; the mechanics are Solid.
  *

@@ -140,7 +140,10 @@ export function Home(): JSX.Element {
           for your data.
         </p>
         <pre class="w-fit max-w-full whitespace-pre-wrap break-words rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
-          <code>pnpm add @newui/atoms @newui/molecules @newui/tailwind</code>
+          <code>
+            pnpm add @talelk/newui-atoms @talelk/newui-molecules
+            @talelk/newui-tailwind
+          </code>
         </pre>
       </header>
 

@@ -5,7 +5,7 @@ import {
   ChartCard,
   normalizeAxisChart,
   useChartTokens,
-} from '@newui/charts'
+} from '@talelk/newui-charts'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 const data = [

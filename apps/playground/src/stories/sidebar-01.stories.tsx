@@ -1,7 +1,7 @@
-import { Button, TextInput } from '@newui/atoms'
-import { Select } from '@newui/molecules'
-import { SidebarItem } from '@newui/organisms'
-import { AppShell } from '@newui/templates'
+import { Button, TextInput } from '@talelk/newui-atoms'
+import { Select } from '@talelk/newui-molecules'
+import { SidebarItem } from '@talelk/newui-organisms'
+import { AppShell } from '@talelk/newui-templates'
 import { createMemo, createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

@@ -1,4 +1,4 @@
-import { cn } from '@newui/atoms'
+import { cn } from '@talelk/newui-atoms'
 import { createSignal, For, type JSX, Match, Switch } from 'solid-js'
 
 /**

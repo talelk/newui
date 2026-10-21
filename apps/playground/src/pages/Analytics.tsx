@@ -1,4 +1,5 @@
-import { Badge, Button, Switch } from '@newui/atoms'
+import { useNavigate } from '@solidjs/router'
+import { Badge, Button, Switch } from '@talelk/newui-atoms'
 import {
   AreaChart,
   BarChart,
@@ -9,17 +10,20 @@ import {
   type NumberCardProps,
   paletteColors,
   useChartTokens,
-} from '@newui/charts'
+} from '@talelk/newui-charts'
 import {
   count,
   createUndo,
   downloadText,
   usd as money,
   usdK,
-} from '@newui/data'
-import { Alert, Select } from '@newui/molecules'
-import { DataTable, type DataTableColumn, FilterBar } from '@newui/organisms'
-import { useNavigate } from '@solidjs/router'
+} from '@talelk/newui-data'
+import { Alert, Select } from '@talelk/newui-molecules'
+import {
+  DataTable,
+  type DataTableColumn,
+  FilterBar,
+} from '@talelk/newui-organisms'
 import {
   createMemo,
   createSignal,

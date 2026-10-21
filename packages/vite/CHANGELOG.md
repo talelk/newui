@@ -1,4 +1,4 @@
-# @newui/vite
+# @talelk/newui-vite
 
 ## 1.0.0
 

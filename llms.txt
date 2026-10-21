@@ -6,16 +6,16 @@ data helpers, optional charts and editors, and a copyable application skeleton.
 
 ## Packages
 
-- `@newui/tokens` — framework-neutral token data and the CSS-variable generator.
-- `@newui/tailwind` — v4 `@theme` / `@utility` / plugins and `style.css`.
-- `@newui/icons` — the icon set as Solid components.
-- `@newui/atoms` — single controls and marks over Zag.
-- `@newui/molecules` — compound interactions built from atoms.
-- `@newui/organisms` — page regions: sidebar, filter bar, board, table, virtual list.
-- `@newui/templates` — `AppShell`, `PaneLayout` and `AuthLayout`.
-- `@newui/data` — headless formatting, selection, undo, downloads, query and forms.
-- `@newui/charts`, `@newui/editor`, `@newui/code-editor` — optional chart and editing surfaces.
-- `@newui/vite` — dev-server proxy, icon auto-import and DocType types.
+- `@talelk/newui-tokens` — framework-neutral token data and the CSS-variable generator.
+- `@talelk/newui-tailwind` — v4 `@theme` / `@utility` / plugins and `style.css`.
+- `@talelk/newui-icons` — the icon set as Solid components.
+- `@talelk/newui-atoms` — single controls and marks over Zag.
+- `@talelk/newui-molecules` — compound interactions built from atoms.
+- `@talelk/newui-organisms` — page regions: sidebar, filter bar, board, table, virtual list.
+- `@talelk/newui-templates` — `AppShell`, `PaneLayout` and `AuthLayout`.
+- `@talelk/newui-data` — headless formatting, selection, undo, downloads, query and forms.
+- `@talelk/newui-charts`, `@talelk/newui-editor`, `@talelk/newui-code-editor` — optional chart and editing surfaces.
+- `@talelk/newui-vite` — dev-server proxy, icon auto-import and DocType types.
 
 ## Conventions
 
@@ -34,10 +34,10 @@ data helpers, optional charts and editors, and a copyable application skeleton.
 
 ## Data
 
-`@newui/data` exports formatting and selection helpers, undo and downloads,
+`@talelk/newui-data` exports formatting and selection helpers, undo and downloads,
 `createDataClient`/`DataProvider`, `createCollection` over repositories, and
-`createAppForm`/`Form`/`fieldError` over TanStack Form. `@newui/data/query` and
-`@newui/data/form` are the two documented subpaths.
+`createAppForm`/`Form`/`fieldError` over TanStack Form. `@talelk/newui-data/query` and
+`@talelk/newui-data/form` are the two documented subpaths.
 
 ## Commands
 

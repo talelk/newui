@@ -1,5 +1,5 @@
 {
-  "name": "@newui/vite",
+  "name": "@talelk/newui-vite",
   "version": "1.0.0",
   "type": "module",
   "description": "Vite plugins for newui apps: dev-server proxy, optional lucide icon auto-import, and DocType TypeScript generation.",

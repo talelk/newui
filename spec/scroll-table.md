@@ -5,7 +5,7 @@ A labelled horizontal scroll region for wide semantic tables.
 ## Usage
 
 ```tsx
-import { ScrollTable, TABLE_HEAD_CLASS } from '@newui/molecules'
+import { ScrollTable, TABLE_HEAD_CLASS } from '@talelk/newui-molecules'
 
 <ScrollTable label="Cashflow ledger">
   <table>

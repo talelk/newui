@@ -1,6 +1,6 @@
-import { Button, TextInput } from '@newui/atoms'
-import { AuthCard } from '@newui/organisms'
-import { AuthLayout } from '@newui/templates'
+import { Button, TextInput } from '@talelk/newui-atoms'
+import { AuthCard } from '@talelk/newui-organisms'
+import { AuthLayout } from '@talelk/newui-templates'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 /** Centered public-access frame around the auth organism. */

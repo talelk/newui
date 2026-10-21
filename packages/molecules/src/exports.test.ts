@@ -47,7 +47,7 @@ const PUBLIC = [
   'Tree',
 ]
 
-describe('@newui/molecules', () => {
+describe('@talelk/newui-molecules', () => {
   it('exports exactly the composed interactions', () => {
     expect(Object.keys(molecules)).toEqual(expect.arrayContaining(PUBLIC))
     for (const legacy of [

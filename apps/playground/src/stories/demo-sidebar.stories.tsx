@@ -1,6 +1,6 @@
-import { Button } from '@newui/atoms'
-import { Dropdown } from '@newui/molecules'
-import { AppSidebar } from '@newui/organisms'
+import { Button } from '@talelk/newui-atoms'
+import { Dropdown } from '@talelk/newui-molecules'
+import { AppSidebar } from '@talelk/newui-organisms'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

@@ -1,4 +1,4 @@
-import { NumberCard } from '@newui/charts'
+import { NumberCard } from '@talelk/newui-charts'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
 function RevenueCard(props: { loading?: boolean; error?: string }) {

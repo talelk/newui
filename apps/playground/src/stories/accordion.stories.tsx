@@ -1,4 +1,4 @@
-import { Accordion } from '@newui/molecules'
+import { Accordion } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

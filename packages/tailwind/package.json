@@ -1,5 +1,5 @@
 {
-  "name": "@newui/tailwind",
+  "name": "@talelk/newui-tailwind",
   "version": "1.0.0",
   "type": "module",
   "description": "Tailwind CSS v4 layer: the newui design tokens as @theme, @utility and plugins.",
@@ -22,7 +22,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@newui/tokens": "workspace:*"
+    "@talelk/newui-tokens": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.11",

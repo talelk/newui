@@ -1,5 +1,5 @@
 /**
- * `@newui/charts` — Solid wrappers over echarts, drawn with the SVG renderer
+ * `@talelk/newui-charts` — Solid wrappers over echarts, drawn with the SVG renderer
  * and themed with the newui chart tokens.
  *
  * The barrel is curated (P14/P15): the components, the shared shell, the two

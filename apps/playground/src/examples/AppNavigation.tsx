@@ -1,4 +1,4 @@
-import { SidebarItem, useSidebar } from '@newui/organisms'
+import { SidebarItem, useSidebar } from '@talelk/newui-organisms'
 import { For, type JSX, Show } from 'solid-js'
 
 /**

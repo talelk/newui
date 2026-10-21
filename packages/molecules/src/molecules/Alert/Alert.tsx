@@ -4,8 +4,8 @@ import {
   type ButtonTheme,
   type ButtonVariant,
   Icon,
-} from '@newui/atoms'
-import { cn, tv, type VariantProps } from '@newui/atoms/internal'
+} from '@talelk/newui-atoms'
+import { cn, tv, type VariantProps } from '@talelk/newui-atoms/internal'
 import {
   type Component,
   createSignal,

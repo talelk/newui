@@ -1,5 +1,5 @@
-import { Button } from '@newui/atoms'
-import { KeyboardShortcutsDialog } from '@newui/molecules'
+import { Button } from '@talelk/newui-atoms'
+import { KeyboardShortcutsDialog } from '@talelk/newui-molecules'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 

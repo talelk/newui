@@ -49,7 +49,7 @@ export function PackageGuides() {
             class="rounded-5 border border-outline-gray-1 p-4"
           >
             <summary class="cursor-pointer rounded-3 font-medium focus-visible:focus-ring">
-              @newui/{name}
+              @talelk/newui-{name}
             </summary>
             <Show when={open() === name}>
               <div class="mt-4">

@@ -1,6 +1,6 @@
 # CodeEditor
 
-CodeMirror 6 for Solid. Install `@newui/code-editor` with its declared peers.
+CodeMirror 6 for Solid. Install `@talelk/newui-code-editor` with its declared peers.
 `/organisms/code-editor` provides executable controlled usage and copyable source;
 `/docs#code-editor` loads the package guide.
 

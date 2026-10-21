@@ -7,17 +7,17 @@ ADRs and visual audits remain history; they do not describe the supported API.
 
 | Level | Question | Package / surface | Current inventory |
 | --- | --- | --- | --- |
-| Foundations | What does it look like? | `@newui/tokens`, `@newui/tailwind`, `@newui/icons` | tokens and glyphs |
-| Atoms | What is this single element? | `@newui/atoms` | 20 references |
-| Molecules | What is this interaction? | `@newui/molecules` | 42 references |
-| Organisms | What is this page region? | `@newui/organisms` | 24 references |
-| Templates | How does the page open? | `@newui/templates` | exactly 3 templates |
+| Foundations | What does it look like? | `@talelk/newui-tokens`, `@talelk/newui-tailwind`, `@talelk/newui-icons` | tokens and glyphs |
+| Atoms | What is this single element? | `@talelk/newui-atoms` | 20 references |
+| Molecules | What is this interaction? | `@talelk/newui-molecules` | 42 references |
+| Organisms | What is this page region? | `@talelk/newui-organisms` | 24 references |
+| Templates | How does the page open? | `@talelk/newui-templates` | exactly 3 templates |
 | Pages | What does the product do? | applications in `apps/*` | 12 recipes plus starter |
 
-`@newui/charts`, `@newui/editor` and `@newui/code-editor` remain separately
+`@talelk/newui-charts`, `@talelk/newui-editor` and `@talelk/newui-code-editor` remain separately
 installable domain add-ons. Their entries are classified by composition in the
 atomic reference, while their package boundaries keep ECharts, TipTap and
-CodeMirror optional. `@newui/data` is the headless logic branch beside the
+CodeMirror optional. `@talelk/newui-data` is the headless logic branch beside the
 visual ladder; it owns helpers, Query and Form, not rendered tables or lists.
 
 ## Package graph
@@ -25,22 +25,22 @@ visual ladder; it owns helpers, Query and Form, not rendered tables or lists.
 The source tree and public package names follow the dependency direction:
 
 ```text
-@newui/tokens / @newui/tailwind / @newui/icons
+@talelk/newui-tokens / @talelk/newui-tailwind / @talelk/newui-icons
                  ↓
-@newui/atoms → @newui/molecules
+@talelk/newui-atoms → @talelk/newui-molecules
                     ↓
-               @newui/organisms
+               @talelk/newui-organisms
                     ↓
-               @newui/templates
+               @talelk/newui-templates
                     ↓
              apps/playground / apps/starter
 
-@newui/data ─────────────────→ apps/*
+@talelk/newui-data ─────────────────→ apps/*
 ```
 
 Core organism exports include `AppSidebar`, `FilterBar`, `StatGrid`,
 `KanbanBoard`, `DataTable` and `VirtualList`. The rendered table and virtual
-list moved here from `@newui/data`, making data headless again. `ScrollTable` is
+list moved here from `@talelk/newui-data`, making data headless again. `ScrollTable` is
 a molecule: it is a labelled horizontal scroll wrapper, not a table engine.
 
 The registry has one explicit `atomic` level per entry in
@@ -52,7 +52,7 @@ parts and organism-level chart widgets.
 
 ## The three templates
 
-`@newui/templates` exports exactly:
+`@talelk/newui-templates` exports exactly:
 
 1. **`AppShell`** — the only application shell. It owns one responsive sidebar:
    brand/logo, tenant slot, multi-section icon navigation, collapse-to-icons,
@@ -93,7 +93,7 @@ stories and tests link only to the new paths.
 
 ## Rules and gates
 
-- Dependencies point down the atomic graph. `@newui/data` imports no visual
+- Dependencies point down the atomic graph. `@talelk/newui-data` imports no visual
   package; charts and editor engines remain optional.
 - Every public package has an explicit exports test and manifest check.
 - Every reference entry has a contract, isolated story, generated props and a

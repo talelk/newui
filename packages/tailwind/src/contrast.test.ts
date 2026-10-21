@@ -1,4 +1,4 @@
-import { semanticColors } from '@newui/tokens'
+import { semanticColors } from '@talelk/newui-tokens'
 import { wcagLuminance } from 'culori'
 import { describe, expect, it } from 'vitest'
 

@@ -1,4 +1,4 @@
-import { ChartCard, LineChart } from '@newui/charts'
+import { ChartCard, LineChart } from '@talelk/newui-charts'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { ChartDemoControls, MONTHLY_ACTIVITY } from './chart-demo-state'
 

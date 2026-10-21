@@ -1,5 +1,5 @@
-import { Badge, Button } from '@newui/atoms'
 import { A, useLocation, useParams } from '@solidjs/router'
+import { Badge, Button } from '@talelk/newui-atoms'
 import {
   createMemo,
   createResource,

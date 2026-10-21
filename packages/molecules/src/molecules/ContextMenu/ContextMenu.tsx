@@ -5,7 +5,7 @@ import {
   createZagApi,
   createZagContext,
   Portal,
-} from '@newui/atoms/internal'
+} from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/menu'
 import { type JSX, type ParentComponent, Show } from 'solid-js'
 

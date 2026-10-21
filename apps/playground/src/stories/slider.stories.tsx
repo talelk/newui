@@ -1,4 +1,4 @@
-import { Slider } from '@newui/atoms'
+import { Slider } from '@talelk/newui-atoms'
 import type { JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
