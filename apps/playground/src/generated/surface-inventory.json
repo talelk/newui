@@ -338,15 +338,11 @@
   {
     "package": "@newui/atoms",
     "name": "closeDialog",
-    "implementation": "packages/atoms/src/lib/media.ts",
+    "implementation": "packages/atoms/src/lib/dialog/native.ts",
     "documentation": "/docs#atoms",
     "contract": null,
     "tests": [
-      "packages/atoms/src/lib/color-scheme.test.ts",
-      "packages/atoms/src/lib/controllable.test.ts",
-      "packages/atoms/src/lib/tv.test.ts",
-      "packages/atoms/src/lib/tw-merge.sweep.test.ts",
-      "packages/atoms/src/lib/tw-merge.test.ts"
+      "packages/atoms/src/lib/dialog/dialog.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -2251,15 +2247,11 @@
   {
     "package": "@newui/atoms",
     "name": "showDialog",
-    "implementation": "packages/atoms/src/lib/media.ts",
+    "implementation": "packages/atoms/src/lib/dialog/native.ts",
     "documentation": "/docs#atoms",
     "contract": null,
     "tests": [
-      "packages/atoms/src/lib/color-scheme.test.ts",
-      "packages/atoms/src/lib/controllable.test.ts",
-      "packages/atoms/src/lib/tv.test.ts",
-      "packages/atoms/src/lib/tw-merge.sweep.test.ts",
-      "packages/atoms/src/lib/tw-merge.test.ts"
+      "packages/atoms/src/lib/dialog/dialog.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -5848,6 +5840,15 @@
   },
   {
     "package": "@newui/molecules",
+    "name": "ScrollTableHead",
+    "implementation": "packages/molecules/src/molecules/ScrollTable/ScrollTable.tsx",
+    "documentation": "/molecules/scroll-table",
+    "contract": "spec/scroll-table.md",
+    "tests": [],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
     "name": "ScrollTableProps",
     "implementation": "packages/molecules/src/molecules/ScrollTable/ScrollTable.tsx",
     "documentation": "/molecules/scroll-table",
@@ -5949,15 +5950,6 @@
       "packages/molecules/src/molecules/TabButtons/TabButtons.browser.test.tsx",
       "packages/molecules/src/molecules/TabButtons/TabButtons.test.tsx"
     ],
-    "acceptance": "pending"
-  },
-  {
-    "package": "@newui/molecules",
-    "name": "TABLE_HEAD_CLASS",
-    "implementation": "packages/molecules/src/molecules/ScrollTable/ScrollTable.tsx",
-    "documentation": "/molecules/scroll-table",
-    "contract": "spec/scroll-table.md",
-    "tests": [],
     "acceptance": "pending"
   },
   {

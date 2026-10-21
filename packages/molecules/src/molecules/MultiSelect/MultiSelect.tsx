@@ -7,6 +7,7 @@ import {
   createZagApi,
   Field,
   Portal,
+  popupFieldVariants,
   useField,
 } from '@newui/atoms/internal'
 import * as zag from '@zag-js/combobox'
@@ -89,14 +90,6 @@ const SIZE: Record<MultiSelectSize, string> = {
   sm: 'min-h-7 rounded-3 text-base',
   md: 'min-h-8 rounded-3 text-base',
   lg: 'min-h-10 rounded-3 text-lg',
-}
-
-const VARIANT: Record<MultiSelectVariant, string> = {
-  subtle:
-    'border border-surface-gray-2 bg-surface-gray-2 hover:border-outline-gray-3 hover:bg-surface-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:bg-surface-base data-[state=open]:shadow-sm',
-  outline:
-    'border border-outline-gray-2 bg-surface-base hover:border-outline-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:shadow-sm',
-  ghost: 'border-0 bg-transparent',
 }
 
 const ROW =
@@ -316,7 +309,7 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
         class={cn(
           'flex w-full flex-wrap items-center gap-1 px-1.5 py-0.5 transition-colors',
           SIZE[size()],
-          VARIANT[local.variant ?? 'outline'],
+          popupFieldVariants[local.variant ?? 'outline'],
           'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:opacity-60',
           'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
         )}

@@ -1,5 +1,5 @@
 import { Button, Checkbox, TextInput } from '@newui/atoms'
-import { Pagination, ScrollTable, TABLE_HEAD_CLASS } from '@newui/molecules'
+import { Pagination, ScrollTable, ScrollTableHead } from '@newui/molecules'
 import {
   type ColumnDef,
   columnFilteringFeature,
@@ -200,7 +200,7 @@ export function DataTable<T extends { id: string }>(
       </div>
       <ScrollTable label={`${props.title} table`}>
         <table class="w-full min-w-[720px] border-collapse text-start">
-          <thead class={TABLE_HEAD_CLASS}>
+          <ScrollTableHead>
             <For each={table.getHeaderGroups()}>
               {(group) => (
                 <tr>
@@ -253,7 +253,7 @@ export function DataTable<T extends { id: string }>(
                 </tr>
               )}
             </For>
-          </thead>
+          </ScrollTableHead>
           <tbody>
             <For each={table.getRowModel().rows}>
               {(row) => (

@@ -5,3 +5,4 @@ export type {
   PromptOptions,
 } from './dialog'
 export { DialogHost, dialog } from './dialog'
+export { closeDialog, showDialog } from './native'

@@ -6,6 +6,7 @@ import {
   createZagApi,
   Field,
   Portal,
+  popupFieldVariants,
   useField,
 } from '@newui/atoms/internal'
 import { ListCollection } from '@zag-js/collection'
@@ -75,14 +76,6 @@ const PAD: Record<SelectSize, string> = {
   sm: 'px-2 text-base',
   md: 'px-2.5 text-base',
   lg: 'px-3 text-lg',
-}
-
-const VARIANT: Record<SelectVariant, string> = {
-  subtle:
-    'border border-surface-gray-2 bg-surface-gray-2 hover:border-outline-gray-3 hover:bg-surface-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:bg-surface-base data-[state=open]:shadow-sm',
-  outline:
-    'border border-outline-gray-2 bg-surface-base hover:border-outline-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:shadow-sm',
-  ghost: 'border-0 bg-transparent',
 }
 
 function Chevron() {
@@ -194,7 +187,7 @@ function SelectControl(props: SelectProps): JSX.Element {
         class={cn(
           'flex w-full items-stretch transition-colors',
           SIZE[size()],
-          VARIANT[local.variant ?? 'outline'],
+          popupFieldVariants[local.variant ?? 'outline'],
           'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
           'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-1 data-[disabled]:opacity-60',
         )}

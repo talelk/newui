@@ -1,4 +1,4 @@
-import { ScrollTable, TABLE_HEAD_CLASS } from '@newui/molecules'
+import { ScrollTable, ScrollTableHead } from '@newui/molecules'
 import { For } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -6,7 +6,7 @@ export function Demo() {
   return (
     <ScrollTable label="Quarterly cashflow table">
       <table class="w-full min-w-[720px] border-collapse text-start">
-        <thead class={TABLE_HEAD_CLASS}>
+        <ScrollTableHead>
           <tr>
             <th class="p-3">Month</th>
             <th class="p-3">Operating</th>
@@ -14,7 +14,7 @@ export function Demo() {
             <th class="p-3">Financing</th>
             <th class="p-3">Net</th>
           </tr>
-        </thead>
+        </ScrollTableHead>
         <tbody>
           <For each={['January', 'February', 'March']}>
             {(month, index) => (

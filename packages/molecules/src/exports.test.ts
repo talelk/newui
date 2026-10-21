@@ -32,7 +32,7 @@ const PUBLIC = [
   'Rating',
   'Select',
   'ScrollTable',
-  'TABLE_HEAD_CLASS',
+  'ScrollTableHead',
   'TabButtons',
   'Tabs',
   'TimePicker',

@@ -16,7 +16,7 @@ import {
   DateRangePicker,
   type DateRangeValue,
   ScrollTable,
-  TABLE_HEAD_CLASS,
+  ScrollTableHead,
   TabButtons,
 } from '@newui/molecules'
 import type { DataTableColumn } from '@newui/organisms'
@@ -433,7 +433,7 @@ export function Accounting(): JSX.Element {
         <div class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1">
           <ScrollTable label="Cashflow ledger">
             <table class="w-full min-w-[640px] text-interface">
-              <thead class={TABLE_HEAD_CLASS}>
+              <ScrollTableHead>
                 <tr>
                   <For
                     each={[
@@ -451,7 +451,7 @@ export function Accounting(): JSX.Element {
                     )}
                   </For>
                 </tr>
-              </thead>
+              </ScrollTableHead>
               <tbody>
                 <For each={flowRows()}>
                   {(transaction) => (
