@@ -1,6 +1,6 @@
 {
   "name": "@newui/vite",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "description": "Vite plugins for newui apps: dev-server proxy, optional lucide icon auto-import, and DocType TypeScript generation.",
   "sideEffects": false,

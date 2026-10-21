@@ -1,6 +1,6 @@
 {
   "name": "@newui/organisms",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "description": "Application regions, sidebars, tables and widgets built from atoms and molecules.",
   "exports": {
