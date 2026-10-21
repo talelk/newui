@@ -45,6 +45,15 @@ const enable = !process.argv.includes('--no-enable')
 const npm = ['--yes', 'npm@11.15.0', 'trust', 'github']
 const configured: string[] = []
 
+const tokenEnv = ['NPM_TOKEN', 'NODE_AUTH_TOKEN'].filter(
+  (key) => process.env[key],
+)
+if (tokenEnv.length > 0) {
+  process.stderr.write(
+    `[trust] ${tokenEnv.join(' and ')} are set. npm trust needs the interactive login session, so unset them before running this script.\n`,
+  )
+}
+
 for (const [index, name] of packages.entries()) {
   process.stdout.write(`\n[trust] ${name} (${index + 1}/${packages.length})\n`)
   const result = spawnSync(
@@ -63,7 +72,7 @@ for (const [index, name] of packages.entries()) {
   )
   if (result.status !== 0) {
     process.stderr.write(
-      `\n[trust] ${name} was not configured. If it already has a Trusted Publisher, run \`npm trust list ${name}\`, revoke it, and retry.\n`,
+      `\n[trust] ${name} was not configured. \`npm trust\` requires an interactive \`npm login\` session with 2FA; a long-lived NPM_TOKEN/NODE_AUTH_TOKEN cannot perform this operation. Run \`npm logout\`, \`npm login --auth-type=web\`, then retry. If a Trusted Publisher already exists, run \`npm trust list ${name}\`, revoke it, and retry.\n`,
     )
     process.exit(result.status ?? 1)
   }

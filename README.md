@@ -84,7 +84,8 @@ Trusted Publisher is required before OIDC can publish it. Bootstrap once:
    It configures GitHub Actions, owner `talelk`, repository `newui`, workflow
    `changesets.yml`, with `npm publish` allowed. Use
    `pnpm trust:publishers --no-enable` if you want to inspect the result before
-   enabling releases.
+   enabling releases. The trust commands require an interactive `npm login`
+   session with 2FA, not a long-lived `NPM_TOKEN`/`NODE_AUTH_TOKEN`.
 3. The release script remains gated while `NPM_PUBLISH` is false, so a Version
    Packages PR never paints `main` red before the external setup is complete.
 
