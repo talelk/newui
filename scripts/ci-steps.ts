@@ -32,6 +32,11 @@ export const CI_STEPS: CiStep[] = [
     group: 'checks',
   },
   {
+    name: 'Package tarball smoke',
+    command: 'pnpm packages:smoke',
+    group: 'checks',
+  },
+  {
     name: 'Dead code & unused deps (Knip)',
     command: 'pnpm knip',
     group: 'checks',

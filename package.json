@@ -32,7 +32,7 @@
     "packages:check": "for p in packages/*; do publint \"$p\" --strict || exit 1; done",
     "knip": "knip",
     "size": "tsx scripts/size.ts",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --project=chrome",
     "css": "pnpm --filter @newui/tailwind build:css",
     "api": "tsx scripts/propsgen.ts",
     "site": "tsx scripts/sitegen.ts",
@@ -52,7 +52,9 @@
     "skills:validate": "intent validate",
     "skills:stale": "intent stale",
     "skills:check": "pnpm skills:validate && pnpm skills:stale",
-    "skills:version": "tsx scripts/skill-versions.ts"
+    "skills:version": "tsx scripts/skill-versions.ts",
+    "test:e2e:all": "playwright test",
+    "packages:smoke": "tsx scripts/packages-smoke.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",

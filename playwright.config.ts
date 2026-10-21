@@ -46,7 +46,30 @@ export default defineConfig({
    * regression test. The bundled build is pinned by the Playwright version, so
    * the same input renders the same image on CI and on a laptop.
    */
-  projects: [{ name: 'chrome', use: { ...devices['Desktop Chrome'] } }],
+  // Chrome is the budget and visual baseline engine — CI runs
+  // `pnpm test:e2e` (chrome only). `pnpm test:e2e:all` adds WebKit and
+  // Firefox: the overlay/scroll classes the harness guards are exactly where
+  // Safari and Firefox diverge, so they run locally and on the nightly.
+  projects: [
+    { name: 'chrome', use: { ...devices['Desktop Chrome'] } },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+      testIgnore: /visual\.spec\.ts/,
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+      testIgnore: /visual\.spec\.ts/,
+    },
+    {
+      // Touch points, not a synthesized mouse: the mobile drawer and the
+      // kanban drag are finger surfaces, and tap/hover semantics differ.
+      name: 'touch',
+      use: { ...devices['Pixel 7'], hasTouch: true },
+      testMatch: /responsive\.spec\.ts|site-shell\.spec\.ts/,
+    },
+  ],
   webServer: [
     {
       // The site build is told where Storybook answers, so its "Open in

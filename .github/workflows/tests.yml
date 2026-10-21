@@ -8,6 +8,12 @@ on:
 permissions:
   contents: read
 
+# A superseded PR run is wasted minutes; the push run on main is the one
+# that matters.
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -42,6 +48,10 @@ jobs:
       - name: Package manifest (publint)
         if: ${{ !cancelled() }}
         run: pnpm packages:check
+
+      - name: Package tarball smoke
+        if: ${{ !cancelled() }}
+        run: pnpm packages:smoke
 
       - name: Dead code & unused deps (Knip)
         if: ${{ !cancelled() }}

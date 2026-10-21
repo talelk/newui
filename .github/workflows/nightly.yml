@@ -1,0 +1,81 @@
+name: Nightly
+
+# The loops the docs describe but a PR pipeline cannot afford: the full
+# cross-engine harness, the stress sweeps, the leak tripwires, dependency
+# drift, and the advisory visual review. Findings land in artifacts; the
+# visual review is advisory unless dispatched with `require: true`.
+
+on:
+  schedule:
+    # 03:00 UTC daily — off-peak for every timezone the team works in.
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+    inputs:
+      require:
+        description: Make the visual review blocking
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightly-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  harness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: pnpm/action-setup@v6.1.0
+
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Browsers (all engines, with system deps)
+        run: pnpm exec playwright install --with-deps chromium webkit firefox
+
+      - name: Cross-engine harness (chrome · webkit · firefox · touch)
+        if: ${{ !cancelled() }}
+        run: pnpm test:e2e:all
+
+      - name: Stress sweeps (text scale · widths · unicode fuzz)
+        if: ${{ !cancelled() }}
+        run: pnpm exec playwright test --project=chrome e2e/stress.spec.ts
+
+      - name: Memory tripwires (heap ratchets with forced GC)
+        if: ${{ !cancelled() }}
+        run: pnpm exec playwright test --project=chrome e2e/memory.spec.ts
+
+      - name: Dependency drift report
+        if: ${{ !cancelled() }}
+        run: pnpm exec tsx scripts/dep-drift.ts
+
+      - name: Advisory visual review
+        if: ${{ !cancelled() }}
+        env:
+          NEWUI_VLM_ENDPOINT: ${{ secrets.NEWUI_VLM_ENDPOINT }}
+        run: |
+          if [ "${{ inputs.require }}" = "true" ]; then
+            pnpm review --require
+          else
+            pnpm review
+          fi
+
+      - name: Upload findings
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-findings
+          path: |
+            test-results/
+          retention-days: 14
+          if-no-files-found: ignore
