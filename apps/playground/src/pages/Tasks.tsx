@@ -138,14 +138,12 @@ function NewTask(props: {
         {(field) => (
           <Select
             label="Priority"
-            value={[field().state.value]}
+            value={field().state.value}
             options={['High', 'Medium', 'Low'].map((value) => ({
               value,
               label: value,
             }))}
-            onValueChange={(value) =>
-              field().handleChange(value[0] ?? 'Medium')
-            }
+            onValueChange={(value) => field().handleChange(value ?? 'Medium')}
           />
         )}
       </form.Field>
@@ -419,14 +417,14 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
         <div class="sm:hidden">
           <Select
             label="Sort task list"
-            value={[taskSort()]}
+            value={taskSort()}
             options={optionsOf([
               'Default order',
               'Title',
               'Priority',
               'Due date',
             ])}
-            onValueChange={(value) => setTaskSort(value[0] ?? 'Default order')}
+            onValueChange={(value) => setTaskSort(value ?? 'Default order')}
           />
         </div>
       </FilterBar>
@@ -713,29 +711,31 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
                   <TextInput name="due" label="Due date" value={row().due} />
                   <Select
                     label="Task status"
-                    value={[row().status]}
+                    value={row().status}
                     options={TASK_STATUSES.map((value) => ({
                       value,
                       label: value,
                     }))}
                     onValueChange={(value) =>
-                      update({ status: value[0] as TaskRecord['status'] })
+                      update({
+                        status: (value ?? 'Todo') as TaskRecord['status'],
+                      })
                     }
                   />
                   <Select
                     label="Task priority"
-                    value={[row().priority]}
+                    value={row().priority}
                     options={['High', 'Medium', 'Low'].map((value) => ({
                       value,
                       label: value,
                     }))}
                     onValueChange={(value) =>
-                      update({ priority: value[0] ?? 'Medium' })
+                      update({ priority: value ?? 'Medium' })
                     }
                   />
                   <Select
                     label="Task assignee"
-                    value={[row().owner]}
+                    value={row().owner}
                     options={[
                       'Rhea Kapoor',
                       'Priya Nair',
@@ -743,17 +743,17 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
                       'Ana Costa',
                     ].map((value) => ({ value, label: value }))}
                     onValueChange={(value) =>
-                      update({ owner: value[0] ?? 'Rhea Kapoor' })
+                      update({ owner: value ?? 'Rhea Kapoor' })
                     }
                   />
                   <Select
                     label="Task project"
-                    value={[row().project]}
+                    value={row().project}
                     options={['Website', 'Mobile app', 'Design system'].map(
                       (value) => ({ value, label: value }),
                     )}
                     onValueChange={(value) =>
-                      update({ project: value[0] ?? 'Website' })
+                      update({ project: value ?? 'Website' })
                     }
                   />
                   <Button type="submit" variant="solid" theme="blue">

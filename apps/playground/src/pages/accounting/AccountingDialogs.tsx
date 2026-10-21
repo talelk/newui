@@ -83,9 +83,9 @@ export default function AccountingDialogs(props: {
             />
             <Select
               label="Transaction category"
-              value={[category()]}
+              value={category()}
               options={CATEGORIES.map((value) => ({ label: value, value }))}
-              onValueChange={(value) => setCategory(value[0] ?? 'Revenue')}
+              onValueChange={(value) => setCategory(value ?? 'Revenue')}
             />
             <DatePicker
               label="Transaction date"

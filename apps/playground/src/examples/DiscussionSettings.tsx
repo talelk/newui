@@ -294,10 +294,8 @@ export function DiscussionSettings(props: {
                       description="Choose a light, dark, or system-matched interface"
                     >
                       <Select
-                        value={[theme()]}
-                        onValueChange={(value) =>
-                          setTheme(value[0] ?? 'system')
-                        }
+                        value={theme()}
+                        onValueChange={(value) => setTheme(value ?? 'system')}
                         options={[
                           { label: 'Light', value: 'light' },
                           { label: 'Dark', value: 'dark' },
@@ -316,9 +314,9 @@ export function DiscussionSettings(props: {
                       description="Show unread activity as a dot or a count"
                     >
                       <Select
-                        value={[badgeStyle()]}
+                        value={badgeStyle()}
                         onValueChange={(value) =>
-                          setBadgeStyle(value[0] ?? 'Unread count')
+                          setBadgeStyle(value ?? 'Unread count')
                         }
                         options={[
                           { label: 'Dot', value: 'Dot' },
@@ -362,9 +360,9 @@ export function DiscussionSettings(props: {
                         description="Choose how often you receive your digest"
                       >
                         <Select
-                          value={[digestFrequency()]}
+                          value={digestFrequency()}
                           onValueChange={(value) =>
-                            setDigestFrequency(value[0] ?? 'Weekly')
+                            setDigestFrequency(value ?? 'Weekly')
                           }
                           options={[
                             { label: 'Weekly', value: 'Weekly' },
@@ -547,12 +545,12 @@ export function DiscussionSettings(props: {
                 fallback={
                   <Select
                     label="Member role"
-                    value={[role()]}
+                    value={role()}
                     options={['Admin', 'Member', 'Guest'].map((value) => ({
                       value,
                       label: value,
                     }))}
-                    onValueChange={(value) => setRole(value[0] ?? 'Member')}
+                    onValueChange={(value) => setRole(value ?? 'Member')}
                   />
                 }
               >

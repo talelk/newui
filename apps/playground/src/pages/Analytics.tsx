@@ -369,12 +369,12 @@ export function Analytics(): JSX.Element {
           <div class="w-32 max-w-full">
             <Select
               aria-label="Preview state"
-              value={[state()]}
+              value={state()}
               options={['ready', 'loading', 'empty', 'error'].map((value) => ({
                 value,
                 label: value.charAt(0).toUpperCase() + value.slice(1),
               }))}
-              onValueChange={(value) => update(setState, value[0] ?? 'ready')}
+              onValueChange={(value) => update(setState, value ?? 'ready')}
             />
           </div>
         </div>

@@ -210,13 +210,13 @@ export function Mail(): JSX.Element {
       <div class="flex flex-wrap items-end gap-3">
         <Select
           label="Mail account"
-          value={[account()]}
+          value={account()}
           options={['rhea@acme.com', 'team@acme.com'].map((value) => ({
             value,
             label: value,
           }))}
           onValueChange={(value) => {
-            const next = value[0] ?? 'rhea@acme.com'
+            const next = value ?? 'rhea@acme.com'
             accounts.set(account(), messages())
             setMessages(
               accounts.get(next) ??

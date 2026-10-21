@@ -154,12 +154,10 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
                 size="sm"
                 variant={select.value ? 'subtle' : 'outline'}
                 options={select.options}
-                value={select.value ? [select.value] : []}
+                value={select.value || null}
                 placeholder={select.label}
                 aria-label={select.label}
-                onValueChange={(value) =>
-                  select.onValueChange?.(value[0] ?? '')
-                }
+                onValueChange={(value) => select.onValueChange?.(value ?? '')}
               />
             </div>
           )}

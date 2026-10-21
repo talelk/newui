@@ -1,5 +1,5 @@
 import { Avatar, Badge, Button, TextInput } from '@newui/atoms'
-import { createUndo, first, usd as money, optionsOf } from '@newui/data'
+import { createUndo, usd as money, optionsOf } from '@newui/data'
 import { DatePicker, Select } from '@newui/molecules'
 import {
   DataTable,
@@ -143,13 +143,10 @@ export function Deals(): JSX.Element {
       cell: (context) => (
         <Select
           aria-label={`Stage for ${context.row.original.organization}`}
-          value={[context.row.original.stage]}
+          value={context.row.original.stage}
           options={optionsOf(STAGES)}
           onValueChange={(value) =>
-            move(
-              context.row.original.id,
-              first(value, 'Qualification') as Stage,
-            )
+            move(context.row.original.id, (value ?? 'Qualification') as Stage)
           }
         />
       ),
@@ -284,9 +281,9 @@ export function Deals(): JSX.Element {
           aria-label="Sort deals"
           variant="subtle"
           class="w-40 max-w-full"
-          value={[sort()]}
+          value={sort()}
           options={optionsOf(['Board order', 'Due date', 'Highest value'])}
-          onValueChange={(value) => setSort(first(value, 'Due date'))}
+          onValueChange={(value) => setSort(value ?? 'Due date')}
         />
       </FilterBar>
       <Notice
@@ -402,18 +399,16 @@ export function Deals(): JSX.Element {
             />
             <Select
               label="Opportunity owner"
-              value={[newOwner()]}
+              value={newOwner()}
               options={optionsOf(OWNERS)}
-              onValueChange={(value) =>
-                setNewOwner(first(value, OWNERS[0] ?? ''))
-              }
+              onValueChange={(value) => setNewOwner(value ?? OWNERS[0] ?? '')}
             />
             <Select
               label="Initial stage"
-              value={[stage()]}
+              value={stage()}
               options={optionsOf(STAGES)}
               onValueChange={(value) =>
-                setStage(first(value, 'Qualification') as Stage)
+                setStage((value ?? 'Qualification') as Stage)
               }
             />
             <DatePicker

@@ -1,5 +1,5 @@
 import { Button, Divider, Switch, TextInput } from '@newui/atoms'
-import { first, optionsOf } from '@newui/data'
+import { optionsOf } from '@newui/data'
 import { createAppForm, Form, fieldError } from '@newui/data/form'
 import { Alert, Card, Select } from '@newui/molecules'
 import { createSignal, type JSX, Show } from 'solid-js'
@@ -92,9 +92,9 @@ export function Settings(): JSX.Element {
                 <Select
                   label="Timezone"
                   options={optionsOf(TIMEZONES)}
-                  value={[field().state.value]}
+                  value={field().state.value}
                   onValueChange={(value) =>
-                    field().handleChange(first(value, 'UTC'))
+                    field().handleChange(value ?? 'UTC')
                   }
                 />
               )}

@@ -69,7 +69,7 @@ describe('FormControl', () => {
       document.querySelector('[data-slot="select-trigger"]') as Element,
     )
     await userEvent.click(await screen.findByText('Paid'))
-    expect(onValueChange).toHaveBeenCalledWith(['paid'])
+    expect(onValueChange).toHaveBeenCalledWith('paid')
   })
 
   it('routes to Checkbox and forwards checked and onCheckedChange', async () => {

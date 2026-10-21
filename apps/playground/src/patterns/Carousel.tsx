@@ -106,30 +106,30 @@ export default function Carousel(props: { example?: string }) {
       <div class="flex flex-wrap items-end gap-3">
         <Select
           label="Orientation"
-          value={[orientation()]}
+          value={orientation()}
           options={['Horizontal', 'Vertical'].map((value) => ({
             label: value,
             value,
           }))}
-          onValueChange={(value) => setOrientation(value[0] ?? 'Horizontal')}
+          onValueChange={(value) => setOrientation(value ?? 'Horizontal')}
         />
         <Select
           label="Slide size"
-          value={[size()]}
+          value={size()}
           options={['Full width', 'Compact cards'].map((value) => ({
             label: value,
             value,
           }))}
-          onValueChange={(value) => setSize(value[0] ?? 'Full width')}
+          onValueChange={(value) => setSize(value ?? 'Full width')}
         />
         <Select
           label="Slide spacing"
-          value={[spacing()]}
+          value={spacing()}
           options={['8', '16', '24'].map((value) => ({
             label: `${value}px`,
             value,
           }))}
-          onValueChange={(value) => setSpacing(value[0] ?? '16')}
+          onValueChange={(value) => setSpacing(value ?? '16')}
         />
         <Switch
           label="Automatic playback"

@@ -37,7 +37,7 @@ describe('Select', () => {
       document.querySelector('[data-slot="select-trigger"]') as Element,
     )
     await userEvent.click(await screen.findByText('Paid'))
-    expect(onValueChange).toHaveBeenCalledWith(['paid'])
+    expect(onValueChange).toHaveBeenCalledWith('paid')
   })
 
   it('exposes the size and variant axes on the control', () => {
@@ -71,7 +71,7 @@ describe('Select', () => {
 
   it('shows the selected option icon in the trigger', () => {
     const { container } = render(() => (
-      <Select options={RICH_OPTIONS} value={['paid']} />
+      <Select options={RICH_OPTIONS} value="paid" />
     ))
     const trigger = container.querySelector(
       '[data-slot="select-trigger"]',

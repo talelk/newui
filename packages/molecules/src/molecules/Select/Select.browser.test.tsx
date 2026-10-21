@@ -68,7 +68,7 @@ describe('Select (browser, real CSS)', () => {
 
   it('sizes the selected option icon in the trigger', () => {
     const { container } = render(() => (
-      <Select options={RICH_OPTIONS} value={['paid']} />
+      <Select options={RICH_OPTIONS} value="paid" />
     ))
     const icon = container.querySelector(
       '[data-slot="select-trigger"] .lucide-check',

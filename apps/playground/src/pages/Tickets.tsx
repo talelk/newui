@@ -424,31 +424,31 @@ export function Tickets(): JSX.Element {
                 <div class="my-5 grid gap-3 sm:grid-cols-2">
                   <Select
                     label="Ticket status"
-                    value={[ticket().status]}
+                    value={ticket().status}
                     options={STATUSES.map((value) => ({ label: value, value }))}
                     onValueChange={(value) =>
                       update(ticket().id, {
-                        status: (value[0] ?? 'Open') as Status,
+                        status: (value ?? 'Open') as Status,
                       })
                     }
                   />
                   <Select
                     label="Assigned agent"
-                    value={[ticket().agent]}
+                    value={ticket().agent}
                     options={AGENTS.map((value) => ({ label: value, value }))}
                     onValueChange={(value) =>
-                      update(ticket().id, { agent: value[0] ?? 'Unassigned' })
+                      update(ticket().id, { agent: value ?? 'Unassigned' })
                     }
                   />
                   <Select
                     label="Ticket priority"
-                    value={[ticket().priority]}
+                    value={ticket().priority}
                     options={PRIORITIES.map((value) => ({
                       label: value,
                       value,
                     }))}
                     onValueChange={(value) =>
-                      update(ticket().id, { priority: value[0] ?? 'Medium' })
+                      update(ticket().id, { priority: value ?? 'Medium' })
                     }
                   />
                 </div>

@@ -185,13 +185,11 @@ function TeamMembers(): JSX.Element {
                   value,
                   label: value,
                 }))}
-                value={[member.role]}
+                value={member.role}
                 onValueChange={(value) =>
                   setMembers((rows) =>
                     rows.map((row, i) =>
-                      i === index()
-                        ? { ...row, role: value[0] ?? 'Member' }
-                        : row,
+                      i === index() ? { ...row, role: value ?? 'Member' } : row,
                     ),
                   )
                 }
@@ -266,13 +264,13 @@ function ShareDocument(): JSX.Element {
       <TextInput label="Document link" value={url} readonly />
       <Select
         label="Anyone with the link"
-        value={[access()]}
+        value={access()}
         options={[
           { label: 'Can view', value: 'view' },
           { label: 'Can comment', value: 'comment' },
           { label: 'Can edit', value: 'edit' },
         ]}
-        onValueChange={(value) => setAccess(value[0] ?? 'view')}
+        onValueChange={(value) => setAccess(value ?? 'view')}
       />
       <Button variant="outline" iconLeft="lucide-copy" onClick={copy}>
         Copy link
@@ -348,21 +346,21 @@ function ReportIssue(): JSX.Element {
         <div class="grid grid-cols-2 gap-3">
           <Select
             label="Area"
-            value={[area()]}
+            value={area()}
             options={['billing', 'account', 'reports'].map((value) => ({
               value,
               label: value[0]?.toUpperCase() + value.slice(1),
             }))}
-            onValueChange={(value) => setArea(value[0] ?? 'billing')}
+            onValueChange={(value) => setArea(value ?? 'billing')}
           />
           <Select
             label="Issue priority"
-            value={[priority()]}
+            value={priority()}
             options={['low', 'medium', 'high'].map((value) => ({
               value,
               label: value[0]?.toUpperCase() + value.slice(1),
             }))}
-            onValueChange={(value) => setPriority(value[0] ?? 'medium')}
+            onValueChange={(value) => setPriority(value ?? 'medium')}
           />
         </div>
         <Textarea

@@ -5,6 +5,24 @@ a **v1-equivalent freeze** is declared; until then each change is documented her
 and, where the transform is mechanical, a `scripts/migrate.ts` will be added
 alongside it.
 
+## `Select` single mode is scalar (pre-1.0)
+
+`Select`'s value was `string[]` in every mode. Single mode (the default, no
+`multiple`) now takes `value: string | null` and reports `onValueChange` with a
+scalar — the same shape as `Combobox`. `multiple` keeps the array contract.
+
+Before:
+
+```tsx
+<Select options={STATUSES} value={[status()]} onValueChange={(v) => setStatus(v[0] ?? 'Todo')} />
+```
+
+After:
+
+```tsx
+<Select options={STATUSES} value={status()} onValueChange={(v) => setStatus(v ?? 'Todo')} />
+```
+
 ## Vite 8 tooling
 
 `@newui/vite` now targets Vite `^8.3.4`. Upgrade consumer applications from Vite 6

@@ -1,5 +1,5 @@
 import { Badge, Button, TextInput } from '@newui/atoms'
-import { count, first, optionsOf, usd } from '@newui/data'
+import { count, optionsOf, usd } from '@newui/data'
 import { createAppForm, Form, fieldError } from '@newui/data/form'
 import { createCollection } from '@newui/data/query'
 import { Alert, Dialog, Select } from '@newui/molecules'
@@ -411,9 +411,9 @@ function CreateProjectDialog(props: {
               <Select
                 label="Owner"
                 options={optionsOf(OWNERS)}
-                value={[field().state.value]}
+                value={field().state.value}
                 onValueChange={(value) =>
-                  field().handleChange(first(value, OWNERS[0] ?? ''))
+                  field().handleChange(value ?? OWNERS[0] ?? '')
                 }
               />
             )}
@@ -424,11 +424,9 @@ function CreateProjectDialog(props: {
               <Select
                 label="Status"
                 options={optionsOf(PROJECT_STATUSES)}
-                value={[field().state.value]}
+                value={field().state.value}
                 onValueChange={(value) =>
-                  field().handleChange(
-                    (first(value, 'Active') as ProjectStatus) ?? 'Active',
-                  )
+                  field().handleChange((value ?? 'Active') as ProjectStatus)
                 }
               />
             )}
@@ -529,11 +527,9 @@ function ProjectDialog(props: {
                 <Select
                   label="Status"
                   options={optionsOf(PROJECT_STATUSES)}
-                  value={[status()]}
+                  value={status()}
                   onValueChange={(value) =>
-                    setStatus(
-                      (first(value, 'Active') as ProjectStatus) ?? 'Active',
-                    )
+                    setStatus((value ?? 'Active') as ProjectStatus)
                   }
                 />
 

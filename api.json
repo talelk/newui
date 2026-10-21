@@ -4810,7 +4810,75 @@
         "description": "Merged into the rendered control's root."
       }
     ],
-    "FormControlSelectProps": [
+    "FormControlSelectSingleProps": [
+      {
+        "name": "type",
+        "type": "'select'",
+        "optional": false
+      },
+      {
+        "name": "options",
+        "type": "SelectOption[]",
+        "optional": false
+      },
+      {
+        "name": "value",
+        "type": "string | null",
+        "optional": true,
+        "description": "Selected value; `null` clears it."
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string | null) => void",
+        "optional": true
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "multiple",
+        "type": "false",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true,
+        "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Label drawn by the rendered control. Honoured by every type."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true,
+        "description": "Form field name."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the rendered control's root."
+      }
+    ],
+    "FormControlSelectMultiProps": [
       {
         "name": "type",
         "type": "'select'",
@@ -4825,7 +4893,7 @@
         "name": "value",
         "type": "string[]",
         "optional": true,
-        "description": "Selected values. Pass more than one with `multiple`."
+        "description": "Selected values."
       },
       {
         "name": "onValueChange",
@@ -4839,8 +4907,8 @@
       },
       {
         "name": "multiple",
-        "type": "boolean",
-        "optional": true
+        "type": "true",
+        "optional": false
       },
       {
         "name": "id",
@@ -5424,6 +5492,74 @@
       {
         "name": "variant",
         "type": "InputVariant",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true,
+        "description": "`id` of the rendered control. Only the text and `textarea` types take one."
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Label drawn by the rendered control. Honoured by every type."
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true,
+        "description": "Form field name."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the rendered control's root."
+      }
+    ],
+    "FormControlSelectProps": [
+      {
+        "name": "type",
+        "type": "'select'",
+        "optional": false
+      },
+      {
+        "name": "options",
+        "type": "SelectOption[]",
+        "optional": false
+      },
+      {
+        "name": "value",
+        "type": "string | null",
+        "optional": true,
+        "description": "Selected value; `null` clears it."
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string | null) => void",
+        "optional": true
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "multiple",
+        "type": "false",
         "optional": true
       },
       {
@@ -6485,22 +6621,11 @@
     ]
   },
   "packages/molecules/src/molecules/Select/Select.tsx": {
-    "SelectProps": [
+    "SelectBaseProps": [
       {
         "name": "options",
         "type": "SelectOption[]",
         "optional": false
-      },
-      {
-        "name": "value",
-        "type": "string[]",
-        "optional": true,
-        "description": "Selected values. Pass more than one for a multi-select."
-      },
-      {
-        "name": "onValueChange",
-        "type": "(value: string[]) => void",
-        "optional": true
       },
       {
         "name": "placeholder",
@@ -6544,11 +6669,6 @@
         "optional": true
       },
       {
-        "name": "multiple",
-        "type": "boolean",
-        "optional": true
-      },
-      {
         "name": "name",
         "type": "string",
         "optional": true
@@ -6576,6 +6696,267 @@
         "type": "string",
         "optional": true,
         "description": "Accessible name for the trigger when no visible `label` is rendered."
+      }
+    ],
+    "SelectSingleProps": [
+      {
+        "name": "multiple",
+        "type": "false",
+        "optional": true,
+        "description": "Single mode (the default): one selected value; `null` clears it."
+      },
+      {
+        "name": "value",
+        "type": "string | null",
+        "optional": true
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string | null) => void",
+        "optional": true
+      },
+      {
+        "name": "options",
+        "type": "SelectOption[]",
+        "optional": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the trigger when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "size",
+        "type": "SelectSize",
+        "optional": true,
+        "description": "Trigger height/typography. Matches the input scale.",
+        "default": "sm"
+      },
+      {
+        "name": "variant",
+        "type": "SelectVariant",
+        "optional": true,
+        "description": "Trigger surface. `outline` is the default; `subtle` is filled."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ],
+    "SelectMultiProps": [
+      {
+        "name": "multiple",
+        "type": "true",
+        "optional": false
+      },
+      {
+        "name": "value",
+        "type": "string[]",
+        "optional": true,
+        "description": "Selected values; the empty array clears."
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string[]) => void",
+        "optional": true
+      },
+      {
+        "name": "options",
+        "type": "SelectOption[]",
+        "optional": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the trigger when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "size",
+        "type": "SelectSize",
+        "optional": true,
+        "description": "Trigger height/typography. Matches the input scale.",
+        "default": "sm"
+      },
+      {
+        "name": "variant",
+        "type": "SelectVariant",
+        "optional": true,
+        "description": "Trigger surface. `outline` is the default; `subtle` is filled."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ],
+    "SelectProps": [
+      {
+        "name": "multiple",
+        "type": "false",
+        "optional": true,
+        "description": "Single mode (the default): one selected value; `null` clears it."
+      },
+      {
+        "name": "value",
+        "type": "string | null",
+        "optional": true
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string | null) => void",
+        "optional": true
+      },
+      {
+        "name": "options",
+        "type": "SelectOption[]",
+        "optional": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the trigger when no visible `label` is rendered."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "size",
+        "type": "SelectSize",
+        "optional": true,
+        "description": "Trigger height/typography. Matches the input scale.",
+        "default": "sm"
+      },
+      {
+        "name": "variant",
+        "type": "SelectVariant",
+        "optional": true,
+        "description": "Trigger surface. `outline` is the default; `subtle` is filled."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
       }
     ]
   },

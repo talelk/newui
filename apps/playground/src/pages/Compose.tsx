@@ -226,13 +226,13 @@ export function Compose(): JSX.Element {
           >
             <Select
               label="Audience"
-              value={[audience()]}
+              value={audience()}
               options={[
                 { label: 'Workspace members', value: 'workspace' },
                 { label: 'Public demo', value: 'public' },
                 { label: 'Only me', value: 'private' },
               ]}
-              onValueChange={(value) => setAudience(value[0] ?? 'workspace')}
+              onValueChange={(value) => setAudience(value ?? 'workspace')}
             />
             <DatePicker
               label="Publication date"

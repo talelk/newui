@@ -113,15 +113,29 @@ export interface FormControlTextareaProps extends FormControlShared {
   variant?: InputVariant
 }
 
-export interface FormControlSelectProps extends FormControlShared {
+export interface FormControlSelectSingleProps extends FormControlShared {
   type: 'select'
   options: SelectOption[]
-  /** Selected values. Pass more than one with `multiple`. */
+  /** Selected value; `null` clears it. */
+  value?: string | null
+  onValueChange?: (value: string | null) => void
+  placeholder?: string
+  multiple?: false
+}
+
+export interface FormControlSelectMultiProps extends FormControlShared {
+  type: 'select'
+  options: SelectOption[]
+  /** Selected values. */
   value?: string[]
   onValueChange?: (value: string[]) => void
   placeholder?: string
-  multiple?: boolean
+  multiple: true
 }
+
+export type FormControlSelectProps =
+  | FormControlSelectSingleProps
+  | FormControlSelectMultiProps
 
 export interface FormControlCheckboxProps extends FormControlShared {
   type: 'checkbox'
@@ -247,18 +261,27 @@ export type FormControlProps =
   | FormControlDateTimeProps
 
 function renderSelect(props: FormControlSelectProps): JSX.Element {
-  return (
+  const shared = {
+    options: props.options,
+    placeholder: props.placeholder,
+    label: props.label,
+    'aria-label': props['aria-label'],
+    disabled: props.disabled,
+    name: props.name,
+    class: props.class,
+  }
+  return props.multiple ? (
     <Select
-      options={props.options}
+      {...shared}
+      multiple
       value={props.value}
       onValueChange={props.onValueChange}
-      placeholder={props.placeholder}
-      label={props.label}
-      aria-label={props['aria-label']}
-      disabled={props.disabled}
-      multiple={props.multiple}
-      name={props.name}
-      class={props.class}
+    />
+  ) : (
+    <Select
+      {...shared}
+      value={props.value}
+      onValueChange={props.onValueChange}
     />
   )
 }

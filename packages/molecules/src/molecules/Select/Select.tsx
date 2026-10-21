@@ -27,11 +27,8 @@ export interface SelectOption {
   description?: string
 }
 
-export interface SelectProps {
+export interface SelectBaseProps {
   options: SelectOption[]
-  /** Selected values. Pass more than one for a multi-select. */
-  value?: string[]
-  onValueChange?: (value: string[]) => void
   placeholder?: string
   label?: JSX.Element
   description?: JSX.Element
@@ -41,7 +38,6 @@ export interface SelectProps {
   /** Accessible name for the trigger when no visible `label` is rendered. */
   'aria-label'?: string
   disabled?: boolean
-  multiple?: boolean
   name?: string
   /** Trigger height/typography. Matches the input scale. */
   /** @default sm */
@@ -50,6 +46,22 @@ export interface SelectProps {
   variant?: SelectVariant
   class?: string
 }
+
+export interface SelectSingleProps extends SelectBaseProps {
+  /** Single mode (the default): one selected value; `null` clears it. */
+  multiple?: false
+  value?: string | null
+  onValueChange?: (value: string | null) => void
+}
+
+export interface SelectMultiProps extends SelectBaseProps {
+  multiple: true
+  /** Selected values; the empty array clears. */
+  value?: string[]
+  onValueChange?: (value: string[]) => void
+}
+
+export type SelectProps = SelectSingleProps | SelectMultiProps
 
 const SIZE: Record<SelectSize, string> = {
   xs: 'min-h-6 rounded-3',
@@ -111,6 +123,16 @@ function SelectControl(props: SelectProps): JSX.Element {
 
   const field = useField()
   const size = () => local.size ?? 'sm'
+  const isMulti = () => local.multiple === true
+
+  // The Zag machine is array-shaped in both modes; the scalar/array boundary
+  // lives here, so single mode passes one value across it. `undefined` leaves
+  // the machine uncontrolled — only a real value becomes a controlled array.
+  const machineValue = createMemo<string[] | undefined>(() => {
+    if (isMulti()) return local.value as string[] | undefined
+    const single = local.value as string | null | undefined
+    return single == null ? undefined : [single]
+  })
 
   const collection = createMemo(
     () =>
@@ -131,12 +153,21 @@ function SelectControl(props: SelectProps): JSX.Element {
     invalid: field?.hasError(),
     required: field?.required(),
     collection: collection(),
-    value: local.value,
+    value: machineValue(),
     disabled: local.disabled,
     multiple: local.multiple,
     name: local.name,
-    onValueChange: (details: { value: string[] }) =>
-      local.onValueChange?.(details.value),
+    onValueChange: (details: { value: string[] }) => {
+      if (isMulti()) {
+        ;(local.onValueChange as ((value: string[]) => void) | undefined)?.(
+          details.value,
+        )
+      } else {
+        ;(
+          local.onValueChange as ((value: string | null) => void) | undefined
+        )?.(details.value[0] ?? null)
+      }
+    },
   }))
 
   // The first selected option — drives the trigger's leading icon.

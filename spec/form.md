@@ -39,7 +39,8 @@ props and the value shape follow the resolved control:
 
 - text-like / `textarea` — `value`, `onInput` (+ `onChange`, `rows`, `prefix`,
   `suffix`, `size`, `variant` where the control has them);
-- `select` — `options`, `value: string[]`, `onValueChange`;
+- `select` — `options`, `value: string | null` (with `multiple: true`,
+  `value: string[]`), `onValueChange`;
 - `combobox` — `options`, `value: string | null`, `onValueChange`;
 - `multiselect` — `options`, `value: string[]`, `onValueChange`;
 - `date` — `value: string | null`, `onValueChange`, `min`/`max`;

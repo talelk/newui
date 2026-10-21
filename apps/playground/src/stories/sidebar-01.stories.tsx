@@ -78,12 +78,12 @@ export function Demo() {
       tenant={
         <Select
           aria-label="Documentation version"
-          value={[version()]}
+          value={version()}
           options={['1.0.1', '1.1.0-alpha.0', '2.0.0-beta.1'].map((value) => ({
             value,
             label: value,
           }))}
-          onValueChange={(value) => setVersion(value[0] ?? '1.0.1')}
+          onValueChange={(value) => setVersion(value ?? '1.0.1')}
         />
       }
       tenantCollapsed={

@@ -1,10 +1,11 @@
 # Select
 
 A Zag value selector over fixed `options`, with optional icon, description and
-disabled state per option. `value` is an array of strings;
-`onValueChange` reports the next array. The default is a single selection;
-`multiple` permits more than one value. `name` is carried by a hidden native
-select for form participation.
+disabled state per option. Single mode (the default) takes `value: string | null`
+— `null` clears — and `onValueChange` reports the next scalar, matching
+`Combobox`. With `multiple`, `value` is `string[]` and `onValueChange` reports
+the next array (use `MultiSelect` when the chips UI is wanted). `name` is
+carried by a hidden native select for form participation.
 
 The shared Field contract provides `label`, `description`, `error`, `required`
 and `id`. The visible combobox trigger receives the label, supporting/error ids

@@ -1,6 +1,6 @@
 import { Badge, Button, TextInput } from '@newui/atoms'
 import { NumberCard } from '@newui/charts'
-import { downloadBlob, first, optionsOf, bytes as size } from '@newui/data'
+import { downloadBlob, optionsOf, bytes as size } from '@newui/data'
 import {
   BottomSheet,
   Breadcrumbs,
@@ -327,9 +327,9 @@ export function Files(): JSX.Element {
           aria-label="Sort files"
           variant="subtle"
           class="w-40 max-w-full"
-          value={[sort()]}
+          value={sort()}
           options={optionsOf(['Name', 'Modified', 'Size'])}
-          onValueChange={(value) => setSort(first(value, 'Name'))}
+          onValueChange={(value) => setSort(value ?? 'Name')}
         />
       </FilterBar>
       <Breadcrumbs
@@ -571,7 +571,7 @@ export function Files(): JSX.Element {
                   />
                   <Select
                     label="Move to folder"
-                    value={[moveTo()]}
+                    value={moveTo()}
                     options={[
                       { label: 'All files', value: 'root' },
                       ...items()
@@ -586,7 +586,7 @@ export function Files(): JSX.Element {
                           value: entry.id,
                         })),
                     ]}
-                    onValueChange={(value) => setMoveTo(value[0] ?? 'root')}
+                    onValueChange={(value) => setMoveTo(value ?? 'root')}
                   />
                 </div>
                 <Dialog.Footer>

@@ -5,20 +5,25 @@
 export const API = {
   "SelectProps": [
     {
-      "name": "options",
-      "type": "SelectOption[]",
-      "optional": false
+      "name": "multiple",
+      "type": "false",
+      "optional": true,
+      "description": "Single mode (the default): one selected value; `null` clears it."
     },
     {
       "name": "value",
-      "type": "string[]",
-      "optional": true,
-      "description": "Selected values. Pass more than one for a multi-select."
+      "type": "string | null",
+      "optional": true
     },
     {
       "name": "onValueChange",
-      "type": "(value: string[]) => void",
+      "type": "(value: string | null) => void",
       "optional": true
+    },
+    {
+      "name": "options",
+      "type": "SelectOption[]",
+      "optional": false
     },
     {
       "name": "placeholder",
@@ -51,18 +56,13 @@ export const API = {
       "optional": true
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true,
       "description": "Accessible name for the trigger when no visible `label` is rendered."
     },
     {
       "name": "disabled",
-      "type": "boolean",
-      "optional": true
-    },
-    {
-      "name": "multiple",
       "type": "boolean",
       "optional": true
     },
@@ -88,12 +88,6 @@ export const API = {
       "name": "class",
       "type": "string",
       "optional": true
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "optional": true,
-      "description": "Accessible name for the trigger when no visible `label` is rendered."
     }
   ]
 } as const

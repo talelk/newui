@@ -17,7 +17,7 @@ export function Demo() {
       <div class="flex flex-wrap items-end gap-3">
         <Select
           label="Code language"
-          value={[language()]}
+          value={language()}
           options={[
             'javascript',
             'typescript',
@@ -28,7 +28,9 @@ export function Demo() {
             'sql',
             'markdown',
           ].map((value) => ({ value, label: value }))}
-          onValueChange={(value) => setLanguage(value[0] as CodeEditorLanguage)}
+          onValueChange={(value) =>
+            setLanguage((value ?? 'typescript') as CodeEditorLanguage)
+          }
         />
         <Switch
           label="Read-only code"
