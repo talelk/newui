@@ -54,7 +54,8 @@
     "skills:check": "pnpm skills:validate && pnpm skills:stale",
     "skills:version": "tsx scripts/skill-versions.ts",
     "test:e2e:all": "playwright test",
-    "packages:smoke": "tsx scripts/packages-smoke.ts"
+    "packages:smoke": "tsx scripts/packages-smoke.ts",
+    "gen": "tsx scripts/gen-component.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
