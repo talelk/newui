@@ -331,14 +331,15 @@ packages.
   `.github/workflows/tests.yml` runs them as individual labelled steps, and
   `pnpm verify` runs the identical commands locally. `ci.test.ts` fails if the
   workflow and the declaration drift, so "CI runs locally" stays true.
-- **npm trusted publishing.** `changesets.yml` requests `id-token: write`;
-  every published package declares a public `publishConfig` and its repository.
-  Each npm package needs a Trusted Publisher for `talelk/newui` /
-  `changesets.yml` with direct `npm publish` allowed. No long-lived
-  `NPM_TOKEN` is stored. `scripts/publish.ts` is gated by the repository
-  variable `NPM_PUBLISH` until the first publish and the Trusted Publisher
-  setup are complete. `pnpm trust:publishers` configures every package in bulk
-  with `npm trust` and enables the gate when it finishes.
+- **npm trusted publishing & auto release.** `changesets.yml` requests
+  `id-token: write`; every published package declares a public `publishConfig`
+  and its repository. Each npm package needs a Trusted Publisher for
+  `talelk/newui` / `changesets.yml` with direct `npm publish` allowed. No
+  long-lived `NPM_TOKEN` is stored. `scripts/publish.ts` is gated by the
+  repository variable `NPM_PUBLISH`; `pnpm trust:publishers` configures every
+  package in bulk and enables the gate. Once enabled, `auto-release.yml` merges
+  the Version Packages PR after the required `checks`, `coverage` and `e2e`
+  checks pass and publishes in the same workflow through OIDC.
 - `pnpm verify` (all) · `pnpm verify:checks` (fast gates) · `pnpm verify:e2e`
   (browser harness) · `pnpm verify:affected` (only the gates the diff can
   dirty — the agent loop: change → affected → full `verify` before pushing)

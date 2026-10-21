@@ -89,8 +89,11 @@ Trusted Publisher is required before OIDC can publish it. Bootstrap once:
 3. The release script remains gated while `NPM_PUBLISH` is false, so a Version
    Packages PR never paints `main` red before the external setup is complete.
 
-After that, merging a Version Packages pull request versions and publishes
-automatically through OIDC; no `NPM_TOKEN` secret is required or used.
+After that, the **Auto release** workflow takes over: when the Version Packages
+pull request's required checks pass, it merges the PR and publishes in the same
+run through OIDC, then pushes the release tags and refreshes the Pages build.
+`main` is protected by the `checks`, `coverage` and `e2e` required status
+checks. No `NPM_TOKEN` secret is required or used.
 
 ## Packages
 

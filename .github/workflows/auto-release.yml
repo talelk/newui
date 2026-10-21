@@ -1,0 +1,106 @@
+name: Auto release
+
+# The Version Packages PR is the release review gate: once its checks pass,
+# merge it and publish in this workflow. The merge uses GITHUB_TOKEN, so it
+# deliberately does not rely on a second push-triggered workflow (GitHub
+# suppresses those). Publishing therefore happens here, with id-token: write.
+#
+# A manual dispatch is provided for recovery if a publish job needs a retry.
+
+on:
+  workflow_run:
+    workflows: [Tests]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: Version Packages pull request number
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+  checks: read
+  statuses: read
+  id-token: write
+
+concurrency:
+  group: auto-release
+  cancel-in-progress: false
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  NPM_PUBLISH: 'true'
+  NPM_CONFIG_PROVENANCE: 'true'
+
+jobs:
+  release:
+    if: >
+      vars.NPM_PUBLISH == 'true' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'pull_request' &&
+        github.event.workflow_run.head_branch == 'changeset-release/main'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Resolve and validate the Version Packages PR
+        id: pr
+        env:
+          EVENT_PR: ${{ github.event.workflow_run.pull_requests[0].number }}
+          INPUT_PR: ${{ inputs.pr }}
+        run: |
+          PR="${INPUT_PR:-$EVENT_PR}"
+          if [ -z "$PR" ]; then
+            echo "No Version Packages pull request to release."
+            exit 1
+          fi
+          STATE=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json state --jq .state)
+          if [ "$STATE" != "OPEN" ]; then
+            echo "PR #$PR is $STATE; nothing to merge."
+            exit 0
+          fi
+          BRANCH=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json headRefName --jq .headRefName)
+          BASE=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json baseRefName --jq .baseRefName)
+          DRAFT=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)
+          if [ "$BRANCH" != "changeset-release/main" ] || [ "$BASE" != "main" ] || [ "$DRAFT" = "true" ]; then
+            echo "PR #$PR is not the Version Packages PR (branch=$BRANCH base=$BASE draft=$DRAFT)."
+            exit 1
+          fi
+          echo "number=$PR" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for every pull request check
+        env:
+          PR: ${{ steps.pr.outputs.number }}
+        run: gh pr checks "$PR" --repo "$GITHUB_REPOSITORY" --watch --interval 10
+
+      - name: Merge the Version Packages PR
+        env:
+          PR: ${{ steps.pr.outputs.number }}
+        run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch
+
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6.1.0
+
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish through npm trusted publishing
+        run: pnpm run release
+
+      - name: Push release tags
+        run: git push origin --tags
+
+      - name: Refresh Pages with the released version
+        run: gh workflow run pages.yml --ref main --repo "$GITHUB_REPOSITORY"
