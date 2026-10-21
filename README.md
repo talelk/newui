@@ -67,6 +67,12 @@ Trusted Publisher is required before OIDC can publish it. Bootstrap once:
 
 1. Publish the first versions with a one-time npm credential (locally or from a
    temporary trusted workflow). Do not store that credential in this repository.
+   The root package is private and versionless, so publish the workspace:
+
+   ```sh
+   npm login
+   pnpm publish:stage
+   ```
 2. On npmjs.com, add a **Trusted Publisher** for every `@newui/*` package:
    GitHub Actions, owner `talelk`, repository `newui`, workflow
    `changesets.yml`, and allow direct `npm publish`.
