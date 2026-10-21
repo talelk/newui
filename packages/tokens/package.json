@@ -19,5 +19,6 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "license": "Apache-2.0"
 }

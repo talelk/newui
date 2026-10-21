@@ -40,5 +40,6 @@
   "devDependencies": {
     "solid-js": "^1.9.17"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "license": "Apache-2.0"
 }

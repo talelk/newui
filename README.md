@@ -4,6 +4,7 @@
 [![SolidJS](https://img.shields.io/badge/SolidJS-1.9-2c4f7c?logo=solid)](https://www.solidjs.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06b6d4?logo=tailwindcss)](https://tailwindcss.com/)
 [![pnpm](https://img.shields.io/badge/pnpm-workspace-f69220?logo=pnpm)](https://pnpm.io/)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 A compact analytics UI system built with SolidJS, Zag, semantic tokens and
 Tailwind CSS v4. Neutral surfaces, explicit blue primary actions, 28px default
@@ -79,3 +80,52 @@ After public props change, run `pnpm api` and `pnpm site`, and keep the
 prop no longer exists. After tokens change, run `pnpm css`. Generated files are
 committed and drift is checked. Visual
 baselines are updated deliberately and inspected before acceptance.
+
+## Sources and inspiration
+
+newui is an independent SolidJS implementation, not an official port. It began
+as a SolidJS reworking of [frappe-ui](https://github.com/frappe/frappe-ui) and
+its design language, and it borrows composition patterns and registry examples
+from several open-source projects. Thank you to the people who built and shared
+them:
+
+- **[frappe-ui](https://github.com/frappe/frappe-ui)** — Frappe Technologies and
+  contributors. The Vue component library and its philosophy are the primary
+  reference; the read-only checkout lives in `references/frappe-ui-main/`.
+- **[SolidUI](https://www.solid-ui.com/)** — Stefan Karger, Michael Essiet and
+  contributors. The 68 registry examples and several application compositions
+  are adapted from this SolidJS port of shadcn/ui and Tremor.
+- **[shadcn/ui](https://github.com/shadcn-ui/ui)** and
+  **[Tremor](https://github.com/tremorlabs/tremor)** — the upstream design and
+  composition sources behind SolidUI's registry.
+- **[Zag](https://github.com/chakra-ui/zag)** — Chakra UI and contributors. Zag
+  supplies the accessible state machines behind our overlays, menus, pickers
+  and controls.
+- **[TanStack](https://tanstack.com/)** — Query, Form, Table and Virtual power
+  the headless data layer and its rendered organisms.
+- **[SolidJS](https://www.solidjs.com/)**,
+  **[Tailwind CSS](https://tailwindcss.com/)**,
+  **[Lucide](https://lucide.dev/)**, **[ECharts](https://echarts.apache.org/)**,
+  **[TipTap](https://tiptap.dev/)** and
+  **[CodeMirror](https://codemirror.net/)** — the runtime, styling, icon,
+  charting and editing foundations.
+- **[Inter](https://rsms.me/inter/)** — Rasmus Andersson and the Inter Project
+  Authors. The default typeface, shipped under the SIL Open Font License.
+
+These projects are not affiliated with newui and do not endorse it. Their
+licenses remain their own; the read-only checkouts under `references/` are
+development references, not published package content.
+
+## License
+
+newui is released under the [Apache License 2.0](LICENSE).
+Copyright 2026 the newui contributors.
+
+The project includes material derived from MIT-licensed sources. Their
+copyright and permission notices are recorded in [NOTICE](NOTICE).
+
+License compatibility is intentional: the shipped dependencies are MIT,
+Apache-2.0, BSD (2- or 3-clause), ISC, 0BSD or OFL, all compatible with an
+Apache-2.0 distribution. The MPL-2.0 packages in the workspace are development
+tools and are not part of the published package runtimes. The Inter font keeps
+its own SIL Open Font License, included with the font files.

@@ -2,7 +2,7 @@
   "name": "@newui/data",
   "version": "0.0.0",
   "type": "module",
-  "description": "The logic layer: formatting, selection, undo and downloads \u2014 no components.",
+  "description": "The logic layer: formatting, selection, undo and downloads — no components.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/talelk/newui.git",
@@ -45,5 +45,6 @@
   "dependencies": {
     "@tanstack/solid-form": "^1.33.5",
     "@tanstack/solid-query": "^5.104.3"
-  }
+  },
+  "license": "Apache-2.0"
 }
