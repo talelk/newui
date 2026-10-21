@@ -142,6 +142,7 @@ function ToastItem(props: {
   return (
     <div
       {...api().getRootProps()}
+      data-slot="toast"
       class="pointer-events-auto flex w-[360px] items-center rounded-card bg-surface-gray-9 px-4 py-2.5 shadow-xl"
     >
       <Show when={render()} fallback={defaultBody()}>
@@ -168,6 +169,7 @@ export function ToastRegion(props: {
     <Portal>
       <div
         {...api().getGroupProps()}
+        data-slot="toast-region"
         class={cn('pointer-events-none z-50 flex flex-col gap-2', props.class)}
       >
         <For each={api().getToasts()}>

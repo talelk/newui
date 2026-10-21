@@ -33,11 +33,13 @@ export function Icon(props: IconProps): JSX.Element {
             fallback={
               <Dynamic
                 component={icon() as Component<{ class?: string }>}
+                data-slot="icon"
                 class={props.class}
               />
             }
           >
             <span
+              data-slot="icon"
               class={cn(icon() as string, props.class)}
               aria-hidden="true"
             />

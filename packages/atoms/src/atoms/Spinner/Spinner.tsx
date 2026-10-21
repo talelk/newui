@@ -41,6 +41,7 @@ export function Spinner(props: SpinnerProps): JSX.Element {
     <span
       role="status"
       aria-label="Loading"
+      data-slot="spinner"
       class={cn(
         'inline-block shrink-0 animate-spin rounded-full',
         'motion-reduce:[animation-duration:1.6s]',

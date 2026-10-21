@@ -45,7 +45,7 @@ export function Progress(props: ProgressProps): JSX.Element {
   const filled = () => Math.round((clamped() / 100) * intervalCount())
 
   return (
-    <div class={cn('w-full space-y-[10px]', local.class)}>
+    <div data-slot="progress" class={cn('w-full space-y-[10px]', local.class)}>
       <Show when={showHeader()}>
         <div class="flex items-baseline justify-between">
           <span class="text-base-medium text-ink-gray-8">{local.label}</span>
@@ -59,6 +59,7 @@ export function Progress(props: ProgressProps): JSX.Element {
 
       <div
         role="progressbar"
+        data-slot="progress-track"
         aria-label={local['aria-label'] ?? local.label}
         aria-valuemin={0}
         aria-valuemax={100}
@@ -72,13 +73,17 @@ export function Progress(props: ProgressProps): JSX.Element {
         <Show
           when={!local.indeterminate}
           fallback={
-            <div class="h-full w-1/3 animate-[progress_1.4s_ease-in-out_infinite] bg-surface-gray-10" />
+            <div
+              data-slot="progress-fill"
+              class="h-full w-1/3 animate-[progress_1.4s_ease-in-out_infinite] bg-surface-gray-10"
+            />
           }
         >
           <Show
             when={useIntervals()}
             fallback={
               <div
+                data-slot="progress-fill"
                 class="h-full bg-surface-gray-10 transition-[width] duration-[660ms] ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none"
                 style={{ width: `${clamped()}%` }}
               />

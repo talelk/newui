@@ -41,6 +41,7 @@ export function Dropdown(props: DropdownProps): JSX.Element {
   return (
     <Menu.Root onSelect={local.onSelect}>
       <Menu.Trigger
+        data-slot="dropdown-trigger"
         class={cn(
           // frappe's default trigger is a subtle gray `Button` (size `sm`):
           // `h-7 text-base px-2 rounded-4`, not a bordered input-like box.
@@ -57,7 +58,7 @@ export function Dropdown(props: DropdownProps): JSX.Element {
           aria-hidden="true"
         />
       </Menu.Trigger>
-      <Menu.Content>
+      <Menu.Content data-slot="dropdown-content">
         <For each={local.options}>
           {(option) => (
             <Menu.Item value={option.value} disabled={option.disabled}>

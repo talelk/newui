@@ -78,6 +78,7 @@ export function Password(props: PasswordProps): JSX.Element {
           <TooltipRoot>
             <TooltipTrigger
               type="button"
+              data-slot="password-toggle"
               disabled={props.disabled}
               aria-label={toggleLabel()}
               aria-pressed={show() ? 'true' : 'false'}

@@ -14,18 +14,23 @@ export function Skeleton(props: SkeletonProps): JSX.Element {
       when={props.lines !== undefined}
       fallback={
         <div
+          data-slot="skeleton"
           class={cn('animate-pulse bg-surface-gray-3', props.class)}
           aria-hidden="true"
         />
       }
     >
       <div
+        data-slot="skeleton"
         class={cn('flex w-full flex-col gap-2', props.class)}
         aria-hidden="true"
       >
         <For each={Array.from({ length: Math.max(1, props.lines ?? 1) })}>
           {() => (
-            <div class="h-4 w-full animate-pulse rounded-3 bg-surface-gray-3" />
+            <div
+              data-slot="skeleton-line"
+              class="h-4 w-full animate-pulse rounded-3 bg-surface-gray-3"
+            />
           )}
         </For>
       </div>
