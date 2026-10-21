@@ -48,22 +48,34 @@ and adds `.nojekyll`. The Vite base and the Solid Router base both come from
 
 ## Release
 
-Changesets opens a **Version Packages** pull request; merging it publishes the
-changed packages with `pnpm run release`. Publishing uses npm trusted
-publishing, not a stored token: `.github/workflows/changesets.yml` requests the
-`id-token: write` permission and the npm CLI exchanges GitHub's OIDC identity
-for a short-lived credential.
+Semver is automatic. Every change carries a Changeset; the Changesets workflow
+opens or updates a **Version Packages** pull request with the calculated bumps,
+the changelog, the skill metadata and the regenerated site data (the changelog
+page and masthead version chip). Merging that pull request publishes the new
+versions.
 
-Configure a **Trusted Publisher** on each package on npmjs.com:
+Publishing uses npm trusted publishing, not a stored token:
+[`.github/workflows/changesets.yml`](.github/workflows/changesets.yml) requests
+`id-token: write`, and the npm CLI exchanges GitHub's OIDC identity for a
+short-lived credential. Every published package declares a public
+`publishConfig` and its `repository`, which npm needs for provenance.
 
-- Provider: GitHub Actions
-- Organization or user: `talelk`
-- Repository: `newui`
-- Workflow filename: `changesets.yml`
-- Allow `npm publish` (not only staged publishes)
+### First publish
 
-Every published package sets `publishConfig.access` to `public`. No
-`NPM_TOKEN` secret is required or used.
+A package must exist before npm lets you configure its Trusted Publisher, and a
+Trusted Publisher is required before OIDC can publish it. Bootstrap once:
+
+1. Publish the first versions with a one-time npm credential (locally or from a
+   temporary trusted workflow). Do not store that credential in this repository.
+2. On npmjs.com, add a **Trusted Publisher** for every `@newui/*` package:
+   GitHub Actions, owner `talelk`, repository `newui`, workflow
+   `changesets.yml`, and allow direct `npm publish`.
+3. Set the repository variable `NPM_PUBLISH=true`. The release script is gated
+   until then so the version PR does not paint `main` red while the external
+   setup is incomplete.
+
+After that, merging a Version Packages pull request versions and publishes
+automatically through OIDC; no `NPM_TOKEN` secret is required or used.
 
 ## Packages
 

@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process'
+import { writeFileSync } from 'node:fs'
 
 /**
  * Publish through Changesets only when the repository is ready.
@@ -18,10 +19,16 @@ if (process.env['NPM_PUBLISH'] !== 'true') {
   process.stdout.write(
     '[release] npm publishing is gated. Set the repository variable NPM_PUBLISH=true after configuring the Trusted Publishers for @newui/*.\n',
   )
+  // The Changesets action expects its output file even when the publish
+  // script is a deliberate no-op; an empty report keeps releases and tags
+  // disabled without the action warning on every push.
+  const output = process.env['CHANGESETS_OUTPUT']
+  if (output) writeFileSync(output, '')
   process.exit(0)
 }
 
 const result = spawnSync('pnpm', ['exec', 'changeset', 'publish'], {
   stdio: 'inherit',
+  env: process.env,
 })
 process.exit(result.status ?? 1)

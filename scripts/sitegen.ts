@@ -631,9 +631,9 @@ export interface PendingChange {
   file: string
 }
 
-export const RELEASED = ${JSON.stringify(released, null, 2)} satisfies ReleasedPackage[]
+export const RELEASED: ReleasedPackage[] = ${JSON.stringify(released, null, 2)}
 
-export const PENDING = ${JSON.stringify(pending, null, 2)} satisfies PendingChange[]
+export const PENDING: PendingChange[] = ${JSON.stringify(pending, null, 2)}
 `,
 )
 

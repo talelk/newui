@@ -335,7 +335,9 @@ packages.
   every published package declares a public `publishConfig` and its repository.
   Each npm package needs a Trusted Publisher for `talelk/newui` /
   `changesets.yml` with direct `npm publish` allowed. No long-lived
-  `NPM_TOKEN` is stored.
+  `NPM_TOKEN` is stored. `scripts/publish.ts` is gated by the repository
+  variable `NPM_PUBLISH` until the first publish and the Trusted Publisher
+  setup are complete.
 - `pnpm verify` (all) · `pnpm verify:checks` (fast gates) · `pnpm verify:e2e`
   (browser harness) · `pnpm verify:affected` (only the gates the diff can
   dirty — the agent loop: change → affected → full `verify` before pushing)
