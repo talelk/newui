@@ -33,7 +33,7 @@ async function settledCharts(page: Page) {
   await page.evaluate(() => document.fonts.ready)
 }
 
-/** The tolerance the analytics shots need; see `settledCharts`. */
+/** The tolerance chart-bearing shots need; see `settledCharts`. */
 const CHART_NOISE = { maxDiffPixelRatio: 0.03 }
 
 /**
@@ -103,7 +103,7 @@ test('collapsed application sidebar keeps one aligned content column', async ({
   const sidebar = page.locator('[data-slot="app-shell-sidebar"]')
   const content = page.locator('[data-slot="app-shell-content"]')
   await expect(sidebar).toBeVisible()
-  await expect(page).toHaveScreenshot('app-shell-expanded.png', RASTERISATION)
+  await expect(page).toHaveScreenshot('app-shell-expanded.png', CHART_NOISE)
 
   await sidebar.getByRole('button', { name: 'Collapse' }).click()
   await expect(sidebar).toHaveCSS('width', '56px')
@@ -117,5 +117,5 @@ test('collapsed application sidebar keeps one aligned content column', async ({
       () => document.documentElement.scrollWidth - window.innerWidth,
     ),
   ).toBeLessThanOrEqual(1)
-  await expect(page).toHaveScreenshot('app-shell-collapsed.png', RASTERISATION)
+  await expect(page).toHaveScreenshot('app-shell-collapsed.png', CHART_NOISE)
 })
