@@ -73,6 +73,9 @@ for (const theme of ['light', 'dark']) {
     ).toBeVisible()
     await expect(page).toHaveScreenshot(`reference-${theme}.png`, {
       animations: 'disabled',
+      // The masthead chip follows the package version; masking it keeps this
+      // reference a design check rather than a release-number check.
+      mask: [page.locator('a[aria-label^="Version "]')],
       ...RASTERISATION,
     })
     await page.goto(`/spec?theme=${theme}`)
