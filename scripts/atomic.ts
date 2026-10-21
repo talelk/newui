@@ -80,6 +80,7 @@ export const CLASSIFICATION: Record<string, AtomicLevel> = {
   ScatterChart: 'organism',
   ScrollArea: 'atom',
   ScrollTable: 'molecule',
+  Table: 'molecule',
   Select: 'molecule',
   SettingsDialog: 'organism',
   Sidebar: 'organism',

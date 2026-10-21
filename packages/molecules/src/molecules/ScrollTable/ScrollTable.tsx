@@ -1,3 +1,4 @@
+import { tableHeadClass } from '@newui/atoms/internal'
 import type { JSX, ParentComponent } from 'solid-js'
 
 /**
@@ -28,10 +29,7 @@ export function ScrollTable(props: ScrollTableProps): JSX.Element {
 
 /** The shared `<thead>` treatment for the kit's tables. */
 export const ScrollTableHead: ParentComponent = (props) => (
-  <thead
-    data-slot="scroll-table-head"
-    class="border-y border-outline-gray-1 bg-surface-gray-1 text-caption text-ink-gray-7"
-  >
+  <thead data-slot="scroll-table-head" class={tableHeadClass}>
     {props.children}
   </thead>
 )

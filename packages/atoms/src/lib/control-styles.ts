@@ -14,3 +14,11 @@ export const popupFieldVariants = {
     'border border-outline-gray-2 bg-surface-base hover:border-outline-gray-3 data-[state=open]:border-outline-gray-4 data-[state=open]:shadow-sm',
   ghost: 'border-0 bg-transparent',
 } as const
+
+/**
+ * The shared `<thead>` treatment — the one header row both `ScrollTable` and
+ * the semantic `Table` parts compose. Shared between molecules, never
+ * exported to consumers (P10: they style through the parts).
+ */
+export const tableHeadClass =
+  'border-y border-outline-gray-1 bg-surface-gray-1 text-caption text-ink-gray-7'

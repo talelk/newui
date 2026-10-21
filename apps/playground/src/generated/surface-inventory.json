@@ -1661,6 +1661,21 @@
   },
   {
     "package": "@newui/atoms",
+    "name": "tableHeadClass",
+    "implementation": "packages/atoms/src/lib/control-styles.ts",
+    "documentation": "/docs#atoms",
+    "contract": null,
+    "tests": [
+      "packages/atoms/src/lib/color-scheme.test.ts",
+      "packages/atoms/src/lib/controllable.test.ts",
+      "packages/atoms/src/lib/tv.test.ts",
+      "packages/atoms/src/lib/tw-merge.sweep.test.ts",
+      "packages/atoms/src/lib/tw-merge.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/atoms",
     "name": "TabOrientation",
     "implementation": "packages/atoms/src/lib/tab-styles.ts",
     "documentation": "/docs#atoms",
@@ -4860,6 +4875,83 @@
     "tests": [
       "packages/molecules/src/molecules/TabButtons/TabButtons.browser.test.tsx",
       "packages/molecules/src/molecules/TabButtons/TabButtons.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "Table",
+    "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
+    "documentation": "/docs#molecules",
+    "contract": null,
+    "tests": [
+      "packages/molecules/src/molecules/Table/Table.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "TableBody",
+    "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
+    "documentation": "/docs#molecules",
+    "contract": null,
+    "tests": [
+      "packages/molecules/src/molecules/Table/Table.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "TableCell",
+    "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
+    "documentation": "/docs#molecules",
+    "contract": null,
+    "tests": [
+      "packages/molecules/src/molecules/Table/Table.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "TableColumnHeader",
+    "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
+    "documentation": "/docs#molecules",
+    "contract": null,
+    "tests": [
+      "packages/molecules/src/molecules/Table/Table.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "TableHead",
+    "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
+    "documentation": "/docs#molecules",
+    "contract": null,
+    "tests": [
+      "packages/molecules/src/molecules/Table/Table.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "TableRow",
+    "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
+    "documentation": "/docs#molecules",
+    "contract": null,
+    "tests": [
+      "packages/molecules/src/molecules/Table/Table.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "TableRowProps",
+    "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
+    "documentation": "/docs#molecules",
+    "contract": null,
+    "tests": [
+      "packages/molecules/src/molecules/Table/Table.test.tsx"
     ],
     "acceptance": "pending"
   },

@@ -662,6 +662,18 @@
       ]
     },
     {
+      "id": "molecules-data-table--default",
+      "title": "Molecules/Data/Table",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/table.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "molecules-disclosure-accordion--default",
       "title": "Molecules/Disclosure/Accordion",
       "name": "Default",

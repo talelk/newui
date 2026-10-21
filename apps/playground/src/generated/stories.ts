@@ -356,6 +356,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'molecules-disclosure-tabbuttons--default',
     load: () => import('../stories/tab-buttons.stories'),
   },
+  "Table": {
+    id: 'molecules-data-table--default',
+    load: () => import('../stories/table.stories'),
+  },
   "Tabs": {
     id: 'molecules-disclosure-tabs--default',
     load: () => import('../stories/tabs.stories'),

@@ -6938,6 +6938,26 @@
       }
     ]
   },
+  "packages/molecules/src/molecules/Table/Table.tsx": {
+    "TableRowProps": [
+      {
+        "name": "selected",
+        "type": "boolean",
+        "optional": true,
+        "description": "Marks the row as the current selection; rendered via `data-selected`."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ]
+  },
   "packages/molecules/src/molecules/Tabs/Tabs.tsx": {
     "TabsRootProps": [
       {
