@@ -1,14 +1,16 @@
 import { useLocation } from '@solidjs/router'
 import { Show } from 'solid-js'
 import { applicationSources } from '../lib/application-sources'
+import { stripBase } from '../lib/base'
 import { EXAMPLES } from '../lib/examples'
 import { ResponsivePreview } from '../lib/ResponsivePreview'
 import { PageIntro } from '../shell/PageIntro'
 
 export function ApplicationPage() {
   const location = useLocation()
-  const example = () => EXAMPLES.find((item) => item.href === location.pathname)
-  const slug = () => location.pathname.split('/').at(-1) ?? ''
+  const path = () => stripBase(location.pathname)
+  const example = () => EXAMPLES.find((item) => item.href === path())
+  const slug = () => path().split('/').at(-1) ?? ''
   return (
     <Show when={example()}>
       {(entry) => (

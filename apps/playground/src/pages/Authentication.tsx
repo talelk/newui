@@ -5,6 +5,7 @@ import { AuthCard } from '@newui/organisms'
 import { AuthLayout } from '@newui/templates'
 import { A } from '@solidjs/router'
 import { createSignal, type JSX, Show } from 'solid-js'
+import { assetUrl } from '../lib/base'
 import { ThemeMenu } from '../shell/ThemeMenu'
 
 export function Authentication(): JSX.Element {
@@ -43,7 +44,7 @@ export function Authentication(): JSX.Element {
             href="/"
             class="flex w-fit items-center gap-2 rounded-3 text-section focus-visible:focus-ring"
           >
-            <img src="/favicon.svg" alt="" class="size-8" />
+            <img src={assetUrl('favicon.svg')} alt="" class="size-8" />
             newui
           </A>
           <div class="max-w-lg">

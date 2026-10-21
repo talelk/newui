@@ -10,6 +10,7 @@ import {
   Show,
   Suspense,
 } from 'solid-js'
+import { BASE_PATH, sitePath } from './base'
 import { LoadingNote } from './LoadingNote'
 import { type StoryGlobals, storyUrl } from './storybook'
 
@@ -187,14 +188,18 @@ function Preview(props: {
       return storyUrl(props.story, { theme: theme(), dir: dir() })
     if (!props.src) return undefined
     const url = new URL(props.src, location.origin)
+    if (url.origin !== location.origin) return props.src
+    const pathname = url.pathname.startsWith(`${BASE_PATH}/`)
+      ? url.pathname
+      : sitePath(url.pathname)
     // The isolated story document reads the theme/direction from its query.
     // Application previews already mirror the host document through `sync`,
     // and their fullscreen links must stay exactly as the app wrote them.
-    if (url.origin !== location.origin || !url.pathname.startsWith('/preview/'))
-      return props.src
+    if (!pathname.startsWith(`${BASE_PATH}/preview/`))
+      return `${pathname}${url.search}${url.hash}`
     url.searchParams.set('theme', theme() ?? 'light')
     url.searchParams.set('dir', dir() ?? 'ltr')
-    return `${url.pathname}${url.search}${url.hash}`
+    return `${pathname}${url.search}${url.hash}`
   }
   let frame: HTMLIFrameElement | undefined
   let stage: HTMLDivElement | undefined

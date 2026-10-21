@@ -8,6 +8,7 @@ import {
   on,
   Show,
 } from 'solid-js'
+import { stripBase } from '../lib/base'
 import { NAV, SECTION_ICONS, sectionFor } from './nav'
 import { FilterInput, NAV_ROW, NothingMatches } from './nav-ui'
 
@@ -38,7 +39,7 @@ export function SidebarNav(props: {
   const [query, setQuery] = createSignal('')
   const [expanded, setExpanded] = createSignal<string[]>(['Overview'])
 
-  const current = () => sectionFor(location.pathname)
+  const current = () => sectionFor(stripBase(location.pathname))
   const searching = () => query().trim() !== ''
   const results = createMemo(() => {
     const needle = query().trim().toLowerCase()
@@ -58,7 +59,7 @@ export function SidebarNav(props: {
   // would immediately reopen it, and a section could never be closed.
   createEffect(
     on(
-      () => location.pathname,
+      () => stripBase(location.pathname),
       () => {
         const title = current()?.title
         if (title)
@@ -213,7 +214,9 @@ function NavLink(props: {
   return (
     <A
       href={props.item.href}
-      aria-current={location.pathname === props.item.href ? 'page' : undefined}
+      aria-current={
+        stripBase(location.pathname) === props.item.href ? 'page' : undefined
+      }
       class={NAV_ROW}
     >
       <span class="min-w-0 flex-1 truncate">{props.item.title}</span>

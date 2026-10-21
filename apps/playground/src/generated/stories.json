@@ -914,6 +914,42 @@
       ]
     },
     {
+      "id": "molecules-fields-taginput--default",
+      "title": "Molecules/Fields/TagInput",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/tag-input.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-fields-taginput--disabled",
+      "title": "Molecules/Fields/TagInput",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/tag-input.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-fields-taginput--invalid",
+      "title": "Molecules/Fields/TagInput",
+      "name": "Invalid",
+      "exportName": "Invalid",
+      "importPath": "src/stories/tag-input.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "molecules-inputs-formcontrol--default",
       "title": "Molecules/Inputs/FormControl",
       "name": "Default",

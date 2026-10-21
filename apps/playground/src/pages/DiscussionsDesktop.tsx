@@ -14,6 +14,7 @@ import {
   type createDiscussions,
   DiscussionDialogs,
 } from '../examples/discussions'
+import { assetUrl } from '../lib/base'
 
 /**
  * Responsive workspace: a tenant/community switcher and all
@@ -159,7 +160,11 @@ export function DiscussionsDesktop(props: {
             href="/pages/discussions"
             class="flex min-h-10 items-center gap-2 rounded-3 px-2 font-semibold focus-visible:focus-ring"
           >
-            <img src="/favicon.svg" alt="" class="size-6 rounded-[6px]" />
+            <img
+              src={assetUrl('favicon.svg')}
+              alt=""
+              class="size-6 rounded-[6px]"
+            />
             <span>Acme Community</span>
           </a>
         }
@@ -169,7 +174,11 @@ export function DiscussionsDesktop(props: {
             aria-label="Acme Community home"
             class="grid size-10 place-items-center rounded-3 focus-visible:focus-ring"
           >
-            <img src="/favicon.svg" alt="" class="size-7 rounded-[6px]" />
+            <img
+              src={assetUrl('favicon.svg')}
+              alt=""
+              class="size-7 rounded-[6px]"
+            />
           </a>
         }
         tenant={

@@ -4882,8 +4882,8 @@
     "package": "@newui/molecules",
     "name": "Table",
     "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
-    "documentation": "/docs#molecules",
-    "contract": null,
+    "documentation": "/molecules/table",
+    "contract": "spec/table.md",
     "tests": [
       "packages/molecules/src/molecules/Table/Table.test.tsx"
     ],
@@ -4893,8 +4893,8 @@
     "package": "@newui/molecules",
     "name": "TableBody",
     "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
-    "documentation": "/docs#molecules",
-    "contract": null,
+    "documentation": "/molecules/table",
+    "contract": "spec/table.md",
     "tests": [
       "packages/molecules/src/molecules/Table/Table.test.tsx"
     ],
@@ -4904,8 +4904,8 @@
     "package": "@newui/molecules",
     "name": "TableCell",
     "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
-    "documentation": "/docs#molecules",
-    "contract": null,
+    "documentation": "/molecules/table",
+    "contract": "spec/table.md",
     "tests": [
       "packages/molecules/src/molecules/Table/Table.test.tsx"
     ],
@@ -4915,8 +4915,8 @@
     "package": "@newui/molecules",
     "name": "TableColumnHeader",
     "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
-    "documentation": "/docs#molecules",
-    "contract": null,
+    "documentation": "/molecules/table",
+    "contract": "spec/table.md",
     "tests": [
       "packages/molecules/src/molecules/Table/Table.test.tsx"
     ],
@@ -4926,8 +4926,8 @@
     "package": "@newui/molecules",
     "name": "TableHead",
     "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
-    "documentation": "/docs#molecules",
-    "contract": null,
+    "documentation": "/molecules/table",
+    "contract": "spec/table.md",
     "tests": [
       "packages/molecules/src/molecules/Table/Table.test.tsx"
     ],
@@ -4937,8 +4937,8 @@
     "package": "@newui/molecules",
     "name": "TableRow",
     "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
-    "documentation": "/docs#molecules",
-    "contract": null,
+    "documentation": "/molecules/table",
+    "contract": "spec/table.md",
     "tests": [
       "packages/molecules/src/molecules/Table/Table.test.tsx"
     ],
@@ -4948,8 +4948,8 @@
     "package": "@newui/molecules",
     "name": "TableRowProps",
     "implementation": "packages/molecules/src/molecules/Table/Table.tsx",
-    "documentation": "/docs#molecules",
-    "contract": null,
+    "documentation": "/molecules/table",
+    "contract": "spec/table.md",
     "tests": [
       "packages/molecules/src/molecules/Table/Table.test.tsx"
     ],
@@ -5132,6 +5132,50 @@
       "packages/atoms/src/lib/tv.test.ts",
       "packages/atoms/src/lib/tw-merge.sweep.test.ts",
       "packages/atoms/src/lib/tw-merge.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "TagInput",
+    "implementation": "packages/molecules/src/molecules/TagInput/TagInput.tsx",
+    "documentation": "/molecules/tag-input",
+    "contract": "spec/tag-input.md",
+    "tests": [
+      "packages/molecules/src/molecules/TagInput/TagInput.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "TagInputProps",
+    "implementation": "packages/molecules/src/molecules/TagInput/TagInput.tsx",
+    "documentation": "/molecules/tag-input",
+    "contract": "spec/tag-input.md",
+    "tests": [
+      "packages/molecules/src/molecules/TagInput/TagInput.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "TagInputSize",
+    "implementation": "packages/molecules/src/molecules/TagInput/TagInput.tsx",
+    "documentation": "/molecules/tag-input",
+    "contract": "spec/tag-input.md",
+    "tests": [
+      "packages/molecules/src/molecules/TagInput/TagInput.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "TagInputVariant",
+    "implementation": "packages/molecules/src/molecules/TagInput/TagInput.tsx",
+    "documentation": "/molecules/tag-input",
+    "contract": "spec/tag-input.md",
+    "tests": [
+      "packages/molecules/src/molecules/TagInput/TagInput.test.tsx"
     ],
     "acceptance": "pending"
   },

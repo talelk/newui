@@ -3,6 +3,7 @@ import { A, useLocation } from '@solidjs/router'
 import { createMemo, createSignal, type JSX, Show } from 'solid-js'
 import { COMPONENTS, GROUPS } from '../generated/components'
 import { ATOMIC, levelOf } from '../lib/atomic'
+import { stripBase } from '../lib/base'
 import { CatalogList } from '../lib/CatalogList'
 import { groupEntries } from '../lib/catalog'
 import { PageIntro } from '../shell/PageIntro'
@@ -17,7 +18,8 @@ import { PageIntro } from '../shell/PageIntro'
  */
 export function ComponentsIndex(): JSX.Element {
   const location = useLocation()
-  const level = () => levelOf(location.pathname.split('/')[1] ?? '') ?? 'atom'
+  const level = () =>
+    levelOf(stripBase(location.pathname).split('/')[1] ?? '') ?? 'atom'
   const meta = () => ATOMIC[level()]
   const [query, setQuery] = createSignal('')
 

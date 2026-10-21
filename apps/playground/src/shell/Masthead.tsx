@@ -9,6 +9,7 @@ import {
   Show,
   Suspense,
 } from 'solid-js'
+import { assetUrl, stripBase } from '../lib/base'
 import { NAV, sectionFor } from './nav'
 import { NAV_ROW } from './nav-ui'
 
@@ -88,15 +89,16 @@ export function Masthead(props: {
   const location = useLocation()
   const [finding, setFinding] = createSignal(false)
   let findTrigger: HTMLButtonElement | undefined
-  const section = () => sectionFor(location.pathname)
+  const path = () => stripBase(location.pathname)
+  const section = () => sectionFor(path())
   const title = () => {
     const exact = NAV.flatMap((entry) => entry.items).find(
-      (entry) => entry.href === location.pathname,
+      (entry) => entry.href === path(),
     )
     return (
       props.title ??
       exact?.title ??
-      (location.pathname.split('/').at(-1) ?? '').replace(/-/g, ' ')
+      (path().split('/').at(-1) ?? '').replace(/-/g, ' ')
     )
   }
   onMount(() => {
@@ -127,7 +129,7 @@ export function Masthead(props: {
           aria-label="newui home"
           class="flex shrink-0 items-center gap-2 rounded-3 focus-visible:focus-ring"
         >
-          <img src="/favicon.svg" alt="" class="size-6 rounded-3" />
+          <img src={assetUrl('favicon.svg')} alt="" class="size-6 rounded-3" />
           <span class="hidden font-semibold sm:inline">newui</span>
         </A>
         <nav

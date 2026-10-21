@@ -8,6 +8,7 @@ import {
   Show,
   useContext,
 } from 'solid-js'
+import { BASE_PATH, stripBase } from '../lib/base'
 import { Masthead } from './Masthead'
 import { modalKeyDown } from './modal'
 import type { NavItem } from './nav'
@@ -109,8 +110,9 @@ export function Chrome(
         </a>
         <Masthead
           title={
-            props.siblings?.find((item) => item.href === location.pathname)
-              ?.title
+            props.siblings?.find(
+              (item) => item.href === stripBase(location.pathname),
+            )?.title
           }
           menuRef={(element) => {
             menuButton = element
@@ -211,7 +213,7 @@ function Arrow(props: { icon: string }): JSX.Element {
 
 function PrevNext(props: { items?: NavItem[] }): JSX.Element {
   const location = useLocation()
-  const siblings = () => siblingsFor(location.pathname, props.items)
+  const siblings = () => siblingsFor(stripBase(location.pathname), props.items)
 
   return (
     <Show when={siblings().previous || siblings().next}>
@@ -299,9 +301,12 @@ export function BareLayout(props: RouteSectionProps): JSX.Element {
         /\/fullscreen(?:$|\?)/.test(url.pathname)
       )
         return
+      const path = url.pathname.startsWith(BASE_PATH)
+        ? url.pathname.slice(BASE_PATH.length) || '/'
+        : url.pathname
       if (
         !/^\/(?:$|docs(?:\/|$)|foundations(?:\/|$)|architecture(?:\/|$)|components(?:\/|$)|blocks(?:\/|$)|layouts(?:\/|$)|charts(?:\/|$)|editors(?:\/|$)|examples(?:\/|$))/.test(
-          url.pathname,
+          path,
         )
       )
         return

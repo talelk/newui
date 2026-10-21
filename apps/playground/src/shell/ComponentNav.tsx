@@ -2,6 +2,7 @@ import { A, useLocation } from '@solidjs/router'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { COMPONENTS, GROUPS } from '../generated/components'
 import { ATOMIC, type AtomicLevel } from '../lib/atomic'
+import { stripBase } from '../lib/base'
 import { groupEntries, matchesEntry } from '../lib/catalog'
 import { FilterInput, NAV_ROW, NothingMatches } from './nav-ui'
 
@@ -30,7 +31,7 @@ export function ComponentNav(props: { level: AtomicLevel }): JSX.Element {
   )
 
   const grouped = createMemo(() => groupEntries(visible(), GROUPS))
-  const current = () => location.pathname.split('/')[2] ?? ''
+  const current = () => stripBase(location.pathname).split('/')[2] ?? ''
 
   return (
     <nav aria-label={meta().label} class="flex flex-col gap-4">
@@ -46,7 +47,7 @@ export function ComponentNav(props: { level: AtomicLevel }): JSX.Element {
           <A
             href={meta().href}
             aria-current={
-              location.pathname === meta().href ? 'page' : undefined
+              stripBase(location.pathname) === meta().href ? 'page' : undefined
             }
             class={NAV_ROW}
           >

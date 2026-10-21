@@ -1,4 +1,13 @@
-import { Badge, ScrollTable, Table } from '@newui/molecules'
+import { Badge } from '@newui/atoms'
+import {
+  ScrollTable,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumnHeader,
+  TableHead,
+  TableRow,
+} from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import { For } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'

@@ -7097,6 +7097,108 @@
       }
     ]
   },
+  "packages/molecules/src/molecules/TagInput/TagInput.tsx": {
+    "TagInputProps": [
+      {
+        "name": "value",
+        "type": "string[]",
+        "optional": true,
+        "description": "Controlled tokens."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[]",
+        "optional": true,
+        "description": "Uncontrolled initial tokens."
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string[]) => void",
+        "optional": true
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Shared labelling contract (P5)."
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "unique",
+        "type": "boolean",
+        "optional": true,
+        "description": "Rejects a token when the list already holds it. Default `true`."
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "optional": true,
+        "description": "Caps the list; further entries are ignored."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      },
+      {
+        "name": "size",
+        "type": "TagInputSize",
+        "optional": true,
+        "default": "sm"
+      },
+      {
+        "name": "variant",
+        "type": "TagInputVariant",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when no visible `label` is rendered."
+      }
+    ]
+  },
   "packages/molecules/src/molecules/Timeline/Timeline.tsx": {
     "TimelineProps": [
       {

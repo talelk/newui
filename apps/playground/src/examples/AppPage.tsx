@@ -4,6 +4,7 @@ import { SidebarItem } from '@newui/organisms'
 import { AppShell } from '@newui/templates'
 import { A } from '@solidjs/router'
 import { createMemo, createSignal, type JSX } from 'solid-js'
+import { assetUrl } from '../lib/base'
 import { EXAMPLES } from '../lib/examples'
 import { ThemeMenu } from '../shell/ThemeMenu'
 
@@ -65,7 +66,11 @@ export function AppPage(props: {
           href="/pages"
           class="flex min-h-10 items-center gap-2 rounded-3 px-2 font-semibold focus-visible:focus-ring"
         >
-          <img src="/favicon.svg" alt="" class="size-6 rounded-[6px]" />
+          <img
+            src={assetUrl('favicon.svg')}
+            alt=""
+            class="size-6 rounded-[6px]"
+          />
           <span>Acme workspace</span>
         </A>
       }
@@ -75,7 +80,11 @@ export function AppPage(props: {
           aria-label="Acme workspace home"
           class="grid size-10 place-items-center rounded-3 focus-visible:focus-ring"
         >
-          <img src="/favicon.svg" alt="" class="size-7 rounded-[6px]" />
+          <img
+            src={assetUrl('favicon.svg')}
+            alt=""
+            class="size-7 rounded-[6px]"
+          />
         </A>
       }
       tenant={

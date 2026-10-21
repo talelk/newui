@@ -3,6 +3,7 @@
     "pages/Analytics.tsx",
     "examples/AppNavigation.tsx",
     "examples/AppPage.tsx",
+    "lib/base.ts",
     "lib/examples.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",

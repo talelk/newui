@@ -405,6 +405,18 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "Table",
+    "description": "The semantic table: Table, TableHead, TableBody, TableRow, TableColumnHeader and TableCell style the native elements directly, for data that is…",
+    "slug": "table",
+    "group": "Data",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src",
+    "atomic": "molecule",
+    "parts": [],
+    "spec": "table",
+    "shipped": true
+  },
+  {
     "name": "VirtualList",
     "description": "A fixed-row list that keeps a bounded number of records in the DOM.",
     "slug": "virtual-list",
@@ -846,6 +858,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "SwitchProps"
     ],
     "spec": "switch",
+    "shipped": true
+  },
+  {
+    "name": "TagInput",
+    "description": "A token editor: type and press Enter or comma to add a tag, Backspace on the empty input removes the last one, and every tag carries its own remove…",
+    "slug": "tag-input",
+    "group": "Inputs",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/TagInput",
+    "atomic": "molecule",
+    "parts": [
+      "TagInputProps"
+    ],
+    "spec": "tag-input",
     "shipped": true
   },
   {

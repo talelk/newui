@@ -13,6 +13,7 @@ import { Dynamic } from 'solid-js/web'
 import { componentBySlug } from '../generated/components'
 import { STORIES } from '../generated/stories'
 import { ATOMIC } from '../lib/atomic'
+import { stripBase } from '../lib/base'
 // The globs behind the tables and the story source text live here rather than
 // in this page: Vite 8's dep scan cannot parse `.tsx` files that hold a source
 // glob, so a page hosting one breaks pre-bundling.
@@ -212,7 +213,7 @@ export function ComponentPage(): JSX.Element {
   const params = useParams()
   const location = useLocation()
   const entry = createMemo(() => componentBySlug(params['name'] ?? ''))
-  const here = () => location.pathname.split('/')[1] ?? ''
+  const here = () => stripBase(location.pathname).split('/')[1] ?? ''
   const misplaced = () => {
     const found = entry()
     return found && here() !== sectionOf(found) ? found : undefined

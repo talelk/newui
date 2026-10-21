@@ -53,6 +53,7 @@ export const REQUIRED_STATES: Record<string, string[]> = {
   DateTimePicker: ['Disabled', 'Invalid'],
   TimePicker: ['Disabled', 'Invalid'],
   FileUploader: ['Disabled', 'Invalid'],
+  TagInput: ['Disabled', 'Invalid'],
   ToggleGroup: ['Disabled'],
 
   // Disclosure and navigation.

@@ -364,6 +364,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'molecules-disclosure-tabs--default',
     load: () => import('../stories/tabs.stories'),
   },
+  "TagInput": {
+    id: 'molecules-fields-taginput--default',
+    load: () => import('../stories/tag-input.stories'),
+  },
   "Text": {
     id: 'atoms-display-text--default',
     load: () => import('../stories/text.stories'),

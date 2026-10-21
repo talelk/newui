@@ -2,6 +2,7 @@ import { type RouteSectionProps, useLocation } from '@solidjs/router'
 import type { JSX } from 'solid-js'
 import { COMPONENTS } from '../generated/components'
 import { ATOMIC, type AtomicLevel } from '../lib/atomic'
+import { stripBase } from '../lib/base'
 import { TableOfContents } from '../lib/TableOfContents'
 import { ComponentNav } from './ComponentNav'
 import type { NavItem } from './nav'
@@ -22,6 +23,7 @@ function ReferenceLayout(
   },
 ): JSX.Element {
   const location = useLocation()
+  const path = () => stripBase(location.pathname)
   const meta = () => ATOMIC[props.level]
   const siblings = (): NavItem[] => [
     { title: `All ${meta().label.toLowerCase()}`, href: meta().href },
@@ -39,8 +41,7 @@ function ReferenceLayout(
   // An entry page (`/atoms/button`) has the reference page's four anchored
   // sections; the indexes and the compositions do not, so they keep whatever
   // the caller supplied (today: nothing).
-  const isEntry = () =>
-    location.pathname.split('/').filter(Boolean).length === 2
+  const isEntry = () => path().split('/').filter(Boolean).length === 2
   const toc = () =>
     props.toc ??
     (isEntry()

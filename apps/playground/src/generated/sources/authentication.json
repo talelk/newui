@@ -1,6 +1,7 @@
 {
   "files": [
     "pages/Authentication.tsx",
+    "lib/base.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts"
   ],

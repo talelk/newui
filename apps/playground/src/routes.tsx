@@ -15,6 +15,7 @@ import {
   onCleanup,
   onMount,
 } from 'solid-js'
+import { BASE_PATH, stripBase } from './lib/base'
 import { BareLayout, SiteLayout } from './shell/SiteLayout'
 
 /**
@@ -200,7 +201,7 @@ const TITLES = new Map(ROUTES.map((route) => [route.path, route.title]))
 function RouteTitle(): JSX.Element {
   const location = useLocation()
   createEffect(() => {
-    const pathname = location.pathname
+    const pathname = stripBase(location.pathname)
     const title = TITLES.get(pathname)
     if (title) document.title = `${title} · newui`
     else if (/^\/kit\/recipes\/[^/]+$/.test(pathname)) {
@@ -224,7 +225,7 @@ function RouteTitle(): JSX.Element {
 
 export function AppRoutes(): JSX.Element {
   return (
-    <Router root={Root}>
+    <Router root={Root} base={BASE_PATH}>
       <Route path="/" component={SiteLayout}>
         <Route path="/" component={Home} />
         <Route path="/docs" component={Docs} />
