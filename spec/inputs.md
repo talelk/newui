@@ -27,6 +27,12 @@ Controls opt in by reading `useField()` for `controlId`/`describedBy`; atoms
 that put their own root in the DOM (Zag parts) apply those ids to the
 appropriate element.
 
+`TextInput` and `Textarea` extend the native element's attribute set —
+`autocomplete`, `inputmode`, `maxlength`, `pattern`, `min`/`max`, event
+handlers — so consumers never need a second prop surface for HTML behavior.
+Component axes (`size`, `variant`) and the P6 adornments (`prefix`/`suffix`)
+stay library vocabulary; `prefix` shadows the HTML attribute of the same name.
+
 Not an input (P5 does not apply): icon-only buttons, action toggles.
 
 ## Analytics defaults

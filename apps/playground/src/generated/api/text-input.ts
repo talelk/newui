@@ -7,37 +7,14 @@ export const API = {
     {
       "name": "type",
       "type": "string",
-      "optional": true
+      "optional": true,
+      "default": "'text'"
     },
     {
       "name": "value",
       "type": "string",
-      "optional": true
-    },
-    {
-      "name": "placeholder",
-      "type": "string",
-      "optional": true
-    },
-    {
-      "name": "name",
-      "type": "string",
-      "optional": true
-    },
-    {
-      "name": "id",
-      "type": "string",
-      "optional": true
-    },
-    {
-      "name": "disabled",
-      "type": "boolean",
-      "optional": true
-    },
-    {
-      "name": "readonly",
-      "type": "boolean",
-      "optional": true
+      "optional": true,
+      "description": "Controlled value."
     },
     {
       "name": "size",
@@ -83,31 +60,6 @@ export const API = {
     {
       "name": "required",
       "type": "boolean",
-      "optional": true
-    },
-    {
-      "name": "'aria-label'",
-      "type": "string",
-      "optional": true
-    },
-    {
-      "name": "onInput",
-      "type": "JSX.EventHandlerUnion<HTMLInputElement, InputEvent>",
-      "optional": true
-    },
-    {
-      "name": "onChange",
-      "type": "JSX.EventHandlerUnion<HTMLInputElement, Event>",
-      "optional": true
-    },
-    {
-      "name": "onKeyDown",
-      "type": "JSX.EventHandlerUnion<HTMLInputElement, KeyboardEvent>",
-      "optional": true
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
       "optional": true
     }
   ]

@@ -24,6 +24,24 @@ describe('TextInput', () => {
     expect(input.getAttribute('aria-invalid')).toBeNull()
   })
 
+  it('forwards native input attributes', () => {
+    const { getByRole } = render(() => (
+      <TextInput
+        type="email"
+        autocomplete="email"
+        inputmode="email"
+        maxLength={64}
+        pattern="[^@]+@[^@]+"
+      />
+    ))
+    const input = getByRole('textbox')
+    expect(input.getAttribute('type')).toBe('email')
+    expect(input.getAttribute('autocomplete')).toBe('email')
+    expect(input.getAttribute('inputmode')).toBe('email')
+    expect(input.getAttribute('maxlength')).toBe('64')
+    expect(input.getAttribute('pattern')).toBe('[^@]+@[^@]+')
+  })
+
   it('wires the shared labelling contract', () => {
     const { getByRole, getByText } = render(() => (
       <TextInput

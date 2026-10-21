@@ -17,9 +17,11 @@ unchanged.
 | `description` | `JSX.Element` | — | `aria-describedby` |
 | `error` | `JSX.Element \| false` | — | non-empty ⇒ invalid |
 | `required` | `boolean` | `false` | |
-| `placeholder` | `string` | — | |
 | `disabled` | `boolean` | `false` | disables the toggle too |
 | `class` | `string` | — | merged into the field root |
+
+Native input attributes (`placeholder`, `autocomplete`, `maxlength`, …)
+pass through — see `spec/inputs.md`.
 
 Controlled vs uncontrolled follows `createControllableSignal`: pass `value` to
 control, `defaultValue` otherwise; `onValueChange` fires either way.

@@ -6,14 +6,17 @@ import { cn } from '../../lib/tv'
 export type InputSize = 'xs' | 'sm' | 'md' | 'lg'
 export type InputVariant = 'subtle' | 'outline' | 'ghost'
 
-export interface TextInputProps {
+export interface TextInputProps
+  extends Omit<
+    JSX.InputHTMLAttributes<HTMLInputElement>,
+    // the native `prefix` attribute is a string; `prefix` here is the P6
+    // adornment slot
+    'prefix'
+  > {
+  /** @default 'text' */
   type?: string
+  /** Controlled value. */
   value?: string
-  placeholder?: string
-  name?: string
-  id?: string
-  disabled?: boolean
-  readonly?: boolean
   /** @default sm */
   size?: InputSize
   variant?: InputVariant
@@ -24,10 +27,6 @@ export interface TextInputProps {
   description?: JSX.Element
   error?: JSX.Element | false
   required?: boolean
-  'aria-label'?: string
-  onInput?: JSX.EventHandlerUnion<HTMLInputElement, InputEvent>
-  onChange?: JSX.EventHandlerUnion<HTMLInputElement, Event>
-  onKeyDown?: JSX.EventHandlerUnion<HTMLInputElement, KeyboardEvent>
 }
 
 const PAD: Record<InputSize, [string, string, string]> = {

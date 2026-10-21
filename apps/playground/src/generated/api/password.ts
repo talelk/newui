@@ -44,33 +44,8 @@ export const API = {
       "optional": true
     },
     {
-      "name": "disabled",
+      "name": "required",
       "type": "boolean",
-      "optional": true
-    },
-    {
-      "name": "name",
-      "type": "string",
-      "optional": true
-    },
-    {
-      "name": "id",
-      "type": "string",
-      "optional": true
-    },
-    {
-      "name": "onChange",
-      "type": "JSX.EventHandlerUnion<HTMLInputElement, Event>",
-      "optional": true
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "optional": true
-    },
-    {
-      "name": "placeholder",
-      "type": "string",
       "optional": true
     },
     {
@@ -81,16 +56,6 @@ export const API = {
     {
       "name": "error",
       "type": "JSX.Element | false",
-      "optional": true
-    },
-    {
-      "name": "required",
-      "type": "boolean",
-      "optional": true
-    },
-    {
-      "name": "readonly",
-      "type": "boolean",
       "optional": true
     },
     {

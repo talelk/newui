@@ -3,14 +3,10 @@ import { Field, useField } from '../../lib/field'
 import { cn } from '../../lib/tv'
 import type { InputSize, InputVariant } from '../TextInput'
 
-export interface TextareaProps {
+export interface TextareaProps
+  extends JSX.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  /** Controlled value. */
   value?: string
-  placeholder?: string
-  rows?: number
-  name?: string
-  id?: string
-  disabled?: boolean
-  readonly?: boolean
   /** @default sm */
   size?: InputSize
   variant?: InputVariant
@@ -19,8 +15,6 @@ export interface TextareaProps {
   description?: JSX.Element
   error?: JSX.Element | false
   required?: boolean
-  'aria-label'?: string
-  onInput?: JSX.EventHandlerUnion<HTMLTextAreaElement, InputEvent>
 }
 
 const SIZE: Record<InputSize, string> = {
