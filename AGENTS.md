@@ -90,6 +90,7 @@ build embed.
 | path | what it is |
 | --- | --- |
 | `/` `/docs` `/foundations` `/architecture` `/kit` `/kit/recipes` | the site, inside `SiteLayout` (masthead · sidebar · content · prev/next). `/architecture` is atomic design written down: five levels, one question each, with counts generated from the registry; `/kit/recipes` is the non-public composition gallery |
+| `/changelog` | releases and pending changesets, generated from `CHANGELOG.md` + `.changeset/` — the masthead's version chip links here |
 | `/atoms` · `/atoms/<name>` | the atoms reference, inside `AtomsLayout` — same chrome, but the sidebar is the filterable index |
 | `/molecules` · `/molecules/<name>` | the same, for molecules (fields, pickers, menus, chart parts) |
 | `/organisms` · `/organisms/<name>` | the same, for organisms: page regions, chart widgets and editors |
@@ -189,7 +190,10 @@ packages.
   `@newui/tokens` is a leaf, packages never import from `apps/`, nothing imports
   from `dist/`.
 - **Package correctness** — `publint --strict` (`pnpm packages:check`) validates
-  every package's `exports`, `files` and conditions for consumers.
+  every package's `exports`, `files` and conditions for consumers, and
+  `pnpm packages:smoke` packs every package and asserts the tarball carries its
+  exports map — a `files` field that forgets `src/` fails as a consumer would,
+  not as a manifest lint.
 - **Types** — `tsc --noEmit` with `strict`, `noUncheckedIndexedAccess`,
   `noPropertyAccessFromIndexSignature`, `noImplicitOverride`, `noImplicitReturns`
   and `allowUnreachableCode: false`. (`exactOptionalPropertyTypes` is off: it
@@ -269,7 +273,7 @@ packages.
   nobody can reach are both caught.
 - **Disposal** (`packages/molecules/src/disposal.test.tsx`): mount/unmount 100
   overlays and assert `document.body` is unchanged — no node or listener leak.
-- **Browser harness** (`e2e/`, `pnpm test:e2e`, Playwright's pinned Chromium): axe on
+- **Browser harness** (`e2e/`, `pnpm test:e2e` — the chrome project; Playwright's pinned Chromium): axe on
   real CSS (colour contrast), keyboard/focus-visible/focus-trap, tabs/select/
   switch/tooltip interaction, responsive overflow at 320/768/1280, RTL, 200%
   text zoom, and perf budgets (LCP, CLS, dialog latency, 2000-row list). The
@@ -318,6 +322,11 @@ packages.
 
 ## CI
 
+- **Nightly.** `.github/workflows/nightly.yml` runs what a PR pipeline cannot
+  afford: the cross-engine harness (`pnpm test:e2e:all` — chrome, webkit,
+  firefox and a touch project), the stress sweeps, the memory tripwires,
+  `dep-drift` and the advisory visual review, on a 03:00 UTC cron with
+  findings uploaded as artifacts.
 - **One pipeline, two runners.** `scripts/ci-steps.ts` declares the steps;
   `.github/workflows/tests.yml` runs them as individual labelled steps, and
   `pnpm verify` runs the identical commands locally. `ci.test.ts` fails if the
@@ -425,6 +434,9 @@ pnpm skills:version # set metadata.library_version from each owning package
 pnpm docs:build     # render spec/*.md + api.json into a static docs/ site
 pnpm css            # regenerate @theme + tokens CSS   (run after token changes)
 pnpm changeset      # add a changeset
+pnpm gen component  # scaffold a component: source, registrations, spec, story, changeset
+pnpm packages:smoke # pack every package; the tarball must carry its exports map
+pnpm test:e2e:all   # the e2e harness on chrome, webkit, firefox and touch
 ```
 
 ## Rules
