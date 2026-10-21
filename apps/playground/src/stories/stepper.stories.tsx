@@ -1,9 +1,9 @@
-import { Stepper } from '@newui/molecules'
+import { Stepper, type StepperStep } from '@newui/molecules'
 import type { JSX } from 'solid-js'
 import { createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
-const STEPS = [
+const STEPS: StepperStep[] = [
   { value: 'account', label: 'Account', description: 'Who is this for?' },
   { value: 'payment', label: 'Payment', description: 'Card or transfer' },
   { value: 'review', label: 'Review' },
@@ -26,11 +26,9 @@ export function Demo(): JSX.Element {
         label="Progress overview"
       />
       <Stepper
-        steps={[
-          ...STEPS.slice(0, 1),
-          { ...STEPS[1], disabled: true },
-          STEPS[2],
-        ]}
+        steps={STEPS.map((step, index) =>
+          index === 1 ? { ...step, disabled: true } : step,
+        )}
         defaultValue="account"
         label="With a locked step"
       />

@@ -958,8 +958,8 @@
     "package": "@newui/atoms",
     "name": "Heading",
     "implementation": "packages/atoms/src/atoms/Heading/Heading.tsx",
-    "documentation": "/docs#atoms",
-    "contract": null,
+    "documentation": "/atoms/heading",
+    "contract": "spec/heading.md",
     "tests": [
       "packages/atoms/src/atoms/Heading/Heading.test.tsx"
     ],
@@ -969,8 +969,8 @@
     "package": "@newui/atoms",
     "name": "HeadingLevel",
     "implementation": "packages/atoms/src/atoms/Heading/Heading.tsx",
-    "documentation": "/docs#atoms",
-    "contract": null,
+    "documentation": "/atoms/heading",
+    "contract": "spec/heading.md",
     "tests": [
       "packages/atoms/src/atoms/Heading/Heading.test.tsx"
     ],
@@ -980,8 +980,8 @@
     "package": "@newui/atoms",
     "name": "HeadingProps",
     "implementation": "packages/atoms/src/atoms/Heading/Heading.tsx",
-    "documentation": "/docs#atoms",
-    "contract": null,
+    "documentation": "/atoms/heading",
+    "contract": "spec/heading.md",
     "tests": [
       "packages/atoms/src/atoms/Heading/Heading.test.tsx"
     ],
@@ -1798,8 +1798,8 @@
     "package": "@newui/atoms",
     "name": "Text",
     "implementation": "packages/atoms/src/atoms/Text/Text.tsx",
-    "documentation": "/docs#atoms",
-    "contract": null,
+    "documentation": "/atoms/text",
+    "contract": "spec/text.md",
     "tests": [
       "packages/atoms/src/atoms/Text/Text.test.tsx"
     ],
@@ -1857,8 +1857,8 @@
     "package": "@newui/atoms",
     "name": "TextProps",
     "implementation": "packages/atoms/src/atoms/Text/Text.tsx",
-    "documentation": "/docs#atoms",
-    "contract": null,
+    "documentation": "/atoms/text",
+    "contract": "spec/text.md",
     "tests": [
       "packages/atoms/src/atoms/Text/Text.test.tsx"
     ],
@@ -1868,8 +1868,8 @@
     "package": "@newui/atoms",
     "name": "TextSize",
     "implementation": "packages/atoms/src/atoms/Text/Text.tsx",
-    "documentation": "/docs#atoms",
-    "contract": null,
+    "documentation": "/atoms/text",
+    "contract": "spec/text.md",
     "tests": [
       "packages/atoms/src/atoms/Text/Text.test.tsx"
     ],
@@ -1879,8 +1879,8 @@
     "package": "@newui/atoms",
     "name": "TextWeight",
     "implementation": "packages/atoms/src/atoms/Text/Text.tsx",
-    "documentation": "/docs#atoms",
-    "contract": null,
+    "documentation": "/atoms/text",
+    "contract": "spec/text.md",
     "tests": [
       "packages/atoms/src/atoms/Text/Text.test.tsx"
     ],

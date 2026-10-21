@@ -578,6 +578,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "Heading",
+    "description": "A section or page title.",
+    "slug": "heading",
+    "group": "Display",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Heading",
+    "atomic": "atom",
+    "parts": [
+      "HeadingProps"
+    ],
+    "spec": "heading",
+    "shipped": true
+  },
+  {
     "name": "Icon",
     "description": "Renders a named Lucide glyph or a supplied Solid component.",
     "slug": "icon",
@@ -619,6 +633,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "ListRowProps"
     ],
     "spec": "list",
+    "shipped": true
+  },
+  {
+    "name": "Text",
+    "description": "Body copy.",
+    "slug": "text",
+    "group": "Display",
+    "package": "@newui/atoms",
+    "source": "packages/atoms/src/atoms/Text",
+    "atomic": "atom",
+    "parts": [
+      "TextProps"
+    ],
+    "spec": "text",
     "shipped": true
   },
   {

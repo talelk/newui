@@ -41,7 +41,7 @@ export const LADDER: LadderLevel[] = [
     "question": "What is this single element?",
     "unit": "atom",
     "package": "@newui/atoms",
-    "count": 20,
+    "count": 22,
     "href": "/atoms",
     "blurb": "One control or mark, with nothing else inside: a Button, an input, a Badge, the scroll viewport itself."
   },

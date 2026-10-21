@@ -48,7 +48,7 @@ function inlineCss(): Plugin {
   }
 }
 
-const base = (process.env['VITE_BASE'] ?? '/').replace(/\/?$/, '/')
+const base = (process.env['VITE_BASE'] || '/').replace(/\/?$/, '/')
 
 export default defineConfig({
   base,
