@@ -101,7 +101,7 @@ them:
 
 - **[frappe-ui](https://github.com/frappe/frappe-ui)** — Frappe Technologies and
   contributors. Its component library and design approach are the primary
-  reference; the read-only checkout lives in `references/frappe-ui-main/`.
+  reference.
 - **[SolidUI](https://www.solid-ui.com/)** — Stefan Karger, Michael Essiet and
   contributors. The 68 registry examples and several application compositions
   are adapted from this SolidJS port of shadcn/ui and Tremor.

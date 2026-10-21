@@ -9,7 +9,7 @@ import {
   Show,
   Suspense,
 } from 'solid-js'
-import { LIBRARY_VERSION } from '../generated/changelog'
+import { LIBRARY_VERSION } from '../generated/version'
 import { assetUrl, stripBase } from '../lib/base'
 import { NAV, sectionFor } from './nav'
 import { NAV_ROW } from './nav-ui'

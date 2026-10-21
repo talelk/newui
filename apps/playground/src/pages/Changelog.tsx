@@ -1,5 +1,6 @@
 import { For, type JSX, Show } from 'solid-js'
-import { LIBRARY_VERSION, PENDING, RELEASED } from '../generated/changelog'
+import { PENDING, RELEASED } from '../generated/changelog'
+import { LIBRARY_VERSION } from '../generated/version'
 import { PageIntro } from '../shell/PageIntro'
 
 const BUMP_TONE: Record<string, string> = {
@@ -38,7 +39,7 @@ export function Changelog(): JSX.Element {
               {(change) => (
                 <li class="rounded-card border border-outline-gray-1 bg-surface-base p-4">
                   <div class="flex flex-wrap items-baseline gap-2">
-                    <span class="text-interface-medium text-ink-gray-9">
+                    <span class="text-interface font-medium text-ink-gray-9">
                       {change.package}
                     </span>
                     <span
@@ -65,7 +66,7 @@ export function Changelog(): JSX.Element {
           <For each={RELEASED}>
             {(pkg) => (
               <article>
-                <h3 class="text-interface-medium text-ink-gray-8">
+                <h3 class="text-interface font-medium text-ink-gray-8">
                   {pkg.package}
                   <span class="ms-2 text-caption text-ink-gray-6">
                     v{pkg.version}

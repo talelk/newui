@@ -110,11 +110,11 @@ export default function Forms() {
               <dl class="grid gap-control-gap rounded-card bg-surface-gray-1 p-card-pad-compact sm:grid-cols-2">
                 <div>
                   <dt class="text-caption text-ink-gray-6">Workspace</dt>
-                  <dd class="text-interface-medium">{workspace()}</dd>
+                  <dd class="text-interface font-medium">{workspace()}</dd>
                 </div>
                 <div>
                   <dt class="text-caption text-ink-gray-6">Team invitation</dt>
-                  <dd class="text-interface-medium">
+                  <dd class="text-interface font-medium">
                     {invite() ? email() : 'No invitation'}
                   </dd>
                 </div>

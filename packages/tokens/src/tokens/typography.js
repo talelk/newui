@@ -227,6 +227,48 @@ export default {
   },
   tracking: {
     text: {
+      interface: {
+        regular: '0em',
+        medium: '0.01em',
+        semibold: '0.01em',
+        bold: '0.01em',
+        black: '0.01em',
+      },
+      caption: {
+        regular: '0em',
+        medium: '0.01em',
+        semibold: '0.01em',
+        bold: '0.01em',
+        black: '0.01em',
+      },
+      heading: {
+        regular: '-0.025em',
+        medium: '-0.02em',
+        semibold: '-0.025em',
+        bold: '-0.025em',
+        black: '-0.025em',
+      },
+      section: {
+        regular: '-0.015em',
+        medium: '-0.01em',
+        semibold: '-0.015em',
+        bold: '-0.015em',
+        black: '-0.015em',
+      },
+      metric: {
+        regular: '-0.025em',
+        medium: '-0.02em',
+        semibold: '-0.025em',
+        bold: '-0.025em',
+        black: '-0.025em',
+      },
+      hero: {
+        regular: '-0.035em',
+        medium: '-0.03em',
+        semibold: '-0.035em',
+        bold: '-0.035em',
+        black: '-0.035em',
+      },
       '2xs': {
         regular: '0.01em',
         medium: '0.01em',

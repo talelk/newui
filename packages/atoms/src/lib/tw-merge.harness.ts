@@ -113,8 +113,12 @@ export function familyOf(token: string): string | undefined {
 function walk(dir: string, out: string[] = []): string[] {
   for (const entry of readdirSync(dir)) {
     const full = path.join(dir, entry)
-    if (statSync(full).isDirectory()) walk(full, out)
-    else if (/\.tsx?$/.test(entry) && !/\.test\.tsx?$/.test(entry))
+    if (statSync(full).isDirectory()) {
+      // Generated data (registries, the changelog) is not authored usage: its
+      // strings — changeset filenames, package names — tokenize like classes
+      // but no stylesheet is written from them.
+      if (path.basename(full) !== 'generated') walk(full, out)
+    } else if (/\.tsx?$/.test(entry) && !/\.test\.tsx?$/.test(entry))
       out.push(full)
   }
   return out

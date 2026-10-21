@@ -307,6 +307,3 @@ export const PENDING = [
     "file": "typography-atoms.md"
   }
 ] satisfies PendingChange[]
-
-/** The version the masthead shows — the atoms package leads the kit. */
-export const LIBRARY_VERSION = "0.1.0"

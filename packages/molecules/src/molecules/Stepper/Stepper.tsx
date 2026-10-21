@@ -1,5 +1,5 @@
 import { cn, createControllableSignal } from '@newui/atoms/internal'
-import { For, type JSX, Show } from 'solid-js'
+import { For, type JSX, Show, untrack } from 'solid-js'
 
 export interface StepperStep {
   /** Stable id — the `value` the stepper reports. */
@@ -37,12 +37,15 @@ export interface StepperProps {
 export function Stepper(props: StepperProps): JSX.Element {
   const [value, setValue] = createControllableSignal<string>({
     value: () => props.value,
-    defaultValue: props.defaultValue ?? props.steps[0]?.value,
+    defaultValue: props.defaultValue,
     onChange: (next) => props.onValueChange?.(next),
   })
 
+  // With neither `value` nor `defaultValue`, the first step is where you are.
+  const current = () => value() ?? props.steps[0]?.value
+
   const currentIndex = () =>
-    props.steps.findIndex((step) => step.value === value())
+    props.steps.findIndex((step) => step.value === current())
 
   const reachable = (index: number): boolean => {
     const step = props.steps[index]
@@ -87,7 +90,7 @@ export function Stepper(props: StepperProps): JSX.Element {
                       'data-[state=current]:border-outline-blue-6 data-[state=current]:bg-surface-blue-8 data-[state=current]:text-ink-base',
                       'data-[state=upcoming]:border-outline-gray-3 data-[state=upcoming]:bg-surface-base data-[state=upcoming]:text-ink-gray-6',
                       'focus-visible:focus-ring',
-                      'disabled:pointer-events-none data-[disabled]:text-ink-gray-4',
+                      'disabled:pointer-events-none data-[disabled]:text-ink-gray-6',
                       clickable() && 'cursor-pointer',
                     )}
                   >
@@ -102,9 +105,9 @@ export function Stepper(props: StepperProps): JSX.Element {
                     <span
                       data-slot="stepper-label"
                       class={cn(
-                        'block truncate text-interface-medium',
+                        'block truncate text-interface font-medium',
                         stepState() === 'upcoming' && 'text-ink-gray-6',
-                        step.disabled && 'text-ink-gray-4',
+                        step.disabled && 'text-ink-gray-6',
                       )}
                     >
                       {step.label}
