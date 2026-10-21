@@ -55,3 +55,6 @@ jobs:
           # Flip this repository variable to true after the first publish and
           # the per-package Trusted Publisher setup.
           NPM_PUBLISH: ${{ vars.NPM_PUBLISH }}
+          # pnpm reads npm's config env; provenance is what trusted publishing
+          # signs, and some pnpm versions only attach it when asked explicitly.
+          NPM_CONFIG_PROVENANCE: 'true'
