@@ -337,7 +337,8 @@ packages.
   `changesets.yml` with direct `npm publish` allowed. No long-lived
   `NPM_TOKEN` is stored. `scripts/publish.ts` is gated by the repository
   variable `NPM_PUBLISH` until the first publish and the Trusted Publisher
-  setup are complete.
+  setup are complete. `pnpm trust:publishers` configures every package in bulk
+  with `npm trust` and enables the gate when it finishes.
 - `pnpm verify` (all) · `pnpm verify:checks` (fast gates) · `pnpm verify:e2e`
   (browser harness) · `pnpm verify:affected` (only the gates the diff can
   dirty — the agent loop: change → affected → full `verify` before pushing)

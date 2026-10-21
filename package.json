@@ -57,7 +57,8 @@
     "test:e2e:all": "playwright test",
     "packages:smoke": "tsx scripts/packages-smoke.ts",
     "gen": "tsx scripts/gen-component.ts",
-    "publish:stage": "pnpm -r stage publish --access public"
+    "publish:stage": "pnpm -r stage publish --access public",
+    "trust:publishers": "tsx scripts/trust-publishers.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",

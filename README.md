@@ -73,12 +73,20 @@ Trusted Publisher is required before OIDC can publish it. Bootstrap once:
    npm login
    pnpm publish:stage
    ```
-2. On npmjs.com, add a **Trusted Publisher** for every `@talelk/newui-*` package:
-   GitHub Actions, owner `talelk`, repository `newui`, workflow
-   `changesets.yml`, and allow direct `npm publish`.
-3. Set the repository variable `NPM_PUBLISH=true`. The release script is gated
-   until then so the version PR does not paint `main` red while the external
-   setup is incomplete.
+2. Configure a **Trusted Publisher** for every package. The script uses npm's
+   bulk `trust` command, runs the first 2FA prompt, and then sets the
+   `NPM_PUBLISH` repository variable:
+
+   ```sh
+   pnpm trust:publishers
+   ```
+
+   It configures GitHub Actions, owner `talelk`, repository `newui`, workflow
+   `changesets.yml`, with `npm publish` allowed. Use
+   `pnpm trust:publishers --no-enable` if you want to inspect the result before
+   enabling releases.
+3. The release script remains gated while `NPM_PUBLISH` is false, so a Version
+   Packages PR never paints `main` red before the external setup is complete.
 
 After that, merging a Version Packages pull request versions and publishes
 automatically through OIDC; no `NPM_TOKEN` secret is required or used.
