@@ -18,7 +18,7 @@ component previews as a scroll-loaded chunk (§4D), Analytics runs on
 drops its copy at render time only), and the TOC tracks the section being
 read.
 
-Authority: `AGENTS.md` + `spec/redesign-blueprint.md`.
+Authority: `AGENTS.md` + `redesign-blueprint.md` (this directory).
 Evidence for every item was opened in-tree; citations are `file:line`
 relative to the repo root unless prefixed `apps/playground/src/`
 (shortened `pg/` below = `apps/playground/src/`).

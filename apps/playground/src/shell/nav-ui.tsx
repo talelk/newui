@@ -1,7 +1,7 @@
 import type { JSX } from 'solid-js'
 
 /**
- * Shared navigation chrome for the shell (H12, spec/examples-refresh.md §1).
+ * Shared navigation chrome for the shell (H12, spec/history/examples-refresh.md §1).
  *
  * The nav-row class was spelled out five times across the masthead and the
  * two sidebars, and the filter field twice. Both live here once. Plain

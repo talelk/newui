@@ -2,7 +2,7 @@ import { Button } from '@newui/atoms'
 import { type JSX, Show } from 'solid-js'
 
 /**
- * The examples' one status strip (H1, spec/examples-refresh.md §1).
+ * The examples' one status strip (H1, spec/history/examples-refresh.md §1).
  *
  * Eleven pages kept a `notice` signal and hand-rendered the same bordered
  * `role="status"` box, three of them with an Undo button bolted on. This

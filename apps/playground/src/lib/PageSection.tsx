@@ -1,7 +1,7 @@
 import { type JSX, Show } from 'solid-js'
 
 /**
- * A titled, anchored page section (H9, spec/examples-refresh.md §1).
+ * A titled, anchored page section (H9, spec/history/examples-refresh.md §1).
  *
  * Docs, Foundations and Settings each defined this component locally, and
  * the reference page repeated the markup four times. The `id` is required

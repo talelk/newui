@@ -4,7 +4,7 @@ import { createSignal, type JSX } from 'solid-js'
 
 /**
  * The create-form dialog shell every example was repeating (H16,
- * spec/examples-refresh.md §1): Dialog chrome, the `noValidate` form, the
+ * spec/history/examples-refresh.md §1): Dialog chrome, the `noValidate` form, the
  * attempted-submit signal that gates field errors, and the
  * Cancel / solid-submit footer. Fields and the mutation stay local to
  * each page — only the scaffold is shared.

@@ -1,7 +1,7 @@
 import { createEffect, createSignal, For, type JSX, onCleanup } from 'solid-js'
 
 /**
- * The "On this page" column's contents (H15, spec/examples-refresh.md §1).
+ * The "On this page" column's contents (H15, spec/history/examples-refresh.md §1).
  *
  * Real `<a href="#id">` links — they work with the keyboard, with
  * find-in-page, and before any script runs — plus a scrollspy that marks

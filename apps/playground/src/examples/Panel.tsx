@@ -2,7 +2,7 @@ import { card } from '@newui/molecules'
 import { type JSX, Show } from 'solid-js'
 
 /**
- * The examples' titled surface (H6, spec/examples-refresh.md §1).
+ * The examples' titled surface (H6, spec/history/examples-refresh.md §1).
  *
  * `rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3` was
  * spelled out on twenty-odd sections. That is the library `Card`'s own

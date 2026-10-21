@@ -8,7 +8,13 @@
  * The Markdown subset is deliberately small — headings, fenced code, tables,
  * lists, inline code/bold/links — which is exactly what the specs use.
  */
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import {
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  unlinkSync,
+  writeFileSync,
+} from 'node:fs'
 import path from 'node:path'
 
 const root = process.cwd()
@@ -328,6 +334,20 @@ const pages: Page[] = [
 ]
 
 mkdirSync(outDir, { recursive: true })
+
+// The generator owns `docs/*.html` outright: drop pages whose spec no longer
+// exists so a removed contract stops serving its stale build.
+const expected = new Set([
+  'index.html',
+  'api.html',
+  'foundations.html',
+  ...specFiles.map((file) => `${file.replace(/\.md$/, '')}.html`),
+])
+for (const entry of readdirSync(outDir)) {
+  if (entry.endsWith('.html') && !expected.has(entry)) {
+    unlinkSync(path.join(outDir, entry))
+  }
+}
 
 const overview = `# newui
 

@@ -1,7 +1,9 @@
 # Design principles
 
-These are the API and composition rules the library follows. They are the
-contract: if an implementation and a principle disagree, the principle wins.
+These are the API and composition rules the library follows. Between documents,
+precedence is `spec/*.md` > ADRs > this file > `CONTEXT.md`; within that order,
+if an implementation and the governing rule disagree, the rule wins — a spec
+that encodes a deviation must say so.
 
 ## Prop design
 
@@ -20,8 +22,9 @@ use an axis-named string enum (`size="md"`, `align="end"`), never a generic
 `mode`.
 
 **P4. Two color axes only — `variant` + `theme`.** `variant` is
-`solid | subtle | outline | ghost`; `theme` is a color name
-(`gray | blue | green | amber | red`). No `intent`/`severity`/`appearance`. State
+`solid | subtle | outline | ghost`; `theme` is a color name drawn from
+`gray | blue | green | amber | red | violet`, and a component ships the subset
+it supports (see `CONTEXT.md`). No `intent`/`severity`/`appearance`. State
 (error/disabled/loading) is a state prop, not a theme.
 
 **P5. Every input control exposes the same labelling contract** — `label`,
@@ -61,13 +64,19 @@ keyboard-only focus (`:focus-visible`), ARIA by props, ids auto-generated,
 `sr-only` text where the UI is visual-only. Zag primitives supply most of this;
 we audit and document deviations.
 
-**P13. Deprecate, don't remove.** Old surface keeps working; removal is a major.
+**P13. Deprecate, don't remove — after 1.0.** Old surface keeps working;
+removal is a major. Before 1.0 the library breaks cleanly: removals happen
+without compatibility aliases, but are always recorded in `spec/migrations.md`
+with before/after code.
 
 ## Packaging
 
-**P14/P15. Root is the default; a subpath is earned.** A subpath needs cost
-isolation, an extensible registry, or a name collision — not "it feels big".
-`export *` only from a curated barrel.
+**P14. The package root is the default.** Consumers import from the root, and
+the root barrel is curated — `export *` only over a surface that was reviewed
+as a whole.
+
+**P15. A subpath is earned.** It needs cost isolation, an extensible registry,
+or a name collision — not "it feels big".
 
 ## Styling mechanics (Solid + Tailwind v4)
 

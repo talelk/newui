@@ -1,7 +1,7 @@
 import type { JSX } from 'solid-js'
 
 /**
- * The one Suspense fallback (H8, spec/examples-refresh.md §1).
+ * The one Suspense fallback (H8, spec/history/examples-refresh.md §1).
  *
  * Seven `<p>Loading…</p>` copies disagreed on wording and shade. A page
  * passes its own noun (`Loading props…`); the treatment is shared.

@@ -23,13 +23,15 @@ own.
 
 | `type` | renders |
 | --- | --- |
-| `text` _(default)_, `email`, `password`, `number`, `search`, `tel`, `url`, `time`, `datetime-local`, `month`, `week`, `file`, `range` | `TextInput` with the matching HTML `type` |
+| `text` _(default)_, `email`, `password`, `number`, `search`, `tel`, `url`, `month`, `week`, `file`, `range` | `TextInput` with the matching HTML `type` |
 | `textarea` | `Textarea` |
 | `select` | `Select` |
 | `combobox` | `Combobox` |
 | `multiselect` | `MultiSelect` |
 | `checkbox` | `Checkbox` |
 | `date` | `DatePicker` |
+| `time` | `TimePicker` |
+| `datetime-local` | `DateTimePicker` |
 
 Name a field's exact surface by using its component directly. `FormControl` is
 for the uniform case (a rendered list of field definitions); type-specific
@@ -41,21 +43,23 @@ props and the value shape follow the resolved control:
 - `combobox` — `options`, `value: string | null`, `onValueChange`;
 - `multiselect` — `options`, `value: string[]`, `onValueChange`;
 - `date` — `value: string | null`, `onValueChange`, `min`/`max`;
+- `time` — `value: string | null`, `onValueChange`, `min`/`max`, `interval`;
+- `datetime-local` — `value: string | null`, `onValueChange`, `min`/`max`,
+  `locale`, `interval`;
 - `checkbox` — `checked`, `defaultChecked`, `onCheckedChange`.
 
-`type="date"` renders `DatePicker`. `TimePicker` is not built yet, so
-`type="time"` / `type="datetime-local"` are the browser's native inputs (via
-`TextInput`). For a native date input, use `<TextInput type="date" />`.
+`type="date"` / `type="time"` / `type="datetime-local"` render `DatePicker` /
+`TimePicker` / `DateTimePicker`. Only `month` and `week` stay native inputs
+(there is no picker for them yet).
 
 `type="password"` is a plain masked `TextInput`; the reveal toggle is the
 `Password` component.
 
-Only the text and `textarea` types expose `description` / `error` /
-`required` and an `id`. `select` and `checkbox` have their own narrower
-surfaces — `select` draws its own label (`label`, `options`, `value`,
-`onValueChange`), `checkbox` draws its own label and description plus its
-checked state — so a prop the resolved control does not support is a type
-error, not a silent drop.
+The text-like types and the picker/combobox types expose `description` /
+`error` / `required` and an `id` through the shared labelling contract.
+`select` draws only its own label; `checkbox` draws its label and description
+plus its checked state — a prop the resolved control does not support is a
+type error, not a silent drop.
 
 ## `FormLabel`
 

@@ -4,7 +4,7 @@ import { CatalogIcon } from './CatalogIcon'
 import type { CatalogSection } from './catalog'
 
 /**
- * The grouped catalog list (H10, spec/examples-refresh.md §1).
+ * The grouped catalog list (H10, spec/history/examples-refresh.md §1).
  *
  * The components and blocks indexes rendered the same ~35-line block:
  * a group heading over a divided list of icon + name + description rows.

@@ -1,5 +1,5 @@
 /**
- * Catalog filtering and grouping (H11, spec/examples-refresh.md §1).
+ * Catalog filtering and grouping (H11, spec/history/examples-refresh.md §1).
  *
  * The reference sidebar and the two index pages grouped the generated
  * registry three slightly different ways. The predicate and the grouping

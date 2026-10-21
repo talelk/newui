@@ -1,7 +1,7 @@
 import type { JSX } from 'solid-js'
 
 /**
- * The bordered stage a block demo sits in (H14, spec/examples-refresh.md
+ * The bordered stage a block demo sits in (H14, spec/history/examples-refresh.md
  * §1). Four demos spelled the wrapper out; the only real difference is
  * whether the block needs a fixed height to compose against — `medium`
  * for a sidebar, `tall` for a board, neither for a toolbar or a card.

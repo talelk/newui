@@ -1,10 +1,9 @@
 # Redesign blueprint — site + shells/charts polish
 
-> Placement: requested as `docs/redesign-blueprint.md`, written here instead
-> because `.gitignore:7` ignores all of `docs/` (generated site output,
-> `git check-ignore -v docs/redesign-blueprint.md` → `.gitignore:7:docs/`).
-> A hand-authored blueprint in `docs/` would never enter history. `spec/`
-> is the committed contract layer (`spec/*.md` > ADRs > PRINCIPLES > CONTEXT).
+> Archived in `spec/history/` — a historical record, not a contract. Originally
+> written in `spec/` because `.gitignore` ignores all of `docs/`; moved out of
+> the contract layer once the work it planned had landed. Current architecture
+> is specified by `kit.md` and ADR-0013.
 
 > Historical implementation plan. Its package paths, API assumptions and task
 > status predate the atomic refactor; current architecture is specified by

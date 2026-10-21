@@ -20,7 +20,10 @@ Default `true`.
 Only two, by design:
 
 - **variant** — `solid | subtle | outline | ghost`
-- **theme** — `gray | blue | green | amber | red` (Badge adds `violet`)
+- **theme** — drawn from `gray | blue | green | amber | red | violet`. A
+  component ships the subset it supports (Button stops at red; Badge, Avatar
+  and KanbanBoard add `violet`). Chart palettes additionally use `orange` and
+  `yellow`, but those are chart-only — never component `theme` values.
 
 The warning tone is **`amber`** everywhere. Never `yellow`/`orange`.
 State (error/disabled/loading) is a state prop, never a theme.
@@ -34,15 +37,18 @@ _Avoid_: using `theme` for light/dark.
 **route / href** — navigation destinations. `route` is in-app, `href` external.
 _Avoid_: `to`, `link`.
 
-**action** — a button declared via a component's action prop, rendered in its
-footer. Typed with a context object (`{ close }`, `{ dismiss }`).
+**action** — a button declared via a component's `action` prop. Typed either
+as an element (`JSX.Element`) or a config object (`label`, `icon?`,
+`onClick`); where the component owns the dismissal, `onClick` receives a
+context callback (Alert's `{ close }`, `{ dismiss }`).
 
-**side** — the edge a component attaches to (`left | right`). Distinct from
-`dir` (writing direction). _Avoid_: direction, placement.
+**side** — the edge a component attaches to (`top | bottom | left | right`).
+Distinct from `dir` (writing direction). _Avoid_: direction, placement.
 
 **align** — placement along a side (`start | center | end`).
 
 **bare** — a prop that suppresses default chrome so content fills the shell.
+Currently only Dialog (`bare?: boolean` drops the body padding).
 
 **fluid** — a prop that makes items stretch to fill the container.
 _Avoid_: fullWidth, block, grow.

@@ -38,13 +38,14 @@ the package name.
 ## Atoms and molecules
 
 Each control has a file named by its slug (`button.md`, `dialog.md`,
-`date-picker.md`, …). Input controls share the contract in [`inputs.md`](inputs.md)
+`datepicker.md`, …). Input controls share the contract in [`inputs.md`](inputs.md)
 and [`form.md`](form.md); their concrete per-control behavior stays in the
 individual contract. `scroll-table.md` documents the table scroll molecule.
 
 ## Decision history
 
 ADRs explain why a decision was made; when a later accepted contract disagrees,
-the current `spec/*.md` wins. Example refresh notes are historical records, not
-supported import paths. ADR-0013 supersedes the earlier
+the current `spec/*.md` wins. Superseded execution blueprints live in
+[`history/`](history/) — archived records, not contracts and not supported
+import paths. ADR-0013 supersedes the earlier
 package and shell mapping in ADR-0012.

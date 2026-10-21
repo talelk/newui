@@ -426,8 +426,14 @@ pnpm changeset      # add a changeset
 - Semantic tokens only (`surface-*`, `ink-*`, `outline-*`) — never raw colors.
 - Every input control reuses the shared labelling contract (`Field`, P5).
 - Accessibility is part of done: keyboard, focus, ARIA (P12).
-- A component is not done until it has: `Root.tsx`, `recipe.ts`, `types`, a
-  `.test.tsx` (logic/ARIA) and, where it renders, a `recipe.test.ts`.
+- A component is not done until it has: a single `Name.tsx` (types declared in
+  it) with `data-slot`/`data-state` hooks; variants either in the shared
+  `control-styles` or a local `recipe.ts` when the matrix belongs to the
+  component (`Button`); a `.test.tsx` covering logic and ARIA; a browser story
+  with the states [`spec/states.md`](./spec/states.md) requires
+  (`pnpm stories:check` enforces it); a `spec/<name>.md` contract; and a
+  classification entry in `scripts/atomic.ts` (`pnpm site` fails otherwise).
+  Regenerate `pnpm api` and `pnpm site` so the reference page exists.
 - Public surface changes are listed in each atomic package's `src/exports.test.ts`.
 
 ## Do not

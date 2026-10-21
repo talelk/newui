@@ -2,7 +2,7 @@ import { Button } from '@newui/atoms'
 import { type Accessor, createMemo, createSignal, type JSX } from 'solid-js'
 
 /**
- * The chart demos' shared state toggles (H13, spec/examples-refresh.md §1).
+ * The chart demos' shared state toggles (H13, spec/history/examples-refresh.md §1).
  *
  * Eight demos repeated the same body: three signals, three toggle buttons,
  * then a chart fed `empty ? [] : data`, `loading` and an error string.

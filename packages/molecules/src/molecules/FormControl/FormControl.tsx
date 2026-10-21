@@ -8,13 +8,17 @@ import {
 import { type JSX, Match, Switch } from 'solid-js'
 import { Combobox, type ComboboxOption } from '../Combobox'
 import { DatePicker } from '../DatePicker'
+import { DateTimePicker } from '../DateTimePicker'
 import { MultiSelect, type MultiSelectOption } from '../MultiSelect'
 import { Select, type SelectOption } from '../Select'
+import { TimePicker } from '../TimePicker'
 
 /**
  * Native HTML input types routed to `TextInput`. `password` renders
  * a plain masked input here — use the `Password` component when the reveal
- * toggle is wanted (frappe-ui draws the same line).
+ * toggle is wanted (frappe-ui draws the same line). `time` and
+ * `datetime-local` have their own pickers and are routed to `TimePicker` /
+ * `DateTimePicker`, not to the native inputs.
  */
 export type FormControlTextType =
   | 'text'
@@ -24,7 +28,6 @@ export type FormControlTextType =
   | 'search'
   | 'tel'
   | 'url'
-  | 'datetime-local'
   | 'month'
   | 'week'
   | 'file'
@@ -38,7 +41,6 @@ const TEXT_TYPES: readonly FormControlTextType[] = [
   'search',
   'tel',
   'url',
-  'datetime-local',
   'month',
   'week',
   'file',
@@ -53,6 +55,8 @@ export type FormControlType =
   | 'multiselect'
   | 'checkbox'
   | 'date'
+  | 'time'
+  | 'datetime-local'
 
 function isTextType(
   type: FormControlType | undefined,
@@ -182,6 +186,55 @@ export interface FormControlDateProps extends FormControlShared {
   variant?: InputVariant
 }
 
+export interface FormControlTimeProps extends FormControlShared {
+  type: 'time'
+  /** Selected time as `HH:mm` (or `HH:mm:ss`); `null` when cleared. */
+  value?: string | null
+  onValueChange?: (value: string | null) => void
+  /** Minute interval between generated options. Default `15`. */
+  interval?: number
+  /** Minimum selectable time as `HH:mm[:ss]`. */
+  min?: string
+  /** Maximum selectable time as `HH:mm[:ss]`. */
+  max?: string
+  placeholder?: string
+  /** Whether the input accepts typed times. Default `true`. */
+  typeable?: boolean
+  /** `TimePicker` is fully labelled through the P5 contract. */
+  description?: JSX.Element
+  error?: JSX.Element | false
+  required?: boolean
+  /** @default sm */
+  size?: InputSize
+  variant?: InputVariant
+}
+
+export interface FormControlDateTimeProps extends FormControlShared {
+  type: 'datetime-local'
+  /** Selected date+time as ISO `YYYY-MM-DDTHH:mm`; `null` when cleared. */
+  value?: string | null
+  onValueChange?: (value: string | null) => void
+  /** Earliest selectable date/time (`YYYY-MM-DD` or `YYYY-MM-DDTHH:mm[:ss]`). */
+  min?: string
+  /** Latest selectable date/time (`YYYY-MM-DD` or `YYYY-MM-DDTHH:mm[:ss]`). */
+  max?: string
+  /** BCP 47 locale for formatting/parsing. */
+  locale?: string
+  /** Minute interval between generated time options. Default `30`. */
+  interval?: number
+  placeholder?: string
+  /** Allow typing the date. Default `true`. */
+  typeable?: boolean
+  readonly?: boolean
+  /** `DateTimePicker` is fully labelled through the P5 contract. */
+  description?: JSX.Element
+  error?: JSX.Element | false
+  required?: boolean
+  /** @default sm */
+  size?: InputSize
+  variant?: InputVariant
+}
+
 export type FormControlProps =
   | FormControlTextProps
   | FormControlTextareaProps
@@ -190,6 +243,8 @@ export type FormControlProps =
   | FormControlComboboxProps
   | FormControlMultiSelectProps
   | FormControlDateProps
+  | FormControlTimeProps
+  | FormControlDateTimeProps
 
 function renderSelect(props: FormControlSelectProps): JSX.Element {
   return (
@@ -278,6 +333,58 @@ function renderDate(props: FormControlDateProps): JSX.Element {
   )
 }
 
+function renderTime(props: FormControlTimeProps): JSX.Element {
+  return (
+    <TimePicker
+      value={props.value}
+      onValueChange={props.onValueChange}
+      interval={props.interval}
+      min={props.min}
+      max={props.max}
+      placeholder={props.placeholder}
+      typeable={props.typeable}
+      label={props.label}
+      description={props.description}
+      error={props.error}
+      required={props.required}
+      aria-label={props['aria-label']}
+      disabled={props.disabled}
+      name={props.name}
+      id={props.id}
+      size={props.size}
+      variant={props.variant}
+      class={props.class}
+    />
+  )
+}
+
+function renderDateTime(props: FormControlDateTimeProps): JSX.Element {
+  return (
+    <DateTimePicker
+      value={props.value}
+      onValueChange={props.onValueChange}
+      min={props.min}
+      max={props.max}
+      locale={props.locale}
+      interval={props.interval}
+      placeholder={props.placeholder}
+      typeable={props.typeable}
+      readonly={props.readonly}
+      label={props.label}
+      description={props.description}
+      error={props.error}
+      required={props.required}
+      aria-label={props['aria-label']}
+      disabled={props.disabled}
+      name={props.name}
+      id={props.id}
+      size={props.size}
+      variant={props.variant}
+      class={props.class}
+    />
+  )
+}
+
 function renderCheckbox(props: FormControlCheckboxProps): JSX.Element {
   return (
     <Checkbox
@@ -349,9 +456,9 @@ function renderText(props: FormControlTextProps): JSX.Element {
  * the value shape) follow that control.
  *
  * Ported from frappe-ui's `FormControl`. The types it routes are the controls
- * this library ships today. `type="date"` renders `DatePicker`; `type="time"`
- * and `type="datetime-local"` are still the browser's native inputs (via
- * `TextInput`) until `TimePicker` lands.
+ * this library ships today. `type="date"`, `type="time"` and
+ * `type="datetime-local"` render `DatePicker`, `TimePicker` and
+ * `DateTimePicker`; only month/week inputs stay native (via `TextInput`).
  *
  * Only the text and `textarea` types expose `description` / `error` /
  * `required` and an `id`; `select` and `checkbox` have their own narrower
@@ -372,6 +479,12 @@ export function FormControl(props: FormControlProps): JSX.Element {
       </Match>
       <Match when={props.type === 'date'}>
         {renderDate(props as FormControlDateProps)}
+      </Match>
+      <Match when={props.type === 'time'}>
+        {renderTime(props as FormControlTimeProps)}
+      </Match>
+      <Match when={props.type === 'datetime-local'}>
+        {renderDateTime(props as FormControlDateTimeProps)}
       </Match>
       <Match when={props.type === 'checkbox'}>
         {renderCheckbox(props as FormControlCheckboxProps)}
