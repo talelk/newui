@@ -46,6 +46,25 @@ builds with the repository's Pages base path, publishes Storybook under
 and adds `.nojekyll`. The Vite base and the Solid Router base both come from
 `VITE_BASE`, so local development stays at `/`.
 
+## Release
+
+Changesets opens a **Version Packages** pull request; merging it publishes the
+changed packages with `pnpm run release`. Publishing uses npm trusted
+publishing, not a stored token: `.github/workflows/changesets.yml` requests the
+`id-token: write` permission and the npm CLI exchanges GitHub's OIDC identity
+for a short-lived credential.
+
+Configure a **Trusted Publisher** on each package on npmjs.com:
+
+- Provider: GitHub Actions
+- Organization or user: `talelk`
+- Repository: `newui`
+- Workflow filename: `changesets.yml`
+- Allow `npm publish` (not only staged publishes)
+
+Every published package sets `publishConfig.access` to `public`. No
+`NPM_TOKEN` secret is required or used.
+
 ## Packages
 
 | Package | Responsibility |

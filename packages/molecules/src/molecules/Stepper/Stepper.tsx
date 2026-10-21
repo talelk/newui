@@ -1,5 +1,5 @@
 import { cn, createControllableSignal } from '@newui/atoms/internal'
-import { For, type JSX, Show, untrack } from 'solid-js'
+import { For, type JSX, Show } from 'solid-js'
 
 export interface StepperStep {
   /** Stable id — the `value` the stepper reports. */

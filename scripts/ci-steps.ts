@@ -109,7 +109,7 @@ export const CI_STEPS: CiStep[] = [
   },
   {
     name: 'Browser the harness pins',
-    command: 'pnpm exec playwright install chromium',
+    command: 'pnpm playwright:install',
     group: 'e2e',
   },
   {

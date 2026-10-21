@@ -331,6 +331,11 @@ packages.
   `.github/workflows/tests.yml` runs them as individual labelled steps, and
   `pnpm verify` runs the identical commands locally. `ci.test.ts` fails if the
   workflow and the declaration drift, so "CI runs locally" stays true.
+- **npm trusted publishing.** `changesets.yml` requests `id-token: write`;
+  every published package declares a public `publishConfig` and its repository.
+  Each npm package needs a Trusted Publisher for `talelk/newui` /
+  `changesets.yml` with direct `npm publish` allowed. No long-lived
+  `NPM_TOKEN` is stored.
 - `pnpm verify` (all) · `pnpm verify:checks` (fast gates) · `pnpm verify:e2e`
   (browser harness) · `pnpm verify:affected` (only the gates the diff can
   dirty — the agent loop: change → affected → full `verify` before pushing)

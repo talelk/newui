@@ -155,7 +155,7 @@ jobs:
           key: playwright-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Browser the harness pins
-        run: pnpm exec playwright install chromium
+        run: pnpm playwright:install
 
       - name: Component browser tests (real CSS)
         run: pnpm test:browser

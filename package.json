@@ -33,6 +33,7 @@
     "knip": "knip",
     "size": "tsx scripts/size.ts",
     "test:e2e": "playwright test --project=chrome",
+    "playwright:install": "tsx scripts/install-playwright.ts",
     "css": "pnpm --filter @newui/tailwind build:css",
     "api": "tsx scripts/propsgen.ts",
     "site": "tsx scripts/sitegen.ts",
