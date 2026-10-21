@@ -331,7 +331,7 @@ mkdirSync(outDir, { recursive: true })
 
 const overview = `# newui
 
-A SolidJS component library — a port of frappe-ui on SolidJS + Zag + Tailwind CSS v4.
+A SolidJS component library built on SolidJS + Zag + Tailwind CSS v4.
 
 This site is generated from \`spec/*.md\` (the per-component contracts) and
 \`api.json\` (the prop tables). Regenerate with \`pnpm docs\`.

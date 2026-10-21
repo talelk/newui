@@ -1,9 +1,9 @@
 # Migrations
 
 Known breaking changes and how to move off them. Codemods are only written when
-a **v1-equivalent freeze** is declared (frappe-ui's `v1-release/` model); until
-then each change is documented here and, where the transform is mechanical, a
-`scripts/migrate.ts` will be added alongside it.
+a **v1-equivalent freeze** is declared; until then each change is documented here
+and, where the transform is mechanical, a `scripts/migrate.ts` will be added
+alongside it.
 
 ## Vite 8 tooling
 
@@ -47,24 +47,15 @@ The compound API is unchanged — it is `Menu` (`Menu.Root`, `Menu.Item`, …). 
 codemod would rewrite `Dropdown.Root` → `Menu.Root` and `Dropdown.Item` →
 `Menu.Item`; it is deferred (see ADR-0006).
 
-## No `v-model` (from frappe-ui)
+## No `v-model`
 
-Not a version change but the first thing a frappe-ui consumer hits: overlays use
-`open` + `onOpenChange`, inputs use `value` + `onValueChange` (ADR-0001).
+Overlays use `open` + `onOpenChange`; inputs use `value` + `onValueChange`
+(ADR-0001). Uncontrolled use is expressed with `default*` props.
 
-## Colour shifts (from frappe-ui)
+## Colour shifts
 
-Colours intentionally differ from frappe-ui where WCAG AA required it
-(ADR-0005). Not a code migration — a visual one; see `spec/design-deltas*.md`.
-
-## Migrating from frappe-ui
-
-Not automated. The component names line up almost one-for-one (`RadioGroup`
-aliases `Radio`, `UIProvider` is `FrappeUIProvider`); the state model (no
-`v-model`) and package model are the real differences. In newui, imports follow
-the atomic owner: atoms from `@newui/atoms`, compound interactions from
-`@newui/molecules`, page regions from `@newui/organisms`, and the three page
-templates from `@newui/templates`.
+Colours intentionally differ from earlier releases where WCAG AA required it
+(ADR-0005). This is a visual migration, not a code migration.
 
 ## Atomic package and shell break
 

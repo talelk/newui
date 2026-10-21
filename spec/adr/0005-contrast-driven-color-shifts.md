@@ -4,8 +4,8 @@
 
 ## Context
 
-frappe-ui's colour recipes predate a systematic contrast pass: `Button`
-`blue-solid` is `surface-blue-6`, `Badge` subtle text is `ink-blue-7`, etc.
+An earlier set of colour recipes predates a systematic contrast pass: `Button`
+`blue-solid` used `surface-blue-6`, `Badge` subtle text used `ink-blue-7`, etc.
 Against the WCAG AA threshold (4.5:1 for text, 3:1 for UI), several of those
 pairings fail.
 
@@ -25,9 +25,7 @@ the contract; a new pairing without a passing ratio fails CI.
 
 ## Consequences
 
-- Our rendered colours **intentionally differ** from frappe-ui. This is the main
-  source of "design delta" and is documented per component in
-  `spec/design-deltas*.md`.
-- `text-ink-base` (ours) stands in for frappe's `text-white` on solid fills.
+- The rendered colours intentionally differ from the earlier recipes.
+- `text-ink-base` stands in for `text-white` on solid fills.
 - Reversing a shift means adding a passing contrast pair, not just editing a
   class.

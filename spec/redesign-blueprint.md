@@ -4,7 +4,7 @@
 > because `.gitignore:7` ignores all of `docs/` (generated site output,
 > `git check-ignore -v docs/redesign-blueprint.md` → `.gitignore:7:docs/`).
 > A hand-authored blueprint in `docs/` would never enter history. `spec/`
-> is the committed contract layer (`spec/*.md` > ADRs > PHILOSOPHY > CONTEXT).
+> is the committed contract layer (`spec/*.md` > ADRs > PRINCIPLES > CONTEXT).
 
 > Historical implementation plan. Its package paths, API assumptions and task
 > status predate the atomic refactor; current architecture is specified by
@@ -66,8 +66,8 @@ Goal: make Slices 1–5 machine-checkable before any markup moves.
    invert `scripts/sitegen.ts` `componentOf` + `FAMILIES` + `SPEC_ALIASES`
    (do not use naive `PascalCase(spec)+Props` — measured false-fail 27/82
    specs). Parse spec Props tables outside code fences only. Skip list:
-   README, design-deltas-*, example-tasks, migrations, redesign-progress,
-   reference-examples, tanstack-integration, visual-system,
+   README, example-tasks, migrations, reference-examples,
+   visual-system,
    dialog-imperative, toast. Note 45/82 specs have no `## Props` table —
    those assert only that the spec defers to generated tables.
 3. Add token-vocabulary derivation test: derive expected `--color-*`
@@ -219,7 +219,6 @@ Docs/content, in the same diff as the code each item describes:
   chart wrappers `showLegend?` auto-wiring + default tooltip;
   `FilterBar chips?/onClearAll?/resultCount?`; `AppSidebar footer?/search?`;
   `Dashboard` span via child wrapper. Delete dead `PageToolbarTab`.
-- `spec/redesign-progress.md`: update per landed slice; link this file.
 - `AGENTS.md`: refresh measured sizes only after `pnpm size`/`pnpm budget`
   re-measure; never hand-copied numbers.
 

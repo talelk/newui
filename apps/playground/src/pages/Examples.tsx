@@ -26,9 +26,6 @@ export function Examples(): JSX.Element {
                 <p class="mt-1 text-caption text-ink-gray-7">
                   {example.description}
                 </p>
-                <p class="mt-1 text-caption text-ink-gray-7">
-                  {example.source}
-                </p>
               </div>
               <span
                 aria-hidden="true"

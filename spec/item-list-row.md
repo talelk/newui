@@ -15,9 +15,9 @@ all three.
 | `active` | `boolean` | `false` | marks the row the pointer or keyboard is on |
 | `selected` | `boolean` | `false` | marks the chosen value |
 | `disabled` | `boolean` | `false` | mutes the row; does not stop clicks |
-| `prefix` | `JSX.Element` | — | leading adornment (frappe-ui's `#prefix` slot) |
+| `prefix` | `JSX.Element` | — | leading adornment |
 | `label` | `JSX.Element` | — | replaces the default content when both are passed (`#label`) |
-| `suffix` | `JSX.Element` | — | trailing adornment (frappe-ui's `#suffix` slot) |
+| `suffix` | `JSX.Element` | — | trailing adornment |
 | `class` | `string` | — | merged into the root |
 | `children` | `JSX.Element` | — | the default label content |
 | `role` / `aria-*` / `onClick` / … | — | — | land on the wrapper element (attribute fallthrough) |
@@ -25,7 +25,7 @@ all three.
 ## Behavior
 
 - **Label.** The default content (`children`) fills the label region. Passing
-  `label` replaces it when both are set, mirroring frappe-ui's `#label` slot
+  `label` replaces the default content when both are set
   overriding the default slot.
 - **Prefix / suffix.** `prefix` and `suffix` render only when provided, so an
   empty adornment leaves no gap.

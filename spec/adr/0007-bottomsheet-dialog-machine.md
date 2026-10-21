@@ -4,9 +4,9 @@
 
 ## Context
 
-frappe-ui's `BottomSheet` is a bottom-anchored modal sheet. Zag ships a
-`@zag-js/drawer` machine, but it models a **stacked-drawer registry** (iOS-style
-multi-level sheets with a shared backdrop), not a single bottom sheet.
+A bottom sheet is a bottom-anchored modal panel. Zag ships a `@zag-js/drawer`
+machine, but it models a **stacked-drawer registry** (multi-level sheets with a
+shared backdrop), not a single bottom sheet.
 
 ## Decision
 

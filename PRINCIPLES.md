@@ -1,8 +1,7 @@
-# Design philosophy
+# Design principles
 
-Ported from `frappe-ui`'s `PHILOSOPHY.md`, restated for Solid. The rules are
-the contract; the Vue mechanics are translated, not the reasoning. Where a rule
-still reads Vue-ish in the reference, the Solid shape below wins.
+These are the API and composition rules the library follows. They are the
+contract: if an implementation and a principle disagree, the principle wins.
 
 ## Prop design
 

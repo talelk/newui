@@ -55,11 +55,6 @@ const SKIP_PROPS: Record<string, string> = {
   // Documents the `DialogOptions`/`PromptOptions` bags for the imperative
   // `dialog.*` helpers, which are not component `*Props` in `api.json`.
   'dialog-imperative.md': 'imperative options, not component props',
-  // Historical frappe-ui parity audits; their prop-surface tables compare
-  // against the reference, they are not contracts.
-  'design-deltas-display.md': 'parity audit, not a contract',
-  'design-deltas-inputs.md': 'parity audit, not a contract',
-  'design-deltas-overlays.md': 'parity audit, not a contract',
 }
 
 /** Standard DOM fallthrough `api.json` omits by design. See the header. */

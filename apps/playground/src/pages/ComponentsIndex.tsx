@@ -46,8 +46,7 @@ export function ComponentsIndex(): JSX.Element {
         >
           <h2 class="text-section">Site compositions</h2>
           <p class="text-ink-gray-7">
-            Adapted from solid-ui. Copy the source; these are not package
-            exports.
+            Copy the source; these are not package exports.
           </p>
           <div class="flex flex-wrap gap-4">
             <A

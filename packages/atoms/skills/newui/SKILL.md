@@ -1,10 +1,10 @@
 ---
 name: newui
-description: Build user interfaces with the newui SolidJS component library (a
-  SolidJS port of frappe-ui on Zag + Tailwind CSS v4). Use when scaffolding
-  SolidJS pages, forms, dialogs, lists, or any UI that should look and feel like
-  a Frappe product, when the user mentions newui, @newui/atoms, or asks to use
-  newui components, tokens, or conventions.
+description: Build user interfaces with the newui SolidJS component library on
+  Zag + Tailwind CSS v4. Use when scaffolding SolidJS pages, forms, dialogs,
+  lists, or any UI that should look and feel consistent and product-ready, when
+  the user mentions newui, @newui/atoms, or asks to use newui components, tokens,
+  or conventions.
 metadata:
   type: core
   domain: ui
@@ -12,7 +12,7 @@ metadata:
   library_version: '0.1.0'
 sources:
   - talelk/newui:AGENTS.md
-  - talelk/newui:PHILOSOPHY.md
+  - talelk/newui:PRINCIPLES.md
   - talelk/newui:CONTEXT.md
   - talelk/newui:skills/README.md
   - talelk/newui:spec/adr/0001-solid-no-v-model.md
@@ -28,8 +28,8 @@ sources:
 
 # newui
 
-Build UIs that look and feel like Frappe products by composing **newui**
-components and styling with the library's **semantic Tailwind tokens**.
+Build polished, consistent business UIs by composing **newui** components and
+styling with the library's **semantic Tailwind tokens**.
 
 ## Quick start
 

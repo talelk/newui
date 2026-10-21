@@ -1,8 +1,8 @@
 # Visual system
 
-The shared standard for every package and the documentation site. Design references:
-solid-ui/shadcn for restrained surfaces, composition and clear hierarchy,
-and Frappe for practical business controls. No new runtime framework is introduced.
+The shared standard for every package and the documentation site. The system
+favors restrained surfaces, explicit hierarchy and practical business controls.
+No new runtime framework is introduced.
 
 ## Typography and density
 

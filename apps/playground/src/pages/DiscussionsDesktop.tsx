@@ -16,7 +16,7 @@ import {
 } from '../examples/discussions'
 
 /**
- * Frappe-inspired responsive workspace: a tenant/community switcher and all
+ * Responsive workspace: a tenant/community switcher and all
  * navigation live in the AppShell's one sidebar. Example data and edits stay in
  * this route's memory.
  */
@@ -160,13 +160,13 @@ export function DiscussionsDesktop(props: {
             class="flex min-h-10 items-center gap-2 rounded-3 px-2 font-semibold focus-visible:focus-ring"
           >
             <img src="/favicon.svg" alt="" class="size-6 rounded-[6px]" />
-            <span>Frappe Community</span>
+            <span>Acme Community</span>
           </a>
         }
         brandCollapsed={
           <a
             href="/pages/discussions"
-            aria-label="Frappe Community home"
+            aria-label="Acme Community home"
             class="grid size-10 place-items-center rounded-3 focus-visible:focus-ring"
           >
             <img src="/favicon.svg" alt="" class="size-7 rounded-[6px]" />

@@ -2,8 +2,8 @@
 
 Architecture decision records. Each captures a decision that is not obvious from
 the code, with the reasoning, so a future change is a deliberate reversal rather
-than an accident. Format mirrors frappe-ui's `spec/adr/`: **Status** →
-**Context** → **Decision** → **Rationale** → **Consequences**.
+than an accident. Each record follows **Status** → **Context** → **Decision** →
+**Rationale** → **Consequences**.
 
 Statuses: `accepted`, `superseded by ADR-XXXX`, `proposed`.
 

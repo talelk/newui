@@ -3,7 +3,7 @@
 `Breadcrumbs` — a trail showing where the current page sits in a hierarchy and
 letting the user step back to a parent. It renders its own
 `<nav aria-label="Breadcrumb">` landmark around an ordered list, so it is the
-page's main breadcrumb trail (frappe-ui leaves the landmark to the caller).
+page's main breadcrumb trail; the landmark belongs to the caller.
 
 ## Props
 
@@ -55,8 +55,8 @@ page's main breadcrumb trail (frappe-ui leaves the landmark to the caller).
 `breadcrumbs-separator` / `breadcrumbs-current` / `breadcrumbs-link` /
 `breadcrumbs-button`. Colors use semantic tokens only (`ink-gray-*`).
 
-## Not ported
+## Deliberate omission
 
-frappe-ui collapses overflow into a `…` dropdown once the trail does not fit
+The trail collapses overflow into a `…` dropdown once it does not fit
 its container. That depends on a resize observer and the `Dropdown`/`Button`
 family; it is out of scope here, and the trail scrolls/clips instead.

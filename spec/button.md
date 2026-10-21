@@ -30,7 +30,7 @@
 - `route` renders an anchor with a plain `href` (no new tab) and no `rel`;
   pair it with `onClick` to intercept the click and navigate with your router
   (CONTEXT: `route` = in-app, `href` = external).
-- **No `tooltip` prop** (a deliberate non-mirror of frappe-ui): wrapping the
+- **No `tooltip` prop** (a deliberate omission): wrapping the
   button in the `Tooltip` family would statically pull `@zag-js/tooltip` into
   every `Button` import — 9 → 32 kB gzip. Compose `<Tooltip>` around a button
   where you need one; the `Button` stays machine-free.

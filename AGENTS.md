@@ -12,24 +12,24 @@ Use intent maintainer setup to initialize missing records, maintainer add to reg
 
 # newui
 
-A SolidJS component library — the equivalent of `frappe-ui` rebuilt on
-**SolidJS + Zag + typed variant recipes + Tailwind CSS v4**.
+A SolidJS component library built on **SolidJS + Zag + typed variant recipes +
+Tailwind CSS v4**.
 
-The Vue originals are checked out read-only at `references/frappe-ui-main/` and the Zag
-source at `references/zag-main/`. Port from them; never edit them.
+The development reference checkouts under `references/` are read-only. Never
+edit them.
 
 Ship tier: prod.
 
 ## Read order
 
 1. [`AGENTS.md`](./AGENTS.md) — this file.
-2. `PHILOSOPHY.md` — API design rules (ported from frappe-ui, P1–P15).
+2. `PRINCIPLES.md` — API design rules (P1–P15).
 3. `CONTEXT.md` — shared vocabulary (variant/theme, open, dismissible, …).
 4. `spec/*.md` — per-component API contracts.
 5. [`skills/README.md`](./skills/README.md) — how versioned Agent Skills ship
    with the packages and how consumers discover them.
 
-When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
+When docs disagree: `spec/*.md` > ADRs > `PRINCIPLES.md` > `CONTEXT.md`.
 
 ## Architecture
 
@@ -37,7 +37,7 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 | --- | --- | --- |
 | tokens | `@newui/tokens` | framework-neutral token data + CSS-var generator |
 | tailwind | `@newui/tailwind` | v4 `@theme`/`@utility`/plugins, `style.css` |
-| icons | `@newui/icons` | Frappe's glyphs as Solid components |
+| icons | `@newui/icons` | the icon set as Solid components |
 | atoms | `@newui/atoms` | single controls/marks and shared runtime foundations |
 | molecules | `@newui/molecules` | compound interactions built from atoms |
 | organisms | `@newui/organisms` | page regions: sidebar, filter bar, board, table, virtual list |
@@ -46,7 +46,7 @@ When docs disagree: `spec/*.md` > ADRs > `PHILOSOPHY.md` > `CONTEXT.md`.
 | code editor | `@newui/code-editor` | CodeMirror 6 Solid component |
 | rich text | `@newui/editor` | TipTap 3 Solid editor + toolbar |
 | charts | `@newui/charts` | echarts Solid wrappers (SVG renderer) |
-| vite | `@newui/vite` | Frappe dev proxy · lucide auto-import · DocType types |
+| vite | `@newui/vite` | dev-server proxy · lucide auto-import · DocType types |
 | site | `apps/playground` | the docs site, Storybook's host, and the visual acceptance surface |
 | starter | `apps/starter` | the gated application skeleton — the copyable composition of every level |
 
@@ -64,7 +64,7 @@ names fail generation. The old `@newui/ui`, `@newui/blocks` and
 
 - **Primitives:** raw `@zag-js/*` via `useMachine` + `normalizeProps`
   (`packages/atoms/src/lib/zag.ts`). Zag supplies keyboard, ARIA and focus.
-- **Styling:** `tv()` recipes replace frappe-ui's hand-written class maps. Only
+- **Styling:** `tv()` recipes replace hand-written class maps. Only
   two color axes exist — `variant` + `theme` (P4).
 - **State:** no `v-model`. Use `open`/`onOpenChange` (overlays) via
   `createDisclosure`, or let the Zag machine own state (`checked` +
@@ -160,9 +160,9 @@ regression suite.
 
 ### Application and reference examples
 
-`/pages` links complete application workflows only. All eight Frappe recipe
-families share one documentation destination per family and respond to the
-actual viewport; the solid-ui application examples have explicit destinations.
+`/pages` links complete application workflows only. All eight application
+recipe families share one documentation destination per family and respond to
+the actual viewport; the application examples have explicit destinations.
 The 68 registry examples link to the atomic page that owns their public API, and
 non-component recipes live under `/kit/recipes`. `spec/reference-examples.md`
 documents the mapping and acceptance boundaries. `lib/examples.ts` owns the
@@ -432,6 +432,6 @@ pnpm changeset      # add a changeset
 
 ## Do not
 
-- Invent new public API vocabulary without checking `PHILOSOPHY.md`/`spec/`.
+- Invent new public API vocabulary without checking `PRINCIPLES.md`/`spec/`.
 - Add class-name or style-injection props.
-- Edit the reference checkouts (`references/frappe-ui-main/`, `references/solid-ui-main/`, `references/zag-main/`).
+- Edit the read-only reference checkouts under `references/`.

@@ -8,7 +8,7 @@ export const API = {
       "name": "lines",
       "type": "number",
       "optional": true,
-      "description": "Number of shimmering bars. Omit for frappe-ui's class-sized single block."
+      "description": "Number of shimmering bars. Omit for the class-sized single block."
     },
     {
       "name": "class",

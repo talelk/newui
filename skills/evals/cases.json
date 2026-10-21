@@ -134,14 +134,14 @@
       "area": "styling-hooks",
       "prompt": "Style the highlighted option in a Combobox differently from the rest, and the open state of its trigger.",
       "check": "Customisation targets `data-slot` / `data-state` (and Zag's `data-highlighted` / `data-disabled`) attributes in CSS, not an `itemClass`/`contentClass`/`triggerClass` prop.",
-      "source": "PHILOSOPHY.md"
+      "source": "PRINCIPLES.md"
     },
     {
       "id": "hooks-class-fallthrough",
       "area": "styling-hooks",
       "prompt": "Make this dialog wider than the default.",
       "check": "Width is set with a utility on the root `class` (merged last through `cn()`), not via a `contentClass`/`contentStyle` or other class-injection prop.",
-      "source": "PHILOSOPHY.md"
+      "source": "PRINCIPLES.md"
     },
     {
       "id": "packaging-root-import",

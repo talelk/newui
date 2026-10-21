@@ -2695,7 +2695,7 @@
         "name": "lines",
         "type": "number",
         "optional": true,
-        "description": "Number of shimmering bars. Omit for frappe-ui's class-sized single block."
+        "description": "Number of shimmering bars. Omit for the class-sized single block."
       },
       {
         "name": "class",
@@ -5375,7 +5375,7 @@
         "name": "prefix",
         "type": "JSX.Element",
         "optional": true,
-        "description": "Leading adornment (frappe-ui's `#prefix` slot)."
+        "description": "Leading adornment."
       },
       {
         "name": "label",
@@ -5387,7 +5387,7 @@
         "name": "suffix",
         "type": "JSX.Element",
         "optional": true,
-        "description": "Trailing adornment (frappe-ui's `#suffix` slot)."
+        "description": "Trailing adornment."
       },
       {
         "name": "class",

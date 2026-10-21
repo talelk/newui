@@ -50,11 +50,11 @@ export interface ItemListRowProps
    * attribute, so skip the action in your own handler.
    */
   disabled?: boolean
-  /** Leading adornment (frappe-ui's `#prefix` slot). */
+  /** Leading adornment. */
   prefix?: JSX.Element
   /** Replaces the default content when both are passed (`#label` slot). */
   label?: JSX.Element
-  /** Trailing adornment (frappe-ui's `#suffix` slot). */
+  /** Trailing adornment. */
   suffix?: JSX.Element
   /** Merged into the root. */
   class?: string

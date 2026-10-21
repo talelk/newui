@@ -25,7 +25,7 @@ The playground is the documentation site and visual acceptance surface. Start
 with `/foundations`, browse `/atoms` and `/organisms`, or open
 `/pages/analytics`. `/pages` contains complete local business workflows;
 `/kit/recipes` collects small examples outside the application catalog, while
-the 68 solid-ui registry examples link to the atomic component or recipe they
+the 68 copyable registry examples link to the atomic component or recipe they
 demonstrate. Every page and live demo loads lazily.
 
 ```sh
@@ -45,19 +45,20 @@ a demo is written once.
 | `@newui/atoms`, `@newui/molecules` | Single controls/marks and compound interactions |
 | `@newui/organisms` | Application regions, sidebar, table and virtual list |
 | `@newui/templates` | Exactly three page templates: `AppShell`, `PaneLayout`, `AuthLayout` |
-| `@newui/icons` | Frappe glyphs as Solid components |
+| `@newui/icons` | The icon set as Solid components |
 | `@newui/data` | Headless format/selection/undo/download, query and form logic |
 | `@newui/charts` | Theme-aware ECharts SVG wrappers and accessible data fallbacks |
 | `@newui/editor`, `@newui/code-editor` | TipTap and CodeMirror integrations |
-| `@newui/vite` | Frappe development integration |
+| `@newui/vite` | Development integration: dev-server proxy, icons and DocType types |
 
 TanStack Table and Virtual belong to the organism package; Query and Form belong
 to the headless data package. Applications import the atomic layer they use.
-Reference checkouts remain read-only and are never shipped as runtime code.
+Development reference checkouts remain read-only and are never shipped as
+runtime code.
 
 ## Contracts and validation
 
-Read [AGENTS.md](AGENTS.md), [PHILOSOPHY.md](PHILOSOPHY.md),
+Read [AGENTS.md](AGENTS.md), [PRINCIPLES.md](PRINCIPLES.md),
 [CONTEXT.md](CONTEXT.md), then the component's contract under `spec/`.
 The [construction kit](spec/kit.md), [states](spec/states.md),
 [visual system](spec/visual-system.md),
@@ -90,7 +91,7 @@ from several open-source projects. Thank you to the people who built and shared
 them:
 
 - **[frappe-ui](https://github.com/frappe/frappe-ui)** — Frappe Technologies and
-  contributors. The Vue component library and its philosophy are the primary
+  contributors. Its component library and design approach are the primary
   reference; the read-only checkout lives in `references/frappe-ui-main/`.
 - **[SolidUI](https://www.solid-ui.com/)** — Stefan Karger, Michael Essiet and
   contributors. The 68 registry examples and several application compositions

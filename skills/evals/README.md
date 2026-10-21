@@ -8,8 +8,8 @@ asks two questions the skill's own text cannot answer:
 2. **Does an agent that has only the skill write correct newui code?** Scored
    against the repo's specs and source, never against the skill.
 
-The approach mirrors `frappe-ui-main/skills/frappe-ui/evals/`, restated for
-Solid + newui.
+The approach is deliberately isolated from the repository's source so a run
+measures what the skill alone produces.
 
 ## Files
 
@@ -37,7 +37,7 @@ set is grouped by `area`:
 | `zag` | `createZagApi` / `createZagContext`, never raw `useMachine` | 2 |
 | `dialogs` | the imperative `dialog.*` helpers + `DialogHost` | 1 |
 
-Every `source` is a real path in this repo (`spec/*.md`, `PHILOSOPHY.md`,
+Every `source` is a real path in this repo (`spec/*.md`, `PRINCIPLES.md`,
 `CONTEXT.md`, `AGENTS.md`, an ADR, or library source). `score.ts` fails if a
 source moves.
 
@@ -81,6 +81,6 @@ A case can invoke correctly and still fail its check — that is the useful sign
   can score a wrong instruction as correct. If a `check` is not actually
   supported by its `source`, treat that as a bad case and fix the case, not the
   answer.
-- **Coverage is not completeness.** The 26 cases are the behaviours that
-  frappe-ui's audit showed agents get wrong (prop-level facts, not component
-  choice). They do not cover the whole surface.
+- **Coverage is not completeness.** The 26 cases target prop-level facts and
+  component choice that reviewers have seen agents get wrong. They do not cover
+  the whole surface.

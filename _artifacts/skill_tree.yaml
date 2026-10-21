@@ -11,16 +11,15 @@ skills:
         domain: ui,
         package: packages/atoms,
         path: skills/newui/SKILL.md,
-        description: "Build user interfaces with the newui SolidJS component library (a
-          SolidJS port of frappe-ui on Zag + Tailwind CSS v4). Use when
-          scaffolding SolidJS pages, forms, dialogs, lists, or any UI that
-          should look and feel like a Frappe product, when the user mentions
-          newui, @newui/atoms, or asks to use newui components, tokens, or
-          conventions.",
+        description: "Build user interfaces with the newui SolidJS component library on
+          Zag + Tailwind CSS v4. Use when scaffolding SolidJS pages, forms,
+          dialogs, lists, or any UI that should look and feel consistent and
+          product-ready, when the user mentions newui, @newui/atoms, or asks to
+          use newui components, tokens, or conventions.",
         sources:
           [
             talelk/newui:AGENTS.md,
-            talelk/newui:PHILOSOPHY.md,
+            talelk/newui:PRINCIPLES.md,
             talelk/newui:CONTEXT.md,
             talelk/newui:skills/README.md,
             talelk/newui:spec/adr/0001-solid-no-v-model.md,
@@ -64,21 +63,27 @@ distribution:
 coverage:
   ignored_packages:
     - name: '@newui/charts'
-      reason: optional organism-level chart package; its API is covered by source and stories, not the core UI skill
+      reason: optional organism-level chart package; its API is covered by source and
+        stories, not the core UI skill
     - name: '@newui/code-editor'
-      reason: optional organism-level editor add-on; its API is covered by source and stories
+      reason: optional organism-level editor add-on; its API is covered by source and
+        stories
     - name: '@newui/editor'
-      reason: optional organism-level rich-text add-on; its API is covered by source and stories
+      reason: optional organism-level rich-text add-on; its API is covered by source
+        and stories
     - name: '@newui/icons'
       reason: glyph names are implementation detail of the UI skill's icon convention
     - name: '@newui/molecules'
-      reason: covered by the newui UI skill, which routes molecules to their installed source
+      reason: covered by the newui UI skill, which routes molecules to their installed
+        source
     - name: '@newui/organisms'
-      reason: covered by the newui UI skill, which routes organisms to their installed source
+      reason: covered by the newui UI skill, which routes organisms to their installed
+        source
     - name: '@newui/tailwind'
       reason: covered by the newui UI skill's semantic-token rules
     - name: '@newui/templates'
-      reason: covered by the newui UI skill, which routes templates to their installed source
+      reason: covered by the newui UI skill, which routes templates to their installed
+        source
     - name: '@newui/tokens'
       reason: covered by the newui UI skill's semantic-token rules
     - name: '@newui/vite'

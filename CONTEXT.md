@@ -1,6 +1,6 @@
 # Vocabulary
 
-The shared names the library's APIs use. Pairs with `PHILOSOPHY.md` (rules) and
+The shared names the library's APIs use. Pairs with `PRINCIPLES.md` (rules) and
 `spec/` (per-component contracts).
 
 ## Lifecycle & control
@@ -10,7 +10,7 @@ Tooltip), a boolean bound with `open` + `onOpenChange`.
 _Avoid_: visible, show, isOpen.
 
 **value** — the primary value a control represents (selected option, text).
-_Avoid_: modelValue (Vue-ism).
+_Avoid_: modelValue.
 
 **dismissible** — whether an overlay closes on outside click / Escape.
 Default `true`.

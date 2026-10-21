@@ -16,10 +16,9 @@ is deleted (§3, major changeset for `@newui/blocks`), Home embeds real
 component previews as a scroll-loaded chunk (§4D), Analytics runs on
 `DataTable`, reference pages render one Props table (the spec contract
 drops its copy at render time only), and the TOC tracks the section being
-read. See `spec/redesign-progress.md` for the measured record.
+read.
 
-Authority: `AGENTS.md` + `spec/redesign-blueprint.md` +
-`spec/redesign-progress.md` (Slice 5 leftovers, progress `:446-450`).
+Authority: `AGENTS.md` + `spec/redesign-blueprint.md`.
 Evidence for every item was opened in-tree; citations are `file:line`
 relative to the repo root unless prefixed `apps/playground/src/`
 (shortened `pg/` below = `apps/playground/src/`).
@@ -425,7 +424,7 @@ gate it names is red.
 | E TOC | A-set + `pnpm test:e2e` (anchor/focus behaviour, axe with real CSS) + `pnpm arch` (shell-stays-lean after any routes/shell forwarding edit) |
 | F AuthCard (library) | `pnpm vitest run packages/blocks` · `pnpm typecheck` · `pnpm api:check` (unchanged = no API drift) · `pnpm specs:check` · `pnpm size` (blocks barrel; still cannot reach slider/toast/date-picker) · changeset present · A-set for the demo/page side |
 | Any §5 additive prop or `PageToolbarTab` deletion | F-set, but `pnpm api && pnpm site` regeneration committed in-diff and `pnpm api:check && pnpm site:check` green **after** regen; `pnpm packages:check`; exports test updated if the public surface moved |
-| Final (after last slice) | `pnpm verify` (all CI steps, `scripts/ci-steps.ts`) · `pnpm shots` full review light/dark × 320/768/1280 · `pnpm lighthouse` · update `spec/redesign-progress.md` and AGENTS.md measured sizes **only** from fresh `pnpm size`/`pnpm budget` output |
+| Final (after last slice) | `pnpm verify` (all CI steps, `scripts/ci-steps.ts`) · `pnpm shots` full review light/dark × 320/768/1280 · `pnpm lighthouse` · update AGENTS.md measured sizes **only** from fresh `pnpm size`/`pnpm budget` output |
 
 ## Sequencing summary
 
@@ -437,5 +436,4 @@ each. Estimated net effect: every application example renders
 FilterBar/StatGrid-or-NumberCard/ChartCard chrome where the surface
 exists, ~11 notice copies, 8 chart-demo bodies, 4 formatters and 4
 download copies collapse into single playground-local modules, and
-Home/TOC/AuthCard close the Slice-5 ledger in
-`spec/redesign-progress.md`.
+Home/TOC/AuthCard close the Slice-5 ledger.

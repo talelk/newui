@@ -1,9 +1,8 @@
 # newui skill spec
 
-A SolidJS component library — the SolidJS equivalent of frappe-ui, built on
-Zag, typed variant recipes and Tailwind CSS v4. The skills ship beside the
-packages they describe so an agent can load the visual guidance, the data
-guidance, or both, at the installed version.
+A SolidJS component library built on Zag, typed variant recipes and Tailwind
+CSS v4. The skills ship beside the packages they describe so an agent can load
+the visual guidance, the data guidance, or both, at the installed version.
 
 ## Domains
 

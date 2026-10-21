@@ -12,7 +12,7 @@ export function Demo(): JSX.Element {
       <Avatar size="xs" label="Alex Rivera" />
       <Avatar size="md" label="Sam Lee" />
       <Avatar size="lg" theme="blue" label="Jordan Park" />
-      <Avatar size="2xl" shape="square" theme="green" label="Frappe" />
+      <Avatar size="2xl" shape="square" theme="green" label="Acme" />
     </div>
   )
 }

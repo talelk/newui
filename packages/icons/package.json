@@ -2,7 +2,7 @@
   "name": "@newui/icons",
   "version": "0.0.0",
   "type": "module",
-  "description": "Frappe's own icon set, ported to Solid components.",
+  "description": "The icon set as Solid components.",
   "exports": {
     ".": {
       "solid": "./src/index.ts",

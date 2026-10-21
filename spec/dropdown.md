@@ -1,7 +1,7 @@
 # Dropdown
 
 `Dropdown` — an options-based action menu. A thin composition over the compound
-`Menu` (same Zag `menu` machine), matching frappe-ui's options-first `Dropdown`.
+`Menu` (same Zag `menu` machine), exposing an options-first `Dropdown`.
 
 ## Props
 

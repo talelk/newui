@@ -1,4 +1,4 @@
-/** Shipped application examples and their reference lineage, with no runtime UI. */
+/** Shipped application examples, with no runtime UI. */
 export const EXAMPLES = [
   {
     name: 'Accounting',
@@ -6,7 +6,6 @@ export const EXAMPLES = [
     preview: 'Chart',
     description:
       'Cashflow, expenses, payroll and a profit report connected to one local ledger.',
-    source: 'Frappe AccountingDesktop',
     icon: 'lucide-chart-no-axes-column',
   },
   {
@@ -15,7 +14,6 @@ export const EXAMPLES = [
     preview: 'Card',
     description:
       'Folders, favourites, local uploads, previews, downloads and restorable trash.',
-    source: 'Frappe FilesDesktop',
     icon: 'lucide-folder',
   },
   {
@@ -24,7 +22,6 @@ export const EXAMPLES = [
     preview: 'List',
     description:
       'A local helpdesk with service targets, ownership, replies, resolution and bulk actions.',
-    source: 'Frappe TicketsDesktop',
     icon: 'lucide-ticket',
   },
   {
@@ -33,7 +30,6 @@ export const EXAMPLES = [
     preview: 'Card',
     description:
       'An opportunity board with accessible stage changes, filters, creation and a typed list.',
-    source: 'Frappe DealsDesktop',
     icon: 'lucide-handshake',
   },
   {
@@ -42,7 +38,6 @@ export const EXAMPLES = [
     preview: 'List',
     description:
       'Folders, labels, search, unread filters, conversations and a local email composer.',
-    source: 'Frappe MailDesktop · solid-ui mail',
     icon: 'lucide-mail',
   },
   {
@@ -50,7 +45,6 @@ export const EXAMPLES = [
     href: '/pages/compose',
     preview: 'Editor',
     description: 'Write, preview, save and publish a local rich-text update.',
-    source: 'Frappe ComposeDesktop',
     icon: 'lucide-file-pen-line',
   },
   {
@@ -59,7 +53,6 @@ export const EXAMPLES = [
     preview: 'Chart',
     description:
       'Revenue, channels, regions, transactions and a clear view of growth.',
-    source: 'Tremor analytical interfaces · solid-ui dashboard',
     icon: 'lucide-chart-no-axes-combined',
   },
   {
@@ -68,7 +61,6 @@ export const EXAMPLES = [
     preview: 'Tasks',
     description:
       'A thousand local tasks with typed tables, validated creation and a virtual feed.',
-    source: 'Frappe TasksDesktop · solid-ui tasks',
     icon: 'lucide-list-checks',
   },
   {
@@ -77,7 +69,6 @@ export const EXAMPLES = [
     preview: 'Card',
     description:
       'Account, payment, team, sharing, notifications, support, project and cookie compositions.',
-    source: 'solid-ui cards',
     icon: 'lucide-layout-grid',
   },
   {
@@ -86,7 +77,6 @@ export const EXAMPLES = [
     preview: 'AuthCard',
     description:
       'Validated sign-in, account creation and email-link demo flows.',
-    source: 'solid-ui authentication',
     icon: 'lucide-lock-keyhole',
   },
   {
@@ -95,7 +85,6 @@ export const EXAMPLES = [
     preview: 'Sidebar',
     description:
       'Community switcher, grouped spaces, a filterable feed and workspace settings.',
-    source: 'Frappe DiscussionsDesktop',
     icon: 'lucide-messages-square',
   },
   {
@@ -104,7 +93,6 @@ export const EXAMPLES = [
     preview: 'Dialog',
     description:
       'Grouped settings navigation with profile, notification and member panels.',
-    source: 'Frappe SettingsDialog',
     icon: 'lucide-settings-2',
   },
 ] as const

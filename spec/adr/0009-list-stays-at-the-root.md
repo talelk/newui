@@ -4,9 +4,9 @@
 
 ## Context
 
-frappe-ui exposes `frappe-ui/list` as a subpath (with its own structural
-`style.css`). `List` and its parts are exported from the `@newui/molecules`
-root barrel; no component-specific subpath is needed.
+`List` and its parts are exported from the `@newui/molecules` root barrel. A
+component-specific subpath would add a second entry point without a separate
+dependency graph.
 
 ## Decision
 

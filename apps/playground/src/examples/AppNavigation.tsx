@@ -4,7 +4,7 @@ import { For, type JSX, Show } from 'solid-js'
 /**
  * The navigation list an application recipe carries in its sidebar.
  *
- * Rows are the library's `SidebarItem` — the same anatomy frappe-ui's
+ * Rows are the library's `SidebarItem` — the same anatomy the sidebar uses
  * recipes compose. Inside `AppShell` they sit in the one integrated sidebar,
  * so the list shares its collapse state, labels and tooltips.
  * Standalone use (Mail's in-page mailbox list) reads the context's expanded

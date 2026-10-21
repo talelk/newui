@@ -18,7 +18,6 @@
  * `--check` regenerates in memory and fails on drift, the same gate `api:check`
  * and `css:check` are.
  */
-import { createHash } from 'node:crypto'
 import {
   existsSync,
   mkdirSync,
@@ -32,7 +31,6 @@ import path from 'node:path'
 import { Node, Project, SyntaxKind } from 'ts-morph'
 import { APPLICATION_FILES } from '../apps/playground/src/lib/application-files'
 import { EXAMPLES } from '../apps/playground/src/lib/examples'
-import { REFERENCE_EXAMPLES } from '../apps/playground/src/lib/reference-examples'
 import { semanticColors } from '../packages/tokens/src/index.js'
 import { atomicOf } from './atomic'
 
@@ -864,89 +862,6 @@ write(
   path.join(outDir, 'surface-inventory.json'),
   `${JSON.stringify(inventory, null, 2)}\n`,
 )
-
-const referenceFile = path.join(outDir, 'reference-inventory.json')
-type ReferenceSurface = {
-  source: string
-  implementation: string
-  documentation: string
-  tests: string[]
-  digest?: string
-  controls?: { line: number; element: string; source: string }[]
-  acceptance: 'pending'
-}
-const previousReferences: ReferenceSurface[] = existsSync(referenceFile)
-  ? JSON.parse(readFileSync(referenceFile, 'utf8'))
-  : []
-const families = [
-  'Tasks',
-  'Mail',
-  'Files',
-  'Deals',
-  'Tickets',
-  'Accounting',
-  'Compose',
-  'Discussions',
-]
-const references: ReferenceSurface[] = [
-  ...['dashboard', 'authentication', 'cards', 'mail', 'tasks'].map((name) => ({
-    source: `references/solid-ui-main/apps/docs/src/components/${name}/index.tsx`,
-    implementation: `apps/playground/src/pages/${({ dashboard: 'Analytics', authentication: 'Authentication', cards: 'Cards', mail: 'Mail', tasks: 'Tasks' } as Record<string, string>)[name]}.tsx`,
-    documentation: `/pages/${name === 'dashboard' ? 'analytics' : name}`,
-    tests: [
-      `e2e/${({ dashboard: 'analytics', authentication: 'example-patterns', cards: 'example-patterns', mail: 'mail', tasks: 'tasks' } as Record<string, string>)[name]}.spec.ts`,
-    ],
-    acceptance: 'pending' as const,
-  })),
-  ...families.flatMap((name) =>
-    ['Desktop', 'Mobile'].map((viewport) => ({
-      source: `references/frappe-ui-main/docs/components/recipes/${name}${viewport}.vue`,
-      implementation: `apps/playground/src/pages/${name}.tsx`,
-      documentation: `/pages/${name.toLowerCase()}`,
-      tests: [
-        `e2e/${({ Tasks: 'tasks', Mail: 'mail', Compose: 'compose', Discussions: 'discussions-settings' } as Record<string, string>)[name] ?? 'business-recipes'}.spec.ts`,
-      ],
-      acceptance: 'pending' as const,
-    })),
-  ),
-  ...REFERENCE_EXAMPLES.map((entry) => ({
-    source: `references/solid-ui-main/apps/docs/src/registry/example/${entry.source}.tsx`,
-    implementation: entry.implementation,
-    documentation: entry.href,
-    tests: ['e2e/reference-patterns.spec.ts'],
-    acceptance: 'pending' as const,
-  })),
-  ...['sidebar-01/index', 'demo-sidebar'].map((name) => ({
-    source: `references/solid-ui-main/apps/docs/src/registry/block/${name}.tsx`,
-    implementation: `apps/playground/src/stories/${name.split('/')[0]}.stories.tsx`,
-    documentation: `/organisms/compositions/${name.split('/')[0]}`,
-    tests: ['e2e/responsive-preview.spec.ts'],
-    acceptance: 'pending' as const,
-  })),
-]
-for (const entry of references) {
-  const file = path.join(root, entry.source)
-  if (!existsSync(file)) {
-    const prior = previousReferences.find(
-      (item) => item.source === entry.source,
-    )
-    entry.digest = prior?.digest
-    entry.controls = prior?.controls
-    continue
-  }
-  const source = readFileSync(file, 'utf8')
-  entry.digest = createHash('sha256').update(source).digest('hex')
-  entry.controls = [
-    ...source.matchAll(
-      /<(?:Button|button|input|select|textarea|[A-Z][\w.]*(?:Item|Trigger|Select|Input|Switch|Checkbox|Tab|Menu))\b[^>]*>/g,
-    ),
-  ].map((match) => ({
-    line: source.slice(0, match.index).split('\n').length,
-    element: /^<([\w.]+)/.exec(match[0])?.[1] ?? '',
-    source: match[0],
-  }))
-}
-write(referenceFile, `${JSON.stringify(references, null, 2)}\n`)
 
 if (!isCheck) {
   rmSync(apiOutDir, { recursive: true, force: true })

@@ -50,7 +50,7 @@ export const API = {
       "name": "prefix",
       "type": "JSX.Element",
       "optional": true,
-      "description": "Leading adornment (frappe-ui's `#prefix` slot)."
+      "description": "Leading adornment."
     },
     {
       "name": "label",
@@ -62,7 +62,7 @@ export const API = {
       "name": "suffix",
       "type": "JSX.Element",
       "optional": true,
-      "description": "Trailing adornment (frappe-ui's `#suffix` slot)."
+      "description": "Trailing adornment."
     },
     {
       "name": "class",

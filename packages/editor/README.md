@@ -4,39 +4,13 @@ A [TipTap](https://tiptap.dev/) (ProseMirror) rich-text editor as a Solid
 component, themed with the newui semantic tokens so it follows the light/dark
 `colorScheme` axis with no reconfiguration.
 
-## Binding decision (spike)
+## Binding
 
-TipTap has no official Solid binding; the Vue binding (`@tiptap/vue-3`) is what
-`frappe-ui-main/src/molecules/editor` uses. Before writing this package the two
-community Solid bindings were checked against the requirement "TipTap 3 + Solid
-1.9":
-
-| Candidate | TipTap 3? | Solid 1.9? | Installs | Verdict |
-| --- | --- | --- | --- | --- |
-| [`@vrite/tiptap-solid`](https://www.npmjs.com/package/@vrite/tiptap-solid) `1.0.4` | **No** — peers pin `@tiptap/core`/`@tiptap/pm` to exactly `2.5.9` | `^1.8.20` | n/a | **Rejected.** TipTap 2 only, and unpublished since Aug 2024. |
-| [`solid-tiptap`](https://www.npmjs.com/package/solid-tiptap) `0.8.0` | Yes — peers `@tiptap/core ^3`, `@tiptap/pm ^3` | `^1.7` | Yes (verified against `@tiptap/*@3.31` + `solid-js@1.9`) | **Viable but not adopted.** |
-
-`solid-tiptap` is a sound, maintained binding, but it is a poor fit for a
-component library:
-
-- Its `useEditor` constructs the editor **inside a `createEffect` that tracks the
-  whole options object** (`createEffect(() => new Editor({ ...props() }))`). Any
-  reactive prop read there — `content`, `extensions`, an accessor — destroys and
-  rebuilds the editor on change, discarding the document, selection and undo
-  history. A controlled `value` would do exactly that on every keystroke.
-- It offers no controlled-value contract; only `createEditorTransaction` readers.
-  The `value` + `onValueChange` two-way contract (P2) would still have to be
-  written on top.
-
-So this package implements a **thin wrapper over `@tiptap/core` directly**,
-mirroring `@newui/code-editor`'s CodeMirror wrapper. That buys: no third-party
-binding dependency, the library's own `value`/`onValueChange` semantics, a stable
-lifecycle (`onMount` create / `onCleanup` destroy — prop changes never rebuild the
-editor), and narrow external writes that do not re-enter `onValueChange`.
-
-The toolbar's pressed states are bridged from TipTap's `transaction` event into a
-Solid signal — the one genuinely useful idea from `solid-tiptap`, reimplemented
-in ~10 lines instead of taken as a dependency.
+TipTap has no official Solid binding. This package is a thin wrapper over
+`@tiptap/core` directly, matching `@newui/code-editor`'s CodeMirror wrapper. That
+keeps the library's own `value`/`onValueChange` contract, a stable lifecycle
+(`onMount` create / `onCleanup` destroy — prop changes never rebuild the editor),
+and narrow external writes that do not re-enter `onValueChange`.
 
 ## Install
 

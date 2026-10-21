@@ -1,9 +1,8 @@
 # Running the newui skill evals
 
 A short procedure for taking `cases.json` to a batch of model answers and a
-written findings file. It mirrors the intent of frappe-ui's
-`evals/run.workflow.js` (one fresh builder per case, then batched graders)
-without wiring any CI.
+written findings file. The procedure uses one fresh builder per case and then
+batched graders; it is not wired into CI.
 
 ## 0. Validate first
 
@@ -22,10 +21,10 @@ case, create `${runDir}/${case.id}/`.
 ## 2. Build — one fresh agent per case
 
 Run a **new** agent for each case, given only the raw `prompt`. Two conditions
-matter, and both come from frappe-ui's experience:
+matter in practice:
 
 - **Source-blind.** The builder must not read this repo's `packages/`, `spec/`,
-  `PHILOSOPHY.md`, `CONTEXT.md`, `AGENTS.md`, or `llms.txt`. The skill is the
+  `PRINCIPLES.md`, `CONTEXT.md`, `AGENTS.md`, or `llms.txt`. The skill is the
   agent's only reference — that is the condition it ships for. If the builder
   can read the specs, it grades itself against the truth and every case passes.
 - **Neutralised standing instructions.** If the agent's context already says

@@ -11,7 +11,7 @@ skills:
   - name: newui
     slug: newui
     domain: ui
-    description: Build user interfaces with the newui SolidJS component library (a SolidJS port of frappe-ui on Zag + Tailwind CSS v4). Use when scaffolding SolidJS pages, forms, dialogs, lists, or any UI that should look and feel like a Frappe product, when the user mentions newui, @newui/atoms, or asks to use newui components, tokens, or conventions.
+    description: Build user interfaces with the newui SolidJS component library on Zag + Tailwind CSS v4. Use when scaffolding SolidJS pages, forms, dialogs, lists, or any UI that should look and feel consistent and product-ready, when the user mentions newui, @newui/atoms, or asks to use newui components, tokens, or conventions.
     type: core
     packages:
       - '@newui/atoms'

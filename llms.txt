@@ -1,60 +1,62 @@
 # newui
 
-A SolidJS component library — the equivalent of frappe-ui rebuilt on **SolidJS +
-Zag + Tailwind CSS v4**, themed with Frappe's design tokens. Ship tier: prod.
+A SolidJS component library built on **SolidJS + Zag + typed variant recipes +
+Tailwind CSS v4**. It ships semantic tokens, a full component ladder, headless
+data helpers, optional charts and editors, and a copyable application skeleton.
 
 ## Packages
 
-- `@newui/tokens` — framework-neutral token data + CSS-variable generator (leaf).
-- `@newui/tailwind` — v4 `@theme`/`@utility`/plugins + `style.css`.
-- `@newui/icons` — Frappe's glyphs as Solid components.
-- `@newui/ui` — components over Zag, `tv()` recipes, and the `lib/` shims.
+- `@newui/tokens` — framework-neutral token data and the CSS-variable generator.
+- `@newui/tailwind` — v4 `@theme` / `@utility` / plugins and `style.css`.
+- `@newui/icons` — the icon set as Solid components.
+- `@newui/atoms` — single controls and marks over Zag.
+- `@newui/molecules` — compound interactions built from atoms.
+- `@newui/organisms` — page regions: sidebar, filter bar, board, table, virtual list.
+- `@newui/templates` — `AppShell`, `PaneLayout` and `AuthLayout`.
+- `@newui/data` — headless formatting, selection, undo, downloads, query and forms.
+- `@newui/charts`, `@newui/editor`, `@newui/code-editor` — optional chart and editing surfaces.
+- `@newui/vite` — dev-server proxy, icon auto-import and DocType types.
 
-## Conventions (short)
+## Conventions
 
-- **Two colour axes only**: `variant` (`solid | subtle | outline | ghost`) and
+- **Two color axes only**: `variant` (`solid | subtle | outline | ghost`) and
   `theme` (`gray | blue | green | amber | red`; Badge adds `violet`). State
   (error/disabled/loading) is a state prop, never a theme.
 - **No `v-model`.** Overlays take `open` + `onOpenChange`; inputs take `value` +
-  `onValueChange` (or `checked` + `onCheckedChange`). Uncontrolled via
-  `default*`.
-- **Every input shares the labelling contract** (P5): `label`, `description`,
-  `error`, `required` — implemented by `Field`.
+  `onValueChange` (or `checked` + `onCheckedChange`). Uncontrolled via `default*`.
+- **Every input shares the labelling contract** (`label`, `description`, `error`,
+  `required`), implemented by `Field`.
 - **Styling hooks are `data-slot` / `data-state`**, never class-injection props.
   Root `class` fallthrough is merged last with `cn()`.
-- **Semantic tokens only** — `surface-*`, `ink-*`, `outline-*`. Never raw colours.
+- **Semantic tokens only** — `surface-*`, `ink-*`, `outline-*`. Never raw colors.
 - Light/dark is the `colorScheme` axis (`createColorScheme`), not `theme`.
+- Components are imported from their atomic package root; no component subpaths.
 
-## Components
+## Data
 
-Alert · AppShell (+PageHeader/PageBody) · Avatar · Badge · BottomSheet ·
-Breadcrumbs · Button · Card · Checkbox · Combobox · ContextMenu · DatePicker ·
-DesktopShell · Dialog · Divider · Dropdown · Duration · ErrorMessage ·
-FileUploader · FormControl · FormLabel · HoverCard · Icon · ItemListRow ·
-KeyboardShortcut · KeyboardShortcutsDialog · List · Menu · MobileShell
-(+MobileNav/PageHeaderMobile) · MultiSelect · NumberInput · Password · Popover ·
-Progress · RadioGroup (alias `Radio`) · Rating · ScrollArea · Select ·
-SettingsDialog · Sidebar · Skeleton · Slider · Spinner · Switch · TabButtons ·
-Tabs · Textarea · TextInput · TimePicker · Toast · Tooltip · Tree.
-
-Per-component contracts live in [`spec/`](./spec). API tables are generated into
-`packages/ui/api.json`. The data layer lives in `@newui/ui`'s `lib/resource/`:
-`request`/`setConfig`, `createResource`/`createListResource`/
-`createDocumentResource`, `useCall`/`useDoc`/`useList`/`useDoctype`/`useNewDoc`,
-plus `createLocalStore`/`createIdbStore`/`createRealtime`. Imperative dialogs:
-`dialog.confirm`/`dialog.danger`/`dialog.prompt` + `<DialogHost />`.
+`@newui/data` exports formatting and selection helpers, undo and downloads,
+`createDataClient`/`DataProvider`, `createCollection` over repositories, and
+`createAppForm`/`Form`/`fieldError` over TanStack Form. `@newui/data/query` and
+`@newui/data/form` are the two documented subpaths.
 
 ## Commands
 
 ```
 pnpm dev             # playground
-pnpm build           # build all packages
-pnpm test            # vitest (unit + a11y + manifest)
+pnpm storybook       # isolated component surface
+pnpm build           # package CSS and theme generation
+pnpm test            # vitest unit, a11y and manifest suites
 pnpm test:ssr        # Solid SSR smoke tests
-pnpm verify          # the whole CI pipeline locally (15 steps)
+pnpm verify          # the whole CI pipeline locally
 pnpm verify:checks   # fast gates only
 pnpm verify:e2e      # browser harness only
 pnpm css             # regenerate @theme + tokens CSS after token changes
-pnpm api             # regenerate packages/ui/api.json
-pnpm docs:build      # render spec/*.md + api.json into a static docs/ site
+pnpm api             # regenerate api.json
+pnpm site            # regenerate the component registry and API slices
+pnpm docs:build      # render spec/*.md + api.json into a static docs site
+pnpm skills:check    # validate Agent Skills and report staleness
 ```
+
+Per-component contracts live in [`spec/`](./spec). The design rules live in
+[`PRINCIPLES.md`](./PRINCIPLES.md), vocabulary in [`CONTEXT.md`](./CONTEXT.md),
+and the agent-facing skills in [`skills/`](./skills).

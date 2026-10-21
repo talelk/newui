@@ -1,6 +1,6 @@
 # Form trio — `FormControl`, `FormLabel`, `ErrorMessage`
 
-frappe-ui's public form primitives. `FormControl` is a `type` dispatcher; every
+The public form primitives. `FormControl` is a `type` dispatcher; every
 type shares the `label` / `description` / `error` / `required` contract (P5)
 where the resolved control supports it. `FormLabel` and `ErrorMessage` are the
 standalone halves of that contract, for wiring a control the library does not
@@ -83,6 +83,6 @@ Renders nothing when there is no error (empty string, empty array, or an
 test. Lines stack (`whitespace-pre-line`), `role="alert"`,
 `data-slot="error"`.
 
-Unlike frappe-ui's `ErrorMessage`, the message renders as **text**, not
+Unlike `ErrorMessage`, the message renders as **text**, not
 sanitised HTML (P10 — no `innerHTML`): an `<b>` in a server message shows
 literally.

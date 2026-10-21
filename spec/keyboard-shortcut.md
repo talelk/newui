@@ -74,7 +74,7 @@ defaults to the browser platform.
 | `class` | `string` | — | merged into the dialog content |
 
 `KeyboardShortcutEntry` is `{ group?, label?, description?, combo, altCombos? }`.
-`label` is this library's name for a row; `description` is frappe-ui's alias.
+`label` names a row; `description` adds the supporting line.
 Rows without a `group` fall under `General`.
 
 ### Behavior

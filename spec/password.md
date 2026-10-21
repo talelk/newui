@@ -31,7 +31,7 @@ control, `defaultValue` otherwise; `onValueChange` fires either way.
 - The toggle is a `button` with `pointer-events-auto` — it sits in the
   `pointer-events-none` suffix socket `TextInput` provides for adornments, so it
   opts back into hit-testing.
-- `Mod+I` / `Ctrl+I` toggles from the input, matching frappe-ui.
+- `Mod+I` / `Ctrl+I` toggles from the input.
 - The toggle carries `aria-label` ("Show password" / "Hide password"),
   `aria-pressed` and `aria-keyshortcuts="Control+I Meta+I"`.
 - A server-masked value (one containing `*`) hides the toggle entirely.

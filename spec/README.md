@@ -1,10 +1,10 @@
 # Contracts
 
-Per-reference contracts. Source-of-truth order:
+Per-component contracts. Source-of-truth order:
 
 1. `spec/*.md` — current API and behavior contracts.
 2. [`adr/`](./adr/README.md) — decision history.
-3. [`../PHILOSOPHY.md`](../PHILOSOPHY.md) — design rules.
+3. [`../PRINCIPLES.md`](../PRINCIPLES.md) — design rules.
 4. [`../CONTEXT.md`](../CONTEXT.md) — shared vocabulary.
 
 ## Atomic design
@@ -45,6 +45,6 @@ individual contract. `scroll-table.md` documents the table scroll molecule.
 ## Decision history
 
 ADRs explain why a decision was made; when a later accepted contract disagrees,
-the current `spec/*.md` wins. Design-delta audits and example refresh notes are
-historical records, not supported import paths. ADR-0013 supersedes the earlier
+the current `spec/*.md` wins. Example refresh notes are historical records, not
+supported import paths. ADR-0013 supersedes the earlier
 package and shell mapping in ADR-0012.

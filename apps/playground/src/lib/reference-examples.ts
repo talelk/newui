@@ -1,4 +1,4 @@
-/** Port destinations for the 68 examples in the checked-out solid-ui registry. */
+/** Canonical destinations for the 68 registry examples. */
 const destinations: Record<string, string> = {
   'progress-demo': '/atoms/progress',
   'progress-circle-demo': '/atoms/progress-circle',

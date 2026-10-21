@@ -3,7 +3,7 @@ import { For, Show } from 'solid-js'
 import { cn } from '../../lib/tv'
 
 export interface SkeletonProps {
-  /** Number of shimmering bars. Omit for frappe-ui's class-sized single block. */
+  /** Number of shimmering bars. Omit for the class-sized single block. */
   lines?: number
   class?: string
 }

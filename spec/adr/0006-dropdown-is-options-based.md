@@ -5,8 +5,8 @@
 ## Context
 
 `Dropdown` started as an alias of the compound `Menu`
-(`export const Dropdown = { ...Menu }`). frappe-ui's `Dropdown` is
-**options-based**: pass `options` and a trigger, get a menu.
+(`export const Dropdown = { ...Menu }`). The common case is **options-based**:
+pass `options` and a trigger, get a menu.
 
 ## Decision
 
@@ -16,8 +16,8 @@ escape hatch for custom triggers/rows.
 
 ## Rationale
 
-The common case is a list of actions; the options-based API is shorter and
-matches frappe-ui's vocabulary (P8: a different value shape is a different
+A list of actions is the common case; the options-based API is shorter and
+matches the library's vocabulary (P8: a different value shape is a different
 component, not a flag). Keeping `Menu` compound means the alias removal costs
 nothing for callers who need full control.
 

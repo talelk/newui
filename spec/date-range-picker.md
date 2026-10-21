@@ -62,7 +62,7 @@ round-trips through the model), not `Date`s.
   picking.
 - **Half-open is internal.** Only a complete `[from, to]` (or `[]`) is reported.
   The machine keeps the half-open range for the hover preview; `onValueChange`
-  does not fire for it. This mirrors frappe-ui and keeps the model a strict
+  does not fire for it. This keeps the model a strict
   two-tuple-or-empty.
 - `format` sets each input's display text via `Intl.DateTimeFormat`; typing
   still parses through Zag's locale parser. `typeable={false}` is the

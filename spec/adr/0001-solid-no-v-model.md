@@ -4,8 +4,8 @@
 
 ## Context
 
-frappe-ui is Vue and binds two-way state with `v-model`. Solid has no equivalent:
-a component receives a value and a change callback, and reactivity flows through
+Solid does not bind two-way state with a `v-model` directive: a component
+receives a value and a change callback, and reactivity flows through
 signals/accessors.
 
 ## Decision

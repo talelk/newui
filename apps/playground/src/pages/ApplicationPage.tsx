@@ -14,7 +14,6 @@ export function ApplicationPage() {
       {(entry) => (
         <article class="flex min-w-0 flex-col gap-4">
           <PageIntro title={entry().name} description={entry().description} />
-          <p class="text-caption text-ink-gray-7">{entry().source}</p>
           <ResponsivePreview
             title={entry().name}
             src={`${entry().href}/fullscreen`}

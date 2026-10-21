@@ -23,7 +23,7 @@ export function CompositionPage() {
         <article class="flex min-w-0 flex-col gap-4">
           <PageIntro
             title={item().title}
-            description="A copyable solid-ui block composition built from newui. This composition lives in the site; it is not a package export."
+            description="A copyable block composition built from newui. This composition lives in the site; it is not a package export."
           />
           <Show when={STORIES[item().demo]}>
             {(story) => (

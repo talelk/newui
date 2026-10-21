@@ -4,9 +4,9 @@
 
 ## Context
 
-frappe-ui is **one package with subpath exports** (`./list`, `./charts`,
-`./editor`, `./code-editor`, `./vite`, `./vitepress`, `./style.css`, …). This
-library could mirror that or split into workspace packages.
+A single package with many subpath exports (`./list`, `./charts`, `./editor`,
+`./code-editor`, `./vite`, `./style.css`, …) would couple every dependency graph
+to one release. This library splits that surface into workspace packages.
 
 ## Decision
 
@@ -28,7 +28,6 @@ are only expressible because the boundaries are real packages.
 
 - Consumers install exactly what they use (`@newui/charts` does not drag the
   atomic component packages into a chart-only app).
-- We do **not** mirror `./vitepress` (a docs theme is app code) or
-  `./experimental`.
+- A docs theme and experimental surfaces stay out of the published packages.
 - Deliberate non-mirror: no `./style.css` subpath on a component package; the
   stylesheet is `@newui/tailwind/style.css`.

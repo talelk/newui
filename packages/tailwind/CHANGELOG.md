@@ -26,9 +26,8 @@
 
 - 5e84078: Seven components, and two more merge-config gaps found on the way.
 
-  **New** — each from Zag's machine where one exists, following solid-ui's
-  inventory rather than Kobalte's implementation (one primitive layer, one
-  definition of focus and keyboard):
+  **New** — each from Zag's machine where one exists, keeping one primitive
+  layer and one definition of focus and keyboard:
 
   - `Accordion` / `Collapsible` — `@zag-js/accordion`, `@zag-js/collapsible`.
     `Item` owns the value and the disabled flag and hands both to its parts, so a

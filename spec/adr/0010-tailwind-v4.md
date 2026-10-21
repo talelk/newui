@@ -4,7 +4,7 @@
 
 ## Context
 
-frappe-ui is Tailwind **v3** and ships a v3 preset. This library targets v4.
+This library targets Tailwind CSS **v4**.
 
 ## Decision
 
@@ -21,8 +21,8 @@ hand-maintained JS preset and the token list. Colour utilities resolve runtime
 
 ## Consequences
 
-- The `lucide-*` icon plugin is ported from `matchComponents` to
-  `matchUtilities`.
+- The `lucide-*` icon plugin uses `matchUtilities` rather than
+  `matchComponents`.
 - `pnpm css` regenerates the CSS after token changes; `css:check` fails if a
   referenced utility is not emitted.
 - Consumers must be on Tailwind v4.

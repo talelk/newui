@@ -165,7 +165,7 @@ or any content in its default slot.
 control on the right. The title becomes a `<label>` pointing at the control's id
 when one is detected (a `[data-slot="control"]`, `[role="switch"]`,
 `[role="checkbox"]`, `input`, `select` or `textarea` inside the row), so a
-frappe-ui control such as `Switch` needs no wiring. Set `labelFor` to point the
+a control such as `Switch` needs no wiring. Set `labelFor` to point the
 label at another element's id.
 
 ## Accessibility

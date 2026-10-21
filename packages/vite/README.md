@@ -2,8 +2,8 @@
 
 Vite plugins for newui apps. Three concerns, each usable on its own:
 
-1. **Frappe dev-server proxy** — proxy `/api` (and `/app`, `/assets`, …) to a
-   Frappe backend, with the port auto-detected from a bench.
+1. **Backend dev-server proxy** — proxy `/api` (and `/app`, `/assets`, …) to a
+   local backend, with the port auto-detected from a bench.
 2. **Lucide auto-import** *(optional)* — `~icons/lucide/*` imports and bare
    `<LucideName />` tags, resolved to Solid components.
 3. **DocType types** — fetch DocType metadata and emit TypeScript interfaces for
