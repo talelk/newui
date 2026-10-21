@@ -3,13 +3,13 @@ name: newui
 description: Build user interfaces with the newui SolidJS component library on
   Zag + Tailwind CSS v4. Use when scaffolding SolidJS pages, forms, dialogs,
   lists, or any UI that should look and feel consistent and product-ready, when
-  the user mentions newui, @newui/atoms, or asks to use newui components, tokens,
-  or conventions.
+  the user mentions newui, @newui/atoms, or asks to use newui components,
+  tokens, or conventions.
 metadata:
   type: core
   domain: ui
   library: '@newui/atoms'
-  library_version: '0.1.0'
+  library_version: '1.0.0'
 sources:
   - talelk/newui:AGENTS.md
   - talelk/newui:PRINCIPLES.md

@@ -1,6 +1,6 @@
 {
   "name": "@newui/charts",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "description": "Solid wrappers over echarts (SVG renderer), themed with the newui chart tokens.",
   "exports": {

@@ -9,7 +9,7 @@ metadata:
   type: core
   domain: data
   library: '@newui/data'
-  library_version: '0.0.0'
+  library_version: '1.0.0'
 sources:
   - talelk/newui:spec/data.md
   - talelk/newui:skills/README.md

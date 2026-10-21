@@ -1,6 +1,6 @@
 {
   "name": "@newui/templates",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "description": "The three page templates: AppShell, PaneLayout and AuthLayout.",
   "exports": {
