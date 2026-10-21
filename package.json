@@ -42,7 +42,7 @@
     "specs:check": "tsx scripts/check-specs.ts",
     "refs:check": "tsx scripts/check-references.ts",
     "changeset": "changeset",
-    "version": "changeset version && pnpm skills:version",
+    "version": "changeset version && pnpm skills:version && pnpm site",
     "release": "changeset publish",
     "lighthouse": "tsx scripts/lighthouse.ts",
     "budget": "tsx scripts/budget.ts",
