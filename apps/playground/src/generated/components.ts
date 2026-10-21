@@ -464,6 +464,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "Stepper",
+    "description": "Wizard progress: an ordered list inside a named navigation landmark.",
+    "slug": "stepper",
+    "group": "Disclosure",
+    "package": "@newui/molecules",
+    "source": "packages/molecules/src/molecules/Stepper",
+    "atomic": "molecule",
+    "parts": [
+      "StepperProps"
+    ],
+    "spec": "stepper",
+    "shipped": true
+  },
+  {
     "name": "TabButtons",
     "description": "A segmented choice without panels.",
     "slug": "tab-buttons",

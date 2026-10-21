@@ -1166,6 +1166,18 @@
       ]
     },
     {
+      "id": "molecules-navigation-stepper--default",
+      "title": "Molecules/Navigation/Stepper",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/stepper.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "molecules-numbercard--default",
       "title": "Molecules/NumberCard",
       "name": "Default",

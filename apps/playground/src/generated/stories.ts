@@ -348,6 +348,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'organisms-statgrid--default',
     load: () => import('../stories/stat-grid.stories'),
   },
+  "Stepper": {
+    id: 'molecules-navigation-stepper--default',
+    load: () => import('../stories/stepper.stories'),
+  },
   "Switch": {
     id: 'atoms-inputs-switch--default',
     load: () => import('../stories/switch.stories'),

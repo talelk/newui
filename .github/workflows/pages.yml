@@ -36,13 +36,26 @@ jobs:
         with:
           enablement: true
 
+      - name: Resolve bases
+        id: bases
+        run: |
+          base="${{ steps.pages.outputs.base_path }}"
+          base="${base%/}"
+          echo "site=$base" >> "$GITHUB_OUTPUT"
+          echo "storybook=$base/storybook" >> "$GITHUB_OUTPUT"
+
       - name: Build site
         run: pnpm build:playground
         env:
-          VITE_BASE: ${{ steps.pages.outputs.base_path }}
+          VITE_BASE: ${{ steps.bases.outputs.site }}
+          VITE_STORYBOOK_BASE: ${{ steps.bases.outputs.storybook }}
 
-      - name: Add Pages fallback
+      - name: Build Storybook
+        run: pnpm storybook:build
+
+      - name: Add Pages fallback and Storybook
         run: |
+          cp -R apps/playground/storybook-static apps/playground/dist/storybook
           cp apps/playground/dist/index.html apps/playground/dist/404.html
           touch apps/playground/dist/.nojekyll
 

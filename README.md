@@ -37,6 +37,15 @@ composition on its own origin, with one story per state
 ([`spec/states.md`](spec/states.md)). The site embeds the same story modules, so
 a demo is written once.
 
+## Deploy
+
+Pushes to `main` deploy the playground to GitHub Pages through
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml). The workflow
+builds with the repository's Pages base path, publishes Storybook under
+`/storybook/`, copies `index.html` to `404.html` so deep links boot the router,
+and adds `.nojekyll`. The Vite base and the Solid Router base both come from
+`VITE_BASE`, so local development stays at `/`.
+
 ## Packages
 
 | Package | Responsibility |

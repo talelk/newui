@@ -163,6 +163,7 @@ const GROUPS: Record<string, string> = {
   Collapsible: 'Disclosure',
   Tabs: 'Disclosure',
   TabButtons: 'Disclosure',
+  Stepper: 'Disclosure',
   ToggleGroup: 'Selection',
   Button: 'Actions',
   Dropdown: 'Actions',

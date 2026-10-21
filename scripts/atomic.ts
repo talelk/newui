@@ -93,6 +93,7 @@ export const CLASSIFICATION: Record<string, AtomicLevel> = {
   TabButtons: 'molecule',
   Tabs: 'molecule',
   TagInput: 'molecule',
+  Stepper: 'molecule',
   TextInput: 'atom',
   Text: 'atom',
   Textarea: 'atom',

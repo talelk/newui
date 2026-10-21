@@ -51,7 +51,7 @@ export const LADDER: LadderLevel[] = [
     "question": "What is this interaction?",
     "unit": "molecule",
     "package": "@newui/molecules · @newui/charts",
-    "count": 44,
+    "count": 45,
     "href": "/molecules",
     "blurb": "Atoms assembled into one interaction: a field, a picker, a menu, a card, a chart legend."
   },

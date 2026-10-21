@@ -4844,6 +4844,39 @@
   },
   {
     "package": "@newui/molecules",
+    "name": "Stepper",
+    "implementation": "packages/molecules/src/molecules/Stepper/Stepper.tsx",
+    "documentation": "/molecules/stepper",
+    "contract": "spec/stepper.md",
+    "tests": [
+      "packages/molecules/src/molecules/Stepper/Stepper.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "StepperProps",
+    "implementation": "packages/molecules/src/molecules/Stepper/Stepper.tsx",
+    "documentation": "/molecules/stepper",
+    "contract": "spec/stepper.md",
+    "tests": [
+      "packages/molecules/src/molecules/Stepper/Stepper.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
+    "name": "StepperStep",
+    "implementation": "packages/molecules/src/molecules/Stepper/Stepper.tsx",
+    "documentation": "/molecules/stepper",
+    "contract": "spec/stepper.md",
+    "tests": [
+      "packages/molecules/src/molecules/Stepper/Stepper.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@newui/molecules",
     "name": "TabButtonOption",
     "implementation": "packages/molecules/src/molecules/TabButtons/TabButtons.tsx",
     "documentation": "/molecules/tab-buttons",
