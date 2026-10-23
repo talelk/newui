@@ -24,3 +24,15 @@ zag-main/
 # suite has no screenshot matcher), so they are regenerated output, not
 # baselines.
 __screenshots__/
+
+# Local agent tooling and Impeccable review artifacts. The design-system
+# sidecar (DESIGN.md and .impeccable/design.json) is committed; live sessions,
+# critique captures and per-app review output are local state.
+.opencode/
+.github/agents/
+.github/skills/
+.impeccable/config.local.json
+.impeccable/critique/
+.impeccable/live/
+.impeccable/review/
+apps/playground/.impeccable/
