@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-21T23:51:09Z",
+  "title": "Design System: newui",
+  "extensions": {
+    "colorMeta": {
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas White",
+        "canonical": "oklch(1 0 0)",
+        "tonalRamp": [
+          "oklch(0.168 0.006 255)",
+          "oklch(0.341 0.006 255)",
+          "oklch(0.439 0.006 255)",
+          "oklch(0.586 0.006 255)",
+          "oklch(0.83 0.006 255)",
+          "oklch(0.913 0.006 255)",
+          "oklch(0.964 0.006 255)",
+          "oklch(0.979 0.006 255)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(0.168 0.006 255)",
+        "tonalRamp": [
+          "oklch(0.168 0.006 255)",
+          "oklch(0.341 0.006 255)",
+          "oklch(0.439 0.006 255)",
+          "oklch(0.586 0.006 255)",
+          "oklch(0.83 0.006 255)",
+          "oklch(0.913 0.006 255)",
+          "oklch(0.964 0.006 255)",
+          "oklch(0.979 0.006 255)"
+        ]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Ink Faint",
+        "canonical": "oklch(0.586 0.006 255)",
+        "tonalRamp": [
+          "oklch(0.168 0.006 255)",
+          "oklch(0.341 0.006 255)",
+          "oklch(0.439 0.006 255)",
+          "oklch(0.586 0.006 255)",
+          "oklch(0.83 0.006 255)",
+          "oklch(0.913 0.006 255)",
+          "oklch(0.964 0.006 255)",
+          "oklch(0.979 0.006 255)"
+        ]
+      },
+      "signal-blue": {
+        "role": "primary",
+        "displayName": "Signal Blue",
+        "canonical": "oklch(0.561 0.168 252.355)",
+        "tonalRamp": [
+          "oklch(0.309 0.104 256.771)",
+          "oklch(0.396 0.113 250.204)",
+          "oklch(0.477 0.149 253.403)",
+          "oklch(0.561 0.168 252.355)",
+          "oklch(0.641 0.186 251.565)",
+          "oklch(0.73 0.121 245.297)",
+          "oklch(0.88 0.061 242.553)",
+          "oklch(0.96 0.021 241.348)"
+        ]
+      },
+      "success": {
+        "role": "secondary",
+        "displayName": "Success Green",
+        "canonical": "oklch(0.53 0.122 156.15)",
+        "tonalRamp": [
+          "oklch(0.277 0.052 161.616)",
+          "oklch(0.321 0.05 163.839)",
+          "oklch(0.425 0.101 155.32)",
+          "oklch(0.53 0.122 156.15)",
+          "oklch(0.67 0.124 159.024)",
+          "oklch(0.816 0.12 155.416)",
+          "oklch(0.908 0.07 154.3)",
+          "oklch(0.965 0.03 155.987)"
+        ]
+      },
+      "warning": {
+        "role": "secondary",
+        "displayName": "Warning Amber",
+        "canonical": "oklch(0.612 0.136 63.758)",
+        "tonalRamp": [
+          "oklch(0.31 0.075 46.734)",
+          "oklch(0.416 0.099 47.734)",
+          "oklch(0.472 0.124 46.689)",
+          "oklch(0.612 0.136 63.758)",
+          "oklch(0.723 0.152 71.82)",
+          "oklch(0.865 0.105 83.468)",
+          "oklch(0.917 0.063 91.484)",
+          "oklch(0.967 0.045 91.733)"
+        ]
+      },
+      "danger": {
+        "role": "secondary",
+        "displayName": "Danger Red",
+        "canonical": "oklch(0.497 0.185 27.335)",
+        "tonalRamp": [
+          "oklch(0.276 0.093 25.823)",
+          "oklch(0.348 0.12 26.042)",
+          "oklch(0.438 0.153 26.273)",
+          "oklch(0.497 0.185 27.335)",
+          "oklch(0.595 0.208 26.283)",
+          "oklch(0.772 0.118 19.495)",
+          "oklch(0.915 0.044 17.978)",
+          "oklch(0.947 0.026 17.626)"
+        ]
+      },
+      "accent-violet": {
+        "role": "tertiary",
+        "displayName": "Accent Violet",
+        "canonical": "oklch(0.545 0.18 287.523)",
+        "tonalRamp": [
+          "oklch(0.226 0.128 277.835)",
+          "oklch(0.273 0.109 285.208)",
+          "oklch(0.356 0.139 285.299)",
+          "oklch(0.545 0.18 287.523)",
+          "oklch(0.574 0.216 287.282)",
+          "oklch(0.761 0.129 293.171)",
+          "oklch(0.891 0.058 291.738)",
+          "oklch(0.943 0.031 297.722)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "hero": {
+        "displayName": "Hero",
+        "purpose": "One per page: home statement or application marketing panel. Never inside a card."
+      },
+      "heading": {
+        "displayName": "Heading",
+        "purpose": "Page and dialog titles; the largest in-product heading."
+      },
+      "section": {
+        "displayName": "Section",
+        "purpose": "Card titles and section headings; the workhorse heading of a dense screen."
+      },
+      "metric": {
+        "displayName": "Metric",
+        "purpose": "A single KPI value, always set in tabular numerals and paired with a caption."
+      },
+      "interface": {
+        "displayName": "Interface",
+        "purpose": "Body copy, controls, navigation and table cells — the default reading size."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Metadata, helper text, badges and timestamps. The 12px floor."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-sm",
+        "value": "inset 0px 0.25px 1.5px 0px #ffffff29, 0px 0px 1px 0px #00000033, 0px 1px 3px 0px #00000024",
+        "purpose": "Hover lift on an input or popup trigger; the first step of a menu."
+      },
+      {
+        "name": "shadow-base",
+        "value": "inset 0px 0.25px 1.5px 0px #ffffff29, 0px 0px 1.5px 0px #00000029, 0px 2px 5px 0px #00000024",
+        "purpose": "A raised inline surface that is not yet an overlay."
+      },
+      {
+        "name": "shadow-md",
+        "value": "inset 0px 0.25px 1.5px 0px #ffffff29, 0px 0px 1.5px 0px #00000026, 0px 0px 6px 2px #0000000a, 0px 6px 12px -2px #00000014",
+        "purpose": "Popovers and hover cards."
+      },
+      {
+        "name": "shadow-lg",
+        "value": "inset 0px 0.25px 1.5px 0px #ffffff29, 0px 0px 1.5px 0px #0000002e, 0px 0px 6px 3px #00000008, 0px 18px 22px -6px #0000001a",
+        "purpose": "Larger floating panels."
+      },
+      {
+        "name": "shadow-xl",
+        "value": "inset 0px 0.25px 1.5px 0px #ffffff29, 0px 0px 1px 0px #00000033, 0px 0px 10px 2px #0000000a, 0px 24px 30px -8px #0000001a",
+        "purpose": "Dialog and menu panel; the default float in component recipes."
+      },
+      {
+        "name": "shadow-2xl",
+        "value": "inset 0px 0.25px 2px 0px #ffffff29, 0px 0px 1.5px 0px #00000040, 0px 0px 10px 2px #00000008, 0px 44px 52px -10px #0000001a",
+        "purpose": "The rare, large modal."
+      }
+    ],
+    "motion": [
+      {
+        "name": "duration-fast",
+        "value": "100ms",
+        "purpose": "Colour and border state changes on controls."
+      },
+      {
+        "name": "duration-base",
+        "value": "150ms",
+        "purpose": "Default transition for hover, focus and open states."
+      },
+      {
+        "name": "duration-slow",
+        "value": "300ms",
+        "purpose": "Larger surface transitions; never an entrance effect."
+      },
+      {
+        "name": "ease-disclosure",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Accordion and collapsible height transitions."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "2xl", "value": "1536px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Signal Blue solid, 28px, for the one action a region exists for.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">Save changes</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 28px; padding: 2px 8px; border: 0; border-radius: var(--radius-control); background: var(--surface-blue-8); color: var(--ink-base); font-family: \"Inter Variable\", Inter, ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 500; line-height: 20px; letter-spacing: 0; cursor: pointer; transition: background-color 150ms; } .ds-btn-primary:hover { background: var(--surface-blue-9); } .ds-btn-primary:active { background: var(--surface-blue-9); } .ds-btn-primary:focus-visible { outline: var(--focus-outline-blue); outline-offset: 0; } .ds-btn-primary:disabled { background: var(--surface-blue-4); color: var(--ink-base); cursor: not-allowed; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Panel Gray fill with Ink Secondary text; the default button for most actions.",
+      "html": "<button class=\"ds-btn-secondary\" type=\"button\">Cancel</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 28px; padding: 2px 8px; border: 0; border-radius: var(--radius-control); background: var(--surface-gray-2); color: var(--ink-gray-8); font-family: \"Inter Variable\", Inter, ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 500; line-height: 20px; letter-spacing: 0; cursor: pointer; transition: background-color 150ms; } .ds-btn-secondary:hover { background: var(--surface-gray-3); } .ds-btn-secondary:active { background: var(--surface-gray-4); } .ds-btn-secondary:focus-visible { outline: var(--focus-outline-default); outline-offset: 0; } .ds-btn-secondary:disabled { background: var(--surface-gray-2); color: var(--ink-gray-4); cursor: not-allowed; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Canvas White with a Border outline; for a second action that still needs a boundary.",
+      "html": "<button class=\"ds-btn-outline\" type=\"button\">Export</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 28px; padding: 2px 8px; border: 1px solid var(--outline-gray-2); border-radius: var(--radius-control); background: var(--surface-base); color: var(--ink-gray-8); font-family: \"Inter Variable\", Inter, ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 500; line-height: 20px; letter-spacing: 0; cursor: pointer; transition: background-color 150ms, border-color 150ms; } .ds-btn-outline:hover { border-color: var(--outline-gray-3); } .ds-btn-outline:active { border-color: var(--outline-gray-3); background: var(--surface-gray-4); } .ds-btn-outline:focus-visible { outline: var(--focus-outline-default); outline-offset: 0; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "28px outline field with the shared label and caption contract.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Work email</span><input class=\"ds-field-input\" type=\"email\" placeholder=\"you@company.com\" /></label>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 6px; font-family: \"Inter Variable\", Inter, ui-sans-serif, system-ui, sans-serif; } .ds-field-label { color: var(--ink-gray-8); font-size: 14px; font-weight: 500; line-height: 20px; } .ds-field-input { height: 28px; box-sizing: border-box; padding: 2px 8px; border: 1px solid var(--outline-gray-2); border-radius: var(--radius-control); background: var(--surface-base); color: var(--ink-gray-9); font-family: inherit; font-size: 14px; font-weight: 420; line-height: 20px; letter-spacing: 0; transition: border-color 150ms, box-shadow 150ms; } .ds-field-input::placeholder { color: var(--ink-gray-6); } .ds-field-input:hover { border-color: var(--outline-gray-3); } .ds-field-input:focus { border-color: var(--outline-gray-4); box-shadow: var(--shadow-sm); outline: var(--focus-outline-default); outline-offset: 0; } .ds-field-input:disabled { background: var(--surface-gray-2); color: var(--ink-gray-6); cursor: not-allowed; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Flat 8px surface with a 1px border and 12–20px padding; no shadow at rest.",
+      "html": "<section class=\"ds-card\"><h3 class=\"ds-card-title\">Revenue overview</h3><p class=\"ds-card-body\">Paid transactions, refunds and net revenue for the selected period.</p></section>",
+      "css": ".ds-card { display: flex; flex-direction: column; gap: 4px; padding: var(--spacing-3); border: 1px solid var(--outline-gray-1); border-radius: var(--radius-card); background: var(--surface-elevation-1); color: var(--ink-gray-9); font-family: \"Inter Variable\", Inter, ui-sans-serif, system-ui, sans-serif; } .ds-card-title { margin: 0; font-size: 18px; font-weight: 600; line-height: 24px; letter-spacing: -0.015em; } .ds-card-body { margin: 0; color: var(--ink-gray-6); font-size: 13px; font-weight: 420; line-height: 18px; }"
+    },
+    {
+      "name": "Status Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "A full pill at 20px with a 12px label; reads as status, never as a button.",
+      "html": "<span class=\"ds-badge\">Paid</span><span class=\"ds-badge ds-badge-success\">Healthy</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; gap: 4px; min-height: 20px; padding: 1px 6px; border-radius: var(--radius-pill); background: var(--surface-gray-2); color: var(--ink-gray-6); font-family: \"Inter Variable\", Inter, ui-sans-serif, system-ui, sans-serif; font-size: 12px; font-weight: 420; line-height: 16px; letter-spacing: 0; white-space: nowrap; } .ds-badge-success { background: var(--surface-green-2); color: var(--ink-green-8); }"
+    },
+    {
+      "name": "Dialog Panel",
+      "kind": "custom",
+      "refersTo": "overlay",
+      "description": "12px opaque panel with a border and the one shadow that means float.",
+      "html": "<div class=\"ds-dialog\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"ds-dialog-title\"><h2 class=\"ds-dialog-title\" id=\"ds-dialog-title\">Delete this view?</h2><p class=\"ds-dialog-body\">The saved filters will be removed for everyone in this workspace.</p><div class=\"ds-dialog-footer\"><button class=\"ds-btn-secondary\" type=\"button\">Cancel</button><button class=\"ds-btn-danger\" type=\"button\">Delete</button></div></div>",
+      "css": ".ds-dialog { width: 420px; max-width: calc(100vw - 32px); padding: var(--spacing-4); border: 1px solid var(--outline-gray-1); border-radius: var(--radius-overlay); background: var(--surface-elevation-1); color: var(--ink-gray-9); box-shadow: var(--shadow-xl); font-family: \"Inter Variable\", Inter, ui-sans-serif, system-ui, sans-serif; } .ds-dialog-title { margin: 0; font-size: 24px; font-weight: 600; line-height: 30px; letter-spacing: -0.025em; } .ds-dialog-body { margin: 8px 0 16px; color: var(--ink-gray-7); font-size: 14px; font-weight: 420; line-height: 20px; } .ds-dialog-footer { display: flex; justify-content: flex-end; gap: 8px; } .ds-btn-secondary, .ds-btn-danger { display: inline-flex; align-items: center; justify-content: center; height: 28px; padding: 2px 8px; border: 0; border-radius: var(--radius-control); font-family: inherit; font-size: 14px; font-weight: 500; line-height: 20px; cursor: pointer; } .ds-btn-secondary { background: var(--surface-gray-2); color: var(--ink-gray-8); } .ds-btn-secondary:hover { background: var(--surface-gray-3); } .ds-btn-danger { background: var(--surface-red-8); color: var(--ink-base); } .ds-btn-danger:hover { background: var(--surface-red-9); } .ds-btn-secondary:focus-visible, .ds-btn-danger:focus-visible { outline: var(--focus-outline-default); outline-offset: 0; }"
+    },
+    {
+      "name": "Navigation Row",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "32px row, 8px radius, 14px label; current is a wash plus Ink.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-row\" href=\"#\">Atoms</a><a class=\"ds-nav-row ds-nav-current\" href=\"#\" aria-current=\"page\">Molecules</a><a class=\"ds-nav-row\" href=\"#\">Organisms</a></nav>",
+      "css": ".ds-nav { display: flex; flex-direction: column; gap: 2px; width: 224px; font-family: \"Inter Variable\", Inter, ui-sans-serif, system-ui, sans-serif; } .ds-nav-row { display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 8px; border-radius: var(--radius-card); color: var(--ink-gray-7); font-size: 14px; font-weight: 420; line-height: 20px; text-decoration: none; transition: background-color 150ms, color 150ms; } .ds-nav-row:hover { background: var(--surface-gray-2); color: var(--ink-gray-9); } .ds-nav-current { background: var(--surface-gray-2); color: var(--ink-gray-9); } .ds-nav-row:focus-visible { outline: var(--focus-outline-default); outline-offset: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Instrument Panel",
+    "overview": "newui is a working surface, not a showcase. It is built for people who spend the day inside business software — ledgers, queues, dashboards, settings — and it assumes the screen is a tool they operate rather than a page they admire. Density is the default: controls are 28px, interface text is 14px, captions are 12px, every gap lands on a 4px rhythm, and a table row earns its height from its content rather than from air. Structure is drawn with 1px borders and type. Colour is a signal, not an atmosphere.\n\nThe mood is compact and workmanlike. Nothing is decorative for its own sake: there are no gradient meshes, no glass panels, no illustration holding up a product claim. Cool Paper neutrals keep the canvas distinct from white cards without turning the page beige. Signal Blue marks action and selection and almost nothing else; a reader should be able to find the one thing they can do on a screen by following the blue. Headings tighten as they grow, numbers are tabular, and motion is a state change rather than an entrance.\n\nThe same system runs the library and the documentation site that demonstrates it. A reference page is not a special case of the brand: it is the product's card, row, badge and field vocabulary applied to prose and code. That is why the site's chrome imports no component — the shell is plain markup over the same semantic tokens a consumer uses.",
+    "keyCharacteristics": [
+      "Density as the default. 28px controls, 32px navigation rows, 14/20 interface text; compact is the normal setting, not a \"small\" variant.",
+      "One working accent. Signal Blue is reserved for action, selection and focus; status has its own three colours and data can borrow violet.",
+      "Border-first depth. Cards are flat with a 1px outline; only genuinely floating surfaces carry a shadow.",
+      "Inter at 420. Body text sits a hair above regular; hierarchy comes from size, weight and tracking, never from a second typeface.",
+      "States are visible without colour alone. Error carries a message, selection carries aria-current or data-state, focus carries an outline.",
+      "Documentation chrome equals product chrome. The site is built from the same tokens, radii and spacing roles it documents."
+    ],
+    "rules": [
+      {
+        "name": "The One Signal Rule",
+        "body": "Signal Blue is for action and selection. If a blue element cannot be clicked, cannot be selected, or does not indicate where the reader is, it is the wrong colour. Status uses green, amber or red; category uses violet.",
+        "section": "colors"
+      },
+      {
+        "name": "The No Raw Ramp Rule",
+        "body": "Components reference semantic roles — surface-*, ink-*, outline-* — never a palette step such as blue-700 or a hex value. A component that needs a new colour needs a semantic token first.",
+        "section": "colors"
+      },
+      {
+        "name": "The AA Pairing Rule",
+        "body": "Every foreground/background pairing a recipe can ship is asserted against WCAG AA in both themes. A pairing that fails is a legibility bug, not a taste call.",
+        "section": "colors"
+      },
+      {
+        "name": "The 420 Rule",
+        "body": "Body text is 420, not 400. Medium is 500 and semibold is 600. Do not fake weight with text-shadow or synthetic bolding; the variable font already carries the steps.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tight Heading Rule",
+        "body": "Negative tracking belongs to 18px and above. Body and caption text stay at 0; shrinking a small label with negative tracking is how dense interfaces become unreadable.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Metric Rule",
+        "body": "Any number that can sit in a column — money, counts, percentages, durations — uses tabular numerals. Proportional figures are for prose, not for a table or a KPI.",
+        "section": "typography"
+      },
+      {
+        "name": "The Named Rhythm Rule",
+        "body": "Use the role — gap-section-gap, p-card-pad-compact, gap-control-gap — not a one-off p-4. A new spacing value is a token decision, not a component decision.",
+        "section": "layout"
+      },
+      {
+        "name": "The Reading Measure Rule",
+        "body": "Long-form prose stays at or under 30rem (≈78 characters at 14px). A paragraph that runs the full 768px column is a bug; tables, code and previews are not prose and keep the column.",
+        "section": "layout"
+      },
+      {
+        "name": "The Two-Rail Rule",
+        "body": "The 224px sidebar and the 48px rail present the same navigation model. Collapsing changes the presentation, never the destinations or the reading order.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Surfaces are flat at rest. A shadow means the element floats; if it does not overlap the page, it does not get one.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Focus-Is-Outline Rule",
+        "body": "Focus is a 2px outline (3px in dark mode), not a box-shadow. It therefore survives forced-colours mode, never collides with a shadow-* utility, and stays visible on every surface — including a solid blue button.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Three-Radius Rule",
+        "body": "6, 8, 12 — control, card, overlay. A fourth radius is specialized geometry (a chart mark, an avatar), not a surface decision. When in doubt, use the role name rather than a number.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do use semantic roles — bg-surface-base, text-ink-gray-9, border-outline-gray-1 — for every colour.",
+      "Do use the named rhythm roles (p-card-pad, gap-section-gap, gap-control-gap) instead of arbitrary spacing utilities.",
+      "Do keep Signal Blue for the action, the selection and the current location; let everything else be neutral.",
+      "Do pair every error with a message and aria-invalid, and every status with a label or icon.",
+      "Do keep the 28px default control and the 24/28/32/40 height scale; use 40–44px targets for primary touch actions.",
+      "Do set metrics and table figures in tabular numerals.",
+      "Do hold long-form prose to the 30rem reading measure, and let tables, code and demos keep the full column.",
+      "Do verify both themes and the 390 / 768 / 1440 widths before calling a screen done."
+    ],
+    "donts": [
+      "Don't use a raw palette step, hex, rgb() or hsl() value in a component; add a semantic token first.",
+      "Don't use theme to mean light/dark. theme is the colour axis; colorScheme owns the mode.",
+      "Don't put a shadow on a resting card or use elevation as decoration.",
+      "Don't add a second accent for visual interest, or use blue for a non-interactive label.",
+      "Don't use glassmorphism, gradient meshes, glow, or hero illustration as product chrome.",
+      "Don't shrink informative text below 12px or touch targets below 40px.",
+      "Don't set navigation labels in tracked uppercase, or tighten small text with negative tracking.",
+      "Don't invent a radius, a control height or a one-off spacing value when a role already exists."
+    ]
+  }
+}

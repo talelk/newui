@@ -134,7 +134,7 @@ export function Home(): JSX.Element {
         <h1 class="max-w-3xl text-hero text-ink-gray-9">
           Clarity for your next data application.
         </h1>
-        <p class="max-w-2xl text-lg text-ink-gray-7">
+        <p class="max-w-[30rem] text-lg text-ink-gray-7">
           Compact controls, thoughtful charts and composed layouts for ambitious
           business software. Built with SolidJS, accessible by design, and ready
           for your data.
@@ -218,7 +218,7 @@ export function Home(): JSX.Element {
 
       <section class="flex flex-col gap-4">
         <h2 class="text-section text-ink-gray-9">Why it is small</h2>
-        <p class="max-w-2xl text-base text-ink-gray-7">
+        <p class="max-w-[30rem] text-base text-ink-gray-7">
           Components are priced. A gzip budget per entry and a tree-shaking
           assertion run in CI, so importing{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">Button</code>{' '}

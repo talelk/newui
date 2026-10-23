@@ -6,7 +6,7 @@ import { AppShell } from '@talelk/newui-templates'
 import { createMemo, createSignal, type JSX } from 'solid-js'
 import { assetUrl } from '../lib/base'
 import { EXAMPLES } from '../lib/examples'
-import { ThemeMenu } from '../shell/ThemeMenu'
+import { ThemeMenu, ThemeMenuCompact } from '../shell/ThemeMenu'
 
 /**
  * The page-level composition used by the application recipes.
@@ -49,6 +49,14 @@ export function AppPage(props: {
     },
     { label: 'Acme · Staging', value: 'staging', icon: 'lucide-flask-conical' },
   ]
+  const accountOptions = [
+    {
+      label: 'Account settings',
+      value: 'account',
+      icon: 'lucide-user-round-cog',
+    },
+    { label: 'Sign out (demo)', value: 'sign-out', icon: 'lucide-log-out' },
+  ]
 
   return (
     <AppShell
@@ -58,7 +66,7 @@ export function AppPage(props: {
         { label: 'Workspace', route: '/pages' },
         { label: props.section },
       ]}
-      mobileTitle={props.section}
+      mobileTitle="Acme workspace"
       actions={props.actions}
       navLabel={`${props.section} navigation`}
       brand={
@@ -88,8 +96,12 @@ export function AppPage(props: {
         </A>
       }
       tenant={
-        <Dropdown options={tenantOptions} onSelect={setTenant}>
-          <span class="flex min-w-0 items-center gap-2">
+        <Dropdown
+          options={tenantOptions}
+          onSelect={setTenant}
+          class="w-full justify-start"
+        >
+          <span class="flex min-w-0 flex-1 items-center gap-2">
             <span
               class="lucide-building-2 size-4 shrink-0"
               aria-hidden="true"
@@ -102,7 +114,7 @@ export function AppPage(props: {
       }
       tenantCollapsed={
         <Dropdown options={tenantOptions} onSelect={setTenant}>
-          <span class="grid size-9 place-items-center">
+          <span class="grid size-8 place-items-center">
             <span class="sr-only">Choose tenant</span>
             <span class="lucide-building-2 size-4" aria-hidden="true" />
           </span>
@@ -120,45 +132,20 @@ export function AppPage(props: {
         </SidebarItem>
       }
       account={
-        <Dropdown
-          options={[
-            {
-              label: 'Account settings',
-              value: 'account',
-              icon: 'lucide-user-round-cog',
-            },
-            {
-              label: 'Sign out (demo)',
-              value: 'sign-out',
-              icon: 'lucide-log-out',
-            },
-          ]}
-        >
-          <span class="flex min-w-0 items-center gap-2">
+        <Dropdown options={accountOptions} class="w-full justify-start">
+          <span class="flex min-w-0 flex-1 items-center gap-2">
             <Avatar size="xs" theme="blue" label="Rhea Kapoor" />
             <span class="truncate">Rhea Kapoor</span>
           </span>
         </Dropdown>
       }
       accountCollapsed={
-        <Dropdown
-          options={[
-            {
-              label: 'Account settings',
-              value: 'account',
-              icon: 'lucide-user-round-cog',
-            },
-            {
-              label: 'Sign out (demo)',
-              value: 'sign-out',
-              icon: 'lucide-log-out',
-            },
-          ]}
-        >
+        <Dropdown options={accountOptions}>
           <Avatar size="xs" theme="blue" label="Rhea Kapoor" />
         </Dropdown>
       }
-      headerActions={<ThemeMenu />}
+      utilities={<ThemeMenu />}
+      utilitiesCollapsed={<ThemeMenuCompact />}
     >
       {props.children}
     </AppShell>

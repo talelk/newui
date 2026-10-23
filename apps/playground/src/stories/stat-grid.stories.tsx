@@ -54,3 +54,21 @@ type Story = StoryObj<typeof meta>
 
 /** The live demo, exactly as the reference page embeds it. */
 export const Default: Story = {}
+
+export const Compact: Story = {
+  render: () => (
+    <StatGrid
+      compact
+      stats={[
+        { label: 'Total expenses', value: '$209,520', hint: 'Selected period' },
+        { label: 'Pending approval', value: '$4,704', hint: '2 records' },
+        { label: 'Posted expenses', value: '$204,816', hint: 'In the ledger' },
+        { label: 'Largest category', value: '$133,200', hint: 'Payroll' },
+      ]}
+    />
+  ),
+}
+
+export const Loading: Story = {
+  render: () => <StatGrid loading columns={4} stats={[]} />,
+}

@@ -9,36 +9,42 @@ const OPTIONS = [
 ]
 
 describe('TabButtons', () => {
-  it('renders a tablist with the first option selected', () => {
+  it('renders a labelled radiogroup with the first option checked', () => {
     const { getAllByRole, getByRole } = render(() => (
-      <TabButtons options={OPTIONS} />
+      <TabButtons label="View" options={OPTIONS} />
     ))
-    expect(getByRole('tablist')).toBeTruthy()
-    const tabs = getAllByRole('tab')
-    expect(tabs[0]?.getAttribute('aria-selected')).toBe('true')
+    expect(getByRole('radiogroup', { name: 'View' })).toBeTruthy()
+    const radios = getAllByRole('radio')
+    expect(radios[0]?.getAttribute('aria-checked')).toBe('true')
+    expect(radios[0]?.getAttribute('role')).toBe('radio')
   })
 
   it('reports changes through onValueChange', async () => {
     const onValueChange = vi.fn()
     const { getByRole } = render(() => (
-      <TabButtons options={OPTIONS} onValueChange={onValueChange} />
+      <TabButtons
+        label="View"
+        options={OPTIONS}
+        onValueChange={onValueChange}
+      />
     ))
-    await userEvent.click(getByRole('tab', { name: 'Board' }))
+    await userEvent.click(getByRole('radio', { name: 'Board' }))
     expect(onValueChange).toHaveBeenCalledWith('board')
   })
 
   it('marks the active option and drops the mark from the rest', () => {
     const { getAllByRole } = render(() => (
-      <TabButtons options={OPTIONS} defaultValue="board" />
+      <TabButtons label="View" options={OPTIONS} defaultValue="board" />
     ))
-    const tabs = getAllByRole('tab')
-    expect(tabs[0]?.getAttribute('data-state')).toBe('inactive')
-    expect(tabs[1]?.getAttribute('data-state')).toBe('active')
+    const radios = getAllByRole('radio')
+    expect(radios[0]?.getAttribute('data-state')).toBe('inactive')
+    expect(radios[1]?.getAttribute('data-state')).toBe('active')
   })
 
   it('uses one tab stop and skips disabled options with keyboard navigation', async () => {
     const { getByRole } = render(() => (
       <TabButtons
+        label="View"
         options={[
           ...OPTIONS,
           { label: 'Disabled', value: 'disabled', disabled: true },
@@ -46,12 +52,12 @@ describe('TabButtons', () => {
         ]}
       />
     ))
-    const list = getByRole('tab', { name: 'List' })
+    const list = getByRole('radio', { name: 'List' })
     list.focus()
     await userEvent.keyboard('{End}')
-    expect(getByRole('tab', { name: 'Calendar' })).toHaveFocus()
+    expect(getByRole('radio', { name: 'Calendar' })).toHaveFocus()
     await userEvent.keyboard('{ArrowLeft}')
-    expect(getByRole('tab', { name: 'Board' })).toHaveFocus()
+    expect(getByRole('radio', { name: 'Board' })).toHaveFocus()
     expect(list.tabIndex).toBe(-1)
     await userEvent.keyboard('{Home}')
     expect(list).toHaveFocus()
@@ -59,17 +65,27 @@ describe('TabButtons', () => {
 
   it('sets a vertical orientation', () => {
     const { getByRole } = render(() => (
-      <TabButtons options={OPTIONS} vertical />
+      <TabButtons label="View" options={OPTIONS} vertical />
     ))
-    expect(getByRole('tablist').getAttribute('aria-orientation')).toBe(
+    expect(getByRole('radiogroup').getAttribute('aria-orientation')).toBe(
       'vertical',
     )
   })
 
   it('renders the sliding indicator for pill variants', () => {
     const { container } = render(() => (
-      <TabButtons options={OPTIONS} variant="subtle" />
+      <TabButtons label="View" options={OPTIONS} variant="subtle" />
     ))
     expect(container.querySelector('[data-slot="tab-indicator"]')).toBeTruthy()
+  })
+
+  it('wraps without the absolute indicator', () => {
+    const { container, getByRole } = render(() => (
+      <TabButtons label="Sections" options={OPTIONS} wrap />
+    ))
+    const group = getByRole('radiogroup')
+    expect(group.hasAttribute('data-wrap')).toBe(true)
+    expect(group.className).toContain('flex-wrap')
+    expect(container.querySelector('[data-slot="tab-indicator"]')).toBeNull()
   })
 })

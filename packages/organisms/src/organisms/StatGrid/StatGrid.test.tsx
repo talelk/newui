@@ -77,7 +77,19 @@ describe('StatGrid', () => {
     const className = container.querySelector(
       '[data-slot="stat-grid"]',
     )?.className
-    expect(className).toContain('sm:grid-cols-2')
+    expect(className).toContain('min-[360px]:grid-cols-2')
     expect(className).toContain('xl:grid-cols-3')
+  })
+
+  it('compact cards use the tight padding and omit the icon tile', () => {
+    const { container } = render(() => (
+      <StatGrid
+        compact
+        stats={[{ label: 'One', value: '1', icon: 'lucide-house' }]}
+      />
+    ))
+    const card = container.querySelector('[data-slot="stat"]')
+    expect(card?.className).toContain('p-2.5')
+    expect(card?.querySelector('.bg-surface-gray-2')).toBeNull()
   })
 })

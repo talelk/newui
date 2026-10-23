@@ -16,6 +16,18 @@ export const API = {
       "description": "Columns at the widest breakpoint. Defaults to the number of stats, capped."
     },
     {
+      "name": "compact",
+      "type": "boolean",
+      "optional": true,
+      "description": "Tighter cards without the icon tile; for table-led screens."
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "optional": true,
+      "description": "Replaces the cards with the shared skeleton geometry."
+    },
+    {
       "name": "class",
       "type": "string",
       "optional": true

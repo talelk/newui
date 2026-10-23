@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
+import { setTheme } from './_lib/theme'
 
 for (const width of [390, 768, 1440]) {
   test(`deal pointer ordering and cancellation at ${width}`, async ({
@@ -61,7 +62,7 @@ test('mobile tickets use cards, closed queues and local resolution', async ({
     .getByRole('button', { name: 'Resolve selected tickets (1)' })
     .click()
   await expect(cards.getByRole('article')).toHaveCount(0)
-  await page.getByRole('tab', { name: 'Closed tickets' }).click()
+  await page.getByRole('radio', { name: 'Closed tickets' }).click()
   await expect(cards).toContainText('TKT-1024')
   await expect(cards).toContainText('Resolved')
 })
@@ -75,16 +76,16 @@ test('accounting quarterly aggregation and cash accounts use the selected ledger
   await expect(
     page.getByRole('img', { name: 'Income and expenses quarterly' }),
   ).toBeVisible()
-  await page.getByRole('tab', { name: 'Q3 2026', exact: true }).click()
-  await page.getByRole('tab', { name: 'Cash accounts', exact: true }).click()
+  await page.getByRole('radio', { name: 'Q3 2026', exact: true }).click()
+  await page.getByRole('radio', { name: 'Cash accounts', exact: true }).click()
   const accounts = page.getByRole('region', {
-    name: 'Cash accounts',
+    name: 'Cash account balances',
     exact: true,
   })
-  await expect(accounts.locator('[data-slot="stat"]')).toHaveCount(3)
-  await expect(accounts).toContainText(
-    'Net posted movement in the selected period',
-  )
+  await expect(accounts.locator('tbody tr')).toHaveCount(3)
+  await expect(accounts).toContainText('Opening')
+  await expect(accounts).toContainText('Closing')
+  await expect(accounts).toContainText('As of')
 })
 
 test('deals moves by keyboard, undoes and creates validated opportunities', async ({
@@ -113,7 +114,7 @@ test('deals moves by keyboard, undoes and creates validated opportunities', asyn
   await page.getByRole('button', { name: 'Create deal', exact: true }).click()
   await page.getByRole('searchbox', { name: 'Search deals' }).fill('Northstar')
   await expect(page.locator('[data-kanban-id]')).toHaveCount(1)
-  await page.getByRole('tab', { name: 'List', exact: true }).click()
+  await page.getByRole('radio', { name: 'List', exact: true }).click()
   await expect(page.locator('tbody tr')).toHaveCount(1)
   await expect(page.locator('tbody')).toContainText('Northstar Analytics')
 })
@@ -229,7 +230,7 @@ test('accounting connects date filters, transactions, payroll and exported repor
   await expect(
     page.locator('[data-slot="chart-card"] svg').first(),
   ).toBeVisible()
-  await page.getByRole('tab', { name: 'September', exact: true }).click()
+  await page.getByRole('radio', { name: 'September', exact: true }).click()
   const income = page.locator('[data-slot="stat"]').first()
   const before = await income.innerText()
   await page
@@ -245,15 +246,18 @@ test('accounting connects date filters, transactions, payroll and exported repor
     .getByRole('button', { name: 'Record transaction', exact: true })
     .click()
   await expect(income).not.toHaveText(before)
-  await page.getByRole('tab', { name: 'Payroll', exact: true }).click()
+  await page.getByRole('radio', { name: 'Payroll', exact: true }).click()
   await page
     .getByRole('checkbox', { name: 'Select EMP-1', exact: true })
     .check()
   await page
     .getByRole('button', { name: 'Record payroll payments (1)' })
     .click()
+  await page
+    .getByRole('button', { name: 'Record payments', exact: true })
+    .click()
   await expect(page.locator('tbody tr').first()).toContainText('Paid')
-  await page.getByRole('tab', { name: 'Profit & loss', exact: true }).click()
+  await page.getByRole('radio', { name: 'Profit & loss', exact: true }).click()
   await expect(
     page.getByRole('region', { name: 'Profit and loss report' }),
   ).toContainText('Net profit')
@@ -289,7 +293,7 @@ for (const name of [
       await page.setViewportSize({ width: 390, height: 900 })
       await page.goto(`/pages/${name}/fullscreen`)
       await expect(page.locator('h1')).toBeVisible()
-      await page.getByRole('button', { name: theme, exact: true }).click()
+      await setTheme(page, theme)
       await expect(page.locator('h1')).toBeVisible()
       expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])
       await page.evaluate(() => {

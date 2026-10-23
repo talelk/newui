@@ -101,7 +101,7 @@ export function MobileNavItem(props: MobileNavItemProps): JSX.Element {
       onClick={local.onClick}
       class={cn(
         'flex min-h-14 flex-col items-center justify-center gap-1 py-2 text-ink-gray-6 transition',
-        'active:scale-95 data-[state=active]:text-ink-gray-8',
+        'active:scale-95 data-[state=active]:bg-surface-blue-1 data-[state=active]:text-ink-blue-8',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-outline-gray-3',
         local.class,
       )}

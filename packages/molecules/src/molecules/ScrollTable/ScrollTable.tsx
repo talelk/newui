@@ -11,6 +11,8 @@ import type { JSX, ParentComponent } from 'solid-js'
 export interface ScrollTableProps {
   /** Names the region, e.g. `Deals table`. */
   label: string
+  /** Keep the header row visible while the region scrolls vertically. */
+  stickyHeader?: boolean
   children: JSX.Element
 }
 
@@ -20,7 +22,11 @@ export function ScrollTable(props: ScrollTableProps): JSX.Element {
       tabindex="0"
       aria-label={props.label}
       data-slot="scroll-table"
-      class="overflow-x-auto rounded-3 focus-visible:focus-ring"
+      class={`overflow-x-auto rounded-3 focus-visible:focus-ring ${
+        props.stickyHeader
+          ? '[&_thead]:sticky [&_thead]:top-0 [&_thead]:z-raised'
+          : ''
+      }`}
     >
       {props.children}
     </section>

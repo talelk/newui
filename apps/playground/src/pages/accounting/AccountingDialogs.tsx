@@ -1,6 +1,7 @@
-import { TextInput } from '@talelk/newui-atoms'
-import { DatePicker, Select } from '@talelk/newui-molecules'
-import { createSignal } from 'solid-js'
+import { Button, TextInput } from '@talelk/newui-atoms'
+import { usd as currency } from '@talelk/newui-data'
+import { DatePicker, Dialog, Select } from '@talelk/newui-molecules'
+import { createSignal, Show } from 'solid-js'
 import {
   CATEGORIES,
   type Employee,
@@ -11,8 +12,16 @@ import { CreateDialog } from '../../examples/CreateDialog'
 export default function AccountingDialogs(props: {
   open: boolean
   employeeOpen: boolean
+  confirm: {
+    kind: 'expenses' | 'payroll'
+    count: number
+    total: number
+    skipped: number
+  } | null
   onOpenChange: (open: boolean) => void
   onEmployeeOpenChange: (open: boolean) => void
+  onConfirmOpenChange: (open: boolean) => void
+  onConfirm: () => void
   onTransaction: (row: Transaction) => void
   onEmployee: (row: Employee) => void
   onNotice: (message: string) => void
@@ -166,6 +175,68 @@ export default function AccountingDialogs(props: {
           </>
         )}
       />
+      <Show when={props.confirm}>
+        {(request) => (
+          <Dialog.Root
+            open={Boolean(props.confirm)}
+            onOpenChange={props.onConfirmOpenChange}
+          >
+            <Dialog.Content>
+              <Dialog.Header>
+                <Dialog.Title>
+                  {request().kind === 'expenses'
+                    ? 'Approve expenses?'
+                    : 'Record payroll payments?'}
+                </Dialog.Title>
+                <Dialog.Description>
+                  This updates the local ledger. You can undo immediately
+                  afterwards.
+                </Dialog.Description>
+              </Dialog.Header>
+              <p class="mt-4 text-interface text-ink-gray-8">
+                {request().count}{' '}
+                {request().kind === 'expenses'
+                  ? request().count === 1
+                    ? 'expense'
+                    : 'expenses'
+                  : request().count === 1
+                    ? 'payment'
+                    : 'payments'}{' '}
+                · {currency(request().total)}
+              </p>
+              <Show when={request().skipped > 0}>
+                <p class="mt-1 text-caption text-ink-gray-7">
+                  {request().skipped}{' '}
+                  {request().kind === 'expenses'
+                    ? 'already posted'
+                    : 'already paid'}{' '}
+                  and will be skipped.
+                </p>
+              </Show>
+              <Dialog.Footer>
+                <Button
+                  variant="outline"
+                  onClick={() => props.onConfirmOpenChange(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="solid"
+                  theme="blue"
+                  onClick={() => {
+                    props.onConfirm()
+                    props.onConfirmOpenChange(false)
+                  }}
+                >
+                  {request().kind === 'expenses'
+                    ? 'Approve expenses'
+                    : 'Record payments'}
+                </Button>
+              </Dialog.Footer>
+            </Dialog.Content>
+          </Dialog.Root>
+        )}
+      </Show>
     </>
   )
 }

@@ -49,6 +49,12 @@ export const API = {
       "description": "Rendered when nothing matches."
     },
     {
+      "name": "loading",
+      "type": "boolean",
+      "optional": true,
+      "description": "Replaces the list with a loading row while commands register."
+    },
+    {
       "name": "class",
       "type": "string",
       "optional": true

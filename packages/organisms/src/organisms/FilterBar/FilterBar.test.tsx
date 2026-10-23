@@ -135,6 +135,7 @@ describe('FilterBar', () => {
     render(() => (
       <FilterBar
         tabs={{
+          label: 'View',
           value: 'list',
           onValueChange,
           options: [
@@ -145,7 +146,7 @@ describe('FilterBar', () => {
       />
     ))
 
-    await userEvent.click(screen.getByRole('tab', { name: 'Board' }))
+    await userEvent.click(screen.getByRole('radio', { name: 'Board' }))
     expect(onValueChange).toHaveBeenCalledWith('board')
   })
 })

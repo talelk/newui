@@ -61,7 +61,7 @@ export const LADDER: LadderLevel[] = [
     "question": "What is this section?",
     "unit": "organism",
     "package": "@talelk/newui-organisms · @talelk/newui-charts · @talelk/newui-editor",
-    "count": 24,
+    "count": 27,
     "href": "/organisms",
     "blurb": "Self-contained regions of a page: a sidebar, a filter bar, a board, a chart, an editor."
   },

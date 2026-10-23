@@ -129,6 +129,7 @@ export function Authentication(): JSX.Element {
           }
         >
           <TabButtons
+            label="Account access"
             fluid
             value={mode()}
             onValueChange={changeMode}

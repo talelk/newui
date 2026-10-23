@@ -1,9 +1,4 @@
-import {
-  Button,
-  createMediaQuery,
-  UIProvider,
-  useUI,
-} from '@talelk/newui-atoms'
+import { createMediaQuery, UIProvider, useUI } from '@talelk/newui-atoms'
 import { closeDialog, showDialog } from '@talelk/newui-atoms/internal'
 import { type BreadcrumbItem, Breadcrumbs } from '@talelk/newui-molecules'
 import { AppSidebar, type AppSidebarGroup } from '@talelk/newui-organisms'
@@ -41,6 +36,10 @@ export interface AppShellProps {
   navigation?: AppSidebarGroup[]
   /** Advanced navigation content, rendered inside the same sidebar. */
   navigationContent?: JSX.Element | (() => JSX.Element)
+  /** Global utilities pinned above Settings while the sidebar is expanded. */
+  utilities?: JSX.Element
+  /** Compact icon form of `utilities`, shown while the sidebar is collapsed. */
+  utilitiesCollapsed?: JSX.Element
   /** Settings action pinned to the bottom of the sidebar. */
   settings?: JSX.Element
   /** User/account control pinned below settings. */
@@ -116,6 +115,8 @@ export function AppShell(props: AppShellProps): JSX.Element {
     search: props.sidebarSearch,
     groups: props.navigation,
     children: props.navigationContent,
+    utilities: props.utilities,
+    utilitiesCollapsed: props.utilitiesCollapsed,
     settings: props.settings,
     account: props.account,
     accountCollapsed: props.accountCollapsed,
@@ -180,24 +181,26 @@ export function AppShell(props: AppShellProps): JSX.Element {
           <a href="#app-shell-content" class="sr-only focus:not-sr-only">
             Skip to workspace
           </a>
-          <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-section-gap p-page-gutter-compact pb-8 md:p-page-gutter">
-            <div class="flex flex-wrap items-end justify-between gap-4">
-              <div class="min-w-0">
-                <Show when={props.breadcrumbs}>
-                  {(items) => <Breadcrumbs items={items()} />}
-                </Show>
-                <h1 class="mt-1 text-heading">{props.title}</h1>
-                <Show when={props.description}>
-                  <p class="mt-2 max-w-2xl text-ink-gray-7">
-                    {props.description}
-                  </p>
+          <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-4 p-page-gutter-compact pb-8 md:p-page-gutter">
+            <div class="flex flex-col gap-2">
+              <Show when={props.breadcrumbs}>
+                {(items) => <Breadcrumbs items={items()} />}
+              </Show>
+              <div class="flex flex-wrap items-start justify-between gap-4">
+                <div class="min-w-0">
+                  <h1 class="mt-1 text-heading">{props.title}</h1>
+                  <Show when={props.description}>
+                    <p class="mt-1 max-w-2xl text-ink-gray-7">
+                      {props.description}
+                    </p>
+                  </Show>
+                </div>
+                <Show when={props.actions}>
+                  <div class="flex flex-wrap items-center gap-2">
+                    {props.actions}
+                  </div>
                 </Show>
               </div>
-              <Show when={props.actions}>
-                <div class="flex flex-wrap items-center gap-2">
-                  {props.actions}
-                </div>
-              </Show>
             </div>
             {props.children}
             <Show when={props.footer}>{props.footer}</Show>
@@ -219,21 +222,29 @@ export function AppShell(props: AppShellProps): JSX.Element {
           const control = target.closest('a, button, [data-navigates]')
           if (control && !control.closest('[data-keep-drawer]')) closeDrawer()
         }}
-        class="open:flex m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-2rem)] flex-col overflow-y-auto border-e border-outline-gray-1 bg-surface-sidebar p-0 text-ink-gray-9 backdrop:bg-black-overlay-200"
+        class="open:flex m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-2rem)] flex-col overflow-hidden border-e border-outline-gray-1 bg-surface-gray-1 p-0 text-ink-gray-9 shadow-xl backdrop:bg-black-overlay-200"
       >
-        <div class="flex shrink-0 justify-end border-b border-outline-gray-1 p-2">
-          <Button variant="ghost" size="sm" onClick={closeDrawer}>
-            Close navigation
-          </Button>
+        <div class="flex h-10 shrink-0 items-center justify-between border-b border-outline-gray-1 ps-3 pe-2">
+          <span class="text-xs font-medium text-ink-gray-7">Navigation</span>
+          <button
+            type="button"
+            aria-label="Close navigation"
+            onClick={closeDrawer}
+            class="grid size-10 shrink-0 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
+          >
+            <span aria-hidden="true" class="lucide-x size-4" />
+          </button>
         </div>
         <UIProvider dir={ui?.dir()} portalTarget={drawerPortal}>
-          <AppSidebar
-            {...sidebarProps()}
-            width="100%"
-            collapsedWidth="100%"
-            collapsed={false}
-            collapsible={false}
-          />
+          <div class="flex min-h-0 flex-1 flex-col">
+            <AppSidebar
+              {...sidebarProps()}
+              width="100%"
+              collapsedWidth="100%"
+              collapsed={false}
+              collapsible={false}
+            />
+          </div>
         </UIProvider>
       </dialog>
     </div>

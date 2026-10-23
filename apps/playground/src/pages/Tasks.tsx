@@ -358,6 +358,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
           },
         ]}
         tabs={{
+          label: 'Task view',
           value: view(),
           onValueChange: setView,
           options: [

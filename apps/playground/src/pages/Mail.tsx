@@ -304,6 +304,7 @@ export function Mail(): JSX.Element {
                     },
                   ]}
                   tabs={{
+                    label: 'Mail view',
                     value: mode(),
                     onValueChange: setMode,
                     options: [
@@ -584,6 +585,7 @@ export function Mail(): JSX.Element {
                       }}
                     >
                       <TabButtons
+                        label="Reply action"
                         value={replyKind()}
                         onValueChange={(value) => {
                           setReplyKind(value)

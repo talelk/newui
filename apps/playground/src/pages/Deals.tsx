@@ -251,6 +251,7 @@ export function Deals(): JSX.Element {
           },
         ]}
         tabs={{
+          label: 'Deal view',
           value: view(),
           onValueChange: setView,
           options: [

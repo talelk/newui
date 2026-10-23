@@ -49,7 +49,7 @@ test('the app shell is one collapsed sidebar at desktop width', async ({
     'Projects',
   )
   await expect(
-    sidebar.getByRole('button', { name: 'Choose tenant' }),
+    sidebar.getByRole('button', { name: 'Switch tenant' }),
   ).toBeVisible()
 })
 

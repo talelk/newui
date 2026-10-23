@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@solidjs/testing-library'
+import { render, screen, waitFor, within } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { DataTable, type DataTableColumn } from './DataTable'
@@ -22,6 +22,16 @@ const COLUMNS: DataTableColumn<Row>[] = [
     header: 'Amount',
     cell: (context) => `$${context.getValue()}`,
     meta: { align: 'end' },
+  },
+]
+
+const MOBILE_COLUMNS: DataTableColumn<Row>[] = [
+  { accessorKey: 'name', header: 'Name', meta: { mobile: 'title' } },
+  {
+    accessorKey: 'amount',
+    header: 'Amount',
+    cell: (context) => `$${context.getValue()}`,
+    meta: { align: 'end', mobile: 'amount' },
   },
 ]
 
@@ -80,6 +90,57 @@ describe('DataTable', () => {
         cell.getAttribute('aria-sort'),
       )
     })
+  })
+
+  it('renders mobile cards from column meta', () => {
+    table({ columns: MOBILE_COLUMNS })
+    const cards = document.querySelector('[data-slot="data-table-cards"]')
+    expect(cards).toBeTruthy()
+    expect(within(cards as HTMLElement).getByText('Alpha')).toBeTruthy()
+    expect(within(cards as HTMLElement).getByText('$30')).toBeTruthy()
+  })
+
+  it('skips ineligible rows in selection and select-all', async () => {
+    const onRowsAction = vi.fn()
+    table({
+      columns: MOBILE_COLUMNS,
+      rowSelectable: (row) => row.id !== '2',
+      onRowsAction,
+    })
+    const tableRegion = screen.getByRole('region', { name: 'Rows table' })
+    expect(
+      within(tableRegion)
+        .getAllByRole('checkbox', { name: 'Select 2' })
+        .every((box) => box.hasAttribute('disabled')),
+    ).toBe(true)
+    await userEvent.click(
+      within(tableRegion).getByRole('checkbox', {
+        name: 'Select all rows on this page',
+      }),
+    )
+    const bulk = await screen.findByRole('button', {
+      name: /Update selected \(2\)/,
+    })
+    await userEvent.click(bulk)
+    expect(onRowsAction).toHaveBeenCalledWith(['1', '3'])
+  })
+
+  it('renders the shared loading and error states', () => {
+    const loading = render(() => (
+      <DataTable title="Rows" rows={[]} columns={COLUMNS} loading />
+    ))
+    expect(screen.getByRole('status', { name: 'Loading' })).toBeTruthy()
+    loading.unmount()
+    render(() => (
+      <DataTable title="Rows" rows={[]} columns={COLUMNS} error="Failed" />
+    ))
+    expect(screen.getByRole('alert')).toBeTruthy()
+  })
+
+  it('shows the mobile selection bar once a row is selected', async () => {
+    table()
+    await userEvent.click(screen.getByRole('checkbox', { name: 'Select 1' }))
+    expect(document.querySelector('[data-slot="selection-bar"]')).toBeTruthy()
   })
 
   it('can be a read-only table with no selection column', () => {

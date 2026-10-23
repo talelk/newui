@@ -21,6 +21,12 @@ export const API = {
       "description": "The form itself — fields and the submit button."
     },
     {
+      "name": "error",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Form-level failure summary, above the fields."
+    },
+    {
       "name": "providers",
       "type": "AuthProvider[]",
       "optional": true,

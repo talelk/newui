@@ -45,7 +45,8 @@ Application code should normally use the complete `AppSidebar` inside
 ## Behavior and accessibility
 
 - Controlled via `collapsed`/`onCollapsedChange`, otherwise the sidebar owns its
-  state. `⌘B`/`Ctrl+B` toggles unless `shortcut={false}`.
+  state. `⌘B`/`Ctrl+B` toggles unless `shortcut={false}`. **`AppSidebar` binds
+  the shortcut too**, so the tooltip's hint is real wherever the trigger renders.
 - In collapsed mode, item text becomes visually hidden but remains the accessible
   name; a tooltip exposes the label. There is no separate rail API.
 - Sections keep their body mounted and use `hidden`, so `aria-controls` always

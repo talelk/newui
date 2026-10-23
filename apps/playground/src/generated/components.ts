@@ -349,6 +349,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "DataState",
+    "description": "The one loading, empty and error contract for data organisms.",
+    "slug": "data-state",
+    "group": "Data",
+    "package": "@talelk/newui-organisms",
+    "source": "packages/organisms/src/organisms/DataState",
+    "atomic": "organism",
+    "parts": [
+      "DataStateProps"
+    ],
+    "spec": "data-state",
+    "shipped": true
+  },
+  {
     "name": "DataTable",
     "description": "A collection rendered as an accessible, searchable, sortable, paginated table.",
     "slug": "data-table",
@@ -388,6 +402,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "ScrollTableProps"
     ],
     "spec": "scroll-table",
+    "shipped": true
+  },
+  {
+    "name": "SelectionBar",
+    "description": "The bulk-action surface for a data region.",
+    "slug": "selection-bar",
+    "group": "Data",
+    "package": "@talelk/newui-organisms",
+    "source": "packages/organisms/src/organisms/SelectionBar",
+    "atomic": "organism",
+    "parts": [
+      "SelectionBarProps"
+    ],
+    "spec": "selection-bar",
     "shipped": true
   },
   {
@@ -1040,6 +1068,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "PaneLayoutProps"
     ],
     "spec": "pane-layout",
+    "shipped": true
+  },
+  {
+    "name": "Section",
+    "description": "The shared page-region anatomy: header, optional toolbar, body, optional footer.",
+    "slug": "section",
+    "group": "Layout",
+    "package": "@talelk/newui-organisms",
+    "source": "packages/organisms/src/organisms/Section",
+    "atomic": "organism",
+    "parts": [
+      "SectionProps"
+    ],
+    "spec": "section",
     "shipped": true
   },
   {

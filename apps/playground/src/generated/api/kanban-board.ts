@@ -53,6 +53,23 @@ export const API = {
       "description": "Rendered in a column with no cards."
     },
     {
+      "name": "loading",
+      "type": "boolean",
+      "optional": true,
+      "description": "Replaces the board with the shared loading skeleton."
+    },
+    {
+      "name": "error",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Replaces the board with the shared error state."
+    },
+    {
+      "name": "onRetry",
+      "type": "() => void",
+      "optional": true
+    },
+    {
       "name": "class",
       "type": "string",
       "optional": true

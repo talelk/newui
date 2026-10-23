@@ -2,7 +2,6 @@ import { Dropdown } from '@talelk/newui-molecules'
 import { AppSidebar, SidebarItem } from '@talelk/newui-organisms'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
-import { DemoFrame } from './demo-frame'
 
 /** The demo body; the optional props let the Collapsed story start folded. */
 function Example(props: {
@@ -10,7 +9,7 @@ function Example(props: {
   onCollapsedChange?: (collapsed: boolean) => void
 }): JSX.Element {
   return (
-    <DemoFrame medium>
+    <div class="h-[32rem] overflow-auto rounded-6 border border-outline-gray-2">
       <AppSidebar
         brand={
           <span class="flex min-h-10 items-center gap-2 px-2 font-semibold">
@@ -33,16 +32,16 @@ function Example(props: {
           </Dropdown>
         }
         tenantCollapsed={
-          <Dropdown
-            options={[
-              { label: 'Acme · Production', value: 'prod' },
-              { label: 'Acme · Staging', value: 'staging' },
-            ]}
+          <button
+            type="button"
+            aria-label="Switch tenant"
+            title="Switch tenant"
+            class="grid size-8 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
           >
-            <span>
-              <span class="sr-only">Choose tenant</span>A
+            <span aria-hidden="true" class="text-xs font-semibold">
+              A
             </span>
-          </Dropdown>
+          </button>
         }
         collapsed={props.collapsed}
         onCollapsedChange={props.onCollapsedChange}
@@ -71,6 +70,16 @@ function Example(props: {
             Settings
           </SidebarItem>
         }
+        utilities={
+          <SidebarItem label="Appearance" icon="lucide-sun">
+            Appearance
+          </SidebarItem>
+        }
+        utilitiesCollapsed={
+          <SidebarItem label="Appearance" icon="lucide-sun">
+            Appearance
+          </SidebarItem>
+        }
         account={
           <SidebarItem label="Rhea Kapoor" icon="lucide-user-round">
             Rhea Kapoor
@@ -82,7 +91,7 @@ function Example(props: {
           </SidebarItem>
         }
       />
-    </DemoFrame>
+    </div>
   )
 }
 

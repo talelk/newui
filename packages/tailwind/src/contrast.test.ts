@@ -158,3 +158,29 @@ for (const mode of ['light', 'dark'] as Mode[]) {
     ).toBeGreaterThanOrEqual(3)
   })
 }
+
+/**
+ * Solid buttons use the `-9` surface on hover and while open/pressed. The ramp
+ * inverts with the theme: `-9` is darker than the resting `-8` in light mode
+ * and lighter in dark mode. The foreground stays `ink-base`, so both
+ * directions are asserted — this is the pair that ships while the pointer is
+ * on the button, separate from the resting pair above.
+ */
+describe('solid button state contract (WCAG AA)', () => {
+  const SOLID_THEMES = ['gray', 'blue', 'green', 'red'] as const
+
+  for (const theme of SOLID_THEMES) {
+    for (const mode of ['light', 'dark'] as Mode[]) {
+      it(`${mode}: ${theme} solid hover/open ≥ ${AA}`, () => {
+        const ratio = contrast(
+          resolve(mode, 'ink-base'),
+          resolve(mode, `surface-${theme}-9`),
+        )
+        expect(
+          Number(ratio.toFixed(2)),
+          `ink-base on surface-${theme}-9 = ${ratio.toFixed(2)}:1`,
+        ).toBeGreaterThanOrEqual(AA)
+      })
+    }
+  }
+})

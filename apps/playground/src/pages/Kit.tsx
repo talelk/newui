@@ -107,7 +107,7 @@ export function Kit(): JSX.Element {
   ))
 
   return (
-    <article class="flex max-w-3xl flex-col gap-10">
+    <article class="docs-measure flex max-w-3xl flex-col gap-10">
       <PageIntro
         title="Build an app"
         description="Four questions, four answers, and a skeleton that already answers all of them."
@@ -135,7 +135,7 @@ export function Kit(): JSX.Element {
                     <td class="p-2">
                       <A
                         href={rung.href}
-                        class="font-medium text-ink-blue-6 underline decoration-dotted"
+                        class="font-medium text-ink-blue-link underline decoration-dotted"
                       >
                         {rung.level}
                       </A>
@@ -154,7 +154,7 @@ export function Kit(): JSX.Element {
                 <td class="p-2">
                   <A
                     href="/architecture"
-                    class="font-medium text-ink-blue-6 underline decoration-dotted"
+                    class="font-medium text-ink-blue-link underline decoration-dotted"
                   >
                     Logic
                   </A>
@@ -180,7 +180,7 @@ export function Kit(): JSX.Element {
           on{' '}
           <A
             href="/architecture"
-            class="text-ink-blue-6 underline decoration-dotted"
+            class="text-ink-blue-link underline decoration-dotted"
           >
             Architecture
           </A>
@@ -218,7 +218,7 @@ export function Kit(): JSX.Element {
           split is why{' '}
           <A
             href="/templates/app-shell"
-            class="text-ink-blue-6 underline decoration-dotted"
+            class="text-ink-blue-link underline decoration-dotted"
           >
             AppShell
           </A>{' '}
@@ -238,14 +238,14 @@ export function Kit(): JSX.Element {
           bar, a stat row, a detail header. Browse them at{' '}
           <A
             href="/organisms"
-            class="text-ink-blue-6 underline decoration-dotted"
+            class="text-ink-blue-link underline decoration-dotted"
           >
             Organisms
           </A>
           ; the live page is at{' '}
           <A
             href="/pages/tasks"
-            class="text-ink-blue-6 underline decoration-dotted"
+            class="text-ink-blue-link underline decoration-dotted"
           >
             Tasks
           </A>
@@ -416,14 +416,14 @@ pnpm build:starter   # 138 kB gzip: frame, router, data layer, table, forms
           one place — read it beside{' '}
           <A
             href="/pages/tasks"
-            class="text-ink-blue-6 underline decoration-dotted"
+            class="text-ink-blue-link underline decoration-dotted"
           >
             Tasks
           </A>{' '}
           (a thousand records) and{' '}
           <A
             href="/pages/files"
-            class="text-ink-blue-6 underline decoration-dotted"
+            class="text-ink-blue-link underline decoration-dotted"
           >
             Files
           </A>{' '}

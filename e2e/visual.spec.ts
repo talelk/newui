@@ -1,4 +1,5 @@
 import { expect, type Page, test } from '@playwright/test'
+import { setTheme } from './_lib/theme'
 
 test.use({ reducedMotion: 'reduce' })
 
@@ -53,7 +54,7 @@ for (const theme of ['light', 'dark']) {
     test(`analytics visual ${theme} ${width}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 1000 })
       await page.goto('/pages/analytics/fullscreen')
-      await page.getByRole('button', { name: theme, exact: true }).click()
+      await setTheme(page, theme)
       await expect(
         page.locator('[data-slot="chart-card"] svg').first(),
       ).toBeVisible()
@@ -67,7 +68,7 @@ for (const theme of ['light', 'dark']) {
   }
   test(`reference and states visual ${theme}`, async ({ page }) => {
     await page.goto('/atoms/button')
-    await page.getByRole('button', { name: theme, exact: true }).click()
+    await setTheme(page, theme)
     await expect(
       page.getByRole('button', { name: 'Solid', exact: true }),
     ).toBeVisible()

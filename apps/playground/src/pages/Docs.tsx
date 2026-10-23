@@ -36,7 +36,7 @@ export function Docs(): JSX.Element {
     />
   ))
   return (
-    <article class="flex max-w-3xl flex-col gap-8">
+    <article class="docs-measure flex max-w-3xl flex-col gap-8">
       <PageIntro
         title="Installation"
         description="One stylesheet, one provider, and only the packages a screen needs."
@@ -49,7 +49,7 @@ export function Docs(): JSX.Element {
           mapping — including where a package ships two levels — is on{' '}
           <A
             href="/architecture"
-            class="text-ink-blue-6 underline decoration-dotted"
+            class="text-ink-blue-link underline decoration-dotted"
           >
             Atomic design
           </A>
@@ -69,7 +69,7 @@ export function Docs(): JSX.Element {
                 <td class="p-2">
                   <A
                     href="/foundations"
-                    class="text-ink-blue-6 underline decoration-dotted"
+                    class="text-ink-blue-link underline decoration-dotted"
                   >
                     Foundations
                   </A>
@@ -86,7 +86,7 @@ export function Docs(): JSX.Element {
                 <td class="p-2">
                   <A
                     href="/atoms"
-                    class="text-ink-blue-6 underline decoration-dotted"
+                    class="text-ink-blue-link underline decoration-dotted"
                   >
                     Atoms
                   </A>{' '}
@@ -103,7 +103,7 @@ export function Docs(): JSX.Element {
                 <td class="p-2">
                   <A
                     href="/molecules"
-                    class="text-ink-blue-6 underline decoration-dotted"
+                    class="text-ink-blue-link underline decoration-dotted"
                   >
                     Molecules
                   </A>
@@ -117,7 +117,7 @@ export function Docs(): JSX.Element {
                 <td class="p-2">
                   <A
                     href="/organisms"
-                    class="text-ink-blue-6 underline decoration-dotted"
+                    class="text-ink-blue-link underline decoration-dotted"
                   >
                     Organisms
                   </A>
@@ -131,7 +131,7 @@ export function Docs(): JSX.Element {
                 <td class="p-2">
                   <A
                     href="/templates"
-                    class="text-ink-blue-6 underline decoration-dotted"
+                    class="text-ink-blue-link underline decoration-dotted"
                   >
                     Templates
                   </A>
@@ -145,7 +145,7 @@ export function Docs(): JSX.Element {
                 <td class="p-2">
                   <A
                     href="/pages"
-                    class="text-ink-blue-6 underline decoration-dotted"
+                    class="text-ink-blue-link underline decoration-dotted"
                   >
                     Pages
                   </A>
@@ -278,7 +278,7 @@ function DeleteProject() {
       <PageSection id="next" title="Next">
         <p class="text-base text-ink-gray-7">
           Compose a page and wire data —{' '}
-          <A href="/kit" class="text-ink-blue-6 underline decoration-dotted">
+          <A href="/kit" class="text-ink-blue-link underline decoration-dotted">
             Build an app
           </A>{' '}
           walks through the levels with the starter's own code.

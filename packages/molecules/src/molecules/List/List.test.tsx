@@ -53,6 +53,7 @@ describe('TabButtons', () => {
     const onValueChange = vi.fn()
     render(() => (
       <TabButtons
+        label="Filter"
         defaultValue="all"
         onValueChange={onValueChange}
         options={[
@@ -63,9 +64,9 @@ describe('TabButtons', () => {
     ))
 
     expect(
-      screen.getByRole('tab', { name: 'All' }).getAttribute('aria-selected'),
+      screen.getByRole('radio', { name: 'All' }).getAttribute('aria-checked'),
     ).toBe('true')
-    await userEvent.click(screen.getByRole('tab', { name: 'Unread' }))
+    await userEvent.click(screen.getByRole('radio', { name: 'Unread' }))
     expect(onValueChange).toHaveBeenCalledWith('unread')
   })
 })

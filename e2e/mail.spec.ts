@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
+import { setTheme } from './_lib/theme'
 
 test('desktop mail navigation collapses and pane resizing preserves the inbox', async ({
   page,
@@ -180,7 +181,7 @@ for (const theme of ['light', 'dark']) {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.setViewportSize({ width: 390, height: 900 })
     await page.goto('/pages/mail/fullscreen')
-    await page.getByRole('button', { name: theme, exact: true }).click()
+    await setTheme(page, theme)
     await expect(
       page.getByRole('heading', { name: 'Your inbox, in focus' }),
     ).toBeVisible()
@@ -220,7 +221,7 @@ test('forward validates its recipient and creates a separate sent message', asyn
       name: /^Open .*September launch checklist/,
     })
     .click()
-  await page.getByRole('tab', { name: 'Forward', exact: true }).click()
+  await page.getByRole('radio', { name: 'Forward', exact: true }).click()
   await page
     .getByRole('textbox', { name: 'Forward message' })
     .fill('Please review this checklist.')

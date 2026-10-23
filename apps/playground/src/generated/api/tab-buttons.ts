@@ -5,6 +5,12 @@
 export const API = {
   "TabButtonsProps": [
     {
+      "name": "label",
+      "type": "string",
+      "optional": false,
+      "description": "Accessible name for the radiogroup. Required: an unnamed choice is unusable."
+    },
+    {
       "name": "options",
       "type": "TabButtonOption[]",
       "optional": false
@@ -41,6 +47,12 @@ export const API = {
       "type": "boolean",
       "optional": true,
       "description": "Stack the buttons in a column."
+    },
+    {
+      "name": "wrap",
+      "type": "boolean",
+      "optional": true,
+      "description": "Wrap onto multiple rows instead of scrolling horizontally."
     },
     {
       "name": "edge",

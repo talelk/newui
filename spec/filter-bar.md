@@ -9,11 +9,12 @@ the view switcher, on one quiet surface.
 | --- | --- | --- |
 | `query` | `{ value?, placeholder?, onInput?, width? }` | rendered as a search input |
 | `selects` | `FilterSelect[]` | `{ label, options, value?, onValueChange?, width? }` |
-| `tabs` | `{ options, value?, onValueChange? }` | segmented control, pushed to the trailing edge |
+| `tabs` | `{ label, options, value?, onValueChange? }` | segmented control, pushed to the trailing edge; `label` names the radiogroup |
 | `chips` | `FilterChip[]` | `{ label, onRemove? }` — active filters restated as pills under the bar |
 | `onClearAll` | `() => void` | renders "Clear all" while a filter is active; the caller resets its own state |
 | `resultCount` | `number` | stated under the bar as `N result(s)`, announced politely |
 | `children` | `JSX.Element` | extra trailing controls |
+| `surface` | `'card' \| 'bare'` | `card`; `bare` removes the surface for a Section toolbar |
 | `class` | `string` | |
 
 ## Behavior
@@ -22,6 +23,9 @@ the view switcher, on one quiet surface.
   bg-surface-elevation-1 rounded-card`, `data-slot="filter-bar"`) so they read as a
   single toolbar rather than loose fields above the data. This boxed form is
   the one bar shape; a full-bleed page puts the bar inside its own container.
+  `surface="bare"` drops the surface and is the form for a `Section` toolbar.
+- With no query or select, the tabs start at the leading edge instead of being
+  pushed to the trailing edge; there is no empty leading third.
 - Search leads and is the widest target; selects are fixed-width so their labels
   do not jump as values change; the view switcher is pushed to the far end
   because it changes how the data below is *drawn*, not what is in it. On narrow

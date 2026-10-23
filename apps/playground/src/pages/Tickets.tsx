@@ -263,6 +263,7 @@ export function Tickets(): JSX.Element {
           },
         ]}
         tabs={{
+          label: 'Ticket view',
           value: view(),
           onValueChange: setView,
           options: [

@@ -154,3 +154,38 @@ type Story = StoryObj<typeof meta>
 
 /** The live demo, exactly as the reference page embeds it. */
 export const Default: Story = {}
+
+export const Loading: Story = {
+  render: () => (
+    <DemoFrame tall>
+      <KanbanBoard columns={[]} loading label="Deals board">
+        {() => null}
+      </KanbanBoard>
+    </DemoFrame>
+  ),
+}
+
+export const Empty: Story = {
+  render: () => (
+    <DemoFrame tall>
+      <KanbanBoard columns={[]} label="Deals board">
+        {() => null}
+      </KanbanBoard>
+    </DemoFrame>
+  ),
+}
+
+export const Error: Story = {
+  render: () => (
+    <DemoFrame tall>
+      <KanbanBoard
+        columns={[]}
+        error="The local board could not be loaded."
+        onRetry={() => {}}
+        label="Deals board"
+      >
+        {() => null}
+      </KanbanBoard>
+    </DemoFrame>
+  ),
+}

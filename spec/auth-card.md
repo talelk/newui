@@ -9,6 +9,7 @@
 | `title` | `JSX.Element` | rendered as the page's `h1` |
 | `description` | `JSX.Element` | one line under the title |
 | `children` | `JSX.Element` | the form: fields and the submit button |
+| `error` | `JSX.Element` | form-level failure summary above the fields |
 | `providers` | `AuthProvider[]` | social/sso buttons, in order |
 | `footer` | `JSX.Element` | "Don't have an account? Sign up" |
 | `logo` | `JSX.Element` | mark above the title |

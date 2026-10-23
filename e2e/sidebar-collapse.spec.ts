@@ -25,7 +25,7 @@ test.describe('sidebar collapse', () => {
     await expect(nav).toBeVisible()
     expect(await widthOf(nav)).toBeGreaterThan(200)
 
-    await page.getByRole('button', { name: 'Collapse', exact: true }).click()
+    await page.getByRole('button', { name: /^Collapse/ }).click()
     await expect(nav).toHaveAttribute('data-state', 'collapsed')
     await expect.poll(() => widthOf(nav), { timeout: 2000 }).toBeLessThan(64)
   })
@@ -42,7 +42,9 @@ test.describe('sidebar collapse', () => {
     await expect(nav).toBeVisible()
     expect(await widthOf(nav)).toBeGreaterThan(200)
 
-    await page.getByRole('button', { name: 'Collapse', exact: true }).click()
+    await page
+      .getByRole('button', { name: 'Collapse sidebar', exact: true })
+      .click()
     await expect(nav).toHaveAttribute('data-state', 'collapsed')
     await expect.poll(() => widthOf(nav), { timeout: 2000 }).toBeLessThan(64)
   })
@@ -62,7 +64,9 @@ test.describe('sidebar collapse', () => {
     expect(await widthOf(column)).toBeGreaterThan(180)
     await expect(nav.getByText('Pinned views', { exact: true })).toBeVisible()
 
-    await page.getByRole('button', { name: 'Collapse', exact: true }).click()
+    await page
+      .getByRole('button', { name: 'Collapse sidebar', exact: true })
+      .click()
     await expect(nav).toHaveAttribute('data-state', 'collapsed')
     await expect(nav.getByText('Pinned views', { exact: true })).toHaveCount(0)
     await expect(nav.getByText('Notifications', { exact: true })).toHaveClass(
@@ -80,7 +84,9 @@ test.describe('sidebar collapse', () => {
       ),
     ).toBeLessThanOrEqual(1)
 
-    await page.getByRole('button', { name: 'Expand', exact: true }).click()
+    await page
+      .getByRole('button', { name: 'Expand sidebar', exact: true })
+      .click()
     await expect(nav).toHaveAttribute('data-state', 'expanded')
     await expect
       .poll(() => widthOf(column), { timeout: 2000 })
@@ -110,5 +116,31 @@ test.describe('sidebar collapse', () => {
     await expect(drawer.getByRole('button', { name: 'Collapse' })).toHaveCount(
       0,
     )
+  })
+
+  test('the drawer keeps its close control and footer above a short viewport', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 430 })
+    await page.goto('/pages/deals/fullscreen')
+    await page
+      .getByRole('button', { name: 'Open application navigation' })
+      .click()
+
+    const drawer = page.locator('[data-slot="app-shell-drawer"]')
+    const close = drawer.getByRole('button', { name: 'Close navigation' })
+    const footer = drawer.locator('[data-slot="app-sidebar-footer"]')
+    await expect(drawer).toBeVisible()
+    await expect(close).toBeVisible()
+    // The close control sits in the pinned header and the account stays pinned
+    // below the one scrolling region; neither rides the menu's scroll.
+    await expect(close).toHaveCSS('height', '40px')
+    await expect(footer).toBeVisible()
+    await expect(
+      drawer.getByRole('button', { name: /Rhea Kapoor/ }),
+    ).toBeVisible()
+
+    await close.click()
+    await expect(drawer).not.toHaveAttribute('open', '')
   })
 })

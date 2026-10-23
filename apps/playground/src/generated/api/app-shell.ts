@@ -47,6 +47,18 @@ export const API = {
       "description": "Advanced navigation content, rendered inside the same sidebar."
     },
     {
+      "name": "utilities",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Global utilities pinned above Settings while the sidebar is expanded."
+    },
+    {
+      "name": "utilitiesCollapsed",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Compact icon form of `utilities`, shown while the sidebar is collapsed."
+    },
+    {
       "name": "settings",
       "type": "JSX.Element",
       "optional": true,

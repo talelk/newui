@@ -34,7 +34,7 @@ all of them.
 | --- | --- | --- |
 | `CommandPalette` | `open` / `defaultOpen` / `onOpenChange` | controlled or not |
 | | `shortcut` | bind ⌘K / Ctrl+K; default `true` |
-| | `placeholder`, `label`, `empty`, `size` | `label` names both the dialog and the list |
+| | `placeholder`, `label`, `empty`, `size`, `loading` | `label` names both the dialog and the list; `loading` replaces the list with a disabled loading option |
 | `CommandGroup` | `label` | the group's accessible name; hidden while filtering |
 | `CommandItem` | `value` | identity, and what `onSelect` reports |
 | | `keywords` | extra search text for words not in the label |

@@ -24,6 +24,24 @@ describe('ScrollTable', () => {
     expect(region.getAttribute('tabindex')).toBe('0')
   })
 
+  it('can pin the header while the region scrolls', () => {
+    const { container } = render(() => (
+      <ScrollTable label="Deals table" stickyHeader>
+        <table>
+          <ScrollTableHead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </ScrollTableHead>
+        </table>
+      </ScrollTable>
+    ))
+    const region = container.querySelector(
+      'section[data-slot="scroll-table"]',
+    ) as HTMLElement
+    expect(region.className).toContain('[&_thead]:sticky')
+  })
+
   it('binds the shared header treatment to the head', () => {
     const { container } = render(() => (
       <ScrollTable label="Deals table">

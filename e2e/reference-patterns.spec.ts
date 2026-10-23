@@ -7,6 +7,7 @@ import {
 } from '../apps/playground/src/lib/reference-examples'
 import { hrefOf } from '../apps/playground/src/lib/reference-href'
 import { gotoStory, storyIdFor } from './_lib/stories'
+import { setTheme } from './_lib/theme'
 
 test('editor grammar changes preserve edits and read-only prevents writing', async ({
   page,
@@ -235,7 +236,7 @@ for (const { slug: name } of PATTERNS) {
       await page.emulateMedia({ reducedMotion: 'reduce' })
       await page.setViewportSize({ width: 390, height: 900 })
       await page.goto(`/kit/recipes/${name}`)
-      await page.getByRole('button', { name: theme, exact: true }).click()
+      await setTheme(page, theme)
       await expect(page.locator('h1')).toBeVisible()
       expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])
       await page.setViewportSize({ width: 320, height: 900 })

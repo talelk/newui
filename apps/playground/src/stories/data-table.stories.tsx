@@ -14,12 +14,17 @@ export function Demo() {
       title="Tasks"
       rows={rows()}
       columns={[
-        { accessorKey: 'id', header: 'Task' },
-        { accessorKey: 'title', header: 'Title' },
-        { accessorKey: 'status', header: 'Status' },
-        { accessorKey: 'priority', header: 'Priority' },
+        { accessorKey: 'id', header: 'Task', meta: { mobile: 'subtitle' } },
+        { accessorKey: 'title', header: 'Title', meta: { mobile: 'title' } },
+        { accessorKey: 'status', header: 'Status', meta: { mobile: 'status' } },
+        {
+          accessorKey: 'priority',
+          header: 'Priority',
+          meta: { mobile: 'meta' },
+        },
       ]}
       actionLabel="Complete selected"
+      rowSelectable={(row) => row.status !== 'Done'}
       onRowsAction={(ids) =>
         setRows((previous) =>
           previous.map((row) =>
@@ -42,3 +47,38 @@ type Story = StoryObj<typeof meta>
 
 /** The live demo, exactly as the reference page embeds it. */
 export const Default: Story = {}
+
+export const Loading: Story = {
+  render: () => (
+    <DataTable
+      title="Tasks"
+      rows={[]}
+      loading
+      columns={[{ accessorKey: 'title', header: 'Title' }]}
+    />
+  ),
+}
+
+export const Empty: Story = {
+  render: () => (
+    <DataTable
+      title="Tasks"
+      rows={[]}
+      emptyTitle="No tasks match"
+      emptyHint="Try clearing the search."
+      columns={[{ accessorKey: 'title', header: 'Title' }]}
+    />
+  ),
+}
+
+export const Error: Story = {
+  render: () => (
+    <DataTable
+      title="Tasks"
+      rows={[]}
+      error="The local request failed."
+      onRetry={() => {}}
+      columns={[{ accessorKey: 'title', header: 'Title' }]}
+    />
+  ),
+}

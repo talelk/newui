@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, type Page, test } from '@playwright/test'
+import { setTheme } from './_lib/theme'
 
 async function choose(page: Page, label: string, option: string) {
   await page.getByRole('combobox', { name: label, exact: true }).click()
@@ -209,7 +210,7 @@ for (const theme of ['light', 'dark']) {
     for (const route of ['/', '/atoms', '/organisms', '/atoms/button']) {
       await page.goto(route)
       await expect(page.locator('h1').first()).toBeVisible()
-      await page.getByRole('button', { name: theme, exact: true }).click()
+      await setTheme(page, theme)
       if (route === '/atoms/button')
         await expect(
           page.getByRole('button', { name: 'Primary', exact: true }),

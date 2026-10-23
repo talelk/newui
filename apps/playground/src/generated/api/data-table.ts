@@ -42,6 +42,47 @@ export const API = {
       "description": "Selection checkboxes + bulk action. Default on; off for read tables."
     },
     {
+      "name": "rowSelectable",
+      "type": "(row: T) => boolean",
+      "optional": true,
+      "description": "Per-row eligibility; ineligible rows cannot be selected."
+    },
+    {
+      "name": "caption",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Page-supplied context shown beside Search, e.g. \"18 expenses · Sep 2026\"."
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "optional": true,
+      "description": "Skeleton state while the rows are in flight."
+    },
+    {
+      "name": "error",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Error state; the table is replaced by the shared DataState."
+    },
+    {
+      "name": "onRetry",
+      "type": "() => void",
+      "optional": true
+    },
+    {
+      "name": "density",
+      "type": "'comfortable' | 'compact'",
+      "optional": true,
+      "description": "`compact` uses 36px rows instead of 44px."
+    },
+    {
+      "name": "selectionSummary",
+      "type": "(ids: string[]) => JSX.Element",
+      "optional": true,
+      "description": "Total or scope shown beside the count in the mobile selection bar."
+    },
+    {
       "name": "pageSize",
       "type": "number",
       "optional": true

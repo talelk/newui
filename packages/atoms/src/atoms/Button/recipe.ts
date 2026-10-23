@@ -16,7 +16,7 @@ const REST: Record<Combo, string> = {
   'green-solid':
     'text-ink-base bg-surface-green-8 hover:bg-surface-green-9 active:bg-surface-green-9',
   'red-solid':
-    'text-ink-base dark:text-ink-red-9 bg-surface-red-8 hover:bg-surface-red-9 active:bg-surface-red-9',
+    'text-ink-base bg-surface-red-8 hover:bg-surface-red-9 active:bg-surface-red-9',
 
   'gray-subtle':
     'text-ink-gray-8 bg-surface-gray-2 hover:bg-surface-gray-3 active:bg-surface-gray-4',

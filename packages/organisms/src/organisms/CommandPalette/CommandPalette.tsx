@@ -121,6 +121,8 @@ export interface CommandPaletteProps {
   size?: 'sm' | 'md' | 'lg' | 'xl'
   /** Rendered when nothing matches. */
   empty?: JSX.Element
+  /** Replaces the list with a loading row while commands register. */
+  loading?: boolean
   class?: string
   children: JSX.Element
 }
@@ -306,8 +308,17 @@ export function CommandPalette(props: CommandPaletteProps): JSX.Element {
                 so hiding the list until the registry is non-empty deadlocks —
                 no items, so no registry, so the empty state, forever.
               */}
-              {props.children}
-              <Show when={isEmpty()}>
+              <Show when={!props.loading}>{props.children}</Show>
+              <Show when={props.loading}>
+                <div
+                  role="option"
+                  aria-disabled="true"
+                  class="px-2 py-6 text-center text-base text-ink-gray-6"
+                >
+                  Loading commands…
+                </div>
+              </Show>
+              <Show when={!props.loading && isEmpty()}>
                 {/* A listbox may only contain options/groups: the empty
                     message is a disabled option, the one shape a screen
                     reader can address inside the list. */}

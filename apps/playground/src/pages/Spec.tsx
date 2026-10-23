@@ -179,6 +179,7 @@ export function Spec(): JSX.Element {
           <Tabs.Content value="two">Second</Tabs.Content>
         </Tabs.Root>
         <TabButtons
+          label="Message filter"
           options={[
             { label: 'Unread', value: 'unread' },
             { label: 'All', value: 'all' },

@@ -127,7 +127,7 @@ function Rung(props: { level: LadderLevel; index: number }): JSX.Element {
         <p class="mt-1 text-base italic text-ink-gray-8">
           “{props.level.question}”
         </p>
-        <p class="mt-2 max-w-2xl text-base text-ink-gray-7">
+        <p class="mt-2 max-w-[30rem] text-base text-ink-gray-7">
           {props.level.blurb}
         </p>
 
@@ -181,27 +181,27 @@ export function Architecture(): JSX.Element {
         description="One level per entry, decided by composition rather than by package. These are the judgement calls; they live in one file and the registry records the result."
       >
         <div class="flex flex-col gap-3 text-base text-ink-gray-7">
-          <p class="max-w-2xl">
+          <p class="max-w-[30rem]">
             <strong class="text-ink-gray-8">Atom</strong> — one element or
             control, with no other kit component inside it: a button, a mark, an
             input, a label, the scroll viewport itself.
           </p>
-          <p class="max-w-2xl">
+          <p class="max-w-[30rem]">
             <strong class="text-ink-gray-8">Molecule</strong> — one interaction
             or small unit assembled from atoms: a field, a picker, a menu, a
             card, a list row, a dialog shell, a chart's legend.
           </p>
-          <p class="max-w-2xl">
+          <p class="max-w-[30rem]">
             <strong class="text-ink-gray-8">Organism</strong> — a independent
             region of a page: a sidebar, a block, a chart widget, an editor, a
             full search surface.
           </p>
-          <p class="max-w-2xl">
+          <p class="max-w-[30rem]">
             <strong class="text-ink-gray-8">Template</strong> — the arrangement
             of a page: a shell or a page layout. It may contain everything below
             and is the thing a route mounts.
           </p>
-          <p class="max-w-2xl">
+          <p class="max-w-[30rem]">
             The package axis still says where code lives:{' '}
             <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
               @talelk/newui-charts
@@ -215,7 +215,7 @@ export function Architecture(): JSX.Element {
             would have hidden that; filing by composition is what makes the
             levels useful.
           </p>
-          <p class="max-w-2xl">
+          <p class="max-w-[30rem]">
             The classification is in{' '}
             <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
               scripts/atomic.ts
@@ -272,7 +272,7 @@ export function Architecture(): JSX.Element {
         description="One level is not visual. Formatting, selection, undo and downloads behave the same in every app, and no two apps agree on them when they each write their own — so they are a package too."
       >
         <div class="flex flex-col gap-3 text-base text-ink-gray-7">
-          <p class="max-w-2xl">
+          <p class="max-w-[30rem]">
             <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
               @talelk/newui-data
             </code>{' '}
@@ -288,7 +288,7 @@ export function Architecture(): JSX.Element {
             <code>{`import { createUndo, downloadCsv, optionsOf, usd } from '@talelk/newui-data'
 import { DataProvider, createCollection } from '@talelk/newui-data/query'`}</code>
           </pre>
-          <p class="max-w-2xl">
+          <p class="max-w-[30rem]">
             What renders stays in the atomic visual packages. The examples
             copied their status strip eleven times too, but it renders a banner
             with buttons — promoting it here would have made the layer lie about

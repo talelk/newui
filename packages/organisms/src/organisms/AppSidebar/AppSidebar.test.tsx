@@ -69,6 +69,42 @@ describe('AppSidebar', () => {
     expect(screen.getByRole('button', { name: /Rhea Kapoor/ })).toBeTruthy()
   })
 
+  it('keeps a compact utility slot and an expand control in the rail', () => {
+    render(() => (
+      <AppSidebar
+        brand={<span>Acme</span>}
+        collapsed
+        utilities={<span>Preferences</span>}
+        utilitiesCollapsed={<button type="button">Theme</button>}
+        groups={[{ items: [] }]}
+      />
+    ))
+    expect(screen.queryByText('Preferences')).toBeNull()
+    expect(screen.getByRole('button', { name: 'Theme' })).toBeTruthy()
+    expect(screen.getByRole('button', { name: /Expand sidebar/ })).toBeTruthy()
+    expect(
+      screen.queryByRole('button', { name: /Collapse sidebar/ }),
+    ).toBeNull()
+  })
+
+  it('has no fold or compact utilities when it cannot collapse', () => {
+    render(() => (
+      <AppSidebar
+        brand={<span>Acme</span>}
+        collapsible={false}
+        utilities={<span>Preferences</span>}
+        utilitiesCollapsed={<button type="button">Theme</button>}
+        groups={[{ items: [] }]}
+      />
+    ))
+    expect(screen.getByText('Preferences')).toBeTruthy()
+    expect(screen.queryByRole('button', { name: 'Theme' })).toBeNull()
+    expect(screen.queryByRole('button', { name: /Expand sidebar/ })).toBeNull()
+    expect(
+      screen.queryByRole('button', { name: /Collapse sidebar/ }),
+    ).toBeNull()
+  })
+
   it('collapses labels, preserves a compact tenant control and reports the state', async () => {
     const onCollapsedChange = vi.fn()
     sidebar(onCollapsedChange)

@@ -34,6 +34,38 @@ export const API = {
       "description": "Rows rendered beyond the viewport. Default `6`."
     },
     {
+      "name": "loading",
+      "type": "boolean",
+      "optional": true,
+      "description": "Replaces the list with the shared loading skeleton."
+    },
+    {
+      "name": "error",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Replaces the list with the shared error state."
+    },
+    {
+      "name": "onRetry",
+      "type": "() => void",
+      "optional": true
+    },
+    {
+      "name": "emptyTitle",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "emptyDescription",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
+      "name": "emptyAction",
+      "type": "JSX.Element",
+      "optional": true
+    },
+    {
       "name": "children",
       "type": "(item: T, index: number) => JSX.Element",
       "optional": false,

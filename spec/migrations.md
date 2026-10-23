@@ -5,6 +5,46 @@ a **v1-equivalent freeze** is declared; until then each change is documented her
 and, where the transform is mechanical, a `scripts/migrate.ts` will be added
 alongside it.
 
+## `TabButtons` is a radiogroup (1.0)
+
+`TabButtons` is a one-of-N value switcher with no panels, so it now exposes
+`role="radiogroup"` / `role="radio"` and `aria-checked` instead of
+`role="tablist"` / `role="tab"` / `aria-selected`. The `label` prop is required
+and names the group.
+
+Before:
+
+```tsx
+<TabButtons
+  value={view()}
+  onValueChange={setView}
+  options={VIEWS}
+/>
+// role="tablist", aria-selected
+```
+
+After:
+
+```tsx
+<TabButtons
+  label="View"
+  value={view()}
+  onValueChange={setView}
+  options={VIEWS}
+/>
+// role="radiogroup", role="radio", aria-checked
+```
+
+Tests and styling that targeted `[role="tab"]` must target `[role="radio"]`.
+Use `Tabs` when the options own panels.
+
+## `PageToolbar` primary icons are explicit
+
+The primary action no longer receives a `+` automatically. Creation actions
+pass `icon="lucide-plus"`; export, archive and other non-creation actions keep
+their own icon or no icon. The `headingLevel` prop also defaults to `1`; a
+toolbar placed under an `AppShell` H1 passes `headingLevel={2}`.
+
 ## `Select` single mode is scalar (pre-1.0)
 
 `Select`'s value was `string[]` in every mode. Single mode (the default, no

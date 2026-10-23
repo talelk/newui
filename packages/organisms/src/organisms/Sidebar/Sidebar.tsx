@@ -33,11 +33,14 @@ const COLLAPSE_QUERY = '(max-width: 639px)'
 interface SidebarContextValue {
   collapsed: Accessor<boolean>
   toggle: () => void
+  /** Whether `⌘B`/`Ctrl+B` is bound here, so chrome only advertises a real hint. */
+  shortcut: Accessor<boolean>
 }
 
 const SidebarContext = createContext<SidebarContextValue>({
   collapsed: () => false,
   toggle: () => {},
+  shortcut: () => false,
 })
 
 /** Collapsed state + toggle, shared with every part inside a `Sidebar`. */
@@ -83,6 +86,7 @@ export const Sidebar: ParentComponent<SidebarProps> = (props) => {
   const [internal, setInternal] = createSignal<boolean | null>(null)
 
   const collapsible = () => local.collapsible ?? true
+  const shortcut = () => local.shortcut !== false && collapsible()
   const shouldCollapse = () =>
     collapsible() &&
     (local.collapsed !== undefined
@@ -96,7 +100,7 @@ export const Sidebar: ParentComponent<SidebarProps> = (props) => {
   }
 
   onMount(() => {
-    if (local.shortcut === false || !collapsible()) return
+    if (!shortcut()) return
     const onKey = (event: KeyboardEvent) => {
       if (event.key.toLowerCase() !== 'b') return
       if (!event.metaKey && !event.ctrlKey) return
@@ -108,7 +112,9 @@ export const Sidebar: ParentComponent<SidebarProps> = (props) => {
   })
 
   return (
-    <SidebarContext.Provider value={{ collapsed: shouldCollapse, toggle }}>
+    <SidebarContext.Provider
+      value={{ collapsed: shouldCollapse, toggle, shortcut }}
+    >
       <nav
         data-slot="sidebar"
         data-state={shouldCollapse() ? 'collapsed' : 'expanded'}
@@ -162,7 +168,7 @@ export const SidebarHeader: ParentComponent<SidebarHeaderProps> = (props) => {
     <div
       data-slot="sidebar-header"
       class={cn(
-        'flex h-12 shrink-0 items-center justify-between gap-2 px-1',
+        'flex h-12 shrink-0 items-center justify-between gap-2 px-2',
         local.class,
       )}
     >
@@ -235,11 +241,11 @@ export const SidebarLabel: ParentComponent<SidebarLabelProps> = (props) => {
   return (
     <div
       data-slot="sidebar-label"
-      class={cn('relative flex h-7 items-center pl-2', local.class)}
+      class={cn('relative flex h-8 items-center px-2 pt-2', local.class)}
     >
       <div
         class={cn(
-          'text-base leading-tighter text-ink-gray-7',
+          'text-xs font-medium text-ink-gray-6',
           collapsed() ? 'w-0 overflow-hidden opacity-0' : 'w-auto opacity-100',
         )}
       >
@@ -319,9 +325,9 @@ export const SidebarItem: ParentComponent<SidebarItemProps> = (props) => {
 
   const rowClasses = () =>
     cn(
-      'relative flex h-8 w-full items-center rounded-control text-interface text-ink-gray-6',
+      'group relative flex h-8 w-full items-center rounded-control text-interface text-ink-gray-7',
       'transition-colors hover:bg-surface-gray-2 motion-reduce:transition-none',
-      'data-[active]:bg-surface-blue-1 data-[active]:text-ink-blue-8',
+      'data-[active]:bg-surface-blue-1 data-[active]:font-medium data-[active]:text-ink-blue-8',
       local.class,
     )
   const innerClasses = () =>
@@ -439,7 +445,7 @@ export function SidebarSearch(props: SidebarSearchProps): JSX.Element {
 }
 
 export interface SidebarTriggerProps {
-  /** Tooltip copy. Defaults to Collapse/Expand, per state. */
+  /** Tooltip and accessible copy. Defaults to Collapse sidebar/Expand sidebar. */
   label?: string
   class?: string
 }
@@ -453,9 +459,10 @@ export interface SidebarTriggerProps {
  * `SidebarItem` at the bottom of the list); this is the compact one.
  */
 export function SidebarTrigger(props: SidebarTriggerProps): JSX.Element {
-  const { collapsed, toggle } = useSidebar()
+  const { collapsed, toggle, shortcut } = useSidebar()
   const text = () =>
     props.label ?? (collapsed() ? 'Expand sidebar' : 'Collapse sidebar')
+  const hint = () => (shortcut() ? `${text()} · ⌘B` : text())
 
   return (
     <TooltipRoot placement="bottom" openDelay={300}>
@@ -478,7 +485,7 @@ export function SidebarTrigger(props: SidebarTriggerProps): JSX.Element {
           )}
         />
       </TooltipTrigger>
-      <TooltipContent>{`${text()} · ⌘B`}</TooltipContent>
+      <TooltipContent>{hint()}</TooltipContent>
     </TooltipRoot>
   )
 }

@@ -1,3 +1,4 @@
+import { Button } from '@talelk/newui-atoms'
 import { VirtualList } from '@talelk/newui-organisms'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 
@@ -46,3 +47,40 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
+export const Loading: Story = {
+  render: () => (
+    <VirtualList label="Workspace activity" items={[]} itemSize={64} loading>
+      {() => null}
+    </VirtualList>
+  ),
+}
+
+export const Empty: Story = {
+  render: () => (
+    <VirtualList
+      label="Workspace activity"
+      items={[]}
+      itemSize={64}
+      emptyTitle="No activity yet"
+      emptyDescription="New workspace activity appears here."
+      emptyAction={<Button variant="outline">Refresh</Button>}
+    >
+      {() => null}
+    </VirtualList>
+  ),
+}
+
+export const Error: Story = {
+  render: () => (
+    <VirtualList
+      label="Workspace activity"
+      items={[]}
+      itemSize={64}
+      error="The local request failed."
+      onRetry={() => {}}
+    >
+      {() => null}
+    </VirtualList>
+  ),
+}

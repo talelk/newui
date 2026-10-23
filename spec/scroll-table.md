@@ -20,6 +20,7 @@ import { ScrollTable, TABLE_HEAD_CLASS } from '@talelk/newui-molecules'
 | prop | type | notes |
 | --- | --- | --- |
 | `label` | `string` | accessible name of the scroll region |
+| `stickyHeader` | `boolean` | keeps `thead` visible while the region scrolls |
 | `children` | `JSX.Element` | semantic table content |
 
 ## Behavior

@@ -4,6 +4,18 @@ export const CATEGORIES = [
   'Operating expenses',
   'Payroll',
 ]
+/** The cash accounts the demo reports on, in display order. */
+export const ACCOUNTS = ['Operating account', 'Savings', 'Petty cash'] as const
+/**
+ * Cash held on 2026-04-01, before the first transaction in `INITIAL`.
+ * The page rolls these forward through posted movements, so the demo can answer
+ * "how much cash is there" rather than only "what moved".
+ */
+export const OPENING_BALANCES: Record<string, number> = {
+  'Operating account': 184000,
+  Savings: 92000,
+  'Petty cash': 4800,
+}
 export interface Transaction {
   account?: string
   id: string

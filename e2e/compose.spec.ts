@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
+import { setTheme } from './_lib/theme'
 
 test('compose saves and restores a draft, previews, exports and publishes locally', async ({
   page,
@@ -11,7 +12,7 @@ test('compose saves and restores a draft, previews, exports and publishes locall
   await title.fill('Unsaved change')
   await page.getByRole('button', { name: 'Restore saved draft' }).click()
   await expect(title).toHaveValue('September product update')
-  await page.getByRole('tab', { name: 'Preview', exact: true }).click()
+  await page.getByRole('radio', { name: 'Preview', exact: true }).click()
   await expect(
     page.getByRole('article', { name: 'Post preview' }),
   ).toContainText('A clearer way to work')
@@ -36,12 +37,12 @@ test('segmented controls reverse horizontal keyboard movement in RTL', async ({
   await page.evaluate(() => {
     document.documentElement.dir = 'rtl'
   })
-  const first = page.getByRole('tab', { name: 'Sign in', exact: true })
+  const first = page.getByRole('radio', { name: 'Sign in', exact: true })
   await first.focus()
   await page.keyboard.press('ArrowRight')
   await expect(
-    page.getByRole('tab', { name: 'Email link', exact: true }),
-  ).toHaveAttribute('aria-selected', 'true')
+    page.getByRole('radio', { name: 'Email link', exact: true }),
+  ).toHaveAttribute('aria-checked', 'true')
 })
 
 for (const theme of ['light', 'dark']) {
@@ -52,7 +53,7 @@ for (const theme of ['light', 'dark']) {
     await expect(
       page.getByRole('heading', { name: 'Compose a post' }),
     ).toBeVisible()
-    await page.getByRole('button', { name: theme, exact: true }).click()
+    await setTheme(page, theme)
     await expect(page.getByRole('textbox', { name: 'Post body' })).toBeVisible()
     expect(
       await page.evaluate(

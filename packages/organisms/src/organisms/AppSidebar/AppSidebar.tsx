@@ -2,10 +2,10 @@ import { type IconProp, ScrollArea } from '@talelk/newui-atoms'
 import { For, type JSX, Show } from 'solid-js'
 import {
   Sidebar,
-  SidebarCollapseToggle,
   SidebarItem,
   SidebarLabel,
   type SidebarProps,
+  SidebarTrigger,
   useSidebar,
 } from '../Sidebar'
 
@@ -44,6 +44,10 @@ export interface AppSidebarProps {
   groups?: AppSidebarGroup[]
   /** Advanced navigation composition, still inside this single sidebar. */
   children?: JSX.Element | (() => JSX.Element)
+  /** Global utilities rendered above Settings while the sidebar is expanded. */
+  utilities?: JSX.Element
+  /** Compact icon form of `utilities`, shown while the sidebar is collapsed. */
+  utilitiesCollapsed?: JSX.Element
   settings?: JSX.Element
   account?: JSX.Element
   accountCollapsed?: JSX.Element
@@ -78,13 +82,29 @@ function AppSidebarIdentity(props: {
   brandCollapsed?: JSX.Element
   tenant?: JSX.Element
   tenantCollapsed?: JSX.Element
+  collapsible: boolean
 }): JSX.Element {
   const { collapsed } = useSidebar()
   return (
     <>
-      <div data-slot="app-sidebar-brand" class="shrink-0 px-2 pt-3 pb-2">
-        <Show when={collapsed()} fallback={props.brand}>
-          {props.brandCollapsed ?? props.brand}
+      <div
+        data-slot="app-sidebar-brand"
+        class="flex h-12 shrink-0 items-center gap-1 ps-2 pe-1"
+        classList={{ 'justify-center px-1': collapsed() }}
+      >
+        <div
+          class="flex min-w-0 flex-1 items-center"
+          classList={{ 'justify-center': collapsed() }}
+        >
+          <Show when={collapsed()} fallback={props.brand}>
+            {props.brandCollapsed ?? props.brand}
+          </Show>
+        </div>
+        {/* The fold is chrome, not a destination: keeping it in the identity
+            row keeps it out of the menu in the expanded state; the rail
+            repeats the same control under the tenant. */}
+        <Show when={!collapsed() && props.collapsible}>
+          <SidebarTrigger />
         </Show>
       </div>
       <Show when={props.tenant}>
@@ -92,10 +112,19 @@ function AppSidebarIdentity(props: {
           data-slot="app-sidebar-tenant"
           data-keep-drawer
           class="shrink-0 px-2 pb-2"
+          classList={{ 'flex justify-center': collapsed() }}
         >
           <Show when={collapsed()} fallback={props.tenant}>
             {props.tenantCollapsed}
           </Show>
+        </div>
+      </Show>
+      <Show when={collapsed() && props.collapsible}>
+        <div
+          data-slot="app-sidebar-expand"
+          class="flex shrink-0 justify-center border-b border-outline-gray-1 px-2 pt-1 pb-2"
+        >
+          <SidebarTrigger />
         </div>
       </Show>
     </>
@@ -103,19 +132,30 @@ function AppSidebarIdentity(props: {
 }
 
 function AppSidebarFooter(props: {
+  utilities?: JSX.Element
+  utilitiesCollapsed?: JSX.Element
   settings?: JSX.Element
   account?: JSX.Element
   accountCollapsed?: JSX.Element
-  collapsible: boolean
 }): JSX.Element {
   const { collapsed } = useSidebar()
   return (
     <div
       data-slot="app-sidebar-footer"
-      class="mt-auto flex shrink-0 flex-col gap-1 px-2 pt-2 pb-2"
+      class="mt-auto flex shrink-0 flex-col gap-1 border-t border-outline-gray-1 px-2 pt-2 pb-2"
     >
-      <Show when={props.collapsible}>
-        <SidebarCollapseToggle />
+      <Show when={!collapsed() && props.utilities}>
+        <div data-slot="app-sidebar-utilities" class="pb-1">
+          {props.utilities}
+        </div>
+      </Show>
+      <Show when={collapsed() && props.utilitiesCollapsed}>
+        <div
+          data-slot="app-sidebar-utilities"
+          class="flex justify-center pb-0.5"
+        >
+          {props.utilitiesCollapsed}
+        </div>
       </Show>
       <Show when={props.settings}>{props.settings}</Show>
       <Show
@@ -136,7 +176,6 @@ export function AppSidebar(props: AppSidebarProps): JSX.Element {
       collapsed={props.collapsed}
       onCollapsedChange={props.onCollapsedChange}
       collapsible={props.collapsible}
-      shortcut={false}
       ariaLabel={props.ariaLabel ?? 'Application navigation'}
       class={props.class}
     >
@@ -145,6 +184,7 @@ export function AppSidebar(props: AppSidebarProps): JSX.Element {
         brandCollapsed={props.brandCollapsed}
         tenant={props.tenant}
         tenantCollapsed={props.tenantCollapsed}
+        collapsible={props.collapsible !== false}
       />
 
       <Show when={props.search}>
@@ -174,14 +214,18 @@ export function AppSidebar(props: AppSidebarProps): JSX.Element {
                         {(item) => (
                           <SidebarItem
                             active={item.active}
-                            label={item.label}
+                            label={
+                              item.count
+                                ? `${item.label}, ${item.count}`
+                                : item.label
+                            }
                             icon={item.icon}
                             route={item.route}
                             href={item.href}
                             onClick={() => item.onClick?.()}
                             suffix={
                               item.count ? (
-                                <span class="rounded-full bg-surface-gray-2 px-1.5 py-px text-caption tabular-nums text-ink-gray-7">
+                                <span class="rounded-full bg-surface-gray-2 px-1.5 py-px text-caption tabular-nums text-ink-gray-7 group-data-[active]:bg-surface-blue-2 group-data-[active]:text-ink-blue-8">
                                   {item.count}
                                 </span>
                               ) : undefined
@@ -204,10 +248,11 @@ export function AppSidebar(props: AppSidebarProps): JSX.Element {
       </ScrollArea.Root>
 
       <AppSidebarFooter
+        utilities={props.utilities}
+        utilitiesCollapsed={props.utilitiesCollapsed}
         settings={props.settings}
         account={props.account}
         accountCollapsed={props.accountCollapsed}
-        collapsible={props.collapsible !== false}
       />
     </Sidebar>
   )

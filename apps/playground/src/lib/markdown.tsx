@@ -242,7 +242,7 @@ export function renderInline(text: string): JSX.Element {
           return (
             <a
               href={link[2]}
-              class="text-ink-blue-6 underline decoration-dotted"
+              class="text-ink-blue-link underline decoration-dotted"
             >
               {link[1]}
             </a>
@@ -327,7 +327,7 @@ export function Markdown(props: {
 
             <Match when={block.kind === 'paragraph' && block}>
               {(paragraph) => (
-                <p class="text-base leading-relaxed text-ink-gray-7">
+                <p class="max-w-[30rem] text-base leading-relaxed text-ink-gray-7">
                   {renderInline(paragraph().text)}
                 </p>
               )}

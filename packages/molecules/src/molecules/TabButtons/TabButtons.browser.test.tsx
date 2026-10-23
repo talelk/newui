@@ -14,7 +14,7 @@ function nextFrame() {
 describe('TabButtons (browser, real CSS)', () => {
   it('paints the segmented track and positions the indicator on the active tab', async () => {
     const { container } = render(() => (
-      <TabButtons options={OPTIONS} defaultValue="list" />
+      <TabButtons label="View" options={OPTIONS} defaultValue="list" />
     ))
     await nextFrame()
     const track = container.querySelector(
@@ -38,7 +38,7 @@ describe('TabButtons (browser, real CSS)', () => {
 
   it('moves the indicator to the selected tab', async () => {
     const { container } = render(() => (
-      <TabButtons options={OPTIONS} defaultValue="board" />
+      <TabButtons label="View" options={OPTIONS} defaultValue="board" />
     ))
     await nextFrame()
     // Layout must be font-stable: `font-display: swap` re-measures the
@@ -63,7 +63,7 @@ describe('TabButtons (browser, real CSS)', () => {
 
   it('draws an underline rail for the underline variant', () => {
     const { container } = render(() => (
-      <TabButtons options={OPTIONS} variant="underline" />
+      <TabButtons label="View" options={OPTIONS} variant="underline" />
     ))
     const track = container.querySelector(
       '[data-slot="tab-buttons"]',

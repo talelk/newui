@@ -1,4 +1,4 @@
-import { Button, Icon, TextInput } from '@talelk/newui-atoms'
+import { Button, cn, Icon, TextInput } from '@talelk/newui-atoms'
 import { Select, type SelectOption, TabButtons } from '@talelk/newui-molecules'
 import { For, type JSX, onCleanup, onMount, Show } from 'solid-js'
 
@@ -35,6 +35,8 @@ export interface FilterBarProps {
   selects?: FilterSelect[]
   /** A segmented control on the trailing edge — the view switcher. */
   tabs?: {
+    /** Accessible name for the radiogroup. */
+    label: string
     options: FilterOption[]
     value?: string
     onValueChange?: (value: string) => void
@@ -51,6 +53,8 @@ export interface FilterBarProps {
   resultCount?: number
   /** Anything else on the trailing edge, after the tabs. */
   children?: JSX.Element
+  /** `bare` removes the card surface for a toolbar composed into a Section. */
+  surface?: 'card' | 'bare'
   class?: string
 }
 
@@ -106,6 +110,8 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
     (props.chips?.length ?? 0) +
     (props.selects ?? []).filter((select) => Boolean(select.value)).length +
     (props.query?.value ? 1 : 0)
+  const hasLeading = () =>
+    Boolean(props.query) || (props.selects?.length ?? 0) > 0
   const showClearAll = () => props.onClearAll !== undefined && activeCount() > 0
   const showMetaRow = () =>
     (props.chips?.length ?? 0) > 0 ||
@@ -115,7 +121,14 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
   return (
     <div
       data-slot="filter-bar"
-      class={`flex max-w-full flex-col gap-control-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-control-pad ${props.class ?? ''}`}
+      data-surface={props.surface ?? 'card'}
+      class={cn(
+        'flex max-w-full flex-col gap-control-gap',
+        (props.surface ?? 'card') === 'card'
+          ? 'rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-control-pad'
+          : 'p-0',
+        props.class,
+      )}
     >
       <div class="grid max-w-full grid-cols-1 items-center gap-control-gap sm:grid-cols-2 xl:flex xl:flex-wrap">
         <Show when={props.query}>
@@ -163,10 +176,16 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
           )}
         </For>
 
-        <div class="col-span-full flex min-w-0 max-w-full flex-wrap items-center gap-control-gap sm:justify-end xl:ms-auto">
+        <div
+          class={cn(
+            'col-span-full flex min-w-0 max-w-full flex-wrap items-center gap-control-gap',
+            hasLeading() ? 'sm:justify-end xl:ms-auto' : 'sm:justify-start',
+          )}
+        >
           <Show when={props.tabs}>
             {(tabs) => (
               <TabButtons
+                label={tabs().label}
                 options={tabs().options}
                 value={tabs().value}
                 onValueChange={tabs().onValueChange}

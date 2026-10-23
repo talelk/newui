@@ -13,6 +13,8 @@ export interface AuthCardProps {
   description?: JSX.Element
   /** The form itself — fields and the submit button. */
   children: JSX.Element
+  /** Form-level failure summary, above the fields. */
+  error?: JSX.Element
   /** Social sign-in buttons, in order. */
   providers?: AuthProvider[]
   /** The line under the form: "Don't have an account? Sign up". */
@@ -50,6 +52,15 @@ export function AuthCard(props: AuthCardProps): JSX.Element {
             </Show>
           </div>
         </div>
+
+        <Show when={props.error}>
+          <div
+            role="alert"
+            class="rounded-control border border-outline-red-3 bg-surface-red-1 px-3 py-2 text-interface text-ink-red-8"
+          >
+            {props.error}
+          </div>
+        </Show>
 
         <div class="flex flex-col gap-4">{props.children}</div>
 

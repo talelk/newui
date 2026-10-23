@@ -11,6 +11,12 @@ export const API = {
       "description": "Names the region, e.g. `Deals table`."
     },
     {
+      "name": "stickyHeader",
+      "type": "boolean",
+      "optional": true,
+      "description": "Keep the header row visible while the region scrolls vertically."
+    },
+    {
       "name": "children",
       "type": "JSX.Element",
       "optional": false

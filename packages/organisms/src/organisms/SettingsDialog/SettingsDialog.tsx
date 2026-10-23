@@ -108,6 +108,10 @@ const Root: ParentComponent<SettingsDialogProps> = (props) => {
             {local.description ??
               'Manage your settings across the panels in this dialog.'}
           </Dialog.Description>
+          <Dialog.Close class="absolute end-2 top-2 z-raised grid size-8 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring">
+            <span class="sr-only">Close settings</span>
+            <span class="lucide-x size-4" aria-hidden="true" />
+          </Dialog.Close>
           {local.children}
         </Dialog.Content>
       </SettingsDialogContext.Provider>
@@ -377,7 +381,7 @@ export interface SettingsHeaderProps {
 const Header: ParentComponent<SettingsHeaderProps> = (props) => (
   <div
     data-slot="settings-header"
-    class={cn('shrink-0 px-4 pt-6 sm:px-6', props.class)}
+    class={cn('shrink-0 ps-4 pe-12 pt-6 sm:ps-6', props.class)}
   >
     <Show
       when={props.children}

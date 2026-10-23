@@ -143,6 +143,7 @@ export function Compose(): JSX.Element {
           class="xl:col-span-2"
           actions={
             <TabButtons
+              label="Editor view"
               value={view()}
               onValueChange={setView}
               options={[

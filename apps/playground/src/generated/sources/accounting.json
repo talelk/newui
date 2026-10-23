@@ -8,9 +8,10 @@
     "shell/theme.ts",
     "examples/accounting-data.ts",
     "examples/Notice.tsx",
+    "pages/accounting/PeriodBar.tsx",
     "pages/accounting/AccountingDialogs.tsx",
     "examples/CreateDialog.tsx",
-    "pages/accounting/ExpenseChart.tsx"
+    "pages/accounting/ExpenseRanking.tsx"
   ],
   "packages": [
     "@solidjs/router",

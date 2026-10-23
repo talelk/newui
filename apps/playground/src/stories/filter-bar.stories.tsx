@@ -71,6 +71,7 @@ export function Demo(): JSX.Element {
         },
       ]}
       tabs={{
+        label: 'View',
         value: view(),
         onValueChange: setView,
         options: [
@@ -113,3 +114,21 @@ type Story = StoryObj<typeof meta>
 
 /** The live demo, exactly as the reference page embeds it. */
 export const Default: Story = {}
+
+/** A bare period/view row: no search, no card, tabs start at the edge. */
+export const Bare: Story = {
+  render: () => (
+    <FilterBar
+      surface="bare"
+      tabs={{
+        label: 'Reporting period',
+        value: 'six',
+        options: [
+          { label: 'September', value: 'month' },
+          { label: 'Q3 2026', value: 'quarter' },
+          { label: 'Last six months', value: 'six' },
+        ],
+      }}
+    />
+  ),
+}

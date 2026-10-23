@@ -30,6 +30,8 @@ does not create a separate app rail.
 | `brandCollapsed` | `JSX.Element` | optional compact brand mark |
 | `tenant` | `JSX.Element` | tenant/workspace switcher |
 | `tenantCollapsed` | `JSX.Element` | optional compact tenant action |
+| `utilities` | `JSX.Element` | global utilities above the settings action; hidden while collapsed |
+| `utilitiesCollapsed` | `JSX.Element` | compact form of `utilities`, shown in the rail |
 | `search` | `JSX.Element` | optional fixed control above the scrolling groups |
 | `groups` | `AppSidebarGroup[]` | grouped headings/actions and icon rows |
 | `children` | `JSX.Element \| (() => JSX.Element)` | advanced custom menu within the same sidebar; use the function form when it reads `useSidebar()` |
@@ -49,9 +51,15 @@ controls with tooltips in collapsed mode; the app owns active-route state.
 
 ## Behavior
 
-- Brand/tenant stay fixed above the scroll region. Menu groups scroll; settings,
-  account and the collapse control stay in the footer.
-- Multiple labeled groups and group-level actions are supported.
+- Brand/tenant stay fixed above the scroll region. Menu groups scroll; utilities,
+  settings and account stay in the footer behind a 1px rule.
+- `utilities` is hidden while collapsed; pass `utilitiesCollapsed` to keep the
+  same control reachable as an icon (the theme switch does this).
+- The fold is chrome, not a destination: `Collapse` sits at the end of the
+  identity row and the rail repeats an `Expand` control under the tenant, above
+  a divider. The footer never spends a row on it.
+- Multiple labeled groups and group-level actions are supported. Group labels
+  are 12px Ink Muted so rows, not headings, carry the menu.
 - The sidebar has no app-rail sibling. App identity and all destinations live in
   this one navigation surface.
 - Custom `children` that reads `useSidebar()` must be a render function

@@ -1916,6 +1916,18 @@
         "description": "Advanced navigation content, rendered inside the same sidebar."
       },
       {
+        "name": "utilities",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Global utilities pinned above Settings while the sidebar is expanded."
+      },
+      {
+        "name": "utilitiesCollapsed",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Compact icon form of `utilities`, shown while the sidebar is collapsed."
+      },
+      {
         "name": "settings",
         "type": "JSX.Element",
         "optional": true,
@@ -6533,6 +6545,12 @@
         "description": "Names the region, e.g. `Deals table`."
       },
       {
+        "name": "stickyHeader",
+        "type": "boolean",
+        "optional": true,
+        "description": "Keep the header row visible while the region scrolls vertically."
+      },
+      {
         "name": "children",
         "type": "JSX.Element",
         "optional": false
@@ -6925,6 +6943,12 @@
   "packages/molecules/src/molecules/TabButtons/TabButtons.tsx": {
     "TabButtonsProps": [
       {
+        "name": "label",
+        "type": "string",
+        "optional": false,
+        "description": "Accessible name for the radiogroup. Required: an unnamed choice is unusable."
+      },
+      {
         "name": "options",
         "type": "TabButtonOption[]",
         "optional": false
@@ -6961,6 +6985,12 @@
         "type": "boolean",
         "optional": true,
         "description": "Stack the buttons in a column."
+      },
+      {
+        "name": "wrap",
+        "type": "boolean",
+        "optional": true,
+        "description": "Wrap onto multiple rows instead of scrolling horizontally."
       },
       {
         "name": "edge",
@@ -7670,6 +7700,18 @@
         "description": "Advanced navigation composition, still inside this single sidebar."
       },
       {
+        "name": "utilities",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Global utilities rendered above Settings while the sidebar is expanded."
+      },
+      {
+        "name": "utilitiesCollapsed",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Compact icon form of `utilities`, shown while the sidebar is collapsed."
+      },
+      {
         "name": "settings",
         "type": "JSX.Element",
         "optional": true
@@ -7738,6 +7780,12 @@
         "type": "JSX.Element",
         "optional": false,
         "description": "The form itself — fields and the submit button."
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Form-level failure summary, above the fields."
       },
       {
         "name": "providers",
@@ -7811,6 +7859,12 @@
         "description": "Rendered when nothing matches."
       },
       {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Replaces the list with a loading row while commands register."
+      },
+      {
         "name": "class",
         "type": "string",
         "optional": true
@@ -7880,6 +7934,59 @@
       }
     ]
   },
+  "packages/organisms/src/organisms/DataState/DataState.tsx": {
+    "DataStateProps": [
+      {
+        "name": "status",
+        "type": "DataStatus",
+        "optional": false
+      },
+      {
+        "name": "skeleton",
+        "type": "DataSkeleton",
+        "optional": true,
+        "description": "Skeleton shape while loading.",
+        "default": "'rows'"
+      },
+      {
+        "name": "rows",
+        "type": "number",
+        "optional": true,
+        "description": "Skeleton row count.",
+        "default": "5"
+      },
+      {
+        "name": "title",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "action",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "onRetry",
+        "type": "() => void",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
+      }
+    ]
+  },
   "packages/organisms/src/organisms/DataTable/DataTable.tsx": {
     "DataTableProps": [
       {
@@ -7918,6 +8025,47 @@
         "type": "boolean",
         "optional": true,
         "description": "Selection checkboxes + bulk action. Default on; off for read tables."
+      },
+      {
+        "name": "rowSelectable",
+        "type": "(row: T) => boolean",
+        "optional": true,
+        "description": "Per-row eligibility; ineligible rows cannot be selected."
+      },
+      {
+        "name": "caption",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Page-supplied context shown beside Search, e.g. \"18 expenses · Sep 2026\"."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Skeleton state while the rows are in flight."
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Error state; the table is replaced by the shared DataState."
+      },
+      {
+        "name": "onRetry",
+        "type": "() => void",
+        "optional": true
+      },
+      {
+        "name": "density",
+        "type": "'comfortable' | 'compact'",
+        "optional": true,
+        "description": "`compact` uses 36px rows instead of 44px."
+      },
+      {
+        "name": "selectionSummary",
+        "type": "(ids: string[]) => JSX.Element",
+        "optional": true,
+        "description": "Total or scope shown beside the count in the mobile selection bar."
       },
       {
         "name": "pageSize",
@@ -7960,6 +8108,13 @@
         "name": "title",
         "type": "JSX.Element",
         "optional": false
+      },
+      {
+        "name": "headingLevel",
+        "type": "1 | 2 | 3 | 4",
+        "optional": true,
+        "description": "Semantic level of the title.",
+        "default": "1"
       },
       {
         "name": "subtitle",
@@ -8008,7 +8163,7 @@
       },
       {
         "name": "tabs",
-        "type": "{\n    options: FilterOption[]\n    value?: string\n    onValueChange?: (value: string) => void\n  }",
+        "type": "{\n    /** Accessible name for the radiogroup. */\n    label: string\n    options: FilterOption[]\n    value?: string\n    onValueChange?: (value: string) => void\n  }",
         "optional": true,
         "description": "A segmented control on the trailing edge — the view switcher."
       },
@@ -8035,6 +8190,12 @@
         "type": "JSX.Element",
         "optional": true,
         "description": "Anything else on the trailing edge, after the tabs."
+      },
+      {
+        "name": "surface",
+        "type": "'card' | 'bare'",
+        "optional": true,
+        "description": "`bare` removes the card surface for a toolbar composed into a Section."
       },
       {
         "name": "class",
@@ -8092,6 +8253,23 @@
         "type": "(column: KanbanColumn<T>) => JSX.Element",
         "optional": true,
         "description": "Rendered in a column with no cards."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Replaces the board with the shared loading skeleton."
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Replaces the board with the shared error state."
+      },
+      {
+        "name": "onRetry",
+        "type": "() => void",
+        "optional": true
       },
       {
         "name": "class",
@@ -8198,10 +8376,23 @@
         "optional": false
       },
       {
+        "name": "headingLevel",
+        "type": "1 | 2 | 3 | 4",
+        "optional": true,
+        "description": "Semantic level of the title.",
+        "default": "1"
+      },
+      {
         "name": "menu",
         "type": "PageToolbarAction[]",
         "optional": true,
         "description": "Options for the ellipsis menu beside the title. Omitted → no menu."
+      },
+      {
+        "name": "secondary",
+        "type": "PageToolbarAction[]",
+        "optional": true,
+        "description": "Secondary actions, before the primary."
       },
       {
         "name": "action",
@@ -8214,6 +8405,114 @@
         "type": "JSX.Element",
         "optional": true,
         "description": "Anything else on the trailing edge, after the primary action."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
+  "packages/organisms/src/organisms/Section/Section.tsx": {
+    "SectionProps": [
+      {
+        "name": "title",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "actions",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Page or section actions, rendered opposite the title."
+      },
+      {
+        "name": "toolbar",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Controls that change the data, between the header and the body."
+      },
+      {
+        "name": "footer",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Pagination, totals or selection feedback, under a rule."
+      },
+      {
+        "name": "headingLevel",
+        "type": "SectionHeadingLevel",
+        "optional": true,
+        "default": "2"
+      },
+      {
+        "name": "surface",
+        "type": "'plain' | 'card' | 'inset'",
+        "optional": true,
+        "description": "Surface treatment.",
+        "default": "'plain'"
+      },
+      {
+        "name": "density",
+        "type": "'comfortable' | 'compact'",
+        "optional": true,
+        "default": "'comfortable'"
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ]
+  },
+  "packages/organisms/src/organisms/SelectionBar/SelectionBar.tsx": {
+    "SelectionBarProps": [
+      {
+        "name": "count",
+        "type": "number",
+        "optional": false
+      },
+      {
+        "name": "summary",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Context beside the count, e.g. a total or a scope."
+      },
+      {
+        "name": "primary",
+        "type": "SelectionPrimaryAction",
+        "optional": true
+      },
+      {
+        "name": "secondary",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "onClear",
+        "type": "() => void",
+        "optional": true
+      },
+      {
+        "name": "placement",
+        "type": "'inline' | 'sticky'",
+        "optional": true,
+        "description": "`sticky` fixes the bar to the bottom below `sm`.",
+        "default": "'inline'"
       },
       {
         "name": "class",
@@ -8685,7 +8984,7 @@
         "name": "label",
         "type": "string",
         "optional": true,
-        "description": "Tooltip copy. Defaults to Collapse/Expand, per state."
+        "description": "Tooltip and accessible copy. Defaults to Collapse sidebar/Expand sidebar."
       },
       {
         "name": "class",
@@ -8817,6 +9116,18 @@
         "description": "Columns at the widest breakpoint. Defaults to the number of stats, capped."
       },
       {
+        "name": "compact",
+        "type": "boolean",
+        "optional": true,
+        "description": "Tighter cards without the icon tile; for table-led screens."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Replaces the cards with the shared skeleton geometry."
+      },
+      {
         "name": "class",
         "type": "string",
         "optional": true
@@ -8853,6 +9164,38 @@
         "type": "number",
         "optional": true,
         "description": "Rows rendered beyond the viewport. Default `6`."
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Replaces the list with the shared loading skeleton."
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Replaces the list with the shared error state."
+      },
+      {
+        "name": "onRetry",
+        "type": "() => void",
+        "optional": true
+      },
+      {
+        "name": "emptyTitle",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "emptyDescription",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "emptyAction",
+        "type": "JSX.Element",
+        "optional": true
       },
       {
         "name": "children",

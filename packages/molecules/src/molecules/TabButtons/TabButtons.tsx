@@ -28,6 +28,8 @@ export interface TabButtonOption {
 }
 
 export interface TabButtonsProps {
+  /** Accessible name for the radiogroup. Required: an unnamed choice is unusable. */
+  label: string
   options: TabButtonOption[]
   value?: string
   defaultValue?: string
@@ -38,6 +40,8 @@ export interface TabButtonsProps {
   size?: TabsSize
   /** Stack the buttons in a column. */
   vertical?: boolean
+  /** Wrap onto multiple rows instead of scrolling horizontally. */
+  wrap?: boolean
   /** browser-tab + vertical only: the edge the tabs attach to. */
   edge?: TabsEdge
   /** Items share the container width equally instead of sizing to labels. */
@@ -52,6 +56,7 @@ export interface TabButtonsProps {
  */
 export function TabButtons(props: TabButtonsProps): JSX.Element {
   const [local] = splitProps(props, [
+    'label',
     'options',
     'value',
     'defaultValue',
@@ -59,6 +64,7 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
     'variant',
     'size',
     'vertical',
+    'wrap',
     'edge',
     'fluid',
     'class',
@@ -102,11 +108,13 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
 
   const trackClass = () =>
     cn(
-      isPill()
-        ? 'relative isolate inline-flex shrink-0 self-start'
-        : isBrowser()
-          ? 'relative isolate flex'
-          : 'relative flex',
+      local.wrap
+        ? 'relative flex w-fit max-w-full flex-wrap items-center justify-center'
+        : isPill()
+          ? 'relative isolate inline-flex shrink-0 self-start'
+          : isBrowser()
+            ? 'relative isolate flex'
+            : 'relative flex',
       local.vertical ? 'flex-col' : 'items-center',
       local.fluid && 'w-full',
       ...tabTrackClasses({
@@ -115,9 +123,23 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
         orientation: orientation(),
         edge: edge(),
       }),
-      'max-w-full overflow-x-auto',
+      local.wrap ? 'overflow-visible' : 'max-w-full overflow-x-auto',
       local.class,
     )
+
+  const wrappedActiveClass = () => {
+    if (!local.wrap) return ''
+    switch (variant()) {
+      case 'ghost':
+        return 'data-[state=active]:bg-surface-gray-2'
+      case 'underline':
+        return 'data-[state=active]:border-b-2 data-[state=active]:border-outline-gray-8 data-[state=active]:pb-[calc(0.25rem-2px)]'
+      case 'browser-tab':
+        return 'data-[state=active]:border data-[state=active]:border-outline-gray-1 data-[state=active]:bg-surface-elevation-1'
+      default:
+        return 'data-[state=active]:bg-surface-elevation-3 data-[state=active]:shadow-base'
+    }
+  }
 
   const indicatorClasses = () =>
     cn(
@@ -131,14 +153,16 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
       ref={(el) => {
         trackEl = el
       }}
-      role="tablist"
+      role="radiogroup"
+      aria-label={local.label}
       aria-orientation={orientation()}
       data-slot="tab-buttons"
       data-variant={variant()}
       data-size={size()}
+      data-wrap={local.wrap ? '' : undefined}
       class={trackClass()}
     >
-      <Show when={variant() === 'underline'}>
+      <Show when={!local.wrap && variant() === 'underline'}>
         <div
           data-slot="tab-indicator"
           aria-hidden="true"
@@ -146,7 +170,7 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
           style={indicator.style()}
         />
       </Show>
-      <Show when={isPill()}>
+      <Show when={!local.wrap && isPill()}>
         <div aria-hidden="true" class={cn(...tabIndicatorClipClasses())}>
           <div
             data-slot="tab-indicator"
@@ -160,7 +184,7 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
           />
         </div>
       </Show>
-      <Show when={isBrowser()}>
+      <Show when={!local.wrap && isBrowser()}>
         <div
           data-slot="tab-indicator"
           aria-hidden="true"
@@ -178,82 +202,96 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
         {(option) => {
           const active = () => value() === option.value
           return (
-            <button
-              type="button"
-              role="tab"
-              aria-selected={active()}
-              tabIndex={active() ? 0 : -1}
-              onKeyDown={(event) => {
-                const vertical = orientation() === 'vertical'
-                const rtl =
-                  trackEl && getComputedStyle(trackEl).direction === 'rtl'
-                const nextKey = vertical
-                  ? 'ArrowDown'
-                  : rtl
-                    ? 'ArrowLeft'
-                    : 'ArrowRight'
-                const previousKey = vertical
-                  ? 'ArrowUp'
-                  : rtl
-                    ? 'ArrowRight'
-                    : 'ArrowLeft'
-                if (![nextKey, previousKey, 'Home', 'End'].includes(event.key))
-                  return
-                const buttons = Array.from(
-                  trackEl?.querySelectorAll<HTMLButtonElement>(
-                    'button[role="tab"]:not(:disabled)',
-                  ) ?? [],
-                )
-                if (!buttons.length) return
-                event.preventDefault()
-                const current = buttons.indexOf(event.currentTarget)
-                const index =
-                  event.key === 'Home'
-                    ? 0
-                    : event.key === 'End'
-                      ? buttons.length - 1
-                      : (current +
-                          (event.key === nextKey ? 1 : -1) +
-                          buttons.length) %
-                        buttons.length
-                const target = buttons[index]
-                target?.focus()
-                if (target?.dataset['value']) setValue(target.dataset['value'])
-              }}
-              disabled={option.disabled}
-              data-slot="tab-trigger"
-              data-value={option.value}
-              data-state={active() ? 'active' : 'inactive'}
-              onClick={() => setValue(option.value)}
-              class={cn(
-                tabShellClasses,
-                tabRadiusClasses(variant(), size(), buttonBrowserBase(option)),
-                local.vertical && 'w-full',
-                local.fluid && 'flex-1 min-w-0',
-                'relative',
-                option.disabled && 'pointer-events-none opacity-50',
-              )}
-            >
-              <span
+            <>
+              {/* A styled segmented control cannot use native radio inputs
+                  without losing the shared tab shell and sliding indicator; it
+                  follows the WAI-ARIA radiogroup pattern on buttons instead. */}
+              {/* biome-ignore lint/a11y/useSemanticElements: styled radiogroup buttons */}
+              <button
+                type="button"
+                role="radio"
+                aria-checked={active()}
+                tabIndex={active() ? 0 : -1}
+                onKeyDown={(event) => {
+                  const vertical = orientation() === 'vertical'
+                  const rtl =
+                    trackEl && getComputedStyle(trackEl).direction === 'rtl'
+                  const nextKey = vertical
+                    ? 'ArrowDown'
+                    : rtl
+                      ? 'ArrowLeft'
+                      : 'ArrowRight'
+                  const previousKey = vertical
+                    ? 'ArrowUp'
+                    : rtl
+                      ? 'ArrowRight'
+                      : 'ArrowLeft'
+                  if (
+                    ![nextKey, previousKey, 'Home', 'End'].includes(event.key)
+                  )
+                    return
+                  const buttons = Array.from(
+                    trackEl?.querySelectorAll<HTMLButtonElement>(
+                      'button[role="radio"]:not(:disabled)',
+                    ) ?? [],
+                  )
+                  if (!buttons.length) return
+                  event.preventDefault()
+                  const current = buttons.indexOf(event.currentTarget)
+                  const index =
+                    event.key === 'Home'
+                      ? 0
+                      : event.key === 'End'
+                        ? buttons.length - 1
+                        : (current +
+                            (event.key === nextKey ? 1 : -1) +
+                            buttons.length) %
+                          buttons.length
+                  const target = buttons[index]
+                  target?.focus()
+                  if (target?.dataset['value'])
+                    setValue(target.dataset['value'])
+                }}
+                disabled={option.disabled}
+                data-slot="tab-trigger"
+                data-value={option.value}
+                data-state={active() ? 'active' : 'inactive'}
+                onClick={() => setValue(option.value)}
                 class={cn(
-                  tabPillClasses({
-                    variant: variant(),
-                    size: size(),
-                    active: active(),
-                    orientation: orientation(),
-                    iconOnly: false,
-                    browserTabBase: buttonBrowserBase(option),
-                  }),
-                  local.vertical && 'w-full justify-start',
-                  local.fluid && 'w-full',
+                  tabShellClasses,
+                  tabRadiusClasses(
+                    variant(),
+                    size(),
+                    buttonBrowserBase(option),
+                  ),
+                  local.vertical && 'w-full',
+                  local.fluid && 'flex-1 min-w-0',
+                  wrappedActiveClass(),
+                  'relative',
+                  option.disabled && 'pointer-events-none opacity-50',
                 )}
               >
-                <Show when={option.icon}>
-                  <Icon icon={option.icon} class="size-4 shrink-0" />
-                </Show>
-                <span class="min-w-0 truncate">{option.label}</span>
-              </span>
-            </button>
+                <span
+                  class={cn(
+                    tabPillClasses({
+                      variant: variant(),
+                      size: size(),
+                      active: active(),
+                      orientation: orientation(),
+                      iconOnly: false,
+                      browserTabBase: buttonBrowserBase(option),
+                    }),
+                    local.vertical && 'w-full justify-start',
+                    local.fluid && 'w-full',
+                  )}
+                >
+                  <Show when={option.icon}>
+                    <Icon icon={option.icon} class="size-4 shrink-0" />
+                  </Show>
+                  <span class="min-w-0 truncate">{option.label}</span>
+                </span>
+              </button>
+            </>
           )
         }}
       </For>

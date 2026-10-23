@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
+import { setTheme } from './_lib/theme'
 
 test('authentication validates credentials and offers a local demo session', async ({
   page,
@@ -20,7 +21,7 @@ test('authentication validates credentials and offers a local demo session', asy
   ).toBeVisible()
   await expect(page.getByRole('status')).toContainText('local demo session')
   await page.getByRole('button', { name: 'Back to sign in' }).click()
-  await page.getByRole('tab', { name: 'Sign up', exact: true }).click()
+  await page.getByRole('radio', { name: 'Sign up', exact: true }).click()
   await expect(
     page.getByRole('textbox', { name: 'Full name', exact: false }),
   ).toBeVisible()
@@ -102,7 +103,7 @@ for (const route of [
       await page.setViewportSize({ width: 390, height: 900 })
       await page.goto(route)
       await expect(page.locator('h1')).toBeVisible()
-      await page.getByRole('button', { name: theme, exact: true }).click()
+      await setTheme(page, theme)
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth - innerWidth,

@@ -14,7 +14,7 @@ export function Demo(): JSX.Element {
       <PageToolbar
         title="Tickets"
         menu={[{ label: 'Archive', icon: 'lucide-archive' }]}
-        action={{ label: 'New ticket' }}
+        action={{ label: 'New ticket', icon: 'lucide-plus' }}
       >
         <Button
           variant="ghost"

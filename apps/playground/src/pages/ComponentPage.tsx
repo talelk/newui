@@ -248,7 +248,7 @@ export function ComponentPage(): JSX.Element {
               Every entry has one section.{' '}
               <A
                 href={hrefOf(component())}
-                class="text-ink-blue-6 underline decoration-dotted"
+                class="text-ink-blue-link underline decoration-dotted"
               >
                 Open {component().name} under {ATOMIC[component().atomic].label}
               </A>
@@ -270,7 +270,7 @@ export function ComponentPage(): JSX.Element {
                 The index lists every documented component —{' '}
                 <A
                   href="/atoms"
-                  class="text-ink-blue-6 underline decoration-dotted"
+                  class="text-ink-blue-link underline decoration-dotted"
                 >
                   browse it
                 </A>
@@ -318,7 +318,7 @@ export function ComponentPage(): JSX.Element {
                     <Badge size="sm" theme="blue" label="contract" />
                   </Show>
                 </div>
-                <p class="max-w-2xl text-interface text-ink-gray-7">
+                <p class="max-w-[30rem] text-interface text-ink-gray-7">
                   {component().description}
                 </p>
                 <p class="text-caption text-ink-gray-7">

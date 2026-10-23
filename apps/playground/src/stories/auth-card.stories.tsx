@@ -43,3 +43,21 @@ type Story = StoryObj<typeof meta>
 
 /** The live demo, exactly as the reference page embeds it. */
 export const Default: Story = {}
+
+export const Error: Story = {
+  render: () => (
+    <DemoFrame>
+      <AuthCard
+        title="Sign in to Acme"
+        description="Use your work email to continue."
+        error="That email and password combination did not match."
+      >
+        <TextInput label="Email" type="email" placeholder="you@acme.com" />
+        <TextInput label="Password" type="password" placeholder="••••••••" />
+        <Button variant="solid" class="w-full">
+          Sign in
+        </Button>
+      </AuthCard>
+    </DemoFrame>
+  ),
+}

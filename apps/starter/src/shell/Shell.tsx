@@ -85,8 +85,12 @@ export function Shell(props: {
         </A>
       }
       tenant={
-        <Dropdown options={tenantOptions} onSelect={setTenant}>
-          <span class="flex min-w-0 items-center gap-2">
+        <Dropdown
+          options={tenantOptions}
+          onSelect={setTenant}
+          class="w-full justify-start"
+        >
+          <span class="flex min-w-0 flex-1 items-center gap-2">
             <span
               aria-hidden="true"
               class="lucide-building-2 size-4 shrink-0"
@@ -98,12 +102,17 @@ export function Shell(props: {
         </Dropdown>
       }
       tenantCollapsed={
-        <Dropdown options={tenantOptions} onSelect={setTenant}>
-          <span class="grid size-9 place-items-center">
-            <span class="sr-only">Choose tenant</span>
-            <span aria-hidden="true" class="lucide-building-2 size-4" />
-          </span>
-        </Dropdown>
+        <button
+          type="button"
+          aria-label="Switch tenant"
+          title="Switch tenant"
+          onClick={() =>
+            setTenant(tenant() === 'staging' ? 'production' : 'staging')
+          }
+          class="grid size-8 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
+        >
+          <span aria-hidden="true" class="lucide-building-2 size-4" />
+        </button>
       }
       settings={
         <SidebarItem
@@ -121,8 +130,9 @@ export function Shell(props: {
           onSelect={(value) => {
             if (value === 'sign-out') signOutAndNavigate()
           }}
+          class="w-full justify-start"
         >
-          <span class="flex min-w-0 items-center gap-2">
+          <span class="flex min-w-0 flex-1 items-center gap-2">
             <Avatar size="xs" theme="blue" label={account()} />
             <span class="truncate">{account()}</span>
           </span>

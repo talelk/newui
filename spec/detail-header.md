@@ -9,6 +9,7 @@ it is in, and what you can do to it.
 | --- | --- | --- |
 | `breadcrumbs` | `BreadcrumbItem[]` | trail above the title; omitted → no trail |
 | `title` | `JSX.Element` | required |
+| `headingLevel` | `1 \| 2 \| 3 \| 4` | semantic level; defaults to `1` |
 | `subtitle` | `JSX.Element` | muted line — an id, an owner, a timestamp |
 | `status` | `{ label, theme? }` | pill beside the title |
 | `actions` | `DetailAction[]` | all but the last render outline; the last is primary |
@@ -24,4 +25,4 @@ once you know what it belongs to. Actions sit on the trailing edge with the
 primary one **last**, so the least-common (often destructive) action is never the
 one nearest the title. The subtitle reads at `ink-gray-7` (secondary text never
 drops below that step), and the trailing action row wraps rather than pushing
-the title off a narrow record page.
+the title off a narrow record page. The title itself wraps instead of clipping.

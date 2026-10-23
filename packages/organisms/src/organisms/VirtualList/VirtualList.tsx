@@ -1,5 +1,6 @@
 import { createVirtualizer } from '@tanstack/solid-virtual'
-import { For, type JSX, untrack } from 'solid-js'
+import { For, type JSX, Show, untrack } from 'solid-js'
+import { DataState } from '../DataState'
 
 /**
  * A bounded DOM for a long list.
@@ -26,6 +27,14 @@ export interface VirtualListProps<T> {
   height?: string
   /** Rows rendered beyond the viewport. Default `6`. */
   overscan?: number
+  /** Replaces the list with the shared loading skeleton. */
+  loading?: boolean
+  /** Replaces the list with the shared error state. */
+  error?: JSX.Element
+  onRetry?: () => void
+  emptyTitle?: JSX.Element
+  emptyDescription?: JSX.Element
+  emptyAction?: JSX.Element
   /** One row's content; the `li` and its position belong to the list. */
   children: (item: T, index: number) => JSX.Element
 }
@@ -43,6 +52,15 @@ export function VirtualList<T>(props: VirtualListProps<T>): JSX.Element {
     overscan: untrack(() => props.overscan) ?? 6,
   })
 
+  const status = () =>
+    props.loading
+      ? ('loading' as const)
+      : props.error
+        ? ('error' as const)
+        : props.items.length === 0
+          ? ('empty' as const)
+          : ('ready' as const)
+
   return (
     <section
       ref={viewport}
@@ -52,28 +70,44 @@ export function VirtualList<T>(props: VirtualListProps<T>): JSX.Element {
       class="relative overflow-auto rounded-3 focus-visible:focus-ring"
       data-slot="virtual-list"
     >
-      <ul
-        class="relative m-0 list-none p-0"
-        style={{ height: `${virtualizer.getTotalSize()}px` }}
+      <Show
+        when={status() === 'ready'}
+        fallback={
+          <DataState
+            status={status()}
+            skeleton="rows"
+            rows={5}
+            title={props.emptyTitle}
+            description={props.emptyDescription}
+            action={props.emptyAction}
+            error={props.error}
+            onRetry={props.onRetry}
+          />
+        }
       >
-        <For each={virtualizer.getVirtualItems()}>
-          {(row) => (
-            <li
-              class="absolute inset-x-0 top-0"
-              style={{
-                height: `${props.itemSize}px`,
-                transform: `translateY(${row.start}px)`,
-              }}
-              aria-posinset={row.index + 1}
-              aria-setsize={props.items.length}
-            >
-              {/* The virtualiser's count is the array's length, so the index
-                  is a valid key for the mapped row. */}
-              {props.children(props.items[row.index] as T, row.index)}
-            </li>
-          )}
-        </For>
-      </ul>
+        <ul
+          class="relative m-0 list-none p-0"
+          style={{ height: `${virtualizer.getTotalSize()}px` }}
+        >
+          <For each={virtualizer.getVirtualItems()}>
+            {(row) => (
+              <li
+                class="absolute inset-x-0 top-0"
+                style={{
+                  height: `${props.itemSize}px`,
+                  transform: `translateY(${row.start}px)`,
+                }}
+                aria-posinset={row.index + 1}
+                aria-setsize={props.items.length}
+              >
+                {/* The virtualiser's count is the array's length, so the index
+                    is a valid key for the mapped row. */}
+                {props.children(props.items[row.index] as T, row.index)}
+              </li>
+            )}
+          </For>
+        </ul>
+      </Show>
     </section>
   )
 }

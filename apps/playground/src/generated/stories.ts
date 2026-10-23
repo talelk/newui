@@ -124,6 +124,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'organisms-dashboard--default',
     load: () => import('../stories/dashboard.stories'),
   },
+  "DataState": {
+    id: 'organisms-datastate--default',
+    load: () => import('../stories/data-state.stories'),
+  },
   "DataTable": {
     id: 'organisms-datatable--default',
     load: () => import('../stories/data-table.stories'),
@@ -320,9 +324,17 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'molecules-scrolltable--default',
     load: () => import('../stories/scroll-table.stories'),
   },
+  "Section": {
+    id: 'organisms-section--default',
+    load: () => import('../stories/section.stories'),
+  },
   "Select": {
     id: 'molecules-selection-select--default',
     load: () => import('../stories/select.stories'),
+  },
+  "SelectionBar": {
+    id: 'organisms-selectionbar--default',
+    load: () => import('../stories/selection-bar.stories'),
   },
   "SettingsDialog": {
     id: 'organisms-patterns-settingsdialog--default',

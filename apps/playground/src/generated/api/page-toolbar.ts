@@ -10,10 +10,23 @@ export const API = {
       "optional": false
     },
     {
+      "name": "headingLevel",
+      "type": "1 | 2 | 3 | 4",
+      "optional": true,
+      "description": "Semantic level of the title.",
+      "default": "1"
+    },
+    {
       "name": "menu",
       "type": "PageToolbarAction[]",
       "optional": true,
       "description": "Options for the ellipsis menu beside the title. Omitted → no menu."
+    },
+    {
+      "name": "secondary",
+      "type": "PageToolbarAction[]",
+      "optional": true,
+      "description": "Secondary actions, before the primary."
     },
     {
       "name": "action",

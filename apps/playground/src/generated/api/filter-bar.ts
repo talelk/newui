@@ -18,7 +18,7 @@ export const API = {
     },
     {
       "name": "tabs",
-      "type": "{\n    options: FilterOption[]\n    value?: string\n    onValueChange?: (value: string) => void\n  }",
+      "type": "{\n    /** Accessible name for the radiogroup. */\n    label: string\n    options: FilterOption[]\n    value?: string\n    onValueChange?: (value: string) => void\n  }",
       "optional": true,
       "description": "A segmented control on the trailing edge — the view switcher."
     },
@@ -45,6 +45,12 @@ export const API = {
       "type": "JSX.Element",
       "optional": true,
       "description": "Anything else on the trailing edge, after the tabs."
+    },
+    {
+      "name": "surface",
+      "type": "'card' | 'bare'",
+      "optional": true,
+      "description": "`bare` removes the card surface for a toolbar composed into a Section."
     },
     {
       "name": "class",

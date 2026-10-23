@@ -16,6 +16,7 @@ import {
   onCleanup,
   Show,
 } from 'solid-js'
+import { DataState } from '../DataState'
 import { createKanbanDrag, type KanbanSlot } from './drag'
 
 export type KanbanTone = 'gray' | 'amber' | 'blue' | 'green' | 'red' | 'violet'
@@ -79,6 +80,11 @@ export interface KanbanBoardProps<T extends { id: string }> {
   itemLabel?: (item: T) => string
   /** Rendered in a column with no cards. */
   emptyColumn?: (column: KanbanColumn<T>) => JSX.Element
+  /** Replaces the board with the shared loading skeleton. */
+  loading?: boolean
+  /** Replaces the board with the shared error state. */
+  error?: JSX.Element
+  onRetry?: () => void
   class?: string
 }
 
@@ -171,6 +177,14 @@ export function KanbanBoard<T extends { id: string }>(
    * flight loses the element the gesture is holding. An id survives both.
    */
   const columnIds = createMemo(() => rendered().map((column) => column.id))
+  const status = () =>
+    props.loading
+      ? ('loading' as const)
+      : props.error
+        ? ('error' as const)
+        : columnIds().length === 0
+          ? ('empty' as const)
+          : ('ready' as const)
   const columnOf = (columnId: string): KanbanColumn<T> =>
     rendered().find((column) => column.id === columnId) ?? {
       id: columnId,
@@ -303,180 +317,193 @@ export function KanbanBoard<T extends { id: string }>(
       data-kanban-dragging={drag.state() ? '' : undefined}
       class={cn('flex min-h-0 flex-col', props.class)}
     >
-      <ScrollArea.Root class="min-h-0 flex-1">
-        <ScrollArea.Viewport>
-          <ul
-            // A list of columns, each holding a list of cards: the structure a
-            // screen reader walks. The drag is invisible to it, which is exactly
-            // why the card menu exists.
-            class={cn(
-              'flex h-full min-w-max items-stretch gap-card-gap p-card-pad',
-              // Below `lg` the board is a phone-width panner, and there the
-              // reference snaps: a column that lands half-off the edge is a
-              // column you cannot read. Wide, it is a drag surface, and snapping
-              // under a pointer mid-drop is just fighting the user.
-              'max-lg:snap-x max-lg:snap-mandatory max-lg:scroll-px-4',
-              // Text selection during a drag turns a card into a smear.
-              drag.state() && 'select-none',
-            )}
-            aria-label={props.label ?? 'Board'}
-          >
-            <For each={columnIds()}>
-              {(columnId) => {
-                const column = () => columnOf(columnId)
-                return (
-                  <li
-                    ref={(element) => columnRoots.set(columnId, element)}
-                    data-kanban-column={columnId}
-                    class="flex min-h-0 w-72 shrink-0 flex-col rounded-card border border-outline-gray-1 bg-surface-gray-1 max-lg:snap-start dark:bg-transparent"
-                  >
-                    <div class="flex items-center justify-between gap-2 pe-1 ps-3 pt-1 pb-2">
-                      <div class="flex min-w-0 items-center gap-2">
-                        <Show when={column().theme}>
-                          {(tone) => (
-                            <span
-                              class={cn('size-2 rounded-full', TONES[tone()])}
-                              aria-hidden="true"
-                            />
-                          )}
-                        </Show>
-                        {/* `h2`, like the reference: the board is the page's
+      <Show
+        when={status() === 'ready'}
+        fallback={
+          <DataState
+            status={status()}
+            skeleton="cards"
+            title={props.emptyColumn ? undefined : 'No columns yet'}
+            error={props.error}
+            onRetry={props.onRetry}
+          />
+        }
+      >
+        <ScrollArea.Root class="min-h-0 flex-1">
+          <ScrollArea.Viewport>
+            <ul
+              // A list of columns, each holding a list of cards: the structure a
+              // screen reader walks. The drag is invisible to it, which is exactly
+              // why the card menu exists.
+              class={cn(
+                'flex h-full min-w-max items-stretch gap-card-gap p-card-pad',
+                // Below `lg` the board is a phone-width panner, and there the
+                // reference snaps: a column that lands half-off the edge is a
+                // column you cannot read. Wide, it is a drag surface, and snapping
+                // under a pointer mid-drop is just fighting the user.
+                'max-lg:snap-x max-lg:snap-mandatory max-lg:scroll-px-4',
+                // Text selection during a drag turns a card into a smear.
+                drag.state() && 'select-none',
+              )}
+              aria-label={props.label ?? 'Board'}
+            >
+              <For each={columnIds()}>
+                {(columnId) => {
+                  const column = () => columnOf(columnId)
+                  return (
+                    <li
+                      ref={(element) => columnRoots.set(columnId, element)}
+                      data-kanban-column={columnId}
+                      class="flex min-h-0 w-72 shrink-0 flex-col rounded-card border border-outline-gray-1 bg-surface-gray-1 max-lg:snap-start dark:bg-transparent"
+                    >
+                      <div class="flex items-center justify-between gap-2 pe-1 ps-3 pt-1 pb-2">
+                        <div class="flex min-w-0 items-center gap-2">
+                          <Show when={column().theme}>
+                            {(tone) => (
+                              <span
+                                class={cn('size-2 rounded-full', TONES[tone()])}
+                                aria-hidden="true"
+                              />
+                            )}
+                          </Show>
+                          {/* `h2`, like the reference: the board is the page's
                             main content, and a card's own headings then nest
                             under it. An `h3` here trips the heading-order rule
                             on every screen whose board sits directly under an
                             `h1`. */}
-                        <h2 class="truncate text-sm-medium text-ink-gray-8">
-                          {column().name}
-                        </h2>
-                        {/* The count sits on the column's tinted surface, so it
+                          <h2 class="truncate text-sm-medium text-ink-gray-8">
+                            {column().name}
+                          </h2>
+                          {/* The count sits on the column's tinted surface, so it
                             is `ink-gray-6`: the step above fails AA here. */}
-                        <span class="text-sm text-ink-gray-6">
-                          {column().items.length}
-                        </span>
+                          <span class="text-sm text-ink-gray-6">
+                            {column().items.length}
+                          </span>
+                        </div>
+                        <Show when={column().action}>
+                          {(action) => (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              icon={action().icon ?? 'lucide-plus'}
+                              aria-label={action().label}
+                              onClick={action().onClick}
+                            />
+                          )}
+                        </Show>
                       </div>
-                      <Show when={column().action}>
-                        {(action) => (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            icon={action().icon ?? 'lucide-plus'}
-                            aria-label={action().label}
-                            onClick={action().onClick}
-                          />
-                        )}
+
+                      <Show when={column().summary}>
+                        <div class="ps-3 pb-2 text-sm tabular-nums text-ink-gray-6">
+                          {column().summary}
+                        </div>
                       </Show>
-                    </div>
 
-                    <Show when={column().summary}>
-                      <div class="ps-3 pb-2 text-sm tabular-nums text-ink-gray-6">
-                        {column().summary}
-                      </div>
-                    </Show>
-
-                    <ScrollArea.Root class="min-h-0 flex-1">
-                      <ScrollArea.Viewport class="px-2 pb-2">
-                        <ul class="flex min-h-24 flex-col gap-2">
-                          <For
-                            each={column().items}
-                            fallback={
-                              <li class="rounded-5 border border-dashed border-outline-gray-3 p-6 text-center text-sm text-ink-gray-6">
-                                {props.emptyColumn?.(column()) ??
-                                  'Nothing in this column.'}
-                              </li>
-                            }
-                          >
-                            {(item) => (
-                              <li
-                                data-kanban-card=""
-                                data-kanban-id={item.id}
-                                data-dragging={
-                                  drag.isDragging(item.id) ? '' : undefined
-                                }
-                                // Wrapped: a handler read straight off an
-                                // accessor is captured once, and this one needs
-                                // the live element.
-                                onPointerDown={(event) =>
-                                  drag.start(event, item, event.currentTarget)
-                                }
-                                class="shrink-0"
-                              >
-                                <Show
-                                  when={!drag.isDragging(item.id)}
-                                  fallback={
-                                    // The card that was picked up keeps its
-                                    // place as the hole the ghost lands on, so
-                                    // the column does not reflow when it lifts.
-                                    <div
-                                      class="rounded-5 border-2 border-dashed border-outline-gray-2 bg-surface-gray-2"
-                                      style={{
-                                        height: `${drag.state()?.height ?? 0}px`,
-                                      }}
-                                    />
+                      <ScrollArea.Root class="min-h-0 flex-1">
+                        <ScrollArea.Viewport class="px-2 pb-2">
+                          <ul class="flex min-h-24 flex-col gap-2">
+                            <For
+                              each={column().items}
+                              fallback={
+                                <li class="rounded-5 border border-dashed border-outline-gray-3 p-6 text-center text-sm text-ink-gray-6">
+                                  {props.emptyColumn?.(column()) ??
+                                    'Nothing in this column.'}
+                                </li>
+                              }
+                            >
+                              {(item) => (
+                                <li
+                                  data-kanban-card=""
+                                  data-kanban-id={item.id}
+                                  data-dragging={
+                                    drag.isDragging(item.id) ? '' : undefined
                                   }
+                                  // Wrapped: a handler read straight off an
+                                  // accessor is captured once, and this one needs
+                                  // the live element.
+                                  onPointerDown={(event) =>
+                                    drag.start(event, item, event.currentTarget)
+                                  }
+                                  class="shrink-0"
                                 >
-                                  <KanbanCardFrame>
-                                    <div class="flex items-start justify-between gap-1">
-                                      <div class="min-w-0 flex-1">
-                                        {props.children(item)}
-                                      </div>
-                                      <Show when={!props.renderActions}>
-                                        <div class="shrink-0 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100">
-                                          <Menu.Root
-                                            onSelect={(value) =>
-                                              moveTo(item, value)
-                                            }
-                                          >
-                                            <Menu.Trigger
-                                              aria-label={`Actions for ${nameOf(item)}`}
-                                              class="flex size-7 cursor-pointer items-center justify-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-8 focus-visible:focus-ring"
-                                            >
-                                              <Icon
-                                                icon="lucide-ellipsis"
-                                                class="size-4"
-                                              />
-                                            </Menu.Trigger>
-                                            <Menu.Content>
-                                              <Menu.Label>Move to</Menu.Label>
-                                              <For
-                                                each={columnIds().filter(
-                                                  (id) => id !== columnId,
-                                                )}
-                                              >
-                                                {(target) => (
-                                                  <Menu.Item value={target}>
-                                                    {columnOf(target).name}
-                                                  </Menu.Item>
-                                                )}
-                                              </For>
-                                            </Menu.Content>
-                                          </Menu.Root>
+                                  <Show
+                                    when={!drag.isDragging(item.id)}
+                                    fallback={
+                                      // The card that was picked up keeps its
+                                      // place as the hole the ghost lands on, so
+                                      // the column does not reflow when it lifts.
+                                      <div
+                                        class="rounded-5 border-2 border-dashed border-outline-gray-2 bg-surface-gray-2"
+                                        style={{
+                                          height: `${drag.state()?.height ?? 0}px`,
+                                        }}
+                                      />
+                                    }
+                                  >
+                                    <KanbanCardFrame>
+                                      <div class="flex items-start justify-between gap-1">
+                                        <div class="min-w-0 flex-1">
+                                          {props.children(item)}
                                         </div>
-                                      </Show>
-                                      <Show when={props.renderActions}>
-                                        {(render) => (
+                                        <Show when={!props.renderActions}>
                                           <div class="shrink-0 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100">
-                                            {render()(item)}
+                                            <Menu.Root
+                                              onSelect={(value) =>
+                                                moveTo(item, value)
+                                              }
+                                            >
+                                              <Menu.Trigger
+                                                aria-label={`Actions for ${nameOf(item)}`}
+                                                class="flex size-7 cursor-pointer items-center justify-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-8 focus-visible:focus-ring"
+                                              >
+                                                <Icon
+                                                  icon="lucide-ellipsis"
+                                                  class="size-4"
+                                                />
+                                              </Menu.Trigger>
+                                              <Menu.Content>
+                                                <Menu.Label>Move to</Menu.Label>
+                                                <For
+                                                  each={columnIds().filter(
+                                                    (id) => id !== columnId,
+                                                  )}
+                                                >
+                                                  {(target) => (
+                                                    <Menu.Item value={target}>
+                                                      {columnOf(target).name}
+                                                    </Menu.Item>
+                                                  )}
+                                                </For>
+                                              </Menu.Content>
+                                            </Menu.Root>
                                           </div>
-                                        )}
-                                      </Show>
-                                    </div>
-                                  </KanbanCardFrame>
-                                </Show>
-                              </li>
-                            )}
-                          </For>
-                        </ul>
-                      </ScrollArea.Viewport>
-                      <ScrollArea.Scrollbar />
-                    </ScrollArea.Root>
-                  </li>
-                )
-              }}
-            </For>
-          </ul>
-        </ScrollArea.Viewport>
-        <ScrollArea.Scrollbar orientation="horizontal" />
-      </ScrollArea.Root>
+                                        </Show>
+                                        <Show when={props.renderActions}>
+                                          {(render) => (
+                                            <div class="shrink-0 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100">
+                                              {render()(item)}
+                                            </div>
+                                          )}
+                                        </Show>
+                                      </div>
+                                    </KanbanCardFrame>
+                                  </Show>
+                                </li>
+                              )}
+                            </For>
+                          </ul>
+                        </ScrollArea.Viewport>
+                        <ScrollArea.Scrollbar />
+                      </ScrollArea.Root>
+                    </li>
+                  )
+                }}
+              </For>
+            </ul>
+          </ScrollArea.Viewport>
+          <ScrollArea.Scrollbar orientation="horizontal" />
+        </ScrollArea.Root>
+      </Show>
 
       <Show when={drag.state()}>
         {(state) => (

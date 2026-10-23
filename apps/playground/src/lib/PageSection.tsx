@@ -24,7 +24,9 @@ export function PageSection(props: {
         {props.actions}
       </div>
       <Show when={props.description}>
-        <p class="text-base text-ink-gray-7">{props.description}</p>
+        <p class="max-w-[30rem] text-base text-ink-gray-7">
+          {props.description}
+        </p>
       </Show>
       {props.children}
     </section>

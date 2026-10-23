@@ -1,181 +1,794 @@
-import { Button, Switch } from '@talelk/newui-atoms'
-import { Dialog } from '@talelk/newui-molecules'
+import { Badge, Button } from '@talelk/newui-atoms'
 import {
   layoutSpacing,
   radius,
   radiusRoles,
   semanticColors,
 } from '@talelk/newui-tokens'
-import { For } from 'solid-js'
+import { For, type JSX } from 'solid-js'
 import { PageSection } from '../lib/PageSection'
 import { TableOfContents } from '../lib/TableOfContents'
 import { PageIntro } from '../shell/PageIntro'
 import { usePageToc } from '../shell/SiteLayout'
 
-function Swatch(props: { label: string; cssVar: string }) {
+/**
+ * The token specimen sheet.
+ *
+ * A reference page, not a swatch dump: every plate shows the role in the
+ * medium the role is actually used in — fills as surfaces, ink as text,
+ * outline as rules — and labels it with the exact name and value a reader
+ * copies. The page imports the token data it documents, so a renamed or
+ * removed token fails the build here rather than drifting.
+ */
+
+const STEPS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] as const
+
+/** The six hues the vocabulary uses. The remaining ramps ship unwired. */
+const HUES = [
+  { hue: 'gray', role: 'structure' },
+  { hue: 'blue', role: 'action' },
+  { hue: 'green', role: 'success' },
+  { hue: 'amber', role: 'attention' },
+  { hue: 'red', role: 'danger' },
+  { hue: 'violet', role: 'category' },
+] as const
+
+/** The floating planes, in the order a page stacks them. */
+const PLANES = [
+  { key: 'base', label: 'base' },
+  { key: 'elevation-1', label: 'elevation-1' },
+  { key: 'elevation-2', label: 'elevation-2' },
+  { key: 'elevation-3', label: 'elevation-3' },
+  { key: 'sidebar', label: 'sidebar' },
+] as const
+
+/** Ink is demonstrated as text, because that is what it colours. */
+const INKS = [
+  {
+    token: 'ink-gray-9',
+    class: 'text-ink-gray-9',
+    sample: 'Headings and figures',
+  },
+  {
+    token: 'ink-gray-8',
+    class: 'text-ink-gray-8',
+    sample: 'Body copy, cells, navigation',
+  },
+  {
+    token: 'ink-gray-7',
+    class: 'text-ink-gray-7',
+    sample: 'Captions and metadata',
+  },
+  {
+    token: 'ink-gray-6',
+    class: 'text-ink-gray-6',
+    sample: 'Placeholders and quiet icons',
+  },
+] as const
+
+/** Outline is demonstrated as the 1px rules it draws. */
+const OUTLINES = [
+  {
+    token: 'outline-gray-1',
+    class: 'bg-outline-gray-1',
+    sample: 'Cards and panels',
+  },
+  {
+    token: 'outline-gray-2',
+    class: 'bg-outline-gray-2',
+    sample: 'Dividers and fields',
+  },
+  {
+    token: 'outline-gray-3',
+    class: 'bg-outline-gray-3',
+    sample: 'Controls and hover steps',
+  },
+  {
+    token: 'outline-gray-4',
+    class: 'bg-outline-gray-4',
+    sample: 'Strong separations',
+  },
+] as const
+
+/** The three treatments each hue ships, by the steps its recipes use. */
+const TREATMENTS = [
+  {
+    hue: 'gray',
+    wash: { step: '2', class: 'bg-surface-gray-2 text-ink-gray-7' },
+    outline: {
+      step: '2',
+      class: 'border border-outline-gray-2 text-ink-gray-7',
+    },
+    solid: { step: '10', class: 'bg-surface-gray-10 text-ink-base' },
+  },
+  {
+    hue: 'blue',
+    wash: { step: '2', class: 'bg-surface-blue-2 text-ink-blue-8' },
+    outline: {
+      step: '3',
+      class: 'border border-outline-blue-3 text-ink-blue-8',
+    },
+    solid: { step: '8', class: 'bg-surface-blue-8 text-ink-base' },
+  },
+  {
+    hue: 'green',
+    wash: { step: '2', class: 'bg-surface-green-2 text-ink-green-8' },
+    outline: {
+      step: '3',
+      class: 'border border-outline-green-3 text-ink-green-8',
+    },
+    solid: { step: '8', class: 'bg-surface-green-8 text-ink-base' },
+  },
+  {
+    hue: 'amber',
+    wash: { step: '2', class: 'bg-surface-amber-2 text-ink-amber-8' },
+    outline: {
+      step: '3',
+      class: 'border border-outline-amber-3 text-ink-amber-8',
+    },
+    solid: { step: '9', class: 'bg-surface-amber-9 text-ink-base' },
+  },
+  {
+    hue: 'red',
+    wash: { step: '2', class: 'bg-surface-red-2 text-ink-red-8' },
+    outline: { step: '3', class: 'border border-outline-red-3 text-ink-red-8' },
+    solid: { step: '8', class: 'bg-surface-red-8 text-ink-base' },
+  },
+  {
+    hue: 'violet',
+    wash: { step: '2', class: 'bg-surface-violet-2 text-ink-violet-8' },
+    outline: {
+      step: '3',
+      class: 'border border-outline-violet-3 text-ink-violet-8',
+    },
+    solid: { step: '8', class: 'bg-surface-violet-8 text-ink-base' },
+  },
+] as const
+
+const TYPE_ROLES = [
+  {
+    name: 'Hero',
+    meta: '36 / 40 · 600 · −0.035em',
+    sample: 'Clarity for your next data application.',
+    class: 'text-hero text-ink-gray-9',
+  },
+  {
+    name: 'Heading',
+    meta: '24 / 30 · 600 · −0.025em',
+    sample: 'Revenue overview',
+    class: 'text-heading text-ink-gray-9',
+  },
+  {
+    name: 'Section',
+    meta: '18 / 24 · 600 · −0.015em',
+    sample: 'Recent transactions',
+    class: 'text-section text-ink-gray-9',
+  },
+  {
+    name: 'Metric',
+    meta: '28 / 32 · 600 · tabular',
+    sample: '$128,430',
+    class: 'text-metric tabular-nums text-ink-gray-9',
+  },
+  {
+    name: 'Interface',
+    meta: '14 / 20 · 420 · 0',
+    sample:
+      'Filters, labels and body copy share one size; hierarchy comes from the roles above.',
+    class: 'text-interface text-ink-gray-8',
+  },
+  {
+    name: 'Caption',
+    meta: '12 / 16 · 420 · 0',
+    sample: 'Compared with the previous quarter · updated 4 minutes ago',
+    class: 'text-caption text-ink-gray-7',
+  },
+] as const
+
+const TYPE_SCALE = [
+  { token: 'text-2xs', meta: '11 / 420', class: 'text-2xs' },
+  { token: 'text-xs', meta: '12 / 420', class: 'text-xs' },
+  { token: 'text-sm', meta: '13 / 420', class: 'text-sm' },
+  { token: 'text-base', meta: '14 / 420', class: 'text-base' },
+  { token: 'text-base-medium', meta: '14 / 500', class: 'text-base-medium' },
+  { token: 'text-md', meta: '15 / 420', class: 'text-md' },
+  { token: 'text-lg-medium', meta: '16 / 500', class: 'text-lg-medium' },
+  { token: 'text-xl-semibold', meta: '17 / 600', class: 'text-xl-semibold' },
+  { token: 'text-2xl-semibold', meta: '18 / 600', class: 'text-2xl-semibold' },
+  { token: 'text-3xl-bold', meta: '20 / 700', class: 'text-3xl-bold' },
+  { token: 'text-4xl-bold', meta: '24 / 700', class: 'text-4xl-bold' },
+] as const
+
+const RADIUS_ROLES = [
+  { role: 'control', class: 'rounded-control', shape: 'size-16' },
+  { role: 'card', class: 'rounded-card', shape: 'size-16' },
+  { role: 'overlay', class: 'rounded-overlay', shape: 'size-16' },
+  { role: 'pill', class: 'rounded-pill', shape: 'h-10 w-24' },
+] as const
+
+const ELEVATION = [
+  { name: 'none', class: 'bg-surface-base', note: 'resting' },
+  {
+    name: 'sm',
+    class: 'bg-surface-elevation-2 shadow-sm',
+    note: 'lift',
+  },
+  {
+    name: 'base',
+    class: 'bg-surface-elevation-2 shadow-base',
+    note: 'raised',
+  },
+  {
+    name: 'md',
+    class: 'bg-surface-elevation-2 shadow-md',
+    note: 'popover',
+  },
+  {
+    name: 'lg',
+    class: 'bg-surface-elevation-2 shadow-lg',
+    note: 'panel',
+  },
+  {
+    name: 'xl',
+    class: 'bg-surface-elevation-2 shadow-xl',
+    note: 'dialog',
+  },
+  {
+    name: '2xl',
+    class: 'bg-surface-elevation-2 shadow-2xl',
+    note: 'large modal',
+  },
+] as const
+
+const FOCUS = [
+  { name: 'default', var: '--focus-outline-default' },
+  { name: 'blue', var: '--focus-outline-blue' },
+  { name: 'green', var: '--focus-outline-green' },
+  { name: 'amber', var: '--focus-outline-amber' },
+  { name: 'red', var: '--focus-outline-red' },
+  { name: 'violet', var: '--focus-outline-violet' },
+] as const
+
+function tokenValue(
+  layer: Record<string, string>,
+  key: string,
+  fallback = 'transparent',
+): string {
+  return layer[key] ?? fallback
+}
+
+/** An inline token name, set in the same chip the docs use for code. */
+function Token(props: { children: JSX.Element }): JSX.Element {
   return (
-    <div class="flex flex-col gap-1">
+    <code class="rounded-3 bg-surface-gray-2 px-1 py-px font-mono text-caption break-words text-ink-gray-8">
+      {props.children}
+    </code>
+  )
+}
+
+/**
+ * One hue, ten steps, drawn as a single band. The step axis is printed once at
+ * the top because all six bands share it.
+ */
+function Ramp(props: { hue: string; role: string }): JSX.Element {
+  return (
+    <div class="grid grid-cols-[4.5rem_minmax(0,1fr)] items-center gap-3">
+      <div class="min-w-0">
+        <p class="text-base-medium text-ink-gray-9">{props.hue}</p>
+        <p class="text-caption leading-tight break-words text-ink-gray-7">
+          {props.role}
+        </p>
+      </div>
       <div
-        class="h-10 rounded-3 border border-outline-gray-1"
-        style={{ 'background-color': props.cssVar }}
-      />
-      <span class="truncate text-2xs text-ink-gray-7">{props.label}</span>
+        role="img"
+        aria-label={`${props.hue} ramp, steps 1 to 10`}
+        class="grid grid-cols-10 gap-px overflow-hidden rounded-control border border-outline-gray-1"
+      >
+        <For each={STEPS}>
+          {(step) => (
+            <div
+              aria-hidden="true"
+              class="h-10"
+              style={{
+                'background-color': `var(--surface-${props.hue}-${step})`,
+              }}
+            />
+          )}
+        </For>
+      </div>
     </div>
   )
 }
 
-export function Foundations() {
+/**
+ * The same semantic roles at both ends of the colour mode, rendered from the
+ * token data rather than from the page's own CSS variables: both columns stay
+ * legible whichever theme the reader is in.
+ */
+function ThemeProof(props: {
+  title: string
+  layer: (typeof semanticColors)['light']
+}): JSX.Element {
+  const ramp = (name: string): Record<string, string> => props.layer[name] ?? {}
+  const surface = (key: string) => tokenValue(ramp('surface'), key)
+  const ink = (key: string) => tokenValue(ramp('ink'), key, 'inherit')
+  const outline = (key: string) => tokenValue(ramp('outline'), key)
+  return (
+    <div
+      class="flex min-w-0 flex-col gap-3 rounded-card border p-card-pad"
+      style={{
+        'background-color': surface('base'),
+        'border-color': outline('gray-1'),
+      }}
+    >
+      <p class="text-base-medium" style={{ color: ink('gray-9') }}>
+        {props.title}
+      </p>
+      <div class="flex flex-col gap-2">
+        <div class="grid grid-cols-3 gap-1">
+          <For each={PLANES.slice(0, 3)}>
+            {(plane) => (
+              <div
+                class="flex h-14 min-w-0 items-end rounded-control p-1.5"
+                style={{
+                  'background-color': surface(plane.key),
+                  border: `1px solid ${outline('gray-1')}`,
+                }}
+              >
+                <span
+                  class="min-w-0 font-mono text-caption leading-tight break-words"
+                  style={{ color: ink('gray-7') }}
+                >
+                  {plane.label}
+                </span>
+              </div>
+            )}
+          </For>
+        </div>
+        <div
+          class="flex flex-wrap items-baseline justify-between gap-2 rounded-control px-2 py-1.5"
+          style={{ 'background-color': surface('gray-2') }}
+        >
+          <span class="text-interface" style={{ color: ink('gray-9') }}>
+            Primary ink
+          </span>
+          <span class="text-caption" style={{ color: ink('gray-7') }}>
+            muted
+          </span>
+        </div>
+        <div
+          class="h-px w-full"
+          style={{ 'background-color': outline('gray-1') }}
+        />
+        <div
+          class="inline-flex w-fit items-center rounded-control px-2 py-1 text-caption"
+          style={{
+            'background-color': surface('blue-8'),
+            color: ink('base'),
+          }}
+        >
+          selected
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function Foundations(): JSX.Element {
   usePageToc(() => (
     <TableOfContents
       entries={[
-        { id: 'semantic-colors', label: 'Semantic colors' },
-        { id: 'color-scheme', label: 'Color scheme' },
+        { id: 'semantic-colors', label: 'Semantic colour' },
+        { id: 'color-scheme', label: 'Colour scheme' },
+        { id: 'typography-roles', label: 'Type roles' },
+        { id: 'numbered-typography', label: 'Numbered scale' },
         { id: 'layout-rhythm', label: 'Layout rhythm' },
         { id: 'radius', label: 'Radius' },
-        { id: 'typography-roles', label: 'Typography roles' },
-        { id: 'numbered-typography', label: 'Numbered typography' },
         { id: 'elevation', label: 'Elevation' },
         { id: 'focus-rings', label: 'Focus rings' },
-        { id: 'button', label: 'Button' },
-        { id: 'switch', label: 'Switch' },
-        { id: 'dialog', label: 'Dialog' },
       ]}
     />
   ))
+
   return (
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-8">
       <PageIntro
         title="Design tokens"
         description="The vocabulary every component is built from. Colours are semantic — surface-*, ink-*, outline-* — so light and dark come from one document attribute rather than a second set of classes."
       />
-      <PageSection id="semantic-colors" title="Semantic colors">
-        <For each={Object.entries(semanticColors.light)}>
-          {([category, entries]) => (
-            <div class="flex flex-col gap-2">
-              <h3 class="text-sm-medium text-ink-gray-7">{category}</h3>
-              <div class="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-8">
-                <For each={Object.keys(entries)}>
-                  {(name) => (
-                    <Swatch
-                      label={name}
-                      cssVar={`var(--${category}-${name})`}
-                    />
-                  )}
-                </For>
+
+      <PageSection
+        id="semantic-colors"
+        title="Semantic colour"
+        description="Six hues, ten steps each. A step is addressable as a fill, a text colour or a line, and each family is drawn here in the medium it actually paints."
+      >
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col gap-2">
+            <section
+              class="min-w-0 overflow-x-auto rounded-control focus-visible:focus-ring"
+              aria-label="Colour ramps, steps 1 to 10"
+              tabindex="0"
+            >
+              <div class="flex flex-col gap-2">
+                <div class="grid grid-cols-[4.5rem_minmax(0,1fr)] items-center gap-3">
+                  <span class="text-caption text-ink-gray-6">step</span>
+                  <div class="grid grid-cols-10 gap-px">
+                    <For each={STEPS}>
+                      {(step) => (
+                        <span class="text-center font-mono text-caption text-ink-gray-6">
+                          {step}
+                        </span>
+                      )}
+                    </For>
+                  </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <For each={HUES}>
+                    {(entry) => <Ramp hue={entry.hue} role={entry.role} />}
+                  </For>
+                </div>
+              </div>
+            </section>
+            <p class="max-w-[30rem] text-caption text-ink-gray-7">
+              Found under three prefixes: <Token>surface-</Token> for a fill,{' '}
+              <Token>ink-</Token> for text and icons, <Token>outline-</Token>{' '}
+              for a border. Step 1 is the plane nearest the page; step 10
+              carries the strongest contrast against it. Dark mode inverts the
+              values, not the names. The token file also carries yellow, orange,
+              teal, cyan, purple and pink ramps for specialised data colour; no
+              recipe uses them.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <h3 class="text-base-medium text-ink-gray-9">Fills</h3>
+            <div class="grid grid-cols-2 gap-2 sm:grid-cols-5">
+              <For each={PLANES}>
+                {(plane) => (
+                  <div
+                    class="flex h-16 min-w-0 items-end rounded-control border border-outline-gray-1 p-2"
+                    style={{
+                      'background-color': `var(--surface-${plane.key})`,
+                    }}
+                  >
+                    <span class="min-w-0 font-mono text-caption leading-tight break-words text-ink-gray-7">
+                      {plane.label}
+                    </span>
+                  </div>
+                )}
+              </For>
+            </div>
+            <p class="max-w-[30rem] text-caption text-ink-gray-7">
+              Gray is the working surface ramp. <Token>base</Token> is the page
+              and card plane; <Token>elevation-*</Token> and{' '}
+              <Token>sidebar</Token> are the planes that sit on it.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <h3 class="text-base-medium text-ink-gray-9">Text</h3>
+            <div class="flex flex-col border-t border-outline-gray-1">
+              <For each={INKS}>
+                {(entry) => (
+                  <div class="grid gap-1 border-b border-outline-gray-1 py-2.5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-baseline sm:gap-4">
+                    <span class="font-mono text-caption text-ink-gray-7">
+                      {entry.token}
+                    </span>
+                    <span class={`text-interface ${entry.class}`}>
+                      {entry.sample}
+                    </span>
+                  </div>
+                )}
+              </For>
+              <div class="grid gap-2 py-2.5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-center sm:gap-4">
+                <span class="font-mono text-caption text-ink-gray-7">
+                  ink-base
+                </span>
+                <span class="w-fit rounded-control bg-surface-gray-10 px-2 py-1 text-interface text-ink-base">
+                  The inverse ink, on a solid fill
+                </span>
               </div>
             </div>
-          )}
-        </For>
-      </PageSection>
+            <p class="max-w-[30rem] text-caption text-ink-gray-7">
+              <Token>ink-gray-5</Token> is the disabled step. It is never used
+              for body copy, and a disabled control always keeps its label.
+            </p>
+          </div>
 
-      <PageSection id="color-scheme" title="Color scheme">
-        <div class="grid gap-control-gap sm:grid-cols-2">
-          <div class="flex flex-col gap-control-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad">
-            <span class="text-caption text-ink-gray-6">Light</span>
-            <div class="rounded-control bg-surface-base p-control-pad text-ink-gray-9">
-              Surface base · ink gray 9
+          <div class="flex flex-col gap-3">
+            <h3 class="text-base-medium text-ink-gray-9">Rules</h3>
+            <div class="flex flex-col gap-2">
+              <For each={OUTLINES}>
+                {(entry) => (
+                  <div class="grid gap-1 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-center sm:gap-4">
+                    <span class="font-mono text-caption text-ink-gray-7">
+                      {entry.token}
+                    </span>
+                    <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
+                      <span
+                        aria-hidden="true"
+                        class={`h-px flex-1 ${entry.class}`}
+                      />
+                      <span class="text-caption text-ink-gray-7 sm:w-40 sm:shrink-0">
+                        {entry.sample}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </For>
             </div>
           </div>
-          <div
-            data-theme="dark"
-            class="flex flex-col gap-control-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad"
-          >
-            <span class="text-caption text-ink-gray-6">Dark</span>
-            <div class="rounded-control bg-surface-base p-control-pad text-ink-gray-9">
-              Surface base · ink gray 9
-            </div>
+
+          <div class="flex flex-col gap-3">
+            <h3 class="text-base-medium text-ink-gray-9">Treatments</h3>
+            <section
+              class="min-w-0 overflow-x-auto rounded-card border border-outline-gray-1 focus-visible:focus-ring"
+              aria-label="Semantic colour treatments"
+              tabindex="0"
+            >
+              <table class="w-full border-collapse text-start">
+                <caption class="sr-only">
+                  Semantic colour treatments by hue: wash, outline and solid
+                </caption>
+                <thead class="bg-surface-gray-2 text-caption text-ink-gray-7">
+                  <tr>
+                    <th scope="col" class="p-1.5 text-start font-medium sm:p-2">
+                      Hue
+                    </th>
+                    <th scope="col" class="p-1.5 text-start font-medium sm:p-2">
+                      wash
+                    </th>
+                    <th scope="col" class="p-1.5 text-start font-medium sm:p-2">
+                      outline
+                    </th>
+                    <th scope="col" class="p-1.5 text-start font-medium sm:p-2">
+                      solid
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <For each={TREATMENTS}>
+                    {(row) => (
+                      <tr class="border-t border-outline-gray-1">
+                        <th
+                          scope="row"
+                          class="p-1.5 text-start text-base-medium text-ink-gray-9 sm:p-2"
+                        >
+                          {row.hue}
+                        </th>
+                        <td class="p-1.5 sm:p-2">
+                          <span
+                            class={`flex h-8 items-center justify-center rounded-control px-1 font-mono text-caption sm:px-2 ${row.wash.class}`}
+                          >
+                            {row.hue}-{row.wash.step}
+                          </span>
+                        </td>
+                        <td class="p-1.5 sm:p-2">
+                          <span
+                            class={`flex h-8 items-center justify-center rounded-control bg-surface-base px-1 font-mono text-caption sm:px-2 ${row.outline.class}`}
+                          >
+                            {row.hue}-{row.outline.step}
+                          </span>
+                        </td>
+                        <td class="p-1.5 sm:p-2">
+                          <span
+                            class={`flex h-8 items-center justify-center rounded-control px-1 font-mono text-caption sm:px-2 ${row.solid.class}`}
+                          >
+                            {row.hue}-{row.solid.step}
+                          </span>
+                        </td>
+                      </tr>
+                    )}
+                  </For>
+                </tbody>
+              </table>
+            </section>
+            <p class="max-w-[30rem] text-caption text-ink-gray-7">
+              Wash is a selected or informational fill; outline is a removable
+              filter or a quiet chip; solid is one emphasised status. The label
+              always names the state — colour never carries it alone.
+            </p>
           </div>
         </div>
-        <p class="mt-field-gap text-caption text-ink-gray-7">
-          Surfaces, ink, outlines and native controls follow the persisted
-          light, dark or system preference set in the masthead.
+      </PageSection>
+
+      <PageSection
+        id="color-scheme"
+        title="Colour scheme"
+        description="Every role keeps its name across modes. The two columns are the same specimen, resolved from the light and dark token layers; at runtime one data-theme attribute on the document switches between them."
+      >
+        <div class="grid grid-cols-[minmax(0,1fr)] gap-card-gap rounded-card bg-surface-gray-2 p-card-pad sm:grid-cols-2">
+          <ThemeProof title="Light" layer={semanticColors.light} />
+          <ThemeProof title="Dark" layer={semanticColors.dark} />
+        </div>
+        <p class="mt-field-gap max-w-[30rem] text-caption text-ink-gray-7">
+          The masthead stores the reader's choice — light, dark or the system
+          preference — and the CSS <code>color-scheme</code> property follows,
+          so native scrollbars and controls match the page.
+        </p>
+      </PageSection>
+
+      <PageSection
+        id="typography-roles"
+        title="Type roles"
+        description="One family, six working roles. Size, weight and tracking move together; body copy sits at 420, not 400."
+      >
+        <div class="flex flex-col">
+          <For each={TYPE_ROLES}>
+            {(role) => (
+              <div class="grid gap-2 border-t border-outline-gray-1 py-4 sm:grid-cols-[11rem_minmax(0,1fr)] sm:items-baseline sm:gap-4">
+                <div class="flex min-w-0 flex-col gap-0.5">
+                  <span class="text-base-medium text-ink-gray-9">
+                    {role.name}
+                  </span>
+                  <span class="font-mono text-caption text-ink-gray-7">
+                    {role.meta}
+                  </span>
+                </div>
+                <div class="min-w-0">
+                  <p class={`max-w-[38rem] break-words ${role.class}`}>
+                    {role.sample}
+                  </p>
+                </div>
+              </div>
+            )}
+          </For>
+          <div class="border-b border-outline-gray-1" />
+        </div>
+      </PageSection>
+
+      <PageSection
+        id="numbered-typography"
+        title="Numbered scale"
+        description="The standalone size classes the recipes use when a role is not the right unit. Weight is built into the name, so tracking can follow it."
+      >
+        <div class="flex flex-col">
+          <For each={TYPE_SCALE}>
+            {(entry) => (
+              <div class="flex flex-col gap-1 border-t border-outline-gray-1 py-2.5 sm:grid sm:grid-cols-[10rem_minmax(0,1fr)_5rem] sm:items-baseline sm:gap-4">
+                <span class="font-mono text-caption text-ink-gray-7">
+                  {entry.token}
+                </span>
+                <span class={`${entry.class} text-ink-gray-9`}>Aa 123</span>
+                <span class="font-mono text-caption text-ink-gray-6 sm:text-end">
+                  {entry.meta}
+                </span>
+              </div>
+            )}
+          </For>
+          <div class="border-b border-outline-gray-1" />
+        </div>
+        <p class="mt-field-gap max-w-[30rem] text-caption text-ink-gray-7">
+          Numbers that can sit in a column — money, counts, percentages — get{' '}
+          <Token>tabular-nums</Token>, so the figures line up and a changing
+          value does not move its neighbours.
         </p>
       </PageSection>
 
       <PageSection
         id="layout-rhythm"
         title="Layout rhythm"
-        description="Named spacing roles map page gutters, sections, cards, fields and controls onto the shared 4px base scale."
+        description="Spacing is a named role over the 4px scale, not an invented value. The page gutter, card padding, field gap and control gap are the four a screen spends most."
       >
-        <div class="grid gap-control-gap sm:grid-cols-2 xl:grid-cols-3">
+        <dl class="grid border-t border-outline-gray-1 sm:grid-flow-col sm:grid-rows-6 sm:gap-x-8">
           <For each={Object.entries(layoutSpacing)}>
             {([name, value]) => (
-              <div class="flex min-w-0 flex-col gap-control-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad-compact">
-                <div class="flex items-baseline justify-between gap-2">
-                  <span class="min-w-0 break-words text-sm-medium">{name}</span>
-                  <span class="shrink-0 font-mono text-xs text-ink-gray-7">
-                    {value}
-                  </span>
-                </div>
-                <div
-                  aria-hidden="true"
-                  class="h-2 max-w-full rounded-full bg-surface-blue-6"
-                  style={{ width: value }}
-                />
+              <div class="flex items-baseline justify-between gap-3 border-b border-outline-gray-1 py-2">
+                <dt class="min-w-0 break-words text-interface text-ink-gray-8">
+                  {name}
+                </dt>
+                <dd class="shrink-0 font-mono text-caption text-ink-gray-7">
+                  {value}
+                </dd>
               </div>
             )}
           </For>
-        </div>
-        <p class="mt-section-gap text-caption text-ink-gray-7">
-          Use the compact gutter on narrow screens, the page gutter at standard
-          widths, and the wide gutter when a content frame has room to breathe.
-          Controls and fields use smaller internal gaps than sections.
-        </p>
-        <div class="mt-field-gap grid gap-card-gap sm:grid-cols-3">
-          <div class="grid aspect-video place-content-center rounded-card border border-outline-blue-1 bg-surface-blue-1 p-card-pad text-center">
-            <span class="text-sm-medium text-ink-blue-8">16 : 9</span>
-            <span class="mt-1 text-caption text-ink-gray-7">
-              Stable media ratio
-            </span>
+        </dl>
+
+        <div class="mt-6 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-card-gap lg:grid-cols-[minmax(0,1fr)_15rem]">
+          <div class="rounded-card border border-outline-gray-1 bg-surface-gray-1 p-page-gutter-compact sm:p-page-gutter">
+            <div class="rounded-card border border-outline-gray-1 bg-surface-elevation-2 p-card-pad">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <p class="text-caption text-ink-gray-7">Invoice 1042</p>
+                  <p class="text-section break-words text-ink-gray-9">
+                    Northwind Supply
+                  </p>
+                </div>
+                <Badge theme="amber" variant="subtle">
+                  Pending
+                </Badge>
+              </div>
+              <div class="mt-field-gap flex flex-wrap items-baseline justify-between gap-3 border-t border-outline-gray-1 pt-field-gap">
+                <span class="text-caption text-ink-gray-7">Amount due</span>
+                <span class="text-base-medium tabular-nums break-words text-ink-gray-9">
+                  $24,600.00
+                </span>
+              </div>
+              <div class="mt-card-gap flex flex-wrap gap-control-gap">
+                <Button size="sm" variant="outline" theme="gray">
+                  View
+                </Button>
+                <Button size="sm" variant="solid" theme="blue">
+                  Send reminder
+                </Button>
+              </div>
+            </div>
           </div>
-          <div class="grid gap-control-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad sm:col-span-2 sm:grid-cols-2">
-            <div class="rounded-control bg-surface-gray-2 p-control-pad text-caption">
-              Grid cell
-            </div>
-            <div class="rounded-control bg-surface-gray-2 p-control-pad text-caption">
-              Grid cell
-            </div>
-            <div class="rounded-control bg-surface-gray-2 p-control-pad text-caption sm:col-span-2">
-              A full-width cell in the same 4px rhythm
-            </div>
+
+          <div class="flex min-w-0 flex-col gap-3">
+            <p class="text-caption text-ink-gray-7">The roles, outside in</p>
+            <dl class="flex flex-col gap-2">
+              <For
+                each={[
+                  ['page-gutter', 'the frame'],
+                  ['card-pad', 'the card'],
+                  ['field-gap', 'label to value'],
+                  ['control-gap', 'between actions'],
+                ]}
+              >
+                {([role, use]) => (
+                  <div class="flex flex-wrap items-baseline justify-between gap-2">
+                    <dt class="font-mono text-caption text-ink-gray-8">
+                      {role}
+                    </dt>
+                    <dd class="text-caption text-ink-gray-7">{use}</dd>
+                  </div>
+                )}
+              </For>
+            </dl>
+            <p class="text-caption text-ink-gray-7">
+              A card's padding is a role, not a leftover. On a narrow screen the
+              gutter compacts first; the controls keep their height while the
+              frame gives way.
+            </p>
           </div>
         </div>
       </PageSection>
 
-      <PageSection id="radius" title="Radius">
-        <p class="mb-field-gap text-caption text-ink-gray-7">
-          Components use four semantic roles; the numbered scale remains
-          available for specialized geometry.
-        </p>
-        <div class="grid gap-control-gap sm:grid-cols-2 xl:grid-cols-4">
-          <For each={Object.entries(radiusRoles)}>
-            {([key, value]) => (
-              <div class="flex items-center gap-field-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad-compact">
+      <PageSection
+        id="radius"
+        title="Radius"
+        description="Three surface roles plus a pill. The restricted scale is the point: a reader can tell a control from a card from a dialog by silhouette alone."
+      >
+        <div class="grid grid-cols-[minmax(0,1fr)] gap-px overflow-hidden rounded-card border border-outline-gray-1 bg-outline-gray-1 sm:grid-cols-2 xl:grid-cols-4">
+          <For each={RADIUS_ROLES}>
+            {(entry) => (
+              <div class="flex min-w-0 flex-wrap items-center gap-field-gap bg-surface-elevation-1 p-card-pad">
                 <div
-                  class="size-12 shrink-0 border border-outline-gray-3 bg-surface-gray-3"
-                  style={{ 'border-radius': `var(--radius-${key})` }}
+                  aria-hidden="true"
+                  class={`${entry.shape} shrink-0 border border-outline-gray-3 bg-surface-gray-3 ${entry.class}`}
                 />
                 <div class="min-w-0">
-                  <p class="text-sm-medium">{key}</p>
-                  <p class="text-caption text-ink-gray-7">{value}</p>
+                  <p class="text-base-medium break-words text-ink-gray-9">
+                    {entry.role}
+                  </p>
+                  <p class="font-mono text-caption text-ink-gray-7">
+                    {radiusRoles[entry.role]}
+                  </p>
                 </div>
               </div>
             )}
           </For>
         </div>
         <details class="mt-field-gap">
-          <summary class="cursor-pointer rounded-control py-control-pad text-caption text-ink-blue-link focus-visible:focus-ring">
-            Show the primitive radius scale
+          <summary class="cursor-pointer rounded-control text-caption text-ink-blue-link focus-visible:focus-ring">
+            The primitive scale
           </summary>
-          <div class="flex flex-wrap items-end gap-control-gap pt-control-pad">
-            <For each={Object.entries(radius)}>
+          <div class="flex flex-wrap items-end gap-card-gap pt-card-gap">
+            <For
+              each={Object.entries(radius).filter(
+                ([key]) => !(key in radiusRoles),
+              )}
+            >
               {([key, value]) => (
-                <div class="flex flex-col items-center gap-control-gap">
+                <div class="flex flex-col items-center gap-1">
                   <div
-                    class="size-14 border border-outline-gray-3 bg-surface-gray-3"
+                    aria-hidden="true"
+                    class="size-11 border border-outline-gray-3 bg-surface-gray-3"
                     style={{ 'border-radius': `var(--radius-${key})` }}
                   />
-                  <span class="text-2xs text-ink-gray-7">
+                  <span class="font-mono text-caption text-ink-gray-7">
                     {key} · {value}
                   </span>
                 </div>
@@ -185,176 +798,72 @@ export function Foundations() {
         </details>
       </PageSection>
 
-      <PageSection id="typography-roles" title="Typography roles">
-        <div class="flex flex-col gap-4 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3">
-          <div>
-            <p class="text-caption text-ink-gray-7">Page heading · 24 / 30</p>
-            <p class="text-heading">Revenue overview</p>
-          </div>
-          <div>
-            <p class="text-caption text-ink-gray-7">
-              Section heading · 18 / 24
-            </p>
-            <p class="text-section">Recent transactions</p>
-          </div>
-          <div>
-            <p class="text-caption text-ink-gray-7">Metric · 28 / 32</p>
-            <p class="text-metric tabular-nums">$128,430</p>
-          </div>
-          <div>
-            <p class="text-interface">
-              Interface · 14 / 20 · Filters, labels and body copy
-            </p>
-            <p class="text-caption text-ink-gray-7">
-              Supporting text · 12 / 16 · Compared with last month
-            </p>
-          </div>
-        </div>
-      </PageSection>
-      <PageSection id="numbered-typography" title="Numbered typography">
-        <div class="flex flex-col gap-1.5">
-          <span class="text-2xs">text-2xs · 11px</span>
-          <span class="text-xs">text-xs · 12px</span>
-          <span class="text-sm">text-sm · 13px</span>
-          <span class="text-base">text-base · 14px</span>
-          <span class="text-base-medium">text-base-medium · 14px</span>
-          <span class="text-md">text-md · 15px</span>
-          <span class="text-lg-medium">text-lg-medium · 16px</span>
-          <span class="text-xl-semibold">text-xl-semibold · 17px</span>
-          <span class="text-2xl-semibold">text-2xl-semibold · 18px</span>
-          <span class="text-3xl-bold">text-3xl-bold · 20px</span>
-          <span class="text-4xl-bold">text-4xl-bold · 24px</span>
-        </div>
-      </PageSection>
-
-      <PageSection id="elevation" title="Elevation">
-        <div class="flex flex-wrap gap-4 py-4">
-          <div class="flex size-20 items-center justify-center rounded-5 bg-surface-base shadow-sm">
-            sm
-          </div>
-          <div class="flex size-20 items-center justify-center rounded-5 bg-surface-base shadow-base">
-            base
-          </div>
-          <div class="flex size-20 items-center justify-center rounded-5 bg-surface-base shadow-md">
-            md
-          </div>
-          <div class="flex size-20 items-center justify-center rounded-5 bg-surface-base shadow-lg">
-            lg
-          </div>
-          <div class="flex size-20 items-center justify-center rounded-5 bg-surface-base shadow-xl">
-            xl
-          </div>
-          <div class="flex size-20 items-center justify-center rounded-5 bg-surface-base shadow-2xl">
-            2xl
-          </div>
-        </div>
-      </PageSection>
-
-      <PageSection id="focus-rings" title="Focus rings">
-        <div class="flex flex-wrap gap-3">
-          <button
-            type="button"
-            class="rounded-4 bg-surface-base px-3 py-1.5 text-sm focus-ring"
-          >
-            default
-          </button>
-          <button
-            type="button"
-            class="rounded-4 bg-surface-base px-3 py-1.5 text-sm focus-ring-blue"
-          >
-            blue
-          </button>
-          <button
-            type="button"
-            class="rounded-4 bg-surface-base px-3 py-1.5 text-sm focus-ring-green"
-          >
-            green
-          </button>
-          <button
-            type="button"
-            class="rounded-4 bg-surface-base px-3 py-1.5 text-sm focus-ring-amber"
-          >
-            amber
-          </button>
-          <button
-            type="button"
-            class="rounded-4 bg-surface-base px-3 py-1.5 text-sm focus-ring-red"
-          >
-            red
-          </button>
-        </div>
-      </PageSection>
-
-      <PageSection id="button" title="Button">
-        <div class="flex flex-col gap-4">
-          <For each={['solid', 'subtle', 'outline', 'ghost'] as const}>
-            {(variant) => (
-              <div class="flex flex-wrap items-center gap-3">
-                <span class="w-16 text-xs text-ink-gray-7">{variant}</span>
-                <Button variant={variant} theme="gray">
-                  Gray
-                </Button>
-                <Button variant={variant} theme="blue">
-                  Blue
-                </Button>
-                <Button variant={variant} theme="green">
-                  Green
-                </Button>
-                <Button variant={variant} theme="red">
-                  Red
-                </Button>
-                <Button variant={variant} icon="lucide-plus" aria-label="Add" />
-                <Button variant={variant} disabled>
-                  Disabled
-                </Button>
+      <PageSection
+        id="elevation"
+        title="Elevation"
+        description="Resting surfaces are flat and drawn with a 1px border. A shadow means the surface floats above the page, and it is always paired with an opaque surface."
+      >
+        <div class="grid grid-cols-2 gap-card-gap rounded-card border border-outline-gray-1 bg-surface-base p-card-pad sm:grid-cols-4 lg:grid-cols-7">
+          <For each={ELEVATION}>
+            {(step) => (
+              <div class="flex flex-col items-center gap-2">
+                <div
+                  class={`grid h-20 w-full place-items-center rounded-card border border-outline-gray-1 text-caption text-ink-gray-7 ${step.class}`}
+                >
+                  {step.name}
+                </div>
+                <span class="text-caption text-ink-gray-7">{step.note}</span>
               </div>
             )}
           </For>
-          <div class="flex flex-wrap items-center gap-3">
-            <Button size="xs">xs</Button>
-            <Button size="sm">sm</Button>
-            <Button size="md">md</Button>
-            <Button size="lg">lg</Button>
-            <Button loading>Loading</Button>
-            <Button iconLeft="lucide-plus" variant="solid" theme="blue">
-              Create
-            </Button>
+        </div>
+        <p class="mt-field-gap max-w-[30rem] text-caption text-ink-gray-7">
+          Dialogs, popovers and menus take <Token>shadow-xl</Token>; a hover
+          lift on a control takes <Token>shadow-sm</Token>. Dark mode swaps each
+          step for its dark counterpart instead of reusing a light shadow.
+        </p>
+      </PageSection>
+
+      <PageSection
+        id="focus-rings"
+        title="Focus rings"
+        description="Focus is an outline, not a box-shadow: 2px in light mode and 3px in dark. It survives forced-colours mode and never collides with a shadow utility."
+      >
+        <div class="rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad">
+          <div class="flex flex-wrap gap-x-8 gap-y-6">
+            <For each={FOCUS}>
+              {(ring) => (
+                <div class="flex flex-col items-center gap-2">
+                  <div
+                    aria-hidden="true"
+                    class="grid h-9 w-20 place-items-center rounded-control border border-outline-gray-2 bg-surface-base text-caption text-ink-gray-7"
+                    style={{
+                      outline: `var(${ring.var})`,
+                      'outline-offset': '0px',
+                    }}
+                  >
+                    Focus
+                  </div>
+                  <span class="font-mono text-caption text-ink-gray-7">
+                    {ring.name}
+                  </span>
+                </div>
+              )}
+            </For>
           </div>
         </div>
+        <p class="mt-field-gap max-w-[30rem] text-caption text-ink-gray-7">
+          A control's ring follows its theme: a red field draws the red ring, a
+          neutral one the default. Tab through this page to see the live
+          version.
+        </p>
       </PageSection>
 
-      <PageSection id="switch" title="Switch">
-        <div class="flex flex-wrap items-center gap-4">
-          <Switch label="Notifications" defaultChecked />
-          <Switch label="Disabled" disabled />
-          <Switch label="Unchecked" />
-        </div>
-      </PageSection>
-
-      <PageSection id="dialog" title="Dialog">
-        <Dialog.Root>
-          <Dialog.Trigger class="w-fit rounded-4 bg-surface-gray-10 px-3 py-1.5 text-base text-ink-base">
-            Open dialog
-          </Dialog.Trigger>
-          <Dialog.Content>
-            <Dialog.Header>
-              <Dialog.Title>Delete workspace?</Dialog.Title>
-              <Dialog.Description>
-                This can't be undone. The machine handles focus trap, Escape and
-                outside click.
-              </Dialog.Description>
-            </Dialog.Header>
-            <Dialog.Footer>
-              <Dialog.Close class="rounded-4 px-3 py-1.5 text-base text-ink-gray-7">
-                Cancel
-              </Dialog.Close>
-              <Dialog.Close class="rounded-4 bg-surface-red-7 px-3 py-1.5 text-base text-ink-base">
-                Delete
-              </Dialog.Close>
-            </Dialog.Footer>
-          </Dialog.Content>
-        </Dialog.Root>
-      </PageSection>
+      <p class="max-w-[30rem] text-caption text-ink-gray-7">
+        The data lives in <Token>@talelk/newui-tokens</Token>; the utilities
+        live in <Token>@talelk/newui-tailwind</Token>. A token that is not in
+        either package does not reach a component.
+      </p>
     </div>
   )
 }

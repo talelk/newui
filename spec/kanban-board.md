@@ -14,7 +14,13 @@
 | `label` | `string` | `'Board'` | accessible name for the region |
 | `itemLabel` | `(item: T) => string` | `item.id` | how a card is named in its menu |
 | `emptyColumn` | `(column) => JSX.Element` | — | rendered in a column with no cards |
+| `loading` | `boolean` | `false` | shared skeleton instead of the board |
+| `error` | `JSX.Element` | — | shared error state |
+| `onRetry` | `() => void` | — | retry action in the error state |
 | `class` | `string` | — | |
+
+The board also renders the shared `DataState` for `loading`, `error` and an
+empty column set.
 
 ```ts
 interface KanbanColumn<T> {

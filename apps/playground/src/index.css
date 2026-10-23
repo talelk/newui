@@ -3,6 +3,12 @@
 @source "../index.html";
 @source "./**/*.{ts,tsx}";
 
+/* Long-form documentation keeps a readable measure (~72 characters). Tables,
+ * code blocks and previews keep the full column width. */
+.docs-measure :where(p) {
+  max-width: 30rem;
+}
+
 /* Native modal navigation owns focus containment, Escape and background inertness. */
 :where(.site-drawer nav) a {
   display: flex;

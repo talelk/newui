@@ -11,6 +11,7 @@ function Example(props: {
   open?: boolean
   onOpenChange?: (value: boolean) => void
   empty?: JSX.Element
+  loading?: boolean
 }) {
   const [uncontrolledOpen, setUncontrolledOpen] = createSignal(false)
   const [chosen, setChosen] = createSignal('')
@@ -46,6 +47,7 @@ function Example(props: {
         onOpenChange={setOpen}
         label="Demo commands"
         empty={props.empty ?? 'Nothing matches that.'}
+        loading={props.loading}
       >
         <CommandGroup label="Pages">
           <CommandItem
@@ -163,4 +165,8 @@ export const Empty: Story = {
       />
     )
   },
+}
+
+export const Loading: Story = {
+  render: () => <Example open={true} onOpenChange={() => {}} loading />,
 }

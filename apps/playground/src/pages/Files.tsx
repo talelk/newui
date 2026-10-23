@@ -301,6 +301,7 @@ export function Files(): JSX.Element {
           },
         ]}
         tabs={{
+          label: 'File view',
           value: view(),
           onValueChange: setView,
           options: [

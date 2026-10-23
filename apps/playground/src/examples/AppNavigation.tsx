@@ -49,23 +49,30 @@ export function AppNavigation(props: {
       <Show when={heading && !collapsed()}>
         <p
           classList={{
-            'px-2 pb-1 text-xs font-medium text-ink-gray-7': true,
+            'px-2 pb-1 text-xs font-medium text-ink-gray-6': true,
             'pt-3': spaced,
           }}
         >
           {heading}
         </p>
       </Show>
+      {/* The rail keeps the group boundary as a rule, matching SidebarLabel. */}
+      <Show when={heading && collapsed() && spaced}>
+        <div
+          aria-hidden="true"
+          class="mx-2 my-1.5 border-t border-outline-gray-2"
+        />
+      </Show>
       <For each={items}>
         {(item) => (
           <SidebarItem
-            label={item.label}
+            label={item.count ? `${item.label}, ${item.count}` : item.label}
             icon={item.icon}
             active={props.value === item.label}
             onClick={() => props.onChange(item.label)}
             suffix={
               item.count ? (
-                <span class="rounded-full bg-surface-gray-2 px-1.5 py-px text-caption tabular-nums text-ink-gray-7">
+                <span class="rounded-full bg-surface-gray-2 px-1.5 py-px text-caption tabular-nums text-ink-gray-7 group-data-[active]:bg-surface-blue-2 group-data-[active]:text-ink-blue-8">
                   {item.count}
                 </span>
               ) : undefined

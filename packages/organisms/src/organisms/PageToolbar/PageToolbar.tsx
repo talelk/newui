@@ -1,18 +1,25 @@
 import { Button, type IconProp } from '@talelk/newui-atoms'
 import { Dropdown } from '@talelk/newui-molecules'
-import { type JSX, Show } from 'solid-js'
+import { For, type JSX, Show } from 'solid-js'
+import { Dynamic } from 'solid-js/web'
 
 export interface PageToolbarAction {
   label: string
-  /** A `lucide-*` string or a component (P11). */
+  /** A `lucide-*` string or a component (P11). No icon is implied. */
   icon?: IconProp
   onClick?: () => void
+  loading?: boolean
+  disabled?: boolean
 }
 
 export interface PageToolbarProps {
   title: JSX.Element
+  /** Semantic level of the title. @default 1 */
+  headingLevel?: 1 | 2 | 3 | 4
   /** Options for the ellipsis menu beside the title. Omitted → no menu. */
   menu?: PageToolbarAction[]
+  /** Secondary actions, before the primary. */
+  secondary?: PageToolbarAction[]
   /** The primary action — the one thing this screen is for. */
   action?: PageToolbarAction
   /** Anything else on the trailing edge, after the primary action. */
@@ -36,7 +43,12 @@ export function PageToolbar(props: PageToolbarProps): JSX.Element {
       class={`flex min-h-12 shrink-0 items-center justify-between gap-control-gap border-b border-outline-gray-1 bg-surface-base px-page-gutter-compact sm:px-page-gutter ${props.class ?? ''}`}
     >
       <div class="flex min-w-0 items-center gap-1">
-        <span class="truncate text-heading text-ink-gray-9">{props.title}</span>
+        <Dynamic
+          component={`h${props.headingLevel ?? 1}`}
+          class="truncate text-heading text-ink-gray-9"
+        >
+          {props.title}
+        </Dynamic>
         <Show when={props.menu}>
           {(menu) => (
             <Dropdown
@@ -59,12 +71,28 @@ export function PageToolbar(props: PageToolbarProps): JSX.Element {
 
       <div class="flex shrink-0 items-center gap-control-gap">
         {props.children}
+        <Show when={props.secondary}>
+          <For each={props.secondary}>
+            {(action) => (
+              <Button
+                variant="outline"
+                loading={action.loading}
+                disabled={action.disabled}
+                onClick={action.onClick}
+              >
+                {action.label}
+              </Button>
+            )}
+          </For>
+        </Show>
         <Show when={props.action}>
           {(action) => (
             <Button
               variant="solid"
               theme="blue"
-              iconLeft={action().icon ?? 'lucide-plus'}
+              iconLeft={action().icon}
+              loading={action().loading}
+              disabled={action().disabled}
               onClick={action().onClick}
             >
               {action().label}

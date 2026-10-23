@@ -31,6 +31,8 @@ import {
   Show,
   untrack,
 } from 'solid-js'
+import { DataState } from '../DataState'
+import { SelectionBar } from '../SelectionBar'
 
 /**
  * Built on the first table, not when the module is evaluated.
@@ -62,6 +64,20 @@ type Features = ReturnType<typeof createFeatures>
 
 export type DataTableColumn<T extends object> = ColumnDef<Features, T>
 
+/** Where a column appears in the mobile card, when `meta.mobile` is set. */
+export type DataTableMobileRole =
+  | 'title'
+  | 'subtitle'
+  | 'amount'
+  | 'status'
+  | 'meta'
+
+/** The library reads `meta.align` and `meta.mobile`; both are optional. */
+export interface DataTableColumnMeta {
+  align?: 'end'
+  mobile?: DataTableMobileRole
+}
+
 export interface DataTableProps<T extends { id: string }> {
   title: string
   rows: T[]
@@ -72,6 +88,19 @@ export interface DataTableProps<T extends { id: string }> {
   hideSearch?: boolean
   /** Selection checkboxes + bulk action. Default on; off for read tables. */
   selectable?: boolean
+  /** Per-row eligibility; ineligible rows cannot be selected. */
+  rowSelectable?: (row: T) => boolean
+  /** Page-supplied context shown beside Search, e.g. "18 expenses · Sep 2026". */
+  caption?: JSX.Element
+  /** Skeleton state while the rows are in flight. */
+  loading?: boolean
+  /** Error state; the table is replaced by the shared DataState. */
+  error?: JSX.Element
+  onRetry?: () => void
+  /** `compact` uses 36px rows instead of 44px. */
+  density?: 'comfortable' | 'compact'
+  /** Total or scope shown beside the count in the mobile selection bar. */
+  selectionSummary?: (ids: string[]) => JSX.Element
   pageSize?: number
   /** Footer noun: "32 transactions". Defaults to "records". */
   recordsLabel?: string
@@ -110,6 +139,7 @@ export function DataTable<T extends { id: string }>(
       <Checkbox
         aria-label={`Select ${context.row.original.id}`}
         checked={context.row.getIsSelected()}
+        disabled={!context.row.getCanSelect()}
         onCheckedChange={(value) => context.row.toggleSelected(value)}
       />
     ),
@@ -126,6 +156,10 @@ export function DataTable<T extends { id: string }>(
       return resolvedColumns()
     },
     getRowId: (row) => row.id,
+    get enableRowSelection() {
+      return (row: { original: T }) =>
+        props.rowSelectable?.(row.original) ?? true
+    },
     initialState: {
       // Initial only: later pageSize changes do not repaginate the table.
       pagination: {
@@ -144,9 +178,36 @@ export function DataTable<T extends { id: string }>(
     ),
   )
   const alignEnd = (meta: unknown): boolean =>
-    (meta as { align?: string } | undefined)?.align === 'end'
+    (meta as DataTableColumnMeta | undefined)?.align === 'end'
+  const mobileRole = (meta: unknown) =>
+    (meta as DataTableColumnMeta | undefined)?.mobile
+  const hasMobileCards = createMemo(() =>
+    props.columns.some((column) => mobileRole(column.meta)),
+  )
   const selected = () =>
     table.getFilteredSelectedRowModel().rows.map((row) => row.original.id)
+  const status = () =>
+    props.loading
+      ? ('loading' as const)
+      : props.error
+        ? ('error' as const)
+        : ('ready' as const)
+  const runAction = () => {
+    props.onRowsAction?.(selected())
+    table.resetRowSelection()
+  }
+  const cellPad = () =>
+    props.density === 'compact' ? 'px-4 py-2' : 'px-4 py-3'
+  const emptyAction = () => (
+    <Button
+      onClick={() => {
+        if (props.onClearFilters) props.onClearFilters()
+        else table.resetGlobalFilter()
+      }}
+    >
+      {props.onClearFilters ? 'Reset filters' : 'Clear search'}
+    </Button>
+  )
   return (
     <section
       class="min-w-0 rounded-card border border-outline-gray-1 bg-surface-elevation-1"
@@ -168,15 +229,12 @@ export function DataTable<T extends { id: string }>(
             />
           </div>
         </Show>
+        <Show when={props.caption}>
+          <p class="min-w-0 text-caption text-ink-gray-7">{props.caption}</p>
+        </Show>
         <div class="ms-auto flex flex-wrap items-center gap-2">
           <Show when={props.onRowsAction && selected().length}>
-            <Button
-              variant="outline"
-              onClick={() => {
-                props.onRowsAction?.(selected())
-                table.resetRowSelection()
-              }}
-            >
+            <Button variant="outline" class="max-sm:hidden" onClick={runAction}>
               {props.actionLabel ?? 'Update selected'} ({selected().length})
             </Button>
           </Show>
@@ -202,132 +260,260 @@ export function DataTable<T extends { id: string }>(
           </details>
         </div>
       </div>
-      <ScrollTable label={`${props.title} table`}>
-        <table class="w-full min-w-[720px] border-collapse text-start">
-          <ScrollTableHead>
-            <For each={table.getHeaderGroups()}>
-              {(group) => (
-                <tr>
-                  <For each={group.headers}>
-                    {(header) => (
-                      <th
-                        scope="col"
-                        class={
-                          alignEnd(header.column.columnDef.meta)
-                            ? 'px-4 py-3 text-end'
-                            : 'px-4 py-3 text-start'
-                        }
-                        aria-sort={
-                          header.column.getIsSorted() === 'asc'
-                            ? 'ascending'
-                            : header.column.getIsSorted() === 'desc'
-                              ? 'descending'
-                              : undefined
-                        }
-                      >
-                        <Show when={!header.isPlaceholder}>
-                          <Show
-                            when={header.column.getCanSort()}
-                            fallback={flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
+      <Show
+        when={status() === 'ready'}
+        fallback={
+          <DataState
+            status={status()}
+            error={props.error}
+            onRetry={props.onRetry}
+            rows={6}
+          />
+        }
+      >
+        <Show when={hasMobileCards() && table.getRowModel().rows.length > 0}>
+          <div
+            data-slot="data-table-cards"
+            class="flex flex-col gap-2 p-card-pad-compact sm:hidden"
+          >
+            <Show when={selectable()}>
+              <div class="flex items-center justify-between gap-2 px-1">
+                <Checkbox
+                  aria-label={`Select all ${props.title} on this page`}
+                  checked={table.getIsAllPageRowsSelected()}
+                  indeterminate={table.getIsSomePageRowsSelected()}
+                  onCheckedChange={(value) =>
+                    table.toggleAllPageRowsSelected(value)
+                  }
+                />
+                <span class="text-caption text-ink-gray-7">
+                  {selected().length} selected
+                </span>
+              </div>
+            </Show>
+            <For each={table.getRowModel().rows}>
+              {(row) => {
+                const cells = (role: DataTableMobileRole) =>
+                  row
+                    .getVisibleCells()
+                    .filter(
+                      (cell) => mobileRole(cell.column.columnDef.meta) === role,
+                    )
+                return (
+                  <div
+                    class="rounded-4 border border-outline-gray-1 p-3"
+                    classList={{ 'bg-surface-blue-1': row.getIsSelected() }}
+                    data-selected={row.getIsSelected() ? '' : undefined}
+                  >
+                    <div class="flex items-start gap-2">
+                      <Show when={selectable()}>
+                        <Checkbox
+                          aria-label={`Select ${row.original.id}`}
+                          checked={row.getIsSelected()}
+                          disabled={!row.getCanSelect()}
+                          onCheckedChange={(value) => row.toggleSelected(value)}
+                        />
+                      </Show>
+                      <div class="min-w-0 flex-1">
+                        <div class="flex items-start justify-between gap-3">
+                          <div class="min-w-0">
+                            <For each={cells('title')}>
+                              {(cell) => (
+                                <div class="text-interface font-medium [overflow-wrap:anywhere]">
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext(),
+                                  )}
+                                </div>
+                              )}
+                            </For>
+                            <For each={cells('subtitle')}>
+                              {(cell) => (
+                                <div class="text-caption text-ink-gray-7 [overflow-wrap:anywhere]">
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext(),
+                                  )}
+                                </div>
+                              )}
+                            </For>
+                          </div>
+                          <For each={cells('amount')}>
+                            {(cell) => (
+                              <span class="shrink-0 text-interface font-medium tabular-nums">
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </span>
                             )}
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-2 rounded-3 focus-visible:focus-ring"
-                              onClick={header.column.getToggleSortingHandler()}
+                          </For>
+                        </div>
+                        <div class="mt-1 flex flex-wrap items-center gap-2">
+                          <For each={cells('status')}>
+                            {(cell) =>
+                              flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )
+                            }
+                          </For>
+                          <For each={cells('meta')}>
+                            {(cell) => (
+                              <span class="text-caption text-ink-gray-7">
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </span>
+                            )}
+                          </For>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }}
+            </For>
+          </div>
+        </Show>
+        <Show when={table.getFilteredRowModel().rows.length > 0}>
+          <div class={hasMobileCards() ? 'hidden sm:block' : ''}>
+            <ScrollTable label={`${props.title} table`} stickyHeader>
+              <table class="w-full min-w-[720px] border-collapse text-start">
+                <ScrollTableHead>
+                  <For each={table.getHeaderGroups()}>
+                    {(group) => (
+                      <tr>
+                        <For each={group.headers}>
+                          {(header) => (
+                            <th
+                              scope="col"
+                              class={
+                                alignEnd(header.column.columnDef.meta)
+                                  ? `${cellPad()} text-end`
+                                  : `${cellPad()} text-start`
+                              }
+                              aria-sort={
+                                header.column.getIsSorted() === 'asc'
+                                  ? 'ascending'
+                                  : header.column.getIsSorted() === 'desc'
+                                    ? 'descending'
+                                    : undefined
+                              }
+                            >
+                              <Show when={!header.isPlaceholder}>
+                                <Show
+                                  when={header.column.getCanSort()}
+                                  fallback={flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext(),
+                                  )}
+                                >
+                                  <button
+                                    type="button"
+                                    class="inline-flex items-center gap-2 rounded-3 focus-visible:focus-ring"
+                                    onClick={header.column.getToggleSortingHandler()}
+                                  >
+                                    {flexRender(
+                                      header.column.columnDef.header,
+                                      header.getContext(),
+                                    )}
+                                    <span aria-hidden="true">
+                                      <span
+                                        aria-hidden="true"
+                                        class="lucide-arrow-up-down inline-block size-4 align-middle"
+                                      />
+                                    </span>
+                                  </button>
+                                </Show>
+                              </Show>
+                            </th>
+                          )}
+                        </For>
+                      </tr>
+                    )}
+                  </For>
+                </ScrollTableHead>
+                <tbody>
+                  <For each={table.getRowModel().rows}>
+                    {(row) => (
+                      <tr
+                        class="border-b border-outline-gray-1 hover:bg-surface-gray-1 data-[selected]:bg-surface-blue-1 data-[selected]:hover:bg-surface-blue-2"
+                        data-selected={row.getIsSelected() ? '' : undefined}
+                      >
+                        <For each={row.getVisibleCells()}>
+                          {(cell) => (
+                            <td
+                              class={
+                                alignEnd(cell.column.columnDef.meta)
+                                  ? `${cellPad()} text-end text-interface`
+                                  : `${cellPad()} text-interface`
+                              }
                             >
                               {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
                               )}
-                              <span aria-hidden="true">
-                                <span
-                                  aria-hidden="true"
-                                  class="lucide-arrow-up-down inline-block size-4 align-middle"
-                                />
-                              </span>
-                            </button>
-                          </Show>
-                        </Show>
-                      </th>
+                            </td>
+                          )}
+                        </For>
+                      </tr>
                     )}
                   </For>
-                </tr>
-              )}
-            </For>
-          </ScrollTableHead>
-          <tbody>
-            <For each={table.getRowModel().rows}>
-              {(row) => (
-                <tr
-                  class="border-b border-outline-gray-1 hover:bg-surface-gray-1"
-                  data-selected={row.getIsSelected() ? '' : undefined}
-                >
-                  <For each={row.getVisibleCells()}>
-                    {(cell) => (
-                      <td
-                        class={
-                          alignEnd(cell.column.columnDef.meta)
-                            ? 'px-4 py-3 text-end text-interface'
-                            : 'px-4 py-3 text-interface'
-                        }
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </td>
-                    )}
-                  </For>
-                </tr>
-              )}
-            </For>
-          </tbody>
-        </table>
-      </ScrollTable>
-      <Show when={table.getFilteredRowModel().rows.length === 0}>
-        <div class="p-10 text-center">
-          <h3 class="font-semibold">
-            {props.emptyTitle ?? 'No matching records'}
-          </h3>
-          <p class="mt-1 text-ink-gray-7">
-            {props.emptyHint ?? 'Try a different search or clear your filters.'}
-          </p>
-          <Show
-            when={props.onClearFilters}
-            fallback={
-              <Button class="mt-3" onClick={() => table.resetGlobalFilter()}>
-                Clear search
-              </Button>
+                </tbody>
+              </table>
+            </ScrollTable>
+          </div>
+        </Show>
+        <Show when={table.getFilteredRowModel().rows.length === 0}>
+          <DataState
+            status="empty"
+            title={props.emptyTitle ?? 'No matching records'}
+            description={
+              props.emptyHint ?? 'Try a different search or clear your filters.'
             }
+            action={emptyAction()}
+          />
+        </Show>
+        <div class="flex flex-wrap items-center justify-between gap-control-gap border-t border-outline-gray-1 p-card-pad-compact">
+          <span class="text-caption text-ink-gray-7" role="status">
+            <Show when={selectable()}>{selected().length} selected · </Show>
+            {table.getFilteredRowModel().rows.length}{' '}
+            {props.recordsLabel ?? 'records'}
+          </span>
+          <Pagination.Root
+            page={table.atoms.pagination.get().pageIndex + 1}
+            pageSize={table.atoms.pagination.get().pageSize}
+            count={table.getFilteredRowModel().rows.length}
+            onPageChange={(page) => table.setPageIndex(page - 1)}
           >
-            {(clear) => (
-              <Button class="mt-3" onClick={() => clear()()}>
-                Reset filters
-              </Button>
-            )}
-          </Show>
+            <Pagination.Range />
+            <Pagination.PrevTrigger />
+            <Pagination.Pages />
+            <Pagination.NextTrigger />
+          </Pagination.Root>
         </div>
       </Show>
-      <div class="flex flex-wrap items-center justify-between gap-control-gap p-card-pad-compact">
-        <span class="text-caption text-ink-gray-7" role="status">
-          <Show when={selectable()}>{selected().length} selected · </Show>
-          {table.getFilteredRowModel().rows.length}{' '}
-          {props.recordsLabel ?? 'records'}
-        </span>
-        <Pagination.Root
-          page={table.atoms.pagination.get().pageIndex + 1}
-          pageSize={table.atoms.pagination.get().pageSize}
-          count={table.getFilteredRowModel().rows.length}
-          onPageChange={(page) => table.setPageIndex(page - 1)}
-        >
-          <Pagination.Range />
-          <Pagination.PrevTrigger />
-          <Pagination.Pages />
-          <Pagination.NextTrigger />
-        </Pagination.Root>
+      <div class="sm:hidden">
+        <SelectionBar
+          count={selected().length}
+          placement="sticky"
+          summary={
+            props.selectionSummary
+              ? props.selectionSummary(selected())
+              : undefined
+          }
+          primary={
+            props.onRowsAction
+              ? {
+                  label: props.actionLabel ?? 'Update selected',
+                  onClick: runAction,
+                }
+              : undefined
+          }
+          onClear={() => table.resetRowSelection()}
+        />
       </div>
     </section>
   )

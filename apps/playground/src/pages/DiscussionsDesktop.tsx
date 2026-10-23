@@ -295,12 +295,17 @@ export function DiscussionsDesktop(props: {
       >
         <PageToolbar
           title={space()}
+          headingLevel={2}
           menu={SPACE_ACTIONS.map((action) => ({
             label: action.label,
             icon: action.icon,
             onClick: () => spaceAction(action.value),
           }))}
-          action={{ label: 'New discussion', onClick: discussions.start }}
+          action={{
+            label: 'New discussion',
+            icon: 'lucide-plus',
+            onClick: discussions.start,
+          }}
         />
 
         <div class="flex flex-col gap-4">
@@ -312,6 +317,7 @@ export function DiscussionsDesktop(props: {
                 onInput: discussions.setQuery,
               }}
               tabs={{
+                label: 'Feed',
                 value: feedTab(),
                 onValueChange: setFeedTab,
                 options: [

@@ -24,6 +24,12 @@ the card or section around it.
 | `itemSize` | `number` | fixed row height in pixels |
 | `height` | `string` | viewport height; defaults to `24rem` |
 | `overscan` | `number` | rows rendered beyond the viewport; defaults to `6` |
+| `loading` | `boolean` | replaces the list with the shared loading skeleton |
+| `error` | `JSX.Element` | replaces the list with the shared error state |
+| `onRetry` | `() => void` | retry action in the error state |
+| `emptyTitle` | `JSX.Element` | empty-state title |
+| `emptyDescription` | `JSX.Element` | empty-state supporting copy |
+| `emptyAction` | `JSX.Element` | empty-state action |
 | `children` | `(item: T, index: number) => JSX.Element` | row content |
 
 ## Behavior and accessibility
@@ -34,4 +40,6 @@ the card or section around it.
   it natively after focus.
 - Each mounted row declares `aria-posinset` and `aria-setsize`, so assistive
   technology receives the full list position/size while the DOM stays bounded.
+- `loading`, `error` and an empty `items` array render the shared `DataState`
+  instead of an empty scroll region; the height is preserved.
 - The root is `data-slot="virtual-list"`.
