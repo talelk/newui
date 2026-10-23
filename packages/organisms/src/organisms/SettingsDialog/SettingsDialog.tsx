@@ -97,7 +97,8 @@ const Root: ParentComponent<SettingsDialogProps> = (props) => {
         <Dialog.Content
           class={cn(
             'flex h-[100dvh] min-h-0 w-screen max-w-none flex-col overflow-hidden rounded-none p-0',
-            'sm:h-[min(860px,calc(100vh-8rem))] sm:max-h-[calc(100vh_-_8rem)] sm:min-h-[560px] sm:w-auto sm:max-w-4xl sm:flex-row sm:rounded-overlay',
+            'max-sm:fixed max-sm:inset-0',
+            'sm:h-[min(860px,calc(100vh-8rem))] sm:max-h-[calc(100vh_-_8rem)] sm:min-h-[560px] sm:w-[min(56rem,calc(100vw-2rem))] sm:max-w-4xl sm:flex-row sm:rounded-overlay',
             local.class,
           )}
         >
@@ -108,7 +109,7 @@ const Root: ParentComponent<SettingsDialogProps> = (props) => {
             {local.description ??
               'Manage your settings across the panels in this dialog.'}
           </Dialog.Description>
-          <Dialog.Close class="absolute end-2 top-2 z-raised grid size-8 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring">
+          <Dialog.Close class="absolute end-2 top-2 z-raised grid size-10 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring sm:size-8">
             <span class="sr-only">Close settings</span>
             <span class="lucide-x size-4" aria-hidden="true" />
           </Dialog.Close>
@@ -120,6 +121,8 @@ const Root: ParentComponent<SettingsDialogProps> = (props) => {
 }
 
 export interface SettingsSidebarProps {
+  /** Accessible name for the vertical tablist. @default 'Settings' */
+  label?: string
   /** Merged into the sidebar. */
   class?: string
   children?: JSX.Element
@@ -132,11 +135,12 @@ export interface SettingsSidebarProps {
 const Sidebar: ParentComponent<SettingsSidebarProps> = (props) => (
   <div
     role="tablist"
+    aria-label={props.label ?? 'Settings'}
     aria-orientation="vertical"
     data-slot="settings-sidebar"
     class={cn(
       'flex max-h-[38vh] w-full shrink-0 flex-col gap-4 overflow-y-auto border-b border-outline-gray-1 bg-surface-sidebar p-2',
-      'sm:max-h-none sm:w-[220px] sm:border-b-0 sm:border-r',
+      'max-sm:pe-12 sm:max-h-none sm:w-[220px] sm:border-b-0 sm:border-e',
       props.class,
     )}
   >
@@ -245,8 +249,9 @@ const NavItem: ParentComponent<SettingsNavItemProps> = (props) => {
       class={cn(
         'flex min-h-8 w-full items-center gap-2 rounded-control px-2 py-1 text-start text-interface text-ink-gray-7 transition-colors motion-reduce:transition-none',
         'focus-visible:focus-ring',
+        'min-h-10 sm:min-h-8',
         'data-[state=inactive]:hover:bg-surface-gray-2',
-        'data-[state=active]:bg-surface-elevation-3 data-[state=active]:shadow-sm',
+        'data-[state=active]:bg-surface-elevation-3 data-[state=active]:text-ink-gray-9 data-[state=active]:shadow-sm',
         'disabled:cursor-not-allowed disabled:text-ink-gray-4',
         local.class,
       )}

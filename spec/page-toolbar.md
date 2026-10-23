@@ -19,6 +19,8 @@ actions.
 
 ## Behavior
 
+- A `headingLevel` above 1 uses the section scale (18px), not the page-heading
+  scale, so a toolbar nested under an AppShell H1 does not compete with it.
 - The title is a semantic heading, not a span. It defaults to `h1`; a page that
   already has an `AppShell` H1 passes `headingLevel={2}` to make the toolbar a
   section header.

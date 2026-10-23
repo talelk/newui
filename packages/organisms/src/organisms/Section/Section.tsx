@@ -16,6 +16,12 @@ export interface SectionProps {
   footer?: JSX.Element
   /** @default 2 */
   headingLevel?: SectionHeadingLevel
+  /** Explicit id for the rendered heading. Defaults to `<id>-title`. */
+  headingId?: string
+  /** Accessible name when the section has no visible title. */
+  label?: string
+  /** Id of the element that names the region; beats `label`/the heading id. */
+  labelledBy?: string
   /** Surface treatment. @default 'plain' */
   surface?: 'plain' | 'card' | 'inset'
   /** @default 'comfortable' */
@@ -43,9 +49,15 @@ export function Section(props: SectionProps): JSX.Element {
   const density = () => props.density ?? 'comfortable'
   const hasHeader = () =>
     Boolean(props.title || props.description || props.actions)
+  const headingId = () =>
+    props.headingId ?? (props.id ? `${props.id}-title` : undefined)
+  const labelledBy = () =>
+    props.labelledBy ?? (props.title ? headingId() : undefined)
   return (
     <section
       id={props.id}
+      aria-label={props.label}
+      aria-labelledby={labelledBy()}
       data-slot="section"
       data-surface={surface()}
       data-density={density()}
@@ -64,6 +76,7 @@ export function Section(props: SectionProps): JSX.Element {
             <Show when={props.title}>
               <Dynamic
                 component={`h${props.headingLevel ?? 2}`}
+                id={headingId()}
                 class={cn(
                   'min-w-0 text-ink-gray-9',
                   HEADING[props.headingLevel ?? 2],

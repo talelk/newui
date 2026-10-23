@@ -17,7 +17,7 @@ import { usePageToc } from '../shell/SiteLayout'
 
 function Code(props: { children: string }): JSX.Element {
   return (
-    <pre class="whitespace-pre-wrap break-words rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
+    <pre class="whitespace-pre-wrap break-words rounded-card border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
       <code>{props.children}</code>
     </pre>
   )
@@ -55,7 +55,7 @@ export function Docs(): JSX.Element {
           </A>
           .
         </p>
-        <div class="overflow-x-auto rounded-5 border border-outline-gray-1">
+        <div class="overflow-x-auto rounded-card border border-outline-gray-1">
           <table class="w-full border-collapse text-start text-sm">
             <thead class="bg-surface-gray-1 text-caption text-ink-gray-7">
               <tr>

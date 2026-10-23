@@ -125,6 +125,17 @@ describe('DataTable', () => {
     expect(onRowsAction).toHaveBeenCalledWith(['1', '3'])
   })
 
+  it('keeps a stable titled toolbar when an external filter bar owns search', () => {
+    render(() => (
+      <DataTable title="Rows" rows={ROWS} columns={COLUMNS} hideSearch />
+    ))
+    const toolbar = document.querySelector('[data-slot="data-table-toolbar"]')
+    expect(toolbar?.textContent).toContain('Rows')
+    expect(
+      document.querySelector('[data-slot="data-table-columns"]'),
+    ).toBeTruthy()
+  })
+
   it('renders the shared loading and error states', () => {
     const loading = render(() => (
       <DataTable title="Rows" rows={[]} columns={COLUMNS} loading />
@@ -138,7 +149,7 @@ describe('DataTable', () => {
   })
 
   it('shows the mobile selection bar once a row is selected', async () => {
-    table()
+    table({ onRowsAction: () => {} })
     await userEvent.click(screen.getByRole('checkbox', { name: 'Select 1' }))
     expect(document.querySelector('[data-slot="selection-bar"]')).toBeTruthy()
   })

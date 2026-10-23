@@ -77,6 +77,12 @@ export const API = {
       "description": "`compact` uses 36px rows instead of 44px."
     },
     {
+      "name": "cardBreakpoint",
+      "type": "'sm' | 'md' | 'lg'",
+      "optional": true,
+      "description": "Width at which the table becomes cards. Default `sm` (640px)."
+    },
+    {
       "name": "selectionSummary",
       "type": "(ids: string[]) => JSX.Element",
       "optional": true,

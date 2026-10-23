@@ -14,19 +14,22 @@ responds to viewport width on either destination.
 
 | Workflow | What it demonstrates | Browser evidence |
 | --- | --- | --- |
-| Discussions | Community rail, space feeds, local creation/replies, search, read state and settings | `e2e/discussions-settings.spec.ts`, `e2e/interaction.spec.ts` |
-| Compose | Rich text, preview, draft save/restore, Markdown export, local validated publication confirmation | `e2e/compose.spec.ts` |
-| Deals | Pipeline board and list, filters, sorting, creation, stage moves and undo | `e2e/business-recipes.spec.ts` |
-| Tickets | Service targets, priority/agent filters, sortable table, replies, assignment, resolution and creation | `e2e/business-recipes.spec.ts` |
-| Mail | Folders, categories, search, unread state, stars, drafts, replies, forwarding to validated recipients, archive/trash and undo | `e2e/mail.spec.ts` |
-| Files | Folder tree, grid/list, filters, favourites, local file selection, preview, download, trash/restore | `e2e/business-recipes.spec.ts` |
-| Tasks | Validated creation, query lifecycle, table operations, bulk completion, virtual activity | `e2e/tasks.spec.ts` |
 | Accounting | Shared ledger, date filters, cashflow/expenses/payroll/profit report, local mutations and CSV export | `e2e/business-recipes.spec.ts` |
+| Files | Breadcrumb folder navigation, grid/list, filters, favourites, local upload, preview, download, trash/restore | `e2e/business-recipes.spec.ts` |
+| Tickets | Service targets, priority/agent filters, sortable table, replies, assignment, resolution and creation | `e2e/business-recipes.spec.ts` |
+| Deals | Pipeline board and list, filters, sorting, creation, stage moves and undo | `e2e/business-recipes.spec.ts` |
+| Mail | Folders, categories, search, unread state, stars, drafts, replies, forwarding to validated recipients, archive/trash and undo | `e2e/mail.spec.ts` |
+| Compose | Rich text, preview, draft save/restore, Markdown export, local validated publication confirmation | `e2e/compose.spec.ts` |
+| Analytics | Revenue, channels, regions, transactions, local refunds/undo and responsive chart cards | `e2e/analytics.spec.ts` |
+| Tasks | Validated creation, query lifecycle, table operations, bulk completion, virtual activity | `e2e/tasks.spec.ts` |
+| Cards | Eight business card compositions with validated local actions | `e2e/business-recipes.spec.ts` |
+| Authentication | Validated sign-in, sign-up, email-link and local demo sessions | `e2e/example-patterns.spec.ts` |
+| Discussions | Community switcher, grouped space feeds, local creation/replies, search, read state and settings | `e2e/discussions-settings.spec.ts` |
+| Settings | Workspace settings landing and grouped profile, notification and member dialog | `e2e/discussions-settings.spec.ts` |
 
-Five compact application views map to `/pages/analytics`, mail, tasks,
-`/pages/authentication` and `/pages/cards`. The eight card compositions cover
-account creation, payments, team membership, sharing, notifications, support
-reports, project information and cookie preferences.
+The eight card compositions cover account creation, payments, team membership,
+sharing, notifications, support reports, project information and cookie
+preferences.
 
 All example datasets are deterministic and local. Authentication and publication
 create page-local demo state. Files retain selected `File` objects in memory;

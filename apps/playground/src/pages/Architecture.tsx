@@ -112,7 +112,7 @@ function Rung(props: { level: LadderLevel; index: number }): JSX.Element {
         </Show>
       </div>
 
-      <div class="mb-4 min-w-0 flex-1 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4">
+      <div class="mb-4 min-w-0 flex-1 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-4">
         <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <h3 class="text-base-medium text-ink-gray-9">{props.level.title}</h3>
           <code class="rounded-3 border border-outline-gray-1 bg-surface-gray-1 px-1 text-xs text-ink-gray-7">
@@ -230,7 +230,7 @@ export function Architecture(): JSX.Element {
         title="Levels and packages"
         description="The two axes, side by side. Most rows are one package; the rows that are not are the reason the level exists."
       >
-        <div class="overflow-x-auto rounded-5 border border-outline-gray-1">
+        <div class="overflow-x-auto rounded-card border border-outline-gray-1">
           {/* `table-fixed`: auto layout lets a long answered-question column
               squeeze the others to a character on a phone. */}
           <table class="w-full table-fixed border-collapse text-start">

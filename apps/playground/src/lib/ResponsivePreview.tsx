@@ -167,8 +167,15 @@ function Preview(props: {
   children?: JSX.Element
 }): JSX.Element {
   const initial = new URLSearchParams(location.search).get('viewport')
+  /** A phone preview should open at phone size, not as a 24%-scale desktop. */
+  const defaultViewport = (): Viewport =>
+    window.innerWidth < 640
+      ? 'mobile'
+      : window.innerWidth < 1024
+        ? 'tablet'
+        : 'desktop'
   const [viewport, setViewport] = createSignal<Viewport>(
-    initial && initial in VIEWPORTS ? (initial as Viewport) : 'desktop',
+    initial && initial in VIEWPORTS ? (initial as Viewport) : defaultViewport(),
   )
   const [tab, setTab] = createSignal<'preview' | 'source'>('preview')
   const [sourceOpened, setSourceOpened] = createSignal(false)
@@ -331,7 +338,7 @@ function Preview(props: {
   return (
     <section
       aria-label={`${props.title} responsive preview`}
-      class="min-w-0 rounded-5 border border-outline-gray-1 bg-surface-gray-1"
+      class="min-w-0 rounded-card border border-outline-gray-1 bg-surface-gray-1"
     >
       <div
         data-slot="preview-controls"

@@ -1,12 +1,6 @@
-import {
-  Badge,
-  Button,
-  Checkbox,
-  Textarea,
-  TextInput,
-} from '@talelk/newui-atoms'
+import { Badge, Button, Textarea, TextInput } from '@talelk/newui-atoms'
 import { optionsOf } from '@talelk/newui-data'
-import { Dialog, EmptyState, Select } from '@talelk/newui-molecules'
+import { Dialog, Select } from '@talelk/newui-molecules'
 import {
   DataTable,
   type DataTableColumn,
@@ -27,6 +21,36 @@ import {
   type Ticket,
 } from '../examples/tickets-data'
 
+/** Unassigned is a queue state, not an agent: keep it out of this filter. */
+const ASSIGNABLE_AGENTS = AGENTS.filter((agent) => agent !== 'Unassigned')
+
+const STATUS_THEME: Record<Status, 'amber' | 'blue' | 'gray' | 'green'> = {
+  Open: 'amber',
+  Replied: 'blue',
+  Paused: 'gray',
+  Resolved: 'green',
+}
+
+/** Amber marks attention; red is reserved for an SLA breach. */
+const priorityTone = (priority: string) =>
+  priority === 'Urgent'
+    ? 'font-medium text-ink-amber-8'
+    : priority === 'High'
+      ? 'text-ink-gray-9'
+      : 'text-ink-gray-7'
+
+const agentLabel = (agent: string) => (agent === 'Rhea Kapoor' ? 'You' : agent)
+
+const agentTone = (agent: string) =>
+  agent === 'Unassigned'
+    ? 'font-medium text-ink-amber-8'
+    : agent === 'Rhea Kapoor'
+      ? 'font-medium text-ink-gray-9'
+      : 'text-ink-gray-8'
+
+const ticketNoun = (count: number) =>
+  `${count} ${count === 1 ? 'ticket' : 'tickets'}`
+
 export function Tickets(): JSX.Element {
   /**
    * The reference's sidebar: the support workspace's screens, then its saved
@@ -37,7 +61,6 @@ export function Tickets(): JSX.Element {
   const [view, setView] = createSignal('open')
   const [priority, setPriority] = createSignal('All priorities')
   const [agent, setAgent] = createSignal('All agents')
-  const [mobileSelection, setMobileSelection] = createSignal<string[]>([])
   const [query, setQuery] = createSignal('')
   const [queue, setQueue] = createSignal('All queues')
   const [active, setActive] = createSignal<string>()
@@ -77,22 +100,59 @@ export function Tickets(): JSX.Element {
         ticket.id === id ? { ...ticket, ...patch } : ticket,
       ),
     )
+  const resetFilters = () => {
+    setPriority('All priorities')
+    setAgent('All agents')
+    setQueue('All queues')
+    setQuery('')
+  }
+  // The empty table's action must always lead somewhere: reset the view too,
+  // not only the filters the FilterBar restates as chips.
+  const resetAll = () => {
+    resetFilters()
+    setView('all')
+  }
+  const resolveTickets = (ids: string[]) => {
+    if (!ids.length) return
+    setTickets((previous) =>
+      previous.map((ticket) =>
+        ids.includes(ticket.id)
+          ? {
+              ...ticket,
+              status: 'Resolved',
+              resolution: 'Met · just now',
+            }
+          : ticket,
+      ),
+    )
+    setNotice(`${ticketNoun(ids.length)} resolved.`)
+  }
   const columns: DataTableColumn<Ticket>[] = [
-    { accessorKey: 'id', header: 'Ticket' },
+    {
+      accessorKey: 'id',
+      header: 'Ticket',
+      meta: { mobile: 'subtitle' },
+      cell: (context) => (
+        <span class="whitespace-nowrap text-caption tabular-nums text-ink-gray-7">
+          {context.row.original.id}
+        </span>
+      ),
+    },
     {
       accessorKey: 'subject',
       header: 'Subject',
+      meta: { mobile: 'title' },
       cell: (context) => (
         <button
           type="button"
-          class="max-w-72 rounded-3 text-start text-ink-blue-link focus-visible:focus-ring"
+          class="max-w-72 rounded-3 text-start font-medium text-ink-blue-link focus-visible:focus-ring"
           onClick={() => {
             setActive(context.row.original.id)
             setReply('')
           }}
         >
           {context.row.original.subject}
-          <span class="mt-1 block text-caption text-ink-gray-7">
+          <span class="mt-1 block text-caption font-normal text-ink-gray-7">
             {context.row.original.customer}
           </span>
         </button>
@@ -100,34 +160,33 @@ export function Tickets(): JSX.Element {
     },
     {
       accessorKey: 'response',
-      header: 'Response / resolution',
-      cell: (context) => (
-        <div class="whitespace-nowrap text-caption">
-          <p
-            classList={{
-              'text-ink-red-6':
-                context.row.original.response.startsWith('Breached'),
-            }}
-          >
-            {context.row.original.response}
-          </p>
-          <p class="mt-1 text-ink-gray-7">{context.row.original.resolution}</p>
-        </div>
-      ),
+      header: 'First reply / resolution',
+      meta: { mobile: 'meta' },
+      cell: (context) => {
+        const breached = context.row.original.response.startsWith('Breached')
+        return (
+          <div class="whitespace-nowrap text-caption">
+            <p
+              classList={{
+                'font-medium text-ink-red-7': breached,
+                'text-ink-gray-8': !breached,
+              }}
+            >
+              {context.row.original.response}
+            </p>
+            <p class="mt-1 text-ink-gray-7">
+              {context.row.original.resolution}
+            </p>
+          </div>
+        )
+      },
     },
     {
       accessorKey: 'status',
       header: 'Status',
+      meta: { mobile: 'status' },
       cell: (context) => (
-        <Badge
-          theme={
-            context.row.original.status === 'Resolved'
-              ? 'green'
-              : context.row.original.status === 'Open'
-                ? 'red'
-                : 'blue'
-          }
-        >
+        <Badge theme={STATUS_THEME[context.row.original.status]}>
           {context.row.original.status}
         </Badge>
       ),
@@ -135,12 +194,60 @@ export function Tickets(): JSX.Element {
     {
       accessorKey: 'priority',
       header: 'Priority',
+      meta: { mobile: 'meta' },
       sortFn: (a, b) =>
         PRIORITIES.indexOf(a.original.priority) -
         PRIORITIES.indexOf(b.original.priority),
+      cell: (context) => (
+        <span class={priorityTone(context.row.original.priority)}>
+          {context.row.original.priority}
+        </span>
+      ),
     },
-    { accessorKey: 'agent', header: 'Assigned to' },
+    {
+      accessorKey: 'agent',
+      header: 'Assigned to',
+      meta: { mobile: 'meta' },
+      cell: (context) => (
+        <span class={agentTone(context.row.original.agent)}>
+          {agentLabel(context.row.original.agent)}
+        </span>
+      ),
+    },
   ]
+  const queueStats = createMemo(() => [
+    {
+      label: 'Open tickets',
+      value: String(
+        tickets().filter((ticket) => ticket.status === 'Open').length,
+      ),
+      hint: 'Waiting on a first response',
+    },
+    {
+      label: 'Awaiting reply',
+      value: String(
+        tickets().filter((ticket) => ticket.status === 'Replied').length,
+      ),
+      hint: 'The ball is with the customer',
+    },
+    {
+      label: 'Unassigned',
+      value: String(
+        tickets().filter(
+          (ticket) =>
+            ticket.agent === 'Unassigned' && ticket.status !== 'Resolved',
+        ).length,
+      ),
+      hint: 'Open and without an owner',
+    },
+    {
+      label: 'Resolved',
+      value: String(
+        tickets().filter((ticket) => ticket.status === 'Resolved').length,
+      ),
+      hint: `Of ${tickets().length} tickets in total`,
+    },
+  ])
   return (
     <AppPage
       navigation={() => (
@@ -187,51 +294,27 @@ export function Tickets(): JSX.Element {
         </Button>
       }
     >
-      <div class="hidden sm:block">
-        <StatGrid
-          stats={[
-            {
-              label: 'Open tickets',
-              value: String(
-                tickets().filter((ticket) => ticket.status === 'Open').length,
-              ),
-              hint: 'Waiting on a first response',
-              icon: 'lucide-ticket',
-            },
-            {
-              label: 'Awaiting reply',
-              value: String(
-                tickets().filter((ticket) => ticket.status === 'Replied')
-                  .length,
-              ),
-              hint: 'The ball is with the customer',
-              icon: 'lucide-message-square-text',
-            },
-            {
-              label: 'Unassigned',
-              value: String(
-                tickets().filter(
-                  (ticket) =>
-                    ticket.agent === 'Unassigned' &&
-                    ticket.status !== 'Resolved',
-                ).length,
-              ),
-              hint: 'Open and without an owner',
-              icon: 'lucide-user-round-x',
-            },
-            {
-              label: 'Resolved',
-              value: String(
-                tickets().filter((ticket) => ticket.status === 'Resolved')
-                  .length,
-              ),
-              hint: `Of ${tickets().length} tickets in total`,
-              icon: 'lucide-circle-check',
-            },
-          ]}
-        />
+      <section
+        class="grid grid-cols-2 gap-3 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-3 min-[360px]:grid-cols-4 md:hidden"
+        aria-label="Queue summary"
+      >
+        <For each={queueStats()}>
+          {(stat) => (
+            <div class="flex min-w-0 flex-col">
+              <p class="text-caption leading-tight text-ink-gray-7">
+                {stat.label}
+              </p>
+              <p class="mt-auto pt-1 text-metric tabular-nums text-ink-gray-9">
+                {stat.value}
+              </p>
+            </div>
+          )}
+        </For>
+      </section>
+      <div class="hidden md:block">
+        <StatGrid compact columns={4} stats={queueStats()} />
       </div>
-      <Notice text={notice()} onDismiss={() => setNotice('')} />
+      <Notice tone="green" text={notice()} onDismiss={() => setNotice('')} />
       <FilterBar
         query={{
           placeholder: 'Find tickets…',
@@ -249,7 +332,7 @@ export function Tickets(): JSX.Element {
             label: 'Agent',
             value: agent() === 'All agents' ? '' : agent(),
             onValueChange: (value) => setAgent(value || 'All agents'),
-            options: optionsOf(AGENTS),
+            options: optionsOf(ASSIGNABLE_AGENTS),
           },
           {
             label: 'Queue',
@@ -267,9 +350,9 @@ export function Tickets(): JSX.Element {
           value: view(),
           onValueChange: setView,
           options: [
-            { label: 'Open tickets', value: 'open' },
+            { label: 'Active tickets', value: 'open' },
             { label: 'All tickets', value: 'all' },
-            { label: 'Closed tickets', value: 'closed' },
+            { label: 'Resolved tickets', value: 'closed' },
           ],
         }}
         chips={[
@@ -302,116 +385,24 @@ export function Tickets(): JSX.Element {
             : []),
         ]}
         resultCount={rows().length}
-        onClearAll={() => {
-          setPriority('All priorities')
-          setAgent('All agents')
-          setQueue('All queues')
-          setQuery('')
-        }}
+        onClearAll={resetFilters}
       />
-      <section class="flex flex-col gap-3 sm:hidden" aria-label="Ticket cards">
-        <Show when={mobileSelection().length}>
-          <Button
-            onClick={() => {
-              const ids = mobileSelection()
-              setTickets((previous) =>
-                previous.map((ticket) =>
-                  ids.includes(ticket.id)
-                    ? {
-                        ...ticket,
-                        status: 'Resolved',
-                        resolution: 'Met · just now',
-                      }
-                    : ticket,
-                ),
-              )
-              setMobileSelection([])
-              setNotice(`${ids.length} tickets resolved.`)
-            }}
-          >
-            Resolve selected tickets ({mobileSelection().length})
-          </Button>
-        </Show>
-        <For each={rows()}>
-          {(ticket) => (
-            <article class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3">
-              <div class="flex items-start gap-3">
-                <Checkbox
-                  aria-label={`Select mobile ${ticket.id}`}
-                  checked={mobileSelection().includes(ticket.id)}
-                  onCheckedChange={(checked) =>
-                    setMobileSelection((previous) =>
-                      checked
-                        ? [...previous, ticket.id]
-                        : previous.filter((id) => id !== ticket.id),
-                    )
-                  }
-                />
-                <button
-                  type="button"
-                  class="min-w-0 rounded-3 text-start font-medium text-ink-blue-link focus-visible:focus-ring"
-                  onClick={() => {
-                    setActive(ticket.id)
-                    setReply('')
-                  }}
-                >
-                  {ticket.subject}
-                </button>
-              </div>
-              <p class="mt-3 text-caption">
-                {ticket.id} · {ticket.customer}
-              </p>
-              <p class="mt-2 text-caption text-ink-gray-7">
-                {ticket.priority} · {ticket.agent} · {ticket.status}
-              </p>
-              <p class="mt-2 text-caption">First response: {ticket.response}</p>
-            </article>
-          )}
-        </For>
-        <Show when={!rows().length}>
-          <EmptyState
-            bordered
-            icon="lucide-ticket"
-            title="No tickets match this queue"
-            description="Clear a filter or two and the matching tickets come back."
-            action={
-              <Button
-                onClick={() => {
-                  setPriority('All priorities')
-                  setAgent('All agents')
-                  setQueue('All queues')
-                  setQuery('')
-                }}
-              >
-                Clear filters
-              </Button>
-            }
-          />
-        </Show>
-      </section>
-      <div class="hidden sm:block">
-        <DataTable
-          title="Tickets"
-          hideSearch
-          rows={rows()}
-          columns={columns}
-          actionLabel="Resolve tickets"
-          onRowsAction={(ids) => {
-            setTickets((previous) =>
-              previous.map((ticket) =>
-                ids.includes(ticket.id)
-                  ? {
-                      ...ticket,
-                      status: 'Resolved',
-                      resolution: 'Met · just now',
-                    }
-                  : ticket,
-              ),
-            )
-            setNotice(`${ids.length} tickets resolved.`)
-          }}
-        />
-      </div>
+      <DataTable
+        title="Tickets"
+        hideSearch
+        rows={rows()}
+        columns={columns}
+        cardBreakpoint="lg"
+        selectable={view() !== 'closed'}
+        actionLabel="Resolve tickets"
+        recordsLabel="tickets"
+        selectionSummary={() => `${rows().length} in this view`}
+        emptyTitle="No tickets match this view"
+        emptyHint="Clear the search and filters, or switch to All tickets."
+        onClearFilters={resetAll}
+        rowSelectable={(ticket) => ticket.status !== 'Resolved'}
+        onRowsAction={resolveTickets}
+      />
       <Dialog.Root
         open={!!active()}
         onOpenChange={(value) => {
@@ -486,7 +477,7 @@ export function Tickets(): JSX.Element {
                       response: 'Met · just now',
                     })
                     setReply('')
-                    setNotice('Reply added to the local ticket.')
+                    setNotice('Reply sent.')
                   }}
                 >
                   <Textarea
@@ -529,7 +520,7 @@ export function Tickets(): JSX.Element {
         open={open()}
         onOpenChange={setOpen}
         title="Create a support ticket"
-        description="Describe the issue and add it to the local helpdesk."
+        description="Describe the issue and add it to the support queue."
         submitLabel="Create ticket"
         onSubmit={() => {
           if (

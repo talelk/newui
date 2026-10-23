@@ -14,7 +14,7 @@ import {
   useField,
 } from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/date-picker'
-import { type JSX, Show, splitProps } from 'solid-js'
+import { createSignal, type JSX, Show, splitProps } from 'solid-js'
 import type {
   DatePickerAlign,
   DatePickerSide,
@@ -134,6 +134,10 @@ function DateRangePickerControl(props: ControlProps): JSX.Element {
   const offset = () => local.offset ?? 4
 
   const readOnly = () => Boolean(local.readonly) || local.typeable === false
+  // A controlled range only moves when the range is complete. Keep the
+  // half-open pick here so the calendar can visibly hold the start date instead
+  // of snapping back to the parent's old pair.
+  const [draft, setDraft] = createSignal<DateValue[] | undefined>()
 
   const machineId = createId('date-range-picker')
   const { api } = createZagApi<DateRangePickerApi>(
@@ -144,7 +148,7 @@ function DateRangePickerControl(props: ControlProps): JSX.Element {
       locale: local.locale ?? 'en-US',
       selectionMode: 'range',
       numOfMonths: local.dualPane ? 2 : 1,
-      value: toRangeArray(local.value),
+      value: draft() ?? toRangeArray(local.value),
       defaultValue: (() => {
         const initial = toRangeArray(local.defaultValue)
         return initial?.length ? initial : undefined
@@ -188,11 +192,17 @@ function DateRangePickerControl(props: ControlProps): JSX.Element {
         const dates = details.value.filter(
           (date): date is DateValue => date != null,
         )
-        if (dates.length === 1) return
+        if (dates.length === 1) {
+          setDraft(dates)
+          return
+        }
+        setDraft(undefined)
         local.onValueChange?.(toRangeValue(dates))
       },
-      onOpenChange: (details: { open: boolean }) =>
-        local.onOpenChange?.(details.open),
+      onOpenChange: (details: { open: boolean }) => {
+        if (!details.open) setDraft(undefined)
+        local.onOpenChange?.(details.open)
+      },
     }),
   )
 

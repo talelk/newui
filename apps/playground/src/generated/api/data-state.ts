@@ -39,6 +39,13 @@ export const API = {
       "optional": true
     },
     {
+      "name": "icon",
+      "type": "IconProp",
+      "optional": true,
+      "description": "Icon shown in the empty state.",
+      "default": "'lucide-inbox'"
+    },
+    {
       "name": "error",
       "type": "JSX.Element",
       "optional": true

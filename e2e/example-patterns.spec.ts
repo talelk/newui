@@ -31,7 +31,7 @@ test('authentication validates credentials and offers a local demo session', asy
     .fill('rhea@example.com')
   await page.getByRole('button', { name: 'Send demo link' }).click()
   await expect(
-    page.getByRole('heading', { name: 'Check your demo inbox' }),
+    page.getByRole('heading', { name: 'Sign-in link requested' }),
   ).toBeVisible()
   await expect(page.getByRole('status')).toContainText('No email was sent')
 })

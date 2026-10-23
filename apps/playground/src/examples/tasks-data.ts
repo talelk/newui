@@ -47,6 +47,43 @@ export function seedTasks(count = 1000): TaskRecord[] {
   }))
 }
 
+const pad = (value: number) => String(value).padStart(2, '0')
+const MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+]
+
+/** Convert the fixture's display date (`Sep 18, 2026`) to an ISO date. */
+export function dueToISO(value: string): string | null {
+  const match = /^([A-Za-z]{3}) (\d{1,2}), (\d{4})$/.exec(value.trim())
+  if (!match) return null
+  const month = MONTHS.indexOf(match[1] ?? '')
+  const day = Number(match[2])
+  const year = Number(match[3])
+  if (month < 0 || day < 1 || day > 31) return null
+  return `${year}-${pad(month + 1)}-${pad(day)}`
+}
+
+/** Convert a DatePicker ISO value back to the table's display date. */
+export function isoToTaskDue(value: string): string {
+  const [year = 0, month = 1, day = 1] = value.split('-').map(Number)
+  return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
 export interface NewTask {
   title: string
   priority: string

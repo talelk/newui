@@ -1,43 +1,158 @@
 import { A } from '@solidjs/router'
-import { Badge, Button, TextInput } from '@talelk/newui-atoms'
+import { Button, TextInput } from '@talelk/newui-atoms'
+import { isEmail } from '@talelk/newui-data'
 import { createAppForm, Form, fieldError } from '@talelk/newui-data/form'
 import { Password, TabButtons } from '@talelk/newui-molecules'
 import { AuthCard } from '@talelk/newui-organisms'
 import { AuthLayout } from '@talelk/newui-templates'
-import { createSignal, type JSX, Show } from 'solid-js'
+import { createEffect, createSignal, type JSX, Show } from 'solid-js'
 import { assetUrl, sitePath } from '../lib/base'
-import { ThemeMenu } from '../shell/ThemeMenu'
+import { ThemeMenu, ThemeMenuCompact } from '../shell/ThemeMenu'
+
+type Mode = 'login' | 'signup' | 'link'
+type SessionMethod = 'password' | 'signup' | 'email-link' | 'github'
+
+interface Session {
+  method: SessionMethod
+  email: string
+}
+
+const SESSION_TITLE: Record<SessionMethod, string> = {
+  password: "You're signed in",
+  signup: 'Your demo workspace is ready',
+  'email-link': 'Sign-in link requested',
+  github: 'GitHub demo session ready',
+}
+
+const SESSION_MESSAGE: Record<SessionMethod, string> = {
+  password: 'Your local demo session is ready to explore.',
+  signup: 'Your local demo account is ready to explore.',
+  'email-link':
+    'No email was sent. In a real app, check your inbox for the link; this demo opens the dashboard instead.',
+  github:
+    'Your local demo GitHub session is ready to explore. No request left this page.',
+}
 
 export function Authentication(): JSX.Element {
-  const [mode, setMode] = createSignal('login')
-  const [session, setSession] = createSignal('')
-  const [email, setEmail] = createSignal('')
+  const [mode, setMode] = createSignal<Mode>('login')
+  const [session, setSession] = createSignal<Session | null>(null)
+  const [summary, setSummary] = createSignal('')
+  let outcomeHeading: HTMLSpanElement | undefined
+
+  const openSession = (next: Session) => {
+    setSummary('')
+    setSession(next)
+    queueMicrotask(() => outcomeHeading?.focus())
+  }
+
   const { form, submitting } = createAppForm({
     defaultValues: { email: '', password: '', name: '' },
     onSubmit: async (value, api) => {
-      await new Promise((resolve) => setTimeout(resolve, 160))
-      setEmail(value.email)
-      setSession(
+      const method: SessionMethod =
         mode() === 'link'
-          ? 'Check your demo inbox'
+          ? 'email-link'
           : mode() === 'signup'
-            ? 'Your demo workspace is ready'
-            : 'Welcome back',
-      )
+            ? 'signup'
+            : 'password'
+      await new Promise((resolve) => setTimeout(resolve, 160))
+      openSession({ method, email: value.email })
       api.reset()
     },
   })
+
+  const attempts = form.useSelector((state) => state.submissionAttempts)
+  const fieldsValid = form.useSelector((state) => state.isFieldsValid)
+  let lastFocusedAttempt = 0
+
+  createEffect(() => {
+    const attempt = attempts()
+    if (attempt === 0) {
+      lastFocusedAttempt = 0
+      setSummary('')
+      return
+    }
+    if (fieldsValid() || session()) {
+      setSummary('')
+      return
+    }
+    if (attempt > lastFocusedAttempt) {
+      lastFocusedAttempt = attempt
+      setSummary('Check the highlighted fields and try again.')
+      queueMicrotask(() => {
+        document
+          .querySelector<HTMLInputElement>(
+            '[data-slot="auth-card"] input[aria-invalid="true"]',
+          )
+          ?.focus()
+      })
+    }
+  })
+
   const validateEmail = (value: string) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-      ? undefined
-      : 'Enter a valid email address.'
+    isEmail(value) ? undefined : 'Enter a valid email address.'
+
   const changeMode = (value: string) => {
-    setMode(value)
-    setSession('')
+    const next: Mode =
+      value === 'signup' ? 'signup' : value === 'link' ? 'link' : 'login'
+    const email = form.getFieldValue('email')
+    setMode(next)
+    setSummary('')
     form.reset()
+    if (email) form.setFieldValue('email', email)
   }
+
+  const backToSignIn = () => {
+    setMode('login')
+    setSummary('')
+    form.reset()
+    setSession(null)
+    queueMicrotask(() => {
+      document
+        .querySelector<HTMLInputElement>(
+          '[data-slot="auth-card"] input[type="email"]',
+        )
+        ?.focus()
+    })
+  }
+
+  const cardTitle = () => {
+    const current = session()
+    if (current) return SESSION_TITLE[current.method]
+    return mode() === 'signup'
+      ? 'Create your account'
+      : mode() === 'link'
+        ? 'Sign in with email'
+        : 'Welcome back'
+  }
+
+  const cardDescription = () => {
+    const current = session()
+    if (current) return current.email || 'No email address needed'
+    return mode() === 'signup'
+      ? 'Create your Acme workspace account.'
+      : mode() === 'link'
+        ? 'Get a sign-in link for your Acme workspace.'
+        : 'Sign in to your Acme workspace.'
+  }
+
+  const sessionMessage = () => {
+    const current = session()
+    return current ? SESSION_MESSAGE[current.method] : ''
+  }
+
   return (
     <AuthLayout
+      brand={
+        <div class="pt-12 lg:hidden">
+          <A
+            href="/"
+            class="flex min-h-10 w-fit items-center gap-2 rounded-3 text-section focus-visible:focus-ring"
+          >
+            <img src={assetUrl('favicon.svg')} alt="" class="size-8" />
+            newui
+          </A>
+        </div>
+      }
       aside={
         <>
           <A
@@ -49,7 +164,7 @@ export function Authentication(): JSX.Element {
           </A>
           <div class="max-w-lg">
             <p class="mb-5 text-caption">The workspace for what comes next</p>
-            <h2 class="text-hero">Good work starts with a clear view.</h2>
+            <p class="text-hero">Good work starts with a clear view.</p>
             <p class="mt-6 text-lg">
               Your projects, customers and numbers. One thoughtfully composed
               workspace, built around your team.
@@ -70,40 +185,50 @@ export function Authentication(): JSX.Element {
             />{' '}
             Examples
           </A>
-          <ThemeMenu />
+          <div class="hidden sm:flex">
+            <ThemeMenu />
+          </div>
+          <div class="flex sm:hidden">
+            <ThemeMenuCompact />
+          </div>
         </>
       }
     >
       <AuthCard
         title={
-          session() ||
-          (mode() === 'signup'
-            ? 'Create your account'
-            : mode() === 'link'
-              ? 'Sign in with email'
-              : 'Welcome back')
+          <span
+            ref={(element) => {
+              outcomeHeading = element
+            }}
+            tabIndex={-1}
+            class="outline-none [overflow-wrap:anywhere]"
+          >
+            {cardTitle()}
+          </span>
         }
-        description={
-          session()
-            ? email() || 'GitHub demo session'
-            : 'A little clarity. A lot of possibility.'
-        }
-        logo={<Badge theme="blue">Interactive demo</Badge>}
+        description={cardDescription()}
+        error={summary() || undefined}
         providers={
           session()
             ? undefined
             : [
                 {
                   label: 'GitHub demo',
-                  onClick: () => {
-                    setEmail('')
-                    setSession('GitHub demo session ready')
-                  },
+                  onClick: () => openSession({ method: 'github', email: '' }),
                 },
               ]
         }
         footer={
-          session() ? undefined : 'Demo only. Credentials stay on this page.'
+          session() ? undefined : (
+            <span class="flex flex-col items-center gap-2">
+              <span class="inline-flex min-h-5 items-center rounded-full bg-surface-gray-2 px-1.5 text-caption text-ink-gray-6">
+                Interactive demo
+              </span>
+              <span class="text-caption text-ink-gray-7">
+                Demo only. Credentials stay on this page.
+              </span>
+            </span>
+          )
         }
       >
         <Show
@@ -111,9 +236,7 @@ export function Authentication(): JSX.Element {
           fallback={
             <div class="flex flex-col gap-4 text-center">
               <p role="status" class="text-ink-gray-7">
-                {mode() === 'link'
-                  ? 'Your local demo sign-in link is ready. No email was sent.'
-                  : 'Your local demo session is ready to explore.'}
+                {sessionMessage()}
               </p>
               <Button
                 route={sitePath('/pages/analytics/fullscreen')}
@@ -122,23 +245,25 @@ export function Authentication(): JSX.Element {
               >
                 Open the dashboard
               </Button>
-              <Button variant="outline" onClick={() => setSession('')}>
+              <Button variant="outline" onClick={backToSignIn}>
                 Back to sign in
               </Button>
             </div>
           }
         >
-          <TabButtons
-            label="Account access"
-            fluid
-            value={mode()}
-            onValueChange={changeMode}
-            options={[
-              { label: 'Sign in', value: 'login' },
-              { label: 'Sign up', value: 'signup' },
-              { label: 'Email link', value: 'link' },
-            ]}
-          />
+          <Show when={mode() !== 'link'}>
+            <TabButtons
+              label="Account access"
+              wrap
+              class="self-center"
+              value={mode()}
+              onValueChange={changeMode}
+              options={[
+                { label: 'Sign in', value: 'login' },
+                { label: 'Sign up', value: 'signup' },
+              ]}
+            />
+          </Show>
           <Form form={form} class="flex flex-col gap-4">
             <Show when={mode() === 'signup'}>
               <form.Field
@@ -153,6 +278,9 @@ export function Authentication(): JSX.Element {
                 {(field) => (
                   <TextInput
                     label="Full name"
+                    name="name"
+                    autocomplete="name"
+                    autocapitalize="words"
                     required
                     value={field().state.value}
                     error={fieldError(field())}
@@ -173,9 +301,14 @@ export function Authentication(): JSX.Element {
               {(field) => (
                 <TextInput
                   label="Work email"
+                  name="email"
                   type="email"
+                  autocomplete="email"
+                  inputMode="email"
+                  autocapitalize="none"
+                  spellcheck={false}
                   required
-                  placeholder="you@company.com"
+                  placeholder="you@acme.com"
                   value={field().state.value}
                   error={fieldError(field())}
                   onInput={(event) =>
@@ -201,6 +334,12 @@ export function Authentication(): JSX.Element {
                 {(field) => (
                   <Password
                     label="Password"
+                    name="password"
+                    autocomplete={
+                      mode() === 'signup' ? 'new-password' : 'current-password'
+                    }
+                    autocapitalize="none"
+                    spellcheck={false}
                     required
                     value={field().state.value}
                     error={fieldError(field())}

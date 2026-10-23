@@ -48,7 +48,7 @@ export function FormLabel(props: FormLabelProps): JSX.Element {
     >
       {local.label}
       <Show when={local.required}>
-        <span class="select-none text-ink-red-5" aria-hidden="true">
+        <span class="select-none text-ink-red-8" aria-hidden="true">
           {' *'}
         </span>
         <span class="sr-only">(required)</span>

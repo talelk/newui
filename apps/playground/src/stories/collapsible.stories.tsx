@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from 'storybook-solidjs-vite'
  */
 export function Demo(): JSX.Element {
   return (
-    <div class="max-w-md rounded-5 border border-outline-gray-1">
+    <div class="max-w-md rounded-card border border-outline-gray-1">
       <Collapsible.Root>
         <Collapsible.Trigger>Advanced settings</Collapsible.Trigger>
         <Collapsible.Content>
@@ -36,7 +36,7 @@ export const Open: Story = {
   render: () => {
     const [open, setOpen] = createSignal(true)
     return (
-      <div class="max-w-md rounded-5 border border-outline-gray-1">
+      <div class="max-w-md rounded-card border border-outline-gray-1">
         <Collapsible.Root open={open()} onOpenChange={setOpen}>
           <Collapsible.Trigger>Advanced settings</Collapsible.Trigger>
           <Collapsible.Content>
@@ -51,7 +51,7 @@ export const Open: Story = {
 /** Disabled: the trigger reads as inert and does not open the panel. */
 export const Disabled: Story = {
   render: () => (
-    <div class="max-w-md rounded-5 border border-outline-gray-1">
+    <div class="max-w-md rounded-card border border-outline-gray-1">
       <Collapsible.Root disabled>
         <Collapsible.Trigger>Advanced settings</Collapsible.Trigger>
         <Collapsible.Content>

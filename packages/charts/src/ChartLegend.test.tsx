@@ -8,16 +8,15 @@ const items = [
 ]
 
 describe('ChartLegend', () => {
-  it('renders one toggle per series, pressed when the series is visible', () => {
+  it('renders a static legend when nobody can toggle or highlight it', () => {
     const { container } = render(() => <ChartLegend items={items} />)
-    const buttons = container.querySelectorAll(
+    const entries = container.querySelectorAll(
       '[data-slot="chart-legend-item"]',
     )
-    expect(buttons).toHaveLength(2)
-    expect(buttons[0]?.getAttribute('aria-pressed')).toBe('true')
-    expect(buttons[1]?.getAttribute('aria-pressed')).toBe('false')
-    // The accessible name says what the press does, not just the state.
-    expect(buttons[1]?.getAttribute('aria-label')).toBe('Show Refunds')
+    expect(entries).toHaveLength(2)
+    expect(container.querySelector('button')).toBeNull()
+    expect(entries[0]?.getAttribute('aria-pressed')).toBeNull()
+    expect(entries[1]?.getAttribute('aria-label')).toBeNull()
   })
 
   it('toggles and highlights through its callbacks', () => {

@@ -55,14 +55,17 @@ test('mobile tickets use cards, closed queues and local resolution', async ({
 }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/pages/tickets/fullscreen')
-  const cards = page.getByRole('region', { name: 'Ticket cards' })
+  const cards = page.locator('[data-slot="data-table-cards"]')
   await page.getByRole('searchbox', { name: 'Find tickets' }).fill('TKT-1024')
-  await cards.getByRole('checkbox').check()
-  await page
-    .getByRole('button', { name: 'Resolve selected tickets (1)' })
-    .click()
-  await expect(cards.getByRole('article')).toHaveCount(0)
-  await page.getByRole('radio', { name: 'Closed tickets' }).click()
+  await cards
+    .getByRole('checkbox', { name: 'Select TKT-1024', exact: true })
+    .check()
+  await page.getByRole('button', { name: 'Resolve tickets' }).click()
+  await expect(
+    page.getByText('1 ticket resolved.', { exact: true }),
+  ).toBeVisible()
+  await expect(page.getByText('No tickets match this view')).toBeVisible()
+  await page.getByRole('radio', { name: 'Resolved tickets' }).click()
   await expect(cards).toContainText('TKT-1024')
   await expect(cards).toContainText('Resolved')
 })

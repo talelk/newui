@@ -23,14 +23,18 @@ export function AppPage(props: {
   /** Custom sidebar list; a render function so it can read `useSidebar`. */
   navigation?: () => JSX.Element
   actions?: JSX.Element
+  /** Compact actions for the mobile bar; defaults to the page actions. */
+  headerActions?: JSX.Element
+  /** Title in the mobile bar; defaults to the section name. */
+  mobileTitle?: JSX.Element
   children: JSX.Element
 }): JSX.Element {
   const [tenant, setTenant] = createSignal('production')
   const applicationNavigation = createMemo(() => [
     {
       label: 'Applications',
-      // Settings is not an application: the pinned footer action below already
-      // owns it. Listing it here too gave every page two "Settings" links.
+      // Settings is the pinned footer destination, so it is not repeated in
+      // Applications; listing it here too gave every page two Settings links.
       items: EXAMPLES.filter(
         (example) => example.href !== '/pages/settings',
       ).map((example) => ({
@@ -66,7 +70,8 @@ export function AppPage(props: {
         { label: 'Workspace', route: sitePath('/pages') },
         { label: props.section },
       ]}
-      mobileTitle="Acme workspace"
+      mobileTitle={props.mobileTitle ?? props.section}
+      headerActions={props.headerActions}
       actions={props.actions}
       navLabel={`${props.section} navigation`}
       brand={
@@ -126,7 +131,8 @@ export function AppPage(props: {
         <SidebarItem
           label="Settings"
           icon="lucide-settings"
-          route={sitePath('/pages/settings')}
+          route={sitePath('/pages/settings/fullscreen')}
+          active={props.section === 'Settings'}
         >
           Settings
         </SidebarItem>

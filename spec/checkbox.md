@@ -10,4 +10,6 @@ where a control boundary exists. The existing root class and data attributes are
 the styling hooks; there are no part class or style-injection props.
 
 Explicit compact glyph sizes are retained. Labelled rows remain clickable and
-keyboard interaction stays native/Zag-owned.
+keyboard interaction stays native/Zag-owned. The checked/indeterminate glyph is
+a semantic icon over the fill (`text-ink-base`), not the forms-plugin's fixed
+white background image, so it stays legible in both themes and disabled states.

@@ -246,6 +246,13 @@ export const API = {
   ],
   "SettingsSidebarProps": [
     {
+      "name": "label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name for the vertical tablist.",
+      "default": "'Settings'"
+    },
+    {
       "name": "class",
       "type": "string",
       "optional": true,

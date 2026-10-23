@@ -17,7 +17,7 @@ export default function HomePreviews(): JSX.Element {
     window.setTimeout(() => setLoading(false), 1200)
   }
   return (
-    <div class="flex min-h-44 flex-col justify-center gap-5 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4 sm:p-5">
+    <div class="flex min-h-44 flex-col justify-center gap-5 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-4 sm:p-5">
       <div class="flex flex-wrap items-center gap-2">
         <Button variant="solid" theme="blue" loading={loading()} onClick={save}>
           {loading() ? 'Saving…' : 'Save changes'}

@@ -79,7 +79,7 @@ export default function Navigation() {
             <summary class="max-w-full cursor-pointer whitespace-normal break-words rounded-3 border border-outline-gray-2 px-3 py-2 text-interface focus-visible:focus-ring">
               Explore components
             </summary>
-            <ul class="mt-2 space-y-1 rounded-5 border border-outline-gray-1 bg-surface-elevation-2 p-3 shadow-sm">
+            <ul class="mt-2 space-y-1 rounded-card border border-outline-gray-1 bg-surface-elevation-2 p-3 shadow-sm">
               <For
                 each={[
                   ['Buttons', '/atoms/button'],

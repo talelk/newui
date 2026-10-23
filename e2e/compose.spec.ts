@@ -41,7 +41,7 @@ test('segmented controls reverse horizontal keyboard movement in RTL', async ({
   await first.focus()
   await page.keyboard.press('ArrowRight')
   await expect(
-    page.getByRole('radio', { name: 'Email link', exact: true }),
+    page.getByRole('radio', { name: 'Sign up', exact: true }),
   ).toHaveAttribute('aria-checked', 'true')
 })
 

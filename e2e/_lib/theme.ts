@@ -20,9 +20,28 @@ export async function setTheme(
     return
   }
 
-  await page
-    .getByRole('button', { name: 'Open application navigation' })
-    .click()
-  await control.click()
-  await page.keyboard.press('Escape')
+  const navigation = page.getByRole('button', {
+    name: 'Open application navigation',
+  })
+  if (await navigation.isVisible().catch(() => false)) {
+    await navigation.click()
+    await control.click()
+    await page.keyboard.press('Escape')
+    return
+  }
+
+  // Standalone auth pages have no app drawer. Their compact control cycles
+  // light → dark → system, so click until the requested scheme lands.
+  const compact = page.getByRole('button', { name: /^Theme: / })
+  if (await compact.isVisible().catch(() => false)) {
+    for (let index = 0; index < 3; index += 1) {
+      if (
+        (await page.evaluate(() => document.documentElement.dataset.theme)) ===
+        theme
+      )
+        return
+      await compact.click()
+      await page.waitForTimeout(50)
+    }
+  }
 }

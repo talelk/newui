@@ -349,7 +349,10 @@ export function buildAxisGrid(opts: {
   const { horizontal, xAxisTitle } = opts
   return {
     top: 8,
-    bottom: 0,
+    // Reserve the x-axis label band. With `bottom: 0` the temporal axis
+    // renders its ticks outside the plot and they disappear.
+    bottom: 40,
+    containLabel: true,
     left: 2,
     right: xAxisTitle && horizontal ? 24 : 2,
     outerBoundsMode: 'same',

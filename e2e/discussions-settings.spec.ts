@@ -75,6 +75,12 @@ for (const layout of ['desktop', 'mobile']) {
       .getByRole('textbox', { name: 'Discussion reply' })
       .fill('I will prepare the accessibility review.')
     await page.getByRole('button', { name: 'Post reply', exact: true }).click()
+    await expect(page.getByRole('dialog')).toBeHidden()
+    await expect(page.getByText('Reply posted.', { exact: true })).toBeVisible()
+    // Posting returns to the row; reopen to prove the reply is retained.
+    await page
+      .getByRole('button', { name: 'Plan the October release', exact: true })
+      .click()
     await expect(page.getByRole('dialog')).toContainText(
       'I will prepare the accessibility review.',
     )
@@ -95,9 +101,7 @@ for (const layout of ['desktop', 'mobile']) {
         .click()
       // The switched space has no matches for the still-active search, which
       // is exactly what proves the drawer switch took effect.
-      await expect(
-        page.getByText('No discussions match this space and filter.'),
-      ).toBeVisible()
+      await expect(page.getByText(/No discussions/)).toBeVisible()
     }
   })
 }
@@ -125,6 +129,7 @@ test('workspace settings validates, saves, discards edits and retains notificati
     page.getByRole('tab', { name: 'Notifications' }),
   ).toHaveAttribute('aria-selected', 'true')
   await page.getByRole('switch', { name: 'Email digests' }).press('Space')
+  await page.getByRole('button', { name: 'Save notifications' }).click()
   await page.getByRole('tab', { name: /Profile$/ }).click()
   await page
     .getByRole('textbox', { name: 'Display name' })

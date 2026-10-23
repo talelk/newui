@@ -101,6 +101,7 @@ test('a card can be moved with the keyboard alone', async ({ page }) => {
 test('the board scrolls sideways with the keyboard and keeps its columns', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1024, height: 900 })
   await openBoard(page)
 
   const scroller = page

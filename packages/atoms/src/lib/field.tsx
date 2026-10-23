@@ -51,7 +51,7 @@ export const FieldLabelContent: ParentComponent<{ required?: boolean }> = (
   <>
     {props.children}
     <Show when={props.required}>
-      <span class="text-ink-red-5" aria-hidden="true">
+      <span class="text-ink-red-8" aria-hidden="true">
         {' *'}
       </span>
       <span class="sr-only">{' (required)'}</span>

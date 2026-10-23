@@ -26,6 +26,12 @@ Controlled vs uncontrolled is Zag's own contract: pass `checked` to control,
 `defaultChecked` otherwise. The component does not hold its own signal, so both
 modes behave exactly as Zag specifies.
 
+## Contrast
+
+- The thumb uses `surface-gray-10` when off and `surface-base` when on: it
+  clears the track against both off and on tracks in light and dark. The track
+  itself stays visible against a card.
+
 ## Styling hooks
 
 `data-part` (`root`/`control`/`thumb`/`label`), `data-state`

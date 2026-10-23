@@ -49,6 +49,11 @@ round-trips through the model), not `Date`s.
 
 ## Behavior
 
+- A controlled range keeps the first click as a local draft until the end date
+  lands. The calendar visibly holds the start date; the parent only receives a
+  complete `[from, to]` or `[]`. Closing the popover discards the draft.
+
+
 - The trigger is a pair of text inputs: type the start and end (parsed on
   Enter/blur) or open the calendar with the button.
 - The day grid is Zag's `range` mode. The first click sets the start and the

@@ -26,7 +26,8 @@
 - `loading` renders skeleton cards in the same grid, preserving the final layout.
 - The column classes are literal (`min-[360px]:grid-cols-2`,
   `xl:grid-cols-4`), not built from a template string: Tailwind scans for whole
-  class names, so `sm:grid-cols-${n}` would compile to nothing.
+  class names, so `sm:grid-cols-${n}` would compile to nothing. Compact grids
+  use a four-up row from `md` so table-led screens reclaim the tablet fold.
 - **The delta is a tinted pill** (`rounded-full px-1.5`, tabular), coloured by
   `good`: `bg-surface-green-2 text-ink-green-8` / `bg-surface-red-2
   text-ink-red-8`, gray when flat. The `ink-*-8` step is deliberate: it is the
@@ -44,7 +45,8 @@
   `prefers-reduced-motion`.
 - The column classes are literal (`min-[360px]:grid-cols-2`,
   `xl:grid-cols-4`), not built from a template string: Tailwind scans for whole
-  class names, so `sm:grid-cols-${n}` would compile to nothing.
+  class names, so `sm:grid-cols-${n}` would compile to nothing. Compact grids
+  use a four-up row from `md` so table-led screens reclaim the tablet fold.
 
 ## Not yet
 

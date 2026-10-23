@@ -14,7 +14,6 @@
   "packages": [
     "@solidjs/router",
     "@talelk/newui-atoms",
-    "@talelk/newui-charts",
     "@talelk/newui-data",
     "@talelk/newui-molecules",
     "@talelk/newui-organisms",

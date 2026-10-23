@@ -1,5 +1,5 @@
 import { useNavigate } from '@solidjs/router'
-import { Badge, Button, Switch } from '@talelk/newui-atoms'
+import { Badge, Button, Skeleton, Switch } from '@talelk/newui-atoms'
 import {
   AreaChart,
   BarChart,
@@ -18,7 +18,7 @@ import {
   usd as money,
   usdK,
 } from '@talelk/newui-data'
-import { Alert, Select } from '@talelk/newui-molecules'
+import { Alert, EmptyState, Select } from '@talelk/newui-molecules'
 import {
   DataTable,
   type DataTableColumn,
@@ -54,6 +54,30 @@ import {
 
 const ReceiptDialog = lazy(() => import('./analytics/ReceiptDialog'))
 
+const KPI_SKELETONS = [0, 1, 2, 3]
+
+/** Four KPI placeholders that keep the metric geometry while the report loads. */
+function KpiLoadingCards(): JSX.Element {
+  return (
+    <For each={KPI_SKELETONS}>
+      {() => (
+        <div
+          aria-hidden="true"
+          class="flex min-h-48 flex-col rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad"
+        >
+          <div class="flex items-start justify-between gap-2">
+            <Skeleton class="h-4 w-28 rounded-3" />
+            <Skeleton class="h-5 w-14 rounded-full" />
+          </div>
+          <Skeleton class="mt-3 h-8 w-32 rounded-3" />
+          <Skeleton class="mt-3 h-3 w-40 rounded-3" />
+          <Skeleton class="mt-auto h-12 w-full rounded-3" />
+        </div>
+      )}
+    </For>
+  )
+}
+
 export function Analytics(): JSX.Element {
   const navigate = useNavigate()
   const chartTokens = useChartTokens()
@@ -81,7 +105,20 @@ export function Analytics(): JSX.Element {
       records(),
     ),
   )
+  const hasRows = () => rows().length > 0
   const summary = createMemo(() => summarize(rows()))
+  const allRegionRows = createMemo(() =>
+    filterTransactions(
+      'all',
+      Number(days()),
+      query(),
+      state() === 'empty',
+      records(),
+    ),
+  )
+  const allRegionRevenue = createMemo(() => summarize(allRegionRows()).revenue)
+  const regionShare = () =>
+    allRegionRevenue() > 0 ? (summary().revenue / allRegionRevenue()) * 100 : 0
   const previousRows = createMemo(() =>
     filterTransactions(
       region(),
@@ -97,12 +134,26 @@ export function Analytics(): JSX.Element {
   )
   const revenueGoal = () =>
     (150000 * (region() === 'all' ? 1 : 1 / 3) * Number(days())) / 30
-  const goalProgress = () =>
-    Math.min(100, (summary().revenue / revenueGoal()) * 100)
   const leadingChannel = createMemo(
     () => channelSeries(rows()).sort((a, b) => b.Revenue - a.Revenue)[0],
   )
+  const statusPalette = createMemo(() => {
+    const tokens = chartTokens()
+    if (typeof document === 'undefined') return tokens.series.slice(1, 4)
+    const styles = getComputedStyle(document.documentElement)
+    const read = (name: string) => styles.getPropertyValue(name).trim()
+    return [
+      read('--chart-2') || tokens.series[1] || 'currentColor',
+      read('--chart-3') || tokens.series[2] || 'currentColor',
+      read('--ink-gray-4') || tokens.series[3] || 'currentColor',
+    ]
+  })
   const deltaFormat = (value: number) => value.toFixed(1)
+  const axisMoney = (value: number) => {
+    if (Math.abs(value) < 1000) return money(value)
+    const compact = value / 1000
+    return `$${compact.toFixed(1).replace(/\.0$/, '')}k`
+  }
   const changeStatus = (id: string, status: Transaction['status']) => {
     recordUndo.capture(records())
     setRecords((rows) => updateTransactionStatus(rows, id, status))
@@ -115,26 +166,42 @@ export function Analytics(): JSX.Element {
   const sorted = createMemo(() => sortTransactions(rows(), 'day', false))
   const loading = () => state() === 'loading'
   const error = () =>
-    state() === 'error'
-      ? 'The report could not be loaded. Try again.'
-      : undefined
+    state() === 'error' ? 'Check your connection, then try again.' : undefined
   const unavailable = () => loading() || Boolean(error())
+  const scopeDescription = () =>
+    `${days() === '30' ? 'Last 30 days' : `Last ${days()} days`} · ${
+      region() === 'all' ? 'All regions' : region()
+    } · paid revenue in USD.`
+  const hasActiveFilters = () =>
+    region() !== 'all' || days() !== '30' || query().length > 0
   // DataTable resets to page 1 whenever the filtered row set changes.
   const update = (setter: (value: string) => unknown, value: string) => {
     setter(value)
   }
+  const clearFilters = () => {
+    update(setRegion, 'all')
+    update(setDays, '30')
+    update(setQuery, '')
+    update(setState, 'ready')
+  }
+  const exportName = () => {
+    const regionPart =
+      region() === 'all'
+        ? 'all-regions'
+        : region().toLowerCase().replace(/\s+/g, '-')
+    return `revenue-2026-09-${regionPart}-last-${days()}-days${
+      query() ? '-search' : ''
+    }.csv`
+  }
   const exportCsv = () =>
-    downloadText(
-      'revenue-september-2026.csv',
-      csv(sorted()),
-      'text/csv;charset=utf-8',
-    )
+    downloadText(exportName(), csv(sorted()), 'text/csv;charset=utf-8')
   const transactionColumns: DataTableColumn<Transaction>[] = [
     {
       accessorKey: 'customer',
       header: 'Customer',
       sortFn: 'text',
       sortDescFirst: false,
+      meta: { mobile: 'title' },
       cell: (context) => (
         <>
           <button
@@ -155,6 +222,7 @@ export function Analytics(): JSX.Element {
       accessorKey: 'status',
       header: 'Status',
       enableSorting: false,
+      meta: { mobile: 'status' },
       cell: (context) => (
         <Badge
           theme={
@@ -173,6 +241,7 @@ export function Analytics(): JSX.Element {
       accessorKey: 'channel',
       header: 'Channel',
       enableSorting: false,
+      meta: { mobile: 'meta' },
       cell: (context) => (
         <span class="text-ink-gray-7">{context.row.original.channel}</span>
       ),
@@ -182,6 +251,7 @@ export function Analytics(): JSX.Element {
       header: 'Date',
       sortFn: 'alphanumeric',
       sortDescFirst: false,
+      meta: { mobile: 'subtitle' },
       cell: (context) => (
         <span class="text-ink-gray-7">
           Sep {context.row.original.day}, 2026
@@ -193,7 +263,7 @@ export function Analytics(): JSX.Element {
       header: 'Amount',
       sortFn: 'alphanumeric',
       sortDescFirst: false,
-      meta: { align: 'end' },
+      meta: { align: 'end', mobile: 'amount' },
       cell: (context) => (
         <span class="font-medium tabular-nums">
           {money(context.row.original.amount)}
@@ -204,62 +274,70 @@ export function Analytics(): JSX.Element {
   const kpis = createMemo<NumberCardProps[]>(() => [
     {
       title: 'Total revenue',
-      value: summary().revenue,
-      target: revenueGoal(),
+      value: hasRows() ? summary().revenue : null,
+      target: hasRows() ? revenueGoal() : undefined,
       format: money,
-      loading: loading(),
-      error: error() ?? null,
-      sparkline: { data: trend().map((point) => point.Revenue) },
-      delta: compare()
-        ? percentageChange(summary().revenue, previous().revenue)
+      sparkline: hasRows()
+        ? { data: trend().map((point) => point.Revenue) }
         : undefined,
+      delta:
+        hasRows() && compare()
+          ? percentageChange(summary().revenue, previous().revenue)
+          : undefined,
       deltaSuffix: '%',
       deltaFormat,
-      deltaCaption: compare()
-        ? `from ${money(previous().revenue)} last month`
-        : 'Paid transactions in this period',
+      deltaCaption: hasRows()
+        ? compare()
+          ? `from ${money(previous().revenue)} last month`
+          : 'Paid transactions in this period'
+        : undefined,
     },
     {
       title: 'Transactions',
-      value: summary().orders,
-      loading: loading(),
-      error: error() ?? null,
-      delta: compare()
-        ? percentageChange(summary().orders, previous().orders)
-        : undefined,
+      value: hasRows() ? summary().orders : null,
+      delta:
+        hasRows() && compare()
+          ? percentageChange(summary().orders, previous().orders)
+          : undefined,
       deltaSuffix: '%',
       deltaFormat,
-      deltaCaption: compare()
-        ? `from ${count(previous().orders)} last month`
-        : 'Across all selected channels',
+      deltaCaption: hasRows()
+        ? compare()
+          ? `from ${count(previous().orders)} last month`
+          : 'Across all selected channels'
+        : undefined,
     },
     {
       title: 'Average order value',
-      value: summary().average,
+      value: hasRows() ? summary().average : null,
       format: money,
-      loading: loading(),
-      error: error() ?? null,
-      delta: compare()
-        ? percentageChange(summary().average, previous().average)
-        : undefined,
+      delta:
+        hasRows() && compare()
+          ? percentageChange(summary().average, previous().average)
+          : undefined,
       deltaSuffix: '%',
       deltaFormat,
-      deltaCaption: compare()
-        ? `from ${money(previous().average)} last month`
-        : 'Per paid transaction',
+      deltaCaption: hasRows()
+        ? compare()
+          ? `from ${money(previous().average)} last month`
+          : 'Per paid transaction'
+        : undefined,
     },
     {
       title: 'Payment success',
-      value: summary().paidRate,
+      value: hasRows() ? Math.round(summary().paidRate * 10) / 10 : null,
       suffix: '%',
-      loading: loading(),
-      error: error() ?? null,
-      delta: compare() ? summary().paidRate - previous().paidRate : undefined,
+      delta:
+        hasRows() && compare()
+          ? summary().paidRate - previous().paidRate
+          : undefined,
       deltaSuffix: ' pts',
       deltaFormat,
-      deltaCaption: compare()
-        ? `from ${previous().paidRate.toFixed(1)}% last month`
-        : 'Share of transactions paid',
+      deltaCaption: hasRows()
+        ? compare()
+          ? `from ${previous().paidRate.toFixed(1)}% last month`
+          : 'Share of transactions paid'
+        : undefined,
     },
   ])
 
@@ -267,7 +345,7 @@ export function Analytics(): JSX.Element {
     <AppPage
       section="Analytics"
       title="Revenue overview"
-      description="A clear view of how your business is growing."
+      description={scopeDescription()}
       actions={
         <Button
           variant="solid"
@@ -288,8 +366,8 @@ export function Analytics(): JSX.Element {
             setNav(label)
             if (label === 'Overview')
               document
-                .getElementById('workspace-content')
-                ?.scrollIntoView({ block: 'start' })
+                .querySelector<HTMLElement>('[data-slot="app-shell-content"]')
+                ?.scrollTo({ top: 0 })
             if (label === 'Transactions')
               document
                 .getElementById('transactions')
@@ -302,7 +380,7 @@ export function Analytics(): JSX.Element {
             {
               label: 'Transactions',
               icon: 'lucide-receipt',
-              count: rows().length,
+              count: unavailable() ? undefined : rows().length,
             },
             { label: 'Back to examples', icon: 'lucide-layout-grid' },
             { label: 'Component library', icon: 'lucide-shapes' },
@@ -319,7 +397,7 @@ export function Analytics(): JSX.Element {
         selects={[
           {
             label: 'Date range',
-            value: days() === '30' ? '' : days(),
+            value: days(),
             options: [
               { label: 'Last 30 days', value: '30' },
               { label: 'Last 7 days', value: '7' },
@@ -328,10 +406,14 @@ export function Analytics(): JSX.Element {
           },
           {
             label: 'Region',
-            value: region() === 'all' ? '' : region(),
-            options: ['Europe', 'North America', 'Asia Pacific'].map(
-              (value) => ({ value, label: value }),
-            ),
+            value: region(),
+            options: [
+              { label: 'All regions', value: 'all' },
+              ...['Europe', 'North America', 'Asia Pacific'].map((value) => ({
+                value,
+                label: value,
+              })),
+            ],
             onValueChange: (value) => update(setRegion, value || 'all'),
           },
         ]}
@@ -361,212 +443,277 @@ export function Analytics(): JSX.Element {
               ]
             : []),
         ]}
-        resultCount={rows().length}
-        onClearAll={() => {
-          update(setRegion, 'all')
-          update(setDays, '30')
-          update(setQuery, '')
-        }}
+        resultCount={unavailable() ? undefined : rows().length}
+        onClearAll={hasActiveFilters() ? clearFilters : undefined}
       >
-        <div class="flex max-w-full flex-wrap items-center gap-2">
-          <span class="text-caption text-ink-gray-7">Preview state</span>
-          <div class="w-32 max-w-full">
-            <Select
-              aria-label="Preview state"
-              value={state()}
-              options={['ready', 'loading', 'empty', 'error'].map((value) => ({
-                value,
-                label: value.charAt(0).toUpperCase() + value.slice(1),
-              }))}
-              onValueChange={(value) => update(setState, value ?? 'ready')}
-            />
+        <div class="flex max-w-full flex-wrap items-center gap-3">
+          <Switch
+            label="Compare prior month"
+            checked={compare()}
+            onCheckedChange={setCompare}
+          />
+          <div class="flex max-w-full flex-wrap items-center gap-2">
+            <span class="text-caption text-ink-gray-7">Demo state</span>
+            <div class="w-32 max-w-full">
+              <Select
+                aria-label="Preview state"
+                value={state()}
+                options={['ready', 'loading', 'empty', 'error'].map(
+                  (value) => ({
+                    value,
+                    label: value.charAt(0).toUpperCase() + value.slice(1),
+                  }),
+                )}
+                onValueChange={(value) => update(setState, value ?? 'ready')}
+              />
+            </div>
           </div>
         </div>
       </FilterBar>
-      <section
-        aria-label="Key performance indicators"
-        class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
-      >
-        <For each={kpis()}>{(kpi) => <NumberCard {...kpi} />}</For>
-      </section>
-      <section
-        aria-label="Revenue charts"
-        class="grid min-w-0 gap-4 xl:grid-cols-3"
-      >
-        <ChartCard class="xl:col-span-2">
-          <AreaChart
-            data={rows().length ? trend() : []}
-            x="date"
-            y={compare() ? ['Revenue', 'Previous'] : 'Revenue'}
-            seriesConfig={{
-              Previous: {
-                type: 'line',
-                dashed: true,
-                label: 'Prior month',
+      <Show when={error()}>
+        {(message) => (
+          <Alert
+            class="min-w-0"
+            theme="red"
+            variant="outline"
+            title="The report could not be loaded."
+            description={message()}
+            primaryAction={{
+              label: 'Try again',
+              onClick: () => {
+                setState('ready')
               },
             }}
-            title="Revenue over time"
-            subtitle="Paid revenue · USD"
-            height={260}
-            loading={loading()}
-            error={error()}
-            yAxis={{
-              min: 0,
-              format: usdK,
-            }}
-            smooth
           />
-          <ChartLegend
-            items={(compare() ? ['Revenue', 'Previous'] : ['Revenue']).map(
-              (name, index) => ({
-                name,
-                label: name === 'Previous' ? 'Prior month' : name,
-                color:
-                  paletteColors('sequential', chartTokens(), 2)[index] ??
-                  'currentColor',
-              }),
-            )}
-          />
-        </ChartCard>
-        <ChartCard>
-          <BarChart
-            data={rows().length ? channelSeries(rows()) : []}
-            x="channel"
-            y="Revenue"
-            horizontal
-            title="Revenue by channel"
-            subtitle="Where your customers find you"
-            height={260}
-            loading={loading()}
-            error={error()}
-          />
-        </ChartCard>
-      </section>
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <h2 class="text-section">Understand the details</h2>
-        <Switch
-          label="Compare prior month"
-          checked={compare()}
-          onCheckedChange={setCompare}
-        />
-      </div>
-      <section
-        aria-label="Payment and regional breakdown"
-        class="grid min-w-0 gap-4 lg:grid-cols-2"
-      >
-        <ChartCard>
-          <DonutChart
-            data={rows().length ? statusSeries(rows()) : []}
-            category="status"
-            value="Transactions"
-            title="Payment mix"
-            subtitle="Paid, pending and refunded transactions"
-            centerLabel="Transactions"
-            height={260}
-            loading={loading()}
-            error={error()}
-            showDataLabels
-          />
-        </ChartCard>
-        <ChartCard>
-          <BarChart
-            data={rows().length ? regionSeries(rows()) : []}
-            x="region"
-            y="Revenue"
-            horizontal
-            title="Revenue by region"
-            subtitle="Paid revenue across the selected regions"
-            height={260}
-            loading={loading()}
-            error={error()}
-          />
-        </ChartCard>
-      </section>
-      <section aria-label="Revenue insights" class="grid gap-4 lg:grid-cols-2">
-        <NumberCard
-          title="Period revenue goal"
-          value={summary().revenue}
-          target={revenueGoal()}
-          format={money}
-          loading={loading()}
-          error={error() ?? null}
-          deltaCaption={`${goalProgress().toFixed(1)}% of the period goal reached · ${Number(days())} days · ${region() === 'all' ? 'All regions' : region()}`}
-        />
-        <Show
-          when={!unavailable() && summary().revenue > 0}
-          fallback={
-            <Alert
-              theme="blue"
-              title="Channel insight"
-              description="Insights appear when paid revenue is available."
-            />
-          }
+        )}
+      </Show>
+      <Show when={!error()}>
+        <section
+          aria-label="Key performance indicators"
+          aria-busy={loading()}
+          class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
         >
-          <Alert
-            theme="blue"
-            title={`${leadingChannel()?.channel ?? 'A channel'} leads the way.`}
-            description={`${money(leadingChannel()?.Revenue ?? 0)} in paid revenue, representing ${(((leadingChannel()?.Revenue ?? 0) / summary().revenue) * 100).toFixed(1)}% of this selection. Open a receipt below to explore the payment details.`}
-          />
-        </Show>
-      </section>
-      <Notice
-        text={notice()}
-        tone="green"
-        onUndo={
-          recordUndo.snapshot()
-            ? () => {
-                recordUndo.undo(setRecords)
-                setNotice('The transaction change was undone.')
+          <Show when={loading()}>
+            <span class="sr-only" role="status">
+              Loading report
+            </span>
+          </Show>
+          <Show when={!loading()} fallback={<KpiLoadingCards />}>
+            <Show
+              when={hasRows()}
+              fallback={
+                <div class="rounded-card border border-outline-gray-1 bg-surface-elevation-1 sm:col-span-2 xl:col-span-4">
+                  <EmptyState
+                    icon="lucide-inbox"
+                    size="sm"
+                    title="No data for this selection"
+                    description="Try another region, date range, or search."
+                  />
+                </div>
               }
-            : undefined
-        }
-        undoLabel="Undo change"
-      />
+            >
+              <For each={kpis()}>{(kpi) => <NumberCard {...kpi} />}</For>
+            </Show>
+          </Show>
+        </section>
+        <section
+          aria-label="Revenue charts"
+          class="grid min-w-0 gap-4 xl:grid-cols-3"
+        >
+          <ChartCard class="xl:col-span-2">
+            <AreaChart
+              data={rows().length ? trend() : []}
+              x="date"
+              y={compare() ? ['Revenue', 'Previous'] : 'Revenue'}
+              seriesConfig={{
+                Previous: {
+                  type: 'line',
+                  dashed: true,
+                  label: 'Prior month',
+                },
+              }}
+              title="Revenue over time"
+              subtitle="Paid revenue · USD"
+              height={260}
+              loading={loading()}
+              yAxis={{
+                min: 0,
+                format: axisMoney,
+              }}
+              smooth
+            />
+            <ChartLegend
+              items={(compare() ? ['Revenue', 'Previous'] : ['Revenue']).map(
+                (name, index) => ({
+                  name,
+                  label: name === 'Previous' ? 'Prior month' : name,
+                  color:
+                    paletteColors('sequential', chartTokens(), 2)[index] ??
+                    'currentColor',
+                }),
+              )}
+            />
+          </ChartCard>
+          <ChartCard>
+            <BarChart
+              data={rows().length ? channelSeries(rows()) : []}
+              x="channel"
+              y="Revenue"
+              horizontal
+              title="Revenue by channel"
+              subtitle="Paid revenue by acquisition channel · USD"
+              height={260}
+              loading={loading()}
+              yAxis={{ min: 0, format: axisMoney }}
+              seriesConfig={{ Revenue: { format: usdK } }}
+              showDataLabels
+            />
+          </ChartCard>
+        </section>
+        <h2 class="text-section">Payment and regions</h2>
+        <section
+          aria-label="Payment and regional breakdown"
+          class="grid min-w-0 gap-4 lg:grid-cols-2"
+        >
+          <ChartCard>
+            <DonutChart
+              data={rows().length ? statusSeries(rows()) : []}
+              category="status"
+              value="Transactions"
+              title="Payment mix"
+              subtitle="Paid, pending and refunded transactions"
+              centerLabel="Transactions"
+              height={260}
+              loading={loading()}
+              palette={statusPalette()}
+              showDataLabels
+            />
+          </ChartCard>
+          <Show
+            when={region() !== 'all' && hasRows() && !loading()}
+            fallback={
+              <ChartCard>
+                <BarChart
+                  data={rows().length ? regionSeries(rows()) : []}
+                  x="region"
+                  y="Revenue"
+                  horizontal
+                  title="Revenue by region"
+                  subtitle="Paid revenue by region · USD"
+                  height={260}
+                  loading={loading()}
+                  yAxis={{ min: 0, format: axisMoney }}
+                />
+              </ChartCard>
+            }
+          >
+            <ChartCard>
+              <div class="flex h-full min-h-64 flex-col">
+                <div>
+                  <h3 class="text-base font-semibold text-ink-gray-9">
+                    {region()} focus
+                  </h3>
+                  <p class="text-caption text-ink-gray-7">
+                    Paid revenue and share · USD
+                  </p>
+                </div>
+                <div class="my-3 border-t border-outline-gray-1" />
+                <p class="text-metric tabular-nums text-ink-gray-9">
+                  {regionShare().toFixed(1)}%
+                </p>
+                <p class="text-caption text-ink-gray-7">
+                  of all-region paid revenue
+                </p>
+                <dl class="mt-auto grid grid-cols-2 gap-3 pt-4 text-interface">
+                  <div>
+                    <dt class="text-caption text-ink-gray-7">Paid revenue</dt>
+                    <dd class="mt-0.5 font-medium tabular-nums">
+                      {money(summary().revenue)}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-caption text-ink-gray-7">Transactions</dt>
+                    <dd class="mt-0.5 font-medium tabular-nums">
+                      {count(summary().orders)}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </ChartCard>
+          </Show>
+        </section>
+        <section aria-label="Revenue insights" class="grid gap-4">
+          <Show
+            when={!loading()}
+            fallback={
+              <div class="rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad">
+                <Skeleton lines={3} />
+              </div>
+            }
+          >
+            <Show
+              when={hasRows() && summary().revenue > 0}
+              fallback={
+                <Alert
+                  theme="blue"
+                  title="Channel insight"
+                  description="Insights appear when paid revenue is available."
+                />
+              }
+            >
+              <Alert
+                theme="blue"
+                title={`${leadingChannel()?.channel ?? 'A channel'} leads the way.`}
+                description={`${money(leadingChannel()?.Revenue ?? 0)} in paid revenue, representing ${(((leadingChannel()?.Revenue ?? 0) / summary().revenue) * 100).toFixed(1)}% of this selection. Open a receipt below to explore the payment details.`}
+              />
+            </Show>
+          </Show>
+        </section>
+        <Notice
+          text={notice()}
+          tone="green"
+          onUndo={
+            recordUndo.snapshot()
+              ? () => {
+                  recordUndo.undo(setRecords)
+                  setNotice('The transaction change was undone.')
+                }
+              : undefined
+          }
+          undoLabel="Undo change"
+        />
+      </Show>
       {/* Not a <section>: DataTable's own labelled region is the landmark. */}
-      <div id="transactions" class="min-w-0">
+      <div id="transactions" class="min-w-0 scroll-mt-4">
         <div class="pb-3">
           <h2 id="transactions-title" class="text-section">
             Transactions
           </h2>
-          <p class="text-caption text-ink-gray-7">
-            Your latest activity, all in one place. Search runs from the filter
-            bar above.
-          </p>
         </div>
-        <Show
-          when={!unavailable()}
-          fallback={
-            <div
-              role="status"
-              class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-8 text-center text-ink-gray-7"
-            >
-              {error() ?? 'Loading transactions…'}
-              <Show when={error()}>
-                <div class="mt-3">
-                  <Button onClick={() => setState('ready')}>Try again</Button>
-                </div>
-              </Show>
-            </div>
+        <DataTable
+          title="Transactions"
+          caption={
+            loading()
+              ? 'Loading transactions…'
+              : 'Latest activity · search from the filter bar above'
           }
-        >
-          <DataTable
-            title="Transactions"
-            rows={sorted()}
-            columns={transactionColumns}
-            hideSearch
-            selectable={false}
-            pageSize={8}
-            recordsLabel="transactions"
-            emptyTitle="No transactions found"
-            emptyHint="Try another search or reset your filters."
-            onClearFilters={() => {
-              setQuery('')
-              setRegion('all')
-              setDays('30')
-              setState('ready')
-            }}
-          />
-        </Show>
+          rows={sorted()}
+          columns={transactionColumns}
+          hideSearch
+          cardBreakpoint="lg"
+          selectable={false}
+          pageSize={8}
+          recordsLabel="transactions"
+          loading={loading()}
+          error={
+            error()
+              ? 'Transactions are unavailable while the report reloads.'
+              : undefined
+          }
+          emptyTitle="No transactions found"
+          emptyHint="Try another search or reset your filters."
+          onClearFilters={clearFilters}
+        />
       </div>
       <Show when={selectedReceipt()}>
         {(receipt) => (

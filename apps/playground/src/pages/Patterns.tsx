@@ -35,7 +35,7 @@ export function Patterns() {
         fallback={
           <>
             <section
-              class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1"
+              class="flex flex-col divide-y divide-outline-gray-1 rounded-card border border-outline-gray-1"
               aria-label="Additional patterns"
             >
               <For each={PATTERNS}>
@@ -80,7 +80,7 @@ export function Patterns() {
           </>
         }
       >
-        <div class="min-w-0 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-3 sm:p-4">
+        <div class="min-w-0 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-3 sm:p-4">
           <Content />
         </div>
         <A

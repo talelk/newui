@@ -87,7 +87,7 @@ export function Spec(): JSX.Element {
 
       <section
         data-slot="visual-form-states"
-        class="grid gap-4 rounded-5 border border-outline-gray-1 p-4 sm:grid-cols-2"
+        class="grid gap-4 rounded-card border border-outline-gray-1 p-4 sm:grid-cols-2"
         aria-label="Text entry states"
       >
         <TextInput
@@ -302,7 +302,7 @@ export function Spec(): JSX.Element {
 
       <Sidebar
         width="12rem"
-        class="h-40 rounded-5 border border-outline-gray-1"
+        class="h-40 rounded-card border border-outline-gray-1"
       >
         <SidebarItem prefix={<span class="lucide-house size-4" />}>
           Home

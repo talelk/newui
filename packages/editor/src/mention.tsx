@@ -56,7 +56,7 @@ function MentionList(props: MentionListProps): JSX.Element {
       role="listbox"
       aria-label="Mention suggestions"
       data-slot="editor-mention-listbox"
-      class="min-w-40 rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-1 text-ink-gray-9 shadow-lg"
+      class="min-w-40 rounded-overlay border border-outline-gray-1 bg-surface-elevation-1 p-1 text-ink-gray-9 shadow-lg"
     >
       <For each={props.items}>
         {(item, index) => (

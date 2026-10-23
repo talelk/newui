@@ -8,13 +8,26 @@ import {
   TextInput,
 } from '@talelk/newui-atoms'
 import { createUndo, isEmail, optionsOf } from '@talelk/newui-data'
-import { BottomSheet, Select, TabButtons } from '@talelk/newui-molecules'
-import { FilterBar } from '@talelk/newui-organisms'
+import {
+  BottomSheet,
+  Dialog,
+  EmptyState,
+  Select,
+  TabButtons,
+} from '@talelk/newui-molecules'
+import { FilterBar, SelectionBar } from '@talelk/newui-organisms'
 import { PaneLayout } from '@talelk/newui-templates'
-import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
+import {
+  createMemo,
+  createSignal,
+  For,
+  type JSX,
+  onCleanup,
+  onMount,
+  Show,
+} from 'solid-js'
 import { AppNavigation } from '../examples/AppNavigation'
 import { AppPage } from '../examples/AppPage'
-import { CreateDialog } from '../examples/CreateDialog'
 import {
   filterMail,
   initialMail,
@@ -37,6 +50,48 @@ const FOLDERS = [
   'Personal',
 ]
 
+const CATEGORY_OPTIONS = [
+  { label: 'All categories', value: 'All categories' },
+  ...optionsOf(MAIL_CATEGORIES),
+]
+
+/** Space for the AppShell content wrapper's bottom padding. */
+const FRAME_BOTTOM_GUTTER = 32
+
+const LIST_TIME = new Intl.DateTimeFormat('en', {
+  hour: 'numeric',
+  minute: '2-digit',
+})
+const LIST_WEEKDAY = new Intl.DateTimeFormat('en', { weekday: 'short' })
+const LIST_DATE = new Intl.DateTimeFormat('en', {
+  month: 'short',
+  day: 'numeric',
+})
+const FULL_DATE = new Intl.DateTimeFormat('en', {
+  dateStyle: 'medium',
+  timeStyle: 'short',
+})
+
+function dayStart(date: Date): number {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
+}
+
+/** The row-level time: a clock today, "Yesterday", a weekday, then a date. */
+function formatListTime(value: string): string {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return ''
+  const days = Math.round((dayStart(new Date()) - dayStart(date)) / 86_400_000)
+  if (days <= 0) return LIST_TIME.format(date)
+  if (days === 1) return 'Yesterday'
+  if (days < 7) return LIST_WEEKDAY.format(date)
+  return LIST_DATE.format(date)
+}
+
+function formatFullTime(value: string): string {
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? '' : FULL_DATE.format(date)
+}
+
 export function Mail(): JSX.Element {
   const [messages, setMessages] = createSignal<MailMessage[]>(
     initialMail.map((message) => ({ ...message, replies: [] })),
@@ -49,13 +104,14 @@ export function Mail(): JSX.Element {
   const [query, setQuery] = createSignal('')
   const [category, setCategory] = createSignal('All categories')
   const [mode, setMode] = createSignal('all')
+  const [active, setActive] = createSignal<string>()
+  const [selected, setSelected] = createSignal<string[]>([])
   const clearMailFilters = () => {
     setQuery('')
     setCategory('All categories')
     setMode('all')
+    setSelected([])
   }
-  const [active, setActive] = createSignal<string>()
-  const [selected, setSelected] = createSignal<string[]>([])
   const [reply, setReply] = createSignal('')
   const [replyKind, setReplyKind] = createSignal('Reply')
   const [forwardTo, setForwardTo] = createSignal('')
@@ -63,17 +119,44 @@ export function Mail(): JSX.Element {
   const [notice, setNotice] = createSignal('')
   const mailUndo = createUndo<MailMessage[]>()
   const [compose, setCompose] = createSignal(false)
+  const [composeAttempted, setComposeAttempted] = createSignal(false)
   const [draftId, setDraftId] = createSignal<string>()
   const [recipient, setRecipient] = createSignal('')
   const [subject, setSubject] = createSignal('')
   const [body, setBody] = createSignal('')
+  const [frameHeight, setFrameHeight] = createSignal(480)
+  let frame: HTMLDivElement | undefined
+  let composeForm: HTMLFormElement | undefined
+  let replyForm: HTMLFormElement | undefined
   const rows = createMemo(() =>
     filterMail(messages(), folder(), query(), mode() === 'unread', category()),
   )
+  /** Selection is always an intersection with what is on screen. */
+  const selectedVisible = createMemo(() => {
+    const visible = new Set(rows().map((message) => message.id))
+    return selected().filter((id) => visible.has(id))
+  })
   const current = createMemo(() =>
     messages().find((message) => message.id === active()),
   )
+  const hasFilters = () =>
+    query().trim() !== '' || category() !== 'All categories' || mode() !== 'all'
+  const updateFrameHeight = () => {
+    if (!frame) return
+    const next = Math.max(
+      320,
+      Math.floor(window.innerHeight - frame.offsetTop - FRAME_BOTTOM_GUTTER),
+    )
+    setFrameHeight(next)
+  }
+  onMount(() => {
+    updateFrameHeight()
+    void document.fonts.ready.then(updateFrameHeight)
+    window.addEventListener('resize', updateFrameHeight)
+    onCleanup(() => window.removeEventListener('resize', updateFrameHeight))
+  })
   let nextId = initialMail.length + 1
+
   const selectFolder = (value: string) => {
     setFolder(value)
     setActive(undefined)
@@ -93,8 +176,8 @@ export function Mail(): JSX.Element {
     setSelected([])
   }
   const move = (target: MailFolder) => {
-    const ids = selected().length
-      ? selected()
+    const ids = selectedVisible().length
+      ? selectedVisible()
       : active()
         ? [active() as string]
         : []
@@ -108,6 +191,7 @@ export function Mail(): JSX.Element {
   }
   const openMessage = (message: MailMessage) => {
     setActive(message.id)
+    setSelected([])
     setReply('')
     setReplyKind('Reply')
     setForwardTo('')
@@ -118,6 +202,7 @@ export function Mail(): JSX.Element {
       setRecipient(message.email)
       setSubject(message.subject)
       setBody(message.body)
+      setComposeAttempted(false)
       setCompose(true)
     }
   }
@@ -126,7 +211,26 @@ export function Mail(): JSX.Element {
     setRecipient('')
     setSubject('')
     setBody('')
+    setSelected([])
+    setComposeAttempted(false)
     setCompose(true)
+  }
+  const handleComposeOpen = (open: boolean) => {
+    setCompose(open)
+    if (!open) setComposeAttempted(false)
+  }
+  const submitCompose = (event: SubmitEvent) => {
+    event.preventDefault()
+    setComposeAttempted(true)
+    if (!isEmail(recipient()) || !subject().trim() || !body().trim()) {
+      queueMicrotask(() => {
+        composeForm
+          ?.querySelector<HTMLElement>('[aria-invalid="true"]')
+          ?.focus()
+      })
+      return
+    }
+    saveMessage('Sent')
   }
   const saveMessage = (target: 'Sent' | 'Drafts') => {
     if (
@@ -146,6 +250,7 @@ export function Mail(): JSX.Element {
       starred: false,
       muted: false,
       label: 'Work',
+      receivedAt: new Date().toISOString(),
       replies: [],
     }
     setMessages((previous) => [
@@ -153,12 +258,138 @@ export function Mail(): JSX.Element {
       ...previous.filter((item) => item.id !== message.id),
     ])
     setCompose(false)
+    setComposeAttempted(false)
     setNotice(
       target === 'Sent'
         ? 'Message sent in this local demo. No email left this page.'
         : 'Draft saved. Find it in Drafts to continue writing.',
     )
     setActive(undefined)
+  }
+  const composeAction = () => (
+    <Button variant="outline" iconLeft="lucide-pen-line" onClick={newMessage}>
+      Compose email
+    </Button>
+  )
+  const inboxAction = () => (
+    <Button onClick={() => selectFolder('Inbox')}>Back to inbox</Button>
+  )
+  const emptyState = () => {
+    if (hasFilters()) {
+      return (
+        <EmptyState
+          icon="lucide-search-x"
+          size="sm"
+          class="min-h-0 flex-1"
+          title="No conversations here"
+          description="Choose another mailbox or clear your filters."
+          action={
+            <Button onClick={clearMailFilters}>Clear mail filters</Button>
+          }
+        />
+      )
+    }
+    switch (folder()) {
+      case 'Inbox':
+        return (
+          <EmptyState
+            icon="lucide-inbox"
+            size="sm"
+            class="min-h-0 flex-1"
+            title="Inbox is clear"
+            description="You're all caught up. New conversations will land here."
+            action={composeAction()}
+          />
+        )
+      case 'Starred':
+        return (
+          <EmptyState
+            icon="lucide-star"
+            size="sm"
+            class="min-h-0 flex-1"
+            title="No starred conversations"
+            description="Star a conversation to keep it here."
+            action={inboxAction()}
+          />
+        )
+      case 'Sent':
+        return (
+          <EmptyState
+            icon="lucide-send"
+            size="sm"
+            class="min-h-0 flex-1"
+            title="Nothing sent yet"
+            description="Messages you send from this demo appear here."
+            action={composeAction()}
+          />
+        )
+      case 'Drafts':
+        return (
+          <EmptyState
+            icon="lucide-file-pen"
+            size="sm"
+            class="min-h-0 flex-1"
+            title="No drafts yet"
+            description="Saved messages appear here so you can finish them later."
+            action={composeAction()}
+          />
+        )
+      case 'Archive':
+        return (
+          <EmptyState
+            icon="lucide-archive"
+            size="sm"
+            class="min-h-0 flex-1"
+            title="Nothing archived"
+            description="Archived conversations stay here, out of the inbox."
+            action={inboxAction()}
+          />
+        )
+      case 'Snoozed':
+        return (
+          <EmptyState
+            icon="lucide-clock"
+            size="sm"
+            class="min-h-0 flex-1"
+            title="Nothing snoozed"
+            description="Snoozed conversations wait here until you need them."
+            action={inboxAction()}
+          />
+        )
+      case 'Trash':
+        return (
+          <EmptyState
+            icon="lucide-trash-2"
+            size="sm"
+            class="min-h-0 flex-1"
+            title="Trash is empty"
+            description="Conversations you delete will stay here until the demo reloads."
+          />
+        )
+      case 'Work':
+      case 'Personal':
+        return (
+          <EmptyState
+            icon={folder() === 'Work' ? 'lucide-briefcase' : 'lucide-user'}
+            size="sm"
+            class="min-h-0 flex-1"
+            title={`No ${folder()} conversations`}
+            description={`Conversations labelled ${folder()} will appear here.`}
+            action={inboxAction()}
+          />
+        )
+      default:
+        return (
+          <EmptyState
+            icon="lucide-mail"
+            size="sm"
+            class="min-h-0 flex-1"
+            title="No conversations here"
+            description="This mailbox is empty."
+            action={inboxAction()}
+          />
+        )
+    }
   }
   const FOLDER_ICONS: Record<string, string> = {
     Inbox: 'lucide-inbox',
@@ -198,6 +429,7 @@ export function Mail(): JSX.Element {
       description="A clear home for conversations, updates and the work that happens between them."
       actions={
         <Button
+          class="max-sm:min-h-10"
           variant="solid"
           theme="blue"
           iconLeft="lucide-pen-line"
@@ -237,34 +469,30 @@ export function Mail(): JSX.Element {
         <Button
           class="hidden sm:inline-flex"
           aria-expanded={navigationOpen()}
+          aria-controls="mail-mailboxes"
           onClick={() => setNavigationOpen(!navigationOpen())}
         >
           Toggle mail navigation
         </Button>
         <div class="sm:hidden">
-          <Button onClick={() => setMailboxesOpen(true)}>
+          <Button
+            class="max-sm:min-h-10"
+            onClick={() => setMailboxesOpen(true)}
+          >
             Mailboxes · {folder()}
           </Button>
         </div>
       </div>
-      <Notice
-        text={notice()}
-        onUndo={
-          mailUndo.snapshot()
-            ? () => {
-                mailUndo.undo(setMessages)
-                setNotice('Change undone.')
-              }
-            : undefined
-        }
-        undoLabel="Undo mail action"
-        onDismiss={() => setNotice('')}
-      />
-      <div class="flex min-h-[640px] min-w-0 overflow-hidden rounded-5 border border-outline-gray-1 bg-surface-elevation-1">
+      <div
+        ref={(element) => (frame = element)}
+        style={{ height: `${frameHeight()}px` }}
+        class="relative flex min-h-0 min-w-0 overflow-hidden rounded-card border border-outline-gray-1 bg-surface-elevation-1"
+      >
         {/* `MailboxItems` renders the `Mailboxes` nav itself (AppNavigation);
           these wrappers only place it. */}
         <div
-          class="hidden w-40 shrink-0 border-b border-outline-gray-1 p-3 xl:border-b-0 xl:border-e"
+          id="mail-mailboxes"
+          class="hidden w-40 shrink-0 overflow-y-auto border-b border-outline-gray-1 p-3 xl:border-b-0 xl:border-e"
           classList={{ 'sm:block': navigationOpen() }}
         >
           <MailboxItems />
@@ -278,35 +506,45 @@ export function Mail(): JSX.Element {
         </BottomSheet>
         <PaneLayout
           startSize={50}
-          compactAt="sm"
+          compactAt="lg"
           active={active() ? 'end' : 'start'}
           resizeLabel="Resize the conversation list"
           start={
             <section
               aria-label="Conversation list"
-              class="min-w-0 border-outline-gray-1 sm:border-e"
+              class="flex h-full min-h-0 min-w-0 flex-col border-outline-gray-1 sm:border-e"
             >
-              <div class="flex flex-col gap-3 p-3">
+              <div class="flex shrink-0 flex-col gap-3 p-3">
                 <h2 class="text-section">{folder()}</h2>
                 <FilterBar
+                  surface="bare"
+                  class="[&>div>div:last-child]:col-span-1"
                   query={{
                     placeholder: 'Search conversations…',
                     value: query(),
-                    onInput: setQuery,
+                    onInput: (value) => {
+                      setQuery(value)
+                      setSelected([])
+                    },
                   }}
                   selects={[
                     {
                       label: 'Category',
                       value: category() === 'All categories' ? '' : category(),
-                      onValueChange: (value) =>
-                        setCategory(value || 'All categories'),
-                      options: optionsOf(MAIL_CATEGORIES),
+                      onValueChange: (value) => {
+                        setCategory(value || 'All categories')
+                        setSelected([])
+                      },
+                      options: CATEGORY_OPTIONS,
                     },
                   ]}
                   tabs={{
                     label: 'Mail view',
                     value: mode(),
-                    onValueChange: setMode,
+                    onValueChange: (value) => {
+                      setMode(value)
+                      setSelected([])
+                    },
                     options: [
                       { label: 'All', value: 'all' },
                       { label: 'Unread', value: 'unread' },
@@ -317,7 +555,10 @@ export function Mail(): JSX.Element {
                       ? [
                           {
                             label: `Category: ${category()}`,
-                            onRemove: () => setCategory('All categories'),
+                            onRemove: () => {
+                              setCategory('All categories')
+                              setSelected([])
+                            },
                           },
                         ]
                       : []),
@@ -325,7 +566,10 @@ export function Mail(): JSX.Element {
                       ? [
                           {
                             label: 'Unread only',
-                            onRemove: () => setMode('all'),
+                            onRemove: () => {
+                              setMode('all')
+                              setSelected([])
+                            },
                           },
                         ]
                       : []),
@@ -333,7 +577,10 @@ export function Mail(): JSX.Element {
                       ? [
                           {
                             label: `Search: ${query()}`,
-                            onRemove: () => setQuery(''),
+                            onRemove: () => {
+                              setQuery('')
+                              setSelected([])
+                            },
                           },
                         ]
                       : []),
@@ -341,115 +588,149 @@ export function Mail(): JSX.Element {
                   resultCount={rows().length}
                   onClearAll={clearMailFilters}
                 />
-                <Show when={selected().length}>
-                  <div class="flex flex-wrap items-center gap-2">
-                    <span class="text-caption text-ink-gray-7">
-                      {selected().length} selected
-                    </span>
-                    <Button size="sm" onClick={() => move('Archive')}>
-                      Archive selected
-                    </Button>
-                    <Button size="sm" onClick={() => move('Trash')}>
-                      Trash selected
-                    </Button>
-                  </div>
-                </Show>
-              </div>
-              <ul
-                class="max-h-[640px] overflow-y-auto"
-                aria-label="Conversations"
-              >
-                <For
-                  each={rows()}
-                  fallback={
-                    <li class="p-8 text-center">
-                      <p class="font-medium">No conversations here</p>
-                      <p class="mt-1 text-caption text-ink-gray-7">
-                        Choose another mailbox or clear your filters.
-                      </p>
-                      <Button class="mt-3" onClick={clearMailFilters}>
-                        Clear mail filters
-                      </Button>
-                    </li>
-                  }
-                >
-                  {(message) => (
-                    <li
-                      class="flex gap-2 border-b border-outline-gray-1 p-3 last:border-b-0"
-                      classList={{
-                        'bg-surface-blue-1': active() === message.id,
-                      }}
-                    >
-                      <Checkbox
-                        label={
-                          <span class="sr-only">Select {message.subject}</span>
-                        }
-                        checked={selected().includes(message.id)}
-                        onCheckedChange={(checked) =>
-                          setSelected((previous) =>
-                            checked
-                              ? [...previous, message.id]
-                              : previous.filter((id) => id !== message.id),
-                          )
-                        }
-                      />
-                      <button
-                        type="button"
-                        class="min-w-0 flex-1 rounded-3 text-start focus-visible:focus-ring"
-                        onClick={() => openMessage(message)}
-                      >
-                        <span class="sr-only">Open </span>
-                        <span class="flex items-center justify-between gap-2">
-                          <span class="truncate font-medium">
-                            {message.name}
-                          </span>
-                          <Show when={message.unread}>
-                            <span class="text-caption text-ink-blue-link">
-                              Unread
-                            </span>
-                          </Show>
-                        </span>
-                        <span
-                          class="mt-1 block truncate"
-                          classList={{ 'font-semibold': message.unread }}
-                        >
-                          {message.subject}
-                        </span>
-                        <span class="mt-1 line-clamp-2 text-caption text-ink-gray-7">
-                          {message.body.split('\n\n')[1]}
-                        </span>
-                        <span class="mt-2 flex gap-2">
-                          <Badge>{message.category}</Badge>
-                          <Badge>{message.label}</Badge>
-                        </span>
-                      </button>
+                <Show when={selectedVisible().length}>
+                  <SelectionBar
+                    count={selectedVisible().length}
+                    summary={`in ${folder()}`}
+                    primary={{
+                      label: 'Archive',
+                      icon: 'lucide-archive',
+                      onClick: () => move('Archive'),
+                    }}
+                    secondary={
                       <Button
                         size="sm"
                         variant="ghost"
-                        class="aria-pressed:bg-surface-amber-1 aria-pressed:text-ink-amber-8"
-                        icon="lucide-star"
-                        aria-label={`${message.starred ? 'Unstar' : 'Star'} ${message.subject}`}
-                        aria-pressed={message.starred}
-                        onClick={() =>
-                          setMessages(
-                            patchMail(messages(), [message.id], {
-                              starred: !message.starred,
-                            }),
-                          )
+                        theme="red"
+                        onClick={() => move('Trash')}
+                      >
+                        Trash
+                      </Button>
+                    }
+                    onClear={() => setSelected([])}
+                    placement="sticky"
+                  />
+                </Show>
+              </div>
+              <Show when={rows().length} fallback={emptyState()}>
+                <ul
+                  class="min-h-0 flex-1 overflow-y-auto overscroll-contain"
+                  aria-label="Conversations"
+                >
+                  <For each={rows()}>
+                    {(message) => (
+                      <li
+                        class="flex gap-2 border-b border-outline-gray-1 p-3 transition-colors last:border-b-0 hover:bg-surface-gray-1"
+                        classList={{
+                          'bg-surface-blue-1': active() === message.id,
+                          'bg-surface-gray-2':
+                            selectedVisible().includes(message.id) &&
+                            active() !== message.id,
+                        }}
+                        data-active={active() === message.id ? '' : undefined}
+                        data-selected={
+                          selectedVisible().includes(message.id)
+                            ? ''
+                            : undefined
                         }
-                      />
-                    </li>
-                  )}
-                </For>
-              </ul>
+                      >
+                        <Checkbox
+                          class="max-sm:size-10 max-sm:justify-center"
+                          label={
+                            <span class="sr-only">
+                              Select {message.subject}
+                            </span>
+                          }
+                          checked={selected().includes(message.id)}
+                          onCheckedChange={(checked) =>
+                            setSelected((previous) =>
+                              checked
+                                ? [...previous, message.id]
+                                : previous.filter((id) => id !== message.id),
+                            )
+                          }
+                        />
+                        <button
+                          type="button"
+                          class="min-w-0 flex-1 rounded-3 text-start focus-visible:focus-ring"
+                          aria-current={
+                            active() === message.id ? 'true' : undefined
+                          }
+                          onClick={() => openMessage(message)}
+                        >
+                          <span class="sr-only">Open conversation from </span>
+                          <span class="flex items-center justify-between gap-2">
+                            <span class="truncate font-medium">
+                              {message.name}
+                            </span>
+                            <span class="flex shrink-0 items-center gap-2">
+                              <Show when={message.unread}>
+                                <span class="text-caption font-medium text-ink-gray-8">
+                                  Unread
+                                </span>
+                              </Show>
+                              <time
+                                dateTime={message.receivedAt}
+                                title={formatFullTime(message.receivedAt)}
+                                class="text-caption tabular-nums text-ink-gray-7"
+                              >
+                                {formatListTime(message.receivedAt)}
+                              </time>
+                            </span>
+                          </span>
+                          <span class="mt-0.5 flex items-center gap-2">
+                            <span
+                              class="truncate"
+                              classList={{
+                                'font-semibold': message.unread,
+                              }}
+                            >
+                              {message.subject}
+                            </span>
+                            <Badge class="hidden shrink-0 sm:inline-flex">
+                              {message.category}
+                            </Badge>
+                          </span>
+                          <span class="mt-0.5 flex items-center gap-2">
+                            <span class="min-w-0 flex-1 truncate text-caption text-ink-gray-7">
+                              {message.body.split('\n\n')[1] ?? message.body}
+                            </span>
+                            <span class="hidden shrink-0 text-caption text-ink-gray-7 sm:inline">
+                              {message.label}
+                            </span>
+                          </span>
+                        </button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          class="max-sm:size-10 aria-pressed:bg-surface-amber-1 aria-pressed:text-ink-amber-8"
+                          icon="lucide-star"
+                          aria-label={`${message.starred ? 'Unstar' : 'Star'} ${message.subject}`}
+                          aria-pressed={message.starred}
+                          onClick={() =>
+                            setMessages(
+                              patchMail(messages(), [message.id], {
+                                starred: !message.starred,
+                              }),
+                            )
+                          }
+                        />
+                      </li>
+                    )}
+                  </For>
+                </ul>
+              </Show>
             </section>
           }
           end={
-            <section aria-label="Reading pane" class="flex min-w-0 flex-col">
+            <section
+              aria-label="Reading pane"
+              class="flex h-full min-h-0 min-w-0 flex-col"
+            >
               <Show
                 when={current()}
                 fallback={
-                  <div class="grid flex-1 place-content-center p-8 text-center">
+                  <div class="grid min-h-0 flex-1 place-content-center overflow-y-auto p-8 text-center">
                     <span
                       aria-hidden="true"
                       class="lucide-mail mx-auto mb-3 size-8 text-ink-gray-7"
@@ -463,8 +744,9 @@ export function Mail(): JSX.Element {
               >
                 {(message) => (
                   <>
-                    <div class="flex flex-wrap items-center gap-2 border-b border-outline-gray-1 p-3">
+                    <div class="flex shrink-0 flex-wrap items-center gap-2 border-b border-outline-gray-1 p-3">
                       <Button
+                        class="lg:hidden"
                         variant="ghost"
                         icon="lucide-arrow-left"
                         aria-label="Back to conversations"
@@ -514,14 +796,27 @@ export function Mail(): JSX.Element {
                         Mark unread
                       </Button>
                     </div>
-                    <div class="flex-1 p-3">
+                    {/* The scrollable email body must be focusable so keyboard users can scroll it (axe). */}
+                    <article
+                      ref={(element) => {
+                        element.tabIndex = 0
+                      }}
+                      aria-label="Message body"
+                      class="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 focus-visible:focus-ring"
+                    >
                       <h2 class="text-section">{message().subject}</h2>
                       <div class="my-5 flex items-center gap-3">
                         <Avatar label={message().name} />
                         <div class="min-w-0">
                           <p class="font-medium">{message().name}</p>
                           <p class="break-all text-caption text-ink-gray-7">
-                            {message().email} · Sep 30, 2026
+                            {message().email} ·{' '}
+                            <time
+                              dateTime={message().receivedAt}
+                              title={formatFullTime(message().receivedAt)}
+                            >
+                              {formatFullTime(message().receivedAt)}
+                            </time>
                           </p>
                         </div>
                       </div>
@@ -538,9 +833,10 @@ export function Mail(): JSX.Element {
                           </div>
                         )}
                       </For>
-                    </div>
+                    </article>
                     <form
-                      class="sticky bottom-0 flex flex-col gap-4 border-t border-outline-gray-1 bg-surface-elevation-1 p-3"
+                      ref={(element) => (replyForm = element)}
+                      class="flex shrink-0 flex-col gap-3 border-t border-outline-gray-1 bg-surface-elevation-1 p-3"
                       noValidate
                       onSubmit={(event) => {
                         event.preventDefault()
@@ -548,7 +844,16 @@ export function Mail(): JSX.Element {
                         if (!reply().trim()) return
                         const item = message()
                         if (replyKind() === 'Forward') {
-                          if (!isEmail(forwardTo())) return
+                          if (!isEmail(forwardTo())) {
+                            queueMicrotask(() => {
+                              replyForm
+                                ?.querySelector<HTMLElement>(
+                                  '[aria-invalid="true"]',
+                                )
+                                ?.focus()
+                            })
+                            return
+                          }
                           setMessages((previous) => [
                             {
                               ...item,
@@ -561,6 +866,7 @@ export function Mail(): JSX.Element {
                               unread: false,
                               starred: false,
                               muted: false,
+                              receivedAt: new Date().toISOString(),
                               replies: [],
                             },
                             ...previous,
@@ -613,7 +919,7 @@ export function Mail(): JSX.Element {
                       </Show>
                       <Textarea
                         label={`${replyKind()} message`}
-                        rows={4}
+                        rows={3}
                         required
                         value={reply()}
                         onInput={(event) => setReply(event.currentTarget.value)}
@@ -650,17 +956,53 @@ export function Mail(): JSX.Element {
           }
         />
       </div>
-      <CreateDialog
-        open={compose()}
-        onOpenChange={setCompose}
-        title="New message"
-        description="Write a local demo email. Nothing is sent externally."
-        submitLabel="Send demo email"
-        secondaryLabel="Save email draft"
-        onSecondary={() => saveMessage('Drafts')}
-        onSubmit={() => saveMessage('Sent')}
-        fields={(attempted) => (
-          <>
+      <Show when={notice()}>
+        <div
+          class="pointer-events-none fixed inset-x-4 z-overlay flex justify-center sm:justify-end"
+          classList={{
+            'bottom-4': true,
+            'max-sm:bottom-20': selectedVisible().length > 0,
+          }}
+        >
+          <div class="pointer-events-auto w-full max-w-md">
+            <Notice
+              text={notice()}
+              onUndo={
+                mailUndo.snapshot()
+                  ? () => {
+                      mailUndo.undo(setMessages)
+                      setNotice('Change undone.')
+                    }
+                  : undefined
+              }
+              undoLabel="Undo mail action"
+              onDismiss={() => setNotice('')}
+            />
+          </div>
+        </div>
+      </Show>
+      <Dialog.Root open={compose()} onOpenChange={handleComposeOpen}>
+        <Dialog.Content>
+          <Dialog.Header>
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex min-w-0 flex-col gap-1">
+                <Dialog.Title>New message</Dialog.Title>
+                <Dialog.Description>
+                  Write a local demo email. Nothing is sent externally.
+                </Dialog.Description>
+              </div>
+              <Dialog.Close class="grid size-10 shrink-0 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none">
+                <span class="sr-only">Close composer</span>
+                <span aria-hidden="true" class="lucide-x size-4" />
+              </Dialog.Close>
+            </div>
+          </Dialog.Header>
+          <form
+            ref={(element) => (composeForm = element)}
+            noValidate
+            class="mt-5 flex flex-col gap-4"
+            onSubmit={submitCompose}
+          >
             <TextInput
               label="To"
               type="email"
@@ -668,7 +1010,7 @@ export function Mail(): JSX.Element {
               value={recipient()}
               onInput={(event) => setRecipient(event.currentTarget.value)}
               error={
-                attempted() && !isEmail(recipient())
+                composeAttempted() && !isEmail(recipient())
                   ? 'Enter a valid recipient email.'
                   : undefined
               }
@@ -679,7 +1021,9 @@ export function Mail(): JSX.Element {
               value={subject()}
               onInput={(event) => setSubject(event.currentTarget.value)}
               error={
-                attempted() && !subject().trim() ? 'Add a subject.' : undefined
+                composeAttempted() && !subject().trim()
+                  ? 'Add a subject.'
+                  : undefined
               }
             />
             <Textarea
@@ -689,12 +1033,25 @@ export function Mail(): JSX.Element {
               value={body()}
               onInput={(event) => setBody(event.currentTarget.value)}
               error={
-                attempted() && !body().trim() ? 'Write a message.' : undefined
+                composeAttempted() && !body().trim()
+                  ? 'Write a message.'
+                  : undefined
               }
             />
-          </>
-        )}
-      />
+            <Dialog.Footer>
+              <Button variant="ghost" onClick={() => handleComposeOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="outline" onClick={() => saveMessage('Drafts')}>
+                Save email draft
+              </Button>
+              <Button type="submit" variant="solid" theme="blue">
+                Send demo email
+              </Button>
+            </Dialog.Footer>
+          </form>
+        </Dialog.Content>
+      </Dialog.Root>
     </AppPage>
   )
 }

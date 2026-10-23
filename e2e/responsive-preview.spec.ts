@@ -14,7 +14,7 @@ test('application preview preserves editing, comments and its document across al
   await app
     .getByRole('searchbox', { name: 'Find tasks', exact: true })
     .fill('TASK-1001')
-  const task = app.getByRole('button', { name: /TASK-1001 · Website/ })
+  const task = app.getByRole('button', { name: 'Review the revenue dashboard' })
   // Activate from the keyboard: at this width the row sits below the fold
   // of the frame's inner scroller, where a synthesized click cannot land.
   await task.focus()
@@ -23,6 +23,10 @@ test('application preview preserves editing, comments and its document across al
     .getByRole('textbox', { name: 'Task title', exact: false })
     .fill('Review the shared task workflow')
   await app.getByRole('button', { name: 'Save task details' }).click()
+  // Saving the detail returns to the table; reopen the renamed task to comment.
+  await app
+    .getByRole('button', { name: 'Review the shared task workflow' })
+    .click()
   await app
     .getByRole('textbox', { name: 'Add comment' })
     .fill('Keep this comment when resizing.')

@@ -1,4 +1,4 @@
-import { Button, Skeleton } from '@talelk/newui-atoms'
+import { Button, type IconProp, Skeleton } from '@talelk/newui-atoms'
 import { EmptyState } from '@talelk/newui-molecules'
 import { For, type JSX, Show } from 'solid-js'
 
@@ -14,6 +14,8 @@ export interface DataStateProps {
   title?: JSX.Element
   description?: JSX.Element
   action?: JSX.Element
+  /** Icon shown in the empty state. @default 'lucide-inbox' */
+  icon?: IconProp
   error?: JSX.Element
   onRetry?: () => void
   children?: JSX.Element
@@ -76,7 +78,7 @@ function StateFallback(props: DataStateProps): JSX.Element {
           fallback={
             <div data-slot="data-state-empty">
               <EmptyState
-                icon="lucide-inbox"
+                icon={props.icon ?? 'lucide-inbox'}
                 title={props.title ?? 'Nothing here yet'}
                 description={props.description}
                 action={props.action}

@@ -39,6 +39,24 @@ export const API = {
       "default": "2"
     },
     {
+      "name": "headingId",
+      "type": "string",
+      "optional": true,
+      "description": "Explicit id for the rendered heading. Defaults to `<id>-title`."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name when the section has no visible title."
+    },
+    {
+      "name": "labelledBy",
+      "type": "string",
+      "optional": true,
+      "description": "Id of the element that names the region; beats `label`/the heading id."
+    },
+    {
       "name": "surface",
       "type": "'plain' | 'card' | 'inset'",
       "optional": true,

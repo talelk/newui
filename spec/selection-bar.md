@@ -16,6 +16,10 @@ The bulk-action surface for a data region.
 
 ## Behavior
 
+- On phones the primary and Clear actions use the 40px touch height; the
+  bar stays above the safe area.
+
+
 - Renders only while `count > 0`.
 - Inline on desktop; `sticky` is `position: fixed` below `sm` so a selected row
   far down a card list never requires scrolling back to a toolbar.

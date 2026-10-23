@@ -46,7 +46,7 @@ export function PackageGuides() {
             onToggle={(event) => {
               if (event.currentTarget.open) setOpen(name)
             }}
-            class="rounded-5 border border-outline-gray-1 p-4"
+            class="rounded-card border border-outline-gray-1 p-4"
           >
             <summary class="cursor-pointer rounded-3 font-medium focus-visible:focus-ring">
               @talelk/newui-{name}

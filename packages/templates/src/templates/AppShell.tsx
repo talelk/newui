@@ -160,7 +160,7 @@ export function AppShell(props: AppShellProps): JSX.Element {
                   aria-haspopup="dialog"
                   aria-expanded={drawerOpen()}
                   onClick={openDrawer}
-                  class="grid size-9 shrink-0 place-items-center rounded-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
+                  class="grid size-10 shrink-0 place-items-center rounded-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
                 >
                   <span aria-hidden="true" class="lucide-menu size-4" />
                 </button>

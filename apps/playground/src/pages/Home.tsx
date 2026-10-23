@@ -75,7 +75,7 @@ function PreviewSection(): JSX.Element {
         <Show
           when={visible()}
           fallback={
-            <div class="grid min-h-44 place-items-center rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4">
+            <div class="grid min-h-44 place-items-center rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-4">
               <p class="flex flex-col items-center gap-2 text-center">
                 <span class="text-caption text-ink-gray-7">
                   Live controls load as you scroll — the page stays light until
@@ -93,7 +93,7 @@ function PreviewSection(): JSX.Element {
         >
           <Suspense
             fallback={
-              <div class="grid min-h-44 place-items-center rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4">
+              <div class="grid min-h-44 place-items-center rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-4">
                 <p class="text-caption text-ink-gray-7" role="status">
                   Loading previews…
                 </p>
@@ -157,7 +157,7 @@ export function Home(): JSX.Element {
             How the levels fit together →
           </A>
         </div>
-        <ol class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1">
+        <ol class="flex flex-col divide-y divide-outline-gray-1 rounded-card border border-outline-gray-1">
           <For each={LADDER}>
             {(level, index) => (
               <li>

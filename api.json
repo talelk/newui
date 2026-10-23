@@ -7971,6 +7971,13 @@
         "optional": true
       },
       {
+        "name": "icon",
+        "type": "IconProp",
+        "optional": true,
+        "description": "Icon shown in the empty state.",
+        "default": "'lucide-inbox'"
+      },
+      {
         "name": "error",
         "type": "JSX.Element",
         "optional": true
@@ -8060,6 +8067,12 @@
         "type": "'comfortable' | 'compact'",
         "optional": true,
         "description": "`compact` uses 36px rows instead of 44px."
+      },
+      {
+        "name": "cardBreakpoint",
+        "type": "'sm' | 'md' | 'lg'",
+        "optional": true,
+        "description": "Width at which the table becomes cards. Default `sm` (640px)."
       },
       {
         "name": "selectionSummary",
@@ -8450,6 +8463,24 @@
         "default": "2"
       },
       {
+        "name": "headingId",
+        "type": "string",
+        "optional": true,
+        "description": "Explicit id for the rendered heading. Defaults to `<id>-title`."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when the section has no visible title."
+      },
+      {
+        "name": "labelledBy",
+        "type": "string",
+        "optional": true,
+        "description": "Id of the element that names the region; beats `label`/the heading id."
+      },
+      {
         "name": "surface",
         "type": "'plain' | 'card' | 'inset'",
         "optional": true,
@@ -8582,6 +8613,13 @@
       }
     ],
     "SettingsSidebarProps": [
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the vertical tablist.",
+        "default": "'Settings'"
+      },
       {
         "name": "class",
         "type": "string",

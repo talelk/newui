@@ -1255,7 +1255,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "AuthCard",
-    "description": "The centred card a sign-in, sign-up or reset screen is.",
+    "description": "The card a sign-in, sign-up or reset screen sits in.",
     "slug": "auth-card",
     "group": "Patterns",
     "package": "@talelk/newui-organisms",

@@ -69,7 +69,7 @@ export const CardTitle: ParentComponent<PartProps> = (props) => (
 export const CardDescription: ParentComponent<PartProps> = (props) => (
   <p
     data-slot="card-description"
-    class={cn('text-sm text-ink-gray-6', props.class)}
+    class={cn('text-interface text-ink-gray-6', props.class)}
   >
     {props.children}
   </p>

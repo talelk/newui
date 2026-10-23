@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, Icon, Tooltip } from '@talelk/newui-atoms'
+import { Avatar, Badge, Button, Icon } from '@talelk/newui-atoms'
 import {
   Dropdown,
   List,
@@ -6,19 +6,31 @@ import {
   ListRow,
   Menu,
 } from '@talelk/newui-molecules'
-import { FilterBar, PageToolbar, SidebarItem } from '@talelk/newui-organisms'
+import {
+  DataState,
+  FilterBar,
+  PageToolbar,
+  SidebarItem,
+} from '@talelk/newui-organisms'
 import { AppShell } from '@talelk/newui-templates'
 import {
   createMemo,
   createSignal,
   For,
   type JSX,
+  onCleanup,
   Show,
   untrack,
 } from 'solid-js'
+import { COMMUNITIES, SPACES } from '../examples/discussion-fixtures'
 import {
   type createDiscussions,
   DiscussionDialogs,
+  formatRelativeTime,
+  lastActivityAt,
+  pluralize,
+  replyCount,
+  unreadCount,
 } from '../examples/discussions'
 import { assetUrl, sitePath } from '../lib/base'
 
@@ -28,47 +40,51 @@ import { assetUrl, sitePath } from '../lib/base'
  * this route's memory.
  */
 
-interface Community {
-  id: string
-  name: string
+interface CommunityOption {
+  label: string
+  value: string
   icon: string
-  unread?: number
 }
 
-const COMMUNITIES: Community[] = [
-  { id: 'design', name: 'Design', icon: 'lucide-shapes' },
-  {
-    id: 'engineering',
-    name: 'Engineering',
-    icon: 'lucide-code',
-    unread: 4,
-  },
-  {
-    id: 'marketing',
-    name: 'Marketing',
-    icon: 'lucide-megaphone',
-  },
-]
+/**
+ * The rail keeps the community switcher but not the Dropdown chevron: at 56px
+ * wide the glyph and the chevron read as two unrelated icons.
+ */
+function CollapsedCommunityMenu(props: {
+  options: CommunityOption[]
+  icon: string
+  current: string
+  onSelect: (value: string) => void
+}): JSX.Element {
+  return (
+    <Menu.Root onSelect={props.onSelect}>
+      <Menu.Trigger
+        aria-label={`Choose community, currently ${props.current}`}
+        title={props.current}
+        class="grid size-10 place-items-center rounded-control bg-surface-gray-2 text-ink-gray-8 transition-colors hover:bg-surface-gray-3 focus-visible:focus-ring"
+      >
+        <span class={`size-4 ${props.icon}`} aria-hidden="true" />
+      </Menu.Trigger>
+      <Menu.Content class="min-w-44">
+        <For each={props.options}>
+          {(option) => (
+            <Menu.Item value={option.value}>
+              <Icon
+                icon={option.icon}
+                class="size-4 shrink-0 text-ink-gray-6"
+              />
+              <span>{option.label}</span>
+            </Menu.Item>
+          )}
+        </For>
+      </Menu.Content>
+    </Menu.Root>
+  )
+}
 
-const SPACES = [
-  { name: 'Announcements', icon: 'lucide-megaphone', unread: 2 },
-  { name: 'Design System', icon: 'lucide-shapes', unread: 3 },
-  { name: 'Website', icon: 'lucide-globe', unread: 0 },
-  { name: 'Brand', icon: 'lucide-sparkles', unread: 0 },
-  { name: 'Illustrations', icon: 'lucide-pen-tool', unread: 1 },
-  { name: 'Research', icon: 'lucide-flask-conical', unread: 0 },
-  { name: 'Archive', icon: 'lucide-archive', unread: 0 },
-]
-
-const SPACE_ACTIONS = [
-  { label: 'Copy link', value: 'copy-link', icon: 'lucide-link' },
-  { label: 'Mark all as read', value: 'mark-read', icon: 'lucide-check' },
-  { label: 'Manage access', value: 'manage-access', icon: 'lucide-users' },
-  { label: 'Archive', value: 'archive', icon: 'lucide-archive' },
-]
-
-/** A plain avatar trigger for the account menu — no chevron, no pill. */
+/** A plain account trigger in the rail, a responsibility-ready row when open. */
 function AccountMenu(props: {
+  compact?: boolean
   onOpenSettings: () => void
   onLogout: () => void
 }): JSX.Element {
@@ -80,10 +96,27 @@ function AccountMenu(props: {
       }}
     >
       <Menu.Trigger
-        aria-label="Account"
-        class="flex size-7 items-center justify-center rounded-full transition focus-visible:ring-0 focus-visible:focus-ring hover:opacity-90"
+        aria-label={props.compact ? 'Account menu' : undefined}
+        class={
+          props.compact
+            ? 'flex size-7 items-center justify-center rounded-full transition hover:opacity-90 focus-visible:ring-0 focus-visible:focus-ring'
+            : 'flex min-h-10 w-full items-center gap-2 rounded-control px-2 text-start transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring lg:min-h-8'
+        }
       >
-        <Avatar label="Rhea Kapoor" size="lg" class="size-7" />
+        <span aria-hidden="true" class="shrink-0">
+          <Avatar label="Rhea Kapoor" size="lg" class="size-7" />
+        </span>
+        <Show when={!props.compact}>
+          <span class="min-w-0 flex-1">
+            <span class="block truncate text-base text-ink-gray-8">
+              Rhea Kapoor
+            </span>
+            <span class="block truncate text-caption text-ink-gray-7">
+              Admin
+            </span>
+          </span>
+          <span class="sr-only">Account menu</span>
+        </Show>
       </Menu.Trigger>
       <Menu.Content class="min-w-40">
         <Menu.Item value="profile">
@@ -108,58 +141,213 @@ function AccountMenu(props: {
 
 export function DiscussionsDesktop(props: {
   store: ReturnType<typeof createDiscussions>
+  community: () => string
+  setCommunity: (value: string) => void
   space: () => string
   setSpace: (value: string) => void
   onOpenSettings: (section?: string) => void
 }): JSX.Element {
-  const [community, setCommunity] = createSignal('design')
   const space = () => props.space()
-  const setSpace = (value: string) => props.setSpace(value)
-  const [feedTab, setFeedTab] = createSignal('All')
+  const community = () => props.community()
   const discussions = untrack(() => props.store)
+  const [feedTab, setFeedTab] = createSignal('All')
   const [spacesReversed, setSpacesReversed] = createSignal(false)
   const [notice, setNotice] = createSignal('')
+  let noticeTimer: number | undefined
+
+  const notify = (message: string) => {
+    setNotice(message)
+    if (noticeTimer !== undefined) window.clearTimeout(noticeTimer)
+    noticeTimer = window.setTimeout(() => setNotice(''), 4000)
+  }
+
+  onCleanup(() => {
+    if (noticeTimer !== undefined) window.clearTimeout(noticeTimer)
+  })
 
   const setSettingsOpen = (value: boolean) => {
     if (value) props.onOpenSettings()
   }
 
+  const currentCommunity = () =>
+    COMMUNITIES.find((item) => item.id === community())
+
+  const spaces = createMemo(() =>
+    SPACES.filter((item) => item.community === community()).map((item) => ({
+      ...item,
+      unread: discussions.unreadInSpace(item.name),
+    })),
+  )
+
+  const orderedSpaces = createMemo(() =>
+    spacesReversed() ? [...spaces()].reverse() : spaces(),
+  )
+
+  const communityOptions = createMemo(() =>
+    COMMUNITIES.map((item) => {
+      const unread = discussions.unreadInCommunity(item.id)
+      return {
+        label: unread > 0 ? `${item.name} · ${unread} unread` : item.name,
+        value: item.id,
+        icon: item.icon,
+      }
+    }),
+  )
+
   const visibleDiscussions = createMemo(() =>
     feedTab() === 'Unread'
-      ? discussions.rows().filter((discussion) => discussion.unread > 0)
+      ? discussions.rows().filter((discussion) => unreadCount(discussion) > 0)
       : discussions.rows(),
   )
 
-  const spaceAction = (value: string) => {
-    if (value === 'mark-read') {
-      discussions.markRead()
-      setNotice('All discussions in this space are read.')
+  const spaceLabel = () => space() || 'this space'
+
+  const defaultSpace = () =>
+    spaces().find((item) => item.name !== 'Archive')?.name ?? 'Design System'
+
+  const selectCommunity = (value: string) => {
+    if (value === community()) return
+    setFeedTab('All')
+    setNotice('')
+    discussions.setQuery('')
+    discussions.setSelected(undefined)
+    props.setCommunity(value)
+  }
+
+  const selectSpace = (value: string) => {
+    if (value === space()) return
+    setFeedTab('All')
+    setNotice('')
+    discussions.setQuery('')
+    discussions.setSelected(undefined)
+    props.setSpace(value)
+  }
+
+  const emptyState = createMemo(() => {
+    const search = discussions.query().trim()
+    if (search)
+      return {
+        icon: 'lucide-search',
+        title: `No discussions match “${search}”`,
+        description: `Clear the search or try another space.`,
+        actionLabel: 'Clear search',
+        onAction: () => discussions.setQuery(''),
+      }
+    if (space() === 'Archive')
+      return {
+        icon: 'lucide-archive',
+        title: 'Archive is read-only',
+        description:
+          'Archived discussions are kept for reference. Choose another space to start a new conversation.',
+        actionLabel: `Back to ${defaultSpace()}`,
+        onAction: () => selectSpace(defaultSpace()),
+      }
+    if (discussions.spacePosts().length === 0)
+      return {
+        icon: 'lucide-message-square-plus',
+        title: `No discussions in ${spaceLabel()} yet`,
+        description: 'Start the first conversation and it will appear here.',
+        actionLabel: 'Start a discussion',
+        onAction: discussions.start,
+      }
+    if (feedTab() === 'Unread')
+      return {
+        icon: 'lucide-check-check',
+        title: 'You’re all caught up',
+        description: `There are no unread discussions in ${spaceLabel()}.`,
+        actionLabel: 'View all discussions',
+        onAction: () => setFeedTab('All'),
+      }
+    return {
+      icon: 'lucide-inbox',
+      title: 'Nothing here yet',
+      description: 'Try another space or start a new discussion.',
+      actionLabel: 'Start a discussion',
+      onAction: discussions.start,
     }
-    if (value === 'copy-link') {
-      void navigator.clipboard
-        .writeText(
-          `${location.origin}${location.pathname}#${encodeURIComponent(space())}`,
-        )
-        .then(
-          () => setNotice('Space link copied.'),
-          () => setNotice('Copy the current page address to share this demo.'),
-        )
+  })
+
+  const focusDiscussion = (id: string) => {
+    const rows = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-discussion-id]'),
+    )
+    const target = rows.find((item) => item.dataset['discussionId'] === id)
+    if (target) {
+      target.focus()
+      return
     }
-    if (value === 'manage-access') {
-      props.onOpenSettings('users')
+    // Opening a thread from Unread removes it from that list. Move to the next
+    // unread row, or back to the view switcher when the list is now empty.
+    const next = rows[0]
+    if (next) {
+      next.focus()
+      return
     }
-    if (value === 'archive') {
-      setSpace('Archive')
-      setNotice('Viewing the archive. Original discussions are retained.')
-    }
+    const all = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-slot="tab-trigger"]'),
+    ).find((item) => item.textContent?.trim() === 'All')
+    all?.focus()
+  }
+
+  const copyPageLink = () => {
+    void navigator.clipboard.writeText(location.href.replace(/#.*$/, '')).then(
+      () =>
+        notify('Page address copied. Space selection stays in this session.'),
+      () => notify('Copy the page address to share this demo.'),
+    )
+  }
+
+  const markRead = () => {
+    const unread = discussions.unreadInSpace(space())
+    discussions.markRead()
+    notify(
+      unread > 0
+        ? 'All discussions in this space are read.'
+        : 'There was nothing unread in this space.',
+    )
+  }
+
+  const spaceActions = createMemo(() => {
+    const actions = [
+      {
+        label: 'Copy page link',
+        icon: 'lucide-link',
+        onClick: copyPageLink,
+      },
+      {
+        label: 'Mark all as read',
+        icon: 'lucide-check',
+        onClick: markRead,
+      },
+      {
+        label: 'Manage access',
+        icon: 'lucide-users',
+        onClick: () => props.onOpenSettings('users'),
+      },
+    ]
+    if (space() !== 'Archive')
+      actions.push({
+        label: 'Open archive',
+        icon: 'lucide-archive',
+        onClick: () => {
+          selectSpace('Archive')
+          notify('Archive is read-only in this demo.')
+        },
+      })
+    return actions
+  })
+
+  const logout = () => {
+    discussions.setQuery('')
+    discussions.setSelected(undefined)
+    notify('Local session cleared. No external account is connected.')
   }
 
   return (
     <>
       <AppShell
         title="Discussions"
-        description="A community workspace with one sidebar, grouped spaces and account utilities."
-        mobileTitle="Discussions"
+        mobileTitle={spaceLabel()}
         navLabel="Discussions navigation"
         brand={
           <a
@@ -189,54 +377,30 @@ export function DiscussionsDesktop(props: {
         }
         tenant={
           <Dropdown
-            options={COMMUNITIES.map((item) => ({
-              label: item.name,
-              value: item.id,
-              icon: item.icon,
-            }))}
-            onSelect={setCommunity}
+            options={communityOptions()}
+            onSelect={selectCommunity}
+            class="h-10 w-full justify-between lg:h-8"
           >
             <span class="flex min-w-0 items-center gap-2">
               <span
-                class={`size-4 shrink-0 ${COMMUNITIES.find((item) => item.id === community())?.icon ?? 'lucide-shapes'}`}
+                class={`size-4 shrink-0 ${currentCommunity()?.icon ?? 'lucide-shapes'}`}
                 aria-hidden="true"
               />
               <span class="truncate">
-                {COMMUNITIES.find((item) => item.id === community())?.name ??
-                  'Design'}
+                {currentCommunity()?.name ?? 'Community'}
               </span>
             </span>
           </Dropdown>
         }
         tenantCollapsed={
-          <Dropdown
-            options={COMMUNITIES.map((item) => ({
-              label: item.name,
-              value: item.id,
-              icon: item.icon,
-            }))}
-            onSelect={setCommunity}
-          >
-            <span class="grid size-9 place-items-center">
-              <span class="sr-only">Choose community</span>
-              <span
-                class={`size-4 ${COMMUNITIES.find((item) => item.id === community())?.icon ?? 'lucide-shapes'}`}
-                aria-hidden="true"
-              />
-            </span>
-          </Dropdown>
+          <CollapsedCommunityMenu
+            options={communityOptions()}
+            icon={currentCommunity()?.icon ?? 'lucide-shapes'}
+            current={currentCommunity()?.name ?? 'Community'}
+            onSelect={selectCommunity}
+          />
         }
         navigation={[
-          {
-            label: 'Community',
-            items: COMMUNITIES.map((item) => ({
-              label: item.name,
-              icon: item.icon,
-              active: community() === item.id,
-              ...(item.unread ? { count: item.unread } : {}),
-              onClick: () => setCommunity(item.id),
-            })),
-          },
           {
             label: 'Spaces',
             action: (
@@ -244,19 +408,18 @@ export function DiscussionsDesktop(props: {
                 variant="ghost"
                 size="xs"
                 icon="lucide-arrow-up-down"
-                onClick={() => setSpacesReversed((value) => !value)}
                 aria-label="Sort spaces"
+                aria-pressed={spacesReversed()}
+                onClick={() => setSpacesReversed((value) => !value)}
               />
             ),
-            items: (spacesReversed() ? [...SPACES].reverse() : SPACES).map(
-              (item) => ({
-                label: item.name,
-                icon: item.icon,
-                ...(item.unread ? { count: item.unread } : {}),
-                active: space() === item.name,
-                onClick: () => setSpace(item.name),
-              }),
-            ),
+            items: orderedSpaces().map((item) => ({
+              label: item.name,
+              icon: item.icon,
+              ...(item.unread ? { count: item.unread } : {}),
+              active: space() === item.name,
+              onClick: () => selectSpace(item.name),
+            })),
           },
         ]}
         settings={
@@ -271,163 +434,202 @@ export function DiscussionsDesktop(props: {
         account={
           <AccountMenu
             onOpenSettings={() => setSettingsOpen(true)}
-            onLogout={() => {
-              discussions.setQuery('')
-              discussions.setSelected(undefined)
-              setNotice(
-                'Local session cleared. No external account is connected.',
-              )
-            }}
+            onLogout={logout}
           />
         }
         accountCollapsed={
           <AccountMenu
+            compact
             onOpenSettings={() => setSettingsOpen(true)}
-            onLogout={() => {
-              discussions.setQuery('')
-              discussions.setSelected(undefined)
-              setNotice(
-                'Local session cleared. No external account is connected.',
-              )
-            }}
+            onLogout={logout}
           />
         }
       >
         <PageToolbar
-          title={space()}
+          title={spaceLabel()}
           headingLevel={2}
-          menu={SPACE_ACTIONS.map((action) => ({
-            label: action.label,
-            icon: action.icon,
-            onClick: () => spaceAction(action.value),
-          }))}
-          action={{
-            label: 'New discussion',
-            icon: 'lucide-plus',
-            onClick: discussions.start,
-          }}
-        />
+          menu={spaceActions()}
+        >
+          <Show when={space() !== 'Archive'}>
+            <Button
+              variant="solid"
+              theme="blue"
+              iconLeft="lucide-plus"
+              class="h-10 lg:h-7"
+              onClick={discussions.start}
+            >
+              New discussion
+            </Button>
+          </Show>
+        </PageToolbar>
 
         <div class="flex flex-col gap-4">
-          <div class="mb-4">
-            <FilterBar
-              query={{
-                placeholder: 'Search discussions…',
-                value: discussions.query(),
-                onInput: discussions.setQuery,
-              }}
-              tabs={{
-                label: 'Feed',
-                value: feedTab(),
-                onValueChange: setFeedTab,
-                options: [
-                  { label: 'Unread', value: 'Unread' },
-                  { label: 'All', value: 'All' },
-                ],
-              }}
-              chips={[
-                ...(feedTab() === 'Unread'
-                  ? [
-                      {
-                        label: 'Unread only',
-                        onRemove: () => setFeedTab('All'),
-                      },
-                    ]
-                  : []),
-                ...(discussions.query()
-                  ? [
-                      {
-                        label: `Search: ${discussions.query()}`,
-                        onRemove: () => discussions.setQuery(''),
-                      },
-                    ]
-                  : []),
-              ]}
-              resultCount={visibleDiscussions().length}
-              onClearAll={() => {
-                discussions.setQuery('')
-                setFeedTab('All')
-              }}
-            />
-          </div>
+          <FilterBar
+            query={{
+              placeholder: 'Search discussions…',
+              value: discussions.query(),
+              onInput: discussions.setQuery,
+            }}
+            tabs={{
+              label: 'Feed',
+              value: feedTab(),
+              onValueChange: setFeedTab,
+              options: [
+                { label: 'All', value: 'All' },
+                { label: 'Unread', value: 'Unread' },
+              ],
+            }}
+            chips={
+              discussions.query()
+                ? [
+                    {
+                      label: `Search: ${discussions.query()}`,
+                      onRemove: () => discussions.setQuery(''),
+                    },
+                  ]
+                : []
+            }
+            resultCount={visibleDiscussions().length}
+            onClearAll={() => {
+              discussions.setQuery('')
+              setFeedTab('All')
+            }}
+          />
+
           <Show when={notice()}>
-            <p role="status" class="mb-3 text-caption text-ink-gray-7">
+            <p role="status" class="text-caption text-ink-gray-7">
               {notice()}
             </p>
           </Show>
 
-          {/* `-mx-3` lets the row hover surface bleed past the text edge, so the
-              content stays aligned with the container. */}
-          <List class="-mx-3">
-            <For each={visibleDiscussions()}>
-              {(discussion) => (
-                <ListRow height="h-15">
-                  <ListCell>
-                    <Avatar label={discussion.author} size="2xl" />
-                  </ListCell>
-                  <ListCell>
-                    <div class="min-w-0 flex-1">
-                      {/* The sized text sits in an inner span so it keeps its own
-                          line-height; `leading-none` together with `truncate`
-                          would shear off descenders. */}
-                      <div class="truncate leading-none text-ink-gray-8">
-                        <span
-                          class={
-                            discussion.unread
-                              ? 'text-base-semibold'
-                              : 'text-base'
-                          }
-                        >
-                          <button
-                            type="button"
-                            class="max-w-full truncate rounded-3 text-start focus-visible:focus-ring-blue"
-                            onClick={() => discussions.open(discussion)}
+          <DataState
+            status={visibleDiscussions().length > 0 ? 'ready' : 'empty'}
+            icon={emptyState().icon}
+            title={emptyState().title}
+            description={emptyState().description}
+            action={
+              <Button variant="outline" onClick={emptyState().onAction}>
+                {emptyState().actionLabel}
+              </Button>
+            }
+          >
+            {/* `-mx-3` lets the row hover surface bleed past the text edge, so the
+                content stays aligned with the container. */}
+            <List class="-mx-3">
+              <For each={visibleDiscussions()}>
+                {(discussion) => (
+                  <ListRow
+                    height="h-15"
+                    onClick={() => discussions.open(discussion)}
+                  >
+                    <ListCell>
+                      <div aria-hidden="true">
+                        <Avatar label={discussion.author} size="2xl" />
+                      </div>
+                    </ListCell>
+                    <ListCell>
+                      <div class="min-w-0 flex-1">
+                        {/* The sized text sits in an inner span so it keeps its own
+                            line-height; `leading-none` together with `truncate`
+                            would shear off descenders. */}
+                        <div class="truncate leading-none text-ink-gray-8">
+                          <span
+                            class={
+                              unreadCount(discussion)
+                                ? 'text-base-semibold'
+                                : 'text-base'
+                            }
                           >
-                            {discussion.title}
-                          </button>
-                        </span>
+                            <button
+                              type="button"
+                              data-discussion-id={discussion.id}
+                              class="max-w-full truncate rounded-3 text-start focus-visible:focus-ring-blue"
+                              onClick={(event) => {
+                                event.stopPropagation()
+                                discussions.open(discussion)
+                              }}
+                            >
+                              {discussion.title}
+                            </button>
+                          </span>
+                        </div>
+                        <div class="mt-1.5 flex min-w-0 items-center text-base text-ink-gray-7">
+                          <Icon
+                            icon="lucide-reply"
+                            class="mr-1 size-4 shrink-0"
+                          />
+                          <span class="shrink-0">
+                            {discussion.author}:&nbsp;
+                          </span>
+                          <span class="truncate">{discussion.excerpt}</span>
+                        </div>
                       </div>
-                      <div class="mt-1.5 flex min-w-0 items-center text-base text-ink-gray-7">
-                        <Icon
-                          icon="lucide-reply"
-                          class="mr-1 size-4 shrink-0"
-                        />
-                        <span class="shrink-0">{discussion.author}:&nbsp;</span>
-                        <span class="truncate">{discussion.excerpt}</span>
-                      </div>
-                    </div>
-                  </ListCell>
-                  <ListCell class="justify-end">
-                    <div>
-                      <div class="text-right text-sm whitespace-nowrap text-ink-gray-7">
-                        {discussion.lastActivity}
-                      </div>
-                      <div class="mt-1.5 flex items-center justify-end">
-                        <Show
-                          when={discussion.unread}
-                          fallback={<Badge>{discussion.comments + 1}</Badge>}
+                    </ListCell>
+                    <ListCell class="justify-end">
+                      <div class="flex flex-col items-end">
+                        <time
+                          dateTime={new Date(
+                            lastActivityAt(discussion),
+                          ).toISOString()}
+                          class="whitespace-nowrap text-right text-sm text-ink-gray-7"
                         >
-                          <Tooltip text={`${discussion.unread} unread`}>
+                          {formatRelativeTime(lastActivityAt(discussion))}
+                        </time>
+                        <div class="mt-1.5 flex items-center justify-end gap-2">
+                          <span class="inline-flex items-center gap-1 whitespace-nowrap text-caption tabular-nums text-ink-gray-7">
+                            <Icon
+                              icon="lucide-reply"
+                              class="size-3.5"
+                              aria-hidden="true"
+                            />
+                            <span aria-hidden="true">
+                              {replyCount(discussion)}
+                            </span>
+                            <span class="hidden sm:inline" aria-hidden="true">
+                              {pluralize(
+                                replyCount(discussion),
+                                'reply',
+                                'replies',
+                              )}
+                            </span>
+                            <span class="sr-only">
+                              {replyCount(discussion)}{' '}
+                              {pluralize(
+                                replyCount(discussion),
+                                'reply',
+                                'replies',
+                              )}
+                            </span>
+                          </span>
+                          <Show when={unreadCount(discussion) > 0}>
                             <Badge theme="amber" variant="solid" size="sm">
-                              {discussion.unread}
+                              <span aria-hidden="true">
+                                {unreadCount(discussion)}
+                              </span>
+                              <span class="sr-only">
+                                {unreadCount(discussion)} unread
+                              </span>
                             </Badge>
-                          </Tooltip>
-                        </Show>
+                          </Show>
+                        </div>
                       </div>
-                    </div>
-                  </ListCell>
-                </ListRow>
-              )}
-            </For>
-          </List>
-          <Show when={!visibleDiscussions().length}>
-            <p class="py-8 text-center text-ink-gray-7">
-              No discussions match this space and filter.
-            </p>
-          </Show>
+                    </ListCell>
+                  </ListRow>
+                )}
+              </For>
+            </List>
+          </DataState>
         </div>
       </AppShell>
-      <DiscussionDialogs store={discussions} />
+      <DiscussionDialogs
+        store={discussions}
+        onClosed={focusDiscussion}
+        onCreated={() => {
+          setFeedTab('All')
+          notify('Discussion posted.')
+        }}
+        onPosted={() => notify('Reply posted.')}
+      />
     </>
   )
 }

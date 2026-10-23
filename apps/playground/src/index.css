@@ -22,10 +22,44 @@
 /* A composed editor surface uses the editor's public data hooks. */
 .compose-editor [data-slot="editor-content"] {
   min-height: 24rem;
-  padding: 1rem;
+  padding: 0.75rem 0.5rem;
   color: var(--ink-gray-8);
   outline: none;
   line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+/* Long-form prose keeps a readable measure; tables and media keep the column. */
+.compose-editor
+  [data-slot="editor-content"]
+  :is(p, h1, h2, h3, h4, ul, ol, blockquote) {
+  max-inline-size: 30rem;
+}
+
+/* TipTap supplies the placeholder decoration; the composed surface supplies the text. */
+.compose-editor
+  [data-slot="editor-content"]
+  p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--ink-gray-6);
+  float: inline-start;
+  height: 0;
+  pointer-events: none;
+}
+
+.compose-editor [data-slot="editor-content"] img {
+  max-inline-size: 100%;
+  height: auto;
+}
+
+.compose-editor [data-slot="editor-content"] .tableWrapper {
+  max-inline-size: 100%;
+  overflow-x: auto;
+}
+
+/* The read-only preview shares the document styles; the article owns its padding. */
+.compose-editor.compose-preview [data-slot="editor-content"] {
+  padding: 0;
 }
 .compose-editor [data-slot="editor-content"]:focus-visible {
   outline: var(--focus-outline-blue);

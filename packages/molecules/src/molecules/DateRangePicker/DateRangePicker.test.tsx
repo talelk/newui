@@ -54,6 +54,31 @@ describe('DateRangePicker', () => {
     )
   })
 
+  it('holds the first pick in a controlled range until the range completes', async () => {
+    const onValueChange = vi.fn()
+    render(() => (
+      <DateRangePicker
+        label="Range"
+        value={['2026-10-14', '2026-10-16']}
+        min="2026-10-01"
+        max="2026-10-31"
+        onValueChange={onValueChange}
+      />
+    ))
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Choose date range' }),
+    )
+    day('2026-10-20').click()
+    expect(onValueChange).not.toHaveBeenCalled()
+    await waitFor(() =>
+      expect(day('2026-10-20').getAttribute('data-selected')).toBe(''),
+    )
+    day('2026-10-22').click()
+    await waitFor(() =>
+      expect(onValueChange).toHaveBeenCalledWith(['2026-10-20', '2026-10-22']),
+    )
+  })
+
   it('renders two months when dualPane is set', async () => {
     render(() => <DateRangePicker label="Range" dualPane />)
     await userEvent.click(

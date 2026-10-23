@@ -12,6 +12,9 @@ The shared page-region anatomy: header, optional toolbar, body, optional footer.
 | `toolbar` | `JSX.Element` | — | controls between the header and body |
 | `footer` | `JSX.Element` | — | footer above a 1px rule |
 | `headingLevel` | `1 \| 2 \| 3 \| 4` | `2` | semantic heading level |
+| `headingId` | `string` | `<id>-title` when `id` is set | id for the rendered heading |
+| `label` | `string` | — | accessible name when there is no visible title |
+| `labelledBy` | `string` | the title id | id of the element that names the region |
 | `surface` | `'plain' \| 'card' \| 'inset'` | `plain` | surface treatment |
 | `density` | `'comfortable' \| 'compact'` | `comfortable` | 12px or 8px rhythm |
 | `id` | `string` | — | anchor id |

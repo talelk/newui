@@ -64,7 +64,7 @@ interface RouteBudget {
 const ROUTES: RouteBudget[] = [
   {
     route: '/pages/discussions/fullscreen',
-    budget: 160,
+    budget: 210,
     viewport: { width: 390, height: 844 },
     unless: 'the responsive AppShell drawer at mobile width',
   },
@@ -76,7 +76,7 @@ const ROUTES: RouteBudget[] = [
     ['tickets', 230],
     ['accounting', 390],
     ['compose', 380],
-    ['discussions', 200],
+    ['discussions', 215],
     ['analytics', 420],
     ['authentication', 200],
     ['cards', 210],
@@ -165,8 +165,9 @@ const ROUTES: RouteBudget[] = [
   },
 
   // The atomic package split and integrated AppShell add the real shared
-  // navigation to each full-screen app. These ceilings are based on current
-  // browser measurements with room for normal route-level changes.
+  // navigation to each full-screen app. The application recipes now also carry
+  // the shared DataTable/DataState/SelectionBar surfaces; these ceilings track
+  // current browser measurements with room for normal route-level changes.
   {
     route: '/pages/files/fullscreen',
     budget: 200,
@@ -187,8 +188,8 @@ const ROUTES: RouteBudget[] = [
 
   {
     route: '/pages/mail/fullscreen',
-    budget: 150,
-    unless: 'interactive inbox and local composer',
+    budget: 210,
+    unless: 'interactive inbox, thread reading and local composer',
   },
 
   {
@@ -199,8 +200,8 @@ const ROUTES: RouteBudget[] = [
 
   {
     route: '/pages/settings/fullscreen',
-    budget: 100,
-    unless: 'isolated settings dialog composition',
+    budget: 160,
+    unless: 'workspace settings landing and grouped settings dialog',
   },
   {
     route: '/pages/cards/fullscreen',
@@ -214,7 +215,7 @@ const ROUTES: RouteBudget[] = [
   },
   {
     route: '/pages/tasks/fullscreen',
-    budget: 225,
+    budget: 250,
     unless: 'TanStack task workspace with typed table, forms and virtual feed',
   },
 
@@ -270,8 +271,8 @@ const ROUTES: RouteBudget[] = [
   },
   {
     route: '/pages/discussions/fullscreen',
-    budget: 160,
-    unless: 'a full-screen desktop application using the responsive AppShell',
+    budget: 210,
+    unless: 'a full discussions workspace with thread detail and settings',
   },
 ]
 

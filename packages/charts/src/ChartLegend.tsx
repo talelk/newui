@@ -1,4 +1,5 @@
 import { createSignal, For, type JSX, Show } from 'solid-js'
+import { Dynamic } from 'solid-js/web'
 import type { ChartLegendItem, ChartLegendProps } from './types'
 
 /**
@@ -66,18 +67,24 @@ function LegendEntry(props: {
     return `${action} ${props.item.label}${hint}`
   }
 
+  const interactive = () => Boolean(props.onToggle)
   return (
-    <button
-      type="button"
+    <Dynamic
+      component={interactive() ? 'button' : 'span'}
+      {...(interactive() ? { type: 'button' as const } : {})}
       data-slot="chart-legend-item"
       data-dimmed={props.dimmed || undefined}
-      aria-pressed={!props.item.hidden}
-      aria-label={toggleLabel()}
-      onClick={() => props.onToggle?.(props.item.name)}
+      aria-pressed={interactive() ? !props.item.hidden : undefined}
+      aria-label={interactive() ? toggleLabel() : undefined}
+      onClick={
+        interactive() ? () => props.onToggle?.(props.item.name) : undefined
+      }
       onMouseEnter={() => props.onHighlight?.(props.item.name)}
       onMouseLeave={() => props.onHighlight?.(null)}
-      onFocus={() => props.onHighlight?.(props.item.name)}
-      onBlur={() => props.onHighlight?.(null)}
+      onFocus={
+        interactive() ? () => props.onHighlight?.(props.item.name) : undefined
+      }
+      onBlur={interactive() ? () => props.onHighlight?.(null) : undefined}
       style={{
         display: 'inline-flex',
         'align-items': 'center',
@@ -89,7 +96,7 @@ function LegendEntry(props: {
         border: 'none',
         'border-radius': 'var(--radius-pill)',
         background: 'transparent',
-        cursor: 'pointer',
+        cursor: interactive() ? 'pointer' : 'default',
         color: 'var(--ink-gray-7)',
         opacity: props.dimmed ? '0.4' : undefined,
       }}
@@ -126,6 +133,6 @@ function LegendEntry(props: {
           </span>
         </Show>
       </span>
-    </button>
+    </Dynamic>
   )
 }

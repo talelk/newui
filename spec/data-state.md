@@ -11,6 +11,7 @@ The one loading, empty and error contract for data organisms.
 | `rows` | `number` | `5` | skeleton row count |
 | `title` | `JSX.Element` | state default | empty/error title |
 | `description` | `JSX.Element` | — | supporting copy |
+| `icon` | `IconProp` | `lucide-inbox` | empty-state glyph |
 | `action` | `JSX.Element` | — | empty action |
 | `error` | `JSX.Element` | — | error message |
 | `onRetry` | `() => void` | — | renders “Try again” |

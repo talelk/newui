@@ -69,7 +69,7 @@ export function EmptyState(props: EmptyStateProps): JSX.Element {
           <div
             data-slot="empty-state-icon"
             class={cn(
-              'grid place-items-center rounded-5 bg-surface-gray-2 text-ink-gray-6',
+              'grid place-items-center rounded-card bg-surface-gray-2 text-ink-gray-6',
               size().pad,
             )}
           >

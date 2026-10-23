@@ -11,27 +11,33 @@ export interface ActivityRecord {
 /**
  * The task feed: a bounded DOM over the thousand seeded records.
  *
- * The virtualiser, the focusable scroll region and the ARIA row positions are
- * `@talelk/newui-organisms`; this keeps the row's own anatomy (who, what, which
- * record) and the card around it.
+ * The section heading belongs to the page's `Section`; this keeps the card and
+ * the row anatomy (who, what, which record) while `VirtualList` owns the
+ * virtualiser, the focusable scroll region, the ARIA row positions and the
+ * shared loading, empty and error states.
  */
-export function ActivityList(props: { rows: ActivityRecord[] }): JSX.Element {
+export function ActivityList(props: {
+  rows: ActivityRecord[]
+  loading?: boolean
+  error?: JSX.Element
+  onRetry?: () => void
+  emptyTitle?: JSX.Element
+  emptyDescription?: JSX.Element
+  emptyAction?: JSX.Element
+}): JSX.Element {
   return (
-    <section
-      aria-label="Activity stream"
-      class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1"
-    >
-      <div class="border-b border-outline-gray-1 p-3">
-        <h2 class="text-section">Workspace activity</h2>
-        <p class="text-caption text-ink-gray-7">
-          {props.rows.length} records · Scroll to explore the complete feed.
-        </p>
-      </div>
+    <div class="overflow-hidden rounded-card border border-outline-gray-1 bg-surface-elevation-1">
       <VirtualList
         label="Task activity"
         items={props.rows}
         itemSize={72}
         height="440px"
+        loading={props.loading}
+        error={props.error}
+        onRetry={props.onRetry}
+        emptyTitle={props.emptyTitle}
+        emptyDescription={props.emptyDescription}
+        emptyAction={props.emptyAction}
       >
         {(row) => (
           <div class="flex h-full items-center gap-3 border-b border-outline-gray-1 px-4">
@@ -54,6 +60,6 @@ export function ActivityList(props: { rows: ActivityRecord[] }): JSX.Element {
           </div>
         )}
       </VirtualList>
-    </section>
+    </div>
   )
 }

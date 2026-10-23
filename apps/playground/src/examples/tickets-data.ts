@@ -29,6 +29,21 @@ const SUBJECTS = [
   'Unable to reset password',
   'Question about API rate limits',
 ]
+/**
+ * Priority is independent of the four-state status cycle and the five-slot
+ * agent/SLA cycle. A 7-item pattern against 4 and 5 breaks the perfect
+ * Open=Urgent=Breached=Unassigned correlation the old fixture had, so the
+ * queue demonstrates real triage.
+ */
+const PRIORITY_PATTERN = [
+  'Urgent',
+  'High',
+  'Medium',
+  'Low',
+  'High',
+  'Medium',
+  'Low',
+] as const
 export const INITIAL: Ticket[] = Array.from({ length: 32 }, (_, index) => ({
   id: `TKT-${1024 - index}`,
   subject: SUBJECTS[index % 8] ?? 'Support request',
@@ -36,7 +51,7 @@ export const INITIAL: Ticket[] = Array.from({ length: 32 }, (_, index) => ({
     ['Acme Corp', 'Globex', 'Northloop', 'Brightwave'][index % 4] ??
     'Acme Corp',
   status: STATUSES[index % 4] ?? 'Open',
-  priority: PRIORITIES[index % 4] ?? 'Medium',
+  priority: PRIORITY_PATTERN[index % PRIORITY_PATTERN.length] ?? 'Medium',
   agent: AGENTS[index % 5] ?? 'Unassigned',
   response:
     index % 5 === 0

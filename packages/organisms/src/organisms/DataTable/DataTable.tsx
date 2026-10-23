@@ -1,4 +1,4 @@
-import { Button, Checkbox, TextInput } from '@talelk/newui-atoms'
+import { Button, Checkbox, cn, TextInput } from '@talelk/newui-atoms'
 import {
   Pagination,
   ScrollTable,
@@ -99,6 +99,8 @@ export interface DataTableProps<T extends { id: string }> {
   onRetry?: () => void
   /** `compact` uses 36px rows instead of 44px. */
   density?: 'comfortable' | 'compact'
+  /** Width at which the table becomes cards. Default `sm` (640px). */
+  cardBreakpoint?: 'sm' | 'md' | 'lg'
   /** Total or scope shown beside the count in the mobile selection bar. */
   selectionSummary?: (ids: string[]) => JSX.Element
   pageSize?: number
@@ -120,7 +122,10 @@ export interface DataTableProps<T extends { id: string }> {
 export function DataTable<T extends { id: string }>(
   props: DataTableProps<T>,
 ): JSX.Element {
-  const selectable = () => props.selectable !== false
+  // Selection exists to feed the bulk action. A read table with no action
+  // would render a checkbox that can never do anything.
+  const selectable = () =>
+    props.selectable !== false && props.onRowsAction !== undefined
   const selection: DataTableColumn<T> = {
     id: 'select',
     enableHiding: false,
@@ -198,15 +203,80 @@ export function DataTable<T extends { id: string }>(
   }
   const cellPad = () =>
     props.density === 'compact' ? 'px-4 py-2' : 'px-4 py-3'
-  const emptyAction = () => (
-    <Button
-      onClick={() => {
-        if (props.onClearFilters) props.onClearFilters()
-        else table.resetGlobalFilter()
-      }}
+  const cardHiddenClass = () =>
+    props.cardBreakpoint === 'lg'
+      ? 'lg:hidden'
+      : props.cardBreakpoint === 'md'
+        ? 'md:hidden'
+        : 'sm:hidden'
+  const tableHiddenClass = () =>
+    props.cardBreakpoint === 'lg'
+      ? 'hidden lg:block'
+      : props.cardBreakpoint === 'md'
+        ? 'hidden md:block'
+        : 'hidden sm:block'
+  const emptyAction = () => {
+    // Do not offer to reset a filter this table does not own. With `hideSearch`
+    // the page's FilterBar is the only reset path, so it must provide one.
+    if (props.hideSearch && !props.onClearFilters) return undefined
+    return (
+      <Button
+        onClick={() => {
+          if (props.onClearFilters) props.onClearFilters()
+          else table.resetGlobalFilter()
+        }}
+      >
+        {props.onClearFilters ? 'Reset filters' : 'Clear search'}
+      </Button>
+    )
+  }
+  /**
+   * The table's own controls. The toolbar is stable at every width: when an
+   * external FilterBar owns search and there is no caption, the table title
+   * fills the space, so a selection never inserts a row or moves the menu.
+   */
+  const pageCount = () =>
+    Math.max(
+      1,
+      Math.ceil(
+        table.getFilteredRowModel().rows.length /
+          table.atoms.pagination.get().pageSize,
+      ),
+    )
+  const columnLabel = (column: {
+    id: string
+    columnDef: { header?: unknown }
+  }) =>
+    typeof column.columnDef.header === 'string'
+      ? column.columnDef.header
+      : column.id
+  const columnMenu = (placement: 'up' | 'down') => (
+    <details
+      data-slot="data-table-columns"
+      class="relative max-sm:hidden"
+      open={false}
     >
-      {props.onClearFilters ? 'Reset filters' : 'Clear search'}
-    </Button>
+      <summary class="list-none cursor-pointer rounded-3 border border-outline-gray-2 px-3 py-1.5 text-interface focus-visible:focus-ring [&::-webkit-details-marker]:hidden">
+        Columns
+      </summary>
+      <div
+        class={`absolute end-0 z-floating flex min-w-44 flex-col gap-2 rounded-6 border border-outline-gray-1 bg-surface-elevation-2 p-3 shadow-md ${placement === 'up' ? 'bottom-full mb-2' : 'mt-2'}`}
+      >
+        <For
+          each={table
+            .getAllLeafColumns()
+            .filter((column) => column.getCanHide())}
+        >
+          {(column) => (
+            <Checkbox
+              label={columnLabel(column)}
+              checked={column.getIsVisible()}
+              onCheckedChange={(value) => column.toggleVisibility(value)}
+            />
+          )}
+        </For>
+      </div>
+    </details>
   )
   return (
     <section
@@ -214,7 +284,10 @@ export function DataTable<T extends { id: string }>(
       aria-label={props.title}
       data-slot="data-table"
     >
-      <div class="flex flex-wrap items-center justify-between gap-control-gap p-card-pad-compact">
+      <div
+        data-slot="data-table-toolbar"
+        class="flex flex-wrap items-center justify-between gap-control-gap p-card-pad-compact"
+      >
         <Show when={!props.hideSearch}>
           <div class="w-full sm:w-72">
             <TextInput
@@ -232,32 +305,21 @@ export function DataTable<T extends { id: string }>(
         <Show when={props.caption}>
           <p class="min-w-0 text-caption text-ink-gray-7">{props.caption}</p>
         </Show>
+        <Show when={props.hideSearch && !props.caption}>
+          <span class="min-w-0 text-interface font-medium text-ink-gray-8">
+            {props.title}
+          </span>
+        </Show>
         <div class="ms-auto flex flex-wrap items-center gap-2">
           <Show when={props.onRowsAction && selected().length}>
+            <span class="text-caption text-ink-gray-7 tabular-nums">
+              {props.selectionSummary?.(selected())}
+            </span>
             <Button variant="outline" class="max-sm:hidden" onClick={runAction}>
               {props.actionLabel ?? 'Update selected'} ({selected().length})
             </Button>
           </Show>
-          <details class="relative">
-            <summary class="cursor-pointer rounded-3 border border-outline-gray-2 px-3 py-1.5 text-interface focus-visible:focus-ring">
-              Columns
-            </summary>
-            <div class="absolute end-0 z-floating mt-2 flex min-w-44 flex-col gap-2 rounded-6 border border-outline-gray-1 bg-surface-elevation-2 p-3 shadow-md">
-              <For
-                each={table
-                  .getAllLeafColumns()
-                  .filter((column) => column.getCanHide())}
-              >
-                {(column) => (
-                  <Checkbox
-                    label={column.id}
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(value)}
-                  />
-                )}
-              </For>
-            </div>
-          </details>
+          {columnMenu('down')}
         </div>
       </div>
       <Show
@@ -274,12 +336,14 @@ export function DataTable<T extends { id: string }>(
         <Show when={hasMobileCards() && table.getRowModel().rows.length > 0}>
           <div
             data-slot="data-table-cards"
-            class="flex flex-col gap-2 p-card-pad-compact sm:hidden"
+            class={`flex flex-col gap-2 p-card-pad-compact ${cardHiddenClass()}`}
           >
             <Show when={selectable()}>
               <div class="flex items-center justify-between gap-2 px-1">
                 <Checkbox
                   aria-label={`Select all ${props.title} on this page`}
+                  padded
+                  class="size-10"
                   checked={table.getIsAllPageRowsSelected()}
                   indeterminate={table.getIsSomePageRowsSelected()}
                   onCheckedChange={(value) =>
@@ -309,6 +373,8 @@ export function DataTable<T extends { id: string }>(
                       <Show when={selectable()}>
                         <Checkbox
                           aria-label={`Select ${row.original.id}`}
+                          padded
+                          class="size-10"
                           checked={row.getIsSelected()}
                           disabled={!row.getCanSelect()}
                           onCheckedChange={(value) => row.toggleSelected(value)}
@@ -378,7 +444,7 @@ export function DataTable<T extends { id: string }>(
           </div>
         </Show>
         <Show when={table.getFilteredRowModel().rows.length > 0}>
-          <div class={hasMobileCards() ? 'hidden sm:block' : ''}>
+          <div class={hasMobileCards() ? tableHiddenClass() : ''}>
             <ScrollTable label={`${props.title} table`} stickyHeader>
               <table class="w-full min-w-[720px] border-collapse text-start">
                 <ScrollTableHead>
@@ -422,7 +488,15 @@ export function DataTable<T extends { id: string }>(
                                     <span aria-hidden="true">
                                       <span
                                         aria-hidden="true"
-                                        class="lucide-arrow-up-down inline-block size-4 align-middle"
+                                        class={cn(
+                                          'inline-block size-4 align-middle',
+                                          header.column.getIsSorted() === 'asc'
+                                            ? 'lucide-arrow-up'
+                                            : header.column.getIsSorted() ===
+                                                'desc'
+                                              ? 'lucide-arrow-down'
+                                              : 'lucide-arrow-up-down',
+                                        )}
                                       />
                                     </span>
                                   </button>
@@ -476,24 +550,42 @@ export function DataTable<T extends { id: string }>(
             action={emptyAction()}
           />
         </Show>
-        <div class="flex flex-wrap items-center justify-between gap-control-gap border-t border-outline-gray-1 p-card-pad-compact">
-          <span class="text-caption text-ink-gray-7" role="status">
-            <Show when={selectable()}>{selected().length} selected · </Show>
-            {table.getFilteredRowModel().rows.length}{' '}
-            {props.recordsLabel ?? 'records'}
-          </span>
-          <Pagination.Root
-            page={table.atoms.pagination.get().pageIndex + 1}
-            pageSize={table.atoms.pagination.get().pageSize}
-            count={table.getFilteredRowModel().rows.length}
-            onPageChange={(page) => table.setPageIndex(page - 1)}
-          >
-            <Pagination.Range />
-            <Pagination.PrevTrigger />
-            <Pagination.Pages />
-            <Pagination.NextTrigger />
-          </Pagination.Root>
-        </div>
+        <Show when={table.getFilteredRowModel().rows.length > 0}>
+          <div class="flex flex-wrap items-center justify-between gap-control-gap border-t border-outline-gray-1 p-card-pad-compact">
+            <span class="text-caption text-ink-gray-7" role="status">
+              <Show when={selectable()}>{selected().length} selected · </Show>
+              {table.getFilteredRowModel().rows.length}{' '}
+              {props.recordsLabel ?? 'records'}
+            </span>
+            <div class="flex flex-wrap items-center gap-2">
+              <Pagination.Root
+                class="max-sm:flex-nowrap"
+                page={table.atoms.pagination.get().pageIndex + 1}
+                pageSize={table.atoms.pagination.get().pageSize}
+                count={table.getFilteredRowModel().rows.length}
+                onPageChange={(page) => table.setPageIndex(page - 1)}
+              >
+                <span class="contents max-sm:hidden">
+                  <Pagination.Range />
+                </span>
+                <Show when={pageCount() > 1}>
+                  <span class="text-caption text-ink-gray-7 tabular-nums sm:hidden">
+                    Page {table.atoms.pagination.get().pageIndex + 1} of{' '}
+                    {pageCount()}
+                  </span>
+                  <Pagination.PrevTrigger />
+                  <span class="contents max-sm:hidden">
+                    <Pagination.Pages />
+                  </span>
+                  <Pagination.NextTrigger />
+                </Show>
+              </Pagination.Root>
+            </div>
+          </div>
+        </Show>
+      </Show>
+      <Show when={selectable() && selected().length > 0}>
+        <div class="h-16 sm:hidden" aria-hidden="true" />
       </Show>
       <div class="sm:hidden">
         <SelectionBar

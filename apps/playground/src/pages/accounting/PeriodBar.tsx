@@ -46,7 +46,7 @@ export function PeriodBar(props: {
     )
   }
   return (
-    <div class="flex flex-col gap-2 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-1 sm:flex-row sm:items-center">
+    <div class="grid gap-2 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-1 sm:items-center xl:grid-cols-[auto_1fr]">
       <TabButtons
         label="Reporting period shortcuts"
         variant="ghost"
@@ -58,7 +58,7 @@ export function PeriodBar(props: {
           { label: 'Last six months', value: 'six' },
         ]}
       />
-      <div class="flex flex-wrap items-center gap-2 sm:ms-auto">
+      <div class="flex flex-wrap items-center gap-2 sm:justify-end">
         <Show when={props.showGrain}>
           <div class="w-36 max-w-full">
             <Select
@@ -79,18 +79,25 @@ export function PeriodBar(props: {
             />
           </div>
         </Show>
-        <DateRangePicker
-          aria-label="Reporting period"
-          value={props.range}
-          onValueChange={props.onRangeChange}
-          format={{ month: 'short', day: 'numeric', year: 'numeric' }}
-          class="w-full sm:w-[19rem]"
-        />
-        <Show when={props.canReset}>
-          <Button variant="ghost" size="sm" onClick={props.onReset}>
-            Reset
-          </Button>
-        </Show>
+        <div class="flex w-full items-center gap-2 sm:w-auto">
+          <DateRangePicker
+            aria-label="Reporting period"
+            value={props.range}
+            onValueChange={props.onRangeChange}
+            format={{ month: 'short', day: 'numeric', year: 'numeric' }}
+            class="w-auto min-w-0 flex-1 sm:w-[19rem] sm:flex-none"
+          />
+          <Show when={props.canReset}>
+            <Button
+              variant="ghost"
+              size="sm"
+              class="shrink-0"
+              onClick={props.onReset}
+            >
+              Reset
+            </Button>
+          </Show>
+        </div>
       </div>
     </div>
   )

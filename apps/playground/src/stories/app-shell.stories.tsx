@@ -91,7 +91,7 @@ export function Demo(props: { collapsed?: boolean }): JSX.Element {
         </Button>
       }
     >
-      <div class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4">
+      <div class="rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-4">
         The desktop sidebar collapses to labelled icons. At phone width this
         same menu opens as an expanded drawer.
       </div>

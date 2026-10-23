@@ -2,7 +2,6 @@ import {
   Avatar,
   Badge,
   Button,
-  Checkbox,
   Icon,
   Switch,
   Textarea,
@@ -17,38 +16,60 @@ import {
   RadioGroup,
   Select,
 } from '@talelk/newui-molecules'
+import { Section } from '@talelk/newui-organisms'
 import { createSignal, For, type JSX, Show } from 'solid-js'
 import { AppPage } from '../examples/AppPage'
 import { sitePath } from '../lib/base'
 
+/** Move focus to the first field the form marked invalid after submit. */
+function focusFirstInvalid(form: HTMLFormElement) {
+  queueMicrotask(() => {
+    form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus()
+  })
+}
+
 function CreateAccount(): JSX.Element {
   const [name, setName] = createSignal('')
   const [email, setEmail] = createSignal('')
-  const [error, setError] = createSignal(false)
+  const [attempted, setAttempted] = createSignal(false)
   const [saved, setSaved] = createSignal(false)
+  const [savedName, setSavedName] = createSignal('')
   return (
-    <Card class="gap-4">
+    <Card class="gap-card-gap">
       <CardHeader>
         <CardTitle>Create an account</CardTitle>
         <CardDescription>Your next workspace starts here.</CardDescription>
       </CardHeader>
       <form
         noValidate
-        class="flex flex-col gap-3"
+        class="flex flex-col gap-field-gap"
         onSubmit={(event) => {
           event.preventDefault()
+          const form = event.currentTarget
           const valid = name().trim().length > 1 && isEmail(email())
-          setError(!valid)
-          setSaved(valid)
+          setAttempted(true)
+          if (!valid) {
+            setSaved(false)
+            focusFirstInvalid(form)
+            return
+          }
+          setAttempted(false)
+          setSavedName(name().trim())
+          setSaved(true)
         }}
       >
         <TextInput
           label="Account name"
           required
           value={name()}
-          onInput={(event) => setName(event.currentTarget.value)}
+          onInput={(event) => {
+            setName(event.currentTarget.value)
+            setSaved(false)
+          }}
           error={
-            error() && name().trim().length < 2 ? 'Enter your name.' : undefined
+            attempted() && name().trim().length < 2
+              ? 'Enter your name.'
+              : undefined
           }
         />
         <TextInput
@@ -56,18 +77,28 @@ function CreateAccount(): JSX.Element {
           type="email"
           required
           value={email()}
-          onInput={(event) => setEmail(event.currentTarget.value)}
+          onInput={(event) => {
+            setEmail(event.currentTarget.value)
+            setSaved(false)
+          }}
           error={
-            error() && !isEmail(email()) ? 'Enter a valid email.' : undefined
+            attempted() && !isEmail(email())
+              ? 'Enter a valid email.'
+              : undefined
           }
         />
-        <Button type="submit" variant="solid" theme="blue">
+        <Button
+          type="submit"
+          variant="solid"
+          theme="blue"
+          class="w-full sm:w-auto sm:self-start"
+        >
           Create demo account
         </Button>
       </form>
       <Show when={saved()}>
         <p role="status" class="text-caption text-ink-green-7">
-          Demo account created for {name()}.
+          Demo account created for {savedName()}.
         </p>
       </Show>
     </Card>
@@ -78,10 +109,15 @@ function PaymentMethod(): JSX.Element {
   const [method, setMethod] = createSignal('card')
   const [number, setNumber] = createSignal('4242 4242 4242 4242')
   const [name, setName] = createSignal('Rhea Kapoor')
-  const [saved, setSaved] = createSignal(false)
-  const [invalid, setInvalid] = createSignal(false)
+  const [attempted, setAttempted] = createSignal(false)
+  const [savedMessage, setSavedMessage] = createSignal('')
+  const numberDigits = () => number().replace(/\s/g, '')
+  const cardNameInvalid = () =>
+    attempted() && method() === 'card' && name().trim().length < 2
+  const cardNumberInvalid = () =>
+    attempted() && method() === 'card' && !/^\d{16}$/.test(numberDigits())
   return (
-    <Card class="gap-4">
+    <Card class="gap-card-gap">
       <CardHeader>
         <CardTitle>Payment method</CardTitle>
         <CardDescription>
@@ -93,7 +129,8 @@ function PaymentMethod(): JSX.Element {
         value={method()}
         onValueChange={(value) => {
           setMethod(value)
-          setSaved(false)
+          setAttempted(false)
+          setSavedMessage('')
         }}
         orientation="horizontal"
         items={[
@@ -103,31 +140,48 @@ function PaymentMethod(): JSX.Element {
       />
       <form
         noValidate
-        class="flex flex-col gap-3"
+        class="flex flex-col gap-field-gap"
         onSubmit={(event) => {
           event.preventDefault()
-          const valid =
-            method() === 'paypal' ||
-            (/^\d{16}$/.test(number().replace(/\s/g, '')) &&
-              name().trim().length > 1)
-          setInvalid(!valid)
-          setSaved(valid)
+          const form = event.currentTarget
+          setAttempted(true)
+          if (method() === 'paypal') {
+            setAttempted(false)
+            setSavedMessage('Demo PayPal preference saved.')
+            return
+          }
+          if (/^\d{16}$/.test(numberDigits()) && name().trim().length > 1) {
+            setAttempted(false)
+            setSavedMessage(
+              `Demo card ending ${numberDigits().slice(-4)} saved.`,
+            )
+            return
+          }
+          setSavedMessage('')
+          focusFirstInvalid(form)
         }}
       >
         <Show when={method() === 'card'}>
           <TextInput
             label="Cardholder name"
             value={name()}
-            onInput={(event) => setName(event.currentTarget.value)}
+            onInput={(event) => {
+              setName(event.currentTarget.value)
+              setSavedMessage('')
+            }}
+            error={cardNameInvalid() ? 'Enter the cardholder name.' : undefined}
           />
           <TextInput
             label="Card number"
             value={number()}
             prefix={<Icon icon="lucide-credit-card" class="size-4" />}
-            onInput={(event) => setNumber(event.currentTarget.value)}
+            onInput={(event) => {
+              setNumber(event.currentTarget.value)
+              setSavedMessage('')
+            }}
             error={
-              invalid()
-                ? 'Use a 16-digit demo card number and a cardholder name.'
+              cardNumberInvalid()
+                ? 'Use a 16-digit demo card number.'
                 : undefined
             }
           />
@@ -137,16 +191,17 @@ function PaymentMethod(): JSX.Element {
             Save PayPal as the preferred provider for this local demo.
           </p>
         </Show>
-        <Button type="submit" variant="outline">
+        <Button
+          type="submit"
+          variant="outline"
+          class="w-full sm:w-auto sm:self-start"
+        >
           Save payment method
         </Button>
       </form>
-      <Show when={saved()}>
+      <Show when={savedMessage()}>
         <p role="status" class="text-caption text-ink-green-7">
-          {method() === 'card'
-            ? `Demo card ending ${number().replace(/\s/g, '').slice(-4)}`
-            : 'Demo PayPal preference'}{' '}
-          saved.
+          {savedMessage()}
         </p>
       </Show>
     </Card>
@@ -161,7 +216,7 @@ function TeamMembers(): JSX.Element {
   const [invite, setInvite] = createSignal('')
   const [error, setError] = createSignal('')
   return (
-    <Card class="gap-4">
+    <Card class="gap-card-gap">
       <CardHeader>
         <CardTitle>Team members</CardTitle>
         <CardDescription>
@@ -178,38 +233,53 @@ function TeamMembers(): JSX.Element {
                 {member.email}
               </p>
             </div>
-            <div class="w-24 shrink-0">
-              <Select
-                aria-label={`Role for ${member.name}`}
-                disabled={member.role === 'Owner'}
-                options={['Owner', 'Admin', 'Member'].map((value) => ({
-                  value,
-                  label: value,
-                }))}
-                value={member.role}
-                onValueChange={(value) =>
-                  setMembers((rows) =>
-                    rows.map((row, i) =>
-                      i === index() ? { ...row, role: value ?? 'Member' } : row,
-                    ),
-                  )
-                }
-              />
-            </div>
+            <Show
+              when={member.role === 'Owner'}
+              fallback={
+                <div class="w-24 shrink-0">
+                  <Select
+                    aria-label={`Role for ${member.name}`}
+                    options={['Admin', 'Member'].map((value) => ({
+                      value,
+                      label: value,
+                    }))}
+                    value={member.role}
+                    onValueChange={(value) =>
+                      setMembers((rows) =>
+                        rows.map((row, i) =>
+                          i === index()
+                            ? { ...row, role: value ?? 'Member' }
+                            : row,
+                        ),
+                      )
+                    }
+                  />
+                </div>
+              }
+            >
+              <div class="flex w-24 shrink-0 justify-end">
+                <Badge theme="gray" variant="subtle">
+                  <span class="sr-only">Role: </span>Owner
+                </Badge>
+              </div>
+            </Show>
           </div>
         )}
       </For>
       <form
         noValidate
-        class="flex flex-col gap-2 border-t border-outline-gray-1 pt-3"
+        class="flex flex-col gap-control-gap border-t border-outline-gray-1 pt-3"
         onSubmit={(event) => {
           event.preventDefault()
+          const form = event.currentTarget
           if (!isEmail(invite())) {
             setError('Enter a valid email.')
+            focusFirstInvalid(form)
             return
           }
           if (members().some((member) => member.email === invite())) {
             setError('This person is already on the team.')
+            focusFirstInvalid(form)
             return
           }
           setMembers((rows) => [
@@ -228,10 +298,18 @@ function TeamMembers(): JSX.Element {
           label="Invite email"
           type="email"
           value={invite()}
-          onInput={(event) => setInvite(event.currentTarget.value)}
+          onInput={(event) => {
+            setInvite(event.currentTarget.value)
+            setError('')
+          }}
           error={error() || undefined}
         />
-        <Button type="submit" variant="outline" iconLeft="lucide-user-plus">
+        <Button
+          type="submit"
+          variant="outline"
+          iconLeft="lucide-user-plus"
+          class="w-full sm:w-auto sm:self-start"
+        >
           Add demo member
         </Button>
       </form>
@@ -257,7 +335,7 @@ function ShareDocument(): JSX.Element {
       .catch(() => setCopied('Select and copy the link above.'))
   }
   return (
-    <Card class="gap-4">
+    <Card class="gap-card-gap">
       <CardHeader>
         <CardTitle>Share this document</CardTitle>
         <CardDescription>Keep the right people in the loop.</CardDescription>
@@ -271,9 +349,17 @@ function ShareDocument(): JSX.Element {
           { label: 'Can comment', value: 'comment' },
           { label: 'Can edit', value: 'edit' },
         ]}
-        onValueChange={(value) => setAccess(value ?? 'view')}
+        onValueChange={(value) => {
+          setAccess(value ?? 'view')
+          setCopied('')
+        }}
       />
-      <Button variant="outline" iconLeft="lucide-copy" onClick={copy}>
+      <Button
+        variant="outline"
+        iconLeft="lucide-copy"
+        onClick={copy}
+        class="w-full sm:w-auto sm:self-start"
+      >
         Copy link
       </Button>
       <p class="text-caption text-ink-gray-7" role="status">
@@ -288,7 +374,7 @@ function Notifications(): JSX.Element {
   const [email, setEmail] = createSignal(true)
   const [digest, setDigest] = createSignal(false)
   return (
-    <Card class="gap-4">
+    <Card class="gap-card-gap">
       <CardHeader>
         <CardTitle>Notifications</CardTitle>
         <CardDescription>
@@ -323,28 +409,37 @@ function ReportIssue(): JSX.Element {
   const [area, setArea] = createSignal('billing')
   const [priority, setPriority] = createSignal('medium')
   const [description, setDescription] = createSignal('')
-  const [submitted, setSubmitted] = createSignal(false)
+  const [summary, setSummary] = createSignal('')
   const [error, setError] = createSignal('')
+  const resetFeedback = () => {
+    setSummary('')
+    setError('')
+  }
   return (
-    <Card class="gap-4">
+    <Card class="gap-card-gap">
       <CardHeader>
         <CardTitle>Report an issue</CardTitle>
         <CardDescription>Tell us what happened so we can help.</CardDescription>
       </CardHeader>
       <form
         noValidate
-        class="flex flex-col gap-3"
+        class="flex flex-col gap-field-gap"
         onSubmit={(event) => {
           event.preventDefault()
+          const form = event.currentTarget
           if (description().trim().length < 10) {
+            setSummary('')
             setError('Describe the issue in at least 10 characters.')
+            focusFirstInvalid(form)
             return
           }
           setError('')
-          setSubmitted(true)
+          setSummary(
+            `Your ${priority()} priority ${area()} report is saved in this demo.`,
+          )
         }}
       >
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-2 gap-field-gap">
           <Select
             label="Area"
             value={area()}
@@ -352,7 +447,10 @@ function ReportIssue(): JSX.Element {
               value,
               label: value[0]?.toUpperCase() + value.slice(1),
             }))}
-            onValueChange={(value) => setArea(value ?? 'billing')}
+            onValueChange={(value) => {
+              setArea(value ?? 'billing')
+              resetFeedback()
+            }}
           />
           <Select
             label="Issue priority"
@@ -361,23 +459,34 @@ function ReportIssue(): JSX.Element {
               value,
               label: value[0]?.toUpperCase() + value.slice(1),
             }))}
-            onValueChange={(value) => setPriority(value ?? 'medium')}
+            onValueChange={(value) => {
+              setPriority(value ?? 'medium')
+              resetFeedback()
+            }}
           />
         </div>
         <Textarea
           label="What happened?"
           rows={3}
           value={description()}
-          onInput={(event) => setDescription(event.currentTarget.value)}
+          onInput={(event) => {
+            setDescription(event.currentTarget.value)
+            resetFeedback()
+          }}
           error={error() || undefined}
         />
-        <Button type="submit" variant="solid" theme="blue">
+        <Button
+          type="submit"
+          variant="solid"
+          theme="blue"
+          class="w-full sm:w-auto sm:self-start"
+        >
           Submit demo report
         </Button>
       </form>
-      <Show when={submitted()}>
+      <Show when={summary()}>
         <p role="status" class="text-caption text-ink-green-7">
-          Your {priority()} priority {area()} report is saved in this demo.
+          {summary()}
         </p>
       </Show>
     </Card>
@@ -387,9 +496,9 @@ function ReportIssue(): JSX.Element {
 function WorkspaceCard(): JSX.Element {
   const [starred, setStarred] = createSignal(false)
   return (
-    <Card class="gap-4">
+    <Card class="gap-card-gap">
       <div class="flex items-start justify-between">
-        <span class="grid size-10 place-items-center rounded-5 bg-surface-blue-2 text-ink-blue-8">
+        <span class="grid size-10 place-items-center rounded-card bg-surface-blue-2 text-ink-blue-8">
           <Icon icon="lucide-chart-no-axes-combined" class="size-5" />
         </span>
         <Badge theme="green">Live demo</Badge>
@@ -400,7 +509,7 @@ function WorkspaceCard(): JSX.Element {
           A clear view of revenue, channels, and the next opportunity.
         </CardDescription>
       </CardHeader>
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-control-gap">
         <Button
           route={sitePath('/pages/analytics/fullscreen')}
           variant="outline"
@@ -425,17 +534,32 @@ function CookieSettings(): JSX.Element {
   const [marketing, setMarketing] = createSignal(false)
   const [saved, setSaved] = createSignal(false)
   return (
-    <Card class="gap-4">
+    <Card class="gap-card-gap">
       <CardHeader>
         <CardTitle>Cookie settings</CardTitle>
         <CardDescription>Keep control of your preferences.</CardDescription>
       </CardHeader>
-      <Checkbox
-        label="Essential cookies"
-        description="Required for the workspace to work."
-        checked
-        disabled
-      />
+      <div class="flex items-start gap-control-gap">
+        <span
+          aria-hidden="true"
+          class="mt-0.5 grid size-3.5 shrink-0 place-items-center rounded-1 bg-ink-gray-9 text-surface-base"
+        >
+          <Icon icon="lucide-check" class="size-2.5" />
+        </span>
+        <div class="flex min-w-0 flex-col gap-1">
+          <div class="flex flex-wrap items-center gap-control-gap">
+            <span class="text-interface text-ink-gray-8">
+              Essential cookies
+            </span>
+            <Badge theme="gray" variant="subtle">
+              Always on
+            </Badge>
+          </div>
+          <p class="text-caption text-ink-gray-7">
+            Required for the workspace to work.
+          </p>
+        </div>
+      </div>
       <Switch
         label="Analytics cookies"
         checked={analytics()}
@@ -452,7 +576,11 @@ function CookieSettings(): JSX.Element {
           setSaved(false)
         }}
       />
-      <Button variant="outline" onClick={() => setSaved(true)}>
+      <Button
+        variant="outline"
+        onClick={() => setSaved(true)}
+        class="w-full sm:w-auto sm:self-start"
+      >
         Save preferences
       </Button>
       <Show when={saved()}>
@@ -471,11 +599,13 @@ export function Cards(): JSX.Element {
       title="Small surfaces. Useful patterns."
       description="Eight everyday compositions, built from the same compact controls and semantic surfaces."
     >
-      <section aria-labelledby="card-patterns-title">
-        <h2 id="card-patterns-title" class="mb-4 text-section">
-          Everyday workspace patterns
-        </h2>
-        <div class="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <Section
+        id="card-patterns"
+        title="Everyday workspace patterns"
+        headingLevel={2}
+        class="gap-card-gap"
+      >
+        <div class="grid items-start gap-card-gap md:grid-cols-2 xl:grid-cols-3">
           <CreateAccount />
           <TeamMembers />
           <Notifications />
@@ -485,7 +615,7 @@ export function Cards(): JSX.Element {
           <WorkspaceCard />
           <CookieSettings />
         </div>
-      </section>
+      </Section>
     </AppPage>
   )
 }

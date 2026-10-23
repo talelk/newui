@@ -150,7 +150,7 @@ export default function Carousel(props: { example?: string }) {
       >
         <section
           ref={track}
-          class="flex snap-mandatory overflow-auto rounded-5 focus-visible:focus-ring"
+          class="flex snap-mandatory overflow-auto rounded-card focus-visible:focus-ring"
           classList={{
             'h-72 snap-y flex-col': orientation() === 'Vertical',
             'snap-x': orientation() === 'Horizontal',
@@ -212,7 +212,7 @@ export default function Carousel(props: { example?: string }) {
               <article
                 aria-roledescription="slide"
                 aria-label={`${position() + 1} of ${SLIDES.length}`}
-                class="flex min-h-64 shrink-0 snap-start flex-col justify-between rounded-5 border border-outline-blue-1 bg-surface-blue-1 p-6"
+                class="flex min-h-64 shrink-0 snap-start flex-col justify-between rounded-card border border-outline-blue-1 bg-surface-blue-1 p-6"
                 classList={{
                   'w-full': size() === 'Full width',
                   'w-64': size() === 'Compact cards',

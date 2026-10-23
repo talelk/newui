@@ -1,14 +1,22 @@
 {
   "files": [
     "pages/Settings.tsx",
+    "examples/AppPage.tsx",
+    "lib/base.ts",
+    "lib/examples.ts",
+    "shell/ThemeMenu.tsx",
+    "shell/theme.ts",
     "examples/Notice.tsx",
-    "lib/PageSection.tsx",
-    "shell/PageIntro.tsx"
+    "pages/settings/SettingsSummary.tsx",
+    "pages/settings/settings-fixtures.ts"
   ],
   "packages": [
+    "@solidjs/router",
     "@talelk/newui-atoms",
     "@talelk/newui-data",
+    "@talelk/newui-molecules",
     "@talelk/newui-organisms",
+    "@talelk/newui-templates",
     "solid-js"
   ]
 }

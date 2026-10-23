@@ -149,8 +149,13 @@ export function formatTimeAxisLabel(
   grain: TimeGrain = 'day',
   level = 0,
 ): string {
-  const date = toDate(value) ?? (value instanceof Date ? value : null)
-  if (!date) return ''
+  const date =
+    value instanceof Date
+      ? value
+      : typeof value === 'number'
+        ? new Date(value)
+        : toDate(value)
+  if (!date || Number.isNaN(date.getTime())) return ''
 
   const month = MONTHS[date.getMonth()] ?? ''
   if (grain === 'year' || level > 0 || date.getMonth() === 0) {

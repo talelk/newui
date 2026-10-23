@@ -245,7 +245,7 @@ export function EditorToolbar(props: EditorToolbarProps): JSX.Element {
       {...rest}
       role="toolbar"
       aria-label={local['aria-label'] ?? 'Formatting'}
-      class={`flex flex-wrap gap-1 rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-2 ${local.class ?? ''}`}
+      class={`flex flex-wrap gap-1 rounded-card border border-outline-gray-1 bg-surface-gray-1 p-2 ${local.class ?? ''}`}
       data-slot="editor-toolbar"
     >
       <For each={ACTIONS}>

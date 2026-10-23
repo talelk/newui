@@ -53,8 +53,9 @@ export const ListRow: ParentComponent<ListRowProps> = (props) => {
       data-slot="list-row"
       data-active={local.active ? '' : undefined}
       class={cn(
-        'grid cursor-pointer grid-cols-[var(--list-columns)] items-center gap-control-gap rounded-control px-control-pad',
-        'transition-colors hover:bg-surface-gray-2',
+        'grid grid-cols-[var(--list-columns)] items-center gap-control-gap rounded-control px-control-pad',
+        'transition-colors',
+        props.onClick && 'cursor-pointer hover:bg-surface-gray-2',
         'data-[active]:bg-surface-gray-3',
         local.height ?? 'h-14',
         local.class,

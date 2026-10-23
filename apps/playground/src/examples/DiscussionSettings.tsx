@@ -307,6 +307,7 @@ export function DiscussionSettings(props: {
                       description="Choose a light, dark, or system-matched interface"
                     >
                       <Select
+                        aria-label="Appearance"
                         value={theme()}
                         onValueChange={(value) => setTheme(value ?? 'system')}
                         options={[
@@ -327,6 +328,7 @@ export function DiscussionSettings(props: {
                       description="Show unread activity as a dot or a count"
                     >
                       <Select
+                        aria-label="Unread badge"
                         value={badgeStyle()}
                         onValueChange={(value) =>
                           setBadgeStyle(value ?? 'Unread count')
@@ -373,6 +375,7 @@ export function DiscussionSettings(props: {
                         description="Choose how often you receive your digest"
                       >
                         <Select
+                          aria-label="Digest frequency"
                           value={digestFrequency()}
                           onValueChange={(value) =>
                             setDigestFrequency(value ?? 'Weekly')

@@ -23,7 +23,7 @@ function Code(props: { title?: string; children: string }): JSX.Element {
           {props.title}
         </figcaption>
       </Show>
-      <pre class="whitespace-pre-wrap break-words rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
+      <pre class="whitespace-pre-wrap break-words rounded-card border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
         <code>{props.children.trim()}</code>
       </pre>
     </figure>
@@ -118,7 +118,7 @@ export function Kit(): JSX.Element {
         title="1 · The ladder"
         description="Each level imports only from the level below it. That is the whole rule; everything else follows from it."
       >
-        <div class="overflow-x-auto rounded-5 border border-outline-gray-1">
+        <div class="overflow-x-auto rounded-card border border-outline-gray-1">
           <table class="w-full border-collapse text-start text-sm">
             <thead class="bg-surface-gray-1 text-caption text-ink-gray-7">
               <tr>
@@ -370,7 +370,7 @@ pnpm dev:starter     # http://localhost:4183
 pnpm build:starter   # 138 kB gzip: frame, router, data layer, table, forms
           `}
         </Code>
-        <div class="overflow-x-auto rounded-5 border border-outline-gray-1">
+        <div class="overflow-x-auto rounded-card border border-outline-gray-1">
           <table class="w-full border-collapse text-start text-sm">
             <thead class="bg-surface-gray-1 text-caption text-ink-gray-7">
               <tr>

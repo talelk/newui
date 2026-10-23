@@ -23,6 +23,8 @@ export interface MailMessage {
   starred: boolean
   muted: boolean
   label: 'Work' | 'Personal'
+  /** ISO timestamp used by the list and the reading pane. */
+  receivedAt: string
   replies: string[]
 }
 
@@ -89,6 +91,25 @@ const SUBJECTS = [
   ],
 ] as const
 
+/**
+ * A fixed recent run for the demo, newest first. The UI renders these relative
+ * to the reader's day (time, Yesterday, weekday, date).
+ */
+const RECEIVED_AT = [
+  '2026-10-23T09:42:00.000Z',
+  '2026-10-23T08:15:00.000Z',
+  '2026-10-22T17:05:00.000Z',
+  '2026-10-22T11:30:00.000Z',
+  '2026-10-21T15:20:00.000Z',
+  '2026-10-20T09:00:00.000Z',
+  '2026-10-18T13:45:00.000Z',
+  '2026-10-16T10:10:00.000Z',
+  '2026-10-14T16:25:00.000Z',
+  '2026-10-12T08:30:00.000Z',
+  '2026-10-09T14:00:00.000Z',
+  '2026-10-06T12:00:00.000Z',
+] as const
+
 export const initialMail: MailMessage[] = SUBJECTS.map(
   ([subject, name, body], index) => ({
     id: `MAIL-${index + 1}`,
@@ -102,6 +123,7 @@ export const initialMail: MailMessage[] = SUBJECTS.map(
     starred: index === 0 || index === 4,
     muted: false,
     label: index % 3 === 0 ? 'Personal' : 'Work',
+    receivedAt: RECEIVED_AT[index] ?? '1970-01-01T00:00:00.000Z',
     replies: [],
   }),
 )

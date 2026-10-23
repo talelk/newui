@@ -35,8 +35,9 @@ a whole data region.
 | `error` | `JSX.Element` | replaces the data region with the shared error state |
 | `onRetry` | `() => void` | retry action in the error state |
 | `density` | `'comfortable' \| 'compact'` | 44px or 36px rows |
+| `cardBreakpoint` | `'sm' \| 'md'` | width at which the table becomes cards; `sm` (640px), `md` (768px) or `lg` (1024px); default `sm` |
 | `selectionSummary` | `(ids) => JSX.Element` | total or scope in the mobile selection bar |
-| `selectable` | `boolean` | show selection and bulk actions; defaults to `true` |
+| `selectable` | `boolean` | show selection and bulk actions; defaults to `true`, but selection only renders when `onRowsAction` exists |
 | `rowSelectable` | `(row: T) => boolean` | per-row eligibility; ineligible checkboxes are disabled and select-all skips them |
 | `pageSize` | `number` | initial page size; defaults to `10` |
 | `recordsLabel` | `string` | noun in the footer; defaults to “records” |
@@ -52,8 +53,17 @@ a whole data region.
   use the blue selection wash in both the table and the mobile cards. Below
   `sm`, the bulk action moves to a fixed `SelectionBar` at the bottom edge and
   the toolbar action is hidden.
-- `loading` and `error` use the shared `DataState`; the toolbar stays, the data
-  region and footer are replaced.
+- `loading` and `error` use the shared `DataState`; the data region and footer
+  are replaced. The toolbar is stable: with `hideSearch` and no `caption` it
+  shows the table title, so selecting rows never inserts a new 58px row and
+  never moves Columns.
+- The Columns menu sits in the stable toolbar, uses the column's visible header
+  text, and never appears as a raw accessor id.
+- A selectable table requires a bulk action. With no `onRowsAction`, no
+  checkbox column is rendered. With `hideSearch` and no `onClearFilters`, the
+  empty state omits an action that cannot reset the external filter.
+- The mobile pager is compact (`Page 1 of N` plus arrows); the numbered pages
+  and range are hidden below `sm`. An empty table hides the footer entirely.
 - Columns may declare `meta.mobile` as `title`, `subtitle`, `amount`, `status`
   or `meta`. When at least one column does, a card list replaces the table
   below `sm` (640px); the library owns the card wrapper, selection and

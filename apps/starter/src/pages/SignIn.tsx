@@ -5,7 +5,7 @@ import { createAppForm, Form, fieldError } from '@talelk/newui-data/form'
 import { Password } from '@talelk/newui-molecules'
 import { AuthCard } from '@talelk/newui-organisms'
 import { AuthLayout } from '@talelk/newui-templates'
-import type { JSX } from 'solid-js'
+import { createEffect, createSignal, type JSX } from 'solid-js'
 import { signIn } from '../data/session'
 import { emitStarterEvent } from '../devtools/events'
 
@@ -38,11 +38,41 @@ export function SignIn(): JSX.Element {
   const passwordError = ({ value }: { value: string }) =>
     value.length >= 8 ? undefined : 'Use at least 8 characters.'
 
+  const [summary, setSummary] = createSignal('')
+  const attempts = form.useSelector((state) => state.submissionAttempts)
+  const fieldsValid = form.useSelector((state) => state.isFieldsValid)
+  let lastFocusedAttempt = 0
+
+  createEffect(() => {
+    const attempt = attempts()
+    if (attempt === 0) {
+      lastFocusedAttempt = 0
+      setSummary('')
+      return
+    }
+    if (fieldsValid()) {
+      setSummary('')
+      return
+    }
+    if (attempt > lastFocusedAttempt) {
+      lastFocusedAttempt = attempt
+      setSummary('Check the highlighted fields and try again.')
+      queueMicrotask(() => {
+        document
+          .querySelector<HTMLInputElement>(
+            '[data-slot="auth-card"] input[aria-invalid="true"]',
+          )
+          ?.focus()
+      })
+    }
+  })
+
   return (
     <AuthLayout>
       <AuthCard
         title="Sign in to Acme"
         description="The starter's demo session — no request leaves this page."
+        error={summary() || undefined}
         logo={
           <span
             aria-hidden="true"
@@ -66,7 +96,12 @@ export function SignIn(): JSX.Element {
             {(field) => (
               <TextInput
                 label="Email"
+                name="email"
                 type="email"
+                autocomplete="email"
+                inputMode="email"
+                autocapitalize="none"
+                spellcheck={false}
                 required
                 value={field().state.value}
                 error={fieldError(field())}
@@ -84,6 +119,10 @@ export function SignIn(): JSX.Element {
             {(field) => (
               <Password
                 label="Password"
+                name="password"
+                autocomplete="current-password"
+                autocapitalize="none"
+                spellcheck={false}
                 required
                 value={field().state.value}
                 error={fieldError(field())}

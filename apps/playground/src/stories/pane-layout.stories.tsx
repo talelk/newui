@@ -36,7 +36,7 @@ function Example(props: { compactEnd?: boolean }): JSX.Element {
 
   return (
     <DemoFrame>
-      <div class="h-[26rem] overflow-hidden rounded-5 border border-outline-gray-1 bg-surface-elevation-1">
+      <div class="h-[26rem] overflow-hidden rounded-card border border-outline-gray-1 bg-surface-elevation-1">
         <PaneLayout
           startSize={40}
           compactAt="sm"

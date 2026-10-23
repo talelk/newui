@@ -1,6 +1,7 @@
 import { createSignal, type JSX, Show, splitProps } from 'solid-js'
 import { Field, FieldLabelContent, useField } from '../../lib/field'
 import { cn } from '../../lib/tv'
+import { Icon } from '../Icon'
 
 type CheckboxSize = 'xs' | 'sm' | 'md'
 
@@ -101,6 +102,7 @@ function CheckboxControl(props: CheckboxProps): JSX.Element {
       return cn(
         base,
         'cursor-not-allowed border-outline-gray-3 text-ink-gray-5',
+        'checked:bg-ink-gray-5 checked:[background-image:none] indeterminate:bg-ink-gray-5 indeterminate:[background-image:none]',
         'focus:ring-0 focus:ring-offset-0',
       )
     }
@@ -111,7 +113,7 @@ function CheckboxControl(props: CheckboxProps): JSX.Element {
       // `currentColor` — but a `bg-*` utility outranks that base-layer rule, so
       // without an explicit checked fill the box stays `surface-base` and the
       // white check is invisible in light mode.
-      'text-ink-gray-9 checked:bg-ink-gray-9 indeterminate:bg-ink-gray-9',
+      'text-ink-gray-9 checked:bg-ink-gray-9 checked:[background-image:none] indeterminate:bg-ink-gray-9 indeterminate:[background-image:none]',
       // Padded rows drive hover from the row (`group`); otherwise the box does.
       local.padded
         ? 'group-hover:border-outline-gray-5'
@@ -147,28 +149,42 @@ function CheckboxControl(props: CheckboxProps): JSX.Element {
           local.disabled ? 'cursor-not-allowed' : 'cursor-pointer',
         )}
       >
-        <input
-          {...rest}
-          ref={(el) => {
-            el.indeterminate = Boolean(local.indeterminate)
-          }}
-          id={local.id ?? field?.controlId()}
-          required={field?.required() ?? local.required}
-          name={local.name}
-          type="checkbox"
-          checked={checked()}
-          disabled={local.disabled}
-          data-slot="checkbox-control"
-          aria-describedby={field?.describedBy()}
-          aria-invalid={field?.hasError() ? 'true' : undefined}
-          aria-errormessage={field?.hasError() ? field?.errorId() : undefined}
-          class={inputClasses()}
-          onChange={(event) => {
-            const next = event.currentTarget.checked
-            if (!isControlled()) setInternal(next)
-            local.onCheckedChange?.(next)
-          }}
-        />
+        <span class="relative inline-flex shrink-0">
+          <input
+            {...rest}
+            ref={(el) => {
+              el.indeterminate = Boolean(local.indeterminate)
+            }}
+            id={local.id ?? field?.controlId()}
+            required={field?.required() ?? local.required}
+            name={local.name}
+            type="checkbox"
+            checked={checked()}
+            disabled={local.disabled}
+            data-slot="checkbox-control"
+            aria-describedby={field?.describedBy()}
+            aria-invalid={field?.hasError() ? 'true' : undefined}
+            aria-errormessage={field?.hasError() ? field?.errorId() : undefined}
+            class={inputClasses()}
+            onChange={(event) => {
+              const next = event.currentTarget.checked
+              if (!isControlled()) setInternal(next)
+              local.onCheckedChange?.(next)
+            }}
+          />
+          <Show when={checked() || local.indeterminate}>
+            <span
+              data-slot="checkbox-check"
+              aria-hidden="true"
+              class="pointer-events-none absolute inset-0 grid place-items-center text-ink-base"
+            >
+              <Icon
+                icon={local.indeterminate ? 'lucide-minus' : 'lucide-check'}
+                class="size-3"
+              />
+            </span>
+          </Show>
+        </span>
         <Show when={local.label}>
           <span
             data-slot="label"

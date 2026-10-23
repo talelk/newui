@@ -53,7 +53,12 @@ export function SelectionBar(props: SelectionBarProps): JSX.Element {
         <div class="flex flex-wrap items-center gap-2">
           {props.secondary}
           <Show when={props.onClear}>
-            <Button variant="ghost" size="sm" onClick={props.onClear}>
+            <Button
+              variant="ghost"
+              size="sm"
+              class="max-sm:h-10"
+              onClick={props.onClear}
+            >
               Clear
             </Button>
           </Show>
@@ -63,6 +68,7 @@ export function SelectionBar(props: SelectionBarProps): JSX.Element {
                 variant="solid"
                 theme="blue"
                 size="sm"
+                class="max-sm:h-10"
                 iconLeft={primary().icon}
                 disabled={primary().disabled}
                 onClick={primary().onClick}

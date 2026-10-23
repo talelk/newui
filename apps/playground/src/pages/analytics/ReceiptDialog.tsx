@@ -23,7 +23,7 @@ export default function ReceiptDialog(props: {
             Review this local demo receipt and update its payment state.
           </Dialog.Description>
         </Dialog.Header>
-        <div class="my-5 rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-4">
+        <div class="my-5 rounded-card border border-outline-gray-1 bg-surface-gray-1 p-4">
           <p class="text-caption text-ink-gray-7">Amount</p>
           <p class="mt-1 text-metric tabular-nums">
             {money(props.transaction.amount)}

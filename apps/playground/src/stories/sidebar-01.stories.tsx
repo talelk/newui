@@ -118,7 +118,7 @@ export function Demo() {
         </Button>
       }
     >
-      <section class="rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4">
+      <section class="rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-4">
         <p class="text-caption text-ink-gray-7">Version {version()}</p>
         <h2 class="mt-2 text-section">{current()}</h2>
         <p class="mt-3 text-ink-gray-7">

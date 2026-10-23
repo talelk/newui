@@ -29,7 +29,7 @@ export function CatalogList<T extends CatalogEntry>(props: {
         {(section) => (
           <section class="flex flex-col gap-3">
             <h2 class="text-section text-ink-gray-9">{section.group}</h2>
-            <ul class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1">
+            <ul class="flex flex-col divide-y divide-outline-gray-1 rounded-card border border-outline-gray-1">
               <For each={section.entries}>
                 {(entry) => (
                   <li>

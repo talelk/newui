@@ -111,3 +111,14 @@ does not honour it on its own.
 - No multi-select drag: one card at a time.
 - No drop position *within* a card (fractional indices). A drop lands between two
   cards, which is what every board in the reference set does.
+
+## Focus and touch
+
+- A move from a card's “Move to…” menu restores focus to the moved card's action
+  trigger and scrolls the card into view. The trigger is recreated in its
+  destination column, so dropping focus to `<body>` is not acceptable.
+- Below `lg` the column add control and card action trigger use a 40px hit area
+  while keeping the 28px visual glyph; desktop density stays 28px.
+- Columns are 288px wide; at `xl` they narrow to 256px so four stages fit a
+  1440px application viewport without hiding the last stage. At `2xl` they return
+  to 288px.

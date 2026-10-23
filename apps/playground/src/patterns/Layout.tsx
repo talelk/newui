@@ -27,7 +27,7 @@ export default function Layout() {
           onInput={(event) => setSplit(event.currentTarget.value)}
           class="my-3 h-8 w-full accent-ink-blue-link focus-visible:focus-ring"
         />
-        <div class="flex min-h-56 min-w-0 overflow-hidden rounded-5 border border-outline-gray-1">
+        <div class="flex min-h-56 min-w-0 overflow-hidden rounded-card border border-outline-gray-1">
           <div
             class="flex min-w-0 flex-col justify-center bg-surface-blue-1 p-4 text-ink-blue-8"
             style={{ width: `${split()}%` }}
@@ -48,7 +48,7 @@ export default function Layout() {
       </section>
       <section>
         <h2 class="mb-4 text-section">A stable aspect ratio</h2>
-        <div class="grid aspect-video place-content-center rounded-5 border border-outline-blue-1 bg-surface-blue-1 p-4 text-center">
+        <div class="grid aspect-video place-content-center rounded-card border border-outline-blue-1 bg-surface-blue-1 p-4 text-center">
           <p class="text-section text-ink-blue-8">16 : 9</p>
           <p class="mt-2 text-caption text-ink-gray-7">
             Room for a report, a preview or a presentation.
@@ -74,7 +74,7 @@ export default function Layout() {
         >
           <For each={['Discover', 'Build', 'Measure']}>
             {(label, index) => (
-              <div class="rounded-5 border border-outline-gray-1 bg-surface-gray-1 p-4">
+              <div class="rounded-card border border-outline-gray-1 bg-surface-gray-1 p-4">
                 <p class="text-caption text-ink-gray-7">0{index() + 1}</p>
                 <h3 class="mt-3 font-medium">{label}</h3>
               </div>

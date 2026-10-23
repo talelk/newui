@@ -84,7 +84,7 @@ export function Password(props: PasswordProps): JSX.Element {
               aria-pressed={show() ? 'true' : 'false'}
               aria-keyshortcuts="Control+I Meta+I"
               onClick={toggle}
-              class="pointer-events-auto grid size-6 place-items-center rounded-3 text-ink-gray-5 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-7 disabled:pointer-events-none disabled:text-ink-gray-4"
+              class="pointer-events-auto relative grid size-6 place-items-center rounded-3 text-ink-gray-5 transition-colors after:absolute after:-inset-2 after:content-[''] hover:bg-surface-gray-3 hover:text-ink-gray-7 disabled:pointer-events-none disabled:text-ink-gray-4"
             >
               <Icon
                 icon={show() ? 'lucide-eye-off' : 'lucide-eye'}

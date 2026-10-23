@@ -43,6 +43,13 @@ const COLUMNS: Record<2 | 3 | 4, string> = {
   4: 'min-[360px]:grid-cols-2 xl:grid-cols-4',
 }
 
+/** Compact table-led screens earn a four-up row on tablets. */
+const COMPACT_COLUMNS: Record<2 | 3 | 4, string> = {
+  2: 'min-[360px]:grid-cols-2',
+  3: 'min-[360px]:grid-cols-2 md:grid-cols-3',
+  4: 'min-[360px]:grid-cols-2 md:grid-cols-4',
+}
+
 export function StatGrid(props: StatGridProps): JSX.Element {
   const columns = (): 2 | 3 | 4 =>
     props.columns ?? (Math.min(4, Math.max(2, props.stats.length)) as 2 | 3 | 4)
@@ -54,7 +61,7 @@ export function StatGrid(props: StatGridProps): JSX.Element {
         <div
           data-slot="stat-grid"
           data-loading
-          class={`grid gap-card-gap ${COLUMNS[columns()]} ${props.class ?? ''}`}
+          class={`grid gap-card-gap ${props.compact ? COMPACT_COLUMNS[columns()] : COLUMNS[columns()]} ${props.class ?? ''}`}
         >
           <For each={Array.from({ length: columns() })}>
             {() => <Skeleton lines={3} class="h-24" />}
@@ -64,7 +71,7 @@ export function StatGrid(props: StatGridProps): JSX.Element {
     >
       <div
         data-slot="stat-grid"
-        class={`grid gap-card-gap ${COLUMNS[columns()]} ${props.class ?? ''}`}
+        class={`grid gap-card-gap ${props.compact ? COMPACT_COLUMNS[columns()] : COLUMNS[columns()]} ${props.class ?? ''}`}
       >
         <For each={props.stats}>
           {(stat) => (

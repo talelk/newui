@@ -10,16 +10,16 @@ describe('Checkbox (browser, real CSS)', () => {
     expect(box.height).toBeGreaterThan(0)
   })
 
-  it('draws the checked glyph via the forms-plugin background image', () => {
-    const { getByRole, unmount } = render(() => <Checkbox label="Accept" />)
-    const unchecked = getComputedStyle(getByRole('checkbox')).backgroundImage
+  it('draws the checked glyph as a contrast-aware icon', () => {
+    const { container, unmount } = render(() => <Checkbox label="Accept" />)
+    expect(container.querySelector('[data-slot="checkbox-check"]')).toBeNull()
     unmount()
-    const { getByRole: second } = render(() => (
+    const { container: checked } = render(() => (
       <Checkbox label="Accept" checked />
     ))
-    const checked = getComputedStyle(second('checkbox')).backgroundImage
-    expect(checked).not.toBe(unchecked)
-    expect(checked).not.toBe('none')
+    const glyph = checked.querySelector('[data-slot="checkbox-check"]')
+    expect(glyph).toBeTruthy()
+    expect(glyph?.getAttribute('aria-hidden')).toBe('true')
   })
 
   it('paints the checked fill dark, so the white glyph is visible', () => {

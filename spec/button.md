@@ -21,6 +21,10 @@
 
 ## Behavior
 
+- Disabled solid actions use the neutral `surface-gray-2` fill and
+  `ink-gray-4` label, including the blue theme; a disabled primary must not read
+  as an enabled blue button in dark mode.
+
 - Without `label`/`children`, renders the icon-only square form.
 - `loading` sets `aria-busy` and `disabled`, and adds `pointer-events-none`
   while keeping the resting colour (an explicit `disabled` dims instead).

@@ -4,9 +4,8 @@ import { createAppForm, Form, fieldError } from '@talelk/newui-data/form'
 import { createCollection, DataProvider } from '@talelk/newui-data/query'
 import {
   BottomSheet,
+  DatePicker,
   Dialog,
-  EmptyState,
-  Pagination,
   Select,
 } from '@talelk/newui-molecules'
 import {
@@ -15,6 +14,7 @@ import {
   FilterBar,
   MobileNav,
   MobileNavItem,
+  Section,
   StatGrid,
 } from '@talelk/newui-organisms'
 import {
@@ -23,6 +23,7 @@ import {
   createSignal,
   For,
   type JSX,
+  on,
   Show,
   untrack,
 } from 'solid-js'
@@ -32,9 +33,12 @@ import { AppPage } from '../examples/AppPage'
 import { Notice } from '../examples/Notice'
 import {
   createTaskRepository,
+  dueToISO,
+  isoToTaskDue,
   TASK_STATUSES,
   type TaskRecord,
   type TaskRepository,
+  type TaskStatus,
 } from '../examples/tasks-data'
 
 const taskColumns = (
@@ -43,18 +47,21 @@ const taskColumns = (
   {
     accessorKey: 'id',
     header: 'Task',
+    meta: { mobile: 'subtitle' },
     cell: (context) => (
       <span class="whitespace-nowrap text-caption text-ink-gray-7">
         {context.getValue<string>()}
+        <span class="md:hidden"> · {context.row.original.project}</span>
       </span>
     ),
   },
   {
     accessorKey: 'title',
     header: 'Title',
+    meta: { mobile: 'title' },
     cell: (context) => (
-      <div class="flex min-w-72 items-center gap-2">
-        <Badge variant="outline" size="sm">
+      <div class="flex min-w-0 items-center gap-2 sm:min-w-72">
+        <Badge variant="outline" size="sm" class="hidden md:inline-flex">
           {context.row.original.label}
         </Badge>
         <button
@@ -70,6 +77,7 @@ const taskColumns = (
   {
     accessorKey: 'status',
     header: 'Status',
+    meta: { mobile: 'status' },
     cell: (context) => (
       <Badge
         theme={
@@ -87,6 +95,7 @@ const taskColumns = (
   {
     accessorKey: 'priority',
     header: 'Priority',
+    meta: { mobile: 'meta' },
     cell: (context) => (
       <span
         classList={{
@@ -98,12 +107,13 @@ const taskColumns = (
       </span>
     ),
   },
-  { accessorKey: 'owner', header: 'Assignee' },
-  { accessorKey: 'due', header: 'Due date' },
+  { accessorKey: 'owner', header: 'Assignee', meta: { mobile: 'meta' } },
+  { accessorKey: 'due', header: 'Due date', meta: { mobile: 'meta' } },
 ]
 
 function NewTask(props: {
   onSave: (value: { title: string; priority: string }) => Promise<void>
+  onCancel: () => void
 }): JSX.Element {
   const validate = (value: string) =>
     value.trim().length >= 3
@@ -147,7 +157,10 @@ function NewTask(props: {
           />
         )}
       </form.Field>
-      <div class="flex justify-end">
+      <div class="flex flex-wrap justify-end gap-2">
+        <Button variant="outline" onClick={props.onCancel}>
+          Cancel
+        </Button>
         <Button
           type="submit"
           variant="solid"
@@ -172,12 +185,17 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
   const [scope, setScope] = createSignal('all')
   const [owner, setOwner] = createSignal('all')
   const [search, setSearch] = createSignal('')
-  const [mobilePage, setMobilePage] = createSignal(1)
   const [taskSort, setTaskSort] = createSignal('Default order')
-  const [grouped, setGrouped] = createSignal(false)
   const [selected, setSelected] = createSignal<string>()
   const [comment, setComment] = createSignal('')
-  const [detailError, setDetailError] = createSignal('')
+  const [detailTitle, setDetailTitle] = createSignal('')
+  const [detailDue, setDetailDue] = createSignal<string | null>(null)
+  const [detailStatus, setDetailStatus] = createSignal<TaskStatus>('Todo')
+  const [detailPriority, setDetailPriority] = createSignal('Medium')
+  const [detailOwner, setDetailOwner] = createSignal('Rhea Kapoor')
+  const [detailProject, setDetailProject] = createSignal('Website')
+  const [detailTitleError, setDetailTitleError] = createSignal('')
+  const [detailDueError, setDetailDueError] = createSignal('')
   const columns = taskColumns(setSelected)
   // The failure switch is the page's: it wraps the repository's `list` so the
   // "Try again" path exercises the kit's error state, not a special case.
@@ -228,29 +246,85 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
               : 0,
       )
   })
-  createEffect(() => {
-    status()
-    priority()
-    scope()
-    owner()
-    search()
-    taskSort()
-    setMobilePage(1)
-  })
-  const mobileRows = createMemo(() =>
-    filtered().slice((mobilePage() - 1) * 30, mobilePage() * 30),
-  )
+  const taskCount = (count: number) =>
+    `${count.toLocaleString('en-US')} ${count === 1 ? 'task' : 'tasks'}`
+  function clearFilters() {
+    setStatus('all')
+    setPriority('all')
+    setOwner('all')
+    setScope('all')
+    setSearch('')
+  }
+  function retry() {
+    setFailure(false)
+    void query.refetch()
+  }
+  const activityDescription = () =>
+    query.isPending() || query.isError() || filtered().length === 0
+      ? undefined
+      : `${taskCount(filtered().length)} · Scroll to explore the complete feed.`
 
   const current = createMemo(() => all().find((row) => row.id === selected()))
   function update(changes: Parameters<TaskRepository['update']>[1]) {
     const id = selected()
     if (id) tasks.update.mutate({ id, patch: changes })
   }
+  function closeDetail() {
+    setSelected(undefined)
+    setComment('')
+    setDetailTitleError('')
+    setDetailDueError('')
+  }
+  createEffect(
+    on(selected, (id) => {
+      if (!id) return
+      const row = all().find((task) => task.id === id)
+      if (!row) return
+      setDetailTitle(row.title)
+      setDetailDue(dueToISO(row.due))
+      setDetailStatus(row.status)
+      setDetailPriority(row.priority)
+      setDetailOwner(row.owner)
+      setDetailProject(row.project)
+      setDetailTitleError('')
+      setDetailDueError('')
+      setComment('')
+    }),
+  )
+  function saveDetails(event: SubmitEvent) {
+    event.preventDefault()
+    const title = detailTitle().trim()
+    const due = detailDue()
+    let valid = true
+    if (title.length < 3) {
+      setDetailTitleError('Enter a title with at least 3 characters.')
+      valid = false
+    } else {
+      setDetailTitleError('')
+    }
+    if (!due) {
+      setDetailDueError('Choose a due date.')
+      valid = false
+    } else {
+      setDetailDueError('')
+    }
+    if (!valid || !due) return
+    update({
+      title,
+      due: isoToTaskDue(due),
+      status: detailStatus(),
+      priority: detailPriority(),
+      owner: detailOwner(),
+      project: detailProject(),
+    })
+    setNotice(`Saved ${selected() ?? 'task'}.`)
+    closeDetail()
+  }
   const done = () => all().filter((row) => row.status === 'Done').length
   const saveTask = (value: { title: string; priority: string }) =>
     tasks.create.mutateAsync(value).then(() => {
       setOpen(false)
-      setNotice(`Created ${value.title}.`)
+      setNotice(`Task created: ${value.title}.`)
     })
   return (
     <AppPage
@@ -308,10 +382,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
             variant="outline"
             iconLeft="lucide-refresh-cw"
             loading={query.isFetching()}
-            onClick={() => {
-              setFailure(false)
-              void query.refetch()
-            }}
+            onClick={retry}
           >
             Refresh
           </Button>
@@ -403,19 +474,12 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
             ? [{ label: `Search: ${search()}`, onRemove: () => setSearch('') }]
             : []),
         ]}
-        resultCount={filtered().length}
-        onClearAll={() => {
-          setStatus('all')
-          setPriority('all')
-          setOwner('all')
-          setScope('all')
-          setSearch('')
-        }}
+        resultCount={
+          query.isPending() || query.isError() ? undefined : filtered().length
+        }
+        onClearAll={clearFilters}
       >
-        <Button aria-pressed={grouped()} onClick={() => setGrouped(!grouped())}>
-          Group by status
-        </Button>
-        <div class="sm:hidden">
+        <div class="md:hidden">
           <Select
             label="Sort task list"
             value={taskSort()}
@@ -429,8 +493,10 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
           />
         </div>
       </FilterBar>
-      <div class="hidden sm:block">
+      <div class="hidden md:block">
         <StatGrid
+          compact
+          loading={query.isPending()}
           stats={[
             {
               label: 'Total tasks',
@@ -463,122 +529,63 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
       </div>
       <Notice text={notice()} tone="green" onDismiss={() => setNotice('')} />
       <Show
-        when={!query.isPending()}
+        when={view() === 'table'}
         fallback={
-          <div role="status">
-            <EmptyState
-              bordered
-              icon="lucide-list-checks"
-              title="Loading tasks…"
-              description="Fetching the workspace task list."
+          <Section title="Activity" description={activityDescription()}>
+            <ActivityList
+              rows={filtered()}
+              loading={query.isPending()}
+              error={
+                query.isError()
+                  ? (query.error()?.message ?? 'Could not load tasks.')
+                  : undefined
+              }
+              onRetry={retry}
+              emptyTitle="No tasks match"
+              emptyDescription="Try a different search or clear the filters."
+              emptyAction={
+                <Button onClick={clearFilters}>Reset filters</Button>
+              }
             />
-          </div>
+          </Section>
         }
       >
-        <Show
-          when={!query.isError()}
-          fallback={
-            <div role="alert">
-              <EmptyState
-                bordered
-                icon="lucide-circle-alert"
-                title="Could not load tasks"
-                description={query.error()?.message}
-                action={
-                  <Button
-                    onClick={() => {
-                      setFailure(false)
-                      void query.refetch()
-                    }}
-                  >
-                    Try again
-                  </Button>
-                }
-              />
-            </div>
-          }
+        {/* Lift the shared mobile selection bar above the page's fixed nav. */}
+        <Section
+          label="Task list"
+          class="[&_[data-slot=selection-bar]]:max-sm:bottom-20"
         >
-          <Show
-            when={view() === 'table'}
-            fallback={<ActivityList rows={filtered()} />}
-          >
-            <div class={grouped() ? 'hidden' : 'hidden sm:block'}>
-              <DataTable
-                title="Tasks"
-                hideSearch
-                rows={filtered()}
-                columns={columns}
-                actionLabel="Complete selected"
-                onRowsAction={(ids) => {
-                  tasks.updateMany.mutate({ ids, patch: { status: 'Done' } })
-                  setNotice(
-                    `${ids.length} ${ids.length === 1 ? 'task' : 'tasks'} marked complete.`,
-                  )
-                }}
-              />
-            </div>
-            <div
-              data-slot="mobile-task-list"
-              classList={{ 'sm:hidden': !grouped() }}
-            >
-              <For each={grouped() ? [...TASK_STATUSES] : ['Tasks']}>
-                {(group) => (
-                  <details
-                    open
-                    class="mb-3 rounded-5 border border-outline-gray-1 bg-surface-elevation-1"
-                  >
-                    <summary class="cursor-pointer rounded-3 p-3 font-medium focus-visible:focus-ring">
-                      {group} ·{' '}
-                      {
-                        filtered().filter(
-                          (row) => group === 'Tasks' || row.status === group,
-                        ).length
-                      }
-                    </summary>
-                    <ul class="divide-y divide-outline-gray-1">
-                      <For
-                        each={mobileRows().filter(
-                          (row) => group === 'Tasks' || row.status === group,
-                        )}
-                      >
-                        {(row) => (
-                          <li>
-                            <button
-                              type="button"
-                              class="flex w-full flex-col gap-2 p-3 text-start focus-visible:focus-ring"
-                              onClick={() => setSelected(row.id)}
-                            >
-                              <span class="text-caption text-ink-gray-7">
-                                {row.id} · {row.project}
-                              </span>
-                              <span class="font-medium">{row.title}</span>
-                              <span class="text-caption">
-                                {row.status} · {row.priority} · {row.owner}
-                              </span>
-                            </button>
-                          </li>
-                        )}
-                      </For>
-                    </ul>
-                  </details>
-                )}
-              </For>
-              <div class="flex flex-wrap items-center justify-center gap-2 p-3">
-                <Pagination.Root
-                  page={mobilePage()}
-                  pageSize={30}
-                  count={filtered().length}
-                  onPageChange={setMobilePage}
-                >
-                  <Pagination.Range />
-                  <Pagination.PrevTrigger />
-                  <Pagination.Pages />
-                  <Pagination.NextTrigger />
-                </Pagination.Root>
-              </div>
-            </div>
-          </Show>
-        </Show>
+          <DataTable
+            title="Tasks"
+            hideSearch
+            cardBreakpoint="lg"
+            pageSize={10}
+            recordsLabel="tasks"
+            rows={filtered()}
+            columns={columns}
+            actionLabel="Complete selected"
+            loading={query.isPending()}
+            error={
+              query.isError()
+                ? (query.error()?.message ?? 'Could not load tasks.')
+                : undefined
+            }
+            onRetry={retry}
+            onClearFilters={clearFilters}
+            emptyTitle="No tasks match"
+            emptyHint="Try a different search or clear the filters."
+            selectionSummary={() => `${taskCount(filtered().length)} in view`}
+            rowSelectable={(row) =>
+              row.status !== 'Done' && row.status !== 'Canceled'
+            }
+            onRowsAction={(ids) => {
+              tasks.updateMany.mutate({ ids, patch: { status: 'Done' } })
+              setNotice(
+                `${ids.length} ${ids.length === 1 ? 'task' : 'tasks'} marked complete.`,
+              )
+            }}
+          />
+        </Section>
       </Show>
       <details class="text-caption text-ink-gray-7">
         <summary class="w-fit cursor-pointer rounded-3 focus-visible:focus-ring">
@@ -605,6 +612,8 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
           </Button>
         </div>
       </details>
+      {/* Keep the fixed mobile navigation from covering the last content row. */}
+      <div class="h-20 sm:hidden" aria-hidden="true" />
       <div class="fixed inset-x-0 bottom-0 z-30 sm:hidden">
         <MobileNav aria-label="Tasks navigation">
           <MobileNavItem
@@ -669,130 +678,147 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
       <Dialog.Root
         open={!!current()}
         onOpenChange={(value) => {
-          if (!value) {
-            setSelected(undefined)
-            setComment('')
-            setDetailError('')
-          }
+          if (!value) closeDetail()
         }}
       >
-        <Dialog.Content class="max-sm:fixed max-sm:inset-0 max-sm:max-h-none max-sm:w-full max-sm:max-w-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none">
-          <Dialog.Close>Back to tasks</Dialog.Close>
+        <Dialog.Content class="flex max-h-[calc(100dvh-2rem)] flex-col p-0 max-sm:fixed max-sm:inset-0 max-sm:max-h-none max-sm:w-full max-sm:max-w-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none">
           <Show when={current()}>
             {(row) => (
               <>
-                <Dialog.Header>
-                  <Dialog.Title>{row().id}</Dialog.Title>
-                  <Dialog.Description>
-                    Edit task details and discuss the next step.
-                  </Dialog.Description>
-                </Dialog.Header>
-                <form
-                  class="mt-4 flex flex-col gap-3"
-                  onSubmit={(event) => {
-                    event.preventDefault()
-                    const data = new FormData(event.currentTarget)
-                    const title = String(data.get('title') ?? '').trim()
-                    if (title.length < 3) {
-                      setDetailError('Enter at least 3 characters.')
-                      return
-                    }
-                    update({ title, due: String(data.get('due') ?? '') })
-                    setDetailError('')
-                    setNotice(`Saved ${row().id}.`)
-                  }}
-                >
-                  <TextInput
-                    name="title"
-                    label="Task title"
-                    value={row().title}
-                    error={detailError()}
-                    required
-                  />
-                  <TextInput name="due" label="Due date" value={row().due} />
-                  <Select
-                    label="Task status"
-                    value={row().status}
-                    options={TASK_STATUSES.map((value) => ({
-                      value,
-                      label: value,
-                    }))}
-                    onValueChange={(value) =>
-                      update({
-                        status: (value ?? 'Todo') as TaskRecord['status'],
-                      })
-                    }
-                  />
-                  <Select
-                    label="Task priority"
-                    value={row().priority}
-                    options={['High', 'Medium', 'Low'].map((value) => ({
-                      value,
-                      label: value,
-                    }))}
-                    onValueChange={(value) =>
-                      update({ priority: value ?? 'Medium' })
-                    }
-                  />
-                  <Select
-                    label="Task assignee"
-                    value={row().owner}
-                    options={[
-                      'Rhea Kapoor',
-                      'Priya Nair',
-                      'Sam Rivera',
-                      'Ana Costa',
-                    ].map((value) => ({ value, label: value }))}
-                    onValueChange={(value) =>
-                      update({ owner: value ?? 'Rhea Kapoor' })
-                    }
-                  />
-                  <Select
-                    label="Task project"
-                    value={row().project}
-                    options={['Website', 'Mobile app', 'Design system'].map(
-                      (value) => ({ value, label: value }),
-                    )}
-                    onValueChange={(value) =>
-                      update({ project: value ?? 'Website' })
-                    }
-                  />
-                  <Button type="submit" variant="solid" theme="blue">
+                <div class="flex shrink-0 items-center justify-between gap-2 border-b border-outline-gray-1 p-card-pad-compact">
+                  <Dialog.Close class="inline-flex min-h-10 items-center rounded-3 px-2 text-interface font-medium text-ink-gray-7 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring">
+                    Back to tasks
+                  </Dialog.Close>
+                  <span class="text-caption tabular-nums text-ink-gray-7">
+                    {row().id}
+                  </span>
+                </div>
+                <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain p-card-pad">
+                  <Dialog.Header>
+                    <Dialog.Title>{row().title}</Dialog.Title>
+                    <Dialog.Description>
+                      {row().id} · {row().project}
+                    </Dialog.Description>
+                  </Dialog.Header>
+                  <form
+                    id="task-detail-form"
+                    class="mt-4 flex flex-col gap-3"
+                    noValidate
+                    onSubmit={saveDetails}
+                  >
+                    <TextInput
+                      label="Task title"
+                      value={detailTitle()}
+                      error={detailTitleError()}
+                      required
+                      onInput={(event) => {
+                        setDetailTitle(event.currentTarget.value)
+                        if (detailTitleError()) setDetailTitleError('')
+                      }}
+                    />
+                    <DatePicker
+                      label="Due date"
+                      value={detailDue()}
+                      required
+                      clearable
+                      error={detailDueError()}
+                      onValueChange={(value) => {
+                        setDetailDue(value)
+                        if (detailDueError()) setDetailDueError('')
+                      }}
+                    />
+                    <Select
+                      label="Task status"
+                      value={detailStatus()}
+                      options={TASK_STATUSES.map((value) => ({
+                        value,
+                        label: value,
+                      }))}
+                      onValueChange={(value) =>
+                        setDetailStatus((value ?? 'Todo') as TaskStatus)
+                      }
+                    />
+                    <Select
+                      label="Task priority"
+                      value={detailPriority()}
+                      options={['High', 'Medium', 'Low'].map((value) => ({
+                        value,
+                        label: value,
+                      }))}
+                      onValueChange={(value) =>
+                        setDetailPriority(value ?? 'Medium')
+                      }
+                    />
+                    <Select
+                      label="Task assignee"
+                      value={detailOwner()}
+                      options={[
+                        'Rhea Kapoor',
+                        'Priya Nair',
+                        'Sam Rivera',
+                        'Ana Costa',
+                      ].map((value) => ({ value, label: value }))}
+                      onValueChange={(value) =>
+                        setDetailOwner(value ?? 'Rhea Kapoor')
+                      }
+                    />
+                    <Select
+                      label="Task project"
+                      value={detailProject()}
+                      options={['Website', 'Mobile app', 'Design system'].map(
+                        (value) => ({ value, label: value }),
+                      )}
+                      onValueChange={(value) =>
+                        setDetailProject(value ?? 'Website')
+                      }
+                    />
+                  </form>
+                  <section
+                    aria-label="Task comments"
+                    class="mt-4 flex flex-col gap-3"
+                  >
+                    <h3 class="text-base-medium">Comments</h3>
+                    <For each={row().comments}>
+                      {(text) => (
+                        <p class="rounded-3 bg-surface-gray-1 p-3">
+                          Rhea Kapoor: {text}
+                        </p>
+                      )}
+                    </For>
+                    <Textarea
+                      label="Add comment"
+                      value={comment()}
+                      onInput={(event) => setComment(event.currentTarget.value)}
+                    />
+                    <Button
+                      disabled={!comment().trim()}
+                      onClick={() => {
+                        tasks.update.mutate({
+                          id: row().id,
+                          patch: {
+                            comments: [...row().comments, comment().trim()],
+                          },
+                        })
+                        setComment('')
+                      }}
+                    >
+                      Post comment
+                    </Button>
+                  </section>
+                </div>
+                <footer class="flex shrink-0 flex-wrap items-center justify-end gap-2 border-t border-outline-gray-1 p-card-pad">
+                  <Button variant="outline" onClick={closeDetail}>
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    form="task-detail-form"
+                    variant="solid"
+                    theme="blue"
+                  >
                     Save task details
                   </Button>
-                </form>
-                <section
-                  aria-label="Task comments"
-                  class="mt-4 flex flex-col gap-3"
-                >
-                  <h2 class="text-section">Comments</h2>
-                  <For each={row().comments}>
-                    {(text) => (
-                      <p class="rounded-3 bg-surface-gray-1 p-3">
-                        Rhea Kapoor: {text}
-                      </p>
-                    )}
-                  </For>
-                  <Textarea
-                    label="Add comment"
-                    value={comment()}
-                    onInput={(event) => setComment(event.currentTarget.value)}
-                  />
-                  <Button
-                    disabled={!comment().trim()}
-                    onClick={() => {
-                      tasks.update.mutate({
-                        id: row().id,
-                        patch: {
-                          comments: [...row().comments, comment().trim()],
-                        },
-                      })
-                      setComment('')
-                    }}
-                  >
-                    Post comment
-                  </Button>
-                </section>
+                </footer>
               </>
             )}
           </Show>
@@ -806,7 +832,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
               Give your team a clear next step.
             </Dialog.Description>
           </Dialog.Header>
-          <NewTask onSave={saveTask} />
+          <NewTask onSave={saveTask} onCancel={() => setOpen(false)} />
         </Dialog.Content>
       </Dialog.Root>
     </AppPage>

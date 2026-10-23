@@ -67,6 +67,14 @@ const PAIRS: Pair[] = [
   { fg: 'ink-blue-link', bg: 'surface-elevation-1', what: 'blue link on card' },
   { fg: 'ink-blue-link', bg: 'surface-gray-1', what: 'blue link on canvas' },
 
+  // required marker on a label, on the page or a card
+  { fg: 'ink-red-8', bg: 'surface-base', what: 'required marker on base' },
+  {
+    fg: 'ink-red-8',
+    bg: 'surface-elevation-1',
+    what: 'required marker on a card',
+  },
+
   {
     fg: 'ink-blue-8',
     bg: 'surface-blue-1',

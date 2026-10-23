@@ -113,7 +113,7 @@ function SwitchControl(props: SwitchProps): JSX.Element {
 
   const thumbClasses = () =>
     cn(
-      'pointer-events-none inline-block rounded-full bg-surface-base shadow ring-0 transition duration-fast ease-in-out motion-reduce:transition-none',
+      'pointer-events-none inline-block rounded-full bg-surface-gray-10 shadow ring-0 transition duration-fast ease-in-out data-[state=checked]:bg-surface-base motion-reduce:transition-none',
       size() === 'md'
         ? 'size-3.5 data-[state=checked]:translate-x-3'
         : size() === 'sm'

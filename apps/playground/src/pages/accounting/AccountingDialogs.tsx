@@ -1,13 +1,19 @@
 import { Button, TextInput } from '@talelk/newui-atoms'
 import { usd as currency } from '@talelk/newui-data'
 import { DatePicker, Dialog, Select } from '@talelk/newui-molecules'
-import { createSignal, Show } from 'solid-js'
+import { createEffect, createSignal, Show } from 'solid-js'
 import {
   CATEGORIES,
   type Employee,
   type Transaction,
 } from '../../examples/accounting-data'
 import { CreateDialog } from '../../examples/CreateDialog'
+
+const DATE_FORMAT: Intl.DateTimeFormatOptions = {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+}
 
 export default function AccountingDialogs(props: {
   open: boolean
@@ -18,6 +24,10 @@ export default function AccountingDialogs(props: {
     total: number
     skipped: number
   } | null
+  /** ISO date the new transaction should default to, usually the period end. */
+  defaultDate: string
+  /** The same day written the way the page writes dates. */
+  defaultDateLabel: string
   onOpenChange: (open: boolean) => void
   onEmployeeOpenChange: (open: boolean) => void
   onConfirmOpenChange: (open: boolean) => void
@@ -30,7 +40,12 @@ export default function AccountingDialogs(props: {
   const [description, setDescription] = createSignal('')
   const [amount, setAmount] = createSignal('')
   const [category, setCategory] = createSignal('Revenue')
-  const [date, setDate] = createSignal('2026-09-30')
+  const [date, setDate] = createSignal(props.defaultDate)
+  // The dialog stays mounted while another overlay is open; every fresh open
+  // starts at the period end again rather than yesterday's edit.
+  createEffect(() => {
+    if (props.open) setDate(props.defaultDate)
+  })
   const [employeeName, setEmployeeName] = createSignal('')
   const [role, setRole] = createSignal('')
   const [salary, setSalary] = createSignal('')
@@ -41,7 +56,7 @@ export default function AccountingDialogs(props: {
         open={props.open}
         onOpenChange={props.onOpenChange}
         title="Add a transaction"
-        description="Record an income or expense in the local ledger."
+        description={`Record an income or expense in the local ledger. The date defaults to ${props.defaultDateLabel}.`}
         submitLabel="Record transaction"
         onSubmit={() => {
           if (
@@ -63,6 +78,7 @@ export default function AccountingDialogs(props: {
           props.onNotice('Transaction posted to the local ledger.')
           setDescription('')
           setAmount('')
+          setDate(props.defaultDate)
         }}
         fields={(attempted) => (
           <>
@@ -101,6 +117,7 @@ export default function AccountingDialogs(props: {
               value={date()}
               onValueChange={setDate}
               required
+              format={DATE_FORMAT}
               error={
                 attempted() && !date()
                   ? 'Choose a transaction date.'

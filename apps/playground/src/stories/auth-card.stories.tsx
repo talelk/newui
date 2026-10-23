@@ -11,23 +11,27 @@ import { DemoFrame } from './demo-frame'
 export function Demo(): JSX.Element {
   return (
     <DemoFrame>
-      <AuthCard
-        title="Sign in to Acme"
-        description="Use your work email to continue."
-        // Lucide has no brand glyphs: a white-label provider passes its own
-        // mark as a component. These stand-ins keep the demo independent.
-        providers={[
-          { label: 'Continue with SSO', icon: 'lucide-key-round' },
-          { label: 'Continue with a passkey', icon: 'lucide-fingerprint' },
-        ]}
-        footer={<span>Don’t have an account? Ask an admin for an invite.</span>}
-      >
-        <TextInput label="Email" type="email" placeholder="you@acme.com" />
-        <TextInput label="Password" type="password" placeholder="••••••••" />
-        <Button variant="solid" class="w-full">
-          Sign in
-        </Button>
-      </AuthCard>
+      <div class="grid min-h-80 place-items-center p-4 sm:p-6">
+        <AuthCard
+          title="Sign in to Acme"
+          description="Use your work email to continue."
+          // Lucide has no brand glyphs: a white-label provider passes its own
+          // mark as a component. These stand-ins keep the demo independent.
+          providers={[
+            { label: 'Continue with SSO', icon: 'lucide-key-round' },
+            { label: 'Continue with a passkey', icon: 'lucide-fingerprint' },
+          ]}
+          footer={
+            <span>Don’t have an account? Ask an admin for an invite.</span>
+          }
+        >
+          <TextInput label="Email" type="email" placeholder="you@acme.com" />
+          <TextInput label="Password" type="password" placeholder="••••••••" />
+          <Button variant="solid" class="w-full">
+            Sign in
+          </Button>
+        </AuthCard>
+      </div>
     </DemoFrame>
   )
 }
@@ -47,17 +51,19 @@ export const Default: Story = {}
 export const Error: Story = {
   render: () => (
     <DemoFrame>
-      <AuthCard
-        title="Sign in to Acme"
-        description="Use your work email to continue."
-        error="That email and password combination did not match."
-      >
-        <TextInput label="Email" type="email" placeholder="you@acme.com" />
-        <TextInput label="Password" type="password" placeholder="••••••••" />
-        <Button variant="solid" class="w-full">
-          Sign in
-        </Button>
-      </AuthCard>
+      <div class="grid min-h-80 place-items-center p-4 sm:p-6">
+        <AuthCard
+          title="Sign in to Acme"
+          description="Use your work email to continue."
+          error="That email and password combination did not match."
+        >
+          <TextInput label="Email" type="email" placeholder="you@acme.com" />
+          <TextInput label="Password" type="password" placeholder="••••••••" />
+          <Button variant="solid" class="w-full">
+            Sign in
+          </Button>
+        </AuthCard>
+      </div>
     </DemoFrame>
   ),
 }

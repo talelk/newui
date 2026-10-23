@@ -14,13 +14,27 @@ import {
 } from '@talelk/newui-data'
 import {
   type DateRangeValue,
+  EmptyState,
   ScrollTable,
   ScrollTableHead,
   TabButtons,
 } from '@talelk/newui-molecules'
-import type { DataTableColumn } from '@talelk/newui-organisms'
-import { StatGrid } from '@talelk/newui-organisms'
-import { createMemo, createSignal, For, type JSX, lazy, Show } from 'solid-js'
+import {
+  type DataTableColumn,
+  FilterBar,
+  Section,
+  StatGrid,
+} from '@talelk/newui-organisms'
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  For,
+  type JSX,
+  lazy,
+  onCleanup,
+  Show,
+} from 'solid-js'
 import { AppPage } from '../examples/AppPage'
 import {
   ACCOUNTS,
@@ -90,6 +104,8 @@ export function Accounting(): JSX.Element {
     createSignal<ConfirmRequest | null>(null)
   const [open, setOpen] = createSignal(false)
   const [employeeOpen, setEmployeeOpen] = createSignal(false)
+  const [expenseQuery, setExpenseQuery] = createSignal('')
+  const [employeeQuery, setEmployeeQuery] = createSignal('')
   let nextId = 2000
   const ledger = createMemo(() =>
     transactions().filter(
@@ -102,6 +118,7 @@ export function Accounting(): JSX.Element {
   const posted = createMemo(() =>
     ledger().filter((transaction) => transaction.status === 'Posted'),
   )
+  const noPostedActivity = () => posted().length === 0
   const income = () =>
     posted()
       .filter((transaction) => transaction.category === 'Revenue')
@@ -129,10 +146,38 @@ export function Accounting(): JSX.Element {
   const expenseRows = createMemo(() =>
     ledger().filter((transaction) => transaction.category !== 'Revenue'),
   )
+  const visibleExpenses = createMemo(() => {
+    const query = expenseQuery().trim().toLowerCase()
+    if (!query) return expenseRows()
+    return expenseRows().filter((row) =>
+      [row.description, row.category, row.date, row.status].some((value) =>
+        value.toLowerCase().includes(query),
+      ),
+    )
+  })
+  const visibleEmployees = createMemo(() => {
+    const query = employeeQuery().trim().toLowerCase()
+    if (!query) return employees()
+    return employees().filter((employee) =>
+      [employee.name, employee.role, employee.status].some((value) =>
+        value.toLowerCase().includes(query),
+      ),
+    )
+  })
   const notify = (text: string, undo?: () => void) => {
     setNotice(text)
     setUndoAction(() => undo ?? null)
   }
+  // A notice is a receipt, not a permanent banner: it clears itself, and the
+  // undo stays reachable for the window it is on screen.
+  createEffect(() => {
+    if (!notice()) return
+    const timer = setTimeout(() => {
+      setNotice('')
+      setUndoAction(null)
+    }, 7000)
+    onCleanup(() => clearTimeout(timer))
+  })
   const netMovement = (rows: Transaction[]) =>
     rows.reduce(
       (sum, row) =>
@@ -220,34 +265,65 @@ export function Accounting(): JSX.Element {
           year: 'numeric',
         }).format(new Date(`${value}T00:00:00`))
       : ''
-  const periodLabel = () =>
-    `${shortDate(range()[0])} – ${shortDate(range()[1] ?? '2026-09-30')}`
-  const companyStats = () => [
-    {
-      label: 'Posted income',
-      value: currency(income()),
-      hint: 'Posted in the selected period',
-      icon: 'lucide-trending-up',
-    },
-    {
-      label: 'Posted expenses',
-      value: currency(expenses()),
-      hint: 'Posted in the selected period',
-      icon: 'lucide-receipt',
-    },
-    {
-      label: 'Net profit',
-      value: currency(income() - expenses()),
-      hint: 'Income less expenses, posted only',
-      icon: 'lucide-scale',
-    },
-    {
-      label: 'Profit margin',
-      value: `${income() ? (((income() - expenses()) / income()) * 100).toFixed(1) : '0'}%`,
-      hint: 'Share of posted income kept',
-      icon: 'lucide-percent',
-    },
-  ]
+  const periodEnd = () => range()[1] ?? '2026-09-30'
+  const periodEndLabel = () => shortDate(periodEnd())
+  const periodLabel = () => `${shortDate(range()[0])} – ${periodEndLabel()}`
+  const countLabel = (count: number, singular: string) =>
+    `${count} ${count === 1 ? singular : `${singular}s`}`
+  const companyStats = () =>
+    noPostedActivity()
+      ? [
+          {
+            label: 'Posted income',
+            value: '—',
+            hint: 'No posted activity in this period',
+            icon: 'lucide-trending-up',
+          },
+          {
+            label: 'Posted expenses',
+            value: '—',
+            hint: 'No posted activity in this period',
+            icon: 'lucide-receipt',
+          },
+          {
+            label: 'Net profit',
+            value: '—',
+            hint: 'Income less expenses, posted only',
+            icon: 'lucide-scale',
+          },
+          {
+            label: 'Profit margin',
+            value: '—',
+            hint: 'Share of posted income kept',
+            icon: 'lucide-percent',
+          },
+        ]
+      : [
+          {
+            label: 'Posted income',
+            value: currency(income()),
+            hint: 'Posted in the selected period',
+            icon: 'lucide-trending-up',
+          },
+          {
+            label: 'Posted expenses',
+            value: currency(expenses()),
+            hint: 'Posted in the selected period',
+            icon: 'lucide-receipt',
+          },
+          {
+            label: 'Net profit',
+            value: currency(income() - expenses()),
+            hint: 'Income less expenses, posted only',
+            icon: 'lucide-scale',
+          },
+          {
+            label: 'Profit margin',
+            value: `${income() ? (((income() - expenses()) / income()) * 100).toFixed(1) : '0'}%`,
+            hint: 'Share of posted income kept',
+            icon: 'lucide-percent',
+          },
+        ]
   const stats = createMemo(() => {
     if (page() === 'Cash accounts') {
       return [
@@ -267,6 +343,34 @@ export function Accounting(): JSX.Element {
     }
     if (page() === 'Expenses') {
       const rows = expenseRows()
+      if (!rows.length) {
+        return [
+          {
+            label: 'Total expenses',
+            value: '—',
+            hint: 'No expenses in this period',
+            icon: 'lucide-receipt',
+          },
+          {
+            label: 'Pending approval',
+            value: '—',
+            hint: 'Nothing pending',
+            icon: 'lucide-clock',
+          },
+          {
+            label: 'Posted expenses',
+            value: '—',
+            hint: 'Nothing posted',
+            icon: 'lucide-check',
+          },
+          {
+            label: 'Largest category',
+            value: '—',
+            hint: 'No expenses in this period',
+            icon: 'lucide-chart-pie',
+          },
+        ]
+      }
       const total = rows.reduce((sum, row) => sum + row.amount, 0)
       const pendingRows = rows.filter((row) => row.status === 'Pending')
       const pending = pendingRows.reduce((sum, row) => sum + row.amount, 0)
@@ -278,6 +382,7 @@ export function Accounting(): JSX.Element {
         )
       }
       const top = [...byCategory.entries()].sort((a, b) => b[1] - a[1])[0]
+      const topValue = top?.[1] ?? 0
       return [
         {
           label: 'Total expenses',
@@ -288,7 +393,7 @@ export function Accounting(): JSX.Element {
         {
           label: 'Pending approval',
           value: currency(pending),
-          hint: `${pendingRows.length} ${pendingRows.length === 1 ? 'record' : 'records'}`,
+          hint: countLabel(pendingRows.length, 'record'),
           icon: 'lucide-clock',
         },
         {
@@ -299,8 +404,11 @@ export function Accounting(): JSX.Element {
         },
         {
           label: 'Largest category',
-          value: currency(top?.[1] ?? 0),
-          hint: top?.[0] ?? 'No expenses in this period',
+          value: topValue > 0 ? currency(topValue) : '—',
+          hint:
+            topValue > 0
+              ? (top?.[0] ?? 'No expenses in this period')
+              : 'No expenses in this period',
           icon: 'lucide-chart-pie',
         },
       ]
@@ -326,7 +434,7 @@ export function Accounting(): JSX.Element {
           value: currency(
             paid.reduce((sum, employee) => sum + employee.salary, 0),
           ),
-          hint: `${paid.length} ${paid.length === 1 ? 'employee' : 'employees'}`,
+          hint: countLabel(paid.length, 'employee'),
           icon: 'lucide-check',
         },
         {
@@ -334,7 +442,7 @@ export function Accounting(): JSX.Element {
           value: currency(
             pending.reduce((sum, employee) => sum + employee.salary, 0),
           ),
-          hint: `${pending.length} ${pending.length === 1 ? 'employee' : 'employees'}`,
+          hint: countLabel(pending.length, 'employee'),
           icon: 'lucide-clock',
         },
         {
@@ -508,7 +616,7 @@ export function Accounting(): JSX.Element {
       case 'Payroll':
         downloadCSV('acme-payroll.csv', [
           ['Employee', 'Role', 'Monthly salary', 'Status'],
-          ...employees().map((employee) => [
+          ...visibleEmployees().map((employee) => [
             employee.name,
             employee.role,
             employee.salary,
@@ -530,7 +638,7 @@ export function Accounting(): JSX.Element {
       case 'Expenses':
         downloadCSV('acme-expenses.csv', [
           ['Description', 'Category', 'Date', 'Amount (USD)', 'Status'],
-          ...expenseRows().map((transaction) => [
+          ...visibleExpenses().map((transaction) => [
             transaction.description,
             transaction.category,
             transaction.date,
@@ -562,6 +670,7 @@ export function Accounting(): JSX.Element {
           <Button
             variant="outline"
             iconLeft="lucide-download"
+            class="max-sm:min-h-10"
             onClick={exportReport}
           >
             Export report
@@ -570,6 +679,7 @@ export function Accounting(): JSX.Element {
             variant="solid"
             theme="blue"
             iconLeft="lucide-plus"
+            class="max-sm:min-h-10"
             onClick={() => {
               if (page() === 'Payroll') setEmployeeOpen(true)
               else setOpen(true)
@@ -584,6 +694,7 @@ export function Accounting(): JSX.Element {
         <TabButtons
           label="Accounting sections"
           wrap
+          class="justify-start"
           value={page()}
           onValueChange={setPage}
           options={optionsOf([
@@ -614,7 +725,11 @@ export function Accounting(): JSX.Element {
             onReset={resetPeriod}
           />
         </Show>
-        <Show when={notice()}>
+        <Show
+          when={
+            Boolean(notice()) && !open() && !employeeOpen() && !confirmRequest()
+          }
+        >
           <div class="fixed inset-x-4 bottom-4 z-top sm:inset-x-auto sm:end-6 sm:w-[24rem]">
             <Notice
               text={notice()}
@@ -636,94 +751,16 @@ export function Accounting(): JSX.Element {
         </Show>
         <StatGrid compact stats={stats()} />
         <Show when={page() === 'Cash accounts'}>
-          <section
-            aria-label="Cash account balances"
-            class="flex flex-col gap-3 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad"
-          >
-            <div class="flex flex-wrap items-baseline justify-between gap-2">
-              <h3 class="text-section text-ink-gray-9">Account balances</h3>
-              <p class="text-caption text-ink-gray-7">
-                As of {range()[1] ?? '2026-09-30'} · {dataset().count}{' '}
-                {dataset().noun}
-              </p>
-            </div>
-            <ScrollTable label="Cash account balance table">
-              <table class="w-full min-w-[480px] text-interface">
-                <ScrollTableHead>
-                  <tr>
-                    <th scope="col" class="px-4 py-3 text-start">
-                      Account
-                    </th>
-                    <th scope="col" class="px-4 py-3 text-end">
-                      Opening
-                    </th>
-                    <th scope="col" class="px-4 py-3 text-end">
-                      Movement
-                    </th>
-                    <th scope="col" class="px-4 py-3 text-end">
-                      Closing
-                    </th>
-                  </tr>
-                </ScrollTableHead>
-                <tbody>
-                  <For each={accountBalances()}>
-                    {(account) => (
-                      <tr class="border-b border-outline-gray-1 last:border-b-0">
-                        <th
-                          scope="row"
-                          class="px-4 py-3 text-start font-normal"
-                        >
-                          {account.account}
-                        </th>
-                        <td class="px-4 py-3 text-end tabular-nums">
-                          {currency(account.opening)}
-                        </td>
-                        <td class="px-4 py-3 text-end tabular-nums">
-                          {account.movement >= 0 ? '+' : ''}
-                          {currency(account.movement)}
-                        </td>
-                        <td class="px-4 py-3 text-end font-medium tabular-nums">
-                          {currency(account.closing)}
-                        </td>
-                      </tr>
-                    )}
-                  </For>
-                </tbody>
-                <tfoot>
-                  <tr class="border-t border-outline-gray-1 bg-surface-gray-1">
-                    <th scope="row" class="px-4 py-3 text-start">
-                      Total cash
-                    </th>
-                    <td class="px-4 py-3 text-end font-medium tabular-nums">
-                      {currency(
-                        accountBalances().reduce(
-                          (sum, account) => sum + account.opening,
-                          0,
-                        ),
-                      )}
-                    </td>
-                    <td class="px-4 py-3 text-end font-medium tabular-nums">
-                      {currency(
-                        accountBalances().reduce(
-                          (sum, account) => sum + account.movement,
-                          0,
-                        ),
-                      )}
-                    </td>
-                    <td class="px-4 py-3 text-end font-semibold tabular-nums">
-                      {currency(cashTotal())}
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
-            </ScrollTable>
-            <p class="text-caption text-ink-gray-7">
-              Opening balances start at 1 April 2026 and roll forward through
-              posted movements.
-            </p>
-            <div>
+          <Section
+            surface="card"
+            headingLevel={3}
+            title="Account balances"
+            label="Cash account balances"
+            description={`As of ${periodEnd()} · ${countLabel(dataset().count, 'account')}`}
+            actions={
               <Button
                 variant="outline"
+                class="max-sm:min-h-10"
                 onClick={() => {
                   setPage('Cashflow')
                   notify(
@@ -733,8 +770,118 @@ export function Accounting(): JSX.Element {
               >
                 View cashflow ledger
               </Button>
+            }
+          >
+            <div class="flex flex-col gap-3">
+              <div class="hidden sm:block">
+                <ScrollTable label="Cash account balance table">
+                  <table class="w-full min-w-[480px] text-interface">
+                    <ScrollTableHead>
+                      <tr>
+                        <th scope="col" class="px-4 py-3 text-start">
+                          Account
+                        </th>
+                        <th scope="col" class="px-4 py-3 text-end">
+                          Opening
+                        </th>
+                        <th scope="col" class="px-4 py-3 text-end">
+                          Movement
+                        </th>
+                        <th scope="col" class="px-4 py-3 text-end">
+                          Closing
+                        </th>
+                      </tr>
+                    </ScrollTableHead>
+                    <tbody>
+                      <For each={accountBalances()}>
+                        {(account) => (
+                          <tr class="border-b border-outline-gray-1 last:border-b-0">
+                            <th
+                              scope="row"
+                              class="px-4 py-3 text-start font-normal"
+                            >
+                              {account.account}
+                            </th>
+                            <td class="px-4 py-3 text-end tabular-nums">
+                              {currency(account.opening)}
+                            </td>
+                            <td class="px-4 py-3 text-end tabular-nums">
+                              {account.movement >= 0 ? '+' : ''}
+                              {currency(account.movement)}
+                            </td>
+                            <td class="px-4 py-3 text-end font-medium tabular-nums">
+                              {currency(account.closing)}
+                            </td>
+                          </tr>
+                        )}
+                      </For>
+                    </tbody>
+                    <tfoot>
+                      <tr class="border-t border-outline-gray-1 bg-surface-gray-1">
+                        <th scope="row" class="px-4 py-3 text-start">
+                          Total cash
+                        </th>
+                        <td class="px-4 py-3 text-end font-medium tabular-nums">
+                          {currency(
+                            accountBalances().reduce(
+                              (sum, account) => sum + account.opening,
+                              0,
+                            ),
+                          )}
+                        </td>
+                        <td class="px-4 py-3 text-end font-medium tabular-nums">
+                          {currency(
+                            accountBalances().reduce(
+                              (sum, account) => sum + account.movement,
+                              0,
+                            ),
+                          )}
+                        </td>
+                        <td class="px-4 py-3 text-end font-semibold tabular-nums">
+                          {currency(cashTotal())}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </ScrollTable>
+              </div>
+              {/* The same four columns do not fit a phone; the closing balance
+                  is the figure the reader came for, so it leads. */}
+              <div class="flex flex-col divide-y divide-outline-gray-1 sm:hidden">
+                <For each={accountBalances()}>
+                  {(account) => (
+                    <div class="flex items-start justify-between gap-3 py-3 first:pt-0">
+                      <div class="flex min-w-0 flex-col gap-0.5">
+                        <span class="text-interface font-medium text-ink-gray-9 [overflow-wrap:anywhere]">
+                          {account.account}
+                        </span>
+                        <span class="text-caption text-ink-gray-7 [overflow-wrap:anywhere]">
+                          Opening {currency(account.opening)} ·{' '}
+                          {account.movement >= 0 ? '+' : ''}
+                          {currency(account.movement)}
+                        </span>
+                      </div>
+                      <span class="shrink-0 text-interface font-medium tabular-nums text-ink-gray-9">
+                        {currency(account.closing)}
+                      </span>
+                    </div>
+                  )}
+                </For>
+                <div class="flex items-baseline justify-between gap-3 py-3">
+                  <span class="text-interface font-semibold text-ink-gray-9">
+                    Total cash
+                  </span>
+                  <span class="text-interface font-semibold tabular-nums text-ink-gray-9">
+                    {currency(cashTotal())}
+                  </span>
+                </div>
+              </div>
+              <p class="text-caption text-ink-gray-7">
+                Opening balances start at 1 April 2026 and roll forward through
+                posted movements.
+              </p>
             </div>
-          </section>
+          </Section>
         </Show>
         <Show when={page() === 'Cashflow'}>
           <div class="grid min-w-0 gap-4 xl:grid-cols-3">
@@ -783,164 +930,234 @@ export function Accounting(): JSX.Element {
             ]}
           />
           <div class="rounded-card border border-outline-gray-1 bg-surface-elevation-1">
-            <div class="hidden sm:block">
-              <ScrollTable label="Cashflow ledger" stickyHeader>
-                <table class="w-full min-w-[640px] text-interface">
-                  <ScrollTableHead>
-                    <tr>
-                      <For
-                        each={[
-                          'Description',
-                          'Category',
-                          'Date',
-                          'Amount',
-                          'Status',
-                        ]}
+            <Show
+              when={flowRows().length > 0}
+              fallback={
+                <EmptyState
+                  icon="lucide-receipt"
+                  size="sm"
+                  title={
+                    flow() === 'incoming'
+                      ? 'No incoming transactions'
+                      : 'No outgoing transactions'
+                  }
+                  description={`Nothing matches the ${flow()} flow in ${periodLabel()}.`}
+                  action={
+                    <Button
+                      variant="outline"
+                      class="max-sm:min-h-10"
+                      onClick={() => setOpen(true)}
+                    >
+                      Record a transaction
+                    </Button>
+                  }
+                  secondaryAction={
+                    canReset() ? (
+                      <Button
+                        variant="ghost"
+                        class="max-sm:min-h-10"
+                        onClick={resetPeriod}
                       >
-                        {(title) => (
-                          <th scope="col" class="px-4 py-3 text-start">
-                            {title}
-                          </th>
+                        Reset period
+                      </Button>
+                    ) : undefined
+                  }
+                />
+              }
+            >
+              <div class="hidden sm:block">
+                <ScrollTable label="Cashflow ledger" stickyHeader>
+                  <table class="w-full min-w-[640px] text-interface">
+                    <ScrollTableHead>
+                      <tr>
+                        <For
+                          each={[
+                            'Description',
+                            'Category',
+                            'Date',
+                            'Amount',
+                            'Status',
+                          ]}
+                        >
+                          {(title) => (
+                            <th
+                              scope="col"
+                              class={`px-4 py-3 ${title === 'Amount' ? 'text-end' : 'text-start'}`}
+                            >
+                              {title}
+                            </th>
+                          )}
+                        </For>
+                      </tr>
+                    </ScrollTableHead>
+                    <tbody>
+                      <For each={flowRows()}>
+                        {(transaction) => (
+                          <tr class="border-b border-outline-gray-1 last:border-b-0">
+                            <td class="px-4 py-3">{transaction.description}</td>
+                            <td class="px-4 py-3">{transaction.category}</td>
+                            <td class="px-4 py-3">{transaction.date}</td>
+                            <td class="px-4 py-3 text-end tabular-nums">
+                              {currency(transaction.amount)}
+                            </td>
+                            <td class="px-4 py-3">
+                              <Badge
+                                theme={
+                                  transaction.status === 'Posted'
+                                    ? 'green'
+                                    : 'amber'
+                                }
+                              >
+                                {transaction.status}
+                              </Badge>
+                            </td>
+                          </tr>
                         )}
                       </For>
-                    </tr>
-                  </ScrollTableHead>
-                  <tbody>
-                    <For each={flowRows()}>
-                      {(transaction) => (
-                        <tr class="border-b border-outline-gray-1 last:border-b-0">
-                          <td class="px-4 py-3">{transaction.description}</td>
-                          <td class="px-4 py-3">{transaction.category}</td>
-                          <td class="px-4 py-3">{transaction.date}</td>
-                          <td class="px-4 py-3 tabular-nums">
-                            {currency(transaction.amount)}
-                          </td>
-                          <td class="px-4 py-3">
-                            <Badge
-                              theme={
-                                transaction.status === 'Posted'
-                                  ? 'green'
-                                  : 'amber'
-                              }
-                            >
-                              {transaction.status}
-                            </Badge>
-                          </td>
-                        </tr>
-                      )}
-                    </For>
-                  </tbody>
-                </table>
-              </ScrollTable>
-            </div>
-            <ul
-              aria-label="Cashflow ledger cards"
-              class="flex flex-col divide-y divide-outline-gray-1 sm:hidden"
-            >
-              <For each={flowRows()}>
-                {(transaction) => (
-                  <li class="flex flex-col gap-1 p-3">
-                    <div class="flex items-start justify-between gap-2">
-                      <span class="min-w-0 text-interface font-medium [overflow-wrap:anywhere]">
-                        {transaction.description}
-                      </span>
-                      <span class="shrink-0 tabular-nums">
-                        {currency(transaction.amount)}
-                      </span>
-                    </div>
-                    <div class="flex flex-wrap items-center justify-between gap-2">
-                      <span class="text-caption text-ink-gray-7">
-                        {transaction.category} · {transaction.date}
-                      </span>
-                      <Badge
-                        theme={
-                          transaction.status === 'Posted' ? 'green' : 'amber'
-                        }
-                      >
-                        {transaction.status}
-                      </Badge>
-                    </div>
-                  </li>
-                )}
-              </For>
-            </ul>
-            <Show when={!flowRows().length}>
-              <p class="p-8 text-center text-ink-gray-7">
-                No transactions in this period.
-              </p>
+                    </tbody>
+                  </table>
+                </ScrollTable>
+              </div>
+              <ul
+                aria-label="Cashflow ledger cards"
+                class="flex flex-col divide-y divide-outline-gray-1 sm:hidden"
+              >
+                <For each={flowRows()}>
+                  {(transaction) => (
+                    <li class="flex flex-col gap-1 p-3">
+                      <div class="flex items-start justify-between gap-2">
+                        <span class="min-w-0 text-interface font-medium [overflow-wrap:anywhere]">
+                          {transaction.description}
+                        </span>
+                        <span class="shrink-0 tabular-nums">
+                          {currency(transaction.amount)}
+                        </span>
+                      </div>
+                      <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span class="text-caption text-ink-gray-7">
+                          {transaction.category} · {transaction.date}
+                        </span>
+                        <Badge
+                          theme={
+                            transaction.status === 'Posted' ? 'green' : 'amber'
+                          }
+                        >
+                          {transaction.status}
+                        </Badge>
+                      </div>
+                    </li>
+                  )}
+                </For>
+              </ul>
+              <div class="flex flex-wrap items-center justify-between gap-2 border-t border-outline-gray-1 px-4 py-3 text-caption text-ink-gray-7">
+                <span role="status">
+                  {dataset().count} {dataset().noun}
+                </span>
+                <span>{periodLabel()}</span>
+              </div>
             </Show>
-            <div class="flex flex-wrap items-center justify-between gap-2 border-t border-outline-gray-1 px-4 py-3 text-caption text-ink-gray-7">
-              <span role="status">
-                {dataset().count} {dataset().noun}
-              </span>
-              <span>{periodLabel()}</span>
-            </div>
           </div>
         </Show>
         <Show when={page() === 'Expenses'}>
-          <TransactionTable
-            title="Expenses"
-            rows={expenseRows()}
-            columns={transactionColumns}
-            actionLabel="Approve expenses"
-            recordsLabel="expense records"
-            pageSize={8}
-            caption={`${dataset().count} expense records · ${periodLabel()}`}
-            selectionSummary={(ids) =>
-              currency(
-                expenseRows()
-                  .filter((row) => ids.includes(row.id))
-                  .reduce((sum, row) => sum + row.amount, 0),
-              )
-            }
-            rowSelectable={(row) => row.status === 'Pending'}
-            onRowsAction={requestExpenses}
+          <FilterBar
+            query={{
+              value: expenseQuery(),
+              placeholder: 'Search expenses…',
+              onInput: setExpenseQuery,
+            }}
           />
+          <div class="max-sm:[&_[data-slot=selection-bar]_button]:min-h-10">
+            <TransactionTable
+              title="Expenses"
+              rows={visibleExpenses()}
+              columns={transactionColumns}
+              hideSearch
+              actionLabel="Approve expenses"
+              recordsLabel="expense records"
+              pageSize={8}
+              caption={`${countLabel(visibleExpenses().length, 'expense record')} · ${periodLabel()}`}
+              selectionSummary={(ids) =>
+                currency(
+                  visibleExpenses()
+                    .filter((row) => ids.includes(row.id))
+                    .reduce((sum, row) => sum + row.amount, 0),
+                )
+              }
+              rowSelectable={(row) => row.status === 'Pending'}
+              onRowsAction={requestExpenses}
+              emptyTitle={
+                expenseQuery()
+                  ? 'No expenses match'
+                  : 'No expenses in this period'
+              }
+              emptyHint={
+                expenseQuery()
+                  ? 'Try a different search or reset the filter.'
+                  : 'Change the reporting period or add a transaction.'
+              }
+              onClearFilters={
+                expenseQuery() ? () => setExpenseQuery('') : undefined
+              }
+            />
+          </div>
         </Show>
         <Show when={page() === 'Payroll'}>
-          <EmployeeTable
-            title="Payroll"
-            rows={employees()}
-            columns={employeeColumns}
-            actionLabel="Record payroll payments"
-            recordsLabel="employees"
-            caption={`${employees().length} employees · September 2026`}
-            selectionSummary={(ids) =>
-              currency(
-                employees()
-                  .filter((employee) => ids.includes(employee.id))
-                  .reduce((sum, employee) => sum + employee.salary, 0),
-              )
-            }
-            rowSelectable={(row) => row.status === 'Pending'}
-            onRowsAction={requestPayroll}
+          <FilterBar
+            query={{
+              value: employeeQuery(),
+              placeholder: 'Search payroll…',
+              onInput: setEmployeeQuery,
+            }}
           />
+          <div class="max-sm:[&_[data-slot=selection-bar]_button]:min-h-10">
+            <EmployeeTable
+              title="Payroll"
+              rows={visibleEmployees()}
+              columns={employeeColumns}
+              hideSearch
+              actionLabel="Record payroll payments"
+              recordsLabel="employees"
+              caption={`${countLabel(visibleEmployees().length, 'employee')} · September 2026`}
+              selectionSummary={(ids) =>
+                currency(
+                  visibleEmployees()
+                    .filter((employee) => ids.includes(employee.id))
+                    .reduce((sum, employee) => sum + employee.salary, 0),
+                )
+              }
+              rowSelectable={(row) => row.status === 'Pending'}
+              onRowsAction={requestPayroll}
+              emptyTitle="No employees match"
+              emptyHint="Try a different search or reset the filter."
+              onClearFilters={() => setEmployeeQuery('')}
+            />
+          </div>
         </Show>
         <Show when={page() === 'Profit & loss'}>
-          <section
-            class="mx-auto w-full max-w-[56rem] rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad"
-            aria-label="Profit and loss report"
-          >
-            <div class="mb-6 flex flex-wrap items-start justify-between gap-3">
-              <div class="flex flex-col gap-1">
-                <h3 class="text-section">Statement</h3>
-                <p class="text-caption text-ink-gray-7">
-                  {dataset().count} lines · prior column is an illustrative 90%
-                  cohort
-                </p>
-              </div>
+          <Section
+            surface="card"
+            headingLevel={3}
+            title="Statement"
+            label="Profit and loss report"
+            description={
+              noPostedActivity()
+                ? 'No posted activity in this period · prior column is an illustrative 90% cohort'
+                : `${dataset().count} lines · prior column is an illustrative 90% cohort`
+            }
+            actions={
               <Switch
                 label="Show illustrative prior"
                 checked={compare()}
                 onCheckedChange={setCompare}
               />
-            </div>
+            }
+          >
             <section
               class="overflow-x-auto rounded-3 focus-visible:focus-ring"
               tabindex="0"
               aria-label="Profit and loss figures"
             >
-              <table class="w-full min-w-[400px] text-interface">
+              <table class="w-full text-interface">
                 <thead class="border-b border-outline-gray-1 text-caption text-ink-gray-7">
                   <tr>
                     <th class="p-3 text-start" scope="col">
@@ -974,7 +1191,7 @@ export function Accounting(): JSX.Element {
                       </tr>
                     )}
                   </For>
-                  <tr class="bg-surface-blue-1 font-semibold text-ink-blue-8">
+                  <tr class="bg-surface-gray-2 font-semibold text-ink-gray-9">
                     <th class="p-3 text-start" scope="row">
                       Net profit
                     </th>
@@ -990,13 +1207,15 @@ export function Accounting(): JSX.Element {
                 </tbody>
               </table>
             </section>
-          </section>
+          </Section>
         </Show>
         <Show when={open() || employeeOpen() || confirmRequest()}>
           <AccountingDialogs
             open={open()}
             employeeOpen={employeeOpen()}
             confirm={confirmRequest()}
+            defaultDate={periodEnd()}
+            defaultDateLabel={periodEndLabel()}
             onOpenChange={setOpen}
             onEmployeeOpenChange={setEmployeeOpen}
             onConfirmOpenChange={(value) => {

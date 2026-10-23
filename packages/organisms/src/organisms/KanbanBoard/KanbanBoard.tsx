@@ -161,6 +161,8 @@ export function KanbanBoard<T extends { id: string }>(
 
   /** The live preview of the item in flight: a slot, not a commit. */
   const [preview, setPreview] = createSignal<KanbanSlot & { itemId: string }>()
+  /** A card to re-focus after a keyboard move has re-rendered the column. */
+  const [focusAfterMove, setFocusAfterMove] = createSignal<string>()
 
   const rendered = createMemo(() => {
     const slot = preview()
@@ -271,12 +273,14 @@ export function KanbanBoard<T extends { id: string }>(
     item: T | undefined,
     from: KanbanSlot | undefined,
     to: KanbanSlot | undefined,
+    restoreFocus = false,
   ) {
     setPreview(undefined)
     if (!item || !from || !to) return
     const next = placeKanbanItem(columns(), item.id, to)
     if (!isControlled()) setInternal(next)
     props.onMove?.({ item, itemId: item.id, from, to, columns: next })
+    if (restoreFocus) setFocusAfterMove(item.id)
   }
 
   const drag = createKanbanDrag<T>({
@@ -293,10 +297,15 @@ export function KanbanBoard<T extends { id: string }>(
   const moveTo = (item: T, columnId: string) => {
     const from = slotOf(item.id)
     if (!from || from.column === columnId) return
-    settle(item, from, {
-      column: columnId,
-      index: columnOf(columnId).items.length,
-    })
+    settle(
+      item,
+      from,
+      {
+        column: columnId,
+        index: columnOf(columnId).items.length,
+      },
+      true,
+    )
   }
 
   createEffect(() => {
@@ -308,6 +317,23 @@ export function KanbanBoard<T extends { id: string }>(
     }
     window.addEventListener('keydown', onKey)
     onCleanup(() => window.removeEventListener('keydown', onKey))
+  })
+
+  createEffect(() => {
+    const id = focusAfterMove()
+    if (!id) return
+    // Keyboard moves re-create the card in its destination column, so the
+    // trigger that opened the menu is gone. Put focus back on the same card
+    // and keep it in view instead of dropping the reader on <body>.
+    queueMicrotask(() => {
+      const card = [
+        ...(boardRoot?.querySelectorAll<HTMLElement>('[data-kanban-id]') ?? []),
+      ].find((element) => element.dataset['kanbanId'] === id)
+      if (typeof card?.scrollIntoView === 'function')
+        card.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+      card?.querySelector<HTMLElement>('[data-kanban-action]')?.focus()
+      setFocusAfterMove(undefined)
+    })
   })
 
   return (
@@ -354,7 +380,7 @@ export function KanbanBoard<T extends { id: string }>(
                     <li
                       ref={(element) => columnRoots.set(columnId, element)}
                       data-kanban-column={columnId}
-                      class="flex min-h-0 w-72 shrink-0 flex-col rounded-card border border-outline-gray-1 bg-surface-gray-1 max-lg:snap-start dark:bg-transparent"
+                      class="flex min-h-0 w-72 shrink-0 flex-col rounded-card border border-outline-gray-1 bg-surface-gray-1 max-lg:snap-start min-[1440px]:w-64 2xl:w-72 dark:bg-transparent"
                     >
                       <div class="flex items-center justify-between gap-2 pe-1 ps-3 pt-1 pb-2">
                         <div class="flex min-w-0 items-center gap-2">
@@ -387,6 +413,7 @@ export function KanbanBoard<T extends { id: string }>(
                               size="sm"
                               icon={action().icon ?? 'lucide-plus'}
                               aria-label={action().label}
+                              class="max-lg:size-10"
                               onClick={action().onClick}
                             />
                           )}
@@ -405,7 +432,7 @@ export function KanbanBoard<T extends { id: string }>(
                             <For
                               each={column().items}
                               fallback={
-                                <li class="rounded-5 border border-dashed border-outline-gray-3 p-6 text-center text-sm text-ink-gray-6">
+                                <li class="rounded-card border border-dashed border-outline-gray-3 p-6 text-center text-sm text-ink-gray-6">
                                   {props.emptyColumn?.(column()) ??
                                     'Nothing in this column.'}
                                 </li>
@@ -433,7 +460,7 @@ export function KanbanBoard<T extends { id: string }>(
                                       // place as the hole the ghost lands on, so
                                       // the column does not reflow when it lifts.
                                       <div
-                                        class="rounded-5 border-2 border-dashed border-outline-gray-2 bg-surface-gray-2"
+                                        class="rounded-card border-2 border-dashed border-outline-gray-2 bg-surface-gray-2"
                                         style={{
                                           height: `${drag.state()?.height ?? 0}px`,
                                         }}
@@ -453,8 +480,9 @@ export function KanbanBoard<T extends { id: string }>(
                                               }
                                             >
                                               <Menu.Trigger
+                                                data-kanban-action=""
                                                 aria-label={`Actions for ${nameOf(item)}`}
-                                                class="flex size-7 cursor-pointer items-center justify-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-8 focus-visible:focus-ring"
+                                                class="flex size-7 cursor-pointer items-center justify-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-8 focus-visible:focus-ring max-lg:size-10"
                                               >
                                                 <Icon
                                                   icon="lucide-ellipsis"

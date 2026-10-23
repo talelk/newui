@@ -78,7 +78,7 @@ const DISABLED: Record<Combo, string> = {
     'disabled:bg-surface-gray-2 disabled:text-ink-gray-4 disabled:border disabled:border-outline-gray-2',
   'gray-ghost': 'disabled:text-ink-gray-4',
 
-  'blue-solid': 'disabled:bg-surface-blue-4 disabled:text-ink-base',
+  'blue-solid': 'disabled:bg-surface-gray-2 disabled:text-ink-gray-4',
   'blue-subtle': 'disabled:bg-surface-blue-2 disabled:text-ink-blue-link',
   'blue-outline':
     'disabled:bg-surface-blue-2 disabled:text-ink-blue-link disabled:border disabled:border-outline-blue-1',

@@ -61,7 +61,7 @@ function ApiTable(props: { part: string; members: ApiMember[] }): JSX.Element {
       <section
         tabindex="0"
         aria-label={`${props.part} properties`}
-        class="overflow-x-auto rounded-5 border border-outline-gray-1"
+        class="overflow-x-auto rounded-card border border-outline-gray-1"
       >
         <table class="w-full min-w-[38rem] border-collapse text-base">
           <thead>
@@ -415,7 +415,7 @@ export function ComponentPage(): JSX.Element {
               </PageSection>
 
               <PageSection id="usage" title="Usage">
-                <pre class="whitespace-pre-wrap break-words rounded-5 border border-outline-gray-1 bg-surface-elevation-1 p-4 text-caption">
+                <pre class="whitespace-pre-wrap break-words rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-4 text-caption">
                   <code>{`import { ${component().name} } from '${component().package}'`}</code>
                 </pre>
               </PageSection>

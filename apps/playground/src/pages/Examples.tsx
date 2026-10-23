@@ -11,7 +11,7 @@ export function Examples(): JSX.Element {
         title="Pages"
         description="Whole screens wired to real state: every level of the ladder, used the way a product uses it."
       />
-      <div class="flex flex-col divide-y divide-outline-gray-1 rounded-5 border border-outline-gray-1">
+      <div class="flex flex-col divide-y divide-outline-gray-1 rounded-card border border-outline-gray-1">
         <For each={EXAMPLES}>
           {(example) => (
             <A

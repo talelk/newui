@@ -104,6 +104,7 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
       <div
         style={{
           display: 'flex',
+          'flex-wrap': 'wrap',
           'align-items': 'flex-start',
           'justify-content': 'space-between',
           gap: '0.5rem',
@@ -112,11 +113,13 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
         <figcaption
           data-slot="number-card-title"
           style={{
+            flex: '1 1 auto',
+            'min-width': '0',
             'font-size': '0.875rem',
             'line-height': '1.25rem',
             'font-weight': '500',
             color: 'var(--ink-gray-7)',
-            'overflow-wrap': 'anywhere',
+            'overflow-wrap': 'break-word',
           }}
         >
           {props.title}
@@ -164,13 +167,27 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
         <div
           data-slot="number-card-loading"
           role="status"
-          style={{
-            'margin-top': '8px',
-            'font-size': '0.875rem',
-            color: 'var(--ink-gray-7)',
-          }}
+          aria-label="Loading"
+          style={{ 'margin-top': '8px' }}
         >
-          Loading…
+          <div
+            aria-hidden="true"
+            style={{
+              height: 'var(--text-metric, 1.75rem)',
+              'border-radius': 'var(--radius-card)',
+              background: 'var(--surface-gray-2)',
+            }}
+          />
+          <div
+            aria-hidden="true"
+            style={{
+              width: '60%',
+              height: '0.75rem',
+              'margin-top': '8px',
+              'border-radius': 'var(--radius-pill)',
+              background: 'var(--surface-gray-2)',
+            }}
+          />
         </div>
       </Show>
 

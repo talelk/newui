@@ -1,5 +1,5 @@
-import { Button, type IconProp } from '@talelk/newui-atoms'
-import { Dropdown } from '@talelk/newui-molecules'
+import { Button, cn, Icon, type IconProp } from '@talelk/newui-atoms'
+import { Menu } from '@talelk/newui-molecules'
 import { For, type JSX, Show } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 
@@ -45,26 +45,46 @@ export function PageToolbar(props: PageToolbarProps): JSX.Element {
       <div class="flex min-w-0 items-center gap-1">
         <Dynamic
           component={`h${props.headingLevel ?? 1}`}
-          class="truncate text-heading text-ink-gray-9"
+          class={cn(
+            'truncate text-ink-gray-9',
+            (props.headingLevel ?? 1) === 1 ? 'text-heading' : 'text-section',
+          )}
         >
           {props.title}
         </Dynamic>
         <Show when={props.menu}>
           {(menu) => (
-            <Dropdown
-              options={menu().map((entry) => ({
-                label: entry.label,
-                value: entry.label,
-                ...(typeof entry.icon === 'string' ? { icon: entry.icon } : {}),
-              }))}
+            <Menu.Root
               onSelect={(value) =>
                 menu()
                   .find((entry) => entry.label === value)
                   ?.onClick?.()
               }
             >
-              <span class="sr-only">Page actions</span>
-            </Dropdown>
+              <Menu.Trigger
+                aria-label="Page actions"
+                class="grid size-7 shrink-0 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
+              >
+                <Icon icon="lucide-ellipsis" class="size-4" />
+              </Menu.Trigger>
+              <Menu.Content>
+                <For each={menu()}>
+                  {(entry) => (
+                    <Menu.Item value={entry.label}>
+                      <Show when={entry.icon}>
+                        {(icon) => (
+                          <Icon
+                            icon={icon()}
+                            class="size-4 shrink-0 text-ink-gray-6"
+                          />
+                        )}
+                      </Show>
+                      <span>{entry.label}</span>
+                    </Menu.Item>
+                  )}
+                </For>
+              </Menu.Content>
+            </Menu.Root>
           )}
         </Show>
       </div>
@@ -76,6 +96,7 @@ export function PageToolbar(props: PageToolbarProps): JSX.Element {
             {(action) => (
               <Button
                 variant="outline"
+                iconLeft={action.icon}
                 loading={action.loading}
                 disabled={action.disabled}
                 onClick={action.onClick}

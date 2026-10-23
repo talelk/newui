@@ -67,6 +67,7 @@ The parts are also exported as flat named components (`SettingsDialog`,
 
 | prop | type | default | notes |
 | --- | --- | --- | --- |
+| `label` | `string` | `Settings` | accessible name for the vertical tablist |
 | `class` | `string` | — | merged into the sidebar |
 | `children` | `JSX.Element` | — | `NavGroup`s and `NavItem`s |
 
@@ -144,6 +145,16 @@ selection yourself (for example from a `/settings/:tab` URL) or leave them
 unbound and the dialog tracks the selection internally. A `NavItem` and its
 `Panel` share one `value`; clicking a nav item moves the dialog's value and
 reports it through `onValueChange`.
+
+### Geometry
+
+- Desktop content has a stable width (`min(56rem, 100vw - 2rem)`) across panels;
+  switching tabs never resizes the dialog or moves the close control.
+- Below `sm`, the panel is genuinely full-bleed (`fixed inset-0`) rather than
+  inset inside the positioner's gutter. Navigation rows and the close control
+  use the 40px touch scale.
+- The sidebar uses a logical inline border so RTL keeps the divider between the
+  panes.
 
 ### Panels stay mounted
 

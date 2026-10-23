@@ -116,7 +116,7 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
             ? 'relative isolate flex'
             : 'relative flex',
       local.vertical ? 'flex-col' : 'items-center',
-      local.fluid && 'w-full',
+      local.fluid && 'w-full min-w-0',
       ...tabTrackClasses({
         variant: variant(),
         size: size(),
@@ -282,7 +282,7 @@ export function TabButtons(props: TabButtonsProps): JSX.Element {
                       browserTabBase: buttonBrowserBase(option),
                     }),
                     local.vertical && 'w-full justify-start',
-                    local.fluid && 'w-full',
+                    local.fluid && 'w-full min-w-0',
                   )}
                 >
                   <Show when={option.icon}>

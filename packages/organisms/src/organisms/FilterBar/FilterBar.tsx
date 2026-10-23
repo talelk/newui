@@ -130,7 +130,7 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
         props.class,
       )}
     >
-      <div class="grid max-w-full grid-cols-1 items-center gap-control-gap sm:grid-cols-2 xl:flex xl:flex-wrap">
+      <div class="grid max-w-full grid-cols-1 items-center gap-control-gap min-[360px]:grid-cols-2 xl:flex xl:flex-wrap">
         <Show when={props.query}>
           {(query) => (
             <span
@@ -222,7 +222,7 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
                     <button
                       type="button"
                       aria-label={`Remove filter: ${chip.label}`}
-                      class="grid size-4 place-items-center rounded-full text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
+                      class="grid size-6 place-items-center rounded-full text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
                       onClick={() => onRemove()()}
                     >
                       <Icon icon="lucide-x" class="size-3" />

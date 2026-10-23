@@ -12,6 +12,22 @@ export interface WorkspaceFile {
   file?: File
   content?: string
 }
+
+/** Relative day label used by both the grid card and the data table. */
+export function relativeDay(day: number): string {
+  if (day <= 0) return 'Today'
+  if (day === 1) return 'Yesterday'
+  return `${day} days ago`
+}
+
+/** One noun inflection shared by folder counts, file lists and notices. */
+export function countLabel(
+  count: number,
+  singular: string,
+  plural = `${singular}s`,
+): string {
+  return `${count} ${count === 1 ? singular : plural}`
+}
 export const INITIAL: WorkspaceFile[] = [
   {
     id: 'design',

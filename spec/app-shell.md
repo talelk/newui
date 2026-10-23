@@ -68,8 +68,9 @@ one sidebar model: no separately supplied rail, desktop sidebar or mobile nav.
 - The fold lives in the sidebar's identity row, not in the menu; the rail keeps
   an `Expand` control and the compact `utilitiesCollapsed` slot, so collapsing
   does not take a global control away or cost a footer row.
-- Mobile opens the same expanded navigation in a modal drawer. Escape closes it,
-  focus returns to the trigger, and selecting a destination closes the drawer.
+- Mobile opens the same expanded navigation in a modal drawer. The trigger keeps
+  a 40px touch target (the icon stays 16px). Escape closes it, focus returns to
+  the trigger, and selecting a destination closes the drawer.
   The drawer's close control is pinned in its own 40px header; the navigation
   scrolls beneath it and the footer stays at the foot.
 - The navigation list scrolls independently. Brand, tenant, utilities, settings and
