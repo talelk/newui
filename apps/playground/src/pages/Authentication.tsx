@@ -5,7 +5,7 @@ import { Password, TabButtons } from '@talelk/newui-molecules'
 import { AuthCard } from '@talelk/newui-organisms'
 import { AuthLayout } from '@talelk/newui-templates'
 import { createSignal, type JSX, Show } from 'solid-js'
-import { assetUrl } from '../lib/base'
+import { assetUrl, sitePath } from '../lib/base'
 import { ThemeMenu } from '../shell/ThemeMenu'
 
 export function Authentication(): JSX.Element {
@@ -116,7 +116,7 @@ export function Authentication(): JSX.Element {
                   : 'Your local demo session is ready to explore.'}
               </p>
               <Button
-                route="/pages/analytics/fullscreen"
+                route={sitePath('/pages/analytics/fullscreen')}
                 variant="solid"
                 theme="blue"
               >

@@ -19,6 +19,7 @@ import {
 } from '@talelk/newui-molecules'
 import { createSignal, For, type JSX, Show } from 'solid-js'
 import { AppPage } from '../examples/AppPage'
+import { sitePath } from '../lib/base'
 
 function CreateAccount(): JSX.Element {
   const [name, setName] = createSignal('')
@@ -400,7 +401,10 @@ function WorkspaceCard(): JSX.Element {
         </CardDescription>
       </CardHeader>
       <div class="flex flex-wrap gap-2">
-        <Button route="/pages/analytics/fullscreen" variant="outline">
+        <Button
+          route={sitePath('/pages/analytics/fullscreen')}
+          variant="outline"
+        >
           Open workspace
         </Button>
         <Button

@@ -4,7 +4,7 @@ import { Dropdown } from '@talelk/newui-molecules'
 import { SidebarItem } from '@talelk/newui-organisms'
 import { AppShell } from '@talelk/newui-templates'
 import { createMemo, createSignal, type JSX } from 'solid-js'
-import { assetUrl } from '../lib/base'
+import { assetUrl, sitePath } from '../lib/base'
 import { EXAMPLES } from '../lib/examples'
 import { ThemeMenu, ThemeMenuCompact } from '../shell/ThemeMenu'
 
@@ -36,7 +36,7 @@ export function AppPage(props: {
       ).map((example) => ({
         label: example.name,
         icon: example.icon,
-        route: `${example.href}/fullscreen`,
+        route: sitePath(`${example.href}/fullscreen`),
         active: example.name.toLowerCase() === props.section.toLowerCase(),
       })),
     },
@@ -63,7 +63,7 @@ export function AppPage(props: {
       title={props.title}
       description={props.description}
       breadcrumbs={[
-        { label: 'Workspace', route: '/pages' },
+        { label: 'Workspace', route: sitePath('/pages') },
         { label: props.section },
       ]}
       mobileTitle="Acme workspace"
@@ -126,7 +126,7 @@ export function AppPage(props: {
         <SidebarItem
           label="Settings"
           icon="lucide-settings"
-          route="/pages/settings"
+          route={sitePath('/pages/settings')}
         >
           Settings
         </SidebarItem>

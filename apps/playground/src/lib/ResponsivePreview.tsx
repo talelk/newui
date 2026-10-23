@@ -10,7 +10,7 @@ import {
   Show,
   Suspense,
 } from 'solid-js'
-import { BASE_PATH, sitePath } from './base'
+import { BASE_PATH, sitePath, stripBase } from './base'
 import { LoadingNote } from './LoadingNote'
 import { type StoryGlobals, storyUrl } from './storybook'
 
@@ -290,9 +290,12 @@ function Preview(props: {
         return
       const href = anchor.getAttribute('href') ?? ''
       if (!href.startsWith('/')) return
-      if (href.startsWith('/pages/') && href.endsWith('/fullscreen')) return
+      // The app writes base-aware URLs; router calls take the app-relative
+      // path, so strip the deploy prefix before deciding where the click goes.
+      const pathname = stripBase(new URL(href, location.origin).pathname)
+      if (/^\/pages\/[^/]+\/fullscreen$/.test(pathname)) return
       event.preventDefault()
-      navigate(href)
+      navigate(pathname)
     }
     doc?.addEventListener('keydown', keyboard)
     doc?.addEventListener('pointerdown', pointer)

@@ -20,7 +20,7 @@ import {
   type createDiscussions,
   DiscussionDialogs,
 } from '../examples/discussions'
-import { assetUrl } from '../lib/base'
+import { assetUrl, sitePath } from '../lib/base'
 
 /**
  * Responsive workspace: a tenant/community switcher and all
@@ -163,7 +163,7 @@ export function DiscussionsDesktop(props: {
         navLabel="Discussions navigation"
         brand={
           <a
-            href="/pages/discussions"
+            href={sitePath('/pages/discussions')}
             class="flex min-h-10 items-center gap-2 rounded-3 px-2 font-semibold focus-visible:focus-ring"
           >
             <img
@@ -176,7 +176,7 @@ export function DiscussionsDesktop(props: {
         }
         brandCollapsed={
           <a
-            href="/pages/discussions"
+            href={sitePath('/pages/discussions')}
             aria-label="Acme Community home"
             class="grid size-10 place-items-center rounded-3 focus-visible:focus-ring"
           >
