@@ -54,6 +54,10 @@ export default defineConfig({
   base,
   plugins: [solid(), tailwindcss(), inlineCss()],
   build: {
+    // One stylesheet is inlined into the document by `inlineCss`; keeping CSS
+    // in the entry output means lazy chunks never preload a file the plugin
+    // deliberately removes.
+    cssCodeSplit: false,
     rolldownOptions: {
       output: {
         codeSplitting: {
