@@ -9,7 +9,7 @@ metadata:
   type: core
   domain: ui
   library: '@talelk/newui-atoms'
-  library_version: '1.0.0'
+  library_version: '1.0.1'
 sources:
   - talelk/newui:AGENTS.md
   - talelk/newui:PRINCIPLES.md
