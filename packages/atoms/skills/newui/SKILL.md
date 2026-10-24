@@ -82,6 +82,8 @@ here. Open the file you need before writing markup.
   `theme` (`gray | blue | green | amber | red`). No `intent`/`appearance`.
 - No `v-model`: use `open`/`onOpenChange` or `value`/`onValueChange`.
 - Every input exposes `label` / `description` / `error` / `required`.
-- Semantic tokens only (`surface-*`, `ink-*`, `outline-*`) — never raw colours.
+- Semantic tokens only: `surface-*` / `ink-*` / `outline-*` for colour, and the
+  named `z-raised` … `z-top` / `duration-fast|base|slow` scales for stacking and
+  speed — never raw colours, `z-50` or `duration-150`.
 - Customise via `data-slot` / `data-state`, never class-injection props.
 - Accessibility is part of done: keyboard, focus, ARIA (Zag supplies most).
