@@ -3,12 +3,12 @@
   "baseline": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
   "items": {
     "skill:packages/atoms/skills/newui/SKILL.md": {
-      "fingerprint": "697723058e30dfd2c5582f2faccbad350220641cf3f55a826f317ac346adfea2",
+      "fingerprint": "e5e15c2057ba39a7584c2201e56554c88a4c40227d9cfc70f5cfaddc41f5aaa4",
       "snapshot": {
-        "AGENTS.md": "7933d1af7308c5cf48b29a72cc8ee8fb6466eba36d2ea8cce0105398c1b24e23",
+        "AGENTS.md": "dbadcf8ee7a6aebe0bfd8691f2158e86fc2775195719259855157d959208d2e7",
         "CONTEXT.md": "d47a8b20fdfa3a66735ad1eab4d6e56738c2c68409388c308f80bfdb13f2b5b2",
         "PRINCIPLES.md": "a5d2a8c78aa35abd8d271f6ab0de2fac35d7c7138a7033bc8d95e24c72e634c9",
-        "packages/atoms/skills/newui/SKILL.md": "eba6b77bff80e67fceb35c08ef9286ed183717f277e41da421f2f88831ac8c8a",
+        "packages/atoms/skills/newui/SKILL.md": "d8aeafaa8b91e26e76580e55d449fb9d0b9bd2c4ca789a8ddc78d4988fc3fbbb",
         "packages/atoms/src/atoms/Button/Button.tsx": "1ef4dbc4d96bbcd715fcfa29d21f23984f272497d422192891ec729c013f5196",
         "packages/atoms/src/lib/color-scheme.ts": "796e2c8f84dc12be6c6a343d0342c14902c4a2d4e84ee89b2c0278843b9847db",
         "packages/atoms/src/lib/field.tsx": "2522b4eed8e98543169ec27bc58d0246946e4e97c4ac9be15fedda08857fd284",
@@ -20,15 +20,14 @@
         "spec/adr/0001-solid-no-v-model.md": "382711862fd907c2a30d4e141b26013396fac7f598a2f802e169a3016258ea96",
         "spec/inputs.md": "c4bc011628cf4b6ceedfc5b6100a452317592ce1a88de8ce42ca3460c47fdde1"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "updated",
-      "reason": "PRINCIPLES.md gained a named stacking and speed rule (z-raised/floating/overlay/top, duration-fast/base/slow; hard-coded z-50 or duration-150 is a bug). The skill only listed colour tokens as a non-negotiable, so an agent following it could still emit z-50. Extended the semantic-token bullet to cover stacking and speed. The rename-only diffs (field.tsx required marker red-5 -> red-8, Dialog/Combobox/MultiSelect z-50 -> z-overlay, @newui/* -> @talelk/newui-*) match the guidance already in the skill and its sources; the 2.0.0 breaking changes (TabButtons radiogroup, FilterBar tabs.label, DataTable mobile cards) are not documented by this skill, and it routes per-component props to installed source.",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
+      "outcome": "no-change",
+      "reason": "The guidance delta since the last review is mechanical: the release merge ran skills:version and moved metadata.library_version 1.0.0 -> 1.0.1, and AGENTS.md changed only its release-pipeline section (Trusted Publisher identity, dispatch hand-off). The quick start, the where-to-look table and the six non-negotiables are unchanged, and the named z/duration bullet recorded in the previous review is intact. intent stale reports both skills current against their packages.",
       "evidence": [
-        "PRINCIPLES.md:85 named z/duration scales added since f97ad72",
-        "field.tsx:51-54 required marker text-ink-red-5 -> text-ink-red-8 (visual only)",
-        "Dialog/Combobox/MultiSelect: z-50 -> z-overlay and @newui/* -> @talelk/newui-* imports (no API change)",
-        "grep over SKILL.md: no TabButtons, FilterBar, DataTable or role=tab references",
-        "intent validate, pnpm skills:check, pnpm test, pnpm typecheck green at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "git diff f97ad72..HEAD packages/atoms/skills/newui/SKILL.md: package renames plus library_version 0.1.0 -> 1.0.1",
+        "AGENTS.md diff since baseline is the release/auto-release paragraph, no UI guidance",
+        "intent stale: @talelk/newui-atoms 1.0.1 -> 1.0.1, all skills up-to-date",
+        "intent validate and pnpm test green at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "skill:packages/data/skills/newui-data/SKILL.md": {
@@ -54,15 +53,15 @@
       ]
     },
     "planning:_artifacts": {
-      "fingerprint": "2f934b460fb2817038e16220678805a3f43710ed846e7331b0e258463ed64b60",
+      "fingerprint": "86a0c71a3fc2ccb281758e0a3e64d4f74231fd204727fc04885a8900b43e23e8",
       "snapshot": {
-        "AGENTS.md": "7933d1af7308c5cf48b29a72cc8ee8fb6466eba36d2ea8cce0105398c1b24e23",
+        "AGENTS.md": "dbadcf8ee7a6aebe0bfd8691f2158e86fc2775195719259855157d959208d2e7",
         "CONTEXT.md": "d47a8b20fdfa3a66735ad1eab4d6e56738c2c68409388c308f80bfdb13f2b5b2",
         "PRINCIPLES.md": "a5d2a8c78aa35abd8d271f6ab0de2fac35d7c7138a7033bc8d95e24c72e634c9",
         "_artifacts/domain_map.yaml": "0490bfb114bc9e5da1539900fe27e26d2d2b63fd3823d2467455ba319de6e35d",
         "_artifacts/skill_spec.md": "61bc901d4aa781c1a4ea92bfd77d656b3d778061007a139f0eaed8e7a3b6dc91",
         "_artifacts/skill_tree.yaml": "01fee4dec1b8cc3e8b321265e6addfc34e0a8c901f439d502a3f855659fab499",
-        "packages/atoms/skills/newui/SKILL.md": "eba6b77bff80e67fceb35c08ef9286ed183717f277e41da421f2f88831ac8c8a",
+        "packages/atoms/skills/newui/SKILL.md": "d8aeafaa8b91e26e76580e55d449fb9d0b9bd2c4ca789a8ddc78d4988fc3fbbb",
         "packages/atoms/src/atoms/Button/Button.tsx": "1ef4dbc4d96bbcd715fcfa29d21f23984f272497d422192891ec729c013f5196",
         "packages/atoms/src/lib/color-scheme.ts": "796e2c8f84dc12be6c6a343d0342c14902c4a2d4e84ee89b2c0278843b9847db",
         "packages/atoms/src/lib/field.tsx": "2522b4eed8e98543169ec27bc58d0246946e4e97c4ac9be15fedda08857fd284",
@@ -81,13 +80,13 @@
         "spec/data.md": "739992c4550f49280495877df0bb2990bb27de769a17bf10a297a521b506c27a",
         "spec/inputs.md": "c4bc011628cf4b6ceedfc5b6100a452317592ce1a88de8ce42ca3460c47fdde1"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "no-change",
-      "reason": "domain_map.yaml, skill_spec.md and skill_tree.yaml still describe the two shipped skills, their owning packages and their tasks. This review updates one UI-skill bullet but adds no skill, domain, source or task, and the open gaps in skill_spec.md (published-package eval cases) remain open for the same reason: no published 2.0.0 run exists yet.",
+      "reason": "The planning records still name exactly the two skills, their owning packages, domains and tasks; the AGENTS.md edit documents how a release publishes (which workflow carries the OIDC identity) and does not change the skill batch, sources or remaining gaps. The open eval gaps stay open for the same reason as before: no published 2.0.0 run exists yet.",
       "evidence": [
-        "_artifacts/skill_tree.yaml lists exactly the two packages and paths validated by intent validate",
-        "_artifacts/skill_spec.md remaining gaps unchanged and still accurate",
-        "this review only edits packages/atoms/skills/newui/SKILL.md non-negotiables"
+        "_artifacts/skill_tree.yaml lists the same two skills and paths",
+        "_artifacts/skill_spec.md remaining gaps unchanged",
+        "intent maintainer check validates the records at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:README.md": {
@@ -103,15 +102,15 @@
       ]
     },
     "source:apps/playground/src/generated/surface-inventory.json": {
-      "fingerprint": "c638d33da19680ae2a4b4e479d9c6925d510bf956ef96a79fd05759a6dae05aa",
+      "fingerprint": "50c59492f80b48abf5524778d318bba04a54e68ca4ef4252ac905557c53ae3a6",
       "snapshot": {
-        "apps/playground/src/generated/surface-inventory.json": "0f1a045f862cb89c9488e601ce04abd344986703d80d85cc4451d4183ccc8977"
+        "apps/playground/src/generated/surface-inventory.json": "042414a7f454a634e72987f6452ec14924323f3445c367ece0be5f798815522f"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: apps/playground/src/generated/surface-inventory.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: apps/playground/src/generated/surface-inventory.json at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:packages/atoms/src/lib/index.ts": {
@@ -1219,15 +1218,15 @@
       ]
     },
     "source:.github/workflows/auto-release.yml": {
-      "fingerprint": "af0b924f1f1d9951cc7c4d5f1da4b9a8cef4754bd891f4f760e90a280644fdc0",
+      "fingerprint": "b83f36fe14e58c6228522682a8930b3a223769a35d9c31dec6a06078e6ab939d",
       "snapshot": {
-        ".github/workflows/auto-release.yml": "f3f1fca19422e42f9666e5d4901a20c00ca54df19e5d158ddab7adb09280e51a"
+        ".github/workflows/auto-release.yml": "6a03644a0888ed18dbaf5bad76ae16446de3da7ae6041ca9719d9c4a72b01b24"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: .github/workflows/auto-release.yml at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: .github/workflows/auto-release.yml at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:.github/workflows/changesets.yml": {
@@ -1267,15 +1266,15 @@
       ]
     },
     "source:.github/workflows/tests.yml": {
-      "fingerprint": "4feec3ee4161603c966e38be6e364f6f2142bee76bb99e43a01795afc5351943",
+      "fingerprint": "014d08c934ff81da6f7754354dd32118f8d8f7a164dbe55bc8d85e9a590d564e",
       "snapshot": {
-        ".github/workflows/tests.yml": "58cba28d57a4997efc556f993292aa6e3174be66ad76d1239f4e5a165333b032"
+        ".github/workflows/tests.yml": "e8bd0a1407b5b27c9abd1274cdd72bf588efdbe862afed4ba928401478a146d7"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: .github/workflows/tests.yml at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: .github/workflows/tests.yml at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:.gitignore": {
@@ -1867,15 +1866,15 @@
       ]
     },
     "source:apps/playground/src/generated/changelog.ts": {
-      "fingerprint": "151790545d53e26da5dd8cdabbe48c826c8c3b2a7656f3c194f95ace74dbd188",
+      "fingerprint": "d994d0a72b40eeabe096d6f8c05007f270267a273b6cfec29bf9aed4bf177356",
       "snapshot": {
-        "apps/playground/src/generated/changelog.ts": "33a9f97843f0fbf1aa24246c087214aaea3ca964ef2d192643c63a29da202fce"
+        "apps/playground/src/generated/changelog.ts": "6f086524a43310c2e6c6019ee524122a6fd3410bd67c51721ba377014117d216"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: apps/playground/src/generated/changelog.ts at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: apps/playground/src/generated/changelog.ts at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:apps/playground/src/generated/components.ts": {
@@ -2083,15 +2082,15 @@
       ]
     },
     "source:apps/playground/src/generated/version.ts": {
-      "fingerprint": "9c12a14e766a5b904af3b8dd8bdfc1c6c8d3d3a909c9837e84743d8b21df3db1",
+      "fingerprint": "b112772dad86f10836733ca72bf5b957081d1af8624f42241eee10b7637f59b8",
       "snapshot": {
-        "apps/playground/src/generated/version.ts": "9904b7551620f3b68aaa007348a5b0a605db68432f98d3d08f42f86a8d6099ce"
+        "apps/playground/src/generated/version.ts": "cff042fc44830596bbd4d0ba3f81928d381b72c20b379e075eb7445d09bd8233"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: apps/playground/src/generated/version.ts at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: apps/playground/src/generated/version.ts at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:apps/playground/src/index.css": {
@@ -4363,15 +4362,15 @@
       ]
     },
     "source:e2e/visual.spec.ts": {
-      "fingerprint": "ea3d6f2c61df9d1ad88a299ff45496484dd8dd613888f28b9ad7ac196f84b0c0",
+      "fingerprint": "660b1c1e0fb2cdcb620541ab2685f801ccb147d411be178562846c88dd30cb24",
       "snapshot": {
-        "e2e/visual.spec.ts": "d054bd97c40f9e476330274b8425f76c01dee81be522c1bf033235db4c527649"
+        "e2e/visual.spec.ts": "3b5e1194f1aef23e9d65e2141bc1f61830631316fa8ddfbf7edb327b3687a051"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: e2e/visual.spec.ts at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: e2e/visual.spec.ts at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/analytics-dark-1440-chrome-linux.png": {
@@ -4471,27 +4470,27 @@
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png": {
-      "fingerprint": "dfc54fcfad53a0c6e215bf911960bc2c1a2847011ad05938a2cf614ee1fb8259",
+      "fingerprint": "1b422304ca5340db0973d92a4c77dac407bf5af45f16de3b4dab2aacb0c9e391",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png": "b75cdc773cc1955c0bdc2b447ee57925a76d8a656f9a6d299830269155117e9b"
+        "e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png": "c59f12be744f706a41db188ce9a6546a69f94868fb7b81550a87faaa4841acd2"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png": {
-      "fingerprint": "7b96eebf3fa0fc287d6677e566933e10c595aa3f319447ab03746e928ac12462",
+      "fingerprint": "54b5b3d9419610727ef5fed1f7b6883b4489f6830661c253f28ce87fd745ef70",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png": "f90da7a63cb503beb2333bf3a7b3a543c09888dd92ccbcce253aa5185d443402"
+        "e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png": "e09c65abba48a570f6e4414395c77cca7c04a733fee257b4ce79b7cc7a49ca15"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:knip.jsonc": {
@@ -4519,15 +4518,15 @@
       ]
     },
     "source:packages/atoms/CHANGELOG.md": {
-      "fingerprint": "137734f603fc2483c7e23fceaf55d238d3cfe2acc67aad21fe5680c0ba6f0bb4",
+      "fingerprint": "e2512beee0f68590a39a9c09efc28ad75b5f2e040d91db29e4f04ce83b98f720",
       "snapshot": {
-        "packages/atoms/CHANGELOG.md": "6ff90b50ecd81ab7ca8b1b70e590a25af7575c4a79f7aa42358636d67f986b82"
+        "packages/atoms/CHANGELOG.md": "0d57cc086152f7fcb2bba4f5bfbfa6122815888bca839f123113b81d9002bd89"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: packages/atoms/CHANGELOG.md at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: packages/atoms/CHANGELOG.md at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:packages/atoms/README.md": {
@@ -4819,15 +4818,15 @@
       ]
     },
     "source:packages/charts/CHANGELOG.md": {
-      "fingerprint": "611e9f773c4d6b2518c7659c19a38d5372c7e659ea02c1c4cdd98b6318ca1813",
+      "fingerprint": "c9639b7dd0c97786800553fdfc36b318facdcabfb30cfaa1966f89a096e7aa73",
       "snapshot": {
-        "packages/charts/CHANGELOG.md": "3950427cc6d9ff40215618fd03c3cb42b0cd838b24d274fac7908c2eca859380"
+        "packages/charts/CHANGELOG.md": "5c9ba43059e66d20b6fccd9c106c09f9d75af3cde156636111e4ccdf54b9e5c4"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: packages/charts/CHANGELOG.md at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: packages/charts/CHANGELOG.md at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:packages/charts/README.md": {
@@ -4975,15 +4974,15 @@
       ]
     },
     "source:packages/editor/CHANGELOG.md": {
-      "fingerprint": "719792b1a508274027de1c3c638a42072ea83d8e25b3a4223efabee6be429f43",
+      "fingerprint": "967900c5254dc76f0a2ab9afaac93717675bc7ce6805e64b426e9518306c9490",
       "snapshot": {
-        "packages/editor/CHANGELOG.md": "c1aa2631d6973eff5b2b8c03778f567862113ff5f851c7fa1953de5c33fd079e"
+        "packages/editor/CHANGELOG.md": "b4021f300618da393751e8dd7c17d5ebde410acd381fbad757a5a3f159b42859"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: packages/editor/CHANGELOG.md at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: packages/editor/CHANGELOG.md at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:packages/editor/README.md": {
@@ -5047,15 +5046,15 @@
       ]
     },
     "source:packages/molecules/CHANGELOG.md": {
-      "fingerprint": "54d3d5891960acd90c645d0994653cc6f6c0bc7216206fba9b3deb6bf38cafcb",
+      "fingerprint": "8dc5e16134313be988ae4f472072c8638dacd2fda385124211c10568643da1ac",
       "snapshot": {
-        "packages/molecules/CHANGELOG.md": "3245e7bf1d5d8bd88184b92bdbc512ac5ba5abf4aba0f8f4802fd645a2b0b723"
+        "packages/molecules/CHANGELOG.md": "4037109b84d552ec1fcf6b1c63c0bbf5e593d3ea7eef37ce5b810d0730119c81"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: packages/molecules/CHANGELOG.md at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: packages/molecules/CHANGELOG.md at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:packages/molecules/README.md": {
@@ -5755,15 +5754,15 @@
       ]
     },
     "source:packages/organisms/CHANGELOG.md": {
-      "fingerprint": "9f0c9842d21cbeaabe8399bb56d1123e609f341f66da9afa91f3fa8fa67236ab",
+      "fingerprint": "dde44d1c961a0815c92d659ab38d1c2d42e48c5c9811f1005d280342b524f45d",
       "snapshot": {
-        "packages/organisms/CHANGELOG.md": "3858ade842c298889a1504045d909ee5413d755cc043eba1a963b2dc6dda80ed"
+        "packages/organisms/CHANGELOG.md": "b3912c58d6ecf85a4f4d620552ae4485122e818978128f610c36d8e73b81c1f7"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: packages/organisms/CHANGELOG.md at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: packages/organisms/CHANGELOG.md at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:packages/organisms/README.md": {
@@ -6271,15 +6270,15 @@
       ]
     },
     "source:packages/templates/CHANGELOG.md": {
-      "fingerprint": "11bfa3e616bc3fb691544f122ccfe73befaecbddf696856dd752ab5998698ade",
+      "fingerprint": "ce75de285304d0f9ee7b616beac9fff0019308163131c9a576ed4c373dd96078",
       "snapshot": {
-        "packages/templates/CHANGELOG.md": "9fb6eb8bbac00217095c73f577a740d96f4c36a3b1cc1f66cd82a9ac05d62b81"
+        "packages/templates/CHANGELOG.md": "b300e3673622d89b20c73074ea545c13c76e4504fbc4e7652293c26ec5b4d35a"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: packages/templates/CHANGELOG.md at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: packages/templates/CHANGELOG.md at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:packages/templates/README.md": {
@@ -6595,15 +6594,15 @@
       ]
     },
     "source:scripts/publish.ts": {
-      "fingerprint": "9c2e8ba39500ca2c52e5dfdbd9278d7c7c1e210731133b66eedf7e6f602baa30",
+      "fingerprint": "9d7c89f1cfd5231d5b2aae8774bfff80a05a913c70f9ccbef3aa63b3f5f508b9",
       "snapshot": {
-        "scripts/publish.ts": "4acb0b002933ea7547c90ba2a8e61e423d6070b1c39bbfc38ad41056437ff8cc"
+        "scripts/publish.ts": "86a69bef75f4d4cbaaa6dde26b4ebb2534f0bdaeccbffeec4a308fd9c6fc0876"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
+      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
       "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
       "evidence": [
-        "Changed: scripts/publish.ts at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: scripts/publish.ts at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
       ]
     },
     "source:scripts/radii.test.ts": {
