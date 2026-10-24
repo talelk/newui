@@ -1,5 +1,70 @@
 # @talelk/newui-templates
 
+## 1.1.0
+
+### Minor Changes
+
+- dad472a: The application sidebar's fold becomes chrome instead of a menu row: `Collapse`
+  sits at the end of the identity block and the rail repeats an `Expand` control
+  under the tenant, so the footer is free for settings and account. `AppSidebar`
+  now binds `⌘B`/`Ctrl+B` like the bare `Sidebar`, and its trigger tooltip only
+  advertises the shortcut when it is real.
+  
+  `AppShell` and `AppSidebar` accept a `utilities` slot, rendered above Settings
+  while the sidebar is expanded, and a compact `utilitiesCollapsed` form so a
+  global control such as the theme switch does not disappear in the rail. Group
+  labels drop to 12px Ink Muted, active rows gain weight and a tinted count, and
+  counts join the collapsed tooltip. The mobile drawer pins its close control in
+  a 40px header, keeps the navigation list as the only scroller, and uses an
+  opaque surface in dark mode.
+  
+  The page heading and its actions now share one row; breadcrumbs sit above them.
+
+### Patch Changes
+
+- 8710ce8: Application coherence pass across the twelve example applications.
+  
+  - **Atoms:** checked/indeterminate Checkbox now paints a semantic check icon that
+    is legible in both themes and disabled states; Switch thumbs contrast against
+    both track states; required markers use a passing red step; disabled solid
+    blue actions use the neutral disabled treatment; Password keeps its visual
+    size with a larger coarse-pointer hit area.
+  - **Molecules:** Card descriptions use the interface type role; `ListRow` only
+    advertises pointer/hover when it is actionable; TabButtons fluid tracks can
+    shrink at 320/150%; editor mention surfaces use the overlay radius; a
+    controlled DateRangePicker holds the first click as a draft until the range
+    completes.
+  - **Organisms:** DataTable gains `cardBreakpoint`, a stable titled toolbar,
+    humanized column labels, compact mobile paging, guarded external empty
+    actions, a bottom spacer for the sticky selection bar, and selection only
+    when a bulk action exists; Section gains explicit accessible naming; DataState
+    accepts an empty-state icon; SettingsDialog has stable desktop width, true
+    mobile full-bleed, 40px mobile nav/close, an accessible tablist label and
+    logical RTL borders; AuthCard is card-only and flat; KanbanBoard restores
+    focus after keyboard moves, uses 40px touch targets below `lg`, and fits four
+    columns at 1440; PageToolbar uses an ellipsis menu, icons on secondary
+    actions and the section scale for nested headings; FilterBar selects are
+    two-up from 360px; StatGrid compact is four-up at `md`.
+  - **Templates:** AppShell's mobile menu trigger is 40px.
+  - **Charts:** ChartLegend renders static text when it has no handler; NumberCard
+    titles wrap under text zoom and its loading state reserves card geometry;
+    time-axis labels format the numeric timestamp ECharts passes, so monthly
+    plots keep their month ticks; axis charts reserve the label band.
+  - **Editor:** toolbar and mention surfaces follow the card/overlay radius scale.
+  
+  Existing props remain valid; the new state and layout props are additive.
+- Updated dependencies [dad472a]
+- Updated dependencies [8710ce8]
+- Updated dependencies [dad472a]
+- Updated dependencies [dad472a]
+- Updated dependencies [dad472a]
+- Updated dependencies [dad472a]
+- Updated dependencies [3355988]
+- Updated dependencies [dad472a]
+  - @talelk/newui-organisms@2.0.0
+  - @talelk/newui-atoms@1.0.1
+  - @talelk/newui-molecules@2.0.0
+
 ## 1.0.0
 
 ### Major Changes

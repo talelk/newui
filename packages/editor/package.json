@@ -1,6 +1,6 @@
 {
   "name": "@talelk/newui-editor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "A TipTap (ProseMirror) rich-text editor as a Solid component, themed with the newui design tokens.",
   "exports": {
