@@ -125,6 +125,91 @@ function walk(dir: string, out: string[] = []): string[] {
 }
 
 const TOKEN_RE = /^[a-z][a-z0-9:._/[\]()%-]*$/
+
+/** Index just past a quoted string that starts at `start` (escapes honoured). */
+function skipString(source: string, start: number): number {
+  const quote = source[start]
+  let i = start + 1
+  while (i < source.length) {
+    if (source[i] === '\\') {
+      i += 2
+      continue
+    }
+    if (source[i] === quote) return i + 1
+    i++
+  }
+  return source.length
+}
+
+/**
+ * Blank out JSX `style={{ … }}` regions before tokenizing.
+ *
+ * A style object's keys are CSS property names, not classes, but they are
+ * quoted strings like any other: `'outline-offset': '0px'` tokenized as
+ * `outline-offset` and put a name the stylesheet never emits into the sweep.
+ * Without the exclusion, the pruned config's defensive `outline-offset` literal
+ * and the stock config's `outline-color` catch-all disagree on a class neither
+ * can generate — a harness false positive, not a merge bug.
+ *
+ * Class *maps* stay: their keys (`{'pt-3': spaced}`) really are utilities.
+ * Newlines are preserved so positions still line up with the file.
+ */
+export function stripStyleObjects(source: string): string {
+  const out = source.split('')
+  for (const match of source.matchAll(/style=\{\s*\{/g)) {
+    const start = source.indexOf('{', match.index ?? 0)
+    let depth = 0
+    let end = source.length - 1
+    for (let i = start; i < source.length; ) {
+      const char = source[i]
+      if (char === "'" || char === '"' || char === '`') {
+        i = skipString(source, i)
+        continue
+      }
+      if (char === '{') depth++
+      else if (char === '}') {
+        depth--
+        if (depth === 0) {
+          end = i
+          break
+        }
+      }
+      i++
+    }
+    for (let i = start; i <= end; i++) if (out[i] !== '\n') out[i] = ' '
+  }
+  return out.join('')
+}
+
+/** The base utilities a source string mentions, style objects excluded. */
+export function classTokensIn(source: string): string[] {
+  const found: string[] = []
+  const stripped = stripStyleObjects(source)
+  // Each quoted string on its own; the preceding window is inspected rather
+  // than baked into the match, so a short value (`{'pt-3': spaced}`) cannot
+  // swallow the next key as the old greedy prefix did.
+  for (const match of stripped.matchAll(/['"`]([^'"`\n]*)['"`]/g)) {
+    const index = match.index ?? 0
+    const before = stripped.slice(Math.max(0, index - 24), index)
+    // Skip attribute values: `data-slot="select-control"` is not a class.
+    if (/(?:data|aria)-[a-z-]+=$/.test(before)) continue
+    // A key whose value is another string is a lookup map (routes, demo names,
+    // labels), not a class map: `'select-demo': '/molecules/select'` would
+    // otherwise read as a `select-*` utility. Class maps map to expressions
+    // (`{'pt-3': spaced}`), so they survive — and a ternary's `'a' : 'b'`
+    // branches are preceded by `?`, not by `{`/`,`.
+    const after = stripped.slice(index + match[0].length)
+    if (/[{,]\s*$/.test(before) && /^\s*:\s*['"`]/.test(after)) continue
+    for (const raw of (match[1] ?? '').split(/\s+/)) {
+      // Base utilities only. Variants go through tailwind-merge's own modifier
+      // machinery, which this config deliberately does not touch.
+      const token = raw.replace(/^.*:/, '').replace(/^!/, '')
+      if (TOKEN_RE.test(token) && familyOf(token)) found.push(token)
+    }
+  }
+  return found
+}
+
 const tokens = new Set<string>()
 for (const dir of SOURCES) {
   for (const file of walk(dir)) {
@@ -138,16 +223,7 @@ for (const dir of SOURCES) {
       continue
     }
     const source = readFileSync(file, 'utf8')
-    for (const match of source.matchAll(/(.{0,24})['"`]([^'"`\n]*)['"`]/g)) {
-      // Skip attribute values: `data-slot="select-control"` is not a class.
-      if (/(?:data|aria)-[a-z-]+=$/.test(match[1] ?? '')) continue
-      for (const raw of (match[2] ?? '').split(/\s+/)) {
-        // Base utilities only. Variants go through tailwind-merge's own modifier
-        // machinery, which this config deliberately does not touch.
-        const token = raw.replace(/^.*:/, '').replace(/^!/, '')
-        if (TOKEN_RE.test(token) && familyOf(token)) tokens.add(token)
-      }
-    }
+    for (const token of classTokensIn(source)) tokens.add(token)
   }
 }
 
