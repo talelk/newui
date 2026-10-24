@@ -339,7 +339,14 @@ packages.
   repository variable `NPM_PUBLISH`; `pnpm trust:publishers` configures every
   package in bulk and enables the gate. Once enabled, `auto-release.yml` merges
   the Version Packages PR after the required `checks`, `coverage` and `e2e`
-  checks pass and publishes in the same workflow through OIDC.
+  checks pass, then dispatches `changesets.yml`, which publishes through OIDC.
+  The publish must run in the workflow the Trusted Publisher names: the
+  `GITHUB_TOKEN` merge suppresses a push-triggered run, and a publish from
+  `auto-release.yml` would carry the wrong workflow claim, so the dispatch is
+  explicit. `workflow_run` is not the hand-off: it did not fire for the release
+  PR's runs (created by `GITHUB_TOKEN`, held in `action_required` until the
+  Changesets job approves them), so the Tests workflow dispatches the release
+  from its own `release` job instead.
 - `pnpm verify` (all) · `pnpm verify:checks` (fast gates) · `pnpm verify:e2e`
   (browser harness) · `pnpm verify:affected` (only the gates the diff can
   dirty — the agent loop: change → affected → full `verify` before pushing)

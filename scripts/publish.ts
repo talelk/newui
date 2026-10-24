@@ -31,4 +31,9 @@ const result = spawnSync('pnpm', ['exec', 'changeset', 'publish'], {
   stdio: 'inherit',
   env: process.env,
 })
+if ((result.status ?? 1) !== 0) {
+  process.stderr.write(
+    '\n[release] changeset publish failed. A 404 on an OIDC publish means npm has no Trusted Publisher for the package, or it names a different workflow file: run `npm login --auth-type=web`, then `pnpm trust:publishers` (talelk/newui -> changesets.yml, which is the workflow this runs in).\n',
+  )
+}
 process.exit(result.status ?? 1)

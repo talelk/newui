@@ -170,3 +170,21 @@ jobs:
           name: playwright-traces
           path: test-results
           if-no-files-found: ignore
+
+  # The Version Packages PR is the release gate, but `workflow_run` does not
+  # fire for its runs: GITHUB_TOKEN creates them, GitHub holds them in
+  # `action_required` until the Changesets job approves them, and an approved
+  # run does not emit `workflow_run`. Hand the release off explicitly once the
+  # required checks are green.
+  release:
+    if: github.event_name == 'pull_request' && github.head_ref == 'changeset-release/main'
+    needs: [checks, e2e]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - name: Dispatch the release
+        env:
+          PR: ${{ github.event.pull_request.number }}
+        run: gh workflow run auto-release.yml --repo "$GITHUB_REPOSITORY" --ref main -f pr="$PR"
