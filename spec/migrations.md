@@ -5,7 +5,7 @@ a **v1-equivalent freeze** is declared; until then each change is documented her
 and, where the transform is mechanical, a `scripts/migrate.ts` will be added
 alongside it.
 
-## `TabButtons` is a radiogroup (1.0)
+## `TabButtons` is a radiogroup (2.0)
 
 `TabButtons` is a one-of-N value switcher with no panels, so it now exposes
 `role="radiogroup"` / `role="radio"` and `aria-checked` instead of
@@ -37,6 +37,29 @@ After:
 
 Tests and styling that targeted `[role="tab"]` must target `[role="radio"]`.
 Use `Tabs` when the options own panels.
+
+## `FilterBar` tabs require a label (2.0)
+
+The view switcher is the same segmented radiogroup, so its config carries the
+group's accessible name. Without it the control announced anonymous radios.
+
+Before:
+
+```tsx
+<FilterBar tabs={{ options: VIEWS, value: view(), onValueChange: setView }} />
+```
+
+After:
+
+```tsx
+<FilterBar
+  query={{ value: search(), onInput: setSearch }}
+  tabs={{ label: 'View', options: VIEWS, value: view(), onValueChange: setView }}
+/>
+```
+
+Every other `tabs` field is unchanged; the object is still optional, so a bar
+with no view switcher passes none.
 
 ## `PageToolbar` primary icons are explicit
 
