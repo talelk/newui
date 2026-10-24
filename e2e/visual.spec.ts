@@ -38,6 +38,21 @@ async function settledCharts(page: Page) {
 const CHART_NOISE = { maxDiffPixelRatio: 0.03 }
 
 /**
+ * Take the masthead's version chip out of the shot entirely.
+ *
+ * Masking it hides the digits but not their width: `v1.0.0` → `v1.0.1` is a
+ * pixel narrower, the fluid content column re-rasterises its rounded corners a
+ * fraction of a pixel over, and a release PR fails this shot by ~470 pixels.
+ * `display: none` removes the variable from layout, so the baseline is a design
+ * check rather than a release-number check.
+ */
+async function hideVersionChip(page: Page) {
+  await page.addStyleTag({
+    content: 'a[aria-label^="Version "] { display: none !important; }',
+  })
+}
+
+/**
  * And the tolerance everything else needs: a handful of pixels.
  *
  * The runner and a developer machine rasterise a couple of glyph edges
@@ -69,14 +84,12 @@ for (const theme of ['light', 'dark']) {
   test(`reference and states visual ${theme}`, async ({ page }) => {
     await page.goto('/atoms/button')
     await setTheme(page, theme)
+    await hideVersionChip(page)
     await expect(
       page.getByRole('button', { name: 'Solid', exact: true }),
     ).toBeVisible()
     await expect(page).toHaveScreenshot(`reference-${theme}.png`, {
       animations: 'disabled',
-      // The masthead chip follows the package version; masking it keeps this
-      // reference a design check rather than a release-number check.
-      mask: [page.locator('a[aria-label^="Version "]')],
       ...RASTERISATION,
     })
     await page.goto(`/spec?theme=${theme}`)
