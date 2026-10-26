@@ -2086,6 +2086,49 @@
       }
     ]
   },
+  "packages/atoms/src/atoms/AvatarGroup/AvatarGroup.tsx": {
+    "AvatarGroupProps": [
+      {
+        "name": "avatars",
+        "type": "AvatarGroupItem[]",
+        "optional": false
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "optional": true,
+        "description": "How many render before the overflow count.",
+        "default": "4"
+      },
+      {
+        "name": "size",
+        "type": "AvatarSize",
+        "optional": true
+      },
+      {
+        "name": "shape",
+        "type": "AvatarShape",
+        "optional": true
+      },
+      {
+        "name": "theme",
+        "type": "AvatarTheme",
+        "optional": true,
+        "description": "Theme of the fallback tiles, including the overflow count."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name when the group needs naming (e.g. \"Assignees\")."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
   "packages/atoms/src/atoms/Badge/Badge.tsx": {
     "BadgeProps": [
       {
@@ -2536,6 +2579,107 @@
       }
     ]
   },
+  "packages/atoms/src/atoms/IconButton/IconButton.tsx": {
+    "IconButtonProps": [
+      {
+        "name": "label",
+        "type": "string",
+        "optional": false,
+        "description": "The accessible name. An icon-only control is unnamed without it — this\nprop is the point of the component."
+      },
+      {
+        "name": "icon",
+        "type": "IconProp",
+        "optional": true
+      },
+      {
+        "name": "variant",
+        "type": "ButtonVariant",
+        "optional": true
+      },
+      {
+        "name": "theme",
+        "type": "ButtonTheme",
+        "optional": true
+      },
+      {
+        "name": "size",
+        "type": "ButtonSize",
+        "optional": true,
+        "default": "sm"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "optional": true,
+        "description": "External URL, opened in a new tab."
+      },
+      {
+        "name": "route",
+        "type": "string",
+        "optional": true,
+        "description": "In-app destination (CONTEXT: `route` is in-app, `href` is external). Wins\nover `href`. Renders a plain `href`; pair it with `onClick` to intercept\nthe click and navigate with your router."
+      },
+      {
+        "name": "target",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "type",
+        "type": "'button' | 'submit' | 'reset'",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
+  "packages/atoms/src/atoms/Image/Image.tsx": {
+    "ImageProps": [
+      {
+        "name": "src",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "alt",
+        "type": "string",
+        "optional": false,
+        "description": "Text alternative. Pass `''` only for a purely decorative image."
+      },
+      {
+        "name": "ratio",
+        "type": "ImageRatio",
+        "optional": true,
+        "description": "Fixed aspect box; omit and the image keeps its intrinsic ratio."
+      },
+      {
+        "name": "fit",
+        "type": "ImageFit",
+        "optional": true,
+        "default": "cover"
+      },
+      {
+        "name": "fallback",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Replaces the broken image when the source fails to load."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
   "packages/atoms/src/atoms/KeyboardShortcut/KeyboardShortcut.tsx": {
     "KeyboardShortcutProps": [
       {
@@ -2583,6 +2727,50 @@
         "name": "size",
         "type": "\"sm\" | \"md\" | \"lg\" | null | undefined",
         "optional": true
+      }
+    ]
+  },
+  "packages/atoms/src/atoms/Link/Link.tsx": {
+    "LinkProps": [
+      {
+        "name": "href",
+        "type": "string",
+        "optional": true,
+        "description": "External URL, opened in a new tab."
+      },
+      {
+        "name": "route",
+        "type": "string",
+        "optional": true,
+        "description": "In-app destination (CONTEXT: `route` is in-app, `href` is external). Wins\nover `href`. Renders a plain `href`; pair it with `onClick` to intercept\nthe click and navigate with your router."
+      },
+      {
+        "name": "theme",
+        "type": "LinkTheme",
+        "optional": true,
+        "default": "blue"
+      },
+      {
+        "name": "underline",
+        "type": "LinkUnderline",
+        "optional": true,
+        "default": "hover"
+      },
+      {
+        "name": "showExternalIcon",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draw the external-link glyph after the content (external `href` only)."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
       }
     ]
   },
@@ -3185,6 +3373,20 @@
       }
     ]
   },
+  "packages/atoms/src/atoms/VisuallyHidden/VisuallyHidden.tsx": {
+    "VisuallyHiddenProps": [
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ]
+  },
   "packages/molecules/src/molecules/Accordion/Accordion.tsx": {
     "AccordionProps": [
       {
@@ -3443,6 +3645,72 @@
       }
     ]
   },
+  "packages/molecules/src/molecules/Calendar/Calendar.tsx": {
+    "CalendarProps": [
+      {
+        "name": "value",
+        "type": "string",
+        "optional": true,
+        "description": "Controlled selected date as a `YYYY-MM-DD` string (ADR-0008)."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string) => void",
+        "optional": true
+      },
+      {
+        "name": "min",
+        "type": "string",
+        "optional": true,
+        "description": "Minimum selectable date, `YYYY-MM-DD`."
+      },
+      {
+        "name": "max",
+        "type": "string",
+        "optional": true,
+        "description": "Maximum selectable date, `YYYY-MM-DD`."
+      },
+      {
+        "name": "locale",
+        "type": "string",
+        "optional": true,
+        "default": "en-US"
+      },
+      {
+        "name": "dualPane",
+        "type": "boolean",
+        "optional": true,
+        "description": "Render two months side by side."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the grid when there is no visible label."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the grid when there is no visible label."
+      }
+    ]
+  },
   "packages/molecules/src/molecules/Card/Card.tsx": {
     "CardProps": [
       {
@@ -3463,6 +3731,103 @@
       {
         "name": "padding",
         "type": "\"sm\" | \"md\" | \"lg\" | \"none\" | null | undefined",
+        "optional": true
+      }
+    ]
+  },
+  "packages/molecules/src/molecules/Carousel/Carousel.tsx": {
+    "CarouselProps": [
+      {
+        "name": "index",
+        "type": "number",
+        "optional": true,
+        "description": "Controlled slide index."
+      },
+      {
+        "name": "defaultIndex",
+        "type": "number",
+        "optional": true
+      },
+      {
+        "name": "onIndexChange",
+        "type": "(index: number) => void",
+        "optional": true
+      },
+      {
+        "name": "orientation",
+        "type": "CarouselOrientation",
+        "optional": true,
+        "default": "horizontal"
+      },
+      {
+        "name": "autoplay",
+        "type": "boolean",
+        "optional": true,
+        "description": "Advance automatically every `interval` milliseconds. Paused while the\npointer or focus is inside, and never runs under `prefers-reduced-motion`."
+      },
+      {
+        "name": "interval",
+        "type": "number",
+        "optional": true,
+        "default": "5000"
+      },
+      {
+        "name": "loop",
+        "type": "boolean",
+        "optional": true,
+        "description": "Wrap from the last slide back to the first.",
+        "default": "true"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "optional": false,
+        "description": "The accessible name — a carousel is a named section, not anonymous slides."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ],
+    "CarouselViewportProps": [
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ],
+    "CarouselSlideProps": [
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ],
+    "CarouselControlProps": [
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
         "optional": true
       }
     ]
@@ -3534,6 +3899,79 @@
       {
         "name": "children",
         "type": "JSX.Element",
+        "optional": true
+      }
+    ]
+  },
+  "packages/molecules/src/molecules/ColorPicker/ColorPicker.tsx": {
+    "ColorPickerProps": [
+      {
+        "name": "value",
+        "type": "string",
+        "optional": true,
+        "description": "Controlled color as lowercase `#rrggbb`."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string",
+        "optional": true,
+        "default": "#6b7280 (gray-5)"
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string) => void",
+        "optional": true
+      },
+      {
+        "name": "editable",
+        "type": "boolean",
+        "optional": true,
+        "description": "The hex text field beside the swatch.",
+        "default": "true"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
         "optional": true
       }
     ]
@@ -5816,11 +6254,6 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": true
-      },
-      {
-        "name": "onClick",
-        "type": "JSX.EventHandlerUnion<HTMLDivElement, MouseEvent>",
-        "optional": true
       }
     ],
     "ListCellProps": [
@@ -6310,6 +6743,125 @@
       {
         "name": "label",
         "type": "JSX.Element",
+        "optional": true
+      }
+    ]
+  },
+  "packages/molecules/src/molecules/PinInput/PinInput.tsx": {
+    "PinInputProps": [
+      {
+        "name": "length",
+        "type": "number",
+        "optional": true,
+        "description": "How many cells render.",
+        "default": "6"
+      },
+      {
+        "name": "value",
+        "type": "string[]",
+        "optional": true,
+        "description": "Controlled value: one entry per cell."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[]",
+        "optional": true
+      },
+      {
+        "name": "onValueChange",
+        "type": "(details: { value: string[]; valueAsString: string }) => void",
+        "optional": true
+      },
+      {
+        "name": "onValueComplete",
+        "type": "(details: {\n    value: string[]\n    valueAsString: string\n  }) => void",
+        "optional": true,
+        "description": "Fires when every cell holds a valid value — the code is complete."
+      },
+      {
+        "name": "type",
+        "type": "PinInputType",
+        "optional": true,
+        "description": "What a cell accepts.",
+        "default": "numeric"
+      },
+      {
+        "name": "otp",
+        "type": "boolean",
+        "optional": true,
+        "description": "Advertises `autocomplete=\"one-time-code\"` for SMS OTP autofill."
+      },
+      {
+        "name": "mask",
+        "type": "boolean",
+        "optional": true,
+        "description": "Mask the cells like a password."
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "optional": true,
+        "default": "○"
+      },
+      {
+        "name": "blurOnComplete",
+        "type": "boolean",
+        "optional": true,
+        "description": "Blur the last cell once the code is complete."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
         "optional": true
       }
     ]
@@ -7444,6 +7996,90 @@
       }
     ]
   },
+  "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx": {
+    "TimeRangePickerProps": [
+      {
+        "name": "value",
+        "type": "TimeRangeValue",
+        "optional": true,
+        "description": "Controlled range as `[from, to]`, or `[]` when empty."
+      },
+      {
+        "name": "defaultValue",
+        "type": "TimeRangeValue",
+        "optional": true
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: TimeRangeValue) => void",
+        "optional": true
+      },
+      {
+        "name": "interval",
+        "type": "number",
+        "optional": true,
+        "description": "Minute interval of both pickers' option lists.",
+        "default": "15"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "startLabel",
+        "type": "JSX.Element",
+        "optional": true,
+        "default": "Start"
+      },
+      {
+        "name": "endLabel",
+        "type": "JSX.Element",
+        "optional": true,
+        "default": "End"
+      },
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true
+      },
+      {
+        "name": "error",
+        "type": "JSX.Element | false",
+        "optional": true
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "'aria-label'",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
   "packages/molecules/src/molecules/ToggleGroup/ToggleGroup.tsx": {
     "ToggleGroupProps": [
       {
@@ -7545,6 +8181,62 @@
         "type": "string",
         "optional": true,
         "description": "Accessible name when the cell has only an icon."
+      }
+    ]
+  },
+  "packages/molecules/src/molecules/TransferList/TransferList.tsx": {
+    "TransferListProps": [
+      {
+        "name": "options",
+        "type": "TransferOption[]",
+        "optional": false
+      },
+      {
+        "name": "value",
+        "type": "string[]",
+        "optional": true,
+        "description": "Controlled picked values (the right-hand list, in pick order)."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[]",
+        "optional": true
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string[]) => void",
+        "optional": true
+      },
+      {
+        "name": "search",
+        "type": "boolean",
+        "optional": true,
+        "description": "Filter boxes above both lists.",
+        "default": "false"
+      },
+      {
+        "name": "availableLabel",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the available list.",
+        "default": "Available"
+      },
+      {
+        "name": "pickedLabel",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the picked list.",
+        "default": "Selected"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
       }
     ]
   },
@@ -8106,6 +8798,44 @@
         "type": "() => void",
         "optional": true,
         "description": "Empty-state reset for externally filtered pages (beats Clear search)."
+      },
+      {
+        "name": "pinnedStart",
+        "type": "string",
+        "optional": true,
+        "description": "Freeze one column to the start edge of the horizontal scroll — the\nidentifier that must stay visible while the rest move. Controlled:\nchanges go through `onPinnedColumnsChange`."
+      },
+      {
+        "name": "pinnedEnd",
+        "type": "string",
+        "optional": true,
+        "description": "Freeze one column to the end edge — typically the row actions."
+      },
+      {
+        "name": "defaultPinnedStart",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "defaultPinnedEnd",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "onPinnedColumnsChange",
+        "type": "(pinned: DataTablePinned) => void",
+        "optional": true
+      },
+      {
+        "name": "editable",
+        "type": "boolean",
+        "optional": true,
+        "description": "Turn on inline editing: columns whose `meta.editable` is set render a\nclick-to-edit cell. Values are app-owned — edits arrive through\n`onCellChange`, and the table shows whatever the next `rows` carry."
+      },
+      {
+        "name": "onCellChange",
+        "type": "(id: string, columnId: string, value: string) => void",
+        "optional": true
       }
     ]
   },

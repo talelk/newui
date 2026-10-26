@@ -38,3 +38,11 @@ the visual guidance, the data guidance, or both, at the installed version.
 | --- | --- | --- |
 | `newui` | Add task-level eval cases for the consumer-facing quick start once a published-package run exists. | open |
 | `newui-data` | Add a failure-mode case for a mutation that rejects after an optimistic patch. | open |
+
+- Registered `newui-molecules` in `packages/molecules` (domain `ui`). Task coverage, decisions, and checks still need to be recorded.
+
+- Registered `newui-organisms` in `packages/organisms` (domain `ui`). Task coverage, decisions, and checks still need to be recorded.
+
+- Registered `newui-templates` in `packages/templates` (domain `ui`). Task coverage, decisions, and checks still need to be recorded.
+
+- Registered `newui-charts` in `packages/charts` (domain `ui`). Task coverage, decisions, and checks still need to be recorded.

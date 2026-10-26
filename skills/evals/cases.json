@@ -184,6 +184,41 @@
       "prompt": "Deleting a workspace is permanent, so confirm it before deleting.",
       "check": "The confirmation is the imperative `dialog.danger(...)` (awaited, resolving `true`/`false`), with `<DialogHost />` mounted once near the app root — not a hand-mounted `<Dialog>` plus a boolean signal.",
       "source": "spec/dialog-imperative.md"
+    },
+    {
+      "id": "molecules-form-row-contract",
+      "area": "molecules",
+      "prompt": "Add a 'Priority' select and a 'Due date' date picker to the task editor row. Both need a visible label, helper text and an inline error slot.",
+      "check": "Either FormControl or the individual molecules carry `label`, `description` and `error` props (the P5 contract) — no hand-rolled `<label>` elements, no unlabelled bare controls, no `v-model`.",
+      "source": "spec/form.md"
+    },
+    {
+      "id": "molecules-range-tuples",
+      "area": "molecules",
+      "prompt": "Let the user pick a start and end time for a shift, and a from/to date range for a report.",
+      "check": "Uses TimeRangePicker and DateRangePicker whose `onValueChange` reports complete `[from, to]` tuples (or `[]`) — not two loose fields merged by hand, no `onChange`/`v-model` naming.",
+      "source": "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx"
+    },
+    {
+      "id": "organisms-table-pin-edit",
+      "area": "organisms",
+      "prompt": "Build a ledger table: keep the reference column visible while the rest scroll, and let staff fix amounts in place.",
+      "check": "DataTable with `pinnedStart` (and `onPinnedColumnsChange` if interactive) plus `editable` + `onCellChange` with `meta.editable` columns — edits flow through app-owned rows; no hand-rolled `position: sticky` cells, no local table-owned mutation.",
+      "source": "spec/data-table.md"
+    },
+    {
+      "id": "templates-shell-compose",
+      "area": "templates",
+      "prompt": "Set up the application frame for an admin tool: collapsible sidebar with sections, a settings and account action at the bottom, and the page title.",
+      "check": "Uses AppShell with the `navigation`/`settings`/`account` slot vocabulary and `title` for the page h1 — no second Sidebar/MobileNav nested inside, no hand-built mobile drawer.",
+      "source": "spec/app-shell.md"
+    },
+    {
+      "id": "charts-accessible-series",
+      "area": "charts",
+      "prompt": "Show monthly revenue as an area chart on the analytics page.",
+      "check": "Imports from @talelk/newui-charts (AreaChart), passes an `aria-label`, uses the token palette or its option builders — no raw ECharts option object with hard-coded hex, no DataState wrapper around the chart.",
+      "source": "spec/charts.md"
     }
   ]
 }

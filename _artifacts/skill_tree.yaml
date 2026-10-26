@@ -14,8 +14,8 @@ skills:
         description: "Build user interfaces with the newui SolidJS component library on
           Zag + Tailwind CSS v4. Use when scaffolding SolidJS pages, forms,
           dialogs, lists, or any UI that should look and feel consistent and
-          product-ready, when the user mentions newui, @talelk/newui-atoms, or asks to
-          use newui components, tokens, or conventions.",
+          product-ready, when the user mentions newui, @talelk/newui-atoms, or
+          asks to use newui components, tokens, or conventions.",
         sources:
           [
             talelk/newui:AGENTS.md,
@@ -54,6 +54,102 @@ skills:
             talelk/newui:packages/data/src/query/collection.ts,
             talelk/newui:packages/data/src/query/repository.ts,
             talelk/newui:packages/data/src/form/form.tsx
+          ],
+        requires: []
+      },
+    {
+        name: newui-molecules,
+        slug: newui-molecules,
+        domain: ui,
+        package: packages/molecules,
+        path: skills/newui-molecules/SKILL.md,
+        description: "Use when composing compound interactions with
+          @talelk/newui-molecules — forms (FormControl, Select, Combobox,
+          MultiSelect, NumberInput, PinInput, TagInput), dates and times
+          (DatePicker, DateRangePicker, TimePicker, TimeRangePicker, Calendar),
+          overlays (Dialog, Popover, Menu, Dropdown, Toast), lists and tables
+          (List, Table, ScrollTable, TagInput), or picking and transferring
+          values (TransferList). Use when the user mentions these components or
+          asks for form rows, pickers, menus or toasts in newui.\n",
+        sources:
+          [
+            talelk/newui:packages/molecules/src/molecules/Dialog/Dialog.tsx,
+            talelk/newui:packages/molecules/src/molecules/FormControl/FormControl.tsx,
+            talelk/newui:packages/molecules/src/molecules/Select/Select.tsx,
+            talelk/newui:packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx,
+            talelk/newui:packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx,
+            talelk/newui:packages/molecules/src/molecules/List/List.tsx,
+            talelk/newui:spec/form.md,
+            talelk/newui:spec/inputs.md
+          ],
+        requires: []
+      },
+    {
+        name: newui-organisms,
+        slug: newui-organisms,
+        domain: ui,
+        package: packages/organisms,
+        path: skills/newui-organisms/SKILL.md,
+        description: "Use when composing page regions with @talelk/newui-organisms —
+          DataTable (search, sort, pagination, selection, column pinning, inline
+          editing), AppSidebar, Sidebar, FilterBar, StatGrid, KanbanBoard,
+          VirtualList, CommandPalette, DetailHeader, Section, SelectionBar,
+          DataState, MobileNav, AuthCard, SettingsDialog. Use when the user asks
+          for a data table, app sidebar, board, KPI grid or command palette in
+          newui.\n",
+        sources:
+          [
+            talelk/newui:packages/organisms/src/organisms/DataTable/DataTable.tsx,
+            talelk/newui:packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx,
+            talelk/newui:packages/organisms/src/organisms/DataState/DataState.tsx,
+            talelk/newui:packages/organisms/src/organisms/SelectionBar/SelectionBar.tsx,
+            talelk/newui:spec/data-table.md,
+            talelk/newui:spec/sidebar.md
+          ],
+        requires: []
+      },
+    {
+        name: newui-templates,
+        slug: newui-templates,
+        domain: ui,
+        package: packages/templates,
+        path: skills/newui-templates/SKILL.md,
+        description: "Use when composing application frames with @talelk/newui-templates
+          — AppShell (responsive sidebar + drawer,
+          brand/tenant/navigation/settings/ account slots, collapse), PaneLayout
+          (resizable split panes), AuthLayout (sign-in/sign-up canvas). Use when
+          the user asks for an app shell, a split layout or an auth page in
+          newui, or mentions @talelk/newui-templates.\n",
+        sources:
+          [
+            talelk/newui:packages/templates/src/templates/AppShell.tsx,
+            talelk/newui:packages/templates/src/templates/PaneLayout/PaneLayout.tsx,
+            talelk/newui:packages/templates/src/templates/AuthLayout.tsx,
+            talelk/newui:spec/app-shell.md,
+            talelk/newui:spec/pane-layout.md,
+            talelk/newui:spec/auth-layout.md,
+            talelk/newui:spec/adr/0013-atomic-packages-and-app-shell.md
+          ],
+        requires: []
+      },
+    {
+        name: newui-charts,
+        slug: newui-charts,
+        domain: ui,
+        package: packages/charts,
+        path: skills/newui-charts/SKILL.md,
+        description: "Use when rendering charts with @talelk/newui-charts — AreaChart,
+          BarChart, LineChart, DonutChart, FunnelChart, HeatmapChart,
+          ScatterChart, SankeyChart, Dashboard and NumberCard, or tuning series,
+          axes, palettes and empty/loading chart states. Use when the user
+          mentions these chart components or asks for analytics visuals in
+          newui.\n",
+        sources:
+          [
+            talelk/newui:packages/charts/src/index.ts,
+            talelk/newui:packages/charts/src/ChartContainer.tsx,
+            talelk/newui:packages/charts/src/format.ts,
+            talelk/newui:spec/charts.md
           ],
         requires: []
       }

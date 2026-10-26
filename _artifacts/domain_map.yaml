@@ -3,15 +3,21 @@ library:
 domains:
   - name: UI composition
     slug: ui
-    description: Choosing and composing the visual ladder, styling with semantic tokens, and keeping labels, overlays and accessibility consistent.
+    description: Choosing and composing the visual ladder, styling with semantic
+      tokens, and keeping labels, overlays and accessibility consistent.
   - name: Data and forms
     slug: data
-    description: Turning repositories into cached collections, optimistic mutations, and TanStack Form submit lifecycles.
+    description: Turning repositories into cached collections, optimistic mutations,
+      and TanStack Form submit lifecycles.
 skills:
   - name: newui
     slug: newui
     domain: ui
-    description: Build user interfaces with the newui SolidJS component library on Zag + Tailwind CSS v4. Use when scaffolding SolidJS pages, forms, dialogs, lists, or any UI that should look and feel consistent and product-ready, when the user mentions newui, @talelk/newui-atoms, or asks to use newui components, tokens, or conventions.
+    description: Build user interfaces with the newui SolidJS component library on
+      Zag + Tailwind CSS v4. Use when scaffolding SolidJS pages, forms, dialogs,
+      lists, or any UI that should look and feel consistent and product-ready,
+      when the user mentions newui, @talelk/newui-atoms, or asks to use newui
+      components, tokens, or conventions.
     type: core
     packages:
       - '@talelk/newui-atoms'
@@ -26,13 +32,19 @@ skills:
     tasks:
       - Build a SolidJS page from newui atoms, molecules, organisms and templates
       - Choose between Select, Combobox and MultiSelect for a picker
-      - Wire labels, descriptions and field errors through the shared Field contract
-      - Style with semantic surface, ink and outline tokens in light and dark themes
+      - Wire labels, descriptions and field errors through the shared Field
+        contract
+      - Style with semantic surface, ink and outline tokens in light and dark
+        themes
       - Control overlays with open and onOpenChange instead of v-model
   - name: newui-data
     slug: newui-data
     domain: data
-    description: Use the headless newui data layer for SolidJS collections, repository queries, optimistic mutations, TanStack Query caching and form submit lifecycles. Use when a page needs to load a list, create/update/delete records, share a cache, or wire TanStack Form through the kit's Form and field-error contract.
+    description: Use the headless newui data layer for SolidJS collections,
+      repository queries, optimistic mutations, TanStack Query caching and form
+      submit lifecycles. Use when a page needs to load a list,
+      create/update/delete records, share a cache, or wire TanStack Form through
+      the kit's Form and field-error contract.
     type: core
     packages:
       - '@talelk/newui-data'
@@ -43,8 +55,101 @@ skills:
       - createAppForm
       - Form and fieldError
     tasks:
-      - Load a repository-backed list through createCollection and render its pending, error and rows state
-      - Create, update or remove records with optimistic mutations that roll back on failure
-      - Wire a page form to TanStack Form through createAppForm, Form and fieldError
+      - Load a repository-backed list through createCollection and render its
+        pending, error and rows state
+      - Create, update or remove records with optimistic mutations that roll
+        back on failure
+      - Wire a page form to TanStack Form through createAppForm, Form and
+        fieldError
       - Share one QueryClient between panes with DataProvider
+  - name: newui-molecules
+    slug: newui-molecules
+    domain: ui
+    description: >
+      Use when composing compound interactions with @talelk/newui-molecules —
+      forms (FormControl, Select, Combobox, MultiSelect, NumberInput, PinInput,
+      TagInput), dates and times (DatePicker, DateRangePicker, TimePicker,
+      TimeRangePicker, Calendar), overlays (Dialog, Popover, Menu, Dropdown,
+      Toast), lists and tables (List, Table, ScrollTable, TagInput), or picking
+      and transferring values (TransferList). Use when the user mentions these
+      components or asks for form rows, pickers, menus or toasts in newui.
+    packages:
+      - "@talelk/newui-molecules"
+    covers:
+      - FormControl and the shared labelling contract
+      - Select, Combobox, MultiSelect and NumberInput
+      - DatePicker, DateRangePicker, TimePicker, TimeRangePicker, Calendar
+      - Dialog, Popover, Menu, Dropdown and the toast host
+      - List family table roles owned by the caller
+    tasks:
+      - Compose a labelled form row with FormControl or a bare field
+      - Open and close Dialog, Popover and Menu through open/onOpenChange
+      - Pick dates and times, including date and time ranges that report
+        complete tuples
+      - Report a List family composition's table roles from the caller
+      - Raise toasts through a mounted createToaster host
+      - Transfer checked rows between available and picked lists
+  - name: newui-organisms
+    slug: newui-organisms
+    domain: ui
+    description: >
+      Use when composing page regions with @talelk/newui-organisms — DataTable
+      (search, sort, pagination, selection, column pinning, inline editing),
+      AppSidebar, Sidebar, FilterBar, StatGrid, KanbanBoard, VirtualList,
+      CommandPalette, DetailHeader, Section, SelectionBar, DataState, MobileNav,
+      AuthCard, SettingsDialog. Use when the user asks for a data table, app
+      sidebar, board, KPI grid or command palette in newui.
+    packages:
+      - "@talelk/newui-organisms"
+    covers:
+      - DataTable search, sort, pagination and selection
+      - DataTable column pinning and inline cell editing
+      - AppSidebar, Sidebar and the single-sidebar model
+      - DataState loading, empty and error surfaces
+      - SelectionBar bulk actions
+    tasks:
+      - Render a collection as a DataTable with search, sort and pagination
+      - Freeze a column to each scroll edge with app-owned pinning state
+      - Edit cells in place through onCellChange with app-owned rows
+      - Feed selection through onRowsAction and the SelectionBar
+      - Show loading, empty and error through DataState
+  - name: newui-templates
+    slug: newui-templates
+    domain: ui
+    description: >
+      Use when composing application frames with @talelk/newui-templates —
+      AppShell (responsive sidebar + drawer, brand/tenant/navigation/settings/
+      account slots, collapse), PaneLayout (resizable split panes), AuthLayout
+      (sign-in/sign-up canvas). Use when the user asks for an app shell, a split
+      layout or an auth page in newui, or mentions @talelk/newui-templates.
+    packages:
+      - "@talelk/newui-templates"
+    covers:
+      - AppShell responsive sidebar, drawer and collapse
+      - PaneLayout resizable split panes
+      - AuthLayout canvas
+    tasks:
+      - Frame an application with AppShell and its slot vocabulary
+      - Own collapse persistence through collapsed and onCollapsedChange
+      - Split record content with PaneLayout inside the shell
+      - Lay out a public access screen with AuthLayout
+  - name: newui-charts
+    slug: newui-charts
+    domain: ui
+    description: >
+      Use when rendering charts with @talelk/newui-charts — AreaChart, BarChart,
+      LineChart, DonutChart, FunnelChart, HeatmapChart, ScatterChart,
+      SankeyChart, Dashboard and NumberCard, or tuning series, axes, palettes
+      and empty/loading chart states. Use when the user mentions these chart
+      components or asks for analytics visuals in newui.
+    packages:
+      - "@talelk/newui-charts"
+    covers:
+      - Area, Bar, Line, Donut, Funnel, Heatmap, Scatter and Sankey charts
+      - Dashboard and NumberCard compositions
+      - token palette and option builders
+    tasks:
+      - Render a token-palette chart with an accessible name
+      - Show chart loading and empty states through chart props
+      - Tune series and axes with the curated option builders
 gaps: []

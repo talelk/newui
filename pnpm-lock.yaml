@@ -271,6 +271,9 @@ importers:
 
   apps/playground:
     dependencies:
+      '@solidjs/router':
+        specifier: ^1.0.0
+        version: 1.0.0(solid-js@1.9.17)
       '@talelk/newui-atoms':
         specifier: workspace:*
         version: link:../../packages/atoms
@@ -304,9 +307,6 @@ importers:
       '@talelk/newui-tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
-      '@solidjs/router':
-        specifier: ^1.0.0
-        version: 1.0.0(solid-js@1.9.17)
       solid-js:
         specifier: ^1.9.17
         version: 1.9.17
@@ -335,6 +335,9 @@ importers:
 
   apps/starter:
     dependencies:
+      '@solidjs/router':
+        specifier: ^1.0.0
+        version: 1.0.0(solid-js@1.9.17)
       '@talelk/newui-atoms':
         specifier: workspace:*
         version: link:../../packages/atoms
@@ -353,9 +356,6 @@ importers:
       '@talelk/newui-templates':
         specifier: workspace:*
         version: link:../../packages/templates
-      '@solidjs/router':
-        specifier: ^1.0.0
-        version: 1.0.0(solid-js@1.9.17)
       solid-js:
         specifier: ^1.9.17
         version: 1.9.17
@@ -594,6 +594,9 @@ importers:
         specifier: ^1.46.0
         version: 1.46.0
       '@zag-js/pagination':
+        specifier: ^1.46.0
+        version: 1.46.0
+      '@zag-js/pin-input':
         specifier: ^1.46.0
         version: 1.46.0
       '@zag-js/popover':
@@ -2992,6 +2995,9 @@ packages:
 
   '@zag-js/pagination@1.46.0':
     resolution: {integrity: sha512-WGMByrSC+wHM/QbemkuaIm69aJpW3dYU1Jv/qt0CHMCMUqrtYZ8WZJr4kKHUTsrgdigTX2MGIKM7IQ7cxIeS6A==}
+
+  '@zag-js/pin-input@1.46.0':
+    resolution: {integrity: sha512-bv4uZCT5D6kPtjB3WZttInsX1e8mynozT+7ghlo/nFuBR/TAy+V3oouFBD7V9q9FXdaLIetidPDFcDRa8vZNpw==}
 
   '@zag-js/popover@1.46.0':
     resolution: {integrity: sha512-9S5+S6GjfQFwy3lfeQw2VIIPmpz3YjWkqnXV2/xc6p6vcVDjV4NOyIkLEUQhbWwXNP8J8yFbAqAxuQoH2Uozpg==}
@@ -7030,6 +7036,14 @@ snapshots:
       '@zag-js/utils': 1.46.0
 
   '@zag-js/pagination@1.46.0':
+    dependencies:
+      '@zag-js/anatomy': 1.46.0
+      '@zag-js/core': 1.46.0
+      '@zag-js/dom-query': 1.46.0
+      '@zag-js/types': 1.46.0
+      '@zag-js/utils': 1.46.0
+
+  '@zag-js/pin-input@1.46.0':
     dependencies:
       '@zag-js/anatomy': 1.46.0
       '@zag-js/core': 1.46.0
