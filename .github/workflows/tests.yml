@@ -186,5 +186,6 @@ jobs:
     steps:
       - name: Dispatch the release
         env:
+          GH_TOKEN: ${{ github.token }}
           PR: ${{ github.event.pull_request.number }}
         run: gh workflow run auto-release.yml --repo "$GITHUB_REPOSITORY" --ref main -f pr="$PR"
