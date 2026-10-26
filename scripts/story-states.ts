@@ -18,6 +18,7 @@
 export const REQUIRED_STATES: Record<string, string[]> = {
   // Actions — a disabled or busy command must still read as itself.
   Button: ['Disabled', 'Loading'],
+  IconButton: ['Disabled'],
   ContextMenu: ['Open'],
   Menu: ['Open'],
   KeyboardShortcutsDialog: ['Open'],
@@ -54,6 +55,8 @@ export const REQUIRED_STATES: Record<string, string[]> = {
   TimePicker: ['Disabled', 'Invalid'],
   FileUploader: ['Disabled', 'Invalid'],
   TagInput: ['Disabled', 'Invalid'],
+  PinInput: ['Disabled', 'Invalid'],
+  ColorPicker: ['Disabled', 'Invalid'],
   ToggleGroup: ['Disabled'],
 
   // Disclosure and navigation.

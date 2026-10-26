@@ -85,6 +85,12 @@ const isOverscroll = (value: string) => /^(auto|contain|none)$/.test(value)
 
 const isResize = (value: string) => /^(none|x|y|both)$/.test(value)
 
+/** `aspect-<ratio>`: fractions (`4/3`), the named keywords, and arbitrary values. */
+const isAspectRatio = (value: string) =>
+  /^\d+\/\d+$/.test(value) ||
+  ['auto', 'square', 'video'].includes(value) ||
+  isArbitrary(value)
+
 const isBorderWidth = (value: string) =>
   value === '' || /^\d+$/.test(value) || isArbitrary(value)
 
@@ -286,7 +292,7 @@ export const twMergeConfig = {
     'min-h': [{ 'min-h': [isMaxSize] }],
     'max-h': [{ 'max-h': [isMaxSize] }],
     size: [{ size: [isLength] }],
-    aspect: [{ aspect: [isLength] }, 'aspect-auto', 'aspect-square'],
+    aspect: [{ aspect: [isAspectRatio] }],
 
     // ---- typography ----
     'font-size': [{ text: [isFontSize] }],

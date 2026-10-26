@@ -36,3 +36,7 @@ __screenshots__/
 .impeccable/live/
 .impeccable/review/
 apps/playground/.impeccable/
+
+# Local tool artifacts
+.vitest/
+.zcode/

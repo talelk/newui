@@ -7,6 +7,7 @@ import * as atoms from './index'
 
 const PUBLIC = [
   'Avatar',
+  'AvatarGroup',
   'Badge',
   'Button',
   'Checkbox',
@@ -16,7 +17,10 @@ const PUBLIC = [
   'FormLabel',
   'Heading',
   'Icon',
+  'IconButton',
+  'Image',
   'KeyboardShortcut',
+  'Link',
   'Progress',
   'ProgressCircle',
   'ScrollArea',
@@ -28,6 +32,7 @@ const PUBLIC = [
   'TextInput',
   'Textarea',
   'Tooltip',
+  'VisuallyHidden',
 ]
 
 describe('public surface', () => {
