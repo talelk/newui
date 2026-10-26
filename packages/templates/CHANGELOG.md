@@ -1,5 +1,21 @@
 # @talelk/newui-templates
 
+## 1.1.2
+
+### Patch Changes
+
+- 538d5d2: AuthLayout's desktop aside is Cool Paper with a hairline divider, not a saturated blue field — the One Signal Rule keeps blue for the interactive moment, which the app's aside content owns.
+- Updated dependencies [538d5d2]
+- Updated dependencies [538d5d2]
+- Updated dependencies [538d5d2]
+- Updated dependencies [538d5d2]
+- Updated dependencies [538d5d2]
+- Updated dependencies [538d5d2]
+- Updated dependencies [538d5d2]
+  - @talelk/newui-organisms@2.1.1
+  - @talelk/newui-molecules@2.2.0
+  - @talelk/newui-atoms@1.2.0
+
 ## 1.1.1
 
 ### Patch Changes

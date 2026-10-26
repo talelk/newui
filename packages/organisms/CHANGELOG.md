@@ -1,5 +1,19 @@
 # @talelk/newui-organisms
 
+## 2.1.1
+
+### Patch Changes
+
+- 538d5d2: DataTable's card view shows the bulk-select row only once a selection exists: at zero it was a lone checkbox beside "0 selected".
+- Updated dependencies [538d5d2]
+- Updated dependencies [538d5d2]
+- Updated dependencies [538d5d2]
+- Updated dependencies [538d5d2]
+- Updated dependencies [538d5d2]
+- Updated dependencies [538d5d2]
+  - @talelk/newui-molecules@2.2.0
+  - @talelk/newui-atoms@1.2.0
+
 ## 2.1.0
 
 ### Minor Changes

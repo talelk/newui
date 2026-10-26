@@ -10,7 +10,7 @@ metadata:
   type: core
   domain: ui
   library: '@talelk/newui-templates'
-  library_version: '1.1.1'
+  library_version: '1.1.2'
 sources:
   - talelk/newui:packages/templates/src/templates/AppShell.tsx
   - talelk/newui:packages/templates/src/templates/PaneLayout/PaneLayout.tsx

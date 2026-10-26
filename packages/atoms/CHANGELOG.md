@@ -3,6 +3,12 @@
 This history predates the atomic package split. New atoms are released under
 `@talelk/newui-atoms`; molecules and page regions are now separate packages.
 
+## 1.2.0
+
+### Minor Changes
+
+- 538d5d2: New `KeyValue` atom: one label/value pair for settings surfaces, with a horizontal default and a stacked `orientation="vertical"`.
+
 ## 1.1.0
 
 ### Minor Changes
