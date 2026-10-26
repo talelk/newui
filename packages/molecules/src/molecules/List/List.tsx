@@ -31,13 +31,12 @@ export const List: ParentComponent<ListProps> = (props) => (
   </div>
 )
 
-export interface ListRowProps {
+export interface ListRowProps extends JSX.HTMLAttributes<HTMLDivElement> {
   active?: boolean
   /** Row height utility, e.g. `h-14`. */
   height?: string
   class?: string
   children?: JSX.Element
-  onClick?: JSX.EventHandlerUnion<HTMLDivElement, MouseEvent>
 }
 
 export const ListRow: ParentComponent<ListRowProps> = (props) => {
@@ -66,19 +65,23 @@ export const ListRow: ParentComponent<ListRowProps> = (props) => {
   )
 }
 
-export interface ListCellProps {
+export interface ListCellProps extends JSX.HTMLAttributes<HTMLDivElement> {
   class?: string
   children?: JSX.Element
 }
 
-export const ListCell: ParentComponent<ListCellProps> = (props) => (
-  <div
-    data-slot="list-cell"
-    class={cn('flex min-w-0 items-center', props.class)}
-  >
-    {props.children}
-  </div>
-)
+export const ListCell: ParentComponent<ListCellProps> = (props) => {
+  const [local, rest] = splitProps(props, ['class', 'children'])
+  return (
+    <div
+      {...rest}
+      data-slot="list-cell"
+      class={cn('flex min-w-0 items-center', local.class)}
+    >
+      {local.children}
+    </div>
+  )
+}
 
 export const ListHeader: ParentComponent<{
   class?: string
@@ -109,7 +112,8 @@ export const ListHeaderCell: ParentComponent<{
 
 export type ListSortDirection = 'asc' | 'desc' | null
 
-export interface ListHeaderCellSortProps {
+export interface ListHeaderCellSortProps
+  extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'onClick' | 'dir'> {
   /** `asc` / `desc` when this column is the sort key, `null` when it is not. */
   direction?: ListSortDirection
   /** Align the cell (and its glyph) to the end of the column. */
@@ -129,20 +133,9 @@ export interface ListHeaderCellSortProps {
  * Controlled on purpose: the sort state and the toggle rule (fresh column →
  * `asc`, same column → flip, third click → unsorted if the app wants that) live
  * in the screen, which is the only place that knows the data. The cell owns the
- * chrome — a real button, `aria-sort`, and the glyph.
- *
- * The glyph is revealed with opacity rather than `display`, so hovering never
- * shifts the label. End-aligned columns lead with the glyph: a trailing one
- * would reserve space and push the label off the column's right edge, away from
- * the values underneath it.
- */
-/**
- * A sortable column header.
- *
- * Controlled on purpose: the sort state and the toggle rule (fresh column →
- * `asc`, same column → flip, third click → unsorted if the app wants that) live
- * in the screen, which is the only place that knows the data. The cell owns the
- * chrome — a real button, `aria-sort`, and the glyph.
+ * chrome — a real button, `aria-sort`, and the glyph — and forwards its rest
+ * props, so a caller composing a real table adds `role="columnheader"` (which
+ * is also what makes `aria-sort` legal).
  *
  * The glyph is revealed with opacity rather than `display`, so hovering never
  * shifts the label. End-aligned columns lead with the glyph: a trailing one
@@ -156,8 +149,16 @@ export interface ListHeaderCellSortProps {
 export function ListHeaderCellSort(
   props: ListHeaderCellSortProps,
 ): JSX.Element {
-  const direction = () => props.direction ?? null
-  const atEnd = () => props.align === 'end'
+  const [local, rest] = splitProps(props, [
+    'direction',
+    'align',
+    'tooltip',
+    'onClick',
+    'class',
+    'children',
+  ])
+  const direction = () => local.direction ?? null
+  const atEnd = () => local.align === 'end'
   const glyph = () =>
     direction() === 'asc'
       ? 'lucide-arrow-up'
@@ -166,7 +167,7 @@ export function ListHeaderCellSort(
         : 'lucide-arrow-up-down'
 
   const hint = () =>
-    props.tooltip ??
+    local.tooltip ??
     (direction() === null
       ? 'Sort ascending'
       : direction() === 'asc'
@@ -186,8 +187,9 @@ export function ListHeaderCellSort(
   )
 
   return (
-    // biome-ignore lint/a11y/useAriaPropsSupportedByRole: `aria-sort` belongs on a `columnheader`; the family leaves the table roles (table/row/columnheader) to the caller, which is where the rowgroup sits too.
+    // biome-ignore lint/a11y/useAriaPropsSupportedByRole: `aria-sort` belongs on a `columnheader`; the family leaves the table roles (table/row/columnheader) to the caller — forward `role="columnheader"` when composing a real table.
     <div
+      {...rest}
       data-slot="list-header-cell"
       data-sort={direction() ?? undefined}
       aria-sort={
@@ -200,14 +202,14 @@ export function ListHeaderCellSort(
       class={cn(
         'flex min-w-0 items-center',
         atEnd() && 'justify-end',
-        props.class,
+        local.class,
       )}
     >
       <TooltipRoot>
         <TooltipTrigger
           type="button"
           // Wrapped: an event handler read straight off props is captured once.
-          onClick={(event: MouseEvent) => props.onClick?.(event)}
+          onClick={(event: MouseEvent) => local.onClick?.(event)}
           class={cn(
             'group inline-flex h-7 min-w-0 cursor-pointer items-center gap-1 rounded-4 text-sm-medium leading-tighter text-ink-gray-6 transition-colors',
             'hover:text-ink-gray-8',
@@ -215,7 +217,7 @@ export function ListHeaderCellSort(
           )}
         >
           <Show when={atEnd()}>{glyphNode()}</Show>
-          <span class="truncate leading-tighter">{props.children}</span>
+          <span class="truncate leading-tighter">{local.children}</span>
           <Show when={!atEnd()}>{glyphNode()}</Show>
         </TooltipTrigger>
         <TooltipContent>{hint()}</TooltipContent>

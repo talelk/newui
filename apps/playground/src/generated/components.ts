@@ -66,6 +66,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "IconButton",
+    "description": "A square, icon-only command sharing the Button recipe's box and states.",
+    "slug": "icon-button",
+    "group": "Actions",
+    "package": "@talelk/newui-atoms",
+    "source": "packages/atoms/src/atoms/IconButton",
+    "atomic": "atom",
+    "parts": [
+      "IconButtonProps"
+    ],
+    "spec": "icon-button",
+    "shipped": true
+  },
+  {
     "name": "KeyboardShortcut",
     "description": "Draws a key combination as <kbd> glyphs.",
     "slug": "keyboard-shortcut",
@@ -91,6 +105,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "KeyboardShortcutsDialogProps"
     ],
     "spec": "keyboard-shortcuts-dialog",
+    "shipped": true
+  },
+  {
+    "name": "Link",
+    "description": "A text link inside prose or chrome — navigation, not a command.",
+    "slug": "link",
+    "group": "Actions",
+    "package": "@talelk/newui-atoms",
+    "source": "packages/atoms/src/atoms/Link",
+    "atomic": "atom",
+    "parts": [
+      "LinkProps"
+    ],
+    "spec": "link",
     "shipped": true
   },
   {
@@ -550,6 +578,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "AvatarGroup",
+    "description": "A stack of people with one box each: avatars overlap, and everyone past max collapses into a single \"+N\" tile.",
+    "slug": "avatar-group",
+    "group": "Display",
+    "package": "@talelk/newui-atoms",
+    "source": "packages/atoms/src/atoms/AvatarGroup",
+    "atomic": "atom",
+    "parts": [
+      "AvatarGroupProps"
+    ],
+    "spec": "avatar-group",
+    "shipped": true
+  },
+  {
     "name": "Badge",
     "description": "Displays a short status or category.",
     "slug": "badge",
@@ -575,6 +617,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "CardProps"
     ],
     "spec": "card",
+    "shipped": true
+  },
+  {
+    "name": "Carousel",
+    "description": "A scroll-snap strip of slides — scrolling is the interaction, the index follows.",
+    "slug": "carousel",
+    "group": "Display",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src/molecules/Carousel",
+    "atomic": "molecule",
+    "parts": [
+      "CarouselProps"
+    ],
+    "spec": "carousel",
     "shipped": true
   },
   {
@@ -631,6 +687,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "IconProps"
     ],
     "spec": "icon",
+    "shipped": true
+  },
+  {
+    "name": "Image",
+    "description": "A framed image: a painted surface that holds its box while the source loads or fails, so a page's layout never jumps.",
+    "slug": "image",
+    "group": "Display",
+    "package": "@talelk/newui-atoms",
+    "source": "packages/atoms/src/atoms/Image",
+    "atomic": "atom",
+    "parts": [
+      "ImageProps"
+    ],
+    "spec": "image",
     "shipped": true
   },
   {
@@ -703,6 +773,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "TreeRootProps"
     ],
     "spec": "tree",
+    "shipped": true
+  },
+  {
+    "name": "VisuallyHidden",
+    "description": "VisuallyHidden",
+    "slug": "visually-hidden",
+    "group": "Display",
+    "package": "@talelk/newui-atoms",
+    "source": "packages/atoms/src/atoms/VisuallyHidden",
+    "atomic": "atom",
+    "parts": [
+      "VisuallyHiddenProps"
+    ],
+    "spec": "visually-hidden",
     "shipped": true
   },
   {
@@ -790,6 +874,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "ColorPicker",
+    "description": "A color value: the platform's own picker under a styled swatch, with a hex field beside it.",
+    "slug": "color-picker",
+    "group": "Inputs",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src/molecules/ColorPicker",
+    "atomic": "molecule",
+    "parts": [
+      "ColorPickerProps"
+    ],
+    "spec": "color-picker",
+    "shipped": true
+  },
+  {
     "name": "Duration",
     "description": "A duration value control.",
     "slug": "duration",
@@ -872,6 +970,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "PasswordProps"
     ],
     "spec": "password",
+    "shipped": true
+  },
+  {
+    "name": "PinInput",
+    "description": "A fixed-length code — verification digits, an OTP from a text message.",
+    "slug": "pin-input",
+    "group": "Inputs",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src/molecules/PinInput",
+    "atomic": "molecule",
+    "parts": [
+      "PinInputProps"
+    ],
+    "spec": "pin-input",
     "shipped": true
   },
   {
@@ -1290,6 +1402,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "Calendar",
+    "description": "The date grid on its own — no input, no popup, no trigger.",
+    "slug": "calendar",
+    "group": "Selection",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src/molecules/Calendar",
+    "atomic": "molecule",
+    "parts": [
+      "CalendarProps"
+    ],
+    "spec": "calendar",
+    "shipped": true
+  },
+  {
     "name": "Combobox",
     "description": "A searchable single select.",
     "slug": "combobox",
@@ -1403,6 +1529,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "TimeRangePicker",
+    "description": "A start and end time as one value — the shift, window or slot picker.",
+    "slug": "time-range-picker",
+    "group": "Selection",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src/molecules/TimeRangePicker",
+    "atomic": "molecule",
+    "parts": [
+      "TimeRangePickerProps"
+    ],
+    "spec": "time-range-picker",
+    "shipped": true
+  },
+  {
     "name": "ToggleGroup",
     "description": "A row of independent on/off cells that read as one control: text alignment, a view switcher, a density picker.",
     "slug": "toggle-group",
@@ -1415,6 +1555,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "ToggleGroupProps"
     ],
     "spec": "toggle-group",
+    "shipped": true
+  },
+  {
+    "name": "TransferList",
+    "description": "A dual-list picker: the left list is available, the right list is picked, and the buttons between them move the checked rows.",
+    "slug": "transfer-list",
+    "group": "Selection",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src/molecules/TransferList",
+    "atomic": "molecule",
+    "parts": [
+      "TransferListProps"
+    ],
+    "spec": "transfer-list",
     "shipped": true
   }
 ]

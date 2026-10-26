@@ -1,4 +1,5 @@
 import { Button, Checkbox, cn, TextInput } from '@talelk/newui-atoms'
+import { createControllableSignal } from '@talelk/newui-atoms/internal'
 import {
   Pagination,
   ScrollTable,
@@ -7,6 +8,7 @@ import {
 import {
   type ColumnDef,
   columnFilteringFeature,
+  columnPinningFeature,
   columnVisibilityFeature,
   createFilteredRowModel,
   createPaginatedRowModel,
@@ -25,6 +27,7 @@ import {
 import {
   createEffect,
   createMemo,
+  createSignal,
   For,
   type JSX,
   on,
@@ -44,6 +47,7 @@ import { SelectionBar } from '../SelectionBar'
 function createFeatures() {
   return tableFeatures({
     columnFilteringFeature,
+    columnPinningFeature,
     columnVisibilityFeature,
     globalFilteringFeature,
     rowPaginationFeature,
@@ -72,10 +76,22 @@ export type DataTableMobileRole =
   | 'status'
   | 'meta'
 
-/** The library reads `meta.align` and `meta.mobile`; both are optional. */
+/** The library reads `meta.align`, `meta.mobile` and `meta.editable`; all optional. */
 export interface DataTableColumnMeta {
   align?: 'end'
   mobile?: DataTableMobileRole
+  /**
+   * The cell edits in place when the table is `editable`. `editInput` picks
+   * the editor (default `text`).
+   */
+  editable?: boolean
+  editInput?: 'text' | 'number'
+}
+
+/** Which column is frozen to each edge of the horizontal scroll. */
+export interface DataTablePinned {
+  start?: string
+  end?: string
 }
 
 export interface DataTableProps<T extends { id: string }> {
@@ -110,10 +126,97 @@ export interface DataTableProps<T extends { id: string }> {
   emptyHint?: string
   /** Empty-state reset for externally filtered pages (beats Clear search). */
   onClearFilters?: () => void
+  /**
+   * Freeze one column to the start edge of the horizontal scroll — the
+   * identifier that must stay visible while the rest move. Controlled:
+   * changes go through `onPinnedColumnsChange`.
+   */
+  pinnedStart?: string
+  /** Freeze one column to the end edge — typically the row actions. */
+  pinnedEnd?: string
+  defaultPinnedStart?: string
+  defaultPinnedEnd?: string
+  onPinnedColumnsChange?: (pinned: DataTablePinned) => void
+  /**
+   * Turn on inline editing: columns whose `meta.editable` is set render a
+   * click-to-edit cell. Values are app-owned — edits arrive through
+   * `onCellChange`, and the table shows whatever the next `rows` carry.
+   */
+  editable?: boolean
+  onCellChange?: (id: string, columnId: string, value: string) => void
 }
 
 /**
- * A collection as a table: search, sort, page, hide columns, select rows.
+ * A click-to-edit cell. Enter or blur commits; Escape cancels. The value is
+ * the row's raw field, not the formatted render.
+ */
+function EditableCell(props: {
+  id: string
+  columnId: string
+  value: string
+  label: string
+  type: 'text' | 'number'
+  alignEnd: boolean
+  onCommit: (id: string, columnId: string, value: string) => void
+}): JSX.Element {
+  const [editing, setEditing] = createSignal(false)
+  // Seeded at open time (the trigger click), never read while closed.
+  const [draft, setDraft] = createSignal('')
+  const commit = (original: string) => {
+    setEditing(false)
+    const value = draft().trim()
+    if (value !== original) props.onCommit(props.id, props.columnId, value)
+  }
+  return (
+    <Show
+      when={editing()}
+      fallback={
+        <button
+          type="button"
+          data-slot="data-table-edit-trigger"
+          // The name leads with the visible text: a speech user saying what
+          // they see must still land on this control.
+          aria-label={`${props.value || '—'} — edit ${props.label} of ${props.id}`}
+          class={cn(
+            '-mx-1 w-full cursor-text rounded-3 px-1 py-0.5 text-start hover:bg-surface-gray-2 focus-visible:focus-ring',
+            props.alignEnd && 'text-end',
+          )}
+          onClick={() => {
+            setDraft(props.value)
+            setEditing(true)
+          }}
+        >
+          <Show
+            when={props.value !== ''}
+            fallback={<span class="text-ink-gray-5">—</span>}
+          >
+            {props.value}
+          </Show>
+        </button>
+      }
+    >
+      <TextInput
+        aria-label={`Edit ${props.label} of ${props.id}`}
+        // The editor opens on the user's click; focus belongs there.
+        ref={(el) => queueMicrotask(() => el.focus())}
+        type={props.type}
+        value={draft()}
+        size="xs"
+        onInput={(event) => setDraft(event.currentTarget.value)}
+        onBlur={() => commit(props.value)}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') commit(props.value)
+          if (event.key === 'Escape') setEditing(false)
+        }}
+        class="min-w-0"
+      />
+    </Show>
+  )
+}
+
+/**
+ * A collection as a table: search, sort, page, hide columns, select rows,
+ * pin one column to each scroll edge, edit cells in place.
  *
  * TanStack Table is the engine; this is the kit's composition of it. The surface
  * lives in `@talelk/newui-organisms`: it composes controls and owns the TanStack Table
@@ -152,6 +255,38 @@ export function DataTable<T extends { id: string }>(
   const resolvedColumns = createMemo(() =>
     selectable() ? [selection, ...props.columns] : props.columns,
   )
+  const [pinned] = createControllableSignal<DataTablePinned>({
+    value: () => ({
+      start: props.pinnedStart,
+      end: props.pinnedEnd,
+    }),
+    defaultValue: {
+      start: props.defaultPinnedStart,
+      end: props.defaultPinnedEnd,
+    },
+    onChange: (next) => props.onPinnedColumnsChange?.(next),
+  })
+  const editable = () =>
+    props.editable === true && props.onCellChange !== undefined
+  const editMeta = (meta: unknown) => {
+    const columnMeta = meta as DataTableColumnMeta | undefined
+    return columnMeta?.editable === true
+      ? { input: columnMeta.editInput ?? 'text' }
+      : undefined
+  }
+  /** Which edge (if any) a column id is frozen to. */
+  const pinOf = (columnId: string): 'start' | 'end' | undefined => {
+    if (pinned().start === columnId) return 'start'
+    if (pinned().end === columnId) return 'end'
+    return undefined
+  }
+  /** Sticky cell chrome: opaque card surface over the scrolling columns. */
+  const pinClass = (edge: 'start' | 'end' | undefined) =>
+    edge === 'start'
+      ? 'sticky start-0 z-raised bg-surface-elevation-1 group-hover/row:bg-surface-gray-1 data-[selected]:bg-surface-blue-1 data-[selected]:group-hover/row:bg-surface-blue-2 border-e border-outline-gray-1'
+      : edge === 'end'
+        ? 'sticky end-0 z-raised bg-surface-elevation-1 group-hover/row:bg-surface-gray-1 data-[selected]:bg-surface-blue-1 data-[selected]:group-hover/row:bg-surface-blue-2 border-s border-outline-gray-1'
+        : ''
   const table = createTable<Features, T>({
     features: createFeatures(),
     get data() {
@@ -159,6 +294,15 @@ export function DataTable<T extends { id: string }>(
     },
     get columns() {
       return resolvedColumns()
+    },
+    get state() {
+      const pinnedValue = pinned()
+      return {
+        columnPinning: {
+          start: pinnedValue.start ? [pinnedValue.start] : [],
+          end: pinnedValue.end ? [pinnedValue.end] : [],
+        },
+      }
     },
     getRowId: (row) => row.id,
     get enableRowSelection() {
@@ -455,11 +599,12 @@ export function DataTable<T extends { id: string }>(
                           {(header) => (
                             <th
                               scope="col"
-                              class={
+                              class={cn(
                                 alignEnd(header.column.columnDef.meta)
                                   ? `${cellPad()} text-end`
-                                  : `${cellPad()} text-start`
-                              }
+                                  : `${cellPad()} text-start`,
+                                pinClass(pinOf(header.column.id)),
+                              )}
                               aria-sort={
                                 header.column.getIsSorted() === 'asc'
                                   ? 'ascending'
@@ -513,24 +658,61 @@ export function DataTable<T extends { id: string }>(
                   <For each={table.getRowModel().rows}>
                     {(row) => (
                       <tr
-                        class="border-b border-outline-gray-1 hover:bg-surface-gray-1 data-[selected]:bg-surface-blue-1 data-[selected]:hover:bg-surface-blue-2"
+                        class="group/row border-b border-outline-gray-1 hover:bg-surface-gray-1 data-[selected]:bg-surface-blue-1 data-[selected]:hover:bg-surface-blue-2"
                         data-selected={row.getIsSelected() ? '' : undefined}
                       >
                         <For each={row.getVisibleCells()}>
-                          {(cell) => (
-                            <td
-                              class={
-                                alignEnd(cell.column.columnDef.meta)
-                                  ? `${cellPad()} text-end text-interface`
-                                  : `${cellPad()} text-interface`
-                              }
-                            >
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext(),
-                              )}
-                            </td>
-                          )}
+                          {(cell) => {
+                            const edge = pinOf(cell.column.id)
+                            const editingMeta = editable()
+                              ? editMeta(cell.column.columnDef.meta)
+                              : undefined
+                            const raw = (
+                              row.original as Record<string, unknown>
+                            )[cell.column.id]
+                            return (
+                              <td
+                                class={cn(
+                                  alignEnd(cell.column.columnDef.meta)
+                                    ? `${cellPad()} text-end text-interface`
+                                    : `${cellPad()} text-interface`,
+                                  pinClass(edge),
+                                )}
+                                data-selected={
+                                  row.getIsSelected() ? '' : undefined
+                                }
+                              >
+                                <Show
+                                  when={editingMeta}
+                                  fallback={flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext(),
+                                  )}
+                                >
+                                  <EditableCell
+                                    id={row.original.id}
+                                    columnId={cell.column.id}
+                                    value={raw == null ? '' : String(raw)}
+                                    label={columnLabel(
+                                      cell.column as unknown as {
+                                        id: string
+                                        columnDef: { header?: unknown }
+                                      },
+                                    )}
+                                    type={
+                                      editingMeta?.input === 'number'
+                                        ? 'number'
+                                        : 'text'
+                                    }
+                                    alignEnd={alignEnd(
+                                      cell.column.columnDef.meta,
+                                    )}
+                                    onCommit={props.onCellChange ?? (() => {})}
+                                  />
+                                </Show>
+                              </td>
+                            )
+                          }}
                         </For>
                       </tr>
                     )}

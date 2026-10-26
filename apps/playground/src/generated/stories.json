@@ -38,6 +38,30 @@
       ]
     },
     {
+      "id": "atoms-actions-iconbutton--default",
+      "title": "Atoms/Actions/IconButton",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/icon-button.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "atoms-actions-iconbutton--disabled",
+      "title": "Atoms/Actions/IconButton",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/icon-button.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "atoms-actions-keyboardshortcut--default",
       "title": "Atoms/Actions/KeyboardShortcut",
       "name": "Default",
@@ -50,11 +74,35 @@
       ]
     },
     {
+      "id": "atoms-actions-link--default",
+      "title": "Atoms/Actions/Link",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/link.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "atoms-display-avatar--default",
       "title": "Atoms/Display/Avatar",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/avatar.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "atoms-display-avatargroup--default",
+      "title": "Atoms/Display/AvatarGroup",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/avatar-group.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -110,11 +158,48 @@
       ]
     },
     {
+      "id": "atoms-display-image--default",
+      "title": "Atoms/Display/Image",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/image.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "atoms-display-image--fallback",
+      "title": "Atoms/Display/Image",
+      "name": "Fallback",
+      "exportName": "Fallback",
+      "importPath": "src/stories/image.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest",
+        "no-sweep"
+      ]
+    },
+    {
       "id": "atoms-display-text--default",
       "title": "Atoms/Display/Text",
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/text.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "atoms-display-visuallyhidden--default",
+      "title": "Atoms/Display/VisuallyHidden",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/visually-hidden.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -806,6 +891,18 @@
       ]
     },
     {
+      "id": "molecules-display-carousel--default",
+      "title": "Molecules/Display/Carousel",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/carousel.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "molecules-display-emptystate--default",
       "title": "Molecules/Display/EmptyState",
       "name": "Default",
@@ -962,6 +1059,42 @@
       ]
     },
     {
+      "id": "molecules-inputs-colorpicker--default",
+      "title": "Molecules/Inputs/ColorPicker",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/color-picker.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-colorpicker--disabled",
+      "title": "Molecules/Inputs/ColorPicker",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/color-picker.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-colorpicker--invalid",
+      "title": "Molecules/Inputs/ColorPicker",
+      "name": "Invalid",
+      "exportName": "Invalid",
+      "importPath": "src/stories/color-picker.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "molecules-inputs-formcontrol--default",
       "title": "Molecules/Inputs/FormControl",
       "name": "Default",
@@ -1063,6 +1196,42 @@
       "name": "Invalid",
       "exportName": "Invalid",
       "importPath": "src/stories/password.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-pininput--default",
+      "title": "Molecules/Inputs/PinInput",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/pin-input.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-pininput--disabled",
+      "title": "Molecules/Inputs/PinInput",
+      "name": "Disabled",
+      "exportName": "Disabled",
+      "importPath": "src/stories/pin-input.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-pininput--invalid",
+      "title": "Molecules/Inputs/PinInput",
+      "name": "Invalid",
+      "exportName": "Invalid",
+      "importPath": "src/stories/pin-input.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -1327,6 +1496,18 @@
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/scroll-table.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-selection-calendar--default",
+      "title": "Molecules/Selection/Calendar",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/calendar.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -1646,6 +1827,18 @@
       ]
     },
     {
+      "id": "molecules-selection-timerangepicker--default",
+      "title": "Molecules/Selection/TimeRangePicker",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/time-range-picker.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "molecules-selection-togglegroup--default",
       "title": "Molecules/Selection/ToggleGroup",
       "name": "Default",
@@ -1663,6 +1856,18 @@
       "name": "Disabled",
       "exportName": "Disabled",
       "importPath": "src/stories/toggle-group.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-selection-transferlist--default",
+      "title": "Molecules/Selection/TransferList",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/transfer-list.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -1926,6 +2131,18 @@
       "title": "Organisms/DataTable",
       "name": "Loading",
       "exportName": "Loading",
+      "importPath": "src/stories/data-table.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-datatable--pinned-editable",
+      "title": "Organisms/DataTable",
+      "name": "Pinned Editable",
+      "exportName": "PinnedEditable",
       "importPath": "src/stories/data-table.stories.tsx",
       "tags": [
         "dev",
@@ -2563,6 +2780,18 @@
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/app-shell.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "templates-authlayout--aside",
+      "title": "Templates/AuthLayout",
+      "name": "Aside",
+      "exportName": "Aside",
+      "importPath": "src/stories/auth-layout.stories.tsx",
       "tags": [
         "dev",
         "test",

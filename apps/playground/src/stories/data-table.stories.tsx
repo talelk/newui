@@ -82,3 +82,42 @@ export const Error: Story = {
     />
   ),
 }
+
+/** Pinning and inline editing: the identifier stays put, estimates edit in place. */
+export const PinnedEditable: Story = {
+  render: () => {
+    const [rows, setRows] = createSignal(seedTasks())
+    return (
+      <DataTable
+        title="Tasks"
+        rows={rows()}
+        columns={[
+          { accessorKey: 'id', header: 'Task', meta: { mobile: 'subtitle' } },
+          { accessorKey: 'title', header: 'Title', meta: { mobile: 'title' } },
+          {
+            accessorKey: 'status',
+            header: 'Status',
+            meta: { mobile: 'status' },
+          },
+          {
+            accessorKey: 'title',
+            header: 'Title',
+            meta: {
+              editable: true,
+              mobile: 'title',
+            },
+          },
+        ]}
+        pinnedStart="id"
+        editable
+        onCellChange={(id, columnId, value) =>
+          setRows((previous) =>
+            previous.map((row) =>
+              row.id === id ? { ...row, [columnId]: value } : row,
+            ),
+          )
+        }
+      />
+    )
+  },
+}

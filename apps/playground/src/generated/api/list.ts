@@ -54,11 +54,6 @@ export const API = {
       "name": "children",
       "type": "JSX.Element",
       "optional": true
-    },
-    {
-      "name": "onClick",
-      "type": "JSX.EventHandlerUnion<HTMLDivElement, MouseEvent>",
-      "optional": true
     }
   ]
 } as const

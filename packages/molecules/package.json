@@ -11,7 +11,8 @@
     }
   },
   "files": [
-    "src"
+    "src",
+    "skills/newui-molecules"
   ],
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"
@@ -30,6 +31,7 @@
     "@zag-js/menu": "^1.46.0",
     "@zag-js/number-input": "^1.46.0",
     "@zag-js/pagination": "^1.46.0",
+    "@zag-js/pin-input": "^1.46.0",
     "@zag-js/popover": "^1.46.0",
     "@zag-js/radio-group": "^1.46.0",
     "@zag-js/rating-group": "^1.46.0",
@@ -54,5 +56,8 @@
     "type": "git",
     "url": "git+https://github.com/talelk/newui.git",
     "directory": "packages/molecules"
-  }
+  },
+  "keywords": [
+    "tanstack-intent"
+  ]
 }

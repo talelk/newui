@@ -52,6 +52,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'atoms-display-avatar--default',
     load: () => import('../stories/avatar.stories'),
   },
+  "AvatarGroup": {
+    id: 'atoms-display-avatargroup--default',
+    load: () => import('../stories/avatar-group.stories'),
+  },
   "Badge": {
     id: 'atoms-display-badge--default',
     load: () => import('../stories/badge.stories'),
@@ -72,9 +76,17 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'atoms-actions-button--default',
     load: () => import('../stories/button.stories'),
   },
+  "Calendar": {
+    id: 'molecules-selection-calendar--default',
+    load: () => import('../stories/calendar.stories'),
+  },
   "Card": {
     id: 'molecules-display-card--default',
     load: () => import('../stories/card.stories'),
+  },
+  "Carousel": {
+    id: 'molecules-display-carousel--default',
+    load: () => import('../stories/carousel.stories'),
   },
   "ChartBase": {
     id: 'molecules-chartbase--default',
@@ -107,6 +119,10 @@ export const STORIES: Record<string, StoryEntry> = {
   "Collapsible": {
     id: 'molecules-disclosure-collapsible--default',
     load: () => import('../stories/collapsible.stories'),
+  },
+  "ColorPicker": {
+    id: 'molecules-inputs-colorpicker--default',
+    load: () => import('../stories/color-picker.stories'),
   },
   "Combobox": {
     id: 'molecules-selection-combobox--default',
@@ -224,6 +240,14 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'atoms-display-icon--default',
     load: () => import('../stories/icon.stories'),
   },
+  "IconButton": {
+    id: 'atoms-actions-iconbutton--default',
+    load: () => import('../stories/icon-button.stories'),
+  },
+  "Image": {
+    id: 'atoms-display-image--default',
+    load: () => import('../stories/image.stories'),
+  },
   "ItemListRow": {
     id: 'molecules-display-itemlistrow--default',
     load: () => import('../stories/item-list-row.stories'),
@@ -243,6 +267,10 @@ export const STORIES: Record<string, StoryEntry> = {
   "LineChart": {
     id: 'organisms-linechart--default',
     load: () => import('../stories/line-chart.stories'),
+  },
+  "Link": {
+    id: 'atoms-actions-link--default',
+    load: () => import('../stories/link.stories'),
   },
   "List": {
     id: 'molecules-display-list--default',
@@ -283,6 +311,10 @@ export const STORIES: Record<string, StoryEntry> = {
   "Password": {
     id: 'molecules-inputs-password--default',
     load: () => import('../stories/password.stories'),
+  },
+  "PinInput": {
+    id: 'molecules-inputs-pininput--default',
+    load: () => import('../stories/pin-input.stories'),
   },
   "Popover": {
     id: 'molecules-overlays-popover--default',
@@ -404,6 +436,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'molecules-selection-timepicker--default',
     load: () => import('../stories/time-picker.stories'),
   },
+  "TimeRangePicker": {
+    id: 'molecules-selection-timerangepicker--default',
+    load: () => import('../stories/time-range-picker.stories'),
+  },
   "Toast": {
     id: 'molecules-feedback-toast--default',
     load: () => import('../stories/toast.stories'),
@@ -416,6 +452,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'atoms-overlays-tooltip--default',
     load: () => import('../stories/tooltip.stories'),
   },
+  "TransferList": {
+    id: 'molecules-selection-transferlist--default',
+    load: () => import('../stories/transfer-list.stories'),
+  },
   "Tree": {
     id: 'molecules-display-tree--default',
     load: () => import('../stories/tree.stories'),
@@ -423,5 +463,9 @@ export const STORIES: Record<string, StoryEntry> = {
   "VirtualList": {
     id: 'organisms-virtuallist--default',
     load: () => import('../stories/virtual-list.stories'),
+  },
+  "VisuallyHidden": {
+    id: 'atoms-display-visuallyhidden--default',
+    load: () => import('../stories/visually-hidden.stories'),
   },
 }

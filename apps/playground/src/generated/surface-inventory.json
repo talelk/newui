@@ -13,6 +13,39 @@
   },
   {
     "package": "@talelk/newui-atoms",
+    "name": "AvatarGroup",
+    "implementation": "packages/atoms/src/atoms/AvatarGroup/AvatarGroup.tsx",
+    "documentation": "/atoms/avatar-group",
+    "contract": "spec/avatar-group.md",
+    "tests": [
+      "packages/atoms/src/atoms/AvatarGroup/AvatarGroup.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "AvatarGroupItem",
+    "implementation": "packages/atoms/src/atoms/AvatarGroup/AvatarGroup.tsx",
+    "documentation": "/atoms/avatar-group",
+    "contract": "spec/avatar-group.md",
+    "tests": [
+      "packages/atoms/src/atoms/AvatarGroup/AvatarGroup.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "AvatarGroupProps",
+    "implementation": "packages/atoms/src/atoms/AvatarGroup/AvatarGroup.tsx",
+    "documentation": "/atoms/avatar-group",
+    "contract": "spec/avatar-group.md",
+    "tests": [
+      "packages/atoms/src/atoms/AvatarGroup/AvatarGroup.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
     "name": "AvatarProps",
     "implementation": "packages/atoms/src/atoms/Avatar/Avatar.tsx",
     "documentation": "/atoms/avatar",
@@ -988,6 +1021,7 @@
     "documentation": "/atoms/heading",
     "contract": "spec/heading.md",
     "tests": [
+      "packages/atoms/src/atoms/Heading/Heading.browser.test.tsx",
       "packages/atoms/src/atoms/Heading/Heading.test.tsx"
     ],
     "acceptance": "pending"
@@ -999,6 +1033,7 @@
     "documentation": "/atoms/heading",
     "contract": "spec/heading.md",
     "tests": [
+      "packages/atoms/src/atoms/Heading/Heading.browser.test.tsx",
       "packages/atoms/src/atoms/Heading/Heading.test.tsx"
     ],
     "acceptance": "pending"
@@ -1010,6 +1045,7 @@
     "documentation": "/atoms/heading",
     "contract": "spec/heading.md",
     "tests": [
+      "packages/atoms/src/atoms/Heading/Heading.browser.test.tsx",
       "packages/atoms/src/atoms/Heading/Heading.test.tsx"
     ],
     "acceptance": "pending"
@@ -1021,7 +1057,30 @@
     "documentation": "/atoms/icon",
     "contract": "spec/icon.md",
     "tests": [
-      "packages/atoms/src/atoms/Icon/Icon.browser.test.tsx"
+      "packages/atoms/src/atoms/Icon/Icon.browser.test.tsx",
+      "packages/atoms/src/atoms/Icon/Icon.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "IconButton",
+    "implementation": "packages/atoms/src/atoms/IconButton/IconButton.tsx",
+    "documentation": "/atoms/icon-button",
+    "contract": "spec/icon-button.md",
+    "tests": [
+      "packages/atoms/src/atoms/IconButton/IconButton.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "IconButtonProps",
+    "implementation": "packages/atoms/src/atoms/IconButton/IconButton.tsx",
+    "documentation": "/atoms/icon-button",
+    "contract": "spec/icon-button.md",
+    "tests": [
+      "packages/atoms/src/atoms/IconButton/IconButton.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -1032,7 +1091,8 @@
     "documentation": "/atoms/icon",
     "contract": "spec/icon.md",
     "tests": [
-      "packages/atoms/src/atoms/Icon/Icon.browser.test.tsx"
+      "packages/atoms/src/atoms/Icon/Icon.browser.test.tsx",
+      "packages/atoms/src/atoms/Icon/Icon.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -1043,7 +1103,52 @@
     "documentation": "/atoms/icon",
     "contract": "spec/icon.md",
     "tests": [
-      "packages/atoms/src/atoms/Icon/Icon.browser.test.tsx"
+      "packages/atoms/src/atoms/Icon/Icon.browser.test.tsx",
+      "packages/atoms/src/atoms/Icon/Icon.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "Image",
+    "implementation": "packages/atoms/src/atoms/Image/Image.tsx",
+    "documentation": "/atoms/image",
+    "contract": "spec/image.md",
+    "tests": [
+      "packages/atoms/src/atoms/Image/Image.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "ImageFit",
+    "implementation": "packages/atoms/src/atoms/Image/Image.tsx",
+    "documentation": "/atoms/image",
+    "contract": "spec/image.md",
+    "tests": [
+      "packages/atoms/src/atoms/Image/Image.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "ImageProps",
+    "implementation": "packages/atoms/src/atoms/Image/Image.tsx",
+    "documentation": "/atoms/image",
+    "contract": "spec/image.md",
+    "tests": [
+      "packages/atoms/src/atoms/Image/Image.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "ImageRatio",
+    "implementation": "packages/atoms/src/atoms/Image/Image.tsx",
+    "documentation": "/atoms/image",
+    "contract": "spec/image.md",
+    "tests": [
+      "packages/atoms/src/atoms/Image/Image.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -1154,6 +1259,50 @@
       "packages/atoms/src/atoms/KeyboardShortcut/KeyboardShortcut.browser.test.tsx",
       "packages/atoms/src/atoms/KeyboardShortcut/KeyboardShortcut.ssr.test.tsx",
       "packages/atoms/src/atoms/KeyboardShortcut/KeyboardShortcut.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "Link",
+    "implementation": "packages/atoms/src/atoms/Link/Link.tsx",
+    "documentation": "/atoms/link",
+    "contract": "spec/link.md",
+    "tests": [
+      "packages/atoms/src/atoms/Link/Link.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "LinkProps",
+    "implementation": "packages/atoms/src/atoms/Link/Link.tsx",
+    "documentation": "/atoms/link",
+    "contract": "spec/link.md",
+    "tests": [
+      "packages/atoms/src/atoms/Link/Link.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "LinkTheme",
+    "implementation": "packages/atoms/src/atoms/Link/Link.tsx",
+    "documentation": "/atoms/link",
+    "contract": "spec/link.md",
+    "tests": [
+      "packages/atoms/src/atoms/Link/Link.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "LinkUnderline",
+    "implementation": "packages/atoms/src/atoms/Link/Link.tsx",
+    "documentation": "/atoms/link",
+    "contract": "spec/link.md",
+    "tests": [
+      "packages/atoms/src/atoms/Link/Link.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -1283,6 +1432,7 @@
     "documentation": "/atoms/progress-circle",
     "contract": "spec/progress-circle.md",
     "tests": [
+      "packages/atoms/src/atoms/ProgressCircle/ProgressCircle.browser.test.tsx",
       "packages/atoms/src/atoms/ProgressCircle/ProgressCircle.test.tsx"
     ],
     "acceptance": "pending"
@@ -1294,6 +1444,7 @@
     "documentation": "/atoms/progress-circle",
     "contract": "spec/progress-circle.md",
     "tests": [
+      "packages/atoms/src/atoms/ProgressCircle/ProgressCircle.browser.test.tsx",
       "packages/atoms/src/atoms/ProgressCircle/ProgressCircle.test.tsx"
     ],
     "acceptance": "pending"
@@ -1305,6 +1456,7 @@
     "documentation": "/atoms/progress-circle",
     "contract": "spec/progress-circle.md",
     "tests": [
+      "packages/atoms/src/atoms/ProgressCircle/ProgressCircle.browser.test.tsx",
       "packages/atoms/src/atoms/ProgressCircle/ProgressCircle.test.tsx"
     ],
     "acceptance": "pending"
@@ -1490,7 +1642,8 @@
     "documentation": "/atoms/skeleton",
     "contract": "spec/skeleton.md",
     "tests": [
-      "packages/atoms/src/atoms/Skeleton/Skeleton.browser.test.tsx"
+      "packages/atoms/src/atoms/Skeleton/Skeleton.browser.test.tsx",
+      "packages/atoms/src/atoms/Skeleton/Skeleton.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -1501,7 +1654,8 @@
     "documentation": "/atoms/skeleton",
     "contract": "spec/skeleton.md",
     "tests": [
-      "packages/atoms/src/atoms/Skeleton/Skeleton.browser.test.tsx"
+      "packages/atoms/src/atoms/Skeleton/Skeleton.browser.test.tsx",
+      "packages/atoms/src/atoms/Skeleton/Skeleton.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -1846,6 +2000,7 @@
     "documentation": "/atoms/text",
     "contract": "spec/text.md",
     "tests": [
+      "packages/atoms/src/atoms/Text/Text.browser.test.tsx",
       "packages/atoms/src/atoms/Text/Text.test.tsx"
     ],
     "acceptance": "pending"
@@ -1857,7 +2012,8 @@
     "documentation": "/atoms/textarea",
     "contract": "spec/inputs.md",
     "tests": [
-      "packages/atoms/src/atoms/Textarea/Textarea.browser.test.tsx"
+      "packages/atoms/src/atoms/Textarea/Textarea.browser.test.tsx",
+      "packages/atoms/src/atoms/Textarea/Textarea.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -1868,7 +2024,8 @@
     "documentation": "/atoms/textarea",
     "contract": "spec/inputs.md",
     "tests": [
-      "packages/atoms/src/atoms/Textarea/Textarea.browser.test.tsx"
+      "packages/atoms/src/atoms/Textarea/Textarea.browser.test.tsx",
+      "packages/atoms/src/atoms/Textarea/Textarea.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -1905,6 +2062,7 @@
     "documentation": "/atoms/text",
     "contract": "spec/text.md",
     "tests": [
+      "packages/atoms/src/atoms/Text/Text.browser.test.tsx",
       "packages/atoms/src/atoms/Text/Text.test.tsx"
     ],
     "acceptance": "pending"
@@ -1916,6 +2074,7 @@
     "documentation": "/atoms/text",
     "contract": "spec/text.md",
     "tests": [
+      "packages/atoms/src/atoms/Text/Text.browser.test.tsx",
       "packages/atoms/src/atoms/Text/Text.test.tsx"
     ],
     "acceptance": "pending"
@@ -1927,6 +2086,7 @@
     "documentation": "/atoms/text",
     "contract": "spec/text.md",
     "tests": [
+      "packages/atoms/src/atoms/Text/Text.browser.test.tsx",
       "packages/atoms/src/atoms/Text/Text.test.tsx"
     ],
     "acceptance": "pending"
@@ -2305,12 +2465,35 @@
     "acceptance": "pending"
   },
   {
+    "package": "@talelk/newui-atoms",
+    "name": "VisuallyHidden",
+    "implementation": "packages/atoms/src/atoms/VisuallyHidden/VisuallyHidden.tsx",
+    "documentation": "/atoms/visually-hidden",
+    "contract": "spec/visually-hidden.md",
+    "tests": [
+      "packages/atoms/src/atoms/VisuallyHidden/VisuallyHidden.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "VisuallyHiddenProps",
+    "implementation": "packages/atoms/src/atoms/VisuallyHidden/VisuallyHidden.tsx",
+    "documentation": "/atoms/visually-hidden",
+    "contract": "spec/visually-hidden.md",
+    "tests": [
+      "packages/atoms/src/atoms/VisuallyHidden/VisuallyHidden.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
     "package": "@talelk/newui-molecules",
     "name": "Accordion",
     "implementation": "packages/molecules/src/molecules/Accordion/Accordion.tsx",
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2323,6 +2506,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2335,6 +2519,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2347,6 +2532,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2359,6 +2545,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2371,6 +2558,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2383,6 +2571,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2395,6 +2584,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2407,6 +2597,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2419,6 +2610,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2431,6 +2623,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2443,6 +2636,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2455,6 +2649,7 @@
     "documentation": "/molecules/accordion",
     "contract": "spec/accordion.md",
     "tests": [
+      "packages/molecules/src/molecules/Accordion/Accordion.a11y.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.browser.test.tsx",
       "packages/molecules/src/molecules/Accordion/Accordion.test.tsx"
     ],
@@ -2467,6 +2662,7 @@
     "documentation": "/molecules/alert",
     "contract": "spec/alert.md",
     "tests": [
+      "packages/molecules/src/molecules/Alert/Alert.a11y.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.browser.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.test.tsx"
     ],
@@ -2479,6 +2675,7 @@
     "documentation": "/molecules/alert",
     "contract": "spec/alert.md",
     "tests": [
+      "packages/molecules/src/molecules/Alert/Alert.a11y.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.browser.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.test.tsx"
     ],
@@ -2491,6 +2688,7 @@
     "documentation": "/molecules/alert",
     "contract": "spec/alert.md",
     "tests": [
+      "packages/molecules/src/molecules/Alert/Alert.a11y.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.browser.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.test.tsx"
     ],
@@ -2503,6 +2701,7 @@
     "documentation": "/molecules/alert",
     "contract": "spec/alert.md",
     "tests": [
+      "packages/molecules/src/molecules/Alert/Alert.a11y.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.browser.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.test.tsx"
     ],
@@ -2515,6 +2714,7 @@
     "documentation": "/molecules/alert",
     "contract": "spec/alert.md",
     "tests": [
+      "packages/molecules/src/molecules/Alert/Alert.a11y.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.browser.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.test.tsx"
     ],
@@ -2527,6 +2727,7 @@
     "documentation": "/molecules/alert",
     "contract": "spec/alert.md",
     "tests": [
+      "packages/molecules/src/molecules/Alert/Alert.a11y.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.browser.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.test.tsx"
     ],
@@ -2539,6 +2740,7 @@
     "documentation": "/molecules/alert",
     "contract": "spec/alert.md",
     "tests": [
+      "packages/molecules/src/molecules/Alert/Alert.a11y.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.browser.test.tsx",
       "packages/molecules/src/molecules/Alert/Alert.test.tsx"
     ],
@@ -2616,11 +2818,38 @@
   },
   {
     "package": "@talelk/newui-molecules",
+    "name": "Calendar",
+    "implementation": "packages/molecules/src/molecules/Calendar/Calendar.tsx",
+    "documentation": "/molecules/calendar",
+    "contract": "spec/calendar.md",
+    "tests": [
+      "packages/molecules/src/molecules/Calendar/Calendar.a11y.test.tsx",
+      "packages/molecules/src/molecules/Calendar/Calendar.browser.test.tsx",
+      "packages/molecules/src/molecules/Calendar/Calendar.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "CalendarProps",
+    "implementation": "packages/molecules/src/molecules/Calendar/Calendar.tsx",
+    "documentation": "/molecules/calendar",
+    "contract": "spec/calendar.md",
+    "tests": [
+      "packages/molecules/src/molecules/Calendar/Calendar.a11y.test.tsx",
+      "packages/molecules/src/molecules/Calendar/Calendar.browser.test.tsx",
+      "packages/molecules/src/molecules/Calendar/Calendar.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
     "name": "card",
     "implementation": "packages/molecules/src/molecules/Card/Card.tsx",
     "documentation": "/molecules/card",
     "contract": "spec/card.md",
     "tests": [
+      "packages/molecules/src/molecules/Card/Card.a11y.test.tsx",
       "packages/molecules/src/molecules/Card/Card.browser.test.tsx",
       "packages/molecules/src/molecules/Card/Card.test.tsx"
     ],
@@ -2633,6 +2862,7 @@
     "documentation": "/molecules/card",
     "contract": "spec/card.md",
     "tests": [
+      "packages/molecules/src/molecules/Card/Card.a11y.test.tsx",
       "packages/molecules/src/molecules/Card/Card.browser.test.tsx",
       "packages/molecules/src/molecules/Card/Card.test.tsx"
     ],
@@ -2645,6 +2875,7 @@
     "documentation": "/molecules/card",
     "contract": "spec/card.md",
     "tests": [
+      "packages/molecules/src/molecules/Card/Card.a11y.test.tsx",
       "packages/molecules/src/molecules/Card/Card.browser.test.tsx",
       "packages/molecules/src/molecules/Card/Card.test.tsx"
     ],
@@ -2657,6 +2888,7 @@
     "documentation": "/molecules/card",
     "contract": "spec/card.md",
     "tests": [
+      "packages/molecules/src/molecules/Card/Card.a11y.test.tsx",
       "packages/molecules/src/molecules/Card/Card.browser.test.tsx",
       "packages/molecules/src/molecules/Card/Card.test.tsx"
     ],
@@ -2669,6 +2901,7 @@
     "documentation": "/molecules/card",
     "contract": "spec/card.md",
     "tests": [
+      "packages/molecules/src/molecules/Card/Card.a11y.test.tsx",
       "packages/molecules/src/molecules/Card/Card.browser.test.tsx",
       "packages/molecules/src/molecules/Card/Card.test.tsx"
     ],
@@ -2681,6 +2914,7 @@
     "documentation": "/molecules/card",
     "contract": "spec/card.md",
     "tests": [
+      "packages/molecules/src/molecules/Card/Card.a11y.test.tsx",
       "packages/molecules/src/molecules/Card/Card.browser.test.tsx",
       "packages/molecules/src/molecules/Card/Card.test.tsx"
     ],
@@ -2693,6 +2927,7 @@
     "documentation": "/molecules/card",
     "contract": "spec/card.md",
     "tests": [
+      "packages/molecules/src/molecules/Card/Card.a11y.test.tsx",
       "packages/molecules/src/molecules/Card/Card.browser.test.tsx",
       "packages/molecules/src/molecules/Card/Card.test.tsx"
     ],
@@ -2705,8 +2940,141 @@
     "documentation": "/molecules/card",
     "contract": "spec/card.md",
     "tests": [
+      "packages/molecules/src/molecules/Card/Card.a11y.test.tsx",
       "packages/molecules/src/molecules/Card/Card.browser.test.tsx",
       "packages/molecules/src/molecules/Card/Card.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "Carousel",
+    "implementation": "packages/molecules/src/molecules/Carousel/Carousel.tsx",
+    "documentation": "/molecules/carousel",
+    "contract": "spec/carousel.md",
+    "tests": [
+      "packages/molecules/src/molecules/Carousel/Carousel.a11y.test.tsx",
+      "packages/molecules/src/molecules/Carousel/Carousel.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "CarouselControlProps",
+    "implementation": "packages/molecules/src/molecules/Carousel/Carousel.tsx",
+    "documentation": "/molecules/carousel",
+    "contract": "spec/carousel.md",
+    "tests": [
+      "packages/molecules/src/molecules/Carousel/Carousel.a11y.test.tsx",
+      "packages/molecules/src/molecules/Carousel/Carousel.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "CarouselNext",
+    "implementation": "packages/molecules/src/molecules/Carousel/Carousel.tsx",
+    "documentation": "/molecules/carousel",
+    "contract": "spec/carousel.md",
+    "tests": [
+      "packages/molecules/src/molecules/Carousel/Carousel.a11y.test.tsx",
+      "packages/molecules/src/molecules/Carousel/Carousel.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "CarouselOrientation",
+    "implementation": "packages/molecules/src/molecules/Carousel/Carousel.tsx",
+    "documentation": "/molecules/carousel",
+    "contract": "spec/carousel.md",
+    "tests": [
+      "packages/molecules/src/molecules/Carousel/Carousel.a11y.test.tsx",
+      "packages/molecules/src/molecules/Carousel/Carousel.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "CarouselPrevious",
+    "implementation": "packages/molecules/src/molecules/Carousel/Carousel.tsx",
+    "documentation": "/molecules/carousel",
+    "contract": "spec/carousel.md",
+    "tests": [
+      "packages/molecules/src/molecules/Carousel/Carousel.a11y.test.tsx",
+      "packages/molecules/src/molecules/Carousel/Carousel.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "CarouselProps",
+    "implementation": "packages/molecules/src/molecules/Carousel/Carousel.tsx",
+    "documentation": "/molecules/carousel",
+    "contract": "spec/carousel.md",
+    "tests": [
+      "packages/molecules/src/molecules/Carousel/Carousel.a11y.test.tsx",
+      "packages/molecules/src/molecules/Carousel/Carousel.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "CarouselSlide",
+    "implementation": "packages/molecules/src/molecules/Carousel/Carousel.tsx",
+    "documentation": "/molecules/carousel",
+    "contract": "spec/carousel.md",
+    "tests": [
+      "packages/molecules/src/molecules/Carousel/Carousel.a11y.test.tsx",
+      "packages/molecules/src/molecules/Carousel/Carousel.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "CarouselSlideProps",
+    "implementation": "packages/molecules/src/molecules/Carousel/Carousel.tsx",
+    "documentation": "/molecules/carousel",
+    "contract": "spec/carousel.md",
+    "tests": [
+      "packages/molecules/src/molecules/Carousel/Carousel.a11y.test.tsx",
+      "packages/molecules/src/molecules/Carousel/Carousel.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "CarouselStatus",
+    "implementation": "packages/molecules/src/molecules/Carousel/Carousel.tsx",
+    "documentation": "/molecules/carousel",
+    "contract": "spec/carousel.md",
+    "tests": [
+      "packages/molecules/src/molecules/Carousel/Carousel.a11y.test.tsx",
+      "packages/molecules/src/molecules/Carousel/Carousel.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "CarouselViewport",
+    "implementation": "packages/molecules/src/molecules/Carousel/Carousel.tsx",
+    "documentation": "/molecules/carousel",
+    "contract": "spec/carousel.md",
+    "tests": [
+      "packages/molecules/src/molecules/Carousel/Carousel.a11y.test.tsx",
+      "packages/molecules/src/molecules/Carousel/Carousel.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "CarouselViewportProps",
+    "implementation": "packages/molecules/src/molecules/Carousel/Carousel.tsx",
+    "documentation": "/molecules/carousel",
+    "contract": "spec/carousel.md",
+    "tests": [
+      "packages/molecules/src/molecules/Carousel/Carousel.a11y.test.tsx",
+      "packages/molecules/src/molecules/Carousel/Carousel.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -2718,6 +3086,7 @@
     "contract": "spec/collapsible.md",
     "tests": [
       "packages/molecules/src/molecules/Collapsible/Collapsible.a11y.test.tsx",
+      "packages/molecules/src/molecules/Collapsible/Collapsible.browser.test.tsx",
       "packages/molecules/src/molecules/Collapsible/Collapsible.test.tsx"
     ],
     "acceptance": "pending"
@@ -2730,6 +3099,7 @@
     "contract": "spec/collapsible.md",
     "tests": [
       "packages/molecules/src/molecules/Collapsible/Collapsible.a11y.test.tsx",
+      "packages/molecules/src/molecules/Collapsible/Collapsible.browser.test.tsx",
       "packages/molecules/src/molecules/Collapsible/Collapsible.test.tsx"
     ],
     "acceptance": "pending"
@@ -2742,6 +3112,7 @@
     "contract": "spec/collapsible.md",
     "tests": [
       "packages/molecules/src/molecules/Collapsible/Collapsible.a11y.test.tsx",
+      "packages/molecules/src/molecules/Collapsible/Collapsible.browser.test.tsx",
       "packages/molecules/src/molecules/Collapsible/Collapsible.test.tsx"
     ],
     "acceptance": "pending"
@@ -2754,6 +3125,7 @@
     "contract": "spec/collapsible.md",
     "tests": [
       "packages/molecules/src/molecules/Collapsible/Collapsible.a11y.test.tsx",
+      "packages/molecules/src/molecules/Collapsible/Collapsible.browser.test.tsx",
       "packages/molecules/src/molecules/Collapsible/Collapsible.test.tsx"
     ],
     "acceptance": "pending"
@@ -2766,6 +3138,7 @@
     "contract": "spec/collapsible.md",
     "tests": [
       "packages/molecules/src/molecules/Collapsible/Collapsible.a11y.test.tsx",
+      "packages/molecules/src/molecules/Collapsible/Collapsible.browser.test.tsx",
       "packages/molecules/src/molecules/Collapsible/Collapsible.test.tsx"
     ],
     "acceptance": "pending"
@@ -2778,6 +3151,7 @@
     "contract": "spec/collapsible.md",
     "tests": [
       "packages/molecules/src/molecules/Collapsible/Collapsible.a11y.test.tsx",
+      "packages/molecules/src/molecules/Collapsible/Collapsible.browser.test.tsx",
       "packages/molecules/src/molecules/Collapsible/Collapsible.test.tsx"
     ],
     "acceptance": "pending"
@@ -2790,6 +3164,7 @@
     "contract": "spec/collapsible.md",
     "tests": [
       "packages/molecules/src/molecules/Collapsible/Collapsible.a11y.test.tsx",
+      "packages/molecules/src/molecules/Collapsible/Collapsible.browser.test.tsx",
       "packages/molecules/src/molecules/Collapsible/Collapsible.test.tsx"
     ],
     "acceptance": "pending"
@@ -2802,6 +3177,7 @@
     "contract": "spec/collapsible.md",
     "tests": [
       "packages/molecules/src/molecules/Collapsible/Collapsible.a11y.test.tsx",
+      "packages/molecules/src/molecules/Collapsible/Collapsible.browser.test.tsx",
       "packages/molecules/src/molecules/Collapsible/Collapsible.test.tsx"
     ],
     "acceptance": "pending"
@@ -2814,6 +3190,7 @@
     "contract": "spec/collapsible.md",
     "tests": [
       "packages/molecules/src/molecules/Collapsible/Collapsible.a11y.test.tsx",
+      "packages/molecules/src/molecules/Collapsible/Collapsible.browser.test.tsx",
       "packages/molecules/src/molecules/Collapsible/Collapsible.test.tsx"
     ],
     "acceptance": "pending"
@@ -2826,7 +3203,32 @@
     "contract": "spec/collapsible.md",
     "tests": [
       "packages/molecules/src/molecules/Collapsible/Collapsible.a11y.test.tsx",
+      "packages/molecules/src/molecules/Collapsible/Collapsible.browser.test.tsx",
       "packages/molecules/src/molecules/Collapsible/Collapsible.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "ColorPicker",
+    "implementation": "packages/molecules/src/molecules/ColorPicker/ColorPicker.tsx",
+    "documentation": "/molecules/color-picker",
+    "contract": "spec/color-picker.md",
+    "tests": [
+      "packages/molecules/src/molecules/ColorPicker/ColorPicker.a11y.test.tsx",
+      "packages/molecules/src/molecules/ColorPicker/ColorPicker.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "ColorPickerProps",
+    "implementation": "packages/molecules/src/molecules/ColorPicker/ColorPicker.tsx",
+    "documentation": "/molecules/color-picker",
+    "contract": "spec/color-picker.md",
+    "tests": [
+      "packages/molecules/src/molecules/ColorPicker/ColorPicker.a11y.test.tsx",
+      "packages/molecules/src/molecules/ColorPicker/ColorPicker.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -3089,6 +3491,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -3369,6 +3772,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3381,6 +3785,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3393,6 +3798,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3405,6 +3811,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3417,6 +3824,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3429,6 +3837,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3441,6 +3850,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3453,6 +3863,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3465,6 +3876,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3477,6 +3889,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3489,6 +3902,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3501,6 +3915,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3513,6 +3928,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3525,6 +3941,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3537,6 +3954,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3549,6 +3967,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3561,6 +3980,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3573,6 +3993,7 @@
     "documentation": "/molecules/dialog",
     "contract": "spec/dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/Dialog/Dialog.a11y.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.browser.test.tsx",
       "packages/molecules/src/molecules/Dialog/Dialog.test.tsx"
     ],
@@ -3585,6 +4006,7 @@
     "documentation": "/molecules/dropdown",
     "contract": "spec/dropdown.md",
     "tests": [
+      "packages/molecules/src/molecules/Dropdown/Dropdown.a11y.test.tsx",
       "packages/molecules/src/molecules/Dropdown/Dropdown.browser.test.tsx",
       "packages/molecules/src/molecules/Dropdown/Dropdown.test.tsx"
     ],
@@ -3597,6 +4019,7 @@
     "documentation": "/molecules/dropdown",
     "contract": "spec/dropdown.md",
     "tests": [
+      "packages/molecules/src/molecules/Dropdown/Dropdown.a11y.test.tsx",
       "packages/molecules/src/molecules/Dropdown/Dropdown.browser.test.tsx",
       "packages/molecules/src/molecules/Dropdown/Dropdown.test.tsx"
     ],
@@ -3609,6 +4032,7 @@
     "documentation": "/molecules/dropdown",
     "contract": "spec/dropdown.md",
     "tests": [
+      "packages/molecules/src/molecules/Dropdown/Dropdown.a11y.test.tsx",
       "packages/molecules/src/molecules/Dropdown/Dropdown.browser.test.tsx",
       "packages/molecules/src/molecules/Dropdown/Dropdown.test.tsx"
     ],
@@ -3621,6 +4045,8 @@
     "documentation": "/molecules/empty-state",
     "contract": "spec/empty-state.md",
     "tests": [
+      "packages/molecules/src/molecules/EmptyState/EmptyState.a11y.test.tsx",
+      "packages/molecules/src/molecules/EmptyState/EmptyState.browser.test.tsx",
       "packages/molecules/src/molecules/EmptyState/EmptyState.test.tsx"
     ],
     "acceptance": "pending"
@@ -3632,6 +4058,8 @@
     "documentation": "/molecules/empty-state",
     "contract": "spec/empty-state.md",
     "tests": [
+      "packages/molecules/src/molecules/EmptyState/EmptyState.a11y.test.tsx",
+      "packages/molecules/src/molecules/EmptyState/EmptyState.browser.test.tsx",
       "packages/molecules/src/molecules/EmptyState/EmptyState.test.tsx"
     ],
     "acceptance": "pending"
@@ -3643,6 +4071,8 @@
     "documentation": "/molecules/empty-state",
     "contract": "spec/empty-state.md",
     "tests": [
+      "packages/molecules/src/molecules/EmptyState/EmptyState.a11y.test.tsx",
+      "packages/molecules/src/molecules/EmptyState/EmptyState.browser.test.tsx",
       "packages/molecules/src/molecules/EmptyState/EmptyState.test.tsx"
     ],
     "acceptance": "pending"
@@ -3850,6 +4280,7 @@
     "documentation": "/molecules/hover-card",
     "contract": "spec/hover-card.md",
     "tests": [
+      "packages/molecules/src/molecules/HoverCard/HoverCard.a11y.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.browser.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.test.tsx"
     ],
@@ -3862,6 +4293,7 @@
     "documentation": "/molecules/hover-card",
     "contract": "spec/hover-card.md",
     "tests": [
+      "packages/molecules/src/molecules/HoverCard/HoverCard.a11y.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.browser.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.test.tsx"
     ],
@@ -3874,6 +4306,7 @@
     "documentation": "/molecules/hover-card",
     "contract": "spec/hover-card.md",
     "tests": [
+      "packages/molecules/src/molecules/HoverCard/HoverCard.a11y.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.browser.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.test.tsx"
     ],
@@ -3886,6 +4319,7 @@
     "documentation": "/molecules/hover-card",
     "contract": "spec/hover-card.md",
     "tests": [
+      "packages/molecules/src/molecules/HoverCard/HoverCard.a11y.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.browser.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.test.tsx"
     ],
@@ -3898,6 +4332,7 @@
     "documentation": "/molecules/hover-card",
     "contract": "spec/hover-card.md",
     "tests": [
+      "packages/molecules/src/molecules/HoverCard/HoverCard.a11y.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.browser.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.test.tsx"
     ],
@@ -3910,6 +4345,7 @@
     "documentation": "/molecules/hover-card",
     "contract": "spec/hover-card.md",
     "tests": [
+      "packages/molecules/src/molecules/HoverCard/HoverCard.a11y.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.browser.test.tsx",
       "packages/molecules/src/molecules/HoverCard/HoverCard.test.tsx"
     ],
@@ -3978,6 +4414,8 @@
     "documentation": "/molecules/keyboard-shortcuts-dialog",
     "contract": "spec/keyboard-shortcuts-dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.a11y.test.tsx",
+      "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.browser.test.tsx",
       "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.test.tsx"
     ],
     "acceptance": "pending"
@@ -3989,6 +4427,8 @@
     "documentation": "/molecules/keyboard-shortcuts-dialog",
     "contract": "spec/keyboard-shortcuts-dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.a11y.test.tsx",
+      "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.browser.test.tsx",
       "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.test.tsx"
     ],
     "acceptance": "pending"
@@ -4000,6 +4440,8 @@
     "documentation": "/molecules/keyboard-shortcuts-dialog",
     "contract": "spec/keyboard-shortcuts-dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.a11y.test.tsx",
+      "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.browser.test.tsx",
       "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.test.tsx"
     ],
     "acceptance": "pending"
@@ -4011,6 +4453,8 @@
     "documentation": "/molecules/keyboard-shortcuts-dialog",
     "contract": "spec/keyboard-shortcuts-dialog.md",
     "tests": [
+      "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.a11y.test.tsx",
+      "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.browser.test.tsx",
       "packages/molecules/src/molecules/KeyboardShortcutsDialog/KeyboardShortcutsDialog.test.tsx"
     ],
     "acceptance": "pending"
@@ -4022,6 +4466,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4034,6 +4479,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4046,6 +4492,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4058,6 +4505,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4070,6 +4518,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4082,6 +4531,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4094,6 +4544,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4106,6 +4557,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4118,6 +4570,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4130,6 +4583,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4142,6 +4596,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4154,6 +4609,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4166,6 +4622,7 @@
     "documentation": "/molecules/list",
     "contract": "spec/list.md",
     "tests": [
+      "packages/molecules/src/molecules/List/List.a11y.test.tsx",
       "packages/molecules/src/molecules/List/List.browser.test.tsx",
       "packages/molecules/src/molecules/List/List.test.tsx"
     ],
@@ -4178,6 +4635,7 @@
     "documentation": "/molecules/menu",
     "contract": "spec/menu.md",
     "tests": [
+      "packages/molecules/src/molecules/Menu/Menu.a11y.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.browser.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.test.tsx"
     ],
@@ -4190,6 +4648,7 @@
     "documentation": "/molecules/menu",
     "contract": "spec/menu.md",
     "tests": [
+      "packages/molecules/src/molecules/Menu/Menu.a11y.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.browser.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.test.tsx"
     ],
@@ -4202,6 +4661,7 @@
     "documentation": "/molecules/menu",
     "contract": "spec/menu.md",
     "tests": [
+      "packages/molecules/src/molecules/Menu/Menu.a11y.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.browser.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.test.tsx"
     ],
@@ -4214,6 +4674,7 @@
     "documentation": "/molecules/menu",
     "contract": "spec/menu.md",
     "tests": [
+      "packages/molecules/src/molecules/Menu/Menu.a11y.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.browser.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.test.tsx"
     ],
@@ -4226,6 +4687,7 @@
     "documentation": "/molecules/menu",
     "contract": "spec/menu.md",
     "tests": [
+      "packages/molecules/src/molecules/Menu/Menu.a11y.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.browser.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.test.tsx"
     ],
@@ -4238,6 +4700,7 @@
     "documentation": "/molecules/menu",
     "contract": "spec/menu.md",
     "tests": [
+      "packages/molecules/src/molecules/Menu/Menu.a11y.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.browser.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.test.tsx"
     ],
@@ -4250,6 +4713,7 @@
     "documentation": "/molecules/menu",
     "contract": "spec/menu.md",
     "tests": [
+      "packages/molecules/src/molecules/Menu/Menu.a11y.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.browser.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.test.tsx"
     ],
@@ -4262,6 +4726,7 @@
     "documentation": "/molecules/menu",
     "contract": "spec/menu.md",
     "tests": [
+      "packages/molecules/src/molecules/Menu/Menu.a11y.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.browser.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.test.tsx"
     ],
@@ -4274,6 +4739,7 @@
     "documentation": "/molecules/menu",
     "contract": "spec/menu.md",
     "tests": [
+      "packages/molecules/src/molecules/Menu/Menu.a11y.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.browser.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.test.tsx"
     ],
@@ -4286,6 +4752,7 @@
     "documentation": "/molecules/menu",
     "contract": "spec/menu.md",
     "tests": [
+      "packages/molecules/src/molecules/Menu/Menu.a11y.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.browser.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.test.tsx"
     ],
@@ -4298,6 +4765,7 @@
     "documentation": "/molecules/menu",
     "contract": "spec/menu.md",
     "tests": [
+      "packages/molecules/src/molecules/Menu/Menu.a11y.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.browser.test.tsx",
       "packages/molecules/src/molecules/Menu/Menu.test.tsx"
     ],
@@ -4403,11 +4871,24 @@
   },
   {
     "package": "@talelk/newui-molecules",
+    "name": "normalizeHex",
+    "implementation": "packages/molecules/src/molecules/ColorPicker/ColorPicker.tsx",
+    "documentation": "/molecules/color-picker",
+    "contract": "spec/color-picker.md",
+    "tests": [
+      "packages/molecules/src/molecules/ColorPicker/ColorPicker.a11y.test.tsx",
+      "packages/molecules/src/molecules/ColorPicker/ColorPicker.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
     "name": "NumberInput",
     "implementation": "packages/molecules/src/molecules/NumberInput/NumberInput.tsx",
     "documentation": "/molecules/number-input",
     "contract": "spec/number-input.md",
     "tests": [
+      "packages/molecules/src/molecules/NumberInput/NumberInput.a11y.test.tsx",
       "packages/molecules/src/molecules/NumberInput/NumberInput.browser.test.tsx",
       "packages/molecules/src/molecules/NumberInput/NumberInput.test.tsx"
     ],
@@ -4420,6 +4901,7 @@
     "documentation": "/molecules/number-input",
     "contract": "spec/number-input.md",
     "tests": [
+      "packages/molecules/src/molecules/NumberInput/NumberInput.a11y.test.tsx",
       "packages/molecules/src/molecules/NumberInput/NumberInput.browser.test.tsx",
       "packages/molecules/src/molecules/NumberInput/NumberInput.test.tsx"
     ],
@@ -4651,11 +5133,48 @@
   },
   {
     "package": "@talelk/newui-molecules",
+    "name": "PinInput",
+    "implementation": "packages/molecules/src/molecules/PinInput/PinInput.tsx",
+    "documentation": "/molecules/pin-input",
+    "contract": "spec/pin-input.md",
+    "tests": [
+      "packages/molecules/src/molecules/PinInput/PinInput.a11y.test.tsx",
+      "packages/molecules/src/molecules/PinInput/PinInput.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "PinInputProps",
+    "implementation": "packages/molecules/src/molecules/PinInput/PinInput.tsx",
+    "documentation": "/molecules/pin-input",
+    "contract": "spec/pin-input.md",
+    "tests": [
+      "packages/molecules/src/molecules/PinInput/PinInput.a11y.test.tsx",
+      "packages/molecules/src/molecules/PinInput/PinInput.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "PinInputType",
+    "implementation": "packages/molecules/src/molecules/PinInput/PinInput.tsx",
+    "documentation": "/molecules/pin-input",
+    "contract": "spec/pin-input.md",
+    "tests": [
+      "packages/molecules/src/molecules/PinInput/PinInput.a11y.test.tsx",
+      "packages/molecules/src/molecules/PinInput/PinInput.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
     "name": "Popover",
     "implementation": "packages/molecules/src/molecules/Popover/Popover.tsx",
     "documentation": "/molecules/popover",
     "contract": "spec/popover.md",
     "tests": [
+      "packages/molecules/src/molecules/Popover/Popover.a11y.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.browser.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.test.tsx"
     ],
@@ -4668,6 +5187,7 @@
     "documentation": "/molecules/popover",
     "contract": "spec/popover.md",
     "tests": [
+      "packages/molecules/src/molecules/Popover/Popover.a11y.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.browser.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.test.tsx"
     ],
@@ -4680,6 +5200,7 @@
     "documentation": "/molecules/popover",
     "contract": "spec/popover.md",
     "tests": [
+      "packages/molecules/src/molecules/Popover/Popover.a11y.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.browser.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.test.tsx"
     ],
@@ -4692,6 +5213,7 @@
     "documentation": "/molecules/popover",
     "contract": "spec/popover.md",
     "tests": [
+      "packages/molecules/src/molecules/Popover/Popover.a11y.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.browser.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.test.tsx"
     ],
@@ -4704,6 +5226,7 @@
     "documentation": "/molecules/popover",
     "contract": "spec/popover.md",
     "tests": [
+      "packages/molecules/src/molecules/Popover/Popover.a11y.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.browser.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.test.tsx"
     ],
@@ -4716,6 +5239,7 @@
     "documentation": "/molecules/popover",
     "contract": "spec/popover.md",
     "tests": [
+      "packages/molecules/src/molecules/Popover/Popover.a11y.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.browser.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.test.tsx"
     ],
@@ -4728,6 +5252,7 @@
     "documentation": "/molecules/popover",
     "contract": "spec/popover.md",
     "tests": [
+      "packages/molecules/src/molecules/Popover/Popover.a11y.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.browser.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.test.tsx"
     ],
@@ -4740,6 +5265,7 @@
     "documentation": "/molecules/popover",
     "contract": "spec/popover.md",
     "tests": [
+      "packages/molecules/src/molecules/Popover/Popover.a11y.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.browser.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.test.tsx"
     ],
@@ -4752,6 +5278,7 @@
     "documentation": "/molecules/popover",
     "contract": "spec/popover.md",
     "tests": [
+      "packages/molecules/src/molecules/Popover/Popover.a11y.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.browser.test.tsx",
       "packages/molecules/src/molecules/Popover/Popover.test.tsx"
     ],
@@ -4764,6 +5291,7 @@
     "documentation": "/molecules/radio-group",
     "contract": "spec/radio-group.md",
     "tests": [
+      "packages/molecules/src/molecules/RadioGroup/RadioGroup.a11y.test.tsx",
       "packages/molecules/src/molecules/RadioGroup/RadioGroup.browser.test.tsx",
       "packages/molecules/src/molecules/RadioGroup/RadioGroup.test.tsx"
     ],
@@ -4776,6 +5304,7 @@
     "documentation": "/molecules/radio-group",
     "contract": "spec/radio-group.md",
     "tests": [
+      "packages/molecules/src/molecules/RadioGroup/RadioGroup.a11y.test.tsx",
       "packages/molecules/src/molecules/RadioGroup/RadioGroup.browser.test.tsx",
       "packages/molecules/src/molecules/RadioGroup/RadioGroup.test.tsx"
     ],
@@ -4788,6 +5317,7 @@
     "documentation": "/molecules/radio-group",
     "contract": "spec/radio-group.md",
     "tests": [
+      "packages/molecules/src/molecules/RadioGroup/RadioGroup.a11y.test.tsx",
       "packages/molecules/src/molecules/RadioGroup/RadioGroup.browser.test.tsx",
       "packages/molecules/src/molecules/RadioGroup/RadioGroup.test.tsx"
     ],
@@ -4800,6 +5330,7 @@
     "documentation": "/molecules/radio-group",
     "contract": "spec/radio-group.md",
     "tests": [
+      "packages/molecules/src/molecules/RadioGroup/RadioGroup.a11y.test.tsx",
       "packages/molecules/src/molecules/RadioGroup/RadioGroup.browser.test.tsx",
       "packages/molecules/src/molecules/RadioGroup/RadioGroup.test.tsx"
     ],
@@ -4812,6 +5343,7 @@
     "documentation": "/molecules/radio-group",
     "contract": "spec/radio-group.md",
     "tests": [
+      "packages/molecules/src/molecules/RadioGroup/RadioGroup.a11y.test.tsx",
       "packages/molecules/src/molecules/RadioGroup/RadioGroup.browser.test.tsx",
       "packages/molecules/src/molecules/RadioGroup/RadioGroup.test.tsx"
     ],
@@ -4824,6 +5356,7 @@
     "documentation": "/molecules/rating",
     "contract": "spec/rating.md",
     "tests": [
+      "packages/molecules/src/molecules/Rating/Rating.a11y.test.tsx",
       "packages/molecules/src/molecules/Rating/Rating.browser.test.tsx",
       "packages/molecules/src/molecules/Rating/Rating.test.tsx"
     ],
@@ -4836,6 +5369,7 @@
     "documentation": "/molecules/rating",
     "contract": "spec/rating.md",
     "tests": [
+      "packages/molecules/src/molecules/Rating/Rating.a11y.test.tsx",
       "packages/molecules/src/molecules/Rating/Rating.browser.test.tsx",
       "packages/molecules/src/molecules/Rating/Rating.test.tsx"
     ],
@@ -4848,6 +5382,8 @@
     "documentation": "/molecules/scroll-table",
     "contract": "spec/scroll-table.md",
     "tests": [
+      "packages/molecules/src/molecules/ScrollTable/ScrollTable.a11y.test.tsx",
+      "packages/molecules/src/molecules/ScrollTable/ScrollTable.browser.test.tsx",
       "packages/molecules/src/molecules/ScrollTable/ScrollTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -4859,6 +5395,8 @@
     "documentation": "/molecules/scroll-table",
     "contract": "spec/scroll-table.md",
     "tests": [
+      "packages/molecules/src/molecules/ScrollTable/ScrollTable.a11y.test.tsx",
+      "packages/molecules/src/molecules/ScrollTable/ScrollTable.browser.test.tsx",
       "packages/molecules/src/molecules/ScrollTable/ScrollTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -4870,6 +5408,8 @@
     "documentation": "/molecules/scroll-table",
     "contract": "spec/scroll-table.md",
     "tests": [
+      "packages/molecules/src/molecules/ScrollTable/ScrollTable.a11y.test.tsx",
+      "packages/molecules/src/molecules/ScrollTable/ScrollTable.browser.test.tsx",
       "packages/molecules/src/molecules/ScrollTable/ScrollTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -4881,6 +5421,7 @@
     "documentation": "/molecules/select",
     "contract": "spec/select.md",
     "tests": [
+      "packages/molecules/src/molecules/Select/Select.a11y.test.tsx",
       "packages/molecules/src/molecules/Select/Select.browser.test.tsx",
       "packages/molecules/src/molecules/Select/Select.test.tsx"
     ],
@@ -4893,6 +5434,7 @@
     "documentation": "/molecules/select",
     "contract": "spec/select.md",
     "tests": [
+      "packages/molecules/src/molecules/Select/Select.a11y.test.tsx",
       "packages/molecules/src/molecules/Select/Select.browser.test.tsx",
       "packages/molecules/src/molecules/Select/Select.test.tsx"
     ],
@@ -4905,6 +5447,7 @@
     "documentation": "/molecules/select",
     "contract": "spec/select.md",
     "tests": [
+      "packages/molecules/src/molecules/Select/Select.a11y.test.tsx",
       "packages/molecules/src/molecules/Select/Select.browser.test.tsx",
       "packages/molecules/src/molecules/Select/Select.test.tsx"
     ],
@@ -4917,6 +5460,7 @@
     "documentation": "/molecules/select",
     "contract": "spec/select.md",
     "tests": [
+      "packages/molecules/src/molecules/Select/Select.a11y.test.tsx",
       "packages/molecules/src/molecules/Select/Select.browser.test.tsx",
       "packages/molecules/src/molecules/Select/Select.test.tsx"
     ],
@@ -4929,6 +5473,7 @@
     "documentation": "/molecules/select",
     "contract": "spec/select.md",
     "tests": [
+      "packages/molecules/src/molecules/Select/Select.a11y.test.tsx",
       "packages/molecules/src/molecules/Select/Select.browser.test.tsx",
       "packages/molecules/src/molecules/Select/Select.test.tsx"
     ],
@@ -4977,6 +5522,7 @@
     "documentation": "/molecules/tab-buttons",
     "contract": "spec/tab-buttons.md",
     "tests": [
+      "packages/molecules/src/molecules/TabButtons/TabButtons.a11y.test.tsx",
       "packages/molecules/src/molecules/TabButtons/TabButtons.browser.test.tsx",
       "packages/molecules/src/molecules/TabButtons/TabButtons.test.tsx"
     ],
@@ -4989,6 +5535,7 @@
     "documentation": "/molecules/tab-buttons",
     "contract": "spec/tab-buttons.md",
     "tests": [
+      "packages/molecules/src/molecules/TabButtons/TabButtons.a11y.test.tsx",
       "packages/molecules/src/molecules/TabButtons/TabButtons.browser.test.tsx",
       "packages/molecules/src/molecules/TabButtons/TabButtons.test.tsx"
     ],
@@ -5001,6 +5548,7 @@
     "documentation": "/molecules/tab-buttons",
     "contract": "spec/tab-buttons.md",
     "tests": [
+      "packages/molecules/src/molecules/TabButtons/TabButtons.a11y.test.tsx",
       "packages/molecules/src/molecules/TabButtons/TabButtons.browser.test.tsx",
       "packages/molecules/src/molecules/TabButtons/TabButtons.test.tsx"
     ],
@@ -5113,6 +5661,7 @@
     "documentation": "/molecules/tabs",
     "contract": "spec/tabs.md",
     "tests": [
+      "packages/molecules/src/molecules/Tabs/Tabs.a11y.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.browser.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.test.tsx"
     ],
@@ -5125,6 +5674,7 @@
     "documentation": "/molecules/tabs",
     "contract": "spec/tabs.md",
     "tests": [
+      "packages/molecules/src/molecules/Tabs/Tabs.a11y.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.browser.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.test.tsx"
     ],
@@ -5137,6 +5687,7 @@
     "documentation": "/molecules/tabs",
     "contract": "spec/tabs.md",
     "tests": [
+      "packages/molecules/src/molecules/Tabs/Tabs.a11y.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.browser.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.test.tsx"
     ],
@@ -5149,6 +5700,7 @@
     "documentation": "/molecules/tabs",
     "contract": "spec/tabs.md",
     "tests": [
+      "packages/molecules/src/molecules/Tabs/Tabs.a11y.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.browser.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.test.tsx"
     ],
@@ -5161,6 +5713,7 @@
     "documentation": "/molecules/tabs",
     "contract": "spec/tabs.md",
     "tests": [
+      "packages/molecules/src/molecules/Tabs/Tabs.a11y.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.browser.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.test.tsx"
     ],
@@ -5173,6 +5726,7 @@
     "documentation": "/molecules/tabs",
     "contract": "spec/tabs.md",
     "tests": [
+      "packages/molecules/src/molecules/Tabs/Tabs.a11y.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.browser.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.test.tsx"
     ],
@@ -5201,6 +5755,7 @@
     "documentation": "/molecules/tabs",
     "contract": "spec/tabs.md",
     "tests": [
+      "packages/molecules/src/molecules/Tabs/Tabs.a11y.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.browser.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.test.tsx"
     ],
@@ -5213,6 +5768,7 @@
     "documentation": "/molecules/tabs",
     "contract": "spec/tabs.md",
     "tests": [
+      "packages/molecules/src/molecules/Tabs/Tabs.a11y.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.browser.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.test.tsx"
     ],
@@ -5225,6 +5781,7 @@
     "documentation": "/molecules/tabs",
     "contract": "spec/tabs.md",
     "tests": [
+      "packages/molecules/src/molecules/Tabs/Tabs.a11y.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.browser.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.test.tsx"
     ],
@@ -5253,6 +5810,7 @@
     "documentation": "/molecules/tabs",
     "contract": "spec/tabs.md",
     "tests": [
+      "packages/molecules/src/molecules/Tabs/Tabs.a11y.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.browser.test.tsx",
       "packages/molecules/src/molecules/Tabs/Tabs.test.tsx"
     ],
@@ -5281,6 +5839,8 @@
     "documentation": "/molecules/tag-input",
     "contract": "spec/tag-input.md",
     "tests": [
+      "packages/molecules/src/molecules/TagInput/TagInput.a11y.test.tsx",
+      "packages/molecules/src/molecules/TagInput/TagInput.browser.test.tsx",
       "packages/molecules/src/molecules/TagInput/TagInput.test.tsx"
     ],
     "acceptance": "pending"
@@ -5292,6 +5852,8 @@
     "documentation": "/molecules/tag-input",
     "contract": "spec/tag-input.md",
     "tests": [
+      "packages/molecules/src/molecules/TagInput/TagInput.a11y.test.tsx",
+      "packages/molecules/src/molecules/TagInput/TagInput.browser.test.tsx",
       "packages/molecules/src/molecules/TagInput/TagInput.test.tsx"
     ],
     "acceptance": "pending"
@@ -5303,6 +5865,8 @@
     "documentation": "/molecules/tag-input",
     "contract": "spec/tag-input.md",
     "tests": [
+      "packages/molecules/src/molecules/TagInput/TagInput.a11y.test.tsx",
+      "packages/molecules/src/molecules/TagInput/TagInput.browser.test.tsx",
       "packages/molecules/src/molecules/TagInput/TagInput.test.tsx"
     ],
     "acceptance": "pending"
@@ -5314,6 +5878,8 @@
     "documentation": "/molecules/tag-input",
     "contract": "spec/tag-input.md",
     "tests": [
+      "packages/molecules/src/molecules/TagInput/TagInput.a11y.test.tsx",
+      "packages/molecules/src/molecules/TagInput/TagInput.browser.test.tsx",
       "packages/molecules/src/molecules/TagInput/TagInput.test.tsx"
     ],
     "acceptance": "pending"
@@ -5325,6 +5891,8 @@
     "documentation": "/molecules/timeline",
     "contract": "spec/timeline.md",
     "tests": [
+      "packages/molecules/src/molecules/Timeline/Timeline.a11y.test.tsx",
+      "packages/molecules/src/molecules/Timeline/Timeline.browser.test.tsx",
       "packages/molecules/src/molecules/Timeline/Timeline.test.tsx"
     ],
     "acceptance": "pending"
@@ -5336,6 +5904,8 @@
     "documentation": "/molecules/timeline",
     "contract": "spec/timeline.md",
     "tests": [
+      "packages/molecules/src/molecules/Timeline/Timeline.a11y.test.tsx",
+      "packages/molecules/src/molecules/Timeline/Timeline.browser.test.tsx",
       "packages/molecules/src/molecules/Timeline/Timeline.test.tsx"
     ],
     "acceptance": "pending"
@@ -5347,6 +5917,8 @@
     "documentation": "/molecules/timeline",
     "contract": "spec/timeline.md",
     "tests": [
+      "packages/molecules/src/molecules/Timeline/Timeline.a11y.test.tsx",
+      "packages/molecules/src/molecules/Timeline/Timeline.browser.test.tsx",
       "packages/molecules/src/molecules/Timeline/Timeline.test.tsx"
     ],
     "acceptance": "pending"
@@ -5358,6 +5930,8 @@
     "documentation": "/molecules/timeline",
     "contract": "spec/timeline.md",
     "tests": [
+      "packages/molecules/src/molecules/Timeline/Timeline.a11y.test.tsx",
+      "packages/molecules/src/molecules/Timeline/Timeline.browser.test.tsx",
       "packages/molecules/src/molecules/Timeline/Timeline.test.tsx"
     ],
     "acceptance": "pending"
@@ -5434,11 +6008,51 @@
   },
   {
     "package": "@talelk/newui-molecules",
+    "name": "TimeRangePicker",
+    "implementation": "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx",
+    "documentation": "/molecules/time-range-picker",
+    "contract": "spec/time-range-picker.md",
+    "tests": [
+      "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.a11y.test.tsx",
+      "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.browser.test.tsx",
+      "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "TimeRangePickerProps",
+    "implementation": "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx",
+    "documentation": "/molecules/time-range-picker",
+    "contract": "spec/time-range-picker.md",
+    "tests": [
+      "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.a11y.test.tsx",
+      "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.browser.test.tsx",
+      "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "TimeRangeValue",
+    "implementation": "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx",
+    "documentation": "/molecules/time-range-picker",
+    "contract": "spec/time-range-picker.md",
+    "tests": [
+      "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.a11y.test.tsx",
+      "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.browser.test.tsx",
+      "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
     "name": "toast",
     "implementation": "packages/molecules/src/molecules/Toast/Toast.tsx",
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5451,6 +6065,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5463,6 +6078,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5475,6 +6091,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5487,6 +6104,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5499,6 +6117,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5511,6 +6130,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5523,6 +6143,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5535,6 +6156,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5547,6 +6169,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5559,6 +6182,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5571,6 +6195,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5583,6 +6208,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5595,6 +6221,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5607,6 +6234,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5619,6 +6247,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5631,6 +6260,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5643,6 +6273,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5655,6 +6286,7 @@
     "documentation": "/docs#molecules",
     "contract": null,
     "tests": [
+      "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.test.tsx"
     ],
@@ -5789,6 +6421,42 @@
     "tests": [
       "packages/molecules/src/molecules/ToggleGroup/ToggleGroup.a11y.test.tsx",
       "packages/molecules/src/molecules/ToggleGroup/ToggleGroup.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "TransferList",
+    "implementation": "packages/molecules/src/molecules/TransferList/TransferList.tsx",
+    "documentation": "/molecules/transfer-list",
+    "contract": "spec/transfer-list.md",
+    "tests": [
+      "packages/molecules/src/molecules/TransferList/TransferList.a11y.test.tsx",
+      "packages/molecules/src/molecules/TransferList/TransferList.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "TransferListProps",
+    "implementation": "packages/molecules/src/molecules/TransferList/TransferList.tsx",
+    "documentation": "/molecules/transfer-list",
+    "contract": "spec/transfer-list.md",
+    "tests": [
+      "packages/molecules/src/molecules/TransferList/TransferList.a11y.test.tsx",
+      "packages/molecules/src/molecules/TransferList/TransferList.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "TransferOption",
+    "implementation": "packages/molecules/src/molecules/TransferList/TransferList.tsx",
+    "documentation": "/molecules/transfer-list",
+    "contract": "spec/transfer-list.md",
+    "tests": [
+      "packages/molecules/src/molecules/TransferList/TransferList.a11y.test.tsx",
+      "packages/molecules/src/molecules/TransferList/TransferList.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -6093,6 +6761,7 @@
     "documentation": "/organisms/app-sidebar",
     "contract": "spec/app-sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/AppSidebar/AppSidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/AppSidebar/AppSidebar.test.tsx"
     ],
     "acceptance": "pending"
@@ -6104,6 +6773,7 @@
     "documentation": "/organisms/app-sidebar",
     "contract": "spec/app-sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/AppSidebar/AppSidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/AppSidebar/AppSidebar.test.tsx"
     ],
     "acceptance": "pending"
@@ -6115,6 +6785,7 @@
     "documentation": "/organisms/app-sidebar",
     "contract": "spec/app-sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/AppSidebar/AppSidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/AppSidebar/AppSidebar.test.tsx"
     ],
     "acceptance": "pending"
@@ -6126,6 +6797,7 @@
     "documentation": "/organisms/app-sidebar",
     "contract": "spec/app-sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/AppSidebar/AppSidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/AppSidebar/AppSidebar.test.tsx"
     ],
     "acceptance": "pending"
@@ -6173,6 +6845,7 @@
     "documentation": "/organisms/command-palette",
     "contract": "spec/command-palette.md",
     "tests": [
+      "packages/organisms/src/organisms/CommandPalette/CommandPalette.a11y.test.tsx",
       "packages/organisms/src/organisms/CommandPalette/CommandPalette.test.tsx"
     ],
     "acceptance": "pending"
@@ -6184,6 +6857,7 @@
     "documentation": "/organisms/command-palette",
     "contract": "spec/command-palette.md",
     "tests": [
+      "packages/organisms/src/organisms/CommandPalette/CommandPalette.a11y.test.tsx",
       "packages/organisms/src/organisms/CommandPalette/CommandPalette.test.tsx"
     ],
     "acceptance": "pending"
@@ -6195,6 +6869,7 @@
     "documentation": "/organisms/command-palette",
     "contract": "spec/command-palette.md",
     "tests": [
+      "packages/organisms/src/organisms/CommandPalette/CommandPalette.a11y.test.tsx",
       "packages/organisms/src/organisms/CommandPalette/CommandPalette.test.tsx"
     ],
     "acceptance": "pending"
@@ -6206,6 +6881,7 @@
     "documentation": "/organisms/command-palette",
     "contract": "spec/command-palette.md",
     "tests": [
+      "packages/organisms/src/organisms/CommandPalette/CommandPalette.a11y.test.tsx",
       "packages/organisms/src/organisms/CommandPalette/CommandPalette.test.tsx"
     ],
     "acceptance": "pending"
@@ -6217,6 +6893,7 @@
     "documentation": "/organisms/command-palette",
     "contract": "spec/command-palette.md",
     "tests": [
+      "packages/organisms/src/organisms/CommandPalette/CommandPalette.a11y.test.tsx",
       "packages/organisms/src/organisms/CommandPalette/CommandPalette.test.tsx"
     ],
     "acceptance": "pending"
@@ -6228,6 +6905,7 @@
     "documentation": "/organisms/command-palette",
     "contract": "spec/command-palette.md",
     "tests": [
+      "packages/organisms/src/organisms/CommandPalette/CommandPalette.a11y.test.tsx",
       "packages/organisms/src/organisms/CommandPalette/CommandPalette.test.tsx"
     ],
     "acceptance": "pending"
@@ -6239,6 +6917,8 @@
     "documentation": "/organisms/data-state",
     "contract": "spec/data-state.md",
     "tests": [
+      "packages/organisms/src/organisms/DataState/DataState.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataState/DataState.browser.test.tsx",
       "packages/organisms/src/organisms/DataState/DataState.test.tsx"
     ],
     "acceptance": "pending"
@@ -6250,6 +6930,8 @@
     "documentation": "/organisms/data-state",
     "contract": "spec/data-state.md",
     "tests": [
+      "packages/organisms/src/organisms/DataState/DataState.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataState/DataState.browser.test.tsx",
       "packages/organisms/src/organisms/DataState/DataState.test.tsx"
     ],
     "acceptance": "pending"
@@ -6261,6 +6943,8 @@
     "documentation": "/organisms/data-state",
     "contract": "spec/data-state.md",
     "tests": [
+      "packages/organisms/src/organisms/DataState/DataState.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataState/DataState.browser.test.tsx",
       "packages/organisms/src/organisms/DataState/DataState.test.tsx"
     ],
     "acceptance": "pending"
@@ -6272,6 +6956,8 @@
     "documentation": "/organisms/data-state",
     "contract": "spec/data-state.md",
     "tests": [
+      "packages/organisms/src/organisms/DataState/DataState.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataState/DataState.browser.test.tsx",
       "packages/organisms/src/organisms/DataState/DataState.test.tsx"
     ],
     "acceptance": "pending"
@@ -6283,6 +6969,8 @@
     "documentation": "/organisms/data-table",
     "contract": "spec/data-table.md",
     "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -6294,6 +6982,8 @@
     "documentation": "/organisms/data-table",
     "contract": "spec/data-table.md",
     "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -6305,6 +6995,8 @@
     "documentation": "/organisms/data-table",
     "contract": "spec/data-table.md",
     "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -6316,6 +7008,21 @@
     "documentation": "/organisms/data-table",
     "contract": "spec/data-table.md",
     "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "DataTablePinned",
+    "implementation": "packages/organisms/src/organisms/DataTable/DataTable.tsx",
+    "documentation": "/organisms/data-table",
+    "contract": "spec/data-table.md",
+    "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -6327,6 +7034,8 @@
     "documentation": "/organisms/data-table",
     "contract": "spec/data-table.md",
     "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -6338,6 +7047,8 @@
     "documentation": "/organisms/detail-header",
     "contract": "spec/detail-header.md",
     "tests": [
+      "packages/organisms/src/organisms/DetailHeader/DetailHeader.a11y.test.tsx",
+      "packages/organisms/src/organisms/DetailHeader/DetailHeader.browser.test.tsx",
       "packages/organisms/src/organisms/DetailHeader/DetailHeader.test.tsx"
     ],
     "acceptance": "pending"
@@ -6349,6 +7060,8 @@
     "documentation": "/organisms/detail-header",
     "contract": "spec/detail-header.md",
     "tests": [
+      "packages/organisms/src/organisms/DetailHeader/DetailHeader.a11y.test.tsx",
+      "packages/organisms/src/organisms/DetailHeader/DetailHeader.browser.test.tsx",
       "packages/organisms/src/organisms/DetailHeader/DetailHeader.test.tsx"
     ],
     "acceptance": "pending"
@@ -6360,6 +7073,8 @@
     "documentation": "/organisms/detail-header",
     "contract": "spec/detail-header.md",
     "tests": [
+      "packages/organisms/src/organisms/DetailHeader/DetailHeader.a11y.test.tsx",
+      "packages/organisms/src/organisms/DetailHeader/DetailHeader.browser.test.tsx",
       "packages/organisms/src/organisms/DetailHeader/DetailHeader.test.tsx"
     ],
     "acceptance": "pending"
@@ -6371,6 +7086,8 @@
     "documentation": "/organisms/filter-bar",
     "contract": "spec/filter-bar.md",
     "tests": [
+      "packages/organisms/src/organisms/FilterBar/FilterBar.a11y.test.tsx",
+      "packages/organisms/src/organisms/FilterBar/FilterBar.browser.test.tsx",
       "packages/organisms/src/organisms/FilterBar/FilterBar.test.tsx"
     ],
     "acceptance": "pending"
@@ -6382,6 +7099,8 @@
     "documentation": "/organisms/filter-bar",
     "contract": "spec/filter-bar.md",
     "tests": [
+      "packages/organisms/src/organisms/FilterBar/FilterBar.a11y.test.tsx",
+      "packages/organisms/src/organisms/FilterBar/FilterBar.browser.test.tsx",
       "packages/organisms/src/organisms/FilterBar/FilterBar.test.tsx"
     ],
     "acceptance": "pending"
@@ -6393,6 +7112,8 @@
     "documentation": "/organisms/filter-bar",
     "contract": "spec/filter-bar.md",
     "tests": [
+      "packages/organisms/src/organisms/FilterBar/FilterBar.a11y.test.tsx",
+      "packages/organisms/src/organisms/FilterBar/FilterBar.browser.test.tsx",
       "packages/organisms/src/organisms/FilterBar/FilterBar.test.tsx"
     ],
     "acceptance": "pending"
@@ -6404,6 +7125,8 @@
     "documentation": "/organisms/filter-bar",
     "contract": "spec/filter-bar.md",
     "tests": [
+      "packages/organisms/src/organisms/FilterBar/FilterBar.a11y.test.tsx",
+      "packages/organisms/src/organisms/FilterBar/FilterBar.browser.test.tsx",
       "packages/organisms/src/organisms/FilterBar/FilterBar.test.tsx"
     ],
     "acceptance": "pending"
@@ -6415,6 +7138,8 @@
     "documentation": "/organisms/filter-bar",
     "contract": "spec/filter-bar.md",
     "tests": [
+      "packages/organisms/src/organisms/FilterBar/FilterBar.a11y.test.tsx",
+      "packages/organisms/src/organisms/FilterBar/FilterBar.browser.test.tsx",
       "packages/organisms/src/organisms/FilterBar/FilterBar.test.tsx"
     ],
     "acceptance": "pending"
@@ -6426,6 +7151,8 @@
     "documentation": "/organisms/kanban-board",
     "contract": "spec/kanban-board.md",
     "tests": [
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.a11y.test.tsx",
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.browser.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/drag.test.ts"
     ],
@@ -6438,6 +7165,8 @@
     "documentation": "/organisms/kanban-board",
     "contract": "spec/kanban-board.md",
     "tests": [
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.a11y.test.tsx",
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.browser.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/drag.test.ts"
     ],
@@ -6450,6 +7179,8 @@
     "documentation": "/organisms/kanban-board",
     "contract": "spec/kanban-board.md",
     "tests": [
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.a11y.test.tsx",
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.browser.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/drag.test.ts"
     ],
@@ -6462,6 +7193,8 @@
     "documentation": "/organisms/kanban-board",
     "contract": "spec/kanban-board.md",
     "tests": [
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.a11y.test.tsx",
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.browser.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/drag.test.ts"
     ],
@@ -6474,6 +7207,8 @@
     "documentation": "/organisms/kanban-board",
     "contract": "spec/kanban-board.md",
     "tests": [
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.a11y.test.tsx",
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.browser.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/drag.test.ts"
     ],
@@ -6486,6 +7221,7 @@
     "documentation": "/organisms/mobile-nav",
     "contract": "spec/mobile-nav.md",
     "tests": [
+      "packages/organisms/src/organisms/MobileNav/MobileNav.a11y.test.tsx",
       "packages/organisms/src/organisms/MobileNav/MobileNav.browser.test.tsx",
       "packages/organisms/src/organisms/MobileNav/MobileNav.test.tsx"
     ],
@@ -6498,6 +7234,7 @@
     "documentation": "/organisms/mobile-nav",
     "contract": "spec/mobile-nav.md",
     "tests": [
+      "packages/organisms/src/organisms/MobileNav/MobileNav.a11y.test.tsx",
       "packages/organisms/src/organisms/MobileNav/MobileNav.browser.test.tsx",
       "packages/organisms/src/organisms/MobileNav/MobileNav.test.tsx"
     ],
@@ -6510,6 +7247,7 @@
     "documentation": "/organisms/mobile-nav",
     "contract": "spec/mobile-nav.md",
     "tests": [
+      "packages/organisms/src/organisms/MobileNav/MobileNav.a11y.test.tsx",
       "packages/organisms/src/organisms/MobileNav/MobileNav.browser.test.tsx",
       "packages/organisms/src/organisms/MobileNav/MobileNav.test.tsx"
     ],
@@ -6522,6 +7260,7 @@
     "documentation": "/organisms/mobile-nav",
     "contract": "spec/mobile-nav.md",
     "tests": [
+      "packages/organisms/src/organisms/MobileNav/MobileNav.a11y.test.tsx",
       "packages/organisms/src/organisms/MobileNav/MobileNav.browser.test.tsx",
       "packages/organisms/src/organisms/MobileNav/MobileNav.test.tsx"
     ],
@@ -6570,6 +7309,8 @@
     "documentation": "/organisms/kanban-board",
     "contract": "spec/kanban-board.md",
     "tests": [
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.a11y.test.tsx",
+      "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.browser.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/drag.test.ts"
     ],
@@ -6582,6 +7323,8 @@
     "documentation": "/organisms/section",
     "contract": "spec/section.md",
     "tests": [
+      "packages/organisms/src/organisms/Section/Section.a11y.test.tsx",
+      "packages/organisms/src/organisms/Section/Section.browser.test.tsx",
       "packages/organisms/src/organisms/Section/Section.test.tsx"
     ],
     "acceptance": "pending"
@@ -6593,6 +7336,8 @@
     "documentation": "/organisms/section",
     "contract": "spec/section.md",
     "tests": [
+      "packages/organisms/src/organisms/Section/Section.a11y.test.tsx",
+      "packages/organisms/src/organisms/Section/Section.browser.test.tsx",
       "packages/organisms/src/organisms/Section/Section.test.tsx"
     ],
     "acceptance": "pending"
@@ -6604,6 +7349,8 @@
     "documentation": "/organisms/section",
     "contract": "spec/section.md",
     "tests": [
+      "packages/organisms/src/organisms/Section/Section.a11y.test.tsx",
+      "packages/organisms/src/organisms/Section/Section.browser.test.tsx",
       "packages/organisms/src/organisms/Section/Section.test.tsx"
     ],
     "acceptance": "pending"
@@ -6615,6 +7362,8 @@
     "documentation": "/organisms/selection-bar",
     "contract": "spec/selection-bar.md",
     "tests": [
+      "packages/organisms/src/organisms/SelectionBar/SelectionBar.a11y.test.tsx",
+      "packages/organisms/src/organisms/SelectionBar/SelectionBar.browser.test.tsx",
       "packages/organisms/src/organisms/SelectionBar/SelectionBar.test.tsx"
     ],
     "acceptance": "pending"
@@ -6626,6 +7375,8 @@
     "documentation": "/organisms/selection-bar",
     "contract": "spec/selection-bar.md",
     "tests": [
+      "packages/organisms/src/organisms/SelectionBar/SelectionBar.a11y.test.tsx",
+      "packages/organisms/src/organisms/SelectionBar/SelectionBar.browser.test.tsx",
       "packages/organisms/src/organisms/SelectionBar/SelectionBar.test.tsx"
     ],
     "acceptance": "pending"
@@ -6637,6 +7388,8 @@
     "documentation": "/organisms/selection-bar",
     "contract": "spec/selection-bar.md",
     "tests": [
+      "packages/organisms/src/organisms/SelectionBar/SelectionBar.a11y.test.tsx",
+      "packages/organisms/src/organisms/SelectionBar/SelectionBar.browser.test.tsx",
       "packages/organisms/src/organisms/SelectionBar/SelectionBar.test.tsx"
     ],
     "acceptance": "pending"
@@ -7026,6 +7779,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7038,6 +7792,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7050,6 +7805,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7062,6 +7818,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7074,6 +7831,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7086,6 +7844,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7098,6 +7857,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7110,6 +7870,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7122,6 +7883,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7134,6 +7896,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7146,6 +7909,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7158,6 +7922,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7170,6 +7935,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7182,6 +7948,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7194,6 +7961,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7206,6 +7974,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7218,6 +7987,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7230,6 +8000,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7242,6 +8013,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7290,6 +8062,7 @@
     "documentation": "/organisms/sidebar",
     "contract": "spec/sidebar.md",
     "tests": [
+      "packages/organisms/src/organisms/Sidebar/Sidebar.a11y.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.browser.test.tsx",
       "packages/organisms/src/organisms/Sidebar/Sidebar.test.tsx"
     ],
@@ -7302,6 +8075,7 @@
     "documentation": "/organisms/virtual-list",
     "contract": "spec/virtual-list.md",
     "tests": [
+      "packages/organisms/src/organisms/VirtualList/VirtualList.a11y.test.tsx",
       "packages/organisms/src/organisms/VirtualList/VirtualList.test.tsx"
     ],
     "acceptance": "pending"
@@ -7313,6 +8087,7 @@
     "documentation": "/organisms/virtual-list",
     "contract": "spec/virtual-list.md",
     "tests": [
+      "packages/organisms/src/organisms/VirtualList/VirtualList.a11y.test.tsx",
       "packages/organisms/src/organisms/VirtualList/VirtualList.test.tsx"
     ],
     "acceptance": "pending"
@@ -13827,6 +14602,7 @@
     "documentation": "/organisms/editor",
     "contract": "spec/editor.md",
     "tests": [
+      "packages/editor/src/Editor.browser.test.tsx",
       "packages/editor/src/Editor.ssr.test.tsx",
       "packages/editor/src/Editor.test.tsx",
       "packages/editor/src/EditorToolbar.test.tsx",
@@ -13842,6 +14618,7 @@
     "documentation": "/docs#editor",
     "contract": null,
     "tests": [
+      "packages/editor/src/Editor.browser.test.tsx",
       "packages/editor/src/Editor.ssr.test.tsx",
       "packages/editor/src/Editor.test.tsx",
       "packages/editor/src/EditorToolbar.test.tsx",
@@ -13857,6 +14634,7 @@
     "documentation": "/organisms/editor",
     "contract": "spec/editor.md",
     "tests": [
+      "packages/editor/src/Editor.browser.test.tsx",
       "packages/editor/src/Editor.ssr.test.tsx",
       "packages/editor/src/Editor.test.tsx",
       "packages/editor/src/EditorToolbar.test.tsx",
@@ -13872,6 +14650,7 @@
     "documentation": "/docs#editor",
     "contract": null,
     "tests": [
+      "packages/editor/src/Editor.browser.test.tsx",
       "packages/editor/src/Editor.ssr.test.tsx",
       "packages/editor/src/Editor.test.tsx",
       "packages/editor/src/EditorToolbar.test.tsx",
@@ -13887,6 +14666,7 @@
     "documentation": "/organisms/editor",
     "contract": "spec/editor.md",
     "tests": [
+      "packages/editor/src/Editor.browser.test.tsx",
       "packages/editor/src/Editor.ssr.test.tsx",
       "packages/editor/src/Editor.test.tsx",
       "packages/editor/src/EditorToolbar.test.tsx",
@@ -13902,6 +14682,7 @@
     "documentation": "/docs#editor",
     "contract": null,
     "tests": [
+      "packages/editor/src/Editor.browser.test.tsx",
       "packages/editor/src/Editor.ssr.test.tsx",
       "packages/editor/src/Editor.test.tsx",
       "packages/editor/src/EditorToolbar.test.tsx",
@@ -13917,6 +14698,7 @@
     "documentation": "/docs#editor",
     "contract": null,
     "tests": [
+      "packages/editor/src/Editor.browser.test.tsx",
       "packages/editor/src/Editor.ssr.test.tsx",
       "packages/editor/src/Editor.test.tsx",
       "packages/editor/src/EditorToolbar.test.tsx",
@@ -13932,6 +14714,7 @@
     "documentation": "/docs#editor",
     "contract": null,
     "tests": [
+      "packages/editor/src/Editor.browser.test.tsx",
       "packages/editor/src/Editor.ssr.test.tsx",
       "packages/editor/src/Editor.test.tsx",
       "packages/editor/src/EditorToolbar.test.tsx",
@@ -13947,6 +14730,7 @@
     "documentation": "/docs#editor",
     "contract": null,
     "tests": [
+      "packages/editor/src/Editor.browser.test.tsx",
       "packages/editor/src/Editor.ssr.test.tsx",
       "packages/editor/src/Editor.test.tsx",
       "packages/editor/src/EditorToolbar.test.tsx",
@@ -13962,6 +14746,7 @@
     "documentation": "/organisms/code-editor",
     "contract": "spec/code-editor.md",
     "tests": [
+      "packages/code-editor/src/CodeEditor.browser.test.tsx",
       "packages/code-editor/src/CodeEditor.ssr.test.tsx",
       "packages/code-editor/src/CodeEditor.test.tsx",
       "packages/code-editor/src/exports.test.ts"
@@ -13975,6 +14760,7 @@
     "documentation": "/docs#code-editor",
     "contract": null,
     "tests": [
+      "packages/code-editor/src/CodeEditor.browser.test.tsx",
       "packages/code-editor/src/CodeEditor.ssr.test.tsx",
       "packages/code-editor/src/CodeEditor.test.tsx",
       "packages/code-editor/src/exports.test.ts"
@@ -13988,6 +14774,7 @@
     "documentation": "/organisms/code-editor",
     "contract": "spec/code-editor.md",
     "tests": [
+      "packages/code-editor/src/CodeEditor.browser.test.tsx",
       "packages/code-editor/src/CodeEditor.ssr.test.tsx",
       "packages/code-editor/src/CodeEditor.test.tsx",
       "packages/code-editor/src/exports.test.ts"
@@ -14001,6 +14788,7 @@
     "documentation": "/docs#code-editor",
     "contract": null,
     "tests": [
+      "packages/code-editor/src/CodeEditor.browser.test.tsx",
       "packages/code-editor/src/CodeEditor.ssr.test.tsx",
       "packages/code-editor/src/CodeEditor.test.tsx",
       "packages/code-editor/src/exports.test.ts"

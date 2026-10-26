@@ -179,4 +179,113 @@ export const RELEASED: ReleasedPackage[] = [
   }
 ]
 
-export const PENDING: PendingChange[] = []
+export const PENDING: PendingChange[] = [
+  {
+    "package": "@talelk/newui-newui-organisms",
+    "bump": "patch",
+    "summary": "Every organism now carries a dedicated axe accessibility suite in both of its\nrendered states (twelve new `*.a11y.test.tsx` files, from `AppSidebar` to\n`VirtualList`), and the package's export pin lists the whole public surface\n(`DataState`, `Section`, `SelectionBar` were unpinned). No axe rule beyond the\ntwo baseline suppressions was disabled anywhere; no violations surfaced.",
+    "file": "a11y-suite-organisms.md"
+  },
+  {
+    "package": "@talelk/newui-newui-atoms",
+    "bump": "minor",
+    "summary": "New `AvatarGroup` atom: an overlapping stack of `Avatar` tiles that collapses\neveryone past `max` into a single \"+N\" count. Data-driven (`avatars`), with\n`Avatar`'s size, shape and theme axes and a surface ring between tiles.",
+    "file": "avatar-group-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "New `Calendar` molecule: the pickers' date grid exported as a standalone,\nalways-open component — the booking-panel and filter-rail surface that needs a\ndate but no input. Values are `YYYY-MM-DD` strings (ADR-0008), `min`/`max`\nbound the selectable window, `dualPane` shows two months, and the Zag machine\nkeeps the grid's full keyboard model.",
+    "file": "calendar-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "New `Carousel` molecule, promoted from the `/kit/recipes` carousel example\nthrough the kit's recipes-to-API gate. A scroll-snap strip: native scrolling\nstays the interaction (touch, trackpad, arrow keys, RTL), the index follows\nwhere the scroll settles, and `Carousel.Viewport`/`Slide`/`Previous`/`Next`/\n`Status` compose the controls. Autoplay is opt-in, pauses under the pointer\nor focus, and never runs under `prefers-reduced-motion`. The recipe remains\nin the gallery as the themed composition.",
+    "file": "carousel-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "New `ColorPicker` molecule: the platform color picker under a styled swatch\nwith an optional hex field (`#rgb` and `#rrggbb`, normalized, invalid drafts\nflagged without committing). Deliberately no custom hue surface — the native\ncontrol carries the keyboard and screen-reader behavior on every platform,\nwhich a custom one would have to reimplement.",
+    "file": "color-picker-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-organisms",
+    "bump": "minor",
+    "summary": "`DataTable` grows the two powers a business table keeps reaching for. **Column\npinning**: freeze one column to each edge of the horizontal scroll\n(`pinnedStart` — the identifier that must stay visible; `pinnedEnd` —\ntypically the actions) with sticky, opaque, row-tinted cells; pinning state is\napp-owned via `onPinnedColumnsChange`. **Inline editing**: with `editable` and\n`onCellChange`, columns marked `meta.editable` render click-to-edit cells —\nEnter or blur commits the raw field through the app, Escape cancels, and the\ncell shows the app-owned value from the next `rows`.",
+    "file": "data-table-pinning-editing.md"
+  },
+  {
+    "package": "@talelk/newui-newui-editor",
+    "bump": "patch",
+    "summary": "\"@talelk/newui-code-editor\": patch\n---\n\nBoth editor packages gain their browser-tier test floor per ADR-0015: typed\ninput reports documents through `onValueChange`, the editable box keeps its\nmetrics, and the code editor's `readonly` compartment rejects input. No\npublic surface changes.",
+    "file": "editor-browser-floor.md"
+  },
+  {
+    "package": "@talelk/newui-newui-atoms",
+    "bump": "minor",
+    "summary": "New `IconButton` atom: the square, icon-only command. It shares the Button\nrecipe's box, states and focus rings, and makes the accessible name a required\n`label` prop — an icon-only control is unnamed without one.",
+    "file": "icon-button-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-atoms",
+    "bump": "minor",
+    "summary": "New `Image` atom: a framed image that holds its box (by `ratio` or\nintrinsically) while the source loads or fails, so layouts never jump. Lazy by\ndefault, with a `fallback` slot for broken sources.",
+    "file": "image-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-atoms",
+    "bump": "minor",
+    "summary": "New `Link` atom: a text link for prose and chrome. `route` stays in the app (a\nplain `href` a router intercepts), `href` opens a new tab and announces it to\nassistive tech, `theme` picks accent vs quiet, and `underline` controls the\ndecoration. The external glyph is opt-in.",
+    "file": "link-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "The `List` family forwards rest props: `ListRow`, `ListCell` and\n`ListHeaderCellSort` now accept (and type) the full set of div attributes, so\nthe caller's table contract can reach them — `role=\"table\"` on the wrapper,\n`role=\"row\"`/`role=\"cell\"` on rows and cells, and `role=\"columnheader\"` on a\nsortable header, which is also what makes its `aria-sort` legal. Previously\nthat composition was impossible from outside and axe flagged the bare\n`aria-sort` div as an `aria-allowed-attr` violation.",
+    "file": "list-rest-props.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "patch",
+    "summary": "Twenty-one molecules gained dedicated axe accessibility suites (every molecule\nnow has one), and the export pin lists the whole public surface — the `Toast`\nfamily's runtime names (`Toaster`, `ToastRegion`, `toast`, `toaster`,\n`createToaster`) plus `Stepper` and `TagInput` were unpinned.",
+    "file": "molecules-verification.md"
+  },
+  {
+    "package": "@talelk/newui-newui-templates",
+    "bump": "patch",
+    "summary": "Documentation and strategy batch: `spec/pages.md` becomes the Pages rung's\ncontract (responsiveness, a11y, coherence, state coverage, determinism and\nbudgets — every clause backed by an existing gate), ADR-0014 settles\nPRODUCT.md's open success-metric question as four evidence-backed questions\nreviewed at the one-year mark, and ADR-0015 fixes the editor packages'\npositioning: their props are contracts, the engines stay optional, and the\nverification floor now includes browser-tier tests for both.",
+    "file": "pages-contract.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "New `PinInput` molecule: a fixed-length verification code on the Zag pin-input\nmachine. One focus walks every cell — typing advances, paste splits, arrows\nand backspace move between cells. `length` sets the shape, `otp` advertises\n`autocomplete=\"one-time-code\"` autofill, `mask` turns the cells into password\nboxes, and the shared labelling contract (`label`/`description`/`error`/\n`required`) names every cell. `onValueComplete` fires when the code is whole.",
+    "file": "pin-input-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-templates",
+    "bump": "patch",
+    "summary": "The templates package now owns the contracts `spec/kit.md` promises for it.\n`AppShell` gains in-package coverage for the drawer close control, the one-`h1`\nrule, footer ordering, desktop fold (uncontrolled and controlled via\n`collapsed`/`onCollapsedChange`) and header actions. `AuthLayout` gains\ncontract tests for the aside panel, the header row, the brand order and the\nlayout slot, and a story showing the desktop context panel.",
+    "file": "templates-own-contracts.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "New `TimeRangePicker` molecule: two `TimePicker`s under one field label,\nreporting a single `[from, to]` value (or `[]` while empty). Picking the start\nholds a half-open range like the `DateRangePicker`'s draft, and a range that\nends before it starts — a night shift — is reported as-is rather than\nreordered.",
+    "file": "time-range-picker-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "New `TransferList` molecule: a dual-list picker for assigning, segmenting and\npermission screens. Check rows on either side and move them with the chevron\nbuttons between the panels; double chevrons move everything. Rows are\ncheckboxes (natively keyboard-accessible), legends carry live counts, and the\noptional `search` filters both lists with one query.",
+    "file": "transfer-list-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-atoms",
+    "bump": "minor",
+    "summary": "New `VisuallyHidden` atom: the `sr-only` utility as a component with a stable\n`data-slot`, for content only assistive tech should read.",
+    "file": "visually-hidden-new.md"
+  }
+]

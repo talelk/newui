@@ -11,7 +11,8 @@
     }
   },
   "files": [
-    "src"
+    "src",
+    "skills/newui-templates"
   ],
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"
@@ -36,5 +37,8 @@
     "type": "git",
     "url": "git+https://github.com/talelk/newui.git",
     "directory": "packages/templates"
-  }
+  },
+  "keywords": [
+    "tanstack-intent"
+  ]
 }

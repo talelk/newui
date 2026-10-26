@@ -11,7 +11,8 @@
     }
   },
   "files": [
-    "src"
+    "src",
+    "skills/newui-organisms"
   ],
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"
@@ -37,5 +38,8 @@
     "type": "git",
     "url": "git+https://github.com/talelk/newui.git",
     "directory": "packages/organisms"
-  }
+  },
+  "keywords": [
+    "tanstack-intent"
+  ]
 }

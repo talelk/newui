@@ -114,6 +114,44 @@ export const API = {
       "type": "() => void",
       "optional": true,
       "description": "Empty-state reset for externally filtered pages (beats Clear search)."
+    },
+    {
+      "name": "pinnedStart",
+      "type": "string",
+      "optional": true,
+      "description": "Freeze one column to the start edge of the horizontal scroll — the\nidentifier that must stay visible while the rest move. Controlled:\nchanges go through `onPinnedColumnsChange`."
+    },
+    {
+      "name": "pinnedEnd",
+      "type": "string",
+      "optional": true,
+      "description": "Freeze one column to the end edge — typically the row actions."
+    },
+    {
+      "name": "defaultPinnedStart",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "defaultPinnedEnd",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "onPinnedColumnsChange",
+      "type": "(pinned: DataTablePinned) => void",
+      "optional": true
+    },
+    {
+      "name": "editable",
+      "type": "boolean",
+      "optional": true,
+      "description": "Turn on inline editing: columns whose `meta.editable` is set render a\nclick-to-edit cell. Values are app-owned — edits arrive through\n`onCellChange`, and the table shows whatever the next `rows` carry."
+    },
+    {
+      "name": "onCellChange",
+      "type": "(id: string, columnId: string, value: string) => void",
+      "optional": true
     }
   ]
 } as const
