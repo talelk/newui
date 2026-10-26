@@ -1,5 +1,20 @@
 # @talelk/newui-molecules
 
+## 2.2.0
+
+### Minor Changes
+
+- 538d5d2: New `FileCard` molecule: one file as a tile — type icon, name, meta line, optional badge, selection state and app-owned `suffix` actions. Keep the open action and the actions apart: a button card must not carry `suffix`.
+- 538d5d2: New `MessageListItem` molecule: one conversation row — sender, subject, one-line preview, time, avatar, unread and selected states. Unread is carried by text weight and a dot, never colour alone.
+- 538d5d2: New `NotificationItem` molecule: one notification row — event icon, title, description, time, unread and selected states, with app-owned `suffix` controls.
+- 538d5d2: New `ThreadRow` molecule: one discussion thread row — title, preview, reply/participant meta, time, avatar, unread and selected states.
+- 538d5d2: `ToastRegion` publishes its `ToastRegionProps`, so the Toaster family appears in the API tables, the site registry and ⌘K. No runtime behavior change.
+
+### Patch Changes
+
+- Updated dependencies [538d5d2]
+  - @talelk/newui-atoms@1.2.0
+
 ## 2.1.0
 
 ### Minor Changes

@@ -23,8 +23,12 @@ export interface PendingChange {
 export const RELEASED: ReleasedPackage[] = [
   {
     "package": "@talelk/newui-atoms",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "sections": [
+      {
+        "version": "1.2.0",
+        "body": "### Minor Changes\n\n- 538d5d2: New `KeyValue` atom: one label/value pair for settings surfaces, with a horizontal default and a stacked `orientation=\"vertical\"`."
+      },
       {
         "version": "1.1.0",
         "body": "### Minor Changes\n\n- a332a12: New `AvatarGroup` atom: an overlapping stack of `Avatar` tiles that collapses\n  everyone past `max` into a single \"+N\" count. Data-driven (`avatars`), with\n  `Avatar`'s size, shape and theme axes and a surface ring between tiles.\n- a332a12: New `IconButton` atom: the square, icon-only command. It shares the Button\n  recipe's box, states and focus rings, and makes the accessible name a required\n  `label` prop — an icon-only control is unnamed without one.\n- a332a12: New `Image` atom: a framed image that holds its box (by `ratio` or\n  intrinsically) while the source loads or fails, so layouts never jump. Lazy by\n  default, with a `fallback` slot for broken sources.\n- a332a12: New `Link` atom: a text link for prose and chrome. `route` stays in the app (a\n  plain `href` a router intercepts), `href` opens a new tab and announces it to\n  assistive tech, `theme` picks accent vs quiet, and `underline` controls the\n  decoration. The external glyph is opt-in.\n- a332a12: New `VisuallyHidden` atom: the `sr-only` utility as a component with a stable\n  `data-slot`, for content only assistive tech should read."
@@ -107,8 +111,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-molecules",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "sections": [
+      {
+        "version": "2.2.0",
+        "body": "### Minor Changes\n\n- 538d5d2: New `FileCard` molecule: one file as a tile — type icon, name, meta line, optional badge, selection state and app-owned `suffix` actions. Keep the open action and the actions apart: a button card must not carry `suffix`.\n- 538d5d2: New `MessageListItem` molecule: one conversation row — sender, subject, one-line preview, time, avatar, unread and selected states. Unread is carried by text weight and a dot, never colour alone.\n- 538d5d2: New `NotificationItem` molecule: one notification row — event icon, title, description, time, unread and selected states, with app-owned `suffix` controls.\n- 538d5d2: New `ThreadRow` molecule: one discussion thread row — title, preview, reply/participant meta, time, avatar, unread and selected states.\n- 538d5d2: `ToastRegion` publishes its `ToastRegionProps`, so the Toaster family appears in the API tables, the site registry and ⌘K. No runtime behavior change.\n\n### Patch Changes\n\n- Updated dependencies [538d5d2]\n  - @talelk/newui-atoms@1.2.0"
+      },
       {
         "version": "2.1.0",
         "body": "### Minor Changes\n\n- d2060b8: New `Calendar` molecule: the pickers' date grid exported as a standalone,\n  always-open component — the booking-panel and filter-rail surface that needs a\n  date but no input. Values are `YYYY-MM-DD` strings (ADR-0008), `min`/`max`\n  bound the selectable window, `dualPane` shows two months, and the Zag machine\n  keeps the grid's full keyboard model.\n- d2060b8: New `Carousel` molecule, promoted from the `/kit/recipes` carousel example\n  through the kit's recipes-to-API gate. A scroll-snap strip: native scrolling\n  stays the interaction (touch, trackpad, arrow keys, RTL), the index follows\n  where the scroll settles, and `Carousel.Viewport`/`Slide`/`Previous`/`Next`/\n  `Status` compose the controls. Autoplay is opt-in, pauses under the pointer\n  or focus, and never runs under `prefers-reduced-motion`. The recipe remains\n  in the gallery as the themed composition.\n- d2060b8: New `ColorPicker` molecule: the platform color picker under a styled swatch\n  with an optional hex field (`#rgb` and `#rrggbb`, normalized, invalid drafts\n  flagged without committing). Deliberately no custom hue surface — the native\n  control carries the keyboard and screen-reader behavior on every platform,\n  which a custom one would have to reimplement.\n- d2060b8: The `List` family forwards rest props: `ListRow`, `ListCell` and\n  `ListHeaderCellSort` now accept (and type) the full set of div attributes, so\n  the caller's table contract can reach them — `role=\"table\"` on the wrapper,\n  `role=\"row\"`/`role=\"cell\"` on rows and cells, and `role=\"columnheader\"` on a\n  sortable header, which is also what makes its `aria-sort` legal. Previously\n  that composition was impossible from outside and axe flagged the bare\n  `aria-sort` div as an `aria-allowed-attr` violation.\n- d2060b8: New `PinInput` molecule: a fixed-length verification code on the Zag pin-input\n  machine. One focus walks every cell — typing advances, paste splits, arrows\n  and backspace move between cells. `length` sets the shape, `otp` advertises\n  `autocomplete=\"one-time-code\"` autofill, `mask` turns the cells into password\n  boxes, and the shared labelling contract (`label`/`description`/`error`/\n  `required`) names every cell. `onValueComplete` fires when the code is whole.\n- d2060b8: New `TimeRangePicker` molecule: two `TimePicker`s under one field label,\n  reporting a single `[from, to]` value (or `[]` while empty). Picking the start\n  holds a half-open range like the `DateRangePicker`'s draft, and a range that\n  ends before it starts — a night shift — is reported as-is rather than\n  reordered.\n- d2060b8: New `TransferList` molecule: a dual-list picker for assigning, segmenting and\n  permission screens. Check rows on either side and move them with the chevron\n  buttons between the panels; double chevrons move everything. Rows are\n  checkboxes (natively keyboard-accessible), legends carry live counts, and the\n  optional `search` filters both lists with one query.\n\n### Patch Changes\n\n- d2060b8: Twenty-one molecules gained dedicated axe accessibility suites (every molecule\n  now has one), and the export pin lists the whole public surface — the `Toast`\n  family's runtime names (`Toaster`, `ToastRegion`, `toast`, `toaster`,\n  `createToaster`) plus `Stepper` and `TagInput` were unpinned.\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n  - @talelk/newui-atoms@1.1.0"
@@ -125,8 +133,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-organisms",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "sections": [
+      {
+        "version": "2.1.1",
+        "body": "### Patch Changes\n\n- 538d5d2: DataTable's card view shows the bulk-select row only once a selection exists: at zero it was a lone checkbox beside \"0 selected\".\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n  - @talelk/newui-molecules@2.2.0\n  - @talelk/newui-atoms@1.2.0"
+      },
       {
         "version": "2.1.0",
         "body": "### Minor Changes\n\n- d2060b8: `DataTable` grows the two powers a business table keeps reaching for. **Column\n  pinning**: freeze one column to each edge of the horizontal scroll\n  (`pinnedStart` — the identifier that must stay visible; `pinnedEnd` —\n  typically the actions) with sticky, opaque, row-tinted cells; pinning state is\n  app-owned via `onPinnedColumnsChange`. **Inline editing**: with `editable` and\n  `onCellChange`, columns marked `meta.editable` render click-to-edit cells —\n  Enter or blur commits the raw field through the app, Escape cancels, and the\n  cell shows the app-owned value from the next `rows`.\n\n### Patch Changes\n\n- d2060b8: Every organism now carries a dedicated axe accessibility suite in both of its\n  rendered states (twelve new `*.a11y.test.tsx` files, from `AppSidebar` to\n  `VirtualList`), and the package's export pin lists the whole public surface\n  (`DataState`, `Section`, `SelectionBar` were unpinned). No axe rule beyond the\n  two baseline suppressions was disabled anywhere; no violations surfaced.\n- Updated dependencies [a332a12]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [a332a12]\n  - @talelk/newui-atoms@1.1.0\n  - @talelk/newui-molecules@2.1.0"
@@ -157,8 +169,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-templates",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "sections": [
+      {
+        "version": "1.1.2",
+        "body": "### Patch Changes\n\n- 538d5d2: AuthLayout's desktop aside is Cool Paper with a hairline divider, not a saturated blue field — the One Signal Rule keeps blue for the interactive moment, which the app's aside content owns.\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n  - @talelk/newui-organisms@2.1.1\n  - @talelk/newui-molecules@2.2.0\n  - @talelk/newui-atoms@1.2.0"
+      },
       {
         "version": "1.1.1",
         "body": "### Patch Changes\n\n- b60e321: Documentation and strategy batch: `spec/pages.md` becomes the Pages rung's\n  contract (responsiveness, a11y, coherence, state coverage, determinism and\n  budgets — every clause backed by an existing gate), ADR-0014 settles\n  PRODUCT.md's open success-metric question as four evidence-backed questions\n  reviewed at the one-year mark, and ADR-0015 fixes the editor packages'\n  positioning: their props are contracts, the engines stay optional, and the\n  verification floor now includes browser-tier tests for both.\n- d2060b8: The templates package now owns the contracts `spec/kit.md` promises for it.\n  `AppShell` gains in-package coverage for the drawer close control, the one-`h1`\n  rule, footer ordering, desktop fold (uncontrolled and controlled via\n  `collapsed`/`onCollapsedChange`) and header actions. `AuthLayout` gains\n  contract tests for the aside panel, the header row, the brand order and the\n  layout slot, and a story showing the desktop context panel.\n- Updated dependencies [d2060b8]\n- Updated dependencies [a332a12]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [a332a12]\n  - @talelk/newui-organisms@2.1.0\n  - @talelk/newui-atoms@1.1.0\n  - @talelk/newui-molecules@2.1.0"
@@ -199,53 +215,4 @@ export const RELEASED: ReleasedPackage[] = [
   }
 ]
 
-export const PENDING: PendingChange[] = [
-  {
-    "package": "@talelk/newui-newui-templates",
-    "bump": "patch",
-    "summary": "AuthLayout's desktop aside is Cool Paper with a hairline divider, not a saturated blue field — the One Signal Rule keeps blue for the interactive moment, which the app's aside content owns.",
-    "file": "auth-layout-cool-paper.md"
-  },
-  {
-    "package": "@talelk/newui-newui-organisms",
-    "bump": "patch",
-    "summary": "DataTable's card view shows the bulk-select row only once a selection exists: at zero it was a lone checkbox beside \"0 selected\".",
-    "file": "data-table-bulk-row.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "New `FileCard` molecule: one file as a tile — type icon, name, meta line, optional badge, selection state and app-owned `suffix` actions. Keep the open action and the actions apart: a button card must not carry `suffix`.",
-    "file": "file-card-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-atoms",
-    "bump": "minor",
-    "summary": "New `KeyValue` atom: one label/value pair for settings surfaces, with a horizontal default and a stacked `orientation=\"vertical\"`.",
-    "file": "key-value-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "New `MessageListItem` molecule: one conversation row — sender, subject, one-line preview, time, avatar, unread and selected states. Unread is carried by text weight and a dot, never colour alone.",
-    "file": "message-list-item-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "New `NotificationItem` molecule: one notification row — event icon, title, description, time, unread and selected states, with app-owned `suffix` controls.",
-    "file": "notification-item-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "New `ThreadRow` molecule: one discussion thread row — title, preview, reply/participant meta, time, avatar, unread and selected states.",
-    "file": "thread-row-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "`ToastRegion` publishes its `ToastRegionProps`, so the Toaster family appears in the API tables, the site registry and ⌘K. No runtime behavior change.",
-    "file": "toaster-docs.md"
-  }
-]
+export const PENDING: PendingChange[] = []
