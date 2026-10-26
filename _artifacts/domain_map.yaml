@@ -70,9 +70,11 @@ skills:
       forms (FormControl, Select, Combobox, MultiSelect, NumberInput, PinInput,
       TagInput), dates and times (DatePicker, DateRangePicker, TimePicker,
       TimeRangePicker, Calendar), overlays (Dialog, Popover, Menu, Dropdown,
-      Toast), lists and tables (List, Table, ScrollTable, TagInput), or picking
-      and transferring values (TransferList). Use when the user mentions these
-      components or asks for form rows, pickers, menus or toasts in newui.
+      Toast), lists and tables (List, Table, ScrollTable, TagInput), picking
+      and transferring values (TransferList), or display rows (FileCard,
+      MessageListItem, ThreadRow, NotificationItem). Use when the user
+      mentions these components or asks for form rows, pickers, menus, toasts,
+      or list rows for files, mail, threads or notifications in newui.
     packages:
       - "@talelk/newui-molecules"
     covers:
@@ -81,6 +83,7 @@ skills:
       - DatePicker, DateRangePicker, TimePicker, TimeRangePicker, Calendar
       - Dialog, Popover, Menu, Dropdown and the toast host
       - List family table roles owned by the caller
+      - Display rows for files, mail, threads and notifications
     tasks:
       - Compose a labelled form row with FormControl or a bare field
       - Open and close Dialog, Popover and Menu through open/onOpenChange
@@ -89,6 +92,7 @@ skills:
       - Report a List family composition's table roles from the caller
       - Raise toasts through a mounted createToaster host
       - Transfer checked rows between available and picked lists
+      - Render unread and selected list rows without colour-only state
   - name: newui-organisms
     slug: newui-organisms
     domain: ui

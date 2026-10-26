@@ -20,6 +20,7 @@ const PUBLIC = [
   'IconButton',
   'Image',
   'KeyboardShortcut',
+  'KeyValue',
   'Link',
   'Progress',
   'ProgressCircle',

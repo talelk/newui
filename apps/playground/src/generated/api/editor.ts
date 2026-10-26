@@ -61,7 +61,7 @@ export const API = {
       "description": "Render read-only. Reactive."
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true,
       "description": "Accessible name for the editable surface."
@@ -77,12 +77,6 @@ export const API = {
       "type": "JSX.Element",
       "optional": true,
       "description": "Chrome rendered above the editable surface, e.g. `<EditorToolbar />`."
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "optional": true,
-      "description": "Accessible name for the editable surface."
     }
   ],
   "EditorToolbarProps": [
@@ -93,7 +87,7 @@ export const API = {
       "description": "Explicit editor instance. Defaults to the nearest `<Editor>` (context), so\nthe common case is just `<EditorToolbar />` inside an `<Editor>`."
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true,
       "description": "Accessible name for the toolbar."
@@ -103,12 +97,6 @@ export const API = {
       "type": "string",
       "optional": true,
       "description": "Root class fallthrough, merged last (P10)."
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "optional": true,
-      "description": "Accessible name for the toolbar."
     }
   ]
 } as const

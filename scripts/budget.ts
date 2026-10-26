@@ -233,7 +233,7 @@ const ROUTES: RouteBudget[] = [
     budget: 60,
     unless: 'the shell, the router and the toast host',
   },
-  { route: '/docs', budget: 62, unless: 'prose only' },
+  { route: '/docs', budget: 63, unless: 'prose only' },
   { route: '/foundations', budget: 88, unless: 'token swatches' },
   {
     route: '/atoms',

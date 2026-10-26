@@ -3,12 +3,12 @@
   "baseline": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
   "items": {
     "skill:packages/atoms/skills/newui/SKILL.md": {
-      "fingerprint": "e5e15c2057ba39a7584c2201e56554c88a4c40227d9cfc70f5cfaddc41f5aaa4",
+      "fingerprint": "1e4c8fdef63650fe4a8960f695d490ff76b8a532c94f918d2d1c94674f3ddad1",
       "snapshot": {
         "AGENTS.md": "dbadcf8ee7a6aebe0bfd8691f2158e86fc2775195719259855157d959208d2e7",
         "CONTEXT.md": "d47a8b20fdfa3a66735ad1eab4d6e56738c2c68409388c308f80bfdb13f2b5b2",
         "PRINCIPLES.md": "a5d2a8c78aa35abd8d271f6ab0de2fac35d7c7138a7033bc8d95e24c72e634c9",
-        "packages/atoms/skills/newui/SKILL.md": "d8aeafaa8b91e26e76580e55d449fb9d0b9bd2c4ca789a8ddc78d4988fc3fbbb",
+        "packages/atoms/skills/newui/SKILL.md": "d82c44e5d5214e1e22a4b1dff14ed0bdd9e34a8c75cbd0e5397cbbb3063fa1ed",
         "packages/atoms/src/atoms/Button/Button.tsx": "1ef4dbc4d96bbcd715fcfa29d21f23984f272497d422192891ec729c013f5196",
         "packages/atoms/src/lib/color-scheme.ts": "796e2c8f84dc12be6c6a343d0342c14902c4a2d4e84ee89b2c0278843b9847db",
         "packages/atoms/src/lib/field.tsx": "2522b4eed8e98543169ec27bc58d0246946e4e97c4ac9be15fedda08857fd284",
@@ -20,14 +20,11 @@
         "spec/adr/0001-solid-no-v-model.md": "382711862fd907c2a30d4e141b26013396fac7f598a2f802e169a3016258ea96",
         "spec/inputs.md": "c4bc011628cf4b6ceedfc5b6100a452317592ce1a88de8ce42ca3460c47fdde1"
       },
-      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
       "outcome": "no-change",
-      "reason": "The guidance delta since the last review is mechanical: the release merge ran skills:version and moved metadata.library_version 1.0.0 -> 1.0.1, and AGENTS.md changed only its release-pipeline section (Trusted Publisher identity, dispatch hand-off). The quick start, the where-to-look table and the six non-negotiables are unchanged, and the named z/duration bullet recorded in the previous review is intact. intent stale reports both skills current against their packages.",
+      "reason": "KeyValue is a display atom; the newui skill covers cross-cutting foundations (tokens, labelling, overlays), which the new atom does not change.",
       "evidence": [
-        "git diff f97ad72..HEAD packages/atoms/skills/newui/SKILL.md: package renames plus library_version 0.1.0 -> 1.0.1",
-        "AGENTS.md diff since baseline is the release/auto-release paragraph, no UI guidance",
-        "intent stale: @talelk/newui-atoms 1.0.1 -> 1.0.1, all skills up-to-date",
-        "intent validate and pnpm test green at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
+        "packages/atoms/skills/newui/SKILL.md has no per-atom catalog (no Badge/Avatar/Heading entries); KeyValue introduces no new foundation vocabulary."
       ]
     },
     "skill:packages/data/skills/newui-data/SKILL.md": {
@@ -53,15 +50,15 @@
       ]
     },
     "planning:_artifacts": {
-      "fingerprint": "4703d47a46c6c2656d0e9127fa995bbe1051fdbadbf16b26d0369e9e76e76783",
+      "fingerprint": "87078ab1db16a2a34ff0f7d58aa3e56b31028bebbfdf69e7595547fb08ccd95e",
       "snapshot": {
         "AGENTS.md": "dbadcf8ee7a6aebe0bfd8691f2158e86fc2775195719259855157d959208d2e7",
         "CONTEXT.md": "d47a8b20fdfa3a66735ad1eab4d6e56738c2c68409388c308f80bfdb13f2b5b2",
         "PRINCIPLES.md": "a5d2a8c78aa35abd8d271f6ab0de2fac35d7c7138a7033bc8d95e24c72e634c9",
-        "_artifacts/domain_map.yaml": "716ca5da4e02be8663c724854d5727ffa96cf5e73cbef5cd487bd21330a4a1eb",
+        "_artifacts/domain_map.yaml": "f4790bc383157edb944eb15cd54dd75dbfe83452ed25d8c67e1c41e1718b9f40",
         "_artifacts/skill_spec.md": "03a4a1633c3a0b79c6867ded4cae950def11f05e16a53fc6015226460131ced4",
-        "_artifacts/skill_tree.yaml": "cd7d3f44491e750dc5fec08063a1f374627620c3ea6d27571d3fdb4c18affe75",
-        "packages/atoms/skills/newui/SKILL.md": "d8aeafaa8b91e26e76580e55d449fb9d0b9bd2c4ca789a8ddc78d4988fc3fbbb",
+        "_artifacts/skill_tree.yaml": "7ef408e282ebd920582fc6e289e0e33be3b8f348a435b6cd1bbbf2778391ed55",
+        "packages/atoms/skills/newui/SKILL.md": "d82c44e5d5214e1e22a4b1dff14ed0bdd9e34a8c75cbd0e5397cbbb3063fa1ed",
         "packages/atoms/src/atoms/Button/Button.tsx": "1ef4dbc4d96bbcd715fcfa29d21f23984f272497d422192891ec729c013f5196",
         "packages/atoms/src/lib/color-scheme.ts": "796e2c8f84dc12be6c6a343d0342c14902c4a2d4e84ee89b2c0278843b9847db",
         "packages/atoms/src/lib/field.tsx": "2522b4eed8e98543169ec27bc58d0246946e4e97c4ac9be15fedda08857fd284",
@@ -75,24 +72,25 @@
         "packages/data/src/query/client.tsx": "0b1ca717361318d037e67478cf239371bf0ca234a546fb4a40a8db55ac21b1cf",
         "packages/data/src/query/collection.ts": "e6ee06565af3384b09e9ac9e0e895e97749bef3d8631253f3460a0a294248329",
         "packages/data/src/query/repository.ts": "70dfb4734db19f52e6f3efe193f5c94aeae04b28f175e9f36ac8b56836a2b73b",
-        "packages/molecules/skills/newui-molecules/SKILL.md": "1ec86755fd0819c9f231528ed1ea39d330836d4433130e11ba177f2e48edef5a",
+        "packages/molecules/skills/newui-molecules/SKILL.md": "e984f77c1d3601a1596d523d9531840f686f0c9fe29df49ac4fd679d07227a92",
         "packages/molecules/src/molecules/Combobox/Combobox.tsx": "7aa19402dbf136f1ab0b34eb681cf48838e26d895e9b2814307b7f8b08ec2b68",
         "packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx": "d175b641ca521a87bec7a44970c67af81affe93aff54508fe6ab717d8df09d38",
         "packages/molecules/src/molecules/Dialog/Dialog.tsx": "c56ebdef41e077097cf116179d59c62b19003b7092795be886697bc6adeda883",
         "packages/molecules/src/molecules/FormControl/FormControl.tsx": "a684ac76c09c6da14a248f5a132e274ee983f22df178b5c7d23d753fbc26f0ed",
         "packages/molecules/src/molecules/List/List.tsx": "f7e2e3545c9ccac1b86229494161ca9c3b33b417c7247e1d344e0375d98a26e5",
+        "packages/molecules/src/molecules/MessageListItem/MessageListItem.tsx": "4946cd621431815c0bfacde717433a0b3f319c980983fff32dbe39494575cbc0",
         "packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx": "612043bb58182979ad5fa4f97bf2cd141d748315b8dff0427ce169559316000f",
         "packages/molecules/src/molecules/Select/Select.tsx": "75f4f8070c6fff57df9b4f4a256346dab610f13cb2a829c8edf0c6bacfc72e4d",
         "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx": "6863b41b41ea35d769c8429d4ccd93fc1c34bf2a628deb08f41d4e0ac6771e41",
-        "packages/organisms/skills/newui-organisms/SKILL.md": "493b6fdfd7edc6c39e68ec744ab438b3e62b3e7af5b6719a3ac40bfd0778156e",
+        "packages/organisms/skills/newui-organisms/SKILL.md": "07f7e61fc8fe56ebb885e20d8ca0dab778a32226b594a9bbb0ad96b2fb3882e0",
         "packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx": "c4405af938e2ac2d1f168e7549bdbfbd34092ed4b86369f66faab66583d9f53a",
         "packages/organisms/src/organisms/DataState/DataState.tsx": "30b806f142ba8296b7fa71d75e6bb1d4e2d156cfcb409b8a1195e394127e0c00",
-        "packages/organisms/src/organisms/DataTable/DataTable.tsx": "c2d041a517f1c34834214eb33d0e742a404768a94da6eac2983ba8ea7c2c332c",
+        "packages/organisms/src/organisms/DataTable/DataTable.tsx": "5a11e762ab2a3144b78dbda2db50e473027e8c556236b454e8c43ebe797af68c",
         "packages/organisms/src/organisms/SelectionBar/SelectionBar.tsx": "be2e104d332a972a38cd5caf9c0f1ccf0869b96e59503bb1b3febf091e82aa46",
         "packages/tailwind/src/style.css": "e92e204d9120e8d2c1672e108ed2efd67efa246f54c84ee63bdb2727c3a80beb",
-        "packages/templates/skills/newui-templates/SKILL.md": "fe99e4483eab85c1f9500c931450430c4bd38dc2947ddcf19aa69efaf5350df8",
+        "packages/templates/skills/newui-templates/SKILL.md": "7010811fce8fc1e72268010b670fa0777adc6eef8e7c7e8c0da467cd7d8a8938",
         "packages/templates/src/templates/AppShell.tsx": "22259b08ab9f8bf375ba5db8a07779033e9289bbf8b6c9d8a9b746c72ce160ec",
-        "packages/templates/src/templates/AuthLayout.tsx": "240d81ab95e337b565b8e854255d38ddf11d1546c4f4fa12b1fe49b51962f34a",
+        "packages/templates/src/templates/AuthLayout.tsx": "f06d54d498158e426d001b03db560b1163451f753e5f0a142fc97d55017584e6",
         "packages/templates/src/templates/PaneLayout/PaneLayout.tsx": "6fe6ebc719b8bd06103712197ce5c29ff3186710fa9341ddfa872a089f0893db",
         "skills/README.md": "38ff76029f9dffe3e6025102577c139f601a237532af2fa29401f079c2613d5c",
         "spec/adr/0001-solid-no-v-model.md": "382711862fd907c2a30d4e141b26013396fac7f598a2f802e169a3016258ea96",
@@ -107,11 +105,11 @@
         "spec/pane-layout.md": "255ad7ae7e3fd4973abb902321d3764cf07b1434e7561239f39940fc93eb4e49",
         "spec/sidebar.md": "6223b8aed15ae25df389e4da402e4321e389fe08822ba184f8acac364bd4000f"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
       "outcome": "no-change",
-      "reason": "The skill_tree.yaml change is the sync output of the just-recorded skills batch (four new skills, tasks/covers, evals) — the planning record itself, not guidance needing review.",
+      "reason": "Planning records were updated earlier in this batch; the final commits add no new skill coverage.",
       "evidence": [
-        "Changed: _artifacts/skill_tree.yaml at 5f570d35290259928b4031afc573f334fd3872cb"
+        "_artifacts/domain_map.yaml and skill_tree.yaml already carry the display-row family from the recorded update."
       ]
     },
     "source:README.md": {
@@ -127,15 +125,15 @@
       ]
     },
     "source:apps/playground/src/generated/surface-inventory.json": {
-      "fingerprint": "6dfeb5515321ca9c7722cbbab3d86a695d05cd36e043246b67681e92a8a196f0",
+      "fingerprint": "f44e0697d331ba9022fc1e246469c30265270a409c5ed0742ee3059c3ec63104",
       "snapshot": {
-        "apps/playground/src/generated/surface-inventory.json": "26702a1ba5669572d2e5c63c8feeb8ffc595c2c8e4947b401cc04010013ae605"
+        "apps/playground/src/generated/surface-inventory.json": "aad2217880ae328d541fd36ff68925429b43819b18ccc4dc5892c9a7dd60d914"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/surface-inventory.json at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:packages/atoms/src/lib/index.ts": {
@@ -1291,27 +1289,27 @@
       ]
     },
     "source:.github/workflows/tests.yml": {
-      "fingerprint": "014d08c934ff81da6f7754354dd32118f8d8f7a164dbe55bc8d85e9a590d564e",
+      "fingerprint": "f9c3958dfbf78e0f590ccd5efe12ef257a53a9143ae6ea6b52975b37e15da752",
       "snapshot": {
-        ".github/workflows/tests.yml": "e8bd0a1407b5b27c9abd1274cdd72bf588efdbe862afed4ba928401478a146d7"
+        ".github/workflows/tests.yml": "2c6d426c98f8bfc42069fb879f3693e6c2fe4151f4df331106031edcbc590416"
       },
-      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: .github/workflows/tests.yml at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:.gitignore": {
-      "fingerprint": "60dad2ada8b05a48daedbd21cc3525bb6c579b5b5e6abaa29bdd15d6dba681a9",
+      "fingerprint": "97ceeaa018fa01dfc258a8036a84b089993082bc0647d4f13ac47d97b494149b",
       "snapshot": {
-        ".gitignore": "138c83b96fc343168d1ada5ac1dcc2f8db47be2a76aaa3da4f2c4299eb74f1dd"
+        ".gitignore": "cb85691eb3807eb1a5052c9b8f12f7bbe65080c0b2f9500b11b9e1a49a6fff7e"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: .gitignore at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:.impeccable/design.json": {
@@ -1375,15 +1373,15 @@
       ]
     },
     "source:api.json": {
-      "fingerprint": "26c86f20e95b48bef67606d502fe2751c11e0bc0c9dc66225b4114d4fe477ac9",
+      "fingerprint": "d1dc737ac3c8c58f6a0a06ded63b97bec4e284d5acb3db3926d913b3fc2cba4e",
       "snapshot": {
-        "api.json": "9c3b1465a69e631fa9d2d20ba02b3ed6e37ae51ea3e38559cc8a980917bd3411"
+        "api.json": "7d14a84dd34378d5f600d399bea756f93db3f00b7736ddb637de772f36d9b493"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: api.json at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/.gitignore": {
@@ -1459,15 +1457,15 @@
       ]
     },
     "source:apps/playground/src/examples/AppPage.tsx": {
-      "fingerprint": "74fafb42bbced1d3a004e1879f215138df54f7b582fb91688e20fce085a593d2",
+      "fingerprint": "b84d850ef3134573673cbe6be5c2884df28eab33b021ad9e6cafcc6a87fac796",
       "snapshot": {
-        "apps/playground/src/examples/AppPage.tsx": "4ffdbfb016257c89e38a17f7ff0406353a460cdecfaa99bd32c7d8f1f7f36e87"
+        "apps/playground/src/examples/AppPage.tsx": "5abf2dbbb340f548f6d681331cfc696d6b2ae5d784fa4635c0a0be265c4582d0"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/examples/AppPage.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/examples/CreateDialog.test.tsx": {
@@ -1855,15 +1853,15 @@
       ]
     },
     "source:apps/playground/src/generated/api/tag-input.ts": {
-      "fingerprint": "5e242576f480eb1237ec4b98a900f3fa234adb59a3ed3500abe4569f18254de4",
+      "fingerprint": "f54f908e6ac5b285ba12eb38504a2b5bebd225a7190b0c9a0f65ca7dc3f2c71d",
       "snapshot": {
-        "apps/playground/src/generated/api/tag-input.ts": "52911809c9b680ab3ae827cf136aa696c4b8ba74982cf60e4ac6bfcf01d6516e"
+        "apps/playground/src/generated/api/tag-input.ts": "47ffca9bd7d11d865ca77bddc6b5983c7ca7a62c5bbaf64b4ac704c9ceda318e"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/api/tag-input.ts at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/api/text.ts": {
@@ -1891,75 +1889,75 @@
       ]
     },
     "source:apps/playground/src/generated/changelog.ts": {
-      "fingerprint": "9bfd2d05803d39289ce8ec3d7968ba97a12630eef5149db2b53937b370fa0edd",
+      "fingerprint": "5d2754a398e56632d09b2c4f649d492eac7cf11ecefd2fe5f6e353d4282467fe",
       "snapshot": {
-        "apps/playground/src/generated/changelog.ts": "45cc0c99ec444e36a9bc606ee38eca24f76742dc18e130c785c9f00521cd3ca9"
+        "apps/playground/src/generated/changelog.ts": "db3f7a433fed19b3ec526592002906deebd23ba81af2cb3c13cd406ff0a12030"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/changelog.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/components.ts": {
-      "fingerprint": "0d7378c81118e943400b8693d15f802742391bf25c89d28401d66f3be6906ffb",
+      "fingerprint": "db523a61bdb7c538a72d81a121d17216d240b30ff40af23e51b86143419bac9c",
       "snapshot": {
-        "apps/playground/src/generated/components.ts": "4bb234ccac8c3b5b13cbb2ac0ee4c0b1db175a101a3f9d98737b7fdd0df0a5dd"
+        "apps/playground/src/generated/components.ts": "70b308d98ecfd757b11c6374236d60f355107b1528504409dd7785f1fc522d74"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/components.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/counts.ts": {
-      "fingerprint": "e903a796fdece4fa7edd968c55b1580825987227a1a10bbe30e06aa122c5aeff",
+      "fingerprint": "90c8513fedd73702ccda5adcd91f4c202c512a3e33bfa3a9e5964da148bdcb7e",
       "snapshot": {
-        "apps/playground/src/generated/counts.ts": "b81a9e5c50749be24075b1a2dae2a0d082ae702892d36b49cb2cba8cb1dac1a5"
+        "apps/playground/src/generated/counts.ts": "272cebe578d67d3edb4db2e28b177502d38fcce214eb04831c48c284e64f5699"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/counts.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/ladder.ts": {
-      "fingerprint": "3f18ef895e259e7c16a89bd0a2c9208195c32b334614ba4697c984e911f86281",
+      "fingerprint": "d6d233d31b29c7b6ec705ebd93c5ef74ccf95cfe2abb64d9568390aaf472e32f",
       "snapshot": {
-        "apps/playground/src/generated/ladder.ts": "cd295e709c68a40595eb1383eb23f5c85a5f673859db2a13e4cce1256fb630ef"
+        "apps/playground/src/generated/ladder.ts": "6a69cf65386e88e54e73575a6ed8e02d0bc0360dc07bd7eb73ea0d47f4594880"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/ladder.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/sources/accounting.json": {
-      "fingerprint": "6dd462348842634f5f6c9ccb2ff2f603b923d8d2826dc13e96d7cbd014694fd9",
+      "fingerprint": "f4d1e2a764f5a90e59962dc207ca6c8963da4df40f35ac4a446c8f2134891d5a",
       "snapshot": {
-        "apps/playground/src/generated/sources/accounting.json": "d5dd464a5716696fab86c8e803268b649cd27fd2fdfef095d58338b70cab07e1"
+        "apps/playground/src/generated/sources/accounting.json": "c2424f1810e631e515668fe91bda188461c97fe0877590e2302851666cae3c49"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/sources/accounting.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/sources/analytics.json": {
-      "fingerprint": "8fbe1cead15666d926b45981d44b0abedb4335c6052570402489cef98fd0efd0",
+      "fingerprint": "fe8baac76d1a193fca263c8e71b95414913729905ba6a6f80477e873de354b4d",
       "snapshot": {
-        "apps/playground/src/generated/sources/analytics.json": "e5c61beb0820414ba25280d5cabae3b0a13930c1ffd0047cc4b9d7ed235c7c1c"
+        "apps/playground/src/generated/sources/analytics.json": "83960eac438830c0f33d608f6fbf41bd4a194ab95290eddbbd84c0516164ddb5"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/sources/analytics.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/sources/authentication.json": {
@@ -1975,147 +1973,147 @@
       ]
     },
     "source:apps/playground/src/generated/sources/cards.json": {
-      "fingerprint": "e81e52d8fd5a01df323315d50fc1cb5be8a632548d587981465ee1b677e52176",
+      "fingerprint": "39c95503749c1408f92985bfba0c71555971a4cff466b30a36cb67e30e7297dd",
       "snapshot": {
-        "apps/playground/src/generated/sources/cards.json": "c420ee8abfbe648568d72ebc51450144d1940eae6a9671c6c5d14d7636615893"
+        "apps/playground/src/generated/sources/cards.json": "70176119b8dbbd49ed05622b5d7808a0e116c344e7a5c7a6020645c4ba0168b2"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/sources/cards.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/sources/compose.json": {
-      "fingerprint": "10259e4ee7e3d7052e2c178ecd27e8e36f88b4580b2af68c1c1e2a61d3e5c28f",
+      "fingerprint": "ea8a57b2b462da7d708e9dde98c828b552e4600ddc886a962ba7a17a19cabae0",
       "snapshot": {
-        "apps/playground/src/generated/sources/compose.json": "837d5770bfc52f2aef1b161abe16c7842ff29ca0bf4465f1e7b527d11126d7dd"
+        "apps/playground/src/generated/sources/compose.json": "2acbce93717fb5dd6e1a79bf6075919e2d93ef27711bb3917d67f4874d3d619f"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/sources/compose.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/sources/deals.json": {
-      "fingerprint": "dc7c646e6856bfc64e6636d6aab0e15d69e4bb5fc7d5eff0f670ec15d5b10228",
+      "fingerprint": "b7f3004ce3c8e6065d6fa71c57ea65c2b5ce5ba66d0ed5aa19c8707638675500",
       "snapshot": {
-        "apps/playground/src/generated/sources/deals.json": "eb8f6b5d41e62f73554960f0230d48c9bebb2b261aeb2bacdba924007b319ee0"
+        "apps/playground/src/generated/sources/deals.json": "d6a93acdd71f6181a23b55210b9a0bfe8521fdd158d7cecc54c3ae8a2144eaef"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/sources/deals.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/sources/discussions.json": {
-      "fingerprint": "bb8adcdf39ed4ea7ccfd8c5f87d781eee30f0681b66359f812d4f7449f51241e",
+      "fingerprint": "55a12edb4dfb43a9e32e0bfb8cf0c851b42e3947f60e79b10427b7749def4e7a",
       "snapshot": {
-        "apps/playground/src/generated/sources/discussions.json": "36b28706513def79aaef754c57d4819af6258bf9f07a44dd801381423d8371b2"
+        "apps/playground/src/generated/sources/discussions.json": "27d88368513064243f2c2c5667211df1ce67835f2d38c77da926f82cab512624"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/sources/discussions.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/sources/files.json": {
-      "fingerprint": "c5be64b047b61514ab5c1f9686efb85846b1d907e741c0e4d1fda4334db0187a",
+      "fingerprint": "ca23bc7ceee67170df2802dba9a40034b179787a31c0ba8625d712a0c3d5b822",
       "snapshot": {
-        "apps/playground/src/generated/sources/files.json": "b412cea3e9e8ee008d144067c96226411dca4702e31ab3dfcc2c09e85d793723"
+        "apps/playground/src/generated/sources/files.json": "c3bfca6f99e966ba9fc97d71a6a5d496347dae1af538d174bc0d20a9580fae3f"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/sources/files.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/sources/mail.json": {
-      "fingerprint": "13777e2373e9af269ed7b2c34bf9fc8556779cc3e64fb2054eb125cf0c138316",
+      "fingerprint": "a0120f15427a1d47a78acf6b4ecc90fbb9d841e9b170090424274405499fed6d",
       "snapshot": {
-        "apps/playground/src/generated/sources/mail.json": "ac790c7f9fb8afb8e325abb6c52de2854466a11d0dfe63a4fd2ccae1c5f639fd"
+        "apps/playground/src/generated/sources/mail.json": "e5335002bbfbcf46500c1c79723a5a1fd1ef7ac287d5e56b70b26c89b17ec8a4"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/sources/mail.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/sources/settings.json": {
-      "fingerprint": "c211fd6a82f9bc6caae37a1fcb0bcc23444ff57ef6b2de6c95741c94ce63c2b0",
+      "fingerprint": "9855b5f5b540b0564696a5cda5fdb1181e4cc31329fd798f9856a55aeefcfbe4",
       "snapshot": {
-        "apps/playground/src/generated/sources/settings.json": "c76339f90fab42ebfbfbded5a49cd32691f6e94950ef225d84008f2fdbcd7173"
+        "apps/playground/src/generated/sources/settings.json": "ede89b6275891af4e447a1d72b06b333ba7cc5520d9277dba6c76ff318329041"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/sources/settings.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/sources/tasks.json": {
-      "fingerprint": "1caa08261da8df13e1d929ab1b6d45a2c0c4c4c7771fd847d965e39e0b46477d",
+      "fingerprint": "413ce6b3f533cb34c763a473e632c22b453704c339a07508636735b32e68b7cb",
       "snapshot": {
-        "apps/playground/src/generated/sources/tasks.json": "4d4c30c86603cacf76425f18e7659948b3b07c18c1bd66cca1ca89ab00da0852"
+        "apps/playground/src/generated/sources/tasks.json": "fc8385f297cc007e3ea5caec41d8bbbb04430e85a9577e48744d86bfa3b8c5e6"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/sources/tasks.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/sources/tickets.json": {
-      "fingerprint": "0a3e6fa3ed50956fd493969932bd517ddcfb67fa4ad9430e810c4b6b1fe2f632",
+      "fingerprint": "ca84b50cae147ca68e1035eb4fbd37b5ee7adbbe0da9a3fe9dc1150aece77eb9",
       "snapshot": {
-        "apps/playground/src/generated/sources/tickets.json": "c8d2a6af253eac699c60483556a0fae43fbdccd790329d2b955cf7c84a162b4a"
+        "apps/playground/src/generated/sources/tickets.json": "475bc1254acb494a2594536f66a423adb6ce777ba73221814288a91b150d0a2f"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/sources/tickets.json at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/stories.json": {
-      "fingerprint": "2bdbc3612b11229f8522ab79e468be2f9aa3ccabcf0fea81e988ab6eac3ef394",
+      "fingerprint": "a92115c62eb1952aff9ceaebda5786264532fba31e8b2b537ecd746d61f4dc60",
       "snapshot": {
-        "apps/playground/src/generated/stories.json": "904ba4d96a4df67eee98aee30eae30ef525dc068647cb76915dd8598d7caa73d"
+        "apps/playground/src/generated/stories.json": "66b60bfd9297235742f729a24fc20ed4d33d392dd6fc304ccf68625ad33e3b42"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/stories.json at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/stories.ts": {
-      "fingerprint": "3f07691bedc720aae0ddd7e2ac15474034e805c7619426d27f78a74fb933b6ba",
+      "fingerprint": "c55c9c3a6658d44c8119e440cdb199f6c8d465b5d81c0b0211439667ca2dc33c",
       "snapshot": {
-        "apps/playground/src/generated/stories.ts": "b4469c0dedfa07bf750c3a72d51a97b8022dbd4391ce0c7090161ed6bd439f44"
+        "apps/playground/src/generated/stories.ts": "7969d07053b87a831aba25ca54315fa28bcd58759e3fc2f106950a53f4255678"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/stories.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/version.ts": {
-      "fingerprint": "b112772dad86f10836733ca72bf5b957081d1af8624f42241eee10b7637f59b8",
+      "fingerprint": "4e248616a31b38de448162cc937cbf7dec4b3b154352d5a1b15ed8e07a47e8b6",
       "snapshot": {
-        "apps/playground/src/generated/version.ts": "cff042fc44830596bbd4d0ba3f81928d381b72c20b379e075eb7445d09bd8233"
+        "apps/playground/src/generated/version.ts": "01a2d747df19e59f5052d6467ec6b94a6738c12ed89b26ba3eba8de7dabdbb23"
       },
-      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/version.ts at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/index.css": {
@@ -2167,15 +2165,15 @@
       ]
     },
     "source:apps/playground/src/lib/ResponsivePreview.tsx": {
-      "fingerprint": "6ea8fbfb2250eaf266c1d597736b8e578fe736f5aaf2e51ccc05bdaf618973d1",
+      "fingerprint": "9ca0f5f4e6c511e8432c42b52740c7855c65a74a7724fc44c815b27bd5424f72",
       "snapshot": {
-        "apps/playground/src/lib/ResponsivePreview.tsx": "bd6dfdc80273c6f54381ec4fc2dd2786f06b008a29cafc387d5882f80258661f"
+        "apps/playground/src/lib/ResponsivePreview.tsx": "f5e6b1707336837ebc1e4d401ef3bbac437cc306c818a34316582d243370f194"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/lib/ResponsivePreview.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/lib/base.test.ts": {
@@ -2227,15 +2225,15 @@
       ]
     },
     "source:apps/playground/src/pages/Analytics.tsx": {
-      "fingerprint": "234dea1c6888a209c49caf9fb68c8bb57a8fe789f3919c5ad1994ddf26ffefd0",
+      "fingerprint": "71d5f807080ce3bcb450b82433a7557d916b75fc51a1308f9d1e00deb2de3453",
       "snapshot": {
-        "apps/playground/src/pages/Analytics.tsx": "a5a5683c4ced488a93ff55f4fa301bd3da9ef0918401a90e684577e1afaeeada"
+        "apps/playground/src/pages/Analytics.tsx": "ef55f60778f2a86b04105729a730e02b4d89ac73cb765f393ec94a02665e16e3"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Analytics.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/pages/ApplicationPage.tsx": {
@@ -2263,15 +2261,15 @@
       ]
     },
     "source:apps/playground/src/pages/Authentication.tsx": {
-      "fingerprint": "a1ef9a499f91b6038a2ea8339af5480f785f44a97e2374b2be7e148d81e5086b",
+      "fingerprint": "cc890b877b3c32033c049d97f32f18ac403614d3c7bbe6adb502e6b0db1e64ab",
       "snapshot": {
-        "apps/playground/src/pages/Authentication.tsx": "6cb00183dd98b740225f57b5d1f3e46d5bcc105f4a6abbc72b35bb9cce546034"
+        "apps/playground/src/pages/Authentication.tsx": "161b0120f4c12b8824f7d4df346ac14a30e74ff817db6484a97fe9e20f38acf6"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Authentication.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/pages/Cards.tsx": {
@@ -2299,27 +2297,27 @@
       ]
     },
     "source:apps/playground/src/pages/ComponentPage.tsx": {
-      "fingerprint": "518608710cede9929ee10b0f17e9962bc7fecaa4c42343eb05b62bd316066163",
+      "fingerprint": "137329ef65da4c366c2f5e8a91c0de92098e793dd7a95d86c7b47bcf532d75d8",
       "snapshot": {
-        "apps/playground/src/pages/ComponentPage.tsx": "4d9f3ac67b0e283cf276e9f384402924bde7b4b23c3ac245b17945cb3531003f"
+        "apps/playground/src/pages/ComponentPage.tsx": "962d50961f159529163a78ade1a79cca0259ffc084bb59bd9a1361cf74f1ca09"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/pages/ComponentPage.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/pages/ComponentsIndex.tsx": {
-      "fingerprint": "9f01fd9577f06fd0a1d60fbebde6d5f4973795b764846b089624bb339b7e9087",
+      "fingerprint": "cfd5c9a0dc4687f276b0ac2ac02f5b20fb75e8671f0e94a76fa6543664963ebd",
       "snapshot": {
-        "apps/playground/src/pages/ComponentsIndex.tsx": "c2f85936f61e2fbf4d2ff656139c8dd24842d7431d677fc256a4ccf5bd2d1639"
+        "apps/playground/src/pages/ComponentsIndex.tsx": "243c0313c2b6f2da00a7e864ab004af3172e23216ea175928268411f2d6acb82"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/pages/ComponentsIndex.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/pages/Compose.tsx": {
@@ -2359,39 +2357,39 @@
       ]
     },
     "source:apps/playground/src/pages/DiscussionsDesktop.tsx": {
-      "fingerprint": "515bfb75e3b3a386031277bc750e71b63a87e4345aae0c2c38306edf88b322ba",
+      "fingerprint": "efab620d57fbbf5a136ee93c9f46562984fbdaa71bc30c74ad5be6d8cc71a7d5",
       "snapshot": {
-        "apps/playground/src/pages/DiscussionsDesktop.tsx": "aae7635726729c0965fae15b6909c94e492ddcf4cbb98217f9054cba5af9c8a9"
+        "apps/playground/src/pages/DiscussionsDesktop.tsx": "2f75a1895ca0c4a2d69087b8e1663e0ed0a4211c8ec625a250f4caaf638424b2"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/pages/DiscussionsDesktop.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/pages/Docs.tsx": {
-      "fingerprint": "b3010ae48d8907a4e361500e5b21a0219a26c52bc603485941ed0656d2bc143a",
+      "fingerprint": "91c4e8c44ab14fc76ba88814c21ec1ee0865aaa18eeb4e5c4a4df58b1f7bb7ed",
       "snapshot": {
-        "apps/playground/src/pages/Docs.tsx": "466ee76184149fd1d6b769d22200b00cfb0371b6742fb3c18c039c25f9f710dc"
+        "apps/playground/src/pages/Docs.tsx": "ad14954f38e05a6695c554b9f9f31eecee9042913e04cac347d63952edfc8a0c"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Docs.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/pages/Examples.tsx": {
-      "fingerprint": "84297db843ada667048d05e099e52ae47c6594fea280bb5b609fffa93b7441fc",
+      "fingerprint": "6b848d359bb42088efd50d10a15b0b4df69a71050a954afd41c40d5dc65f3b74",
       "snapshot": {
-        "apps/playground/src/pages/Examples.tsx": "f3779ccd8793ad309dd01df1ae7848f2181f11f24a24465291e093fa0ba4fd7c"
+        "apps/playground/src/pages/Examples.tsx": "d677293816372a644c55be3fa9c0c8fb04488216ee73a0d2915cc49881ac9cc9"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Examples.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/pages/Files.tsx": {
@@ -2419,15 +2417,15 @@
       ]
     },
     "source:apps/playground/src/pages/Home.tsx": {
-      "fingerprint": "a097adbcd2858e0272979c5e9e00ac75864e2c1c6a732b81375101d4f797484e",
+      "fingerprint": "92d6834f5660935041c02057327c22f5611e35e1fcbe6a023749635f6ef56de6",
       "snapshot": {
-        "apps/playground/src/pages/Home.tsx": "75472955dc254ce3fc6351abd8abd26e889fc54eb6d1e981a77c399fb4b154a2"
+        "apps/playground/src/pages/Home.tsx": "ea8a34cf5e4190da0e746cd101ea496a2e3fc7e851d5498a2587e15f96e70ac0"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Home.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/pages/Kit.tsx": {
@@ -2447,23 +2445,23 @@
       "snapshot": {
         "apps/playground/src/pages/Mail.tsx": "b36e906726bdc1124f4703e20d2aca14e0d8a65d015b1b1c35be5e58dfeee32e"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Mail.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/pages/Patterns.tsx": {
-      "fingerprint": "68a8892cbcb36de783970b13c1f1334ec1a6ea7def75c3687388539952c6e994",
+      "fingerprint": "0e47b0c0ac6dbf6b145fc998d3ae5fa3b4a8f3b45202b57e7ee54bc4026b4cd0",
       "snapshot": {
-        "apps/playground/src/pages/Patterns.tsx": "1e6e4ce9af861a30a93cfe1c7da0fdbc2337c3e59a538dae9697fdff42cbf9cf"
+        "apps/playground/src/pages/Patterns.tsx": "ef0dead534c1dde22c67144a6f661236a1b65a8c0445da735d73ec4709ac399c"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Patterns.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/pages/Settings.tsx": {
@@ -2755,15 +2753,15 @@
       ]
     },
     "source:apps/playground/src/shell/Masthead.tsx": {
-      "fingerprint": "218c52796856e408c7f7e97c2caffc2d618cc77675200e2634c9fb05842375c8",
+      "fingerprint": "709be3870da859d72a02770d505c5c48ac332e2589aeb13092e769782db697a3",
       "snapshot": {
-        "apps/playground/src/shell/Masthead.tsx": "0121bcb4b6f039dc590b2cc84034e63abec511b19da8855eb9424f03711a034b"
+        "apps/playground/src/shell/Masthead.tsx": "2969cf118633cd9fb2971ec4c1019caf44282c14b23363e4b04af7a03fc96fe0"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/shell/Masthead.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/shell/PageFinder.tsx": {
@@ -2935,15 +2933,15 @@
       ]
     },
     "source:apps/playground/src/stories/auth-layout.stories.tsx": {
-      "fingerprint": "95b5d815d4a06b3147dd3ca53b367dfe1507445477c3e9707db27df147292f70",
+      "fingerprint": "dd7b2db14c5d341a35f7bbad4ed0f181df34397fbbe6018726a79e54df36c78e",
       "snapshot": {
-        "apps/playground/src/stories/auth-layout.stories.tsx": "ffac13ba981b6ca3f1cbb9938097509f64bc58a906bd991d2147bb1919c6acbd"
+        "apps/playground/src/stories/auth-layout.stories.tsx": "919aab57572c643268bd32926de9c73307039f9252bbdee5ad90716cc4f630bd"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
       "outcome": "no-change",
-      "reason": "Batch verified 2026-10-25: 8 new components (Link, IconButton, VisuallyHidden, AvatarGroup, Image, PinInput, Carousel, TransferList) follow the documented conventions in PRINCIPLES/CONTEXT and ship their own spec/*.md contracts; 33 a11y suites, 12 browser suites, templates contract tests and the List rest-prop fix change no claim the shipped newui/newui-data skills make. Both skills validated up-to-date by skills:check; full gates green (verify:checks 24/24, e2e 962 passed).",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/stories/auth-layout.stories.tsx at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/stories/avatar.stories.tsx": {
@@ -4039,15 +4037,15 @@
       ]
     },
     "source:apps/playground/src/stories/toast.stories.tsx": {
-      "fingerprint": "34d827b1e1a6d7c934be2aaa63cc9ff983d68d6f375b7d286cd72604ca4aca07",
+      "fingerprint": "599120c2ddc5f86e2e59667ee5dc2bcc2b17a5f72b0ecaf97fe44c1ca6d71ab1",
       "snapshot": {
-        "apps/playground/src/stories/toast.stories.tsx": "276262298e6b3334c9d1cbdaee25e148345dd1631069ff4585777cc018d7a0fd"
+        "apps/playground/src/stories/toast.stories.tsx": null
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/stories/toast.stories.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/stories/toggle-group.stories.tsx": {
@@ -4315,39 +4313,39 @@
       ]
     },
     "source:e2e/reference-patterns.spec.ts": {
-      "fingerprint": "43090c38514b128643879ff33ce2090a2a871095799e1d17ca3e33df49493f6c",
+      "fingerprint": "89ddcf90c332faf4e7a8eb766ad7dcbb5bf775c4b175054f6fb4484acca368e5",
       "snapshot": {
-        "e2e/reference-patterns.spec.ts": "8a8b164535e84952fec9903cc7a2b0c562de2b22d4d2212c671276fbe75b0082"
+        "e2e/reference-patterns.spec.ts": "2bfae07bc8732b70cc6b59759a2060d37506eb1f72dc477e78fa66c0a14c1db4"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: e2e/reference-patterns.spec.ts at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:e2e/responsive-preview.spec.ts": {
-      "fingerprint": "48e7cd8c1ec66b1276b107982876625651c460d658f21682783c4df9cd7f7dbc",
+      "fingerprint": "162443dc82de4391c0b437d23710f5bcb0f16fcbdbf9967d03abc4d0c4642ebe",
       "snapshot": {
-        "e2e/responsive-preview.spec.ts": "bf8d1a5b556a56adc3b378b36b43b9c270e40a9d4065242d5112ce2af8d75fc8"
+        "e2e/responsive-preview.spec.ts": "8272be1ba56376a47a5b737dc684b7c8bc4d8981f36b29e2dfc114805661145d"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: e2e/responsive-preview.spec.ts at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:e2e/role-drift.baseline.json": {
-      "fingerprint": "3158b1370649d389643d9bee61e0597ed87282ef735266b78fa6181fdc70d898",
+      "fingerprint": "89ce4388411671a15c390cf2bb7d4a9d35d0fbebf1afa57417dc3a94a7816787",
       "snapshot": {
-        "e2e/role-drift.baseline.json": "a531dda446e6b165c8eb0aa0337424a863b8cd77023e899e069cd81ef3920f85"
+        "e2e/role-drift.baseline.json": "2d71fb9f3423069e032a9678a55ec742db48932f97ab21a7c22a11b4e1de5566"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
       "outcome": "no-change",
-      "reason": "Batch verified 2026-10-25: 8 new components (Link, IconButton, VisuallyHidden, AvatarGroup, Image, PinInput, Carousel, TransferList) follow the documented conventions in PRINCIPLES/CONTEXT and ship their own spec/*.md contracts; 33 a11y suites, 12 browser suites, templates contract tests and the List rest-prop fix change no claim the shipped newui/newui-data skills make. Both skills validated up-to-date by skills:check; full gates green (verify:checks 24/24, e2e 962 passed).",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: e2e/role-drift.baseline.json at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:e2e/sidebar-collapse.spec.ts": {
@@ -4495,27 +4493,27 @@
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png": {
-      "fingerprint": "690898a8df7d9f8a7bdfe52625f7ee1432e20a13763f75b4235718bf5aa1ba69",
+      "fingerprint": "56e2c1b626ff16de464ebf3eda94007ad1aef078c31e5fca5ba37b05717c4f81",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png": "6269aeea7d814e14fe911448d01e22b94c7c1ae6e4b680d106cfe47be5e18608"
+        "e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png": "9ddbaa8a6d597777f0f3721ef88f20f299f605b6bdcdadc015e5fa62f843a891"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
       "outcome": "no-change",
-      "reason": "Batch verified 2026-10-25: 8 new components (Link, IconButton, VisuallyHidden, AvatarGroup, Image, PinInput, Carousel, TransferList) follow the documented conventions in PRINCIPLES/CONTEXT and ship their own spec/*.md contracts; 33 a11y suites, 12 browser suites, templates contract tests and the List rest-prop fix change no claim the shipped newui/newui-data skills make. Both skills validated up-to-date by skills:check; full gates green (verify:checks 24/24, e2e 962 passed).",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png": {
-      "fingerprint": "3de2b5afc0aff4a797376a24d119b445f194b5c19fad697f072a82932c837376",
+      "fingerprint": "f2c9c917a9fd50d9ebcde453b07d2624bcda202c7be4268d9dfceb498905b1c8",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png": "e075668ebcdec6d05445cfed0bbc425a39a07681fb3f5adeeb83ec8222a2c278"
+        "e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png": "3f4b68a3ec2e34a06e864989b7b6966e1d96cebf95c63216cb4a2471b88a0d99"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
       "outcome": "no-change",
-      "reason": "Batch verified 2026-10-25: 8 new components (Link, IconButton, VisuallyHidden, AvatarGroup, Image, PinInput, Carousel, TransferList) follow the documented conventions in PRINCIPLES/CONTEXT and ship their own spec/*.md contracts; 33 a11y suites, 12 browser suites, templates contract tests and the List rest-prop fix change no claim the shipped newui/newui-data skills make. Both skills validated up-to-date by skills:check; full gates green (verify:checks 24/24, e2e 962 passed).",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:knip.jsonc": {
@@ -4543,15 +4541,15 @@
       ]
     },
     "source:packages/atoms/CHANGELOG.md": {
-      "fingerprint": "e2512beee0f68590a39a9c09efc28ad75b5f2e040d91db29e4f04ce83b98f720",
+      "fingerprint": "22eeaba86fb866938601513f63efabcbed252304609c05f75df771a8d20de2af",
       "snapshot": {
-        "packages/atoms/CHANGELOG.md": "0d57cc086152f7fcb2bba4f5bfbfa6122815888bca839f123113b81d9002bd89"
+        "packages/atoms/CHANGELOG.md": "b959c32e6390af237a1434fb0232bdd79f61621a9d2820f48cf72a098d773127"
       },
-      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: packages/atoms/CHANGELOG.md at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:packages/atoms/README.md": {
@@ -4747,27 +4745,27 @@
       ]
     },
     "source:packages/atoms/src/atoms/index.ts": {
-      "fingerprint": "e233ce434e69f13347246674b6b8aeb24d06938f7cef8225b3a66de7042ccec5",
+      "fingerprint": "c0e893f7ea47eebb8f1f375e60d6aed7497a58c3b930082440e666bc9be70ed1",
       "snapshot": {
-        "packages/atoms/src/atoms/index.ts": "695c1d61c36e8e7a71c933613678b062942a49cfb62e3e3be977d6733f2e141f"
+        "packages/atoms/src/atoms/index.ts": "b1c7ceff8b5baa1d425aa8b181aa2eebaee30710e71406ddbf426680fea7c01c"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
       "outcome": "no-change",
-      "reason": "Batch verified 2026-10-25: 8 new components (Link, IconButton, VisuallyHidden, AvatarGroup, Image, PinInput, Carousel, TransferList) follow the documented conventions in PRINCIPLES/CONTEXT and ship their own spec/*.md contracts; 33 a11y suites, 12 browser suites, templates contract tests and the List rest-prop fix change no claim the shipped newui/newui-data skills make. Both skills validated up-to-date by skills:check; full gates green (verify:checks 24/24, e2e 962 passed).",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: packages/atoms/src/atoms/index.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:packages/atoms/src/exports.test.ts": {
-      "fingerprint": "45ed66f6214f1bb2cf5fe5cbee39cb49ca4248c72f7f43b27950017a6ff67f08",
+      "fingerprint": "e4eaea0184ac25354fbae981112d4362a7cd657a8f7d20113d5aab437cccf8c6",
       "snapshot": {
-        "packages/atoms/src/exports.test.ts": "6fb07a4d84e2174e0d84bff867a9150dc2cb7adac84eacaa43b9a8d0993d3a93"
+        "packages/atoms/src/exports.test.ts": "3abace585a10f6fcee579bd2993bf2f557f711334a7f28fcc6601f369e6b3ef9"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
       "outcome": "no-change",
-      "reason": "Batch verified 2026-10-25: 8 new components (Link, IconButton, VisuallyHidden, AvatarGroup, Image, PinInput, Carousel, TransferList) follow the documented conventions in PRINCIPLES/CONTEXT and ship their own spec/*.md contracts; 33 a11y suites, 12 browser suites, templates contract tests and the List rest-prop fix change no claim the shipped newui/newui-data skills make. Both skills validated up-to-date by skills:check; full gates green (verify:checks 24/24, e2e 962 passed).",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: packages/atoms/src/exports.test.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:packages/atoms/src/lib/control-styles.ts": {
@@ -4999,15 +4997,15 @@
       ]
     },
     "source:packages/editor/CHANGELOG.md": {
-      "fingerprint": "967900c5254dc76f0a2ab9afaac93717675bc7ce6805e64b426e9518306c9490",
+      "fingerprint": "14a0471a82a02713aee838fec4d00217f4b0fb2764b2a576c9ffd4c6d21ec0e5",
       "snapshot": {
-        "packages/editor/CHANGELOG.md": "b4021f300618da393751e8dd7c17d5ebde410acd381fbad757a5a3f159b42859"
+        "packages/editor/CHANGELOG.md": "823bbbda7b0a96d73aeb0088dee091236df37963b8602230c12efaf281bcdda7"
       },
-      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: packages/editor/CHANGELOG.md at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:packages/editor/README.md": {
@@ -5071,15 +5069,15 @@
       ]
     },
     "source:packages/molecules/CHANGELOG.md": {
-      "fingerprint": "8dc5e16134313be988ae4f472072c8638dacd2fda385124211c10568643da1ac",
+      "fingerprint": "67cb05681af79e840fbfbcfb41f3169c5578e2f1ca9a72efdca474d6505d78e2",
       "snapshot": {
-        "packages/molecules/CHANGELOG.md": "4037109b84d552ec1fcf6b1c63c0bbf5e593d3ea7eef37ce5b810d0730119c81"
+        "packages/molecules/CHANGELOG.md": "73cee417506f39eb627728b95f8bb41d012d2f004dc9dfcf9362b77962f5ef3f"
       },
-      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: packages/molecules/CHANGELOG.md at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:packages/molecules/README.md": {
@@ -5107,15 +5105,15 @@
       ]
     },
     "source:packages/molecules/src/exports.test.ts": {
-      "fingerprint": "a6af3dcecd70f1d88fc07301970648757c88eebb14054c097ebd9e51e317097d",
+      "fingerprint": "8d44b58ce7349e39651443c05dd0cdddbb3c750e4c6c4764fcf1f543d35b4984",
       "snapshot": {
-        "packages/molecules/src/exports.test.ts": "a63eed5167983b2f12ed889f62d42188609428140182452edc237aa9c7a37768"
+        "packages/molecules/src/exports.test.ts": "91580da1cdb290794bd38b891afadee37ad8722082e5d4d477d8c4a2a7849b18"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: packages/molecules/src/exports.test.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:packages/molecules/src/molecules/Accordion/Accordion.tsx": {
@@ -5719,15 +5717,15 @@
       ]
     },
     "source:packages/molecules/src/molecules/Toast/Toast.tsx": {
-      "fingerprint": "2d8cc3e6a536548ee73952d27993f335aa5dee66bf4c53eb06f2363ff974056b",
+      "fingerprint": "b4e3571531462536f9a5d45274fcd7aa3f62401860f61d1cd1596fe9358275dd",
       "snapshot": {
-        "packages/molecules/src/molecules/Toast/Toast.tsx": "4f56d258438ffb8d372d0c8a561577419b68abcbaef45bccc232bdebea032594"
+        "packages/molecules/src/molecules/Toast/Toast.tsx": "eacd445235d18e1a96dd2493d989bc9bff5cfa9a9a2b9eec6bc1a6d6d97775e9"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: packages/molecules/src/molecules/Toast/Toast.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:packages/molecules/src/molecules/ToggleGroup/ToggleGroup.a11y.test.tsx": {
@@ -5767,27 +5765,27 @@
       ]
     },
     "source:packages/molecules/src/molecules/index.ts": {
-      "fingerprint": "6e8f991caac3d0867490c8ad78a4de700eb9dc99aecccb83dc7c93cdc4166cfb",
+      "fingerprint": "9d1d9dd8d35eb800848aaf7d40a8f6b007105be85429a194da6299ccbcda7330",
       "snapshot": {
-        "packages/molecules/src/molecules/index.ts": "df16de662810b45e954c9963f0a319fd8fa619807fea85286e6bf50d135fc8a2"
+        "packages/molecules/src/molecules/index.ts": "22af334f78ed4b0346f1a021285478e51f8d0db09dc646a52d0d12063e3c39f9"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: packages/molecules/src/molecules/index.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:packages/organisms/CHANGELOG.md": {
-      "fingerprint": "dde44d1c961a0815c92d659ab38d1c2d42e48c5c9811f1005d280342b524f45d",
+      "fingerprint": "31d8c633a77803a5e5322b5af01c6e876c4589f08e90092fa335a3ecb9d6650c",
       "snapshot": {
-        "packages/organisms/CHANGELOG.md": "b3912c58d6ecf85a4f4d620552ae4485122e818978128f610c36d8e73b81c1f7"
+        "packages/organisms/CHANGELOG.md": "3dad849e524ca23cf7d2f6ad552dd13c347ae22a5ea1a5ece009e867232ef485"
       },
-      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: packages/organisms/CHANGELOG.md at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:packages/organisms/README.md": {
@@ -6295,15 +6293,15 @@
       ]
     },
     "source:packages/templates/CHANGELOG.md": {
-      "fingerprint": "ce75de285304d0f9ee7b616beac9fff0019308163131c9a576ed4c373dd96078",
+      "fingerprint": "3363dd401e57aead43412fda820e6ce227c0c001505b5a3438d7309294ab895d",
       "snapshot": {
-        "packages/templates/CHANGELOG.md": "b300e3673622d89b20c73074ea545c13c76e4504fbc4e7652293c26ec5b4d35a"
+        "packages/templates/CHANGELOG.md": "aa6e05ce181b808df935fb58e4fa7ae57be6dd41925d6cc49f9ed0c7cca054e5"
       },
-      "head": "4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped change outside the two skills declared sources (release workflow, publish script, e2e harness, spec migration note, changelog data). The guidance delta was reviewed through the skill item; a file-level change here does not alter a rule.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: packages/templates/CHANGELOG.md at 4d5c3ecb3ae4e8466dba8b11231ade9f6456dee3"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:packages/templates/README.md": {
@@ -6523,27 +6521,27 @@
       ]
     },
     "source:scripts/atomic.ts": {
-      "fingerprint": "2df206d965f5edde331ee657bb4723fe5b4a0c9b87b8a64bc4d40f1aa232ee34",
+      "fingerprint": "cfa50c267d9ad157071d8e56035474fead20052356c3ef6b02254d44d0bb8408",
       "snapshot": {
-        "scripts/atomic.ts": "4cfce37372e749a658107798ffa3e9e0a21b3040997e05de509b5b47ba48adfe"
+        "scripts/atomic.ts": "7defaf9f6e93048211ac8830b7e364b4876f355c75e588804d0b148986e1c50a"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: scripts/atomic.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:scripts/budget.ts": {
-      "fingerprint": "fae705793bd00280bf9052c5bc6bc325c976499ea9e422d694af95ec4a9aa85e",
+      "fingerprint": "1326e4d2a77b6ff49c8dd45eb2e8a910a25629f7c8507d5d9d067c93c7e1dddd",
       "snapshot": {
-        "scripts/budget.ts": "46a7a998732a05da929a937ce5dc75f432aa9e7251c2a2c62a96007158346263"
+        "scripts/budget.ts": "b8bab0386f005a55e64a15e51e58f7ffe83d45ca1ee12bdde5b577fbc49b14c3"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: scripts/budget.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:scripts/ci-steps.ts": {
@@ -6643,15 +6641,15 @@
       ]
     },
     "source:scripts/sitegen.ts": {
-      "fingerprint": "5ff30377ca5f433d41e91e779075df2045e3d492e71d7243a7a30d23da622fde",
+      "fingerprint": "d4610f130c7bb49be716ed1a56736a82f95fe6c63521e38bf3ec1c25be5773c7",
       "snapshot": {
-        "scripts/sitegen.ts": "8d8e491a92b6d57f0259252550aba0c8f3cdc00f84449267fffcc4f94eae09fe"
+        "scripts/sitegen.ts": "d9c1d9bcfdd17c0e7e60b39af59f9a9a523f784d482365cfecb6883bc837c664"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: scripts/sitegen.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     },
     "source:scripts/skills.test.ts": {
@@ -6667,15 +6665,15 @@
       ]
     },
     "source:scripts/story-states.ts": {
-      "fingerprint": "431d2e820fd9d0be01a686d5e63937ec8ca041a2022a4826cf55bf493a33843d",
+      "fingerprint": "c8690a49c283396734c5d13e43268f0cb9460ac553666b6b67e6ed0f5627b537",
       "snapshot": {
-        "scripts/story-states.ts": "c32864ce8dcfc94d5930cfb0bfc94b2080607c6347091b8e738ffe2c62aa4cd4"
+        "scripts/story-states.ts": "426993728208459881622e61797f63fb27e5715942f7aee2e76c72e5af268ec7"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: scripts/story-states.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:scripts/trust-publishers.ts": {
@@ -7771,15 +7769,15 @@
       ]
     },
     "source:apps/playground/src/generated/api/pin-input.ts": {
-      "fingerprint": "1de07a7141c04a3af23964552abee4e0388f7f11fa56922f8b138a3e518ef111",
+      "fingerprint": "fc797d6ac830e6e176b31ccfcf712f4f1834ba4710d035a633e0c20a9159380d",
       "snapshot": {
-        "apps/playground/src/generated/api/pin-input.ts": "c4585bb9aaf92e94311ec3cff0ecfbee82b79c2c994099044fd5dd75f02e3d7b"
+        "apps/playground/src/generated/api/pin-input.ts": "658b6674cb318414e751e8d36f14d27e9c751c26209eca848db3166d5247809c"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
       "outcome": "no-change",
-      "reason": "Batch verified 2026-10-25: 8 new components (Link, IconButton, VisuallyHidden, AvatarGroup, Image, PinInput, Carousel, TransferList) follow the documented conventions in PRINCIPLES/CONTEXT and ship their own spec/*.md contracts; 33 a11y suites, 12 browser suites, templates contract tests and the List rest-prop fix change no claim the shipped newui/newui-data skills make. Both skills validated up-to-date by skills:check; full gates green (verify:checks 24/24, e2e 962 passed).",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/api/pin-input.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/api/transfer-list.ts": {
@@ -8963,60 +8961,61 @@
       ]
     },
     "skill:packages/molecules/skills/newui-molecules/SKILL.md": {
-      "fingerprint": "f214df0129f0bbb8d329fcf18eb141df421f234fc88f2616c20732bf51de497c",
+      "fingerprint": "38b74db7f558cb41e7f7d8f5908f5965c3ef772f2b286113252bf94b6cc31fa7",
       "snapshot": {
-        "packages/molecules/skills/newui-molecules/SKILL.md": "1ec86755fd0819c9f231528ed1ea39d330836d4433130e11ba177f2e48edef5a",
+        "packages/molecules/skills/newui-molecules/SKILL.md": "e984f77c1d3601a1596d523d9531840f686f0c9fe29df49ac4fd679d07227a92",
         "packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx": "d175b641ca521a87bec7a44970c67af81affe93aff54508fe6ab717d8df09d38",
         "packages/molecules/src/molecules/Dialog/Dialog.tsx": "c56ebdef41e077097cf116179d59c62b19003b7092795be886697bc6adeda883",
         "packages/molecules/src/molecules/FormControl/FormControl.tsx": "a684ac76c09c6da14a248f5a132e274ee983f22df178b5c7d23d753fbc26f0ed",
         "packages/molecules/src/molecules/List/List.tsx": "f7e2e3545c9ccac1b86229494161ca9c3b33b417c7247e1d344e0375d98a26e5",
+        "packages/molecules/src/molecules/MessageListItem/MessageListItem.tsx": "4946cd621431815c0bfacde717433a0b3f319c980983fff32dbe39494575cbc0",
         "packages/molecules/src/molecules/Select/Select.tsx": "75f4f8070c6fff57df9b4f4a256346dab610f13cb2a829c8edf0c6bacfc72e4d",
         "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx": "6863b41b41ea35d769c8429d4ccd93fc1c34bf2a628deb08f41d4e0ac6771e41",
         "spec/form.md": "3298955343be0fbf9961396c8acb668ae3db6e25e146cb4e9256a6daea8c8f92",
         "spec/inputs.md": "c4bc011628cf4b6ceedfc5b6100a452317592ce1a88de8ce42ca3460c47fdde1"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "The final commits refine behavior the skill already teaches correctly: disabled-row recolor (ink-gray-6), a test-side Enter submit, and the source-region tab stop. The display-row guidance recorded earlier still holds.",
       "evidence": [
-        "Changed: packages/molecules/skills/newui-molecules/SKILL.md, packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx, packages/molecules/src/molecules/Dialog/Dialog.tsx, packages/molecules/src/molecules/FormControl/FormControl.tsx, packages/molecules/src/molecules/List/List.tsx, packages/molecules/src/molecules/Select/Select.tsx, packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx at 5f570d35290259928b4031afc573f334fd3872cb"
+        "packages/molecules/skills/newui-molecules/SKILL.md unchanged since the recorded update; changed sources are tests, a recipe-locked color value and generated data."
       ]
     },
     "skill:packages/organisms/skills/newui-organisms/SKILL.md": {
-      "fingerprint": "b263bf35825dd10e81954b8ac526b030c8ee231b6f99bd25ccd80cea64ae397e",
+      "fingerprint": "736963e4722fbbcd5e037caeab46e528018b9197fa71bbc71a7057368dd10f13",
       "snapshot": {
-        "packages/organisms/skills/newui-organisms/SKILL.md": "493b6fdfd7edc6c39e68ec744ab438b3e62b3e7af5b6719a3ac40bfd0778156e",
+        "packages/organisms/skills/newui-organisms/SKILL.md": "07f7e61fc8fe56ebb885e20d8ca0dab778a32226b594a9bbb0ad96b2fb3882e0",
         "packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx": "c4405af938e2ac2d1f168e7549bdbfbd34092ed4b86369f66faab66583d9f53a",
         "packages/organisms/src/organisms/DataState/DataState.tsx": "30b806f142ba8296b7fa71d75e6bb1d4e2d156cfcb409b8a1195e394127e0c00",
-        "packages/organisms/src/organisms/DataTable/DataTable.tsx": "c2d041a517f1c34834214eb33d0e742a404768a94da6eac2983ba8ea7c2c332c",
+        "packages/organisms/src/organisms/DataTable/DataTable.tsx": "5a11e762ab2a3144b78dbda2db50e473027e8c556236b454e8c43ebe797af68c",
         "packages/organisms/src/organisms/SelectionBar/SelectionBar.tsx": "be2e104d332a972a38cd5caf9c0f1ccf0869b96e59503bb1b3febf091e82aa46",
         "spec/data-table.md": "b3029eceeed2cb4635e273cf22963fd0f66db581c2aa855462ccd777bd22afe4",
         "spec/sidebar.md": "6223b8aed15ae25df389e4da402e4321e389fe08822ba184f8acac364bd4000f"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "DataTable change is behavioral (card-view bulk row renders only when a selection exists); the skill teaches composition, not per-state rendering.",
       "evidence": [
-        "Changed: packages/organisms/skills/newui-organisms/SKILL.md, packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx, packages/organisms/src/organisms/DataState/DataState.tsx, packages/organisms/src/organisms/DataTable/DataTable.tsx, packages/organisms/src/organisms/SelectionBar/SelectionBar.tsx, spec/data-table.md, spec/sidebar.md at 5f570d35290259928b4031afc573f334fd3872cb"
+        "packages/organisms/skills/newui-organisms/SKILL.md documents DataTable composition and sources; no guidance statement is invalidated by the bulk-row gating."
       ]
     },
     "skill:packages/templates/skills/newui-templates/SKILL.md": {
-      "fingerprint": "d5ad76a3906df00ee4c6029e3be1a80a72c2db1156b651a2b7fa522e239a6e79",
+      "fingerprint": "32330b2304853288c1832b471c4bae6b332725ceb5c4c5635b15f262c1fa5a01",
       "snapshot": {
-        "packages/templates/skills/newui-templates/SKILL.md": "fe99e4483eab85c1f9500c931450430c4bd38dc2947ddcf19aa69efaf5350df8",
+        "packages/templates/skills/newui-templates/SKILL.md": "7010811fce8fc1e72268010b670fa0777adc6eef8e7c7e8c0da467cd7d8a8938",
         "packages/templates/src/templates/AppShell.tsx": "22259b08ab9f8bf375ba5db8a07779033e9289bbf8b6c9d8a9b746c72ce160ec",
-        "packages/templates/src/templates/AuthLayout.tsx": "240d81ab95e337b565b8e854255d38ddf11d1546c4f4fa12b1fe49b51962f34a",
+        "packages/templates/src/templates/AuthLayout.tsx": "f06d54d498158e426d001b03db560b1163451f753e5f0a142fc97d55017584e6",
         "packages/templates/src/templates/PaneLayout/PaneLayout.tsx": "6fe6ebc719b8bd06103712197ce5c29ff3186710fa9341ddfa872a089f0893db",
         "spec/adr/0013-atomic-packages-and-app-shell.md": "9b00e5a4eef17a55d3b8bcd3d35477a8faa0f4a4eddbf37bf96daf3c14eb83c5",
         "spec/app-shell.md": "0a41b0fc81391aea1313dce45e58774096f9e9ae8e80e771176437112fc0e2d4",
         "spec/auth-layout.md": "6d526afd73da49c2603271aa2a0428dd5e0f6cc43acb93cbec5d06c7bb864059",
         "spec/pane-layout.md": "255ad7ae7e3fd4973abb902321d3764cf07b1434e7561239f39940fc93eb4e49"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "AuthLayout's aside restyled from a saturated blue field to Cool Paper; the skill's AuthLayout guidance (canvas semantics, app-owned card) is unaffected.",
       "evidence": [
-        "Changed: packages/templates/skills/newui-templates/SKILL.md, packages/templates/src/templates/AppShell.tsx, packages/templates/src/templates/PaneLayout/PaneLayout.tsx, spec/adr/0013-atomic-packages-and-app-shell.md, spec/app-shell.md, spec/auth-layout.md at 5f570d35290259928b4031afc573f334fd3872cb"
+        "packages/templates/skills/newui-templates/SKILL.md line 71 describes AuthLayout behavior, not the aside palette; no guidance mentions the blue panel."
       ]
     },
     "source:.changeset/calendar-new.md": {
@@ -9188,39 +9187,39 @@
       ]
     },
     "source:apps/playground/src/generated/api/calendar.ts": {
-      "fingerprint": "6f54554cac0a743a1d018e3878669b0a4ce33a67fe554fb83444e30f5bb141f6",
+      "fingerprint": "f3a9b50eb9de55764e40eef344c6c5a400c9c6b34ab7dcfedb1310df271ce5c5",
       "snapshot": {
-        "apps/playground/src/generated/api/calendar.ts": "03cf45a78fa0f54b77cbdb8efcb5af0c430012d61d2ea5881d492433b10275ad"
+        "apps/playground/src/generated/api/calendar.ts": "217122dd16662fefcce0dcc5e0b44fc8a60354bb99e0f1232bc2297b5f4673d2"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/api/calendar.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/api/color-picker.ts": {
-      "fingerprint": "f541adc40cc473979cbaf5ab85234892f394291843a62b4bb09800b04afd23e1",
+      "fingerprint": "5e5474dd607393f3fc8adfa2171b9e24a84b9627f748fd7446a007bd406d1013",
       "snapshot": {
-        "apps/playground/src/generated/api/color-picker.ts": "f67dc947f5ac7b3db10c85bff3d5b4e3b7a33f9e71111b075e1dd987faf9659a"
+        "apps/playground/src/generated/api/color-picker.ts": "daba3f72613a63c460851e3ad54ce9c2ffc1485a67379ca6069306a6b4110625"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/api/color-picker.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/generated/api/time-range-picker.ts": {
-      "fingerprint": "8ebb3e4a313374714fc80533ccd5856bd132f48912485f2b2a0a4f242ac1831f",
+      "fingerprint": "b3a446d3b6a5e019f5c7615d929f75762009a4fd9b624d7dec5be587d1a62f61",
       "snapshot": {
-        "apps/playground/src/generated/api/time-range-picker.ts": "3e5c09948a061f6e7db844cc3f0143727e83665d827f6c220011c1f35e1818cc"
+        "apps/playground/src/generated/api/time-range-picker.ts": "be2f55073a3cf7fb839c86023d0bcdd16aec439ca7710acbe9db548ed06d5ac2"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
       "evidence": [
-        "Changed: apps/playground/src/generated/api/time-range-picker.ts at 5f570d35290259928b4031afc573f334fd3872cb"
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
       ]
     },
     "source:apps/playground/src/stories/calendar.stories.tsx": {
@@ -9521,6 +9520,906 @@
       "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
       "evidence": [
         "Changed: spec/time-range-picker.md at 5f570d35290259928b4031afc573f334fd3872cb"
+      ]
+    },
+    "source:.changeset/auth-layout-cool-paper.md": {
+      "fingerprint": "cd9ef241f6584bd58d06202ee8c46308db12fc973b1ed7f6589d94ff5003ee63",
+      "snapshot": {
+        ".changeset/auth-layout-cool-paper.md": "c4af0065ba90bf0179065f1c3d4044f71eef8c622598d28212d263df894148a3"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:.changeset/data-table-bulk-row.md": {
+      "fingerprint": "0d10e21bf5f82df3ea1c99d73b8ed21f11de2a4c4641d6e670310ab3aa397064",
+      "snapshot": {
+        ".changeset/data-table-bulk-row.md": "93ed5f592ebf25b09db183ccc7dd60e4586b6533e94bfe07d66b6d61bc4341b6"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:.changeset/file-card-new.md": {
+      "fingerprint": "04f4fbadd0da83ea4b4fc781824f57634914d47a5e159c70341b1690668f8f19",
+      "snapshot": {
+        ".changeset/file-card-new.md": "a6973be69d74bc46920725e9ca94d7a7869852e624c305bbfe6de7ec45a1eb66"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:.changeset/key-value-new.md": {
+      "fingerprint": "659583471fc36e0f1cf5526c25aa2a00bad369084942e44e4962a017d01353b3",
+      "snapshot": {
+        ".changeset/key-value-new.md": "355436dfbc0dd6fb8c2242026a7f291dd6418c02782dabffa82c87ec17530e8d"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:.changeset/message-list-item-new.md": {
+      "fingerprint": "ba018337fd2811ac6d3e8749440310834e61bc76230fe75ea6ca85583238e564",
+      "snapshot": {
+        ".changeset/message-list-item-new.md": "6a7af44e6ed965fcba29d3e9169163801490a5c11a1dd32cd749fc95965620bc"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:.changeset/notification-item-new.md": {
+      "fingerprint": "ef832f2abf13881b6e81f5267826ab40c1903fad8ccf5967f9e1d5d9ffb8a646",
+      "snapshot": {
+        ".changeset/notification-item-new.md": "224654206246d4d559defa3d9f63958b068ebec02f2981a080b908809f16c51e"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:.changeset/thread-row-new.md": {
+      "fingerprint": "1a8f44de041293cca05247f16eb9081c355f28134450d6f81f50fd63c81d7168",
+      "snapshot": {
+        ".changeset/thread-row-new.md": "31594341d8b852a5eea54b6a3e5af7baa1cce187ee0cbfaddbb526fc42451ba3"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:.changeset/toaster-docs.md": {
+      "fingerprint": "8821a7f4864d55b8e0330b7a96e5e93cb5c3045551c8e73741aa8d459fa16f35",
+      "snapshot": {
+        ".changeset/toaster-docs.md": "08bcb536f1a9f7733f9054e66ef54a12d312290342c24ef97123bc07fdbccadd"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/examples/BackToExamples.tsx": {
+      "fingerprint": "811aaffff82b42d772cc124dc9cb4db3421d99076b60fba67befdebee5e224d0",
+      "snapshot": {
+        "apps/playground/src/examples/BackToExamples.tsx": "142769df22c437590ec1c943fcaf441660368060d43cf351dc8023a25981449e"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/breadcrumbs.ts": {
+      "fingerprint": "c494833b7ae14872803402c0ef6c209cda123b961a2cf32670d8b75b252e8d0a",
+      "snapshot": {
+        "apps/playground/src/generated/api/breadcrumbs.ts": "06a3a5163f0079dd0bc9fef6797c20fef04f905a88a8f15aa39a29fdee2b09b1"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/code-editor.ts": {
+      "fingerprint": "8a8f2538bc52b40e045b0f3cb0bc3c79403ff9cee2c75096934941767abce674",
+      "snapshot": {
+        "apps/playground/src/generated/api/code-editor.ts": "36806d4f474ba1fc25cb910c7dfe8b7bbc0e3ecb4cb75a4d163cc6e65e16c74b"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/combobox.ts": {
+      "fingerprint": "7b34a131abf616fc7026b3a01315768034a0b336015612cc5b55dcfbe76eeb48",
+      "snapshot": {
+        "apps/playground/src/generated/api/combobox.ts": "7d609dd18f759632dd4f259924752dd42dddb0ff061d49796a63855f61ee0692"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/date-picker.ts": {
+      "fingerprint": "64ff6d0eaedf584bf492a87d22943bc1ec4b7e9972733c7de422231daa00b1c9",
+      "snapshot": {
+        "apps/playground/src/generated/api/date-picker.ts": "2169535d8104f4d3f9aedc0a073131ef5be52510a8482c0b843fce64731e47fc"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/date-range-picker.ts": {
+      "fingerprint": "7d02875ee1dff6e54e571032d9013a78d66fc11d37877a185ae972d663df059e",
+      "snapshot": {
+        "apps/playground/src/generated/api/date-range-picker.ts": "96b2db8f6ddcf60a18ac064f11d7abb39cea28d9f9c22937b6af77116c5f26a6"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/date-time-picker.ts": {
+      "fingerprint": "bc0109e82ca30c01a208144291e68d80b7114d3cbbec243da7a404f8d4eced4f",
+      "snapshot": {
+        "apps/playground/src/generated/api/date-time-picker.ts": "1c8e1ce5cb1e43ba135ec6e59635d793fa0b7553ff1f681a2167d0b09364bd78"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/duration.ts": {
+      "fingerprint": "44e1c0c48758fca585881e49497a420001b0891294712a70d347584850a864e0",
+      "snapshot": {
+        "apps/playground/src/generated/api/duration.ts": "8edd2a2c27adc9afd8bcc15a582360b0d03afca54f33380a5ed71cf4f42ab9bc"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/editor.ts": {
+      "fingerprint": "e8c66b33a37ad5aeb2efa747b64d63c0e860fe1b524b054e58b76e4f88cb5bf9",
+      "snapshot": {
+        "apps/playground/src/generated/api/editor.ts": "654580911183f7041ca9c711266b705560e47b55c32af446ecb013521b54b160"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/file-card.ts": {
+      "fingerprint": "9f208a0483b39f9f92de5b1f9f399fe95c5dfcfe808556b405da3c21099055cf",
+      "snapshot": {
+        "apps/playground/src/generated/api/file-card.ts": "726da41ecb07a4ed61e7cb042f81f0aa142f13d1d48fae08fb21222aaad66e66"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/file-uploader.ts": {
+      "fingerprint": "29f04bf0f55fb0d9a86a762edcb694e9931e52725c8c04cf8452267994a7c9a2",
+      "snapshot": {
+        "apps/playground/src/generated/api/file-uploader.ts": "d7ab57f52810ada7ca8454d24409cf989e8ce936c8101f2b4f5ebe075ee1b952"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/key-value.ts": {
+      "fingerprint": "f688d8f86e8b38f6dc10554536038dc3e812071dff43883b361650ebf77ca682",
+      "snapshot": {
+        "apps/playground/src/generated/api/key-value.ts": "858661e651c4e57fe7d87b30a2aaa7156abc9ff3b5d824d261d6f5db976458e1"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/message-list-item.ts": {
+      "fingerprint": "a6039fc3ba69bcda6c034ba05b479733869f4a674a8be365ee7e5411874d8f55",
+      "snapshot": {
+        "apps/playground/src/generated/api/message-list-item.ts": "2a070b82e569a82dea71812b42e31bff134c484107c6061cb5995b1c5e315d7f"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/mobile-nav.ts": {
+      "fingerprint": "43ae69eccf541ab08838f3ea6f2acf47911e23d19b0b965f43d87eb6e6828a1b",
+      "snapshot": {
+        "apps/playground/src/generated/api/mobile-nav.ts": "5ea3259b46674e7ba423b567ba21b8249347e20b415cc2ab72707d22a4ba775f"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/multi-select.ts": {
+      "fingerprint": "895dc23553b66d3697c6f639595d147f2188f6b3fd7dd30464ebf99c85256fdc",
+      "snapshot": {
+        "apps/playground/src/generated/api/multi-select.ts": "fa26c705f157b43a07e53a223a363d52ea792b7a86308a467a6a6e635d5415d3"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/notification-item.ts": {
+      "fingerprint": "eece05a48238698be3fd22e7d95028718016a2c8cdccf9f12ba154a2085e2c35",
+      "snapshot": {
+        "apps/playground/src/generated/api/notification-item.ts": "9fa125d4cf9bef98b92ffce8af243a8a59434a9df0f60bbe8425e57a3655a6a4"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/number-input.ts": {
+      "fingerprint": "79137384144017395bdfb11cbc986c138a9b59c21380b1c1e0ad7d7faf8bd26b",
+      "snapshot": {
+        "apps/playground/src/generated/api/number-input.ts": "c82b3b844d0bc010117d9326286dbad372c3ebef934f75fa92e0775e1aa7db31"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/pagination.ts": {
+      "fingerprint": "45bbbc56d78991e1f0cc7c0331f1d0685c122bdde9bee9fb2cd280e4522cfb11",
+      "snapshot": {
+        "apps/playground/src/generated/api/pagination.ts": "8a53423470eb5a5955b33fab46efd27c36d187fc3ea58b5ce931b281b1453803"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/progress-circle.ts": {
+      "fingerprint": "4beda9eb4841bcecffb8c527195fd37856aa27ace597c028ef9b98a0b96227ef",
+      "snapshot": {
+        "apps/playground/src/generated/api/progress-circle.ts": "284d654fe8275f987122e75397c0cf23e3d696893d47a89b98b4e69c0f8c02eb"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/progress.ts": {
+      "fingerprint": "1b58b971ae07a6c0e79e042bb09af34c03ff0e6327ed1a4fe002104e1785e6bd",
+      "snapshot": {
+        "apps/playground/src/generated/api/progress.ts": "c39d754ecd0b2300974f9e8bca85b461cecaa321a8d9e8bad7b40b2b3c6efaa6"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/radio-group.ts": {
+      "fingerprint": "38dcb2cac526865423f62702be5b42153693535724d703db61819095631848db",
+      "snapshot": {
+        "apps/playground/src/generated/api/radio-group.ts": "e969a217caf3dcbb5ee79e6d57c261a8331230847c92fcc01dad51e827e9f9bf"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/slider.ts": {
+      "fingerprint": "39a63a51dabcaa2160fac27c22f125221d02e3145a40c9acfc3dd28629c66df4",
+      "snapshot": {
+        "apps/playground/src/generated/api/slider.ts": "4b003e918490763c07e6f7d815d7debec89478bc262b8b8a08d41a167064d4b0"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/thread-row.ts": {
+      "fingerprint": "d5432a4f9f68c8df39d04a137a7260ca58f4dafe8a029f02184b97fc8f1aa0fa",
+      "snapshot": {
+        "apps/playground/src/generated/api/thread-row.ts": "786b4ff1906f54623288c33806d7210d35cedbfcd4e3871dd8b95d931c92cc86"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/time-picker.ts": {
+      "fingerprint": "1e05bfa416fd7f15c643a37de07c678551cda9bb2d4fff897c52716d36d68337",
+      "snapshot": {
+        "apps/playground/src/generated/api/time-picker.ts": "0bceed8cdc4efb1fa23a85f5364b65fd0875cc256d4f8e69222471d274373233"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/toaster.ts": {
+      "fingerprint": "f05f2e2de51f06deadec466dafe59526b8db49344ddb6802b6082eb7896d8d42",
+      "snapshot": {
+        "apps/playground/src/generated/api/toaster.ts": "a80e2af8edc61a1d1a82bfc7934a73d95fb6970030c4c24a05fa4316f4cce41e"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/api/toggle-group.ts": {
+      "fingerprint": "c7546e7c3d2603216dfb13726f0e1072b31265b06d81cd63becec95cf5d339cf",
+      "snapshot": {
+        "apps/playground/src/generated/api/toggle-group.ts": "41ed5fec9346dd9642ba422104ccf4afebc89539ab3f1cb5a29508ed667195f2"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/sources/pattern-analytics-widgets.json": {
+      "fingerprint": "40a1729590f1ac7b2e06ed722fa605e8c7cb82880efba903b27d4259c2f70f44",
+      "snapshot": {
+        "apps/playground/src/generated/sources/pattern-analytics-widgets.json": "d01ded3c2344238aec2d797fab788dc2aeffd9e7f108e6c7364a74666bd22914"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/sources/pattern-carousel.json": {
+      "fingerprint": "1176cd765fe08ca3a41a9662556435e7db08997b761d71971e4efb5fb3813831",
+      "snapshot": {
+        "apps/playground/src/generated/sources/pattern-carousel.json": "8bb04bdafa481c5e1c20f4b3ce0e03aea9683adb05b1c59c3d60b91bd6d4e26d"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/sources/pattern-command.json": {
+      "fingerprint": "5c66027e9df686b1e221a43a0330b0c96db7db07ec5d6ecea5caaf42250523bd",
+      "snapshot": {
+        "apps/playground/src/generated/sources/pattern-command.json": "b5db14ddbc9fb7323e7e0c72c006d1a6ebd86955ab1d0da4cb19ad704369e092"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/sources/pattern-forms.json": {
+      "fingerprint": "5e7e8de9babac7d3f8d217a53476251a919aa5348ed1e5859fd60fb1a528562d",
+      "snapshot": {
+        "apps/playground/src/generated/sources/pattern-forms.json": "d2538e99853f6d99456fdbc038277b83eabf264bc848cc807d6eeac56a96bebd"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/sources/pattern-layout.json": {
+      "fingerprint": "5598ad733c9fc017413be20b805eb5b882553d644e8850eea7568471e428df0f",
+      "snapshot": {
+        "apps/playground/src/generated/sources/pattern-layout.json": "ff20849b08302aaa58ea16443f5cdea145b8c6cea8af204b625e47cb492fb932"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/sources/pattern-navigation.json": {
+      "fingerprint": "8a22a56850bc813963979a297468ba8da2d0f574c3a3eba16e4b7e1e8642fb63",
+      "snapshot": {
+        "apps/playground/src/generated/sources/pattern-navigation.json": "78b45ba1f0cdd08b82fced25fb229adcdd1f2e0dff7cb97a241330e41fbaf573"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/sources/pattern-overlays.json": {
+      "fingerprint": "a86640759f3951e045d8f0be63b1606a54c050ff30fab6ebdd1e82e5102f6521",
+      "snapshot": {
+        "apps/playground/src/generated/sources/pattern-overlays.json": "61bf38ea7a4d2d0de34d18b9a38611b75e11547ce44849e94379b04d6f764e5f"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/generated/sources/pattern-verification.json": {
+      "fingerprint": "b906f33144d140bcae17171391f6445f9cd84ea79583aa63c2fde7e773e5d506",
+      "snapshot": {
+        "apps/playground/src/generated/sources/pattern-verification.json": "20b30b1d4aa67aa91850cb7e9ef387549394f9e48022122ac683051d7182e17a"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/lib/AppSilhouette.tsx": {
+      "fingerprint": "f1f4274c2eee3c5ee1dc83f1ca6c7716feaa55d8c1bec6ac4ec37fc0a7d66a3c",
+      "snapshot": {
+        "apps/playground/src/lib/AppSilhouette.tsx": "caef5026d4cb7f2f1e129f17b1adead15e51441bcb347a25752e61904d9fd3a7"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/lib/reference-examples.ts": {
+      "fingerprint": "975a0f7b2924a868c4d1453ff34d0c91b834d6a9b71c46b38e2c9e6d69a9b85c",
+      "snapshot": {
+        "apps/playground/src/lib/reference-examples.ts": "cbc9adb711e710cc41fe1e5a0c9e056a108a4e583de1168c7389abb0ad1d5882"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/stories/file-card.stories.tsx": {
+      "fingerprint": "63185998ccf979c7c30413acd07636ae0ca34a642a95d09682428664707948c4",
+      "snapshot": {
+        "apps/playground/src/stories/file-card.stories.tsx": "658076c3f00dae868afcb42faf26ec82cd43513c955afae8eda243a4ede39c35"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/stories/key-value.stories.tsx": {
+      "fingerprint": "f8f85df451df67382e9fd7cf31dc54be7a982a69a64cd3c93fbcc3cd423ec89b",
+      "snapshot": {
+        "apps/playground/src/stories/key-value.stories.tsx": "b9256fd76a453ab41115225f6e7e5a1a2ce0454c23bc1b0de30ab97e212e0aba"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/stories/message-list-item.stories.tsx": {
+      "fingerprint": "ced78336f1ed0051bf10934990c2b9b8f77a0b25c26d0e980e7df6e6b9b10fc9",
+      "snapshot": {
+        "apps/playground/src/stories/message-list-item.stories.tsx": "2ff830d0616c8d2ef01242d137c9519ba88b189de41b0cd8df7fb28c9cccccc8"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/stories/notification-item.stories.tsx": {
+      "fingerprint": "56991cdd71a93c33789361b100a45a75b0a28ac152e078fe878dc056adc1a526",
+      "snapshot": {
+        "apps/playground/src/stories/notification-item.stories.tsx": "8f9fb7d54a4ffd2ba38c347a6fc6fbd719869a2a7d741ea09e656144f9d99d2f"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/stories/thread-row.stories.tsx": {
+      "fingerprint": "613e3f825f7cb454ed3a839eea59cc7dc540847cbc6e2fbe37d95d7aebaac21d",
+      "snapshot": {
+        "apps/playground/src/stories/thread-row.stories.tsx": "a54a09a5e3c4c77ba20ac3f2af47534b09ff05db00474714fa0d644f093f0fcc"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/stories/toaster.stories.tsx": {
+      "fingerprint": "989d40a956f34054b0ac54386c91a1035cf7e84c5a9e93d6ea3a9cfeac56de87",
+      "snapshot": {
+        "apps/playground/src/stories/toaster.stories.tsx": "9752e6c9b0e6d706e4eed48abcc939fcb3e1c0282456fd90fdae11dbc2ec7cc7"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/atoms/src/atoms/KeyValue/KeyValue.test.tsx": {
+      "fingerprint": "898830db5c896c21c054c9b67d8441b1050f09b9d1559b3961d7c09e68fe69fc",
+      "snapshot": {
+        "packages/atoms/src/atoms/KeyValue/KeyValue.test.tsx": "e4ccf0f1195e3de05fac9e54bc457b4d6b03c7b4b61917684f05ba124da45c67"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/atoms/src/atoms/KeyValue/KeyValue.tsx": {
+      "fingerprint": "e5a7b5d022c2d2d133bfcc4214ff3cdb3cb5d890fd7b70311a87044bc2435f95",
+      "snapshot": {
+        "packages/atoms/src/atoms/KeyValue/KeyValue.tsx": "e9b3cb09425df77ddfafef055869aaf0874883fd18e60e7fc99fa2db55c4b379"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/atoms/src/atoms/KeyValue/index.ts": {
+      "fingerprint": "0192bbea3cecb6bd2f35d915e3bebed8d77b2a283a4321367ee3ee01279d9a77",
+      "snapshot": {
+        "packages/atoms/src/atoms/KeyValue/index.ts": "b5d31690d23682dfdae2ea3adfab0b0effdf0a8d13733032379ed76d8e98e86c"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/FileCard/FileCard.a11y.test.tsx": {
+      "fingerprint": "9eb87050467b4789a7e1f1c210eb253098b0c396ef7d9ffbc501592253f7f629",
+      "snapshot": {
+        "packages/molecules/src/molecules/FileCard/FileCard.a11y.test.tsx": "0c730c63978c279d055447ec0371241b419885b33b5edfa5ca8f77d4f110d28b"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/FileCard/FileCard.test.tsx": {
+      "fingerprint": "4c9c2c966cc12713f5acc0edbc304f94a6b6b02bc95eaaf99605affe196c2bd0",
+      "snapshot": {
+        "packages/molecules/src/molecules/FileCard/FileCard.test.tsx": "23387af36aab0ec18bb1d32f31eef9f7e7b1c39fe5b4c28498b977d689a8de88"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/FileCard/FileCard.tsx": {
+      "fingerprint": "719172a815f5b71765bc671bc6a1fb3f0a94bef56408b8685a7423e23ef192ae",
+      "snapshot": {
+        "packages/molecules/src/molecules/FileCard/FileCard.tsx": "c88bee2b627de8ba520ab56926ae9bf6dee38b076d50cb223769127fb70ba9d5"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/FileCard/index.ts": {
+      "fingerprint": "223aa00ed80bf0872fc34f4f46a7ae73e91a31bb55df8f5eb71447533d049479",
+      "snapshot": {
+        "packages/molecules/src/molecules/FileCard/index.ts": "419109719a070d8eb512946702a2589e6f8b5acc77ab8efd737888a416ef0ae4"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/MessageListItem/MessageListItem.a11y.test.tsx": {
+      "fingerprint": "9a0e59a5a6b5a227dee88bacc296fbe6fd9afaf5b61c53a1b7264a7c0f0c4760",
+      "snapshot": {
+        "packages/molecules/src/molecules/MessageListItem/MessageListItem.a11y.test.tsx": "ecab12352abd47a19ef9b54e6d98e622eef5b5bb951c7155473587f55c7429a7"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/MessageListItem/MessageListItem.test.tsx": {
+      "fingerprint": "467b281d2023eb1f5ea36b7e4e197a1c586a44781fd604c6d6a30c34b5a77c03",
+      "snapshot": {
+        "packages/molecules/src/molecules/MessageListItem/MessageListItem.test.tsx": "2e413f459c6b0ee1b402fbfe1148aafd42d5ceb4a9e20da1cefe46f4851ffd37"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/MessageListItem/index.ts": {
+      "fingerprint": "9156b5403cfe51122703163f380b3426c5b47047817e15e9fbc05c1205aa4fdb",
+      "snapshot": {
+        "packages/molecules/src/molecules/MessageListItem/index.ts": "d16d6906c767762000e69ab95a3b729cc96141851c3eece170931287a3600a54"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/NotificationItem/NotificationItem.a11y.test.tsx": {
+      "fingerprint": "57ab5e8e17d2e1f8b42afdc689a5a8306a4315a915e288bcb89eaff92ff5bed3",
+      "snapshot": {
+        "packages/molecules/src/molecules/NotificationItem/NotificationItem.a11y.test.tsx": "267ea1d98c006a52bc78c912899ea0a9394e4dcc2d11392adc5e75e7510f88bb"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/NotificationItem/NotificationItem.test.tsx": {
+      "fingerprint": "4d582b84809aab1e82bda612c5b3461c56873de072a5e70c193eb998e38b5dc6",
+      "snapshot": {
+        "packages/molecules/src/molecules/NotificationItem/NotificationItem.test.tsx": "b273b9e9666bdd4eed70b8f073061f251c02c00abb3a599754dcf8e3ead41782"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/NotificationItem/NotificationItem.tsx": {
+      "fingerprint": "0d0e8d148fc1a5b67593a82e8a4928fb2ff9f05b98a1bb8a68ea05a3a11e36af",
+      "snapshot": {
+        "packages/molecules/src/molecules/NotificationItem/NotificationItem.tsx": "b41f92a536371c89ab37c2f77ca4d92101413f16ef4b4b41500848d009cfd0ec"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/NotificationItem/index.ts": {
+      "fingerprint": "d27303a22fdaf21f1159515ce59fb646789c93300212c5a5e9754f2091b8588f",
+      "snapshot": {
+        "packages/molecules/src/molecules/NotificationItem/index.ts": "5c229fc8f18274625cdf9cbf4d94a88737644b0ee6cdde7cab71167c80223c49"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/ThreadRow/ThreadRow.a11y.test.tsx": {
+      "fingerprint": "6b29abc669a89b0493be124c597e0f39d915430b7be4e63f02ac79eefc0615e2",
+      "snapshot": {
+        "packages/molecules/src/molecules/ThreadRow/ThreadRow.a11y.test.tsx": "7ae589faa378945fa75d40a6b0af67104335b4a52cd89fb6f8b2560076149bef"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/ThreadRow/ThreadRow.test.tsx": {
+      "fingerprint": "9dab1381e462e244b61267e12019d8a20d9fd4919665d4ee1e28135b09ca3f01",
+      "snapshot": {
+        "packages/molecules/src/molecules/ThreadRow/ThreadRow.test.tsx": "cd823a40191f1af19e1d8a6e5e45dedf125437fb5e3451aef2c3af46fd87c5bd"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/ThreadRow/ThreadRow.tsx": {
+      "fingerprint": "2bf0955d8175218e8f806bfef2aecd4f8a65d77d5a74dc14df7ad713a9904227",
+      "snapshot": {
+        "packages/molecules/src/molecules/ThreadRow/ThreadRow.tsx": "a59d6c8a74e9a6a3754b4e37a4a349cbffd1dab282ec83e666d8d2414e81c16e"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:packages/molecules/src/molecules/ThreadRow/index.ts": {
+      "fingerprint": "8d04e10831be6bc2125c1a396baee649f75f9bc6a22295f3c07576e43d486d97",
+      "snapshot": {
+        "packages/molecules/src/molecules/ThreadRow/index.ts": "e8a1996a753b8a49b7eb3db1de288536c218176d637e2d5502f99901a8114d11"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:scripts/propsgen.ts": {
+      "fingerprint": "3583bea3f26089e76c59bc10e5d0bd9ffbbeacef6c354badef327c81c12001f0",
+      "snapshot": {
+        "scripts/propsgen.ts": "1a506a79f95ea2a4961b77d76dee50e889c38836c3772300f38bd84242b68f61"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:spec/file-card.md": {
+      "fingerprint": "709b4879515c8359bcf84d473aee610546ead3c4a2d26f317df566021677b884",
+      "snapshot": {
+        "spec/file-card.md": "c294734c42a525a7753afd8c34bb53b1e16969288f0da9cefc1c7145e8742972"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:spec/key-value.md": {
+      "fingerprint": "91426be2deb0baeb47a7d53e3e83c9161f49f049716fc0966d69dc6cdcbdf3c5",
+      "snapshot": {
+        "spec/key-value.md": "1af3c9aacf8e338d5fa15dd991e7d57b05581662deb360fe2178af422097f96f"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:spec/message-list-item.md": {
+      "fingerprint": "e29a07485552af7bd9974b21c7550761eb2452c59403984dcc394d79affc1c4a",
+      "snapshot": {
+        "spec/message-list-item.md": "0c8faa4af9447d5a8e9b94afd7366480651b37e2bae683f32de28ac38e9d173e"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:spec/notification-item.md": {
+      "fingerprint": "b15d4cbf676ee7dad0c056231b1ab4999685f3b32234ec7eeb570f88fcf617f6",
+      "snapshot": {
+        "spec/notification-item.md": "8376f96dd70fe24dd566c12938c7950209dde6e19d854dcc027e24b11ea71d25"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:spec/thread-row.md": {
+      "fingerprint": "7993c337e94460721416ffb347ca3e20f2815c6f5fc55fef4735beaaa91b9e57",
+      "snapshot": {
+        "spec/thread-row.md": "c238d068a8c3108faf52844e0bc73310c4610c83e9512b5eb0f46e96b0a04faf"
+      },
+      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "outcome": "no-change",
+      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+      ]
+    },
+    "source:apps/playground/src/lib/pattern-sources.ts": {
+      "fingerprint": "e6b0520e750a4db7fd51fa83435061c8635309733e75bd3b99e5ffb31cfa4723",
+      "snapshot": {
+        "apps/playground/src/lib/pattern-sources.ts": "a7c6f89a553174fc131e364fbeefaa83f50f35640b782339db7a21797e51c0e8"
+      },
+      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "outcome": "no-change",
+      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "evidence": [
+        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
       ]
     }
   }

@@ -6,6 +6,7 @@
     "lib/examples.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",
+    "examples/BackToExamples.tsx",
     "examples/Notice.tsx"
   ],
   "packages": [

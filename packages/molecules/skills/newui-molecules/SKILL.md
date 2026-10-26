@@ -6,8 +6,10 @@ description: >
   dates and times (DatePicker, DateRangePicker, TimePicker, TimeRangePicker,
   Calendar), overlays (Dialog, Popover, Menu, Dropdown, Toast), lists and tables
   (List, Table, ScrollTable, TagInput), or picking and transferring values
-  (TransferList). Use when the user mentions these components or asks for form
-  rows, pickers, menus or toasts in newui.
+  (TransferList), or display rows (FileCard, MessageListItem, ThreadRow,
+  NotificationItem). Use when the user mentions these components or asks for
+  form rows, pickers, menus, toasts, or list rows for files, mail, threads or
+  notifications in newui.
 metadata:
   type: core
   domain: ui
@@ -20,6 +22,7 @@ sources:
   - talelk/newui:packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx
   - talelk/newui:packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx
   - talelk/newui:packages/molecules/src/molecules/List/List.tsx
+  - talelk/newui:packages/molecules/src/molecules/MessageListItem/MessageListItem.tsx
   - talelk/newui:spec/form.md
   - talelk/newui:spec/inputs.md
 ---
@@ -85,6 +88,13 @@ props for exactly this.
 **`null` clears, `undefined` is ignored.** Field-style values use `null` as
 "no value" (`TimePicker`, `DatePicker`). Passing `undefined` leaves the
 control uncontrolled.
+
+**List rows carry their state in text, not colour alone.** `MessageListItem`
+and `ThreadRow` mark unread with heavier text plus a dot, and `selected` sets
+`aria-current` — never a colour-only state. `FileCard` keeps the open action
+and the actions apart: a button card must not carry `suffix` (interactive
+content cannot nest in a button); put the card's controls in siblings beside
+it, or use the `div` root and pass them through `suffix`.
 
 **Don't render a molecule's parts outside the molecule.** Carousel controls
 (`Carousel.Next`), `Toaster` regions and pickers read their family's context;

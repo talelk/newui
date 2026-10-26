@@ -16,6 +16,17 @@ import { Node, Project, type PropertySignature } from 'ts-morph'
 const root = process.cwd()
 const isCheck = process.argv.includes('--check')
 const outFile = path.join(root, 'api.json')
+
+/**
+ * DOM-lib symbols declared with string-literal names (`'aria-label'`) surface
+ * from the checker with their quotes attached; declared members drop them.
+ * Normalize once, or the same attribute lands in a table twice under both
+ * spellings.
+ */
+function symbolName(name: string): string {
+  const unquoted = name.replace(/^'(.*)'$/, '$1')
+  return unquoted
+}
 /** Every package that ships component/template props. `api.json` is keyed by
  * source path, so the site derives each entry's owner from its implementation. */
 const SOURCES = [
@@ -68,7 +79,7 @@ for (const sourceFile of project.getSourceFiles()) {
       const description = property.getJsDocs()[0]?.getDescription().trim()
       const defaultValue = defaultFor(property)
       return {
-        name: property.getName(),
+        name: symbolName(property.getName()),
         type: property.getTypeNode()?.getText() ?? 'unknown',
         optional: property.hasQuestionToken(),
         ...(description ? { description } : {}),
@@ -77,9 +88,10 @@ for (const sourceFile of project.getSourceFiles()) {
     })
     // Include inherited Field and recipe axes while leaving Solid's native DOM
     // attributes to its standard contract. Their source signatures stay intact.
-    const own = new Set(entries[name]?.map((member) => member.name))
+    const own = new Set(entries[name]?.map((member) => symbolName(member.name)))
     for (const symbol of iface.getType().getProperties()) {
-      if (own.has(symbol.getName())) continue
+      const inherited = symbolName(symbol.getName())
+      if (own.has(inherited)) continue
       const declaration = symbol.getDeclarations()[0]
       if (
         !declaration
@@ -95,7 +107,7 @@ for (const sourceFile of project.getSourceFiles()) {
         ? defaultFor(declaration)
         : undefined
       entries[name]?.push({
-        name: symbol.getName(),
+        name: inherited,
         type: Node.isPropertySignature(declaration)
           ? (declaration.getTypeNode()?.getText() ?? 'unknown')
           : symbol.getTypeAtLocation(iface).getText(iface),
@@ -120,7 +132,7 @@ for (const sourceFile of project.getSourceFiles()) {
         const defaultValue = defaultFor(property)
         return [
           {
-            name: symbol.getName(),
+            name: symbolName(symbol.getName()),
             type: property.getTypeNode()?.getText() ?? 'unknown',
             optional: symbol.isOptional(),
             ...(description ? { description } : {}),

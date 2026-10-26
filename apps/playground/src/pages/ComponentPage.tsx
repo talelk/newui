@@ -221,7 +221,9 @@ export function ComponentPage(): JSX.Element {
   usePageToc(() => (
     <Show
       when={entry()}
-      fallback={<TableOfContents entries={REFERENCE_SECTIONS} />}
+      /* An unknown slug has no sections to point at; a stub TOC on the
+         not-found state would promise content the page does not have. */
+      fallback={<TableOfContents entries={[]} />}
     >
       {(component) => (
         <ReferenceToc
@@ -322,7 +324,8 @@ export function ComponentPage(): JSX.Element {
                   {component().description}
                 </p>
                 <p class="text-caption text-ink-gray-7">
-                  {component().package} · {component().parts.length} parts
+                  {component().package} · {component().parts.length} part
+                  {component().parts.length === 1 ? '' : 's'}
                 </p>
                 <nav
                   aria-label="Reference sections"

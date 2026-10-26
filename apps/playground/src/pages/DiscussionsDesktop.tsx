@@ -22,6 +22,7 @@ import {
   Show,
   untrack,
 } from 'solid-js'
+import { BackToExamples } from '../examples/BackToExamples'
 import { COMMUNITIES, SPACES } from '../examples/discussion-fixtures'
 import {
   type createDiscussions,
@@ -33,6 +34,7 @@ import {
   unreadCount,
 } from '../examples/discussions'
 import { assetUrl, sitePath } from '../lib/base'
+import { ThemeMenu, ThemeMenuCompact } from '../shell/ThemeMenu'
 
 /**
  * Responsive workspace: a tenant/community switcher and all
@@ -444,6 +446,9 @@ export function DiscussionsDesktop(props: {
             onLogout={logout}
           />
         }
+        utilities={<ThemeMenu />}
+        utilitiesCollapsed={<ThemeMenuCompact />}
+        footer={<BackToExamples />}
       >
         <PageToolbar
           title={spaceLabel()}

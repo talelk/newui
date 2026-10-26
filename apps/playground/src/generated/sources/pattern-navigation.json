@@ -1,0 +1,39 @@
+{
+  "files": [
+    "patterns/Navigation.tsx",
+    "examples/Notice.tsx"
+  ],
+  "packages": [
+    "@solidjs/router",
+    "@talelk/newui-atoms",
+    "@talelk/newui-molecules",
+    "solid-js"
+  ],
+  "components": [
+    {
+      "name": "BottomSheet",
+      "slug": "bottom-sheet",
+      "href": "/molecules/bottom-sheet"
+    },
+    {
+      "name": "Button",
+      "slug": "button",
+      "href": "/atoms/button"
+    },
+    {
+      "name": "Dialog",
+      "slug": "dialog",
+      "href": "/molecules/dialog"
+    },
+    {
+      "name": "Menu",
+      "slug": "menu",
+      "href": "/molecules/menu"
+    },
+    {
+      "name": "TextInput",
+      "slug": "text-input",
+      "href": "/atoms/text-input"
+    }
+  ]
+}

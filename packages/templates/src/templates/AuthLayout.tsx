@@ -22,7 +22,9 @@ export function AuthLayout(props: AuthLayoutProps): JSX.Element {
       classList={{ 'lg:grid-cols-2': Boolean(props.aside) }}
     >
       <Show when={props.aside}>
-        <aside class="hidden flex-col justify-between bg-surface-blue-8 p-6 text-ink-base lg:flex">
+        {/* Cool Paper, not a saturated brand field: the One Signal Rule keeps
+            blue for the interactive moment, which the app's aside content owns. */}
+        <aside class="hidden flex-col justify-between border-s border-outline-gray-1 bg-surface-gray-2 p-6 text-ink-gray-9 lg:flex">
           {props.aside}
         </aside>
       </Show>

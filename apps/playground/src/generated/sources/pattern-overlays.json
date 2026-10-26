@@ -1,0 +1,32 @@
+{
+  "files": [
+    "patterns/Overlays.tsx"
+  ],
+  "packages": [
+    "@talelk/newui-atoms",
+    "@talelk/newui-molecules",
+    "solid-js"
+  ],
+  "components": [
+    {
+      "name": "BottomSheet",
+      "slug": "bottom-sheet",
+      "href": "/molecules/bottom-sheet"
+    },
+    {
+      "name": "Button",
+      "slug": "button",
+      "href": "/atoms/button"
+    },
+    {
+      "name": "Dialog",
+      "slug": "dialog",
+      "href": "/molecules/dialog"
+    },
+    {
+      "name": "TextInput",
+      "slug": "text-input",
+      "href": "/atoms/text-input"
+    }
+  ]
+}

@@ -8,9 +8,12 @@
     "examples/discussions.tsx",
     "examples/CreateDialog.tsx",
     "pages/DiscussionsDesktop.tsx",
-    "lib/base.ts"
+    "examples/BackToExamples.tsx",
+    "lib/base.ts",
+    "shell/ThemeMenu.tsx"
   ],
   "packages": [
+    "@solidjs/router",
     "@talelk/newui-atoms",
     "@talelk/newui-molecules",
     "@talelk/newui-organisms",

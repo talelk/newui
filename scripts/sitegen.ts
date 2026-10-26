@@ -31,6 +31,7 @@ import path from 'node:path'
 import { Node, Project, SyntaxKind } from 'ts-morph'
 import { APPLICATION_FILES } from '../apps/playground/src/lib/application-files'
 import { EXAMPLES } from '../apps/playground/src/lib/examples'
+import { PATTERNS } from '../apps/playground/src/lib/reference-examples'
 import { semanticColors } from '../packages/tokens/src/index.js'
 import { atomicOf } from './atomic'
 
@@ -71,9 +72,13 @@ const FAMILIES: Record<string, string> = {
   CollapsibleTrigger: 'Collapsible',
   CollapsibleContent: 'Collapsible',
   ColorPicker: 'ColorPicker',
+  FileCard: 'Display',
   IconButton: 'IconButton',
   Image: 'Image',
+  KeyValue: 'Display',
   Link: 'Link',
+  MessageListItem: 'Display',
+  NotificationItem: 'Display',
   PinInput: 'PinInput',
   PopoverRoot: 'Popover',
   MenuRoot: 'Menu',
@@ -81,6 +86,7 @@ const FAMILIES: Record<string, string> = {
   ScrollAreaRoot: 'ScrollArea',
   ScrollAreaViewport: 'ScrollArea',
   ScrollAreaScrollbar: 'ScrollArea',
+  ThreadRow: 'Display',
   TimeRangePicker: 'TimeRangePicker',
   TooltipRoot: 'Tooltip',
   TooltipTrigger: 'Tooltip',
@@ -121,7 +127,7 @@ const FAMILIES: Record<string, string> = {
   TabsTrigger: 'Tabs',
   TabsContent: 'Tabs',
   TimelineItem: 'Timeline',
-  ToastRegion: 'Toast',
+  ToastRegion: 'Toaster',
   ToggleGroupItem: 'ToggleGroup',
   TransferList: 'TransferList',
   TreeRoot: 'Tree',
@@ -220,6 +226,11 @@ const GROUPS: Record<string, string> = {
   Icon: 'Display',
   Text: 'Display',
   Card: 'Display',
+  KeyValue: 'Display',
+  FileCard: 'Display',
+  MessageListItem: 'Display',
+  ThreadRow: 'Display',
+  NotificationItem: 'Display',
   Divider: 'Display',
   Carousel: 'Display',
   EmptyState: 'Display',
@@ -261,7 +272,7 @@ const GROUPS: Record<string, string> = {
   ProgressCircle: 'Feedback',
   Spinner: 'Feedback',
   Skeleton: 'Feedback',
-  Toast: 'Feedback',
+  Toaster: 'Feedback',
 }
 
 const GROUP_ORDER = [
@@ -386,6 +397,7 @@ const SPEC_ALIASES: Record<string, string> = {
   DatePicker: 'datepicker',
   DateTimePicker: 'datetime-picker',
   TimePicker: 'timepicker',
+  Toaster: 'toast',
   MultiSelect: 'multiselect',
   FormControl: 'form',
   FormLabel: 'form',
@@ -445,8 +457,9 @@ const PURPOSE_OVERRIDES: Record<string, string> = {
   ErrorMessage: 'The inline error half of the labelling contract (P5).',
   TextInput: 'Single-line text value with the shared labelling contract.',
   Textarea: 'Multi-line text value with the shared labelling contract.',
-  Toast: 'Transient notifications, mounted once via the Toaster.',
-  VisuallyHidden: 'VisuallyHidden',
+  Toaster: 'The mounted host that renders a stack of toasts.',
+  VisuallyHidden:
+    'A wrapper that hides its children from sight, not from assistive tech.',
 }
 
 /** Compact summaries are derived from contracts, which remain authoritative. */
@@ -835,13 +848,24 @@ const sourcesOutDir = path.join(outDir, 'sources')
 if (!isCheck) rmSync(sourcesOutDir, { recursive: true, force: true })
 else if (existsSync(sourcesOutDir)) {
   for (const file of readdirSync(sourcesOutDir)) {
-    if (!Object.hasOwn(APPLICATION_FILES, file.replace(/\.json$/, '')))
+    const name = file.replace(/\.json$/, '')
+    if (!Object.hasOwn(APPLICATION_FILES, name) && !name.startsWith('pattern-'))
       stale.push(path.relative(root, path.join(sourcesOutDir, file)))
   }
 }
-for (const [slug, entry] of Object.entries(APPLICATION_FILES)) {
+/**
+ * One source manifest per surface: the local graph it pulls in, the packages
+ * it imports, and — for recipe patterns — the `@talelk/*` names it is built
+ * from, so a recipe page's "Built from" chips are generated, not curated.
+ */
+function manifestFor(entry: string): {
+  files: string[]
+  packages: string[]
+  components: string[]
+} {
   const visited = new Set<string>()
   const dependencies = new Set<string>()
+  const used = new Set<string>()
   function visit(relative: string) {
     if (visited.has(relative)) return
     visited.add(relative)
@@ -875,6 +899,11 @@ for (const [slug, entry] of Object.entries(APPLICATION_FILES)) {
             ? specifier.split('/').slice(0, 2).join('/')
             : (specifier.split('/')[0] ?? specifier),
         )
+        if (specifier.startsWith('@talelk/'))
+          for (const declaration of source.getImportDeclarations())
+            if (declaration.getModuleSpecifierValue() === specifier)
+              for (const named of declaration.getNamedImports())
+                used.add(named.getName())
         continue
       }
       const base = path.resolve(path.dirname(file), specifier)
@@ -895,9 +924,49 @@ for (const [slug, entry] of Object.entries(APPLICATION_FILES)) {
     }
   }
   visit(entry)
+  return {
+    files: [...visited],
+    packages: [...dependencies].sort(),
+    components: [...used].sort(),
+  }
+}
+
+for (const [slug, entry] of Object.entries(APPLICATION_FILES)) {
+  const { files, packages } = manifestFor(entry)
   write(
     path.join(outDir, 'sources', `${slug}.json`),
-    `${JSON.stringify({ files: [...visited], packages: [...dependencies].sort() }, null, 2)}\n`,
+    `${JSON.stringify({ files, packages }, null, 2)}\n`,
+  )
+}
+
+/** `analytics-widgets` → `AnalyticsWidgets`, the pattern module's file name. */
+const pascal = (part: string) => part.charAt(0).toUpperCase() + part.slice(1)
+for (const pattern of PATTERNS) {
+  const { files, packages, components } = manifestFor(
+    `patterns/${pattern.slug.split('-').map(pascal).join('')}.tsx`,
+  )
+  write(
+    path.join(outDir, 'sources', `pattern-${pattern.slug}.json`),
+    `${JSON.stringify(
+      {
+        files,
+        packages,
+        components: components.flatMap((name) => {
+          const entry = entries.find((candidate) => candidate.name === name)
+          return entry
+            ? [
+                {
+                  name,
+                  slug: entry.slug,
+                  href: `/${entry.atomic}s/${entry.slug}`,
+                },
+              ]
+            : []
+        }),
+      },
+      null,
+      2,
+    )}\n`,
   )
 }
 const packages = [

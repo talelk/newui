@@ -45,6 +45,11 @@ const TOP_LINKS: { title: string; href: string; section: string }[] = [
     section: 'Atoms',
   },
   {
+    title: 'Molecules',
+    href: sectionHref('Molecules', '/molecules'),
+    section: 'Molecules',
+  },
+  {
     title: 'Organisms',
     href: sectionHref('Organisms', '/organisms'),
     section: 'Organisms',

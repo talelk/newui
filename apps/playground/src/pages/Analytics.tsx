@@ -1,4 +1,3 @@
-import { useNavigate } from '@solidjs/router'
 import { Badge, Button, Skeleton, Switch } from '@talelk/newui-atoms'
 import {
   AreaChart,
@@ -79,7 +78,6 @@ function KpiLoadingCards(): JSX.Element {
 }
 
 export function Analytics(): JSX.Element {
-  const navigate = useNavigate()
   const chartTokens = useChartTokens()
   const [nav, setNav] = createSignal('Overview')
   const [region, setRegion] = createSignal('all')
@@ -372,8 +370,6 @@ export function Analytics(): JSX.Element {
               document
                 .getElementById('transactions')
                 ?.scrollIntoView({ block: 'start' })
-            if (label === 'Back to examples') navigate('/pages')
-            if (label === 'Component library') navigate('/atoms')
           }}
           items={[
             { label: 'Overview', icon: 'lucide-chart-no-axes-combined' },
@@ -382,8 +378,6 @@ export function Analytics(): JSX.Element {
               icon: 'lucide-receipt',
               count: unavailable() ? undefined : rows().length,
             },
-            { label: 'Back to examples', icon: 'lucide-layout-grid' },
-            { label: 'Component library', icon: 'lucide-shapes' },
           ]}
         />
       )}

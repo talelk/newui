@@ -1,0 +1,29 @@
+{
+  "files": [
+    "patterns/AnalyticsWidgets.tsx"
+  ],
+  "packages": [
+    "@talelk/newui-atoms",
+    "@talelk/newui-charts",
+    "@talelk/newui-data",
+    "@talelk/newui-molecules",
+    "solid-js"
+  ],
+  "components": [
+    {
+      "name": "Alert",
+      "slug": "alert",
+      "href": "/molecules/alert"
+    },
+    {
+      "name": "Button",
+      "slug": "button",
+      "href": "/atoms/button"
+    },
+    {
+      "name": "NumberCard",
+      "slug": "number-card",
+      "href": "/molecules/number-card"
+    }
+  ]
+}

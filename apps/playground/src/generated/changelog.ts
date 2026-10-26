@@ -199,4 +199,53 @@ export const RELEASED: ReleasedPackage[] = [
   }
 ]
 
-export const PENDING: PendingChange[] = []
+export const PENDING: PendingChange[] = [
+  {
+    "package": "@talelk/newui-newui-templates",
+    "bump": "patch",
+    "summary": "AuthLayout's desktop aside is Cool Paper with a hairline divider, not a saturated blue field — the One Signal Rule keeps blue for the interactive moment, which the app's aside content owns.",
+    "file": "auth-layout-cool-paper.md"
+  },
+  {
+    "package": "@talelk/newui-newui-organisms",
+    "bump": "patch",
+    "summary": "DataTable's card view shows the bulk-select row only once a selection exists: at zero it was a lone checkbox beside \"0 selected\".",
+    "file": "data-table-bulk-row.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "New `FileCard` molecule: one file as a tile — type icon, name, meta line, optional badge, selection state and app-owned `suffix` actions. Keep the open action and the actions apart: a button card must not carry `suffix`.",
+    "file": "file-card-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-atoms",
+    "bump": "minor",
+    "summary": "New `KeyValue` atom: one label/value pair for settings surfaces, with a horizontal default and a stacked `orientation=\"vertical\"`.",
+    "file": "key-value-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "New `MessageListItem` molecule: one conversation row — sender, subject, one-line preview, time, avatar, unread and selected states. Unread is carried by text weight and a dot, never colour alone.",
+    "file": "message-list-item-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "New `NotificationItem` molecule: one notification row — event icon, title, description, time, unread and selected states, with app-owned `suffix` controls.",
+    "file": "notification-item-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "New `ThreadRow` molecule: one discussion thread row — title, preview, reply/participant meta, time, avatar, unread and selected states.",
+    "file": "thread-row-new.md"
+  },
+  {
+    "package": "@talelk/newui-newui-molecules",
+    "bump": "minor",
+    "summary": "`ToastRegion` publishes its `ToastRegionProps`, so the Toaster family appears in the API tables, the site registry and ⌘K. No runtime behavior change.",
+    "file": "toaster-docs.md"
+  }
+]

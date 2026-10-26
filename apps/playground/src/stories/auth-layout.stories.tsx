@@ -76,7 +76,7 @@ export const Aside: Story = {
           <p class="text-section font-semibold">
             Your workspace, ready on day one.
           </p>
-          <p class="max-w-sm text-p-sm text-ink-base">
+          <p class="max-w-sm text-p-sm">
             Projects, billing and reports in one place. Sign in to pick up where
             your team left off.
           </p>

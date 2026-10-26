@@ -482,7 +482,10 @@ export function DataTable<T extends { id: string }>(
             data-slot="data-table-cards"
             class={`flex flex-col gap-2 p-card-pad-compact ${cardHiddenClass()}`}
           >
-            <Show when={selectable()}>
+            {/* The bulk row earns its place only once a selection exists: at
+                zero it is a lone checkbox beside "0 selected", and the cards'
+                own checkboxes are how a selection starts. */}
+            <Show when={selectable() && selected().length > 0}>
               <div class="flex items-center justify-between gap-2 px-1">
                 <Checkbox
                   aria-label={`Select all ${props.title} on this page`}

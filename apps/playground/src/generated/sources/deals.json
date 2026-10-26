@@ -7,6 +7,7 @@
     "lib/examples.ts",
     "shell/ThemeMenu.tsx",
     "shell/theme.ts",
+    "examples/BackToExamples.tsx",
     "examples/CreateDialog.tsx",
     "examples/deals-data.ts",
     "examples/Notice.tsx"

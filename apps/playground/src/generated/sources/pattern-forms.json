@@ -1,0 +1,37 @@
+{
+  "files": [
+    "patterns/Forms.tsx"
+  ],
+  "packages": [
+    "@talelk/newui-atoms",
+    "@talelk/newui-molecules",
+    "solid-js"
+  ],
+  "components": [
+    {
+      "name": "Alert",
+      "slug": "alert",
+      "href": "/molecules/alert"
+    },
+    {
+      "name": "Button",
+      "slug": "button",
+      "href": "/atoms/button"
+    },
+    {
+      "name": "Card",
+      "slug": "card",
+      "href": "/molecules/card"
+    },
+    {
+      "name": "Switch",
+      "slug": "switch",
+      "href": "/atoms/switch"
+    },
+    {
+      "name": "TextInput",
+      "slug": "text-input",
+      "href": "/atoms/text-input"
+    }
+  ]
+}

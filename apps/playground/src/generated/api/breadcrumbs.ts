@@ -11,7 +11,7 @@ export const API = {
       "description": "Ordered list of breadcrumb items, root first and current page last."
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true,
       "description": "Accessible name for the landmark. Defaults to `\"Breadcrumb\"`."
@@ -21,12 +21,6 @@ export const API = {
       "type": "string",
       "optional": true,
       "description": "Merged into the root `<nav>`."
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "optional": true,
-      "description": "Accessible name for the landmark. Defaults to `\"Breadcrumb\"`."
     }
   ]
 } as const

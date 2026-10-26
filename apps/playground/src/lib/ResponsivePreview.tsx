@@ -27,7 +27,7 @@ export interface PreviewSources {
 }
 
 /** Shared source panel; mounted on first use and retained while browsing Preview. */
-function SourcePanel(props: {
+export function SourcePanel(props: {
   sourceKey: string
   source: () => Promise<string | PreviewSources>
 }): JSX.Element {
@@ -145,9 +145,18 @@ function SourcePanel(props: {
               </details>
             )}
           </Show>
-          <pre class="max-h-[900px] overflow-auto border-t border-outline-gray-1 p-3 text-caption">
-            <code>{currentSource()}</code>
-          </pre>
+          {/* A scroll region whose content offers nothing focusable has to be
+              reachable from the keyboard (WCAG 2.1.1; same contract as
+              ScrollArea's viewport, which sets the same tab stop). */}
+          <div
+            // biome-ignore lint/a11y/noNoninteractiveTabindex: the source region has no focusable descendant, so this element is the tab stop (axe scrollable-region-focusable); ScrollArea's viewport sets the same one.
+            tabIndex={0}
+            class="max-h-[900px] overflow-auto border-t border-outline-gray-1"
+          >
+            <pre class="p-3 text-caption">
+              <code>{currentSource()}</code>
+            </pre>
+          </div>
         </Suspense>
       </ErrorBoundary>
     </div>

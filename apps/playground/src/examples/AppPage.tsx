@@ -7,6 +7,7 @@ import { createMemo, createSignal, type JSX } from 'solid-js'
 import { assetUrl, sitePath } from '../lib/base'
 import { EXAMPLES } from '../lib/examples'
 import { ThemeMenu, ThemeMenuCompact } from '../shell/ThemeMenu'
+import { BackToExamples } from './BackToExamples'
 
 /**
  * The page-level composition used by the application recipes.
@@ -152,6 +153,7 @@ export function AppPage(props: {
       }
       utilities={<ThemeMenu />}
       utilitiesCollapsed={<ThemeMenuCompact />}
+      footer={<BackToExamples />}
     >
       {props.children}
     </AppShell>

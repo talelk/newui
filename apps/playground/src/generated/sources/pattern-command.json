@@ -1,0 +1,33 @@
+{
+  "files": [
+    "patterns/Command.tsx"
+  ],
+  "packages": [
+    "@solidjs/router",
+    "@talelk/newui-atoms",
+    "@talelk/newui-molecules",
+    "solid-js"
+  ],
+  "components": [
+    {
+      "name": "Button",
+      "slug": "button",
+      "href": "/atoms/button"
+    },
+    {
+      "name": "Combobox",
+      "slug": "combobox",
+      "href": "/molecules/combobox"
+    },
+    {
+      "name": "Dialog",
+      "slug": "dialog",
+      "href": "/molecules/dialog"
+    },
+    {
+      "name": "KeyboardShortcut",
+      "slug": "keyboard-shortcut",
+      "href": "/atoms/keyboard-shortcut"
+    }
+  ]
+}

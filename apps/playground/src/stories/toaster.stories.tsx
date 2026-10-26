@@ -35,7 +35,7 @@ export function Demo() {
 }
 
 const meta = {
-  title: 'Molecules/Feedback/Toast',
+  title: 'Molecules/Feedback/Toaster',
   component: Demo,
   excludeStories: ['Demo'],
 } satisfies Meta<typeof Demo>

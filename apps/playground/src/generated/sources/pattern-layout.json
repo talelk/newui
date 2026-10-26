@@ -1,0 +1,16 @@
+{
+  "files": [
+    "patterns/Layout.tsx"
+  ],
+  "packages": [
+    "@talelk/newui-atoms",
+    "solid-js"
+  ],
+  "components": [
+    {
+      "name": "Button",
+      "slug": "button",
+      "href": "/atoms/button"
+    }
+  ]
+}

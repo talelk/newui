@@ -41,7 +41,7 @@ export const LADDER: LadderLevel[] = [
     "question": "What is this single element?",
     "unit": "atom",
     "package": "@talelk/newui-atoms",
-    "count": 27,
+    "count": 28,
     "href": "/atoms",
     "blurb": "One control or mark, with nothing else inside: a Button, an input, a Badge, the scroll viewport itself."
   },
@@ -51,7 +51,7 @@ export const LADDER: LadderLevel[] = [
     "question": "What is this interaction?",
     "unit": "molecule",
     "package": "@talelk/newui-molecules · @talelk/newui-charts",
-    "count": 51,
+    "count": 56,
     "href": "/molecules",
     "blurb": "Atoms assembled into one interaction: a field, a picker, a menu, a card, a chart legend."
   },

@@ -1,0 +1,21 @@
+{
+  "files": [
+    "patterns/Verification.tsx"
+  ],
+  "packages": [
+    "@talelk/newui-atoms",
+    "solid-js"
+  ],
+  "components": [
+    {
+      "name": "Button",
+      "slug": "button",
+      "href": "/atoms/button"
+    },
+    {
+      "name": "TextInput",
+      "slug": "text-input",
+      "href": "/atoms/text-input"
+    }
+  ]
+}

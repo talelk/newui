@@ -50,7 +50,7 @@ export const API = {
       "optional": true
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true,
       "description": "Accessible name for the grid when there is no visible label."
@@ -59,12 +59,6 @@ export const API = {
       "name": "class",
       "type": "string",
       "optional": true
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "optional": true,
-      "description": "Accessible name for the grid when there is no visible label."
     }
   ]
 } as const

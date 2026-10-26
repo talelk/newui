@@ -21,7 +21,7 @@ export const API = {
       "description": "A `lucide-*` string or a component (P11). Alone, it makes the cell square."
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true,
       "description": "Accessible name when the cell has only an icon."
@@ -35,12 +35,6 @@ export const API = {
       "name": "children",
       "type": "JSX.Element",
       "optional": true
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "optional": true,
-      "description": "Accessible name when the cell has only an icon."
     }
   ],
   "ToggleGroupProps": [
@@ -83,7 +77,7 @@ export const API = {
       "optional": true
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true,
       "description": "Accessible name for the group — it is a toolbar of related controls."
@@ -97,12 +91,6 @@ export const API = {
       "name": "children",
       "type": "JSX.Element",
       "optional": false
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "optional": true,
-      "description": "Accessible name for the group — it is a toolbar of related controls."
     }
   ]
 } as const

@@ -19,10 +19,12 @@ test('application preview preserves editing, comments and its document across al
   // of the frame's inner scroller, where a synthesized click cannot land.
   await task.focus()
   await task.press('Enter')
-  await app
-    .getByRole('textbox', { name: 'Task title', exact: false })
-    .fill('Review the shared task workflow')
-  await app.getByRole('button', { name: 'Save task details' }).click()
+  const title = app.getByRole('textbox', { name: 'Task title', exact: false })
+  await title.fill('Review the shared task workflow')
+  // Enter submits `task-detail-form`: at the mobile preset the dialog's Save
+  // button sits below the preview stage's fold, where a synthesized click
+  // cannot land — the keyboard path a real user has on the same form.
+  await title.press('Enter')
   // Saving the detail returns to the table; reopen the renamed task to comment.
   await app
     .getByRole('button', { name: 'Review the shared task workflow' })

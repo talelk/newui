@@ -41,7 +41,7 @@ export const API = {
       "description": "Placeholder shown while the document is empty."
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true,
       "description": "Accessible name for the editable surface."
@@ -51,12 +51,6 @@ export const API = {
       "type": "string",
       "optional": true,
       "description": "Root class fallthrough, merged last (P10)."
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "optional": true,
-      "description": "Accessible name for the editable surface."
     }
   ]
 } as const

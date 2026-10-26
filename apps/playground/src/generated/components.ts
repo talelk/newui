@@ -662,6 +662,18 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "FileCard",
+    "description": "One file as a tile: a type icon, a name, a meta line and room for the app's own actions.",
+    "slug": "file-card",
+    "group": "Display",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src",
+    "atomic": "molecule",
+    "parts": [],
+    "spec": "file-card",
+    "shipped": true
+  },
+  {
     "name": "Heading",
     "description": "A section or page title.",
     "slug": "heading",
@@ -718,6 +730,18 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "KeyValue",
+    "description": "One label/value pair: the row a settings page repeats for \"Email digests — Weekly\" and \"Plan — Team\".",
+    "slug": "key-value",
+    "group": "Display",
+    "package": "@talelk/newui-atoms",
+    "source": "packages/atoms/src",
+    "atomic": "atom",
+    "parts": [],
+    "spec": "key-value",
+    "shipped": true
+  },
+  {
     "name": "List",
     "description": "Composes aligned rows and cells for structured content.",
     "slug": "list",
@@ -734,6 +758,30 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "MessageListItem",
+    "description": "One conversation in a mailbox list: sender, subject, a one-line preview and its time.",
+    "slug": "message-list-item",
+    "group": "Display",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src",
+    "atomic": "molecule",
+    "parts": [],
+    "spec": "message-list-item",
+    "shipped": true
+  },
+  {
+    "name": "NotificationItem",
+    "description": "One notification in a feed or menu: an event icon, what happened, the affected record and its time.",
+    "slug": "notification-item",
+    "group": "Display",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src",
+    "atomic": "molecule",
+    "parts": [],
+    "spec": "notification-item",
+    "shipped": true
+  },
+  {
     "name": "Text",
     "description": "Body copy.",
     "slug": "text",
@@ -745,6 +793,18 @@ export const COMPONENTS: ComponentEntry[] = [
       "TextProps"
     ],
     "spec": "text",
+    "shipped": true
+  },
+  {
+    "name": "ThreadRow",
+    "description": "One discussion thread in a list: subject, a one-line preview, and its meta — replies and age.",
+    "slug": "thread-row",
+    "group": "Display",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src",
+    "atomic": "molecule",
+    "parts": [],
+    "spec": "thread-row",
     "shipped": true
   },
   {
@@ -777,7 +837,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "VisuallyHidden",
-    "description": "VisuallyHidden",
+    "description": "A wrapper that hides its children from sight, not from assistive tech.",
     "slug": "visually-hidden",
     "group": "Display",
     "package": "@talelk/newui-atoms",
@@ -857,6 +917,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "SpinnerProps"
     ],
     "spec": "spinner",
+    "shipped": true
+  },
+  {
+    "name": "Toaster",
+    "description": "The mounted host that renders a stack of toasts.",
+    "slug": "toaster",
+    "group": "Feedback",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src/molecules/Toast",
+    "atomic": "molecule",
+    "parts": [
+      "ToastRegionProps"
+    ],
+    "spec": "toast",
     "shipped": true
   },
   {

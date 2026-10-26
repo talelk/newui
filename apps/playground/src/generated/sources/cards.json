@@ -5,7 +5,8 @@
     "lib/base.ts",
     "lib/examples.ts",
     "shell/ThemeMenu.tsx",
-    "shell/theme.ts"
+    "shell/theme.ts",
+    "examples/BackToExamples.tsx"
   ],
   "packages": [
     "@solidjs/router",

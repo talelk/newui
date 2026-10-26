@@ -28,17 +28,12 @@ export const API = {
       "description": "Content in the middle: a percentage, a count, an icon."
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true
     },
     {
       "name": "class",
-      "type": "string",
-      "optional": true
-    },
-    {
-      "name": "aria-label",
       "type": "string",
       "optional": true
     }

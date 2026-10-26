@@ -69,8 +69,10 @@ skills:
           (DatePicker, DateRangePicker, TimePicker, TimeRangePicker, Calendar),
           overlays (Dialog, Popover, Menu, Dropdown, Toast), lists and tables
           (List, Table, ScrollTable, TagInput), or picking and transferring
-          values (TransferList). Use when the user mentions these components or
-          asks for form rows, pickers, menus or toasts in newui.\n",
+          values (TransferList), or display rows (FileCard, MessageListItem,
+          ThreadRow, NotificationItem). Use when the user mentions these
+          components or asks for form rows, pickers, menus, toasts, or list rows
+          for files, mail, threads or notifications in newui.\n",
         sources:
           [
             talelk/newui:packages/molecules/src/molecules/Dialog/Dialog.tsx,
@@ -79,6 +81,7 @@ skills:
             talelk/newui:packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx,
             talelk/newui:packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx,
             talelk/newui:packages/molecules/src/molecules/List/List.tsx,
+            talelk/newui:packages/molecules/src/molecules/MessageListItem/MessageListItem.tsx,
             talelk/newui:spec/form.md,
             talelk/newui:spec/inputs.md
           ],

@@ -1,0 +1,27 @@
+{
+  "files": [
+    "patterns/Carousel.tsx"
+  ],
+  "packages": [
+    "@talelk/newui-atoms",
+    "@talelk/newui-molecules",
+    "solid-js"
+  ],
+  "components": [
+    {
+      "name": "Button",
+      "slug": "button",
+      "href": "/atoms/button"
+    },
+    {
+      "name": "Select",
+      "slug": "select",
+      "href": "/molecules/select"
+    },
+    {
+      "name": "Switch",
+      "slug": "switch",
+      "href": "/atoms/switch"
+    }
+  ]
+}

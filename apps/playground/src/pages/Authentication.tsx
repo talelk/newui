@@ -169,6 +169,14 @@ export function Authentication(): JSX.Element {
               Your projects, customers and numbers. One thoughtfully composed
               workspace, built around your team.
             </p>
+            {/* The panel's one Signal-Blue moment: a real link, not decoration. */}
+            <A
+              href="/pages"
+              class="mt-6 flex w-fit items-center gap-1.5 rounded-3 text-interface text-ink-blue-link underline decoration-dotted underline-offset-2 focus-visible:focus-ring"
+            >
+              Browse the demo applications
+              <span aria-hidden="true" class="lucide-arrow-right size-4" />
+            </A>
           </div>
           <p class="text-caption">Acme workspace · Authentication example</p>
         </>
@@ -363,6 +371,10 @@ export function Authentication(): JSX.Element {
           </Form>
           <Button
             variant="ghost"
+            /* Ghost inside the card reads as body text; the underline is the
+               affordance that says this is a control (and a screen reader's
+               labelled button alone does not help low-vision sighted users). */
+            class="underline decoration-dotted underline-offset-2"
             onClick={() => changeMode(mode() === 'link' ? 'login' : 'link')}
           >
             {mode() === 'link'

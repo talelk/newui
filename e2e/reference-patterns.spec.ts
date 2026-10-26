@@ -116,12 +116,16 @@ test('carousel supports buttons, vertical layout and keyboard position', async (
 }) => {
   await page.goto('/kit/recipes/carousel')
   await page.getByRole('button', { name: 'Next slide', exact: true }).click()
-  await expect(page.getByRole('status')).toContainText('Slide 2 of 5')
+  await expect(
+    page.getByRole('status').filter({ hasText: 'Slide 2 of 5' }),
+  ).toBeVisible()
   await page.getByRole('combobox', { name: 'Orientation', exact: true }).click()
   await page.getByRole('option', { name: 'Vertical', exact: true }).click()
   await page.getByRole('region', { name: 'Slides', exact: true }).focus()
   await page.keyboard.press('End')
-  await expect(page.getByRole('status')).toContainText('Slide 5 of 5')
+  await expect(
+    page.getByRole('status').filter({ hasText: 'Slide 5 of 5' }),
+  ).toBeVisible()
 })
 
 test('command palette searches and opens a destination with the keyboard', async ({
@@ -149,7 +153,9 @@ test('verification accepts pasted digits and reports errors and success', async 
     .getByRole('textbox', { name: 'Verification code', exact: false })
     .fill('123456')
   await page.getByRole('button', { name: 'Verify code', exact: true }).click()
-  await expect(page.getByRole('status')).toContainText('Code verified')
+  await expect(
+    page.getByRole('status').filter({ hasText: 'Code verified' }),
+  ).toBeVisible()
 })
 
 test('the multi-step form validates, reviews and completes', async ({
@@ -158,7 +164,9 @@ test('the multi-step form validates, reviews and completes', async ({
   await page.goto('/kit/recipes/forms')
   await page.getByRole('button', { name: 'Continue', exact: true }).click()
   await expect(
-    page.getByText('Enter a workspace name to continue.'),
+    page.getByRole('alert').filter({
+      hasText: 'Enter a workspace name to continue.',
+    }),
   ).toBeVisible()
 
   await page.getByRole('textbox', { name: 'Workspace name' }).fill('Northstar')
@@ -172,9 +180,9 @@ test('the multi-step form validates, reviews and completes', async ({
     page.getByText('team@northstar.test', { exact: true }),
   ).toBeVisible()
   await page.getByRole('button', { name: 'Create workspace' }).click()
-  await expect(page.getByRole('status')).toContainText(
-    'Workspace setup complete',
-  )
+  await expect(
+    page.getByRole('status').filter({ hasText: 'Workspace setup complete' }),
+  ).toBeVisible()
 })
 
 test('enterprise overlays cover confirmation, form dialog and mobile sheet', async ({

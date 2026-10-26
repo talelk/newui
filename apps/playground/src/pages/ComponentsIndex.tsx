@@ -1,12 +1,65 @@
 import { A, useLocation } from '@solidjs/router'
 import { Icon } from '@talelk/newui-atoms'
-import { createMemo, createSignal, type JSX, Show } from 'solid-js'
+import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { COMPONENTS, GROUPS } from '../generated/components'
 import { ATOMIC, levelOf } from '../lib/atomic'
 import { stripBase } from '../lib/base'
 import { CatalogList } from '../lib/CatalogList'
 import { groupEntries } from '../lib/catalog'
 import { PageIntro } from '../shell/PageIntro'
+
+/**
+ * The three page frames, drawn: a spatial product shown spatially. One-inch
+ * wireframes in 1px borders, so the index answers "what does this frame look
+ * like" without mounting three applications.
+ */
+const TEMPLATE_SHAPES: { name: string; href: string; shape: JSX.Element }[] = [
+  {
+    name: 'AppShell',
+    href: '/templates/app-shell',
+    shape: (
+      <>
+        <span class="flex min-h-0 flex-1 gap-1.5">
+          <span class="w-1/4 rounded-3 border border-outline-gray-1 bg-surface-gray-2" />
+          <span class="flex min-h-0 flex-1 flex-col gap-1.5">
+            <span class="h-3 rounded-3 border border-outline-gray-1" />
+            <span class="h-1.5 w-2/3 rounded-1 bg-surface-gray-3" />
+            <span class="h-1.5 w-1/2 rounded-1 bg-surface-gray-3" />
+          </span>
+        </span>
+      </>
+    ),
+  },
+  {
+    name: 'PaneLayout',
+    href: '/templates/pane-layout',
+    shape: (
+      <span class="flex min-h-0 flex-1 gap-1.5">
+        <span class="flex min-h-0 flex-1 flex-col justify-center gap-1.5 rounded-3 border border-outline-gray-1 p-1.5">
+          <span class="h-1.5 w-full rounded-1 bg-surface-gray-3" />
+          <span class="h-1.5 w-3/4 rounded-1 bg-surface-gray-3" />
+        </span>
+        <span class="flex min-h-0 flex-1 flex-col justify-center gap-1.5 rounded-3 border border-outline-gray-1 p-1.5">
+          <span class="h-1.5 w-3/4 rounded-1 bg-surface-gray-3" />
+          <span class="h-1.5 w-full rounded-1 bg-surface-gray-3" />
+        </span>
+      </span>
+    ),
+  },
+  {
+    name: 'AuthLayout',
+    href: '/templates/auth-layout',
+    shape: (
+      <span class="flex min-h-0 flex-1 items-center justify-center rounded-3 border border-outline-gray-1 p-2">
+        <span class="flex w-1/2 flex-col gap-1 rounded-3 border border-outline-gray-1 bg-surface-gray-2 p-1.5">
+          <span class="h-1.5 w-2/3 rounded-1 bg-surface-gray-4" />
+          <span class="h-1.5 w-full rounded-1 bg-surface-gray-3" />
+          <span class="h-2 w-full rounded-2 bg-surface-gray-5" />
+        </span>
+      </span>
+    ),
+  },
+]
 
 /**
  * One atomic level's index: every entry filed under it, grouped by purpose.
@@ -67,6 +120,35 @@ export function ComponentsIndex(): JSX.Element {
         </section>
       </Show>
 
+      <Show when={level() === 'template'}>
+        <section class="mb-6 flex flex-col gap-3" aria-label="Template layouts">
+          <div class="grid gap-3 sm:grid-cols-3">
+            <For each={TEMPLATE_SHAPES}>
+              {(shape) => (
+                <A
+                  href={shape.href}
+                  class="group flex flex-col gap-2 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
+                >
+                  <span
+                    aria-hidden="true"
+                    class="flex aspect-[16/9] w-full flex-col gap-1.5 rounded-3 border border-outline-gray-1 bg-surface-base p-2"
+                  >
+                    {shape.shape}
+                  </span>
+                  <span class="flex items-center gap-1.5 text-interface font-medium text-ink-gray-9">
+                    {shape.name}
+                    <span
+                      aria-hidden="true"
+                      class="lucide-arrow-up-right size-3.5 text-ink-gray-7 transition-colors group-hover:text-ink-gray-9"
+                    />
+                  </span>
+                </A>
+              )}
+            </For>
+          </div>
+        </section>
+      </Show>
+
       <label class="relative mb-6 flex max-w-sm items-center">
         <span class="sr-only">Filter {meta().label.toLowerCase()}</span>
         <Icon
@@ -86,16 +168,11 @@ export function ComponentsIndex(): JSX.Element {
         sections={grouped()}
         href={(entry) => `${meta().href}/${entry.slug}`}
         trailing={(entry) => (
-          <>
-            <Show when={entry.parts.length > 0}>
-              <span class="shrink-0 text-xs text-ink-gray-7">
-                {entry.parts.length} part{entry.parts.length === 1 ? '' : 's'}
-              </span>
-            </Show>
-            <span class="hidden text-caption text-ink-gray-7 sm:block">
-              {entry.spec ? 'Has a contract' : 'Props only'}
+          <Show when={entry.parts.length > 0}>
+            <span class="shrink-0 text-xs text-ink-gray-7">
+              {entry.parts.length} part{entry.parts.length === 1 ? '' : 's'}
             </span>
-          </>
+          </Show>
         )}
       />
     </>

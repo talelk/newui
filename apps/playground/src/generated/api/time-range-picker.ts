@@ -70,17 +70,12 @@ export const API = {
       "optional": true
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true
     },
     {
       "name": "class",
-      "type": "string",
-      "optional": true
-    },
-    {
-      "name": "aria-label",
       "type": "string",
       "optional": true
     }

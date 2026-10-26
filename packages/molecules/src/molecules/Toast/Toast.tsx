@@ -157,11 +157,16 @@ function ToastItem(props: {
   )
 }
 
-/** Renders a toaster's stack. Mount once, near the app root. */
-export function ToastRegion(props: {
+/** Props for `ToastRegion`, the portal that renders one toaster's stack. */
+export interface ToastRegionProps {
+  /** The toaster store whose visible toasts this region renders. */
   toaster: ToasterApi
+  /** Extra classes merged onto the region container. */
   class?: string
-}): JSX.Element {
+}
+
+/** Renders a toaster's stack. Mount once, near the app root. */
+export function ToastRegion(props: ToastRegionProps): JSX.Element {
   const { service: groupService, api } = createZagApi<
     ToastGroupApi,
     zagToast.GroupService

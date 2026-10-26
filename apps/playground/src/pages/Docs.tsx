@@ -75,7 +75,8 @@ export function Docs(): JSX.Element {
                   </A>
                 </td>
                 <td class="p-2 font-mono text-xs">
-                  @talelk/newui-tailwind · @talelk/newui-tokens
+                  <span class="whitespace-nowrap">@talelk/newui-tailwind</span>{' '}
+                  · <span class="whitespace-nowrap">@talelk/newui-tokens</span>
                 </td>
                 <td class="p-2 text-ink-gray-7">
                   the tokens and the Tailwind layer — every class is spelled in
@@ -92,7 +93,8 @@ export function Docs(): JSX.Element {
                   </A>{' '}
                 </td>
                 <td class="p-2 font-mono text-xs">
-                  @talelk/newui-atoms · @talelk/newui-icons
+                  <span class="whitespace-nowrap">@talelk/newui-atoms</span> ·{' '}
+                  <span class="whitespace-nowrap">@talelk/newui-icons</span>
                 </td>
                 <td class="p-2 text-ink-gray-7">
                   single controls and marks; Zag supplies keyboard, focus and
@@ -166,10 +168,12 @@ export function Docs(): JSX.Element {
           downloads, and the query/form logic under their own entries. Rendered
           tables and virtual lists are organisms, not data helpers.
         </p>
-        <Code>{`pnpm add @talelk/newui-atoms @talelk/newui-molecules @talelk/newui-tailwind @talelk/newui-icons
+        <Code>{`pnpm add @talelk/newui-atoms @talelk/newui-molecules \\
+  @talelk/newui-tailwind @talelk/newui-icons
 
 # the composed levels and the logic layer
-pnpm add @talelk/newui-organisms @talelk/newui-templates @talelk/newui-data`}</Code>
+pnpm add @talelk/newui-organisms @talelk/newui-templates \\
+  @talelk/newui-data`}</Code>
         <p class="text-base text-ink-gray-7">
           Add{' '}
           <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">

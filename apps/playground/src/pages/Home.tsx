@@ -9,6 +9,7 @@ import {
   Show,
   Suspense,
 } from 'solid-js'
+import { LADDER_COUNTS } from '../generated/counts'
 import { LADDER } from '../generated/ladder'
 
 /**
@@ -76,18 +77,58 @@ function PreviewSection(): JSX.Element {
           when={visible()}
           fallback={
             <div class="grid min-h-44 place-items-center rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-4">
-              <p class="flex flex-col items-center gap-2 text-center">
-                <span class="text-caption text-ink-gray-7">
-                  Live controls load as you scroll — the page stays light until
-                  then.
-                </span>
-                <A
-                  href="/atoms"
-                  class="rounded-3 text-interface text-ink-blue-link underline decoration-dotted focus-visible:focus-ring"
-                >
-                  Browse the live components
-                </A>
-              </p>
+              <div class="flex w-full flex-col items-center gap-3">
+                {/*
+                  A static wireframe of what loads: a metric, a table, a chart.
+                  Markup and tokens only, so the placeholder costs nothing and
+                  never reads as an empty box.
+                */}
+                <div aria-hidden="true" class="flex w-full max-w-xl gap-3">
+                  <div class="flex flex-1 flex-col gap-2 rounded-3 border border-outline-gray-1 bg-surface-base p-3">
+                    <span class="h-1.5 w-10 rounded-1 bg-surface-gray-4" />
+                    <span class="h-3 w-14 rounded-1 bg-surface-gray-3" />
+                    <span class="h-1.5 w-8 rounded-1 bg-surface-gray-4" />
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between gap-1.5 rounded-3 border border-outline-gray-1 bg-surface-base p-3">
+                    <For each={[0, 1, 2, 3]}>
+                      {() => (
+                        <span class="flex items-center gap-1.5">
+                          <span class="size-1.5 rounded-full bg-surface-gray-4" />
+                          <span class="h-1.5 flex-1 rounded-1 bg-surface-gray-3" />
+                          <span class="h-1.5 w-6 rounded-1 bg-surface-gray-4" />
+                        </span>
+                      )}
+                    </For>
+                  </div>
+                  <div class="flex flex-1 items-end gap-1 rounded-3 border border-outline-gray-1 bg-surface-base p-3">
+                    <For
+                      each={['h-4', 'h-7', 'h-5', 'h-9', 'h-6', 'h-8', 'h-10']}
+                    >
+                      {(height, index) => (
+                        <span
+                          class={`w-full flex-1 rounded-1 ${height} ${
+                            index() === 6
+                              ? 'bg-surface-gray-5'
+                              : 'bg-surface-gray-3'
+                          }`}
+                        />
+                      )}
+                    </For>
+                  </div>
+                </div>
+                <p class="flex flex-col items-center gap-2 text-center">
+                  <span class="text-caption text-ink-gray-7">
+                    Live controls load as you scroll: the page stays light until
+                    then.
+                  </span>
+                  <A
+                    href="/atoms"
+                    class="rounded-3 text-interface text-ink-blue-link underline decoration-dotted focus-visible:focus-ring"
+                  >
+                    Browse the live components
+                  </A>
+                </p>
+              </div>
             </div>
           }
         >
@@ -119,7 +160,7 @@ const RULES: { title: string; body: string }[] = [
   },
   {
     title: 'Semantic tokens only',
-    body: 'surface-*, ink-*, outline-* — never a raw palette step and never a hex. Light/dark is one document attribute, so both themes come free.',
+    body: 'surface-*, ink-*, outline-*: never a raw palette step and never a hex. Light/dark is one document attribute, so both themes come free.',
   },
   {
     title: 'Zag supplies the behaviour',
@@ -141,10 +182,22 @@ export function Home(): JSX.Element {
         </p>
         <pre class="w-fit max-w-full whitespace-pre-wrap break-words rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
           <code>
-            pnpm add @talelk/newui-atoms @talelk/newui-molecules
+            pnpm add @talelk/newui-atoms @talelk/newui-molecules \
             @talelk/newui-tailwind
           </code>
         </pre>
+        <p class="flex flex-wrap items-baseline gap-x-5 gap-y-1 text-caption tabular-nums text-ink-gray-7">
+          <span>{LADDER_COUNTS.atoms} atoms</span>
+          <span>{LADDER_COUNTS.molecules} molecules</span>
+          <span>{LADDER_COUNTS.organisms} organisms</span>
+          <span>{LADDER_COUNTS.templates} templates</span>
+          <A
+            href="/pages"
+            class="rounded-3 text-ink-blue-link underline decoration-dotted focus-visible:focus-ring"
+          >
+            {LADDER_COUNTS.pages} complete apps
+          </A>
+        </p>
       </header>
 
       <section class="flex flex-col gap-4">
@@ -185,8 +238,7 @@ export function Home(): JSX.Element {
                       </span>
                     </div>
                     <p class="mt-1 text-caption text-ink-gray-7">
-                      <span class="italic">{level.question}</span> —{' '}
-                      {level.blurb}
+                      <span class="italic">{level.question}</span> {level.blurb}
                     </p>
                   </div>
                   <span

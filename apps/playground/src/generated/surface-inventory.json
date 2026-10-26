@@ -1264,6 +1264,39 @@
   },
   {
     "package": "@talelk/newui-atoms",
+    "name": "keyValue",
+    "implementation": "packages/atoms/src/atoms/KeyValue/KeyValue.tsx",
+    "documentation": "/atoms/key-value",
+    "contract": "spec/key-value.md",
+    "tests": [
+      "packages/atoms/src/atoms/KeyValue/KeyValue.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "KeyValue",
+    "implementation": "packages/atoms/src/atoms/KeyValue/KeyValue.tsx",
+    "documentation": "/atoms/key-value",
+    "contract": "spec/key-value.md",
+    "tests": [
+      "packages/atoms/src/atoms/KeyValue/KeyValue.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
+    "name": "KeyValueProps",
+    "implementation": "packages/atoms/src/atoms/KeyValue/KeyValue.tsx",
+    "documentation": "/atoms/key-value",
+    "contract": "spec/key-value.md",
+    "tests": [
+      "packages/atoms/src/atoms/KeyValue/KeyValue.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-atoms",
     "name": "Link",
     "implementation": "packages/atoms/src/atoms/Link/Link.tsx",
     "documentation": "/atoms/link",
@@ -4079,6 +4112,54 @@
   },
   {
     "package": "@talelk/newui-molecules",
+    "name": "fileCard",
+    "implementation": "packages/molecules/src/molecules/FileCard/FileCard.tsx",
+    "documentation": "/molecules/file-card",
+    "contract": "spec/file-card.md",
+    "tests": [
+      "packages/molecules/src/molecules/FileCard/FileCard.a11y.test.tsx",
+      "packages/molecules/src/molecules/FileCard/FileCard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "FileCard",
+    "implementation": "packages/molecules/src/molecules/FileCard/FileCard.tsx",
+    "documentation": "/molecules/file-card",
+    "contract": "spec/file-card.md",
+    "tests": [
+      "packages/molecules/src/molecules/FileCard/FileCard.a11y.test.tsx",
+      "packages/molecules/src/molecules/FileCard/FileCard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "FileCardProps",
+    "implementation": "packages/molecules/src/molecules/FileCard/FileCard.tsx",
+    "documentation": "/molecules/file-card",
+    "contract": "spec/file-card.md",
+    "tests": [
+      "packages/molecules/src/molecules/FileCard/FileCard.a11y.test.tsx",
+      "packages/molecules/src/molecules/FileCard/FileCard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "FileCardSize",
+    "implementation": "packages/molecules/src/molecules/FileCard/FileCard.tsx",
+    "documentation": "/molecules/file-card",
+    "contract": "spec/file-card.md",
+    "tests": [
+      "packages/molecules/src/molecules/FileCard/FileCard.a11y.test.tsx",
+      "packages/molecules/src/molecules/FileCard/FileCard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
     "name": "FileUploader",
     "implementation": "packages/molecules/src/molecules/FileUploader/FileUploader.tsx",
     "documentation": "/molecules/file-uploader",
@@ -4773,6 +4854,54 @@
   },
   {
     "package": "@talelk/newui-molecules",
+    "name": "messageListItem",
+    "implementation": "packages/molecules/src/molecules/MessageListItem/MessageListItem.tsx",
+    "documentation": "/molecules/message-list-item",
+    "contract": "spec/message-list-item.md",
+    "tests": [
+      "packages/molecules/src/molecules/MessageListItem/MessageListItem.a11y.test.tsx",
+      "packages/molecules/src/molecules/MessageListItem/MessageListItem.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "MessageListItem",
+    "implementation": "packages/molecules/src/molecules/MessageListItem/MessageListItem.tsx",
+    "documentation": "/molecules/message-list-item",
+    "contract": "spec/message-list-item.md",
+    "tests": [
+      "packages/molecules/src/molecules/MessageListItem/MessageListItem.a11y.test.tsx",
+      "packages/molecules/src/molecules/MessageListItem/MessageListItem.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "MessageListItemProps",
+    "implementation": "packages/molecules/src/molecules/MessageListItem/MessageListItem.tsx",
+    "documentation": "/molecules/message-list-item",
+    "contract": "spec/message-list-item.md",
+    "tests": [
+      "packages/molecules/src/molecules/MessageListItem/MessageListItem.a11y.test.tsx",
+      "packages/molecules/src/molecules/MessageListItem/MessageListItem.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "MessageListItemSize",
+    "implementation": "packages/molecules/src/molecules/MessageListItem/MessageListItem.tsx",
+    "documentation": "/molecules/message-list-item",
+    "contract": "spec/message-list-item.md",
+    "tests": [
+      "packages/molecules/src/molecules/MessageListItem/MessageListItem.a11y.test.tsx",
+      "packages/molecules/src/molecules/MessageListItem/MessageListItem.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
     "name": "MultiSelect",
     "implementation": "packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx",
     "documentation": "/molecules/multi-select",
@@ -4878,6 +5007,54 @@
     "tests": [
       "packages/molecules/src/molecules/ColorPicker/ColorPicker.a11y.test.tsx",
       "packages/molecules/src/molecules/ColorPicker/ColorPicker.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "notificationItem",
+    "implementation": "packages/molecules/src/molecules/NotificationItem/NotificationItem.tsx",
+    "documentation": "/molecules/notification-item",
+    "contract": "spec/notification-item.md",
+    "tests": [
+      "packages/molecules/src/molecules/NotificationItem/NotificationItem.a11y.test.tsx",
+      "packages/molecules/src/molecules/NotificationItem/NotificationItem.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "NotificationItem",
+    "implementation": "packages/molecules/src/molecules/NotificationItem/NotificationItem.tsx",
+    "documentation": "/molecules/notification-item",
+    "contract": "spec/notification-item.md",
+    "tests": [
+      "packages/molecules/src/molecules/NotificationItem/NotificationItem.a11y.test.tsx",
+      "packages/molecules/src/molecules/NotificationItem/NotificationItem.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "NotificationItemProps",
+    "implementation": "packages/molecules/src/molecules/NotificationItem/NotificationItem.tsx",
+    "documentation": "/molecules/notification-item",
+    "contract": "spec/notification-item.md",
+    "tests": [
+      "packages/molecules/src/molecules/NotificationItem/NotificationItem.a11y.test.tsx",
+      "packages/molecules/src/molecules/NotificationItem/NotificationItem.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "NotificationItemSize",
+    "implementation": "packages/molecules/src/molecules/NotificationItem/NotificationItem.tsx",
+    "documentation": "/molecules/notification-item",
+    "contract": "spec/notification-item.md",
+    "tests": [
+      "packages/molecules/src/molecules/NotificationItem/NotificationItem.a11y.test.tsx",
+      "packages/molecules/src/molecules/NotificationItem/NotificationItem.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -5886,6 +6063,54 @@
   },
   {
     "package": "@talelk/newui-molecules",
+    "name": "threadRow",
+    "implementation": "packages/molecules/src/molecules/ThreadRow/ThreadRow.tsx",
+    "documentation": "/molecules/thread-row",
+    "contract": "spec/thread-row.md",
+    "tests": [
+      "packages/molecules/src/molecules/ThreadRow/ThreadRow.a11y.test.tsx",
+      "packages/molecules/src/molecules/ThreadRow/ThreadRow.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "ThreadRow",
+    "implementation": "packages/molecules/src/molecules/ThreadRow/ThreadRow.tsx",
+    "documentation": "/molecules/thread-row",
+    "contract": "spec/thread-row.md",
+    "tests": [
+      "packages/molecules/src/molecules/ThreadRow/ThreadRow.a11y.test.tsx",
+      "packages/molecules/src/molecules/ThreadRow/ThreadRow.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "ThreadRowProps",
+    "implementation": "packages/molecules/src/molecules/ThreadRow/ThreadRow.tsx",
+    "documentation": "/molecules/thread-row",
+    "contract": "spec/thread-row.md",
+    "tests": [
+      "packages/molecules/src/molecules/ThreadRow/ThreadRow.a11y.test.tsx",
+      "packages/molecules/src/molecules/ThreadRow/ThreadRow.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "ThreadRowSize",
+    "implementation": "packages/molecules/src/molecules/ThreadRow/ThreadRow.tsx",
+    "documentation": "/molecules/thread-row",
+    "contract": "spec/thread-row.md",
+    "tests": [
+      "packages/molecules/src/molecules/ThreadRow/ThreadRow.a11y.test.tsx",
+      "packages/molecules/src/molecules/ThreadRow/ThreadRow.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
     "name": "Timeline",
     "implementation": "packages/molecules/src/molecules/Timeline/Timeline.tsx",
     "documentation": "/molecules/timeline",
@@ -6205,8 +6430,8 @@
     "package": "@talelk/newui-molecules",
     "name": "Toaster",
     "implementation": "packages/molecules/src/molecules/Toast/Toast.tsx",
-    "documentation": "/docs#molecules",
-    "contract": null,
+    "documentation": "/molecules/toaster",
+    "contract": "spec/toast.md",
     "tests": [
       "packages/molecules/src/molecules/Toast/Toast.a11y.test.tsx",
       "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx",

@@ -56,7 +56,7 @@ export const API = {
       "optional": true
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true,
       "description": "Accessible name for the `<nav>`."
@@ -70,12 +70,6 @@ export const API = {
       "name": "children",
       "type": "JSX.Element",
       "optional": true
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "optional": true,
-      "description": "Accessible name for the `<nav>`."
     }
   ]
 } as const

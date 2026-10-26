@@ -75,7 +75,7 @@ export const API = {
       "optional": true
     },
     {
-      "name": "'aria-label'",
+      "name": "aria-label",
       "type": "string",
       "optional": true,
       "description": "Accessible name when no visible `label` is rendered."
@@ -95,12 +95,6 @@ export const API = {
       "name": "class",
       "type": "string",
       "optional": true
-    },
-    {
-      "name": "aria-label",
-      "type": "string",
-      "optional": true,
-      "description": "Accessible name when no visible `label` is rendered."
     }
   ]
 } as const

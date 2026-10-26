@@ -1654,7 +1654,7 @@
         "description": "Placeholder shown while the document is empty."
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name for the editable surface."
@@ -1664,12 +1664,6 @@
         "type": "string",
         "optional": true,
         "description": "Root class fallthrough, merged last (P10)."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name for the editable surface."
       }
     ]
   },
@@ -1732,7 +1726,7 @@
         "description": "Render read-only. Reactive."
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name for the editable surface."
@@ -1748,12 +1742,6 @@
         "type": "JSX.Element",
         "optional": true,
         "description": "Chrome rendered above the editable surface, e.g. `<EditorToolbar />`."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name for the editable surface."
       }
     ]
   },
@@ -1766,7 +1754,7 @@
         "description": "Explicit editor instance. Defaults to the nearest `<Editor>` (context), so\nthe common case is just `<EditorToolbar />` inside an `<Editor>`."
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name for the toolbar."
@@ -1776,12 +1764,6 @@
         "type": "string",
         "optional": true,
         "description": "Root class fallthrough, merged last (P10)."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name for the toolbar."
       }
     ]
   },
@@ -2467,11 +2449,6 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
-        "type": "string",
-        "optional": true
-      },
-      {
         "name": "aria-label",
         "type": "string",
         "optional": true
@@ -2730,6 +2707,40 @@
       }
     ]
   },
+  "packages/atoms/src/atoms/KeyValue/KeyValue.tsx": {
+    "KeyValueProps": [
+      {
+        "name": "label",
+        "type": "JSX.Element",
+        "optional": false,
+        "description": "The field's name: the quiet half of the pair."
+      },
+      {
+        "name": "value",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The field's value. `children` replaces it when a node is more natural."
+      },
+      {
+        "name": "orientation",
+        "type": "'horizontal' | 'vertical'",
+        "optional": true,
+        "description": "Stacks the pair instead of spreading it across the row."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the root."
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The default value content."
+      }
+    ]
+  },
   "packages/atoms/src/atoms/Link/Link.tsx": {
     "LinkProps": [
       {
@@ -2811,7 +2822,7 @@
         "description": "Render a segmented track of N intervals instead of a continuous bar."
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name. A progressbar is unlabelled without one."
@@ -2820,12 +2831,6 @@
         "name": "class",
         "type": "string",
         "optional": true
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name. A progressbar is unlabelled without one."
       }
     ]
   },
@@ -2855,17 +2860,12 @@
         "description": "Content in the middle: a percentage, a count, an icon."
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true
       },
       {
         "name": "class",
-        "type": "string",
-        "optional": true
-      },
-      {
-        "name": "aria-label",
         "type": "string",
         "optional": true
       }
@@ -2968,7 +2968,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name for the thumb(s). Required when there is no visible label."
@@ -3002,12 +3002,6 @@
         "name": "class",
         "type": "string",
         "optional": true
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name for the thumb(s). Required when there is no visible label."
       }
     ]
   },
@@ -3626,7 +3620,7 @@
         "description": "Ordered list of breadcrumb items, root first and current page last."
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name for the landmark. Defaults to `\"Breadcrumb\"`."
@@ -3636,12 +3630,6 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root `<nav>`."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name for the landmark. Defaults to `\"Breadcrumb\"`."
       }
     ]
   },
@@ -3693,7 +3681,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name for the grid when there is no visible label."
@@ -3702,12 +3690,6 @@
         "name": "class",
         "type": "string",
         "optional": true
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name for the grid when there is no visible label."
       }
     ]
   },
@@ -3960,17 +3942,12 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true
       },
       {
         "name": "class",
-        "type": "string",
-        "optional": true
-      },
-      {
-        "name": "aria-label",
         "type": "string",
         "optional": true
       }
@@ -4094,7 +4071,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name when no visible `label` is rendered."
@@ -4104,12 +4081,6 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -4353,7 +4324,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name when no visible `label` is rendered."
@@ -4363,12 +4334,6 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -4533,7 +4498,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name when no visible `label` is rendered."
@@ -4543,12 +4508,6 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -4713,7 +4672,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name when no visible `label` is rendered."
@@ -4723,12 +4682,6 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -4915,6 +4868,82 @@
       }
     ]
   },
+  "packages/molecules/src/molecules/FileCard/FileCard.tsx": {
+    "FileCardProps": [
+      {
+        "name": "size",
+        "type": "FileCardSize",
+        "optional": true,
+        "description": "Shared row density preset."
+      },
+      {
+        "name": "as",
+        "type": "string | Component<Record<string, unknown>>",
+        "optional": true,
+        "description": "Element tag or component for the card root. Defaults to `div`."
+      },
+      {
+        "name": "name",
+        "type": "JSX.Element",
+        "optional": false,
+        "description": "The file's name; the card truncates it to one line."
+      },
+      {
+        "name": "meta",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Owner, size and age in one quiet line."
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "optional": true,
+        "description": "Lucide icon name for the file type tile (`lucide-file` by default)."
+      },
+      {
+        "name": "badge",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "A badge such as `Shared`, rendered after the meta line."
+      },
+      {
+        "name": "selected",
+        "type": "boolean",
+        "optional": true,
+        "description": "Marks the card as the current selection."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true,
+        "description": "Mutes the card. It does not stop clicks or set the native `disabled`\nattribute, so skip the action in your own handler."
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "optional": true,
+        "description": "Native `type` when the card renders as a `button` (`as=\"button\"`)."
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "optional": true,
+        "description": "Destination when the card renders as an anchor (`as=\"a\"`)."
+      },
+      {
+        "name": "suffix",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "App-owned trailing controls (star, delete). Siblings of the open action."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the root."
+      }
+    ]
+  },
   "packages/molecules/src/molecules/FileUploader/FileUploader.tsx": {
     "FileUploaderProps": [
       {
@@ -4996,7 +5025,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name when no visible `label` is rendered."
@@ -5006,12 +5035,6 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -6386,6 +6409,94 @@
       }
     ]
   },
+  "packages/molecules/src/molecules/MessageListItem/MessageListItem.tsx": {
+    "MessageListItemProps": [
+      {
+        "name": "size",
+        "type": "MessageListItemSize",
+        "optional": true,
+        "description": "Shared row density preset."
+      },
+      {
+        "name": "as",
+        "type": "string | Component<Record<string, unknown>>",
+        "optional": true,
+        "description": "Element tag or component for the row root. Defaults to `div`."
+      },
+      {
+        "name": "sender",
+        "type": "JSX.Element",
+        "optional": false,
+        "description": "The sender's name; bolded while the message is unread."
+      },
+      {
+        "name": "subject",
+        "type": "JSX.Element",
+        "optional": false,
+        "description": "The message's subject line."
+      },
+      {
+        "name": "snippet",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "A one-line preview of the body; the row truncates it."
+      },
+      {
+        "name": "time",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Received time, rendered in tabular figures at the end of the first line."
+      },
+      {
+        "name": "avatar",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Leading avatar, usually `<Avatar label={sender} />`."
+      },
+      {
+        "name": "unread",
+        "type": "boolean",
+        "optional": true,
+        "description": "Flags the message as not yet read: heavier text and an unread dot."
+      },
+      {
+        "name": "selected",
+        "type": "boolean",
+        "optional": true,
+        "description": "Marks the row as the open conversation."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true,
+        "description": "Mutes the row. It does not stop clicks or set the native `disabled`\nattribute, so skip the action in your own handler."
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "optional": true,
+        "description": "Native `type` when the row renders as a `button` (`as=\"button\"`)."
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "optional": true,
+        "description": "Destination when the row renders as an anchor (`as=\"a\"`)."
+      },
+      {
+        "name": "suffix",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Trailing controls (star, archive); stay visible, never hover-only."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the root."
+      }
+    ]
+  },
   "packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx": {
     "MultiSelectProps": [
       {
@@ -6504,7 +6615,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name when no visible `label` is rendered."
@@ -6514,12 +6625,88 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
+      }
+    ]
+  },
+  "packages/molecules/src/molecules/NotificationItem/NotificationItem.tsx": {
+    "NotificationItemProps": [
+      {
+        "name": "size",
+        "type": "NotificationItemSize",
+        "optional": true,
+        "description": "Shared row density preset."
       },
       {
-        "name": "aria-label",
+        "name": "as",
+        "type": "string | Component<Record<string, unknown>>",
+        "optional": true,
+        "description": "Element tag or component for the row root. Defaults to `div`."
+      },
+      {
+        "name": "title",
+        "type": "JSX.Element",
+        "optional": false,
+        "description": "What happened, in one line; bolded while the notification is unread."
+      },
+      {
+        "name": "description",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The affected record or a short body preview."
+      },
+      {
+        "name": "icon",
         "type": "string",
         "optional": true,
-        "description": "Accessible name when no visible `label` is rendered."
+        "description": "Lucide icon name for the event tile (`lucide-bell` by default)."
+      },
+      {
+        "name": "time",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "When it happened, rendered in tabular figures."
+      },
+      {
+        "name": "unread",
+        "type": "boolean",
+        "optional": true,
+        "description": "Flags the notification as not yet read: heavier text and an unread dot."
+      },
+      {
+        "name": "selected",
+        "type": "boolean",
+        "optional": true,
+        "description": "Marks the row as the current target, e.g. in a split view."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true,
+        "description": "Mutes the row. It does not stop clicks or set the native `disabled`\nattribute, so skip the action in your own handler."
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "optional": true,
+        "description": "Native `type` when the row renders as a `button` (`as=\"button\"`)."
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "optional": true,
+        "description": "Destination when the row renders as an anchor (`as=\"a\"`)."
+      },
+      {
+        "name": "suffix",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Trailing controls (mark read, snooze); stay visible, never hover-only."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the root."
       }
     ]
   },
@@ -6591,17 +6778,12 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true
       },
       {
         "name": "class",
-        "type": "string",
-        "optional": true
-      },
-      {
-        "name": "aria-label",
         "type": "string",
         "optional": true
       }
@@ -6661,7 +6843,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name for the `<nav>`."
@@ -6675,12 +6857,6 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": true
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name for the `<nav>`."
       }
     ]
   },
@@ -6850,17 +7026,12 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true
       },
       {
         "name": "class",
-        "type": "string",
-        "optional": true
-      },
-      {
-        "name": "aria-label",
         "type": "string",
         "optional": true
       }
@@ -6978,17 +7149,12 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true
       },
       {
         "name": "class",
-        "type": "string",
-        "optional": true
-      },
-      {
-        "name": "aria-label",
         "type": "string",
         "optional": true
       }
@@ -7147,7 +7313,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name for the trigger when no visible `label` is rendered."
@@ -7179,12 +7345,6 @@
         "name": "class",
         "type": "string",
         "optional": true
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name for the trigger when no visible `label` is rendered."
       }
     ],
     "SelectSingleProps": [
@@ -7795,7 +7955,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name when no visible `label` is rendered."
@@ -7815,12 +7975,94 @@
         "name": "class",
         "type": "string",
         "optional": true
+      }
+    ]
+  },
+  "packages/molecules/src/molecules/ThreadRow/ThreadRow.tsx": {
+    "ThreadRowProps": [
+      {
+        "name": "size",
+        "type": "ThreadRowSize",
+        "optional": true,
+        "description": "Shared row density preset."
       },
       {
-        "name": "aria-label",
+        "name": "as",
+        "type": "string | Component<Record<string, unknown>>",
+        "optional": true,
+        "description": "Element tag or component for the row root. Defaults to `div`."
+      },
+      {
+        "name": "title",
+        "type": "JSX.Element",
+        "optional": false,
+        "description": "The thread's subject line; bolded while the thread is unread."
+      },
+      {
+        "name": "snippet",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "A one-line preview of the latest reply; the row truncates it."
+      },
+      {
+        "name": "meta",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Reply count, participants or age, in one quiet line."
+      },
+      {
+        "name": "time",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Received-or-updated time, rendered in tabular figures."
+      },
+      {
+        "name": "avatar",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Leading avatar, usually the community or author."
+      },
+      {
+        "name": "unread",
+        "type": "boolean",
+        "optional": true,
+        "description": "Flags the thread as not yet read: heavier text and an unread dot."
+      },
+      {
+        "name": "selected",
+        "type": "boolean",
+        "optional": true,
+        "description": "Marks the row as the open thread."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true,
+        "description": "Mutes the row. It does not stop clicks or set the native `disabled`\nattribute, so skip the action in your own handler."
+      },
+      {
+        "name": "type",
         "type": "string",
         "optional": true,
-        "description": "Accessible name when no visible `label` is rendered."
+        "description": "Native `type` when the row renders as a `button` (`as=\"button\"`)."
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "optional": true,
+        "description": "Destination when the row renders as an anchor (`as=\"a\"`)."
+      },
+      {
+        "name": "suffix",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Trailing controls (follow, mark read); stay visible, never hover-only."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true,
+        "description": "Merged into the root."
       }
     ]
   },
@@ -7977,7 +8219,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name when no visible `label` is rendered."
@@ -7987,12 +8229,6 @@
         "type": "string",
         "optional": true,
         "description": "Merged into the root."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name when no visible `label` is rendered."
       }
     ]
   },
@@ -8064,7 +8300,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true
       },
@@ -8072,11 +8308,22 @@
         "name": "class",
         "type": "string",
         "optional": true
+      }
+    ]
+  },
+  "packages/molecules/src/molecules/Toast/Toast.tsx": {
+    "ToastRegionProps": [
+      {
+        "name": "toaster",
+        "type": "ToasterApi",
+        "optional": false,
+        "description": "The toaster store whose visible toasts this region renders."
       },
       {
-        "name": "aria-label",
+        "name": "class",
         "type": "string",
-        "optional": true
+        "optional": true,
+        "description": "Extra classes merged onto the region container."
       }
     ]
   },
@@ -8121,7 +8368,7 @@
         "optional": true
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name for the group — it is a toolbar of related controls."
@@ -8135,12 +8382,6 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": false
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name for the group — it is a toolbar of related controls."
       }
     ],
     "ToggleGroupItemProps": [
@@ -8161,7 +8402,7 @@
         "description": "A `lucide-*` string or a component (P11). Alone, it makes the cell square."
       },
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name when the cell has only an icon."
@@ -8175,12 +8416,6 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": true
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name when the cell has only an icon."
       }
     ]
   },
@@ -9024,7 +9259,7 @@
   "packages/organisms/src/organisms/MobileNav/MobileNav.tsx": {
     "MobileNavProps": [
       {
-        "name": "'aria-label'",
+        "name": "aria-label",
         "type": "string",
         "optional": true,
         "description": "Accessible name for the `<nav>` landmark."
@@ -9040,12 +9275,6 @@
         "type": "JSX.Element",
         "optional": true,
         "description": "One or more `MobileNavItem`s, each becoming an equal-width tab."
-      },
-      {
-        "name": "aria-label",
-        "type": "string",
-        "optional": true,
-        "description": "Accessible name for the `<nav>` landmark."
       }
     ],
     "MobileNavItemProps": [
@@ -9080,7 +9309,7 @@
         "description": "Highlight this tab. A state prop, independent of the current route."
       },
       {
-        "name": "'aria-current'",
+        "name": "aria-current",
         "type": "| 'page'\n    | 'step'\n    | 'location'\n    | 'date'\n    | 'time'\n    | 'true'\n    | 'false'",
         "optional": true,
         "description": "Marks the item as the current page for assistive tech."
@@ -9102,12 +9331,6 @@
         "type": "(event: MouseEvent) => void",
         "optional": true,
         "description": "Click handler. Set it on button items, and on links to navigate in-app."
-      },
-      {
-        "name": "aria-current",
-        "type": "| 'page'\n    | 'step'\n    | 'location'\n    | 'date'\n    | 'time'\n    | 'true'\n    | 'false'",
-        "optional": true,
-        "description": "Marks the item as the current page for assistive tech."
       }
     ]
   },
