@@ -12,7 +12,7 @@ metadata:
   type: core
   domain: ui
   library: '@talelk/newui-molecules'
-  library_version: '2.0.0'
+  library_version: '2.1.0'
 sources:
   - talelk/newui:packages/molecules/src/molecules/Dialog/Dialog.tsx
   - talelk/newui:packages/molecules/src/molecules/FormControl/FormControl.tsx

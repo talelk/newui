@@ -23,8 +23,12 @@ export interface PendingChange {
 export const RELEASED: ReleasedPackage[] = [
   {
     "package": "@talelk/newui-atoms",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "sections": [
+      {
+        "version": "1.1.0",
+        "body": "### Minor Changes\n\n- a332a12: New `AvatarGroup` atom: an overlapping stack of `Avatar` tiles that collapses\n  everyone past `max` into a single \"+N\" count. Data-driven (`avatars`), with\n  `Avatar`'s size, shape and theme axes and a surface ring between tiles.\n- a332a12: New `IconButton` atom: the square, icon-only command. It shares the Button\n  recipe's box, states and focus rings, and makes the accessible name a required\n  `label` prop — an icon-only control is unnamed without one.\n- a332a12: New `Image` atom: a framed image that holds its box (by `ratio` or\n  intrinsically) while the source loads or fails, so layouts never jump. Lazy by\n  default, with a `fallback` slot for broken sources.\n- a332a12: New `Link` atom: a text link for prose and chrome. `route` stays in the app (a\n  plain `href` a router intercepts), `href` opens a new tab and announces it to\n  assistive tech, `theme` picks accent vs quiet, and `underline` controls the\n  decoration. The external glyph is opt-in.\n- a332a12: New `VisuallyHidden` atom: the `sr-only` utility as a component with a stable\n  `data-slot`, for content only assistive tech should read."
+      },
       {
         "version": "1.0.1",
         "body": "### Patch Changes\n\n- 8710ce8: Application coherence pass across the twelve example applications.\n  \n  - **Atoms:** checked/indeterminate Checkbox now paints a semantic check icon that\n    is legible in both themes and disabled states; Switch thumbs contrast against\n    both track states; required markers use a passing red step; disabled solid\n    blue actions use the neutral disabled treatment; Password keeps its visual\n    size with a larger coarse-pointer hit area.\n  - **Molecules:** Card descriptions use the interface type role; `ListRow` only\n    advertises pointer/hover when it is actionable; TabButtons fluid tracks can\n    shrink at 320/150%; editor mention surfaces use the overlay radius; a\n    controlled DateRangePicker holds the first click as a draft until the range\n    completes.\n  - **Organisms:** DataTable gains `cardBreakpoint`, a stable titled toolbar,\n    humanized column labels, compact mobile paging, guarded external empty\n    actions, a bottom spacer for the sticky selection bar, and selection only\n    when a bulk action exists; Section gains explicit accessible naming; DataState\n    accepts an empty-state icon; SettingsDialog has stable desktop width, true\n    mobile full-bleed, 40px mobile nav/close, an accessible tablist label and\n    logical RTL borders; AuthCard is card-only and flat; KanbanBoard restores\n    focus after keyboard moves, uses 40px touch targets below `lg`, and fits four\n    columns at 1440; PageToolbar uses an ellipsis menu, icons on secondary\n    actions and the section scale for nested headings; FilterBar selects are\n    two-up from 360px; StatGrid compact is four-up at `md`.\n  - **Templates:** AppShell's mobile menu trigger is 40px.\n  - **Charts:** ChartLegend renders static text when it has no handler; NumberCard\n    titles wrap under text zoom and its loading state reserves card geometry;\n    time-axis labels format the numeric timestamp ECharts passes, so monthly\n    plots keep their month ticks; axis charts reserve the label band.\n  - **Editor:** toolbar and mention surfaces follow the card/overlay radius scale.\n  \n  Existing props remain valid; the new state and layout props are additive.\n- dad472a: Darken the coloured Avatar initials from `ink-{theme}-7` to `ink-{theme}-8`,\n  matching the contrast contract's `ink-{theme}-8` on `surface-{theme}-2` pair.\n  The blue avatar measured 4.2:1 at 11px.\n- dad472a: Fix the dark-mode solid red Button foreground. `dark:text-ink-red-9` put\n  `red-50` text on the `red-300` surface at 2.96:1; the shared `ink-base`\n  foreground now matches every other solid theme and reaches 4.83:1. The\n  contrast contract already asserted `ink-base` on `surface-red-8`, so the\n  recipe now matches the pair that was being tested.\n- 3355988: Skills: the `newui` non-negotiables now name the stacking and speed scales\n  (`z-raised` … `z-top`, `duration-fast|base|slow`), matching the principle that\n  a component hard-coding `z-50` or `duration-150` is a bug. The bullet previously\n  covered colour tokens only, so an agent following the skill could still emit a\n  numeric layer."
@@ -75,8 +79,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-editor",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "sections": [
+      {
+        "version": "0.1.2",
+        "body": "### Patch Changes\n\n- b60e321: \"@talelk/newui-code-editor\": patch\n  ---\n  \n  Both editor packages gain their browser-tier test floor per ADR-0015: typed\n  input reports documents through `onValueChange`, the editable box keeps its\n  metrics, and the code editor's `readonly` compartment rejects input. No\n  public surface changes."
+      },
       {
         "version": "0.1.1",
         "body": "### Patch Changes\n\n- 8710ce8: Application coherence pass across the twelve example applications.\n  \n  - **Atoms:** checked/indeterminate Checkbox now paints a semantic check icon that\n    is legible in both themes and disabled states; Switch thumbs contrast against\n    both track states; required markers use a passing red step; disabled solid\n    blue actions use the neutral disabled treatment; Password keeps its visual\n    size with a larger coarse-pointer hit area.\n  - **Molecules:** Card descriptions use the interface type role; `ListRow` only\n    advertises pointer/hover when it is actionable; TabButtons fluid tracks can\n    shrink at 320/150%; editor mention surfaces use the overlay radius; a\n    controlled DateRangePicker holds the first click as a draft until the range\n    completes.\n  - **Organisms:** DataTable gains `cardBreakpoint`, a stable titled toolbar,\n    humanized column labels, compact mobile paging, guarded external empty\n    actions, a bottom spacer for the sticky selection bar, and selection only\n    when a bulk action exists; Section gains explicit accessible naming; DataState\n    accepts an empty-state icon; SettingsDialog has stable desktop width, true\n    mobile full-bleed, 40px mobile nav/close, an accessible tablist label and\n    logical RTL borders; AuthCard is card-only and flat; KanbanBoard restores\n    focus after keyboard moves, uses 40px touch targets below `lg`, and fits four\n    columns at 1440; PageToolbar uses an ellipsis menu, icons on secondary\n    actions and the section scale for nested headings; FilterBar selects are\n    two-up from 360px; StatGrid compact is four-up at `md`.\n  - **Templates:** AppShell's mobile menu trigger is 40px.\n  - **Charts:** ChartLegend renders static text when it has no handler; NumberCard\n    titles wrap under text zoom and its loading state reserves card geometry;\n    time-axis labels format the numeric timestamp ECharts passes, so monthly\n    plots keep their month ticks; axis charts reserve the label band.\n  - **Editor:** toolbar and mention surfaces follow the card/overlay radius scale.\n  \n  Existing props remain valid; the new state and layout props are additive."
@@ -99,8 +107,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-molecules",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "sections": [
+      {
+        "version": "2.1.0",
+        "body": "### Minor Changes\n\n- d2060b8: New `Calendar` molecule: the pickers' date grid exported as a standalone,\n  always-open component — the booking-panel and filter-rail surface that needs a\n  date but no input. Values are `YYYY-MM-DD` strings (ADR-0008), `min`/`max`\n  bound the selectable window, `dualPane` shows two months, and the Zag machine\n  keeps the grid's full keyboard model.\n- d2060b8: New `Carousel` molecule, promoted from the `/kit/recipes` carousel example\n  through the kit's recipes-to-API gate. A scroll-snap strip: native scrolling\n  stays the interaction (touch, trackpad, arrow keys, RTL), the index follows\n  where the scroll settles, and `Carousel.Viewport`/`Slide`/`Previous`/`Next`/\n  `Status` compose the controls. Autoplay is opt-in, pauses under the pointer\n  or focus, and never runs under `prefers-reduced-motion`. The recipe remains\n  in the gallery as the themed composition.\n- d2060b8: New `ColorPicker` molecule: the platform color picker under a styled swatch\n  with an optional hex field (`#rgb` and `#rrggbb`, normalized, invalid drafts\n  flagged without committing). Deliberately no custom hue surface — the native\n  control carries the keyboard and screen-reader behavior on every platform,\n  which a custom one would have to reimplement.\n- d2060b8: The `List` family forwards rest props: `ListRow`, `ListCell` and\n  `ListHeaderCellSort` now accept (and type) the full set of div attributes, so\n  the caller's table contract can reach them — `role=\"table\"` on the wrapper,\n  `role=\"row\"`/`role=\"cell\"` on rows and cells, and `role=\"columnheader\"` on a\n  sortable header, which is also what makes its `aria-sort` legal. Previously\n  that composition was impossible from outside and axe flagged the bare\n  `aria-sort` div as an `aria-allowed-attr` violation.\n- d2060b8: New `PinInput` molecule: a fixed-length verification code on the Zag pin-input\n  machine. One focus walks every cell — typing advances, paste splits, arrows\n  and backspace move between cells. `length` sets the shape, `otp` advertises\n  `autocomplete=\"one-time-code\"` autofill, `mask` turns the cells into password\n  boxes, and the shared labelling contract (`label`/`description`/`error`/\n  `required`) names every cell. `onValueComplete` fires when the code is whole.\n- d2060b8: New `TimeRangePicker` molecule: two `TimePicker`s under one field label,\n  reporting a single `[from, to]` value (or `[]` while empty). Picking the start\n  holds a half-open range like the `DateRangePicker`'s draft, and a range that\n  ends before it starts — a night shift — is reported as-is rather than\n  reordered.\n- d2060b8: New `TransferList` molecule: a dual-list picker for assigning, segmenting and\n  permission screens. Check rows on either side and move them with the chevron\n  buttons between the panels; double chevrons move everything. Rows are\n  checkboxes (natively keyboard-accessible), legends carry live counts, and the\n  optional `search` filters both lists with one query.\n\n### Patch Changes\n\n- d2060b8: Twenty-one molecules gained dedicated axe accessibility suites (every molecule\n  now has one), and the export pin lists the whole public surface — the `Toast`\n  family's runtime names (`Toaster`, `ToastRegion`, `toast`, `toaster`,\n  `createToaster`) plus `Stepper` and `TagInput` were unpinned.\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n  - @talelk/newui-atoms@1.1.0"
+      },
       {
         "version": "2.0.0",
         "body": "### Major Changes\n\n- dad472a: `TabButtons` is now a radiogroup. The root is `role=\"radiogroup\"` with a\n  required `label`, each option is `role=\"radio\"` with `aria-checked`, and the\n  old `role=\"tablist\"` / `role=\"tab\"` / `aria-selected` semantics are gone. The\n  `value` / `onValueChange` / `options` API is unchanged; code that queried tab\n  roles or styled `[role=\"tab\"]` must move to radio roles. `Tabs` remains the\n  component for choices that own panels.\n  \n  `TabButtons` also gains `wrap`, which lays options onto multiple rows and\n  replaces the sliding indicator with a variant-aware active surface.\n  \n  `ScrollTable` gains `stickyHeader` for long scroll regions.\n\n### Patch Changes\n\n- 8710ce8: Application coherence pass across the twelve example applications.\n  \n  - **Atoms:** checked/indeterminate Checkbox now paints a semantic check icon that\n    is legible in both themes and disabled states; Switch thumbs contrast against\n    both track states; required markers use a passing red step; disabled solid\n    blue actions use the neutral disabled treatment; Password keeps its visual\n    size with a larger coarse-pointer hit area.\n  - **Molecules:** Card descriptions use the interface type role; `ListRow` only\n    advertises pointer/hover when it is actionable; TabButtons fluid tracks can\n    shrink at 320/150%; editor mention surfaces use the overlay radius; a\n    controlled DateRangePicker holds the first click as a draft until the range\n    completes.\n  - **Organisms:** DataTable gains `cardBreakpoint`, a stable titled toolbar,\n    humanized column labels, compact mobile paging, guarded external empty\n    actions, a bottom spacer for the sticky selection bar, and selection only\n    when a bulk action exists; Section gains explicit accessible naming; DataState\n    accepts an empty-state icon; SettingsDialog has stable desktop width, true\n    mobile full-bleed, 40px mobile nav/close, an accessible tablist label and\n    logical RTL borders; AuthCard is card-only and flat; KanbanBoard restores\n    focus after keyboard moves, uses 40px touch targets below `lg`, and fits four\n    columns at 1440; PageToolbar uses an ellipsis menu, icons on secondary\n    actions and the section scale for nested headings; FilterBar selects are\n    two-up from 360px; StatGrid compact is four-up at `md`.\n  - **Templates:** AppShell's mobile menu trigger is 40px.\n  - **Charts:** ChartLegend renders static text when it has no handler; NumberCard\n    titles wrap under text zoom and its loading state reserves card geometry;\n    time-axis labels format the numeric timestamp ECharts passes, so monthly\n    plots keep their month ticks; axis charts reserve the label band.\n  - **Editor:** toolbar and mention surfaces follow the card/overlay radius scale.\n  \n  Existing props remain valid; the new state and layout props are additive.\n- Updated dependencies [8710ce8]\n- Updated dependencies [dad472a]\n- Updated dependencies [dad472a]\n- Updated dependencies [3355988]\n  - @talelk/newui-atoms@1.0.1"
@@ -113,8 +125,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-organisms",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "sections": [
+      {
+        "version": "2.1.0",
+        "body": "### Minor Changes\n\n- d2060b8: `DataTable` grows the two powers a business table keeps reaching for. **Column\n  pinning**: freeze one column to each edge of the horizontal scroll\n  (`pinnedStart` — the identifier that must stay visible; `pinnedEnd` —\n  typically the actions) with sticky, opaque, row-tinted cells; pinning state is\n  app-owned via `onPinnedColumnsChange`. **Inline editing**: with `editable` and\n  `onCellChange`, columns marked `meta.editable` render click-to-edit cells —\n  Enter or blur commits the raw field through the app, Escape cancels, and the\n  cell shows the app-owned value from the next `rows`.\n\n### Patch Changes\n\n- d2060b8: Every organism now carries a dedicated axe accessibility suite in both of its\n  rendered states (twelve new `*.a11y.test.tsx` files, from `AppSidebar` to\n  `VirtualList`), and the package's export pin lists the whole public surface\n  (`DataState`, `Section`, `SelectionBar` were unpinned). No axe rule beyond the\n  two baseline suppressions was disabled anywhere; no violations surfaced.\n- Updated dependencies [a332a12]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [a332a12]\n  - @talelk/newui-atoms@1.1.0\n  - @talelk/newui-molecules@2.1.0"
+      },
       {
         "version": "2.0.0",
         "body": "### Major Changes\n\n- dad472a: `DataTable` gains `rowSelectable`, which disables selection for ineligible rows\n  and makes select-all skip them, and mobile cards driven by `meta.mobile` on\n  column definitions. When any column declares `mobile`, rows render as cards\n  below `sm`; the library owns the card, selection and pagination, and the column\n  cell renders unchanged. With no mobile metadata the table keeps its existing\n  horizontal-scroll behaviour.\n  \n  `FilterBar`'s `tabs` config now requires `label`, forwarded to the segmented\n  radiogroup. This is a breaking prop change for every FilterBar with a view\n  switcher.\n  \n  `StatGrid` gains `compact`, which drops the icon tile, uses 10px card padding\n  and a 4px gap for table-led screens, and moves to a two-up grid from 360px.\n  `DataTable` gains `caption` for page context beside Search.\n\n### Minor Changes\n\n- dad472a: The application sidebar's fold becomes chrome instead of a menu row: `Collapse`\n  sits at the end of the identity block and the rail repeats an `Expand` control\n  under the tenant, so the footer is free for settings and account. `AppSidebar`\n  now binds `⌘B`/`Ctrl+B` like the bare `Sidebar`, and its trigger tooltip only\n  advertises the shortcut when it is real.\n  \n  `AppShell` and `AppSidebar` accept a `utilities` slot, rendered above Settings\n  while the sidebar is expanded, and a compact `utilitiesCollapsed` form so a\n  global control such as the theme switch does not disappear in the rail. Group\n  labels drop to 12px Ink Muted, active rows gain weight and a tinted count, and\n  counts join the collapsed tooltip. The mobile drawer pins its close control in\n  a 40px header, keeps the navigation list as the only scroller, and uses an\n  opaque surface in dark mode.\n  \n  The page heading and its actions now share one row; breadcrumbs sit above them.\n- 8710ce8: Application coherence pass across the twelve example applications.\n  \n  - **Atoms:** checked/indeterminate Checkbox now paints a semantic check icon that\n    is legible in both themes and disabled states; Switch thumbs contrast against\n    both track states; required markers use a passing red step; disabled solid\n    blue actions use the neutral disabled treatment; Password keeps its visual\n    size with a larger coarse-pointer hit area.\n  - **Molecules:** Card descriptions use the interface type role; `ListRow` only\n    advertises pointer/hover when it is actionable; TabButtons fluid tracks can\n    shrink at 320/150%; editor mention surfaces use the overlay radius; a\n    controlled DateRangePicker holds the first click as a draft until the range\n    completes.\n  - **Organisms:** DataTable gains `cardBreakpoint`, a stable titled toolbar,\n    humanized column labels, compact mobile paging, guarded external empty\n    actions, a bottom spacer for the sticky selection bar, and selection only\n    when a bulk action exists; Section gains explicit accessible naming; DataState\n    accepts an empty-state icon; SettingsDialog has stable desktop width, true\n    mobile full-bleed, 40px mobile nav/close, an accessible tablist label and\n    logical RTL borders; AuthCard is card-only and flat; KanbanBoard restores\n    focus after keyboard moves, uses 40px touch targets below `lg`, and fits four\n    columns at 1440; PageToolbar uses an ellipsis menu, icons on secondary\n    actions and the section scale for nested headings; FilterBar selects are\n    two-up from 360px; StatGrid compact is four-up at `md`.\n  - **Templates:** AppShell's mobile menu trigger is 40px.\n  - **Charts:** ChartLegend renders static text when it has no handler; NumberCard\n    titles wrap under text zoom and its loading state reserves card geometry;\n    time-axis labels format the numeric timestamp ECharts passes, so monthly\n    plots keep their month ticks; axis charts reserve the label band.\n  - **Editor:** toolbar and mention surfaces follow the card/overlay radius scale.\n  \n  Existing props remain valid; the new state and layout props are additive.\n- dad472a: Add the shared region and state foundation: `Section` (header, toolbar, body,\n  footer, heading level, density), `DataState` (ready/loading/empty/error using\n  the existing `Skeleton` and `EmptyState`), and `SelectionBar` (inline or sticky\n  mobile bulk actions).\n  \n  Data organisms adopt it:\n  \n  - `DataTable`: `loading`, `error`, `onRetry`, `density`, `selectionSummary`;\n    shared empty/loading/error states; sticky mobile `SelectionBar`; sticky header.\n  - `VirtualList`: `loading`, `error`, `onRetry` and empty-state props.\n  - `KanbanBoard`: `loading`, `error`, `onRetry` and a board empty state.\n  - `StatGrid`: `loading` skeletons.\n  - `FilterBar`: `variant=\"bare\"` and start-aligned tabs when there is no search\n    or select.\n  - `PageToolbar`: semantic `headingLevel`, secondary actions, loading/disabled\n    actions; the primary no longer implies a `+`.\n  - `DetailHeader`: `headingLevel`; the title wraps instead of clipping.\n  - `SettingsDialog`: visible close control.\n  - `AuthCard`: form-level `error` summary.\n  - `CommandPalette`: `loading` state.\n  - `MobileNav`: active item wash.\n  \n  Existing props remain valid; the new state and region props are additive.\n\n### Patch Changes\n\n- Updated dependencies [8710ce8]\n- Updated dependencies [dad472a]\n- Updated dependencies [dad472a]\n- Updated dependencies [3355988]\n- Updated dependencies [dad472a]\n  - @talelk/newui-atoms@1.0.1\n  - @talelk/newui-molecules@2.0.0"
@@ -141,8 +157,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-templates",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "sections": [
+      {
+        "version": "1.1.1",
+        "body": "### Patch Changes\n\n- b60e321: Documentation and strategy batch: `spec/pages.md` becomes the Pages rung's\n  contract (responsiveness, a11y, coherence, state coverage, determinism and\n  budgets — every clause backed by an existing gate), ADR-0014 settles\n  PRODUCT.md's open success-metric question as four evidence-backed questions\n  reviewed at the one-year mark, and ADR-0015 fixes the editor packages'\n  positioning: their props are contracts, the engines stay optional, and the\n  verification floor now includes browser-tier tests for both.\n- d2060b8: The templates package now owns the contracts `spec/kit.md` promises for it.\n  `AppShell` gains in-package coverage for the drawer close control, the one-`h1`\n  rule, footer ordering, desktop fold (uncontrolled and controlled via\n  `collapsed`/`onCollapsedChange`) and header actions. `AuthLayout` gains\n  contract tests for the aside panel, the header row, the brand order and the\n  layout slot, and a story showing the desktop context panel.\n- Updated dependencies [d2060b8]\n- Updated dependencies [a332a12]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [a332a12]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [d2060b8]\n- Updated dependencies [a332a12]\n  - @talelk/newui-organisms@2.1.0\n  - @talelk/newui-atoms@1.1.0\n  - @talelk/newui-molecules@2.1.0"
+      },
       {
         "version": "1.1.0",
         "body": "### Minor Changes\n\n- dad472a: The application sidebar's fold becomes chrome instead of a menu row: `Collapse`\n  sits at the end of the identity block and the rail repeats an `Expand` control\n  under the tenant, so the footer is free for settings and account. `AppSidebar`\n  now binds `⌘B`/`Ctrl+B` like the bare `Sidebar`, and its trigger tooltip only\n  advertises the shortcut when it is real.\n  \n  `AppShell` and `AppSidebar` accept a `utilities` slot, rendered above Settings\n  while the sidebar is expanded, and a compact `utilitiesCollapsed` form so a\n  global control such as the theme switch does not disappear in the rail. Group\n  labels drop to 12px Ink Muted, active rows gain weight and a tinted count, and\n  counts join the collapsed tooltip. The mobile drawer pins its close control in\n  a 40px header, keeps the navigation list as the only scroller, and uses an\n  opaque surface in dark mode.\n  \n  The page heading and its actions now share one row; breadcrumbs sit above them.\n\n### Patch Changes\n\n- 8710ce8: Application coherence pass across the twelve example applications.\n  \n  - **Atoms:** checked/indeterminate Checkbox now paints a semantic check icon that\n    is legible in both themes and disabled states; Switch thumbs contrast against\n    both track states; required markers use a passing red step; disabled solid\n    blue actions use the neutral disabled treatment; Password keeps its visual\n    size with a larger coarse-pointer hit area.\n  - **Molecules:** Card descriptions use the interface type role; `ListRow` only\n    advertises pointer/hover when it is actionable; TabButtons fluid tracks can\n    shrink at 320/150%; editor mention surfaces use the overlay radius; a\n    controlled DateRangePicker holds the first click as a draft until the range\n    completes.\n  - **Organisms:** DataTable gains `cardBreakpoint`, a stable titled toolbar,\n    humanized column labels, compact mobile paging, guarded external empty\n    actions, a bottom spacer for the sticky selection bar, and selection only\n    when a bulk action exists; Section gains explicit accessible naming; DataState\n    accepts an empty-state icon; SettingsDialog has stable desktop width, true\n    mobile full-bleed, 40px mobile nav/close, an accessible tablist label and\n    logical RTL borders; AuthCard is card-only and flat; KanbanBoard restores\n    focus after keyboard moves, uses 40px touch targets below `lg`, and fits four\n    columns at 1440; PageToolbar uses an ellipsis menu, icons on secondary\n    actions and the section scale for nested headings; FilterBar selects are\n    two-up from 360px; StatGrid compact is four-up at `md`.\n  - **Templates:** AppShell's mobile menu trigger is 40px.\n  - **Charts:** ChartLegend renders static text when it has no handler; NumberCard\n    titles wrap under text zoom and its loading state reserves card geometry;\n    time-axis labels format the numeric timestamp ECharts passes, so monthly\n    plots keep their month ticks; axis charts reserve the label band.\n  - **Editor:** toolbar and mention surfaces follow the card/overlay radius scale.\n  \n  Existing props remain valid; the new state and layout props are additive.\n- Updated dependencies [dad472a]\n- Updated dependencies [8710ce8]\n- Updated dependencies [dad472a]\n- Updated dependencies [dad472a]\n- Updated dependencies [dad472a]\n- Updated dependencies [dad472a]\n- Updated dependencies [3355988]\n- Updated dependencies [dad472a]\n  - @talelk/newui-organisms@2.0.0\n  - @talelk/newui-atoms@1.0.1\n  - @talelk/newui-molecules@2.0.0"
@@ -179,113 +199,4 @@ export const RELEASED: ReleasedPackage[] = [
   }
 ]
 
-export const PENDING: PendingChange[] = [
-  {
-    "package": "@talelk/newui-newui-organisms",
-    "bump": "patch",
-    "summary": "Every organism now carries a dedicated axe accessibility suite in both of its\nrendered states (twelve new `*.a11y.test.tsx` files, from `AppSidebar` to\n`VirtualList`), and the package's export pin lists the whole public surface\n(`DataState`, `Section`, `SelectionBar` were unpinned). No axe rule beyond the\ntwo baseline suppressions was disabled anywhere; no violations surfaced.",
-    "file": "a11y-suite-organisms.md"
-  },
-  {
-    "package": "@talelk/newui-newui-atoms",
-    "bump": "minor",
-    "summary": "New `AvatarGroup` atom: an overlapping stack of `Avatar` tiles that collapses\neveryone past `max` into a single \"+N\" count. Data-driven (`avatars`), with\n`Avatar`'s size, shape and theme axes and a surface ring between tiles.",
-    "file": "avatar-group-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "New `Calendar` molecule: the pickers' date grid exported as a standalone,\nalways-open component — the booking-panel and filter-rail surface that needs a\ndate but no input. Values are `YYYY-MM-DD` strings (ADR-0008), `min`/`max`\nbound the selectable window, `dualPane` shows two months, and the Zag machine\nkeeps the grid's full keyboard model.",
-    "file": "calendar-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "New `Carousel` molecule, promoted from the `/kit/recipes` carousel example\nthrough the kit's recipes-to-API gate. A scroll-snap strip: native scrolling\nstays the interaction (touch, trackpad, arrow keys, RTL), the index follows\nwhere the scroll settles, and `Carousel.Viewport`/`Slide`/`Previous`/`Next`/\n`Status` compose the controls. Autoplay is opt-in, pauses under the pointer\nor focus, and never runs under `prefers-reduced-motion`. The recipe remains\nin the gallery as the themed composition.",
-    "file": "carousel-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "New `ColorPicker` molecule: the platform color picker under a styled swatch\nwith an optional hex field (`#rgb` and `#rrggbb`, normalized, invalid drafts\nflagged without committing). Deliberately no custom hue surface — the native\ncontrol carries the keyboard and screen-reader behavior on every platform,\nwhich a custom one would have to reimplement.",
-    "file": "color-picker-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-organisms",
-    "bump": "minor",
-    "summary": "`DataTable` grows the two powers a business table keeps reaching for. **Column\npinning**: freeze one column to each edge of the horizontal scroll\n(`pinnedStart` — the identifier that must stay visible; `pinnedEnd` —\ntypically the actions) with sticky, opaque, row-tinted cells; pinning state is\napp-owned via `onPinnedColumnsChange`. **Inline editing**: with `editable` and\n`onCellChange`, columns marked `meta.editable` render click-to-edit cells —\nEnter or blur commits the raw field through the app, Escape cancels, and the\ncell shows the app-owned value from the next `rows`.",
-    "file": "data-table-pinning-editing.md"
-  },
-  {
-    "package": "@talelk/newui-newui-editor",
-    "bump": "patch",
-    "summary": "\"@talelk/newui-code-editor\": patch\n---\n\nBoth editor packages gain their browser-tier test floor per ADR-0015: typed\ninput reports documents through `onValueChange`, the editable box keeps its\nmetrics, and the code editor's `readonly` compartment rejects input. No\npublic surface changes.",
-    "file": "editor-browser-floor.md"
-  },
-  {
-    "package": "@talelk/newui-newui-atoms",
-    "bump": "minor",
-    "summary": "New `IconButton` atom: the square, icon-only command. It shares the Button\nrecipe's box, states and focus rings, and makes the accessible name a required\n`label` prop — an icon-only control is unnamed without one.",
-    "file": "icon-button-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-atoms",
-    "bump": "minor",
-    "summary": "New `Image` atom: a framed image that holds its box (by `ratio` or\nintrinsically) while the source loads or fails, so layouts never jump. Lazy by\ndefault, with a `fallback` slot for broken sources.",
-    "file": "image-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-atoms",
-    "bump": "minor",
-    "summary": "New `Link` atom: a text link for prose and chrome. `route` stays in the app (a\nplain `href` a router intercepts), `href` opens a new tab and announces it to\nassistive tech, `theme` picks accent vs quiet, and `underline` controls the\ndecoration. The external glyph is opt-in.",
-    "file": "link-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "The `List` family forwards rest props: `ListRow`, `ListCell` and\n`ListHeaderCellSort` now accept (and type) the full set of div attributes, so\nthe caller's table contract can reach them — `role=\"table\"` on the wrapper,\n`role=\"row\"`/`role=\"cell\"` on rows and cells, and `role=\"columnheader\"` on a\nsortable header, which is also what makes its `aria-sort` legal. Previously\nthat composition was impossible from outside and axe flagged the bare\n`aria-sort` div as an `aria-allowed-attr` violation.",
-    "file": "list-rest-props.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "patch",
-    "summary": "Twenty-one molecules gained dedicated axe accessibility suites (every molecule\nnow has one), and the export pin lists the whole public surface — the `Toast`\nfamily's runtime names (`Toaster`, `ToastRegion`, `toast`, `toaster`,\n`createToaster`) plus `Stepper` and `TagInput` were unpinned.",
-    "file": "molecules-verification.md"
-  },
-  {
-    "package": "@talelk/newui-newui-templates",
-    "bump": "patch",
-    "summary": "Documentation and strategy batch: `spec/pages.md` becomes the Pages rung's\ncontract (responsiveness, a11y, coherence, state coverage, determinism and\nbudgets — every clause backed by an existing gate), ADR-0014 settles\nPRODUCT.md's open success-metric question as four evidence-backed questions\nreviewed at the one-year mark, and ADR-0015 fixes the editor packages'\npositioning: their props are contracts, the engines stay optional, and the\nverification floor now includes browser-tier tests for both.",
-    "file": "pages-contract.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "New `PinInput` molecule: a fixed-length verification code on the Zag pin-input\nmachine. One focus walks every cell — typing advances, paste splits, arrows\nand backspace move between cells. `length` sets the shape, `otp` advertises\n`autocomplete=\"one-time-code\"` autofill, `mask` turns the cells into password\nboxes, and the shared labelling contract (`label`/`description`/`error`/\n`required`) names every cell. `onValueComplete` fires when the code is whole.",
-    "file": "pin-input-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-templates",
-    "bump": "patch",
-    "summary": "The templates package now owns the contracts `spec/kit.md` promises for it.\n`AppShell` gains in-package coverage for the drawer close control, the one-`h1`\nrule, footer ordering, desktop fold (uncontrolled and controlled via\n`collapsed`/`onCollapsedChange`) and header actions. `AuthLayout` gains\ncontract tests for the aside panel, the header row, the brand order and the\nlayout slot, and a story showing the desktop context panel.",
-    "file": "templates-own-contracts.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "New `TimeRangePicker` molecule: two `TimePicker`s under one field label,\nreporting a single `[from, to]` value (or `[]` while empty). Picking the start\nholds a half-open range like the `DateRangePicker`'s draft, and a range that\nends before it starts — a night shift — is reported as-is rather than\nreordered.",
-    "file": "time-range-picker-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "minor",
-    "summary": "New `TransferList` molecule: a dual-list picker for assigning, segmenting and\npermission screens. Check rows on either side and move them with the chevron\nbuttons between the panels; double chevrons move everything. Rows are\ncheckboxes (natively keyboard-accessible), legends carry live counts, and the\noptional `search` filters both lists with one query.",
-    "file": "transfer-list-new.md"
-  },
-  {
-    "package": "@talelk/newui-newui-atoms",
-    "bump": "minor",
-    "summary": "New `VisuallyHidden` atom: the `sr-only` utility as a component with a stable\n`data-slot`, for content only assistive tech should read.",
-    "file": "visually-hidden-new.md"
-  }
-]
+export const PENDING: PendingChange[] = []

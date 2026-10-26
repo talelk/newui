@@ -3,6 +3,26 @@
 This history predates the atomic package split. New atoms are released under
 `@talelk/newui-atoms`; molecules and page regions are now separate packages.
 
+## 1.1.0
+
+### Minor Changes
+
+- a332a12: New `AvatarGroup` atom: an overlapping stack of `Avatar` tiles that collapses
+  everyone past `max` into a single "+N" count. Data-driven (`avatars`), with
+  `Avatar`'s size, shape and theme axes and a surface ring between tiles.
+- a332a12: New `IconButton` atom: the square, icon-only command. It shares the Button
+  recipe's box, states and focus rings, and makes the accessible name a required
+  `label` prop — an icon-only control is unnamed without one.
+- a332a12: New `Image` atom: a framed image that holds its box (by `ratio` or
+  intrinsically) while the source loads or fails, so layouts never jump. Lazy by
+  default, with a `fallback` slot for broken sources.
+- a332a12: New `Link` atom: a text link for prose and chrome. `route` stays in the app (a
+  plain `href` a router intercepts), `href` opens a new tab and announces it to
+  assistive tech, `theme` picks accent vs quiet, and `underline` controls the
+  decoration. The external glyph is opt-in.
+- a332a12: New `VisuallyHidden` atom: the `sr-only` utility as a component with a stable
+  `data-slot`, for content only assistive tech should read.
+
 ## 1.0.1
 
 ### Patch Changes

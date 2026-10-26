@@ -1,5 +1,41 @@
 # @talelk/newui-organisms
 
+## 2.1.0
+
+### Minor Changes
+
+- d2060b8: `DataTable` grows the two powers a business table keeps reaching for. **Column
+  pinning**: freeze one column to each edge of the horizontal scroll
+  (`pinnedStart` — the identifier that must stay visible; `pinnedEnd` —
+  typically the actions) with sticky, opaque, row-tinted cells; pinning state is
+  app-owned via `onPinnedColumnsChange`. **Inline editing**: with `editable` and
+  `onCellChange`, columns marked `meta.editable` render click-to-edit cells —
+  Enter or blur commits the raw field through the app, Escape cancels, and the
+  cell shows the app-owned value from the next `rows`.
+
+### Patch Changes
+
+- d2060b8: Every organism now carries a dedicated axe accessibility suite in both of its
+  rendered states (twelve new `*.a11y.test.tsx` files, from `AppSidebar` to
+  `VirtualList`), and the package's export pin lists the whole public surface
+  (`DataState`, `Section`, `SelectionBar` were unpinned). No axe rule beyond the
+  two baseline suppressions was disabled anywhere; no violations surfaced.
+- Updated dependencies [a332a12]
+- Updated dependencies [d2060b8]
+- Updated dependencies [d2060b8]
+- Updated dependencies [d2060b8]
+- Updated dependencies [a332a12]
+- Updated dependencies [a332a12]
+- Updated dependencies [a332a12]
+- Updated dependencies [d2060b8]
+- Updated dependencies [d2060b8]
+- Updated dependencies [d2060b8]
+- Updated dependencies [d2060b8]
+- Updated dependencies [d2060b8]
+- Updated dependencies [a332a12]
+  - @talelk/newui-atoms@1.1.0
+  - @talelk/newui-molecules@2.1.0
+
 ## 2.0.0
 
 ### Major Changes

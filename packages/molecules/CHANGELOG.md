@@ -1,5 +1,63 @@
 # @talelk/newui-molecules
 
+## 2.1.0
+
+### Minor Changes
+
+- d2060b8: New `Calendar` molecule: the pickers' date grid exported as a standalone,
+  always-open component — the booking-panel and filter-rail surface that needs a
+  date but no input. Values are `YYYY-MM-DD` strings (ADR-0008), `min`/`max`
+  bound the selectable window, `dualPane` shows two months, and the Zag machine
+  keeps the grid's full keyboard model.
+- d2060b8: New `Carousel` molecule, promoted from the `/kit/recipes` carousel example
+  through the kit's recipes-to-API gate. A scroll-snap strip: native scrolling
+  stays the interaction (touch, trackpad, arrow keys, RTL), the index follows
+  where the scroll settles, and `Carousel.Viewport`/`Slide`/`Previous`/`Next`/
+  `Status` compose the controls. Autoplay is opt-in, pauses under the pointer
+  or focus, and never runs under `prefers-reduced-motion`. The recipe remains
+  in the gallery as the themed composition.
+- d2060b8: New `ColorPicker` molecule: the platform color picker under a styled swatch
+  with an optional hex field (`#rgb` and `#rrggbb`, normalized, invalid drafts
+  flagged without committing). Deliberately no custom hue surface — the native
+  control carries the keyboard and screen-reader behavior on every platform,
+  which a custom one would have to reimplement.
+- d2060b8: The `List` family forwards rest props: `ListRow`, `ListCell` and
+  `ListHeaderCellSort` now accept (and type) the full set of div attributes, so
+  the caller's table contract can reach them — `role="table"` on the wrapper,
+  `role="row"`/`role="cell"` on rows and cells, and `role="columnheader"` on a
+  sortable header, which is also what makes its `aria-sort` legal. Previously
+  that composition was impossible from outside and axe flagged the bare
+  `aria-sort` div as an `aria-allowed-attr` violation.
+- d2060b8: New `PinInput` molecule: a fixed-length verification code on the Zag pin-input
+  machine. One focus walks every cell — typing advances, paste splits, arrows
+  and backspace move between cells. `length` sets the shape, `otp` advertises
+  `autocomplete="one-time-code"` autofill, `mask` turns the cells into password
+  boxes, and the shared labelling contract (`label`/`description`/`error`/
+  `required`) names every cell. `onValueComplete` fires when the code is whole.
+- d2060b8: New `TimeRangePicker` molecule: two `TimePicker`s under one field label,
+  reporting a single `[from, to]` value (or `[]` while empty). Picking the start
+  holds a half-open range like the `DateRangePicker`'s draft, and a range that
+  ends before it starts — a night shift — is reported as-is rather than
+  reordered.
+- d2060b8: New `TransferList` molecule: a dual-list picker for assigning, segmenting and
+  permission screens. Check rows on either side and move them with the chevron
+  buttons between the panels; double chevrons move everything. Rows are
+  checkboxes (natively keyboard-accessible), legends carry live counts, and the
+  optional `search` filters both lists with one query.
+
+### Patch Changes
+
+- d2060b8: Twenty-one molecules gained dedicated axe accessibility suites (every molecule
+  now has one), and the export pin lists the whole public surface — the `Toast`
+  family's runtime names (`Toaster`, `ToastRegion`, `toast`, `toaster`,
+  `createToaster`) plus `Stepper` and `TagInput` were unpinned.
+- Updated dependencies [a332a12]
+- Updated dependencies [a332a12]
+- Updated dependencies [a332a12]
+- Updated dependencies [a332a12]
+- Updated dependencies [a332a12]
+  - @talelk/newui-atoms@1.1.0
+
 ## 2.0.0
 
 ### Major Changes
