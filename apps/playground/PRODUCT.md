@@ -107,8 +107,11 @@ the dev-server proxy, Lucide auto-import and DocType types.
 `action`, `side`, `align`, `bare`, `fluid`, `controllable`, `compound part` and
 `machine`.
 
-**Open decision.** The one-year success metric is undecided. Do not invent
-adoption targets, revenue, customer counts, benchmarks or partnership claims.
+**Decided.** The project does not adopt numeric targets — see
+[ADR-0014](../spec/adr/0014-success-questions.md): four success questions with
+named evidence sources, reviewed at the one-year mark. No adoption targets,
+revenue, customer counts, benchmarks or partnership claims until real
+counterparties make sharper metrics honest.
 
 ## Brand Commitments
 

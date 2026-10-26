@@ -118,8 +118,11 @@ const ROUTES: RouteBudget[] = [
   },
   // 280.0 measured: the shell now carries the ladder's counts, and a budget
   // with no headroom turns the next honest shell addition into a red gate.
-  { route: '/organisms/bar-chart', budget: 285 },
-  { route: '/organisms/code-editor', budget: 280 },
+  // Re-raised to 290 when the registry grew by four more molecules.
+  { route: '/organisms/bar-chart', budget: 290 },
+  // 280.0 measured: the shell's registry counts grew with the new atoms and
+  // molecules — same headroom rule as bar-chart above.
+  { route: '/organisms/code-editor', budget: 285 },
   { route: '/organisms/page-toolbar', budget: 190 },
   {
     route: '/kit/recipes',

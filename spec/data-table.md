@@ -44,6 +44,11 @@ a whole data region.
 | `emptyTitle` | `string` | empty-state title |
 | `emptyHint` | `string` | empty-state supporting text |
 | `onClearFilters` | `() => void` | clears external filters before internal search |
+| `pinnedStart` / `pinnedEnd` | `string` | freeze one column to each edge of the horizontal scroll; controlled via `onPinnedColumnsChange` |
+| `defaultPinnedStart` / `defaultPinnedEnd` | `string` | uncontrolled initial pins |
+| `onPinnedColumnsChange` | `(pinned: DataTablePinned) => void` | pinning is app-owned state; the table renders, never mutates it |
+| `editable` | `boolean` | turn on inline editing for columns with `meta.editable` |
+| `onCellChange` | `(id: string, columnId: string, value: string) => void` | committed cell edits; values are app-owned through `rows` |
 
 ## Behavior
 
@@ -73,6 +78,20 @@ a whole data region.
 - Search, sorting, visibility and pagination are local table state. A new
   externally filtered row set resets the current page.
 - Column alignment is set with `meta: { align: 'end' }` for numeric columns.
+- **Pinning.** One column per edge stays visible while the rest scroll
+  horizontally (`pinnedStart` — the identifier; `pinnedEnd` — typically the
+  actions). Pinned cells are sticky at the edge with an opaque surface, a
+  shared divider border, and the row's hover/selected tint, so they read as
+  part of the row. The mobile-card layout ignores pinning — cards do not
+  scroll horizontally. Pinning state belongs to the app; the table renders
+  it and reports nothing on its own.
+- **Inline editing.** With `editable` and `onCellChange` set, columns whose
+  `meta.editable` is `true` render a click-to-edit cell (`meta.editInput`
+  picks `text` or `number`). Enter or blur commits the trimmed value through
+  `onCellChange`; Escape cancels. The cell edits the row's *raw* field — a
+  formatted `cell` render (e.g. `$10`) is replaced by the editor while
+  editing and restored after. Values are app-owned: the table never mutates
+  `rows`; it shows whatever the next `rows` carry.
 - The root is `data-slot="data-table"` for stable browser-level integration.
 - `ScrollTable` is a separate molecule at `@talelk/newui-molecules`; importing it does
   not import the table engine into a route that renders its own semantic table.

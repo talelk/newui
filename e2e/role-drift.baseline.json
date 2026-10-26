@@ -50,6 +50,8 @@
   "label||||||light — color",
   "label||||||light — fontSize",
   "label||||||light — lineHeight",
+  "link||||||light — color",
+  "link||||||light — lineHeight",
   "menu-trigger|||state=closed|||light — backgroundColor",
   "menu-trigger|||state=closed|||light — borderTopLeftRadius",
   "menu-trigger|||state=closed|||light — color",
