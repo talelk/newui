@@ -1,6 +1,6 @@
 {
   "name": "@talelk/newui-organisms",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "type": "module",
   "description": "Application regions, sidebars, tables and widgets built from atoms and molecules.",
   "exports": {

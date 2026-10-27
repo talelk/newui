@@ -1,5 +1,13 @@
 # @talelk/newui-templates
 
+## 1.1.3
+
+### Patch Changes
+
+- Updated dependencies [e0095e2]
+  - @talelk/newui-molecules@2.2.1
+  - @talelk/newui-organisms@2.1.2
+
 ## 1.1.2
 
 ### Patch Changes

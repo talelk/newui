@@ -111,8 +111,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-molecules",
-    "version": "2.2.0",
+    "version": "2.2.1",
     "sections": [
+      {
+        "version": "2.2.1",
+        "body": "### Patch Changes\n\n- e0095e2: Toast: the close button works, stacked toasts lift instead of overlapping, and in-place updates (promise loading → success) re-render in the same node. Root causes: the region keyed items by record reference (the store re-syncs fresh objects constantly, remounting each item's machine mid-click), placement depended on group heights without a tracked read, and the placement transform consuming Zag's `--y`/`--x` variables was never written."
+      },
       {
         "version": "2.2.0",
         "body": "### Minor Changes\n\n- 538d5d2: New `FileCard` molecule: one file as a tile — type icon, name, meta line, optional badge, selection state and app-owned `suffix` actions. Keep the open action and the actions apart: a button card must not carry `suffix`.\n- 538d5d2: New `MessageListItem` molecule: one conversation row — sender, subject, one-line preview, time, avatar, unread and selected states. Unread is carried by text weight and a dot, never colour alone.\n- 538d5d2: New `NotificationItem` molecule: one notification row — event icon, title, description, time, unread and selected states, with app-owned `suffix` controls.\n- 538d5d2: New `ThreadRow` molecule: one discussion thread row — title, preview, reply/participant meta, time, avatar, unread and selected states.\n- 538d5d2: `ToastRegion` publishes its `ToastRegionProps`, so the Toaster family appears in the API tables, the site registry and ⌘K. No runtime behavior change.\n\n### Patch Changes\n\n- Updated dependencies [538d5d2]\n  - @talelk/newui-atoms@1.2.0"
@@ -133,8 +137,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-organisms",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "sections": [
+      {
+        "version": "2.1.2",
+        "body": "### Patch Changes\n\n- Updated dependencies [e0095e2]\n  - @talelk/newui-molecules@2.2.1"
+      },
       {
         "version": "2.1.1",
         "body": "### Patch Changes\n\n- 538d5d2: DataTable's card view shows the bulk-select row only once a selection exists: at zero it was a lone checkbox beside \"0 selected\".\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n  - @talelk/newui-molecules@2.2.0\n  - @talelk/newui-atoms@1.2.0"
@@ -169,8 +177,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-templates",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "sections": [
+      {
+        "version": "1.1.3",
+        "body": "### Patch Changes\n\n- Updated dependencies [e0095e2]\n  - @talelk/newui-molecules@2.2.1\n  - @talelk/newui-organisms@2.1.2"
+      },
       {
         "version": "1.1.2",
         "body": "### Patch Changes\n\n- 538d5d2: AuthLayout's desktop aside is Cool Paper with a hairline divider, not a saturated blue field — the One Signal Rule keeps blue for the interactive moment, which the app's aside content owns.\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n- Updated dependencies [538d5d2]\n  - @talelk/newui-organisms@2.1.1\n  - @talelk/newui-molecules@2.2.0\n  - @talelk/newui-atoms@1.2.0"
@@ -215,11 +227,4 @@ export const RELEASED: ReleasedPackage[] = [
   }
 ]
 
-export const PENDING: PendingChange[] = [
-  {
-    "package": "@talelk/newui-newui-molecules",
-    "bump": "patch",
-    "summary": "Toast: the close button works, stacked toasts lift instead of overlapping, and in-place updates (promise loading → success) re-render in the same node. Root causes: the region keyed items by record reference (the store re-syncs fresh objects constantly, remounting each item's machine mid-click), placement depended on group heights without a tracked read, and the placement transform consuming Zag's `--y`/`--x` variables was never written.",
-    "file": "toast-close-fix.md"
-  }
-]
+export const PENDING: PendingChange[] = []
