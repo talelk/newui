@@ -1,5 +1,12 @@
 # @talelk/newui-organisms
 
+## 2.1.2
+
+### Patch Changes
+
+- Updated dependencies [e0095e2]
+  - @talelk/newui-molecules@2.2.1
+
 ## 2.1.1
 
 ### Patch Changes
