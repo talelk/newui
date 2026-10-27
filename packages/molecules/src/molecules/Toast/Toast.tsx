@@ -5,7 +5,7 @@ import {
   Portal,
 } from '@talelk/newui-atoms/internal'
 import * as zagToast from '@zag-js/toast'
-import { For, type JSX, Show } from 'solid-js'
+import { createMemo, For, type JSX, Show } from 'solid-js'
 
 export type ToastType =
   | 'success'
@@ -86,19 +86,41 @@ const ICON: Record<string, string> = {
 type ToastRecordWithRender = ToastRecord & { render?: ToastRender }
 
 function ToastItem(props: {
-  toast: ToastRecord
+  /** The toast's stable id; the live record is read from `toasts`. */
+  id: string
+  /** The region's tracked toast list, so record updates stay reactive. */
+  toasts: () => ToastRecordWithRender[]
   parent: zagToast.GroupService
 }): JSX.Element {
-  const { api } = createZagApi<ToastApi>(
+  const record = createMemo(
+    () =>
+      props.toasts().find((toast) => toast.id === props.id) as
+        | ToastRecordWithRender
+        | undefined,
+  )
+  const { api: connected } = createZagApi<ToastApi>(
     zagToast.machine,
     zagToast.connect,
     () => ({
-      ...props.toast,
+      id: props.id,
+      ...record(),
       parent: props.parent,
     }),
   )
+  // The item's placement style is computed from the *group's* heights, which
+  // live outside this machine's state and are read lazily inside the template
+  // spread. Re-reading them here makes the connected API recompute when a
+  // sibling mounts or leaves — without this, the first toast never lifts and
+  // its close button stays buried under the newest one.
+  const heights = createMemo(() =>
+    JSON.stringify(props.parent.context.get('heights')),
+  )
+  const api = createMemo(() => {
+    heights()
+    return connected()
+  })
   const type = () => (api().type ?? 'info') as string
-  const render = () => (props.toast as ToastRecordWithRender).render
+  const render = () => record()?.render
 
   // `message` (and `custom`) carry no icon; only the typed toasts do.
   const defaultBody = () => (
@@ -148,7 +170,7 @@ function ToastItem(props: {
     <div
       {...api().getRootProps()}
       data-slot="toast"
-      class="pointer-events-auto flex w-[360px] items-center rounded-card bg-surface-gray-9 px-4 py-2.5 shadow-xl"
+      class="pointer-events-auto flex w-[360px] items-center rounded-card bg-surface-gray-9 px-4 py-2.5 shadow-xl [transform:translate(var(--x,0),var(--y,0))] [z-index:var(--z-index,0)] transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none data-[state=closed]:opacity-0"
     >
       <Show when={render()} fallback={defaultBody()}>
         {(custom) => <>{custom()({ dismiss: api().dismiss })}</>}
@@ -174,6 +196,9 @@ export function ToastRegion(props: ToastRegionProps): JSX.Element {
     id: createId('toaster'),
     store: props.toaster,
   }))
+  /** Tracked once here: every item reads its record through this memo, so a
+   * store sync reaches the items through Solid, not through the raw store. */
+  const toasts = createMemo(() => api().getToasts() as ToastRecordWithRender[])
 
   return (
     <Portal>
@@ -185,8 +210,19 @@ export function ToastRegion(props: ToastRegionProps): JSX.Element {
           props.class,
         )}
       >
-        <For each={api().getToasts()}>
-          {(item) => <ToastItem toast={item} parent={groupService} />}
+        {/* Keyed by toast id, reading the live record from the store. The
+            store hands back fresh record objects on every sync (presence,
+            pause, timers), so keying the items by reference would tear down
+            and recreate each item's machine on every tick — and any
+            pointerdown→mouseup pair straddling a replacement never fires its
+            click. The id list is stable, so For moves nodes instead of
+            replacing them and each machine lives as long as its toast. */}
+        <For
+          each={api()
+            .getToasts()
+            .map((toast) => String(toast.id))}
+        >
+          {(id) => <ToastItem id={id} toasts={toasts} parent={groupService} />}
         </For>
       </div>
     </Portal>
