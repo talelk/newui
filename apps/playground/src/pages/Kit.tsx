@@ -1,6 +1,7 @@
 import { A } from '@solidjs/router'
-import { For, type JSX, Show } from 'solid-js'
+import { For, type JSX } from 'solid-js'
 import { LADDER_COUNTS } from '../generated/counts'
+import { CodeBlock } from '../lib/CodeBlock'
 import { PageSection } from '../lib/PageSection'
 import { TableOfContents } from '../lib/TableOfContents'
 import { PageIntro } from '../shell/PageIntro'
@@ -16,18 +17,7 @@ import { usePageToc } from '../shell/SiteLayout'
  */
 
 function Code(props: { title?: string; children: string }): JSX.Element {
-  return (
-    <figure class="flex flex-col gap-1">
-      <Show when={props.title}>
-        <figcaption class="text-caption text-ink-gray-7">
-          {props.title}
-        </figcaption>
-      </Show>
-      <pre class="whitespace-pre-wrap break-words rounded-card border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
-        <code>{props.children.trim()}</code>
-      </pre>
-    </figure>
-  )
+  return <CodeBlock code={props.children.trim()} title={props.title} />
 }
 
 const LADDER = [

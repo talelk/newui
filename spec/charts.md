@@ -55,7 +55,10 @@ properties, so it follows the light/dark axis without a second recipe.
   `surface-*-2`), the value, a progress bar toward a numeric `target`
   (`role="progressbar"`; string targets print ` / target` only), the
   `deltaCaption` as the baseline line, and a sparkline whose last point carries
-  an end dot. A delta is never printed without its caption naming the baseline.
+  an end dot. The target wraps as a whole unit on narrow cards, the sparkline
+  anchors to the card footer, and loading reserves the optional progress and
+  sparkline geometry. A delta is never printed without its caption naming the
+  baseline.
 
 ## State, access and responsive behavior
 

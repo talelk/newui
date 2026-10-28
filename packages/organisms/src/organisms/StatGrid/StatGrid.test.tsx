@@ -92,4 +92,20 @@ describe('StatGrid', () => {
     expect(card?.className).toContain('p-2.5')
     expect(card?.querySelector('.bg-surface-gray-2')).toBeNull()
   })
+
+  it('leaves room for whole words in regular mobile labels', () => {
+    const { container } = render(() => (
+      <StatGrid
+        stats={[
+          { label: 'Average order value', value: '1', icon: 'lucide-house' },
+        ]}
+      />
+    ))
+    const icon = container.querySelector('.bg-surface-gray-2')
+    const label = screen.getByText('Average order value')
+    expect(icon?.className).toContain('hidden')
+    expect(icon?.className).toContain('sm:grid')
+    expect(label.className).toContain('break-words')
+    expect(label.className).not.toContain('[overflow-wrap:anywhere]')
+  })
 })

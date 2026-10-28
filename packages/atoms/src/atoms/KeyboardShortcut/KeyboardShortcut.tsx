@@ -401,7 +401,7 @@ export function KeyboardShortcut(props: KeyboardShortcutProps): JSX.Element {
                 <span
                   data-slot="separator"
                   aria-hidden="true"
-                  class="font-mono text-[10px] leading-none opacity-60"
+                  class="font-mono text-xs leading-none opacity-60"
                 >
                   +
                 </span>

@@ -7,6 +7,7 @@ import {
   DataTable,
   type DataTableColumn,
   FilterBar,
+  type Stat,
   StatGrid,
 } from '@talelk/newui-organisms'
 import {
@@ -201,6 +202,33 @@ export function Records(): JSX.Element {
     })
   }
 
+  const stats = (): Stat[] => [
+    {
+      label: 'Active budget',
+      value: usd(budget(active())),
+      hint: `${active().length} projects in flight`,
+      icon: 'lucide-wallet',
+    },
+    {
+      label: 'Active',
+      value: count(active().length),
+      hint: 'Being worked on now',
+      icon: 'lucide-activity',
+    },
+    {
+      label: 'Paused',
+      value: count(paused().length),
+      hint: 'Waiting on a decision',
+      icon: 'lucide-pause',
+    },
+    {
+      label: 'Done',
+      value: count(done().length),
+      hint: `${usd(budget(done()))} delivered`,
+      icon: 'lucide-circle-check',
+    },
+  ]
+
   return (
     <Shell
       title="Projects, at a glance"
@@ -241,36 +269,8 @@ export function Records(): JSX.Element {
           />
         </Show>
 
-        <div class="hidden sm:block">
-          <StatGrid
-            stats={[
-              {
-                label: 'Active budget',
-                value: usd(budget(active())),
-                hint: `${active().length} projects in flight`,
-                icon: 'lucide-wallet',
-              },
-              {
-                label: 'Active',
-                value: count(active().length),
-                hint: 'Being worked on now',
-                icon: 'lucide-activity',
-              },
-              {
-                label: 'Paused',
-                value: count(paused().length),
-                hint: 'Waiting on a decision',
-                icon: 'lucide-pause',
-              },
-              {
-                label: 'Done',
-                value: count(done().length),
-                hint: `${usd(budget(done()))} delivered`,
-                icon: 'lucide-circle-check',
-              },
-            ]}
-          />
-        </div>
+        <StatGrid compact class="sm:hidden" stats={stats()} />
+        <StatGrid class="hidden sm:grid" stats={stats()} />
 
         <FilterBar
           selects={[

@@ -106,7 +106,7 @@ test('route navigation does not ratchet the heap', async ({ page }) => {
   test.setTimeout(120_000)
   await page.setViewportSize({ width: 1280, height: 900 })
   await page.goto('/spec')
-  await page.locator('main > *').first().waitFor()
+  await page.locator('main > *:visible').first().waitFor()
 
   const probe = await createMemoryProbe(page)
   try {
@@ -115,11 +115,11 @@ test('route navigation does not ratchet the heap', async ({ page }) => {
     const before = await probe.heapBytes()
     for (let i = 0; i < 12; i += 1) {
       await page.goto('/atoms/button')
-      await page.locator('main > *').first().waitFor()
+      await page.locator('main > *:visible').first().waitFor()
       await page.goto('/organisms/stat-grid')
-      await page.locator('main > *').first().waitFor()
+      await page.locator('main > *:visible').first().waitFor()
       await page.goto('/spec')
-      await page.locator('main > *').first().waitFor()
+      await page.locator('main > *:visible').first().waitFor()
     }
     await probe.forceGc()
     const after = await probe.heapBytes()
@@ -152,7 +152,7 @@ for (const [route, budget] of BUDGETS) {
   test(`${route} loads within a memory budget`, async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 })
     await page.goto(route)
-    await page.locator('main > *').first().waitFor()
+    await page.locator('main > *:visible').first().waitFor()
     await page.waitForTimeout(500)
 
     const probe = await createMemoryProbe(page)

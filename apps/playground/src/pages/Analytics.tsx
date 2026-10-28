@@ -1,10 +1,7 @@
 import { Badge, Button, Skeleton, Switch } from '@talelk/newui-atoms'
 import {
-  AreaChart,
-  BarChart,
   ChartCard,
   ChartLegend,
-  DonutChart,
   NumberCard,
   type NumberCardProps,
   paletteColors,
@@ -52,8 +49,35 @@ import {
 } from './analytics/data'
 
 const ReceiptDialog = lazy(() => import('./analytics/ReceiptDialog'))
+const AreaChart = lazy(() =>
+  import('./analytics/charts').then((module) => ({
+    default: module.AreaChart,
+  })),
+)
+const BarChart = lazy(() =>
+  import('./analytics/charts').then((module) => ({
+    default: module.BarChart,
+  })),
+)
+const DonutChart = lazy(() =>
+  import('./analytics/charts').then((module) => ({
+    default: module.DonutChart,
+  })),
+)
 
 const KPI_SKELETONS = [0, 1, 2, 3]
+
+function ChartLoading(): JSX.Element {
+  return (
+    <div
+      class="flex h-[21rem] flex-col justify-center p-card-pad"
+      role="status"
+    >
+      <span class="sr-only">Loading chart</span>
+      <Skeleton lines={6} />
+    </div>
+  )
+}
 
 /** Four KPI placeholders that keep the metric geometry while the report loads. */
 function KpiLoadingCards(): JSX.Element {
@@ -344,6 +368,24 @@ export function Analytics(): JSX.Element {
       section="Analytics"
       title="Revenue overview"
       description={scopeDescription()}
+      headerActions={
+        <div class="flex items-center gap-2">
+          <span class="hidden text-caption text-ink-gray-7 sm:inline">
+            Demo state
+          </span>
+          <div class="w-28">
+            <Select
+              aria-label="Preview state"
+              value={state()}
+              options={['ready', 'loading', 'empty', 'error'].map((value) => ({
+                value,
+                label: value.charAt(0).toUpperCase() + value.slice(1),
+              }))}
+              onValueChange={(value) => update(setState, value ?? 'ready')}
+            />
+          </div>
+        </div>
+      }
       actions={
         <Button
           variant="solid"
@@ -440,29 +482,11 @@ export function Analytics(): JSX.Element {
         resultCount={unavailable() ? undefined : rows().length}
         onClearAll={hasActiveFilters() ? clearFilters : undefined}
       >
-        <div class="flex max-w-full flex-wrap items-center gap-3">
-          <Switch
-            label="Compare prior month"
-            checked={compare()}
-            onCheckedChange={setCompare}
-          />
-          <div class="flex max-w-full flex-wrap items-center gap-2">
-            <span class="text-caption text-ink-gray-7">Demo state</span>
-            <div class="w-32 max-w-full">
-              <Select
-                aria-label="Preview state"
-                value={state()}
-                options={['ready', 'loading', 'empty', 'error'].map(
-                  (value) => ({
-                    value,
-                    label: value.charAt(0).toUpperCase() + value.slice(1),
-                  }),
-                )}
-                onValueChange={(value) => update(setState, value ?? 'ready')}
-              />
-            </div>
-          </div>
-        </div>
+        <Switch
+          label="Compare prior month"
+          checked={compare()}
+          onCheckedChange={setCompare}
+        />
       </FilterBar>
       <Show when={error()}>
         {(message) => (
@@ -485,7 +509,7 @@ export function Analytics(): JSX.Element {
         <section
           aria-label="Key performance indicators"
           aria-busy={loading()}
-          class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+          class="grid gap-4 min-[360px]:grid-cols-2 xl:grid-cols-4"
         >
           <Show when={loading()}>
             <span class="sr-only" role="status">
@@ -515,53 +539,57 @@ export function Analytics(): JSX.Element {
           class="grid min-w-0 gap-4 xl:grid-cols-3"
         >
           <ChartCard class="xl:col-span-2">
-            <AreaChart
-              data={rows().length ? trend() : []}
-              x="date"
-              y={compare() ? ['Revenue', 'Previous'] : 'Revenue'}
-              seriesConfig={{
-                Previous: {
-                  type: 'line',
-                  dashed: true,
-                  label: 'Prior month',
-                },
-              }}
-              title="Revenue over time"
-              subtitle="Paid revenue · USD"
-              height={260}
-              loading={loading()}
-              yAxis={{
-                min: 0,
-                format: axisMoney,
-              }}
-              smooth
-            />
-            <ChartLegend
-              items={(compare() ? ['Revenue', 'Previous'] : ['Revenue']).map(
-                (name, index) => ({
-                  name,
-                  label: name === 'Previous' ? 'Prior month' : name,
-                  color:
-                    paletteColors('sequential', chartTokens(), 2)[index] ??
-                    'currentColor',
-                }),
-              )}
-            />
+            <Suspense fallback={<ChartLoading />}>
+              <AreaChart
+                data={rows().length ? trend() : []}
+                x="date"
+                y={compare() ? ['Revenue', 'Previous'] : 'Revenue'}
+                seriesConfig={{
+                  Previous: {
+                    type: 'line',
+                    dashed: true,
+                    label: 'Prior month',
+                  },
+                }}
+                title="Revenue over time"
+                subtitle="Paid revenue · USD"
+                height={260}
+                loading={loading()}
+                yAxis={{
+                  min: 0,
+                  format: axisMoney,
+                }}
+                smooth
+              />
+              <ChartLegend
+                items={(compare() ? ['Revenue', 'Previous'] : ['Revenue']).map(
+                  (name, index) => ({
+                    name,
+                    label: name === 'Previous' ? 'Prior month' : name,
+                    color:
+                      paletteColors('sequential', chartTokens(), 2)[index] ??
+                      'currentColor',
+                  }),
+                )}
+              />
+            </Suspense>
           </ChartCard>
           <ChartCard>
-            <BarChart
-              data={rows().length ? channelSeries(rows()) : []}
-              x="channel"
-              y="Revenue"
-              horizontal
-              title="Revenue by channel"
-              subtitle="Paid revenue by acquisition channel · USD"
-              height={260}
-              loading={loading()}
-              yAxis={{ min: 0, format: axisMoney }}
-              seriesConfig={{ Revenue: { format: usdK } }}
-              showDataLabels
-            />
+            <Suspense fallback={<ChartLoading />}>
+              <BarChart
+                data={rows().length ? channelSeries(rows()) : []}
+                x="channel"
+                y="Revenue"
+                horizontal
+                title="Revenue by channel"
+                subtitle="Paid revenue by acquisition channel · USD"
+                height={260}
+                loading={loading()}
+                yAxis={{ min: 0, format: axisMoney }}
+                seriesConfig={{ Revenue: { format: usdK } }}
+                showDataLabels
+              />
+            </Suspense>
           </ChartCard>
         </section>
         <h2 class="text-section">Payment and regions</h2>
@@ -570,34 +598,38 @@ export function Analytics(): JSX.Element {
           class="grid min-w-0 gap-4 lg:grid-cols-2"
         >
           <ChartCard>
-            <DonutChart
-              data={rows().length ? statusSeries(rows()) : []}
-              category="status"
-              value="Transactions"
-              title="Payment mix"
-              subtitle="Paid, pending and refunded transactions"
-              centerLabel="Transactions"
-              height={260}
-              loading={loading()}
-              palette={statusPalette()}
-              showDataLabels
-            />
+            <Suspense fallback={<ChartLoading />}>
+              <DonutChart
+                data={rows().length ? statusSeries(rows()) : []}
+                category="status"
+                value="Transactions"
+                title="Payment mix"
+                subtitle="Paid, pending and refunded transactions"
+                centerLabel="Transactions"
+                height={260}
+                loading={loading()}
+                palette={statusPalette()}
+                showDataLabels
+              />
+            </Suspense>
           </ChartCard>
           <Show
             when={region() !== 'all' && hasRows() && !loading()}
             fallback={
               <ChartCard>
-                <BarChart
-                  data={rows().length ? regionSeries(rows()) : []}
-                  x="region"
-                  y="Revenue"
-                  horizontal
-                  title="Revenue by region"
-                  subtitle="Paid revenue by region · USD"
-                  height={260}
-                  loading={loading()}
-                  yAxis={{ min: 0, format: axisMoney }}
-                />
+                <Suspense fallback={<ChartLoading />}>
+                  <BarChart
+                    data={rows().length ? regionSeries(rows()) : []}
+                    x="region"
+                    y="Revenue"
+                    horizontal
+                    title="Revenue by region"
+                    subtitle="Paid revenue by region · USD"
+                    height={260}
+                    loading={loading()}
+                    yAxis={{ min: 0, format: axisMoney }}
+                  />
+                </Suspense>
               </ChartCard>
             }
           >

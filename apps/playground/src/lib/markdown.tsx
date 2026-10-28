@@ -1,5 +1,6 @@
 import { cn } from '@talelk/newui-atoms'
-import { createSignal, For, type JSX, Match, Switch } from 'solid-js'
+import { For, type JSX, Match, Switch } from 'solid-js'
+import { CodeBlock } from './CodeBlock'
 
 /**
  * A markdown subset, rendered to JSX.
@@ -251,35 +252,6 @@ export function renderInline(text: string): JSX.Element {
         return part
       }}
     </For>
-  )
-}
-
-/** A fenced code block with its own copy button. */
-function CodeBlock(props: { code: string }): JSX.Element {
-  const [copied, setCopied] = createSignal(false)
-  return (
-    <div class="relative">
-      <pre class="whitespace-pre-wrap break-words rounded-card border border-outline-gray-1 bg-surface-gray-1 p-4 text-sm leading-relaxed text-ink-gray-8">
-        <code>{props.code}</code>
-      </pre>
-      <div class="absolute end-2 top-2">
-        {/* Plain markup, not `Button`: this module rides the prose routes
-          (`/docs` is budgeted as prose only), so it stays component-free. */}
-        <button
-          type="button"
-          aria-label="Copy code"
-          class="rounded-3 border border-outline-gray-2 bg-surface-elevation-1 px-2 py-1 text-caption text-ink-gray-8 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none"
-          onClick={() => {
-            void navigator.clipboard?.writeText(props.code).then(
-              () => setCopied(true),
-              () => setCopied(false),
-            )
-          }}
-        >
-          {copied() ? 'Copied' : 'Copy'}
-        </button>
-      </div>
-    </div>
   )
 }
 

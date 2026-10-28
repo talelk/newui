@@ -64,7 +64,20 @@ export function StatGrid(props: StatGridProps): JSX.Element {
           class={`grid gap-card-gap ${props.compact ? COMPACT_COLUMNS[columns()] : COLUMNS[columns()]} ${props.class ?? ''}`}
         >
           <For each={Array.from({ length: columns() })}>
-            {() => <Skeleton lines={3} class="h-24" />}
+            {() => (
+              <div
+                data-slot="stat"
+                aria-hidden="true"
+                class={cn(
+                  'flex flex-col rounded-card border border-outline-gray-1 bg-surface-elevation-1',
+                  props.compact ? 'gap-1 p-2.5' : 'gap-control-gap p-card-pad',
+                )}
+              >
+                <Skeleton lines={1} class="h-5 w-24" />
+                <Skeleton lines={1} class="h-8 w-20" />
+                <Skeleton lines={1} class="h-4 w-28" />
+              </div>
+            )}
           </For>
         </div>
       }
@@ -89,21 +102,21 @@ export function StatGrid(props: StatGridProps): JSX.Element {
                   'cursor-pointer transition-[border-color,box-shadow] hover:border-outline-gray-3 hover:shadow-sm focus-visible:focus-ring motion-reduce:transition-none',
               )}
             >
-              <div class="flex items-start gap-2">
+              <div class="flex flex-wrap items-start gap-2">
                 <Show when={props.compact ? undefined : stat.icon}>
                   {(icon) => (
-                    <span class="grid size-8 shrink-0 place-items-center rounded-4 bg-surface-gray-2">
+                    <span class="hidden size-8 shrink-0 place-items-center rounded-4 bg-surface-gray-2 sm:grid">
                       <Icon icon={icon()} class="size-4 text-ink-gray-7" />
                     </span>
                   )}
                 </Show>
-                <span class="min-w-0 flex-1 text-sm-medium [overflow-wrap:anywhere] text-ink-gray-7">
+                <span class="min-w-0 flex-1 basis-20 break-words text-sm-medium text-ink-gray-7">
                   {stat.label}
                 </span>
                 <Show when={stat.delta}>
                   {(delta) => (
                     <span
-                      class="inline-flex shrink-0 items-center gap-0.5 rounded-full px-1.5 py-0.5 text-xs-medium tabular-nums"
+                      class="ms-auto inline-flex shrink-0 items-center gap-0.5 rounded-full px-1.5 py-0.5 text-xs-medium tabular-nums"
                       classList={{
                         'bg-surface-green-2 text-ink-green-8':
                           delta().direction !== 'flat' && isGood(delta()),

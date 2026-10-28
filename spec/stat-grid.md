@@ -16,11 +16,13 @@
 
 ## Behavior
 
-- **KPI anatomy is label-first, one layout only:** a header row (optional icon
-  in a tinted `size-8 rounded-4 bg-surface-gray-2` square, the label, and the
-  delta pill) → the value (`text-metric`, tabular) → the `hint` as a baseline
-  caption. Cards use the card padding role (`p-card-pad`, 16px) and `rounded-card` (8px).
-  `compact` drops the icon, uses the 10px compact card padding and a 4px gap.
+- **KPI anatomy is label-first:** a wrapping header row (optional icon in a
+  tinted `size-8 rounded-4 bg-surface-gray-2` square, the label, and the delta
+  pill) → the value (`text-metric`, tabular) → the `hint` as a baseline caption.
+  The icon is desktop-only and the delta wraps rather than splitting a label's
+  words on a narrow card. Cards use the card padding role (`p-card-pad`, 16px)
+  and `rounded-card` (8px). `compact` drops the icon, uses the 10px compact card
+  padding and a 4px gap.
 - **The grid is two-up from 360px** so four KPIs do not stack into four full-width
   cards on a phone; below 360px it remains one column.
 - `loading` renders skeleton cards in the same grid, preserving the final layout.

@@ -97,6 +97,23 @@ describe('NumberCard', () => {
     ).toContain('Boom')
   })
 
+  it('reserves progress and sparkline geometry while loading', () => {
+    const { container } = render(() => (
+      <NumberCard
+        title="Revenue"
+        value={80}
+        target={100}
+        sparkline={{ data: [1, 2, 3] }}
+        loading
+      />
+    ))
+    expect(
+      container.querySelectorAll(
+        '[data-slot="number-card-loading"] [aria-hidden="true"]',
+      ),
+    ).toHaveLength(4)
+  })
+
   it('draws a sparkline as an SVG by default and as bars when asked', () => {
     const area = render(() => (
       <NumberCard

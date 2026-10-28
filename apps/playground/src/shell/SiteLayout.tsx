@@ -157,6 +157,16 @@ export function Chrome(
             id="site-content"
             class="mx-auto min-w-0 max-w-[1440px] flex-1 px-4 py-6 lg:px-6"
           >
+            <Show when={toc()}>
+              {(activeToc) => (
+                <details class="mb-6 rounded-card border border-outline-gray-1 bg-surface-elevation-1 px-3 py-2 xl:hidden">
+                  <summary class="flex min-h-10 cursor-pointer items-center rounded-3 text-interface font-medium text-ink-gray-8 focus-visible:focus-ring">
+                    On this page
+                  </summary>
+                  <div class="pb-2">{activeToc()()}</div>
+                </details>
+              )}
+            </Show>
             {props.children}
             <PrevNext items={props.siblings} />
           </main>

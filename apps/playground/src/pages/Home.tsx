@@ -19,12 +19,59 @@ import { LADDER } from '../generated/ladder'
  * statically, so the initial chunk is this file plus the shell. The reader
  * is deciding whether to install the library, so the page answers three
  * questions (what is it, what does it cost, where do I go next) and hands
- * off to `/atoms`, `/organisms` and `/pages`. The one live preview
- * strip is a separate chunk loaded only when it scrolls into view — real
- * components, paid for only by readers who reach them.
+ * off to `/atoms`, `/organisms` and `/pages`. The live product composition
+ * is a separate chunk loaded only when it scrolls into view — real components,
+ * paid for only by readers who reach them.
  */
 
 const HomePreviews = lazy(() => import('./home-previews'))
+
+const INSTALL_COMMAND =
+  'pnpm add @talelk/newui-atoms @talelk/newui-molecules @talelk/newui-tailwind'
+
+function InstallCommand(): JSX.Element {
+  const [copyStatus, setCopyStatus] = createSignal('')
+  let resetTimer: number | undefined
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(INSTALL_COMMAND)
+      setCopyStatus('Copied')
+    } catch {
+      setCopyStatus('Copy failed')
+    }
+    window.clearTimeout(resetTimer)
+    resetTimer = window.setTimeout(() => setCopyStatus(''), 2000)
+  }
+
+  onCleanup(() => window.clearTimeout(resetTimer))
+
+  return (
+    <div class="flex w-fit max-w-full items-center gap-1 rounded-control border border-outline-gray-1 bg-surface-elevation-1 p-1">
+      <pre
+        // biome-ignore lint/a11y/noNoninteractiveTabindex: the command scrolls horizontally on narrow screens, so the region must be keyboard reachable.
+        tabIndex={0}
+        class="min-w-0 overflow-x-auto rounded-control px-2 py-1 text-interface whitespace-nowrap text-ink-gray-8 focus-visible:focus-ring"
+      >
+        <code>{INSTALL_COMMAND}</code>
+      </pre>
+      <button
+        type="button"
+        onClick={copy}
+        class="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-control px-2 text-caption text-ink-gray-7 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
+      >
+        <span
+          aria-hidden="true"
+          class={`${copyStatus() === 'Copied' ? 'lucide-check' : 'lucide-copy'} size-3.5`}
+        />
+        {copyStatus() || 'Copy'}
+      </button>
+      <span role="status" class="sr-only">
+        {copyStatus() === 'Copied' ? 'Install command copied.' : copyStatus()}
+      </span>
+    </div>
+  )
+}
 
 function PreviewSection(): JSX.Element {
   const [visible, setVisible] = createSignal(false)
@@ -180,12 +227,22 @@ export function Home(): JSX.Element {
           business software. Built with SolidJS, accessible by design, and ready
           for your data.
         </p>
-        <pre class="w-fit max-w-full whitespace-pre-wrap break-words rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
-          <code>
-            pnpm add @talelk/newui-atoms @talelk/newui-molecules \
-            @talelk/newui-tailwind
-          </code>
-        </pre>
+        <div class="flex flex-wrap items-center gap-2">
+          <A
+            href="/atoms"
+            class="inline-flex h-8 items-center gap-2 rounded-control bg-surface-blue-8 px-3 text-interface font-medium text-ink-base transition-colors hover:bg-surface-blue-9 focus-visible:focus-ring-blue motion-reduce:transition-none"
+          >
+            Browse components
+            <span aria-hidden="true" class="lucide-arrow-right size-4" />
+          </A>
+          <A
+            href="/pages"
+            class="inline-flex h-8 items-center rounded-control border border-outline-gray-2 bg-surface-base px-3 text-interface font-medium text-ink-gray-8 transition-colors hover:border-outline-gray-3 hover:bg-surface-gray-1 focus-visible:focus-ring motion-reduce:transition-none"
+          >
+            View applications
+          </A>
+        </div>
+        <InstallCommand />
         <p class="flex flex-wrap items-baseline gap-x-5 gap-y-1 text-caption tabular-nums text-ink-gray-7">
           <span>{LADDER_COUNTS.atoms} atoms</span>
           <span>{LADDER_COUNTS.molecules} molecules</span>
@@ -199,6 +256,8 @@ export function Home(): JSX.Element {
           </A>
         </p>
       </header>
+
+      <PreviewSection />
 
       <section class="flex flex-col gap-4">
         <div class="flex flex-wrap items-baseline justify-between gap-2">
@@ -251,8 +310,6 @@ export function Home(): JSX.Element {
           </For>
         </ol>
       </section>
-
-      <PreviewSection />
 
       <section class="flex flex-col gap-4">
         <h2 class="text-section text-ink-gray-9">The rules it holds to</h2>

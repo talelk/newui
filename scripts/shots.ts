@@ -13,7 +13,9 @@
  *                                     # themes, 1440 + 768 + 390
  *   pnpm shots /organisms /pages      # only these routes
  *   pnpm shots story:Accordion        # only this story, on Storybook's origin
+ *   pnpm shots --all-stories          # every story and state, not only spot-checks
  *   pnpm shots --theme=dark           # one theme
+ *   pnpm shots --width=390,1440       # selected viewport widths
  *   pnpm shots --dir=/tmp/compare     # somewhere else (e.g. a before/after pair)
  *
  * The examples use local data and avatar initials. A run waits for the local
@@ -86,8 +88,8 @@ function storyIdFor(component: string): string {
   return story.id
 }
 
-function storyHref(component: string, theme: string): string {
-  return `${STORYBOOK_BASE}/iframe.html?id=${storyIdFor(component)}&viewMode=story&globals=theme:${theme}`
+function storyHref(id: string, theme: string): string {
+  return `${STORYBOOK_BASE}/iframe.html?id=${id}&viewMode=story&globals=theme:${theme}`
 }
 
 const args = process.argv.slice(2)
@@ -95,18 +97,23 @@ const flag = (name: string): string | undefined =>
   args.find((arg) => arg.startsWith(`--${name}=`))?.split('=')[1]
 
 const themeFilter = flag('theme')
+const widthFilter = flag('width')
 const outDir = path.resolve(process.cwd(), flag('dir') ?? 'test-results/shots')
 const routeArgs = args.filter((arg) => arg.startsWith('/'))
+const allStories = args.includes('--all-stories')
 
 /** Every route worth a picture, in nav order, plus the harness surfaces. */
 const ROUTES = [
   '/',
   '/docs',
   '/foundations',
+  '/changelog',
+  '/architecture',
+  '/kit',
   '/atoms',
   '/atoms/button',
   '/molecules',
-  '/molecules/toast',
+  '/molecules/toaster',
   '/molecules/pagination',
   '/molecules/date-picker',
   '/organisms',
@@ -122,20 +129,36 @@ const ROUTES = [
 ]
 
 const THEMES = themeFilter ? [themeFilter] : ['light', 'dark']
-const WIDTHS = [1440, 768, 390]
+const WIDTHS = widthFilter
+  ? widthFilter
+      .split(',')
+      .map((value) => Number(value))
+      .filter((value) => Number.isInteger(value) && value > 0)
+  : [1440, 768, 390]
+if (WIDTHS.length === 0) throw new Error('--width needs positive pixel widths')
 const storyArgs = args
   .filter((arg) => arg.startsWith('story:'))
   .map((arg) => arg.slice('story:'.length))
 // A filter narrows both surfaces: route args select site routes, `story:` args
 // select stories. With no filter, everything runs.
 const selectedRoutes =
-  routeArgs.length > 0 ? routeArgs : storyArgs.length > 0 ? [] : ROUTES
-const selectedStories =
-  storyArgs.length > 0 ? storyArgs : routeArgs.length > 0 ? [] : STORY_CHECKS
+  routeArgs.length > 0
+    ? routeArgs
+    : storyArgs.length > 0 || allStories
+      ? []
+      : ROUTES
+const selectedStories = allStories
+  ? storyIndex.stories.map((story) => ({ id: story.id, slug: story.id }))
+  : (storyArgs.length > 0
+      ? storyArgs
+      : routeArgs.length > 0
+        ? []
+        : STORY_CHECKS
+    ).map((component) => ({ id: storyIdFor(component), slug: component }))
 
-function storyFileName(component: string, theme: string, width: number) {
-  const slug = component.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
-  return `story-${slug}-${theme}-${width}.png`
+function storyFileName(slug: string, theme: string, width: number) {
+  const normalized = slug.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
+  return `story-${normalized}-${theme}-${width}.png`
 }
 
 function fileName(route: string, theme: string, width: number): string {
@@ -216,13 +239,13 @@ try {
         written += 1
         console.warn(`  ${file}`)
       }
-      for (const component of selectedStories) {
-        await page.goto(storyHref(component, theme), {
+      for (const story of selectedStories) {
+        await page.goto(storyHref(story.id, theme), {
           waitUntil: 'networkidle',
           timeout: 60_000,
         })
         await settle(page)
-        const file = storyFileName(component, theme, width)
+        const file = storyFileName(story.slug, theme, width)
         await page.screenshot({
           path: path.join(outDir, file),
           fullPage: true,

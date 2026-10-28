@@ -93,6 +93,8 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
       class={props.class}
       aria-label={props['aria-label'] ?? props.title}
       style={{
+        display: 'flex',
+        'flex-direction': 'column',
         margin: '0',
         padding: 'var(--spacing-card-pad)',
         border: '1px solid var(--outline-gray-1)',
@@ -174,20 +176,43 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
             aria-hidden="true"
             style={{
               height: 'var(--text-metric, 1.75rem)',
+              'margin-bottom': progress() === undefined ? '0' : '8px',
               'border-radius': 'var(--radius-card)',
               background: 'var(--surface-gray-2)',
             }}
           />
+          <Show when={progress() !== undefined}>
+            <div
+              aria-hidden="true"
+              style={{
+                height: '6px',
+                'margin-bottom': '8px',
+                'border-radius': 'var(--radius-pill)',
+                background: 'var(--surface-gray-2)',
+              }}
+            />
+          </Show>
           <div
             aria-hidden="true"
             style={{
               width: '60%',
-              height: '0.75rem',
+              height: '1rem',
               'margin-top': '8px',
               'border-radius': 'var(--radius-pill)',
               background: 'var(--surface-gray-2)',
             }}
           />
+          <Show when={props.sparkline}>
+            <div
+              aria-hidden="true"
+              style={{
+                height: '3rem',
+                'margin-top': '8px',
+                'border-radius': 'var(--radius-card)',
+                background: 'var(--surface-gray-2)',
+              }}
+            />
+          </Show>
         </div>
       </Show>
 
@@ -195,6 +220,10 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
         <div
           data-slot="number-card-value"
           style={{
+            display: 'flex',
+            'flex-wrap': 'wrap',
+            'align-items': 'baseline',
+            'column-gap': '4px',
             'font-size': 'var(--text-metric, 1.75rem)',
             'line-height': 'var(--text-metric--line-height, 2rem)',
             'font-weight': '600',
@@ -212,10 +241,10 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
               style={{
                 'font-size': '1rem',
                 'font-weight': '400',
+                'white-space': 'nowrap',
                 color: 'var(--ink-gray-7)',
               }}
             >
-              {' '}
               / {targetText()}
             </span>
           </Show>
@@ -280,7 +309,9 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
               position: 'relative',
               width: '100%',
               height: '3rem',
-              'margin-top': '8px',
+              'margin-top': 'auto',
+              'padding-top': '8px',
+              'box-sizing': 'content-box',
             }}
           >
             <Show when={mark() === 'bar'}>

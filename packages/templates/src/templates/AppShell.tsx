@@ -133,7 +133,7 @@ export function AppShell(props: AppShellProps): JSX.Element {
       <Show when={desktop()}>
         <div
           data-slot="app-shell-sidebar"
-          class={`h-full shrink-0 overflow-hidden border-e border-outline-gray-1 bg-surface-sidebar transition-[width] duration-200 motion-reduce:transition-none ${collapsed() ? 'w-14' : 'w-64'}`}
+          class={`h-full shrink-0 overflow-hidden border-e border-outline-gray-1 bg-surface-sidebar transition-[width] duration-base motion-reduce:transition-none ${collapsed() ? 'w-14' : 'w-64'}`}
         >
           <AppSidebar
             {...sidebarProps()}
@@ -190,7 +190,7 @@ export function AppShell(props: AppShellProps): JSX.Element {
                 <div class="min-w-0">
                   <h1 class="mt-1 text-heading">{props.title}</h1>
                   <Show when={props.description}>
-                    <p class="mt-1 max-w-2xl text-ink-gray-7">
+                    <p class="mt-1 max-w-[30rem] text-ink-gray-7">
                       {props.description}
                     </p>
                   </Show>

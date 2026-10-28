@@ -351,9 +351,12 @@ function Preview(props: {
     >
       <div
         data-slot="preview-controls"
-        class="flex flex-wrap items-center gap-2 border-b border-outline-gray-1 p-2"
+        class="flex flex-wrap items-center gap-2 border-b border-outline-gray-1 bg-surface-elevation-1 p-2"
       >
-        <fieldset aria-label="Example view" class="flex gap-1">
+        <fieldset
+          aria-label="Example view"
+          class="flex gap-0.5 rounded-control bg-surface-gray-2 p-0.5"
+        >
           <For each={['preview', 'source'] as const}>
             {(value) => (
               <button
@@ -363,7 +366,7 @@ function Preview(props: {
                   setTab(value)
                   if (value === 'source') setSourceOpened(true)
                 }}
-                class="h-7 rounded-3 px-2 text-interface capitalize aria-pressed:bg-surface-elevation-1 aria-pressed:shadow-sm focus-visible:focus-ring"
+                class="h-7 rounded-control px-2.5 text-interface text-ink-gray-7 capitalize transition-colors hover:text-ink-gray-9 aria-pressed:bg-surface-base aria-pressed:font-medium aria-pressed:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
               >
                 {value === 'preview' ? 'Preview' : 'Source'}
               </button>
@@ -371,7 +374,10 @@ function Preview(props: {
           </For>
         </fieldset>
         <Show when={props.src ?? props.story}>
-          <fieldset aria-label="Preview viewport" class="ms-auto flex gap-1">
+          <fieldset
+            aria-label="Preview viewport"
+            class="ms-auto flex gap-0.5 rounded-control bg-surface-gray-2 p-0.5"
+          >
             <For
               each={
                 Object.entries(VIEWPORTS) as [
@@ -387,7 +393,7 @@ function Preview(props: {
                   title={value.label}
                   aria-pressed={viewport() === key}
                   onClick={() => select(key)}
-                  class="grid size-10 sm:size-7 place-items-center rounded-3 text-ink-gray-6 aria-pressed:bg-surface-elevation-1 aria-pressed:text-ink-gray-9 focus-visible:focus-ring"
+                  class="grid size-10 sm:size-7 place-items-center rounded-control text-ink-gray-6 transition-colors hover:text-ink-gray-9 aria-pressed:bg-surface-base aria-pressed:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
                 >
                   <span
                     aria-hidden="true"
@@ -397,7 +403,10 @@ function Preview(props: {
               )}
             </For>
           </fieldset>
-          <output aria-live="polite" class="text-caption text-ink-gray-7">
+          <output
+            aria-live="polite"
+            class="text-caption tabular-nums text-ink-gray-7"
+          >
             {dimensions().width} × {dimensions().height}
           </output>
           <a
@@ -406,7 +415,7 @@ function Preview(props: {
             rel="noreferrer"
             aria-label="Open fullscreen"
             title="Open fullscreen"
-            class="grid size-10 sm:size-7 place-items-center rounded-3 text-ink-gray-6 focus-visible:focus-ring"
+            class="grid size-10 sm:size-7 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
           >
             <span aria-hidden="true" class="lucide-maximize size-4" />
             <span class="sr-only">Open fullscreen</span>

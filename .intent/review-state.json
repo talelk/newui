@@ -3,12 +3,12 @@
   "baseline": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
   "items": {
     "skill:packages/atoms/skills/newui/SKILL.md": {
-      "fingerprint": "1e4c8fdef63650fe4a8960f695d490ff76b8a532c94f918d2d1c94674f3ddad1",
+      "fingerprint": "55223846655819adc84c3d619117dc6e9fcb44422aed95733e5c874f7bf2c1be",
       "snapshot": {
         "AGENTS.md": "dbadcf8ee7a6aebe0bfd8691f2158e86fc2775195719259855157d959208d2e7",
         "CONTEXT.md": "d47a8b20fdfa3a66735ad1eab4d6e56738c2c68409388c308f80bfdb13f2b5b2",
         "PRINCIPLES.md": "a5d2a8c78aa35abd8d271f6ab0de2fac35d7c7138a7033bc8d95e24c72e634c9",
-        "packages/atoms/skills/newui/SKILL.md": "d82c44e5d5214e1e22a4b1dff14ed0bdd9e34a8c75cbd0e5397cbbb3063fa1ed",
+        "packages/atoms/skills/newui/SKILL.md": "84157413a25ca4f22965318a926d4fe8ed06d191f2cbf6369210eb85bfc46f98",
         "packages/atoms/src/atoms/Button/Button.tsx": "1ef4dbc4d96bbcd715fcfa29d21f23984f272497d422192891ec729c013f5196",
         "packages/atoms/src/lib/color-scheme.ts": "796e2c8f84dc12be6c6a343d0342c14902c4a2d4e84ee89b2c0278843b9847db",
         "packages/atoms/src/lib/field.tsx": "2522b4eed8e98543169ec27bc58d0246946e4e97c4ac9be15fedda08857fd284",
@@ -20,11 +20,11 @@
         "spec/adr/0001-solid-no-v-model.md": "382711862fd907c2a30d4e141b26013396fac7f598a2f802e169a3016258ea96",
         "spec/inputs.md": "c4bc011628cf4b6ceedfc5b6100a452317592ce1a88de8ce42ca3460c47fdde1"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
-      "outcome": "no-change",
-      "reason": "KeyValue is a display atom; the newui skill covers cross-cutting foundations (tokens, labelling, overlays), which the new atom does not change.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing guidance change outside the visual refinement batch and outside the current working diff.",
       "evidence": [
-        "packages/atoms/skills/newui/SKILL.md has no per-atom catalog (no Badge/Avatar/Heading entries); KeyValue introduces no new foundation vocabulary."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; current git status contains no edit to this skill."
       ]
     },
     "skill:packages/data/skills/newui-data/SKILL.md": {
@@ -50,7 +50,7 @@
       ]
     },
     "planning:_artifacts": {
-      "fingerprint": "87078ab1db16a2a34ff0f7d58aa3e56b31028bebbfdf69e7595547fb08ccd95e",
+      "fingerprint": "b60cca96be3ce5d8b1c8155187858fa7a84c2a5544140376321d0852880b35aa",
       "snapshot": {
         "AGENTS.md": "dbadcf8ee7a6aebe0bfd8691f2158e86fc2775195719259855157d959208d2e7",
         "CONTEXT.md": "d47a8b20fdfa3a66735ad1eab4d6e56738c2c68409388c308f80bfdb13f2b5b2",
@@ -58,7 +58,7 @@
         "_artifacts/domain_map.yaml": "f4790bc383157edb944eb15cd54dd75dbfe83452ed25d8c67e1c41e1718b9f40",
         "_artifacts/skill_spec.md": "03a4a1633c3a0b79c6867ded4cae950def11f05e16a53fc6015226460131ced4",
         "_artifacts/skill_tree.yaml": "7ef408e282ebd920582fc6e289e0e33be3b8f348a435b6cd1bbbf2778391ed55",
-        "packages/atoms/skills/newui/SKILL.md": "d82c44e5d5214e1e22a4b1dff14ed0bdd9e34a8c75cbd0e5397cbbb3063fa1ed",
+        "packages/atoms/skills/newui/SKILL.md": "84157413a25ca4f22965318a926d4fe8ed06d191f2cbf6369210eb85bfc46f98",
         "packages/atoms/src/atoms/Button/Button.tsx": "1ef4dbc4d96bbcd715fcfa29d21f23984f272497d422192891ec729c013f5196",
         "packages/atoms/src/lib/color-scheme.ts": "796e2c8f84dc12be6c6a343d0342c14902c4a2d4e84ee89b2c0278843b9847db",
         "packages/atoms/src/lib/field.tsx": "2522b4eed8e98543169ec27bc58d0246946e4e97c4ac9be15fedda08857fd284",
@@ -72,7 +72,7 @@
         "packages/data/src/query/client.tsx": "0b1ca717361318d037e67478cf239371bf0ca234a546fb4a40a8db55ac21b1cf",
         "packages/data/src/query/collection.ts": "e6ee06565af3384b09e9ac9e0e895e97749bef3d8631253f3460a0a294248329",
         "packages/data/src/query/repository.ts": "70dfb4734db19f52e6f3efe193f5c94aeae04b28f175e9f36ac8b56836a2b73b",
-        "packages/molecules/skills/newui-molecules/SKILL.md": "e984f77c1d3601a1596d523d9531840f686f0c9fe29df49ac4fd679d07227a92",
+        "packages/molecules/skills/newui-molecules/SKILL.md": "5aa778a78d5a0a5a21aecaff4c81e55ad97060a9dbdf61e3d2e77c06739cd59e",
         "packages/molecules/src/molecules/Combobox/Combobox.tsx": "7aa19402dbf136f1ab0b34eb681cf48838e26d895e9b2814307b7f8b08ec2b68",
         "packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx": "d175b641ca521a87bec7a44970c67af81affe93aff54508fe6ab717d8df09d38",
         "packages/molecules/src/molecules/Dialog/Dialog.tsx": "c56ebdef41e077097cf116179d59c62b19003b7092795be886697bc6adeda883",
@@ -82,14 +82,14 @@
         "packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx": "612043bb58182979ad5fa4f97bf2cd141d748315b8dff0427ce169559316000f",
         "packages/molecules/src/molecules/Select/Select.tsx": "75f4f8070c6fff57df9b4f4a256346dab610f13cb2a829c8edf0c6bacfc72e4d",
         "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx": "6863b41b41ea35d769c8429d4ccd93fc1c34bf2a628deb08f41d4e0ac6771e41",
-        "packages/organisms/skills/newui-organisms/SKILL.md": "07f7e61fc8fe56ebb885e20d8ca0dab778a32226b594a9bbb0ad96b2fb3882e0",
+        "packages/organisms/skills/newui-organisms/SKILL.md": "7e4a3e13999047db7127a2224f282b0bf5f4f326fea574926b70fee723545e3d",
         "packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx": "c4405af938e2ac2d1f168e7549bdbfbd34092ed4b86369f66faab66583d9f53a",
         "packages/organisms/src/organisms/DataState/DataState.tsx": "30b806f142ba8296b7fa71d75e6bb1d4e2d156cfcb409b8a1195e394127e0c00",
         "packages/organisms/src/organisms/DataTable/DataTable.tsx": "5a11e762ab2a3144b78dbda2db50e473027e8c556236b454e8c43ebe797af68c",
         "packages/organisms/src/organisms/SelectionBar/SelectionBar.tsx": "be2e104d332a972a38cd5caf9c0f1ccf0869b96e59503bb1b3febf091e82aa46",
         "packages/tailwind/src/style.css": "e92e204d9120e8d2c1672e108ed2efd67efa246f54c84ee63bdb2727c3a80beb",
-        "packages/templates/skills/newui-templates/SKILL.md": "7010811fce8fc1e72268010b670fa0777adc6eef8e7c7e8c0da467cd7d8a8938",
-        "packages/templates/src/templates/AppShell.tsx": "22259b08ab9f8bf375ba5db8a07779033e9289bbf8b6c9d8a9b746c72ce160ec",
+        "packages/templates/skills/newui-templates/SKILL.md": "cf205b1d8da499cb266e70c5e6c2c0662509a08eef9d740d14b24500a87e870c",
+        "packages/templates/src/templates/AppShell.tsx": "38b9005fa907425439bb7946729476c09e036500bfa848249de4d99d99381c0e",
         "packages/templates/src/templates/AuthLayout.tsx": "f06d54d498158e426d001b03db560b1163451f753e5f0a142fc97d55017584e6",
         "packages/templates/src/templates/PaneLayout/PaneLayout.tsx": "6fe6ebc719b8bd06103712197ce5c29ff3186710fa9341ddfa872a089f0893db",
         "skills/README.md": "38ff76029f9dffe3e6025102577c139f601a237532af2fa29401f079c2613d5c",
@@ -97,7 +97,7 @@
         "spec/adr/0013-atomic-packages-and-app-shell.md": "9b00e5a4eef17a55d3b8bcd3d35477a8faa0f4a4eddbf37bf96daf3c14eb83c5",
         "spec/app-shell.md": "0a41b0fc81391aea1313dce45e58774096f9e9ae8e80e771176437112fc0e2d4",
         "spec/auth-layout.md": "6d526afd73da49c2603271aa2a0428dd5e0f6cc43acb93cbec5d06c7bb864059",
-        "spec/charts.md": "3f86f86e5574e4975e6c500ddd3819fbfe744ac5eee73153ee4bdeb6eb715e68",
+        "spec/charts.md": "7c5f44634022b578b668d196b1037e28a10426318867f098f41d5485a5f9891c",
         "spec/data-table.md": "b3029eceeed2cb4635e273cf22963fd0f66db581c2aa855462ccd777bd22afe4",
         "spec/data.md": "739992c4550f49280495877df0bb2990bb27de769a17bf10a297a521b506c27a",
         "spec/form.md": "3298955343be0fbf9961396c8acb668ae3db6e25e146cb4e9256a6daea8c8f92",
@@ -105,11 +105,11 @@
         "spec/pane-layout.md": "255ad7ae7e3fd4973abb902321d3764cf07b1434e7561239f39940fc93eb4e49",
         "spec/sidebar.md": "6223b8aed15ae25df389e4da402e4321e389fe08822ba184f8acac364bd4000f"
       },
-      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
       "outcome": "no-change",
-      "reason": "Planning records were updated earlier in this batch; the final commits add no new skill coverage.",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "_artifacts/domain_map.yaml and skill_tree.yaml already carry the display-row family from the recorded update."
+        "Changed: spec/charts.md at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:README.md": {
@@ -1457,15 +1457,15 @@
       ]
     },
     "source:apps/playground/src/examples/AppPage.tsx": {
-      "fingerprint": "b84d850ef3134573673cbe6be5c2884df28eab33b021ad9e6cafcc6a87fac796",
+      "fingerprint": "849b6d166571d228979df5d4d3b5010bb95abb75cfb678c85fe7cb4c3efc4b86",
       "snapshot": {
-        "apps/playground/src/examples/AppPage.tsx": "5abf2dbbb340f548f6d681331cfc696d6b2ae5d784fa4635c0a0be265c4582d0"
+        "apps/playground/src/examples/AppPage.tsx": "58da051e6dbf79a032a2b0adf28c8a147548ec7c187756e47794bfb623b5ba04"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
-      "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing item outside this visual refinement batch and absent from the current working diff.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; excluded by current git status."
       ]
     },
     "source:apps/playground/src/examples/CreateDialog.test.tsx": {
@@ -1889,15 +1889,15 @@
       ]
     },
     "source:apps/playground/src/generated/changelog.ts": {
-      "fingerprint": "5d2754a398e56632d09b2c4f649d492eac7cf11ecefd2fe5f6e353d4282467fe",
+      "fingerprint": "02026107324851fc15252625308c285319e0830fca9aa25487245a5715e85244",
       "snapshot": {
-        "apps/playground/src/generated/changelog.ts": "db3f7a433fed19b3ec526592002906deebd23ba81af2cb3c13cd406ff0a12030"
+        "apps/playground/src/generated/changelog.ts": "8ed68a51e5cafa6aec444fdb4b21ea7dc983a2544b3fcef7fe42946e68c98cae"
       },
-      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
-      "outcome": "no-change",
-      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing item outside this visual refinement batch and absent from the current working diff.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; excluded by current git status."
       ]
     },
     "source:apps/playground/src/generated/components.ts": {
@@ -1949,15 +1949,15 @@
       ]
     },
     "source:apps/playground/src/generated/sources/analytics.json": {
-      "fingerprint": "fe8baac76d1a193fca263c8e71b95414913729905ba6a6f80477e873de354b4d",
+      "fingerprint": "6b9f0d89532eb73c41298a6ba2f953016cd3ea09a4346de2848a2371987066f9",
       "snapshot": {
-        "apps/playground/src/generated/sources/analytics.json": "83960eac438830c0f33d608f6fbf41bd4a194ab95290eddbbd84c0516164ddb5"
+        "apps/playground/src/generated/sources/analytics.json": "86a51fd1ed56bd48e0e1742ea780a45fb1e2822957418332413572215359def7"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
       "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:apps/playground/src/generated/sources/authentication.json": {
@@ -2105,15 +2105,15 @@
       ]
     },
     "source:apps/playground/src/generated/version.ts": {
-      "fingerprint": "4e248616a31b38de448162cc937cbf7dec4b3b154352d5a1b15ed8e07a47e8b6",
+      "fingerprint": "f10cded1b18686d5b7020ba71c24ca0b55f921eefa3d70d451c2b2cdba8a3f40",
       "snapshot": {
-        "apps/playground/src/generated/version.ts": "01a2d747df19e59f5052d6467ec6b94a6738c12ed89b26ba3eba8de7dabdbb23"
+        "apps/playground/src/generated/version.ts": "b07159f7124fb240737d8fd7c5196152a7bf3ab422b11f3751b0df72d72e344d"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
-      "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing item outside this visual refinement batch and absent from the current working diff.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; excluded by current git status."
       ]
     },
     "source:apps/playground/src/index.css": {
@@ -2129,15 +2129,15 @@
       ]
     },
     "source:apps/playground/src/lib/CatalogList.tsx": {
-      "fingerprint": "9974ec75657a892463909ce7d0899a03fc4b962f7f8b37b4283b7e6e764a23d0",
+      "fingerprint": "6f12fdc08eaea9f36f458e558034b50951b321623d3e7d9b959b961ddbb356c0",
       "snapshot": {
-        "apps/playground/src/lib/CatalogList.tsx": "d56e7f581205c5c491c9270d359b664a8697ae88a4dc129095428b24b0f1c532"
+        "apps/playground/src/lib/CatalogList.tsx": "4f352e95467bf1a353923b8cfc051a956070e623ceb4847b836d2fc307840415"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
       "evidence": [
-        "Changed: apps/playground/src/lib/CatalogList.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:apps/playground/src/lib/PackageGuides.tsx": {
@@ -2165,15 +2165,15 @@
       ]
     },
     "source:apps/playground/src/lib/ResponsivePreview.tsx": {
-      "fingerprint": "9ca0f5f4e6c511e8432c42b52740c7855c65a74a7724fc44c815b27bd5424f72",
+      "fingerprint": "5cf48785ab21e42147788a1ece79bc9cefd251c5e94efea20a931b715a74ded8",
       "snapshot": {
-        "apps/playground/src/lib/ResponsivePreview.tsx": "f5e6b1707336837ebc1e4d401ef3bbac437cc306c818a34316582d243370f194"
+        "apps/playground/src/lib/ResponsivePreview.tsx": "db74ba3b65d0264a42e9ef7e4c49a9f037b20b40c5e294d90845cfbfe7816aab"
       },
-      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
       "outcome": "no-change",
-      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:apps/playground/src/lib/base.test.ts": {
@@ -2201,15 +2201,15 @@
       ]
     },
     "source:apps/playground/src/lib/markdown.tsx": {
-      "fingerprint": "972ad292d307bfb35813ba844fa1f3fb20afcad44fe33b2f4b8560472a6c3b16",
+      "fingerprint": "f774dacbacbe10470bae48c9f013845d275b43f3e0333d206ed6957561fa01bc",
       "snapshot": {
-        "apps/playground/src/lib/markdown.tsx": "ee69813a243edc194c75dafa690d680818ad1939d78c700154cd1c35c5b45815"
+        "apps/playground/src/lib/markdown.tsx": "c76a73bd0546cc17c42f4f1eb127d96414a745de1164cda63bcf5c4f697161eb"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: apps/playground/src/lib/markdown.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: apps/playground/src/lib/markdown.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:apps/playground/src/pages/Accounting.tsx": {
@@ -2225,15 +2225,15 @@
       ]
     },
     "source:apps/playground/src/pages/Analytics.tsx": {
-      "fingerprint": "71d5f807080ce3bcb450b82433a7557d916b75fc51a1308f9d1e00deb2de3453",
+      "fingerprint": "962d86508c324a66b3d5eaaabacf07d37ab321d871e0387c2a8f7f4609bae495",
       "snapshot": {
-        "apps/playground/src/pages/Analytics.tsx": "ef55f60778f2a86b04105729a730e02b4d89ac73cb765f393ec94a02665e16e3"
+        "apps/playground/src/pages/Analytics.tsx": "600320ae8dd713f4a79fda9554dd9b46b04c9339191c9f3722bf5cc04afddb75"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
       "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "Changed: apps/playground/src/pages/Analytics.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:apps/playground/src/pages/ApplicationPage.tsx": {
@@ -2249,15 +2249,15 @@
       ]
     },
     "source:apps/playground/src/pages/Architecture.tsx": {
-      "fingerprint": "093066d589c7169ca1e08d253c2ba68230eb32ce9a1b84bf574d1bf19de25ffb",
+      "fingerprint": "9af7be898971fa60ff8ae4ac8dfcfee0261332d9f5a3b82dd4468a6258373d4c",
       "snapshot": {
-        "apps/playground/src/pages/Architecture.tsx": "4d8eacc2c64c17522e849548f6e0a3e6fd1c0cca215d360fae9b4838ed4f379b"
+        "apps/playground/src/pages/Architecture.tsx": "1562d3a672f561abd6bd7c932b6d1dde88cdec7dd54c0d77cdd94dbde8e48645"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Architecture.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: apps/playground/src/pages/Architecture.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:apps/playground/src/pages/Authentication.tsx": {
@@ -2285,27 +2285,27 @@
       ]
     },
     "source:apps/playground/src/pages/Changelog.tsx": {
-      "fingerprint": "5603f03a659ea860ae68a89a4fa33d60b1fef7b0206d15314e2dfa9411fc2776",
+      "fingerprint": "3e8c22a3e9ebe88d6c1a8a960d4989e4e13c14a977701d46cc8aac8ecd6657c0",
       "snapshot": {
-        "apps/playground/src/pages/Changelog.tsx": "fe2aca23c3b9b08351212069abce7cc45884be0509293cfb70edcb4c89f80a31"
+        "apps/playground/src/pages/Changelog.tsx": "afa1ce704fb4de10336df2352ae33564fdc4118a6b1532130248f638f85cf294"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Changelog.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: apps/playground/src/pages/Changelog.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:apps/playground/src/pages/ComponentPage.tsx": {
-      "fingerprint": "137329ef65da4c366c2f5e8a91c0de92098e793dd7a95d86c7b47bcf532d75d8",
+      "fingerprint": "05428d7dc7f1293a7e884b4d12ce89569376df6a79a08860fd32696cd5fffa19",
       "snapshot": {
-        "apps/playground/src/pages/ComponentPage.tsx": "962d50961f159529163a78ade1a79cca0259ffc084bb59bd9a1361cf74f1ca09"
+        "apps/playground/src/pages/ComponentPage.tsx": "01114e1b15309c4fcca687aca899be47ed2bc93fe48d4b332b4f840550f415d8"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
       "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "Changed: apps/playground/src/pages/ComponentPage.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:apps/playground/src/pages/ComponentsIndex.tsx": {
@@ -2357,27 +2357,27 @@
       ]
     },
     "source:apps/playground/src/pages/DiscussionsDesktop.tsx": {
-      "fingerprint": "efab620d57fbbf5a136ee93c9f46562984fbdaa71bc30c74ad5be6d8cc71a7d5",
+      "fingerprint": "272ae630c9d60995e6e2cd959e419e7e24f4948f53450b8d1b1f3510f474acfb",
       "snapshot": {
-        "apps/playground/src/pages/DiscussionsDesktop.tsx": "2f75a1895ca0c4a2d69087b8e1663e0ed0a4211c8ec625a250f4caaf638424b2"
+        "apps/playground/src/pages/DiscussionsDesktop.tsx": "7c0cfe63277b97238626e066adc68c2ba911b74ec028ed6c4acbea5be4f1c8e9"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
       "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:apps/playground/src/pages/Docs.tsx": {
-      "fingerprint": "91c4e8c44ab14fc76ba88814c21ec1ee0865aaa18eeb4e5c4a4df58b1f7bb7ed",
+      "fingerprint": "0628ff9632d39b2642094852407ea7651d69205571545d5b3c3d02ceb8632e5c",
       "snapshot": {
-        "apps/playground/src/pages/Docs.tsx": "ad14954f38e05a6695c554b9f9f31eecee9042913e04cac347d63952edfc8a0c"
+        "apps/playground/src/pages/Docs.tsx": "06547958d99456e9cf6ef5abcb88362fc2c4aebbf71fcaef8fb438f13159d159"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
       "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "Changed: apps/playground/src/pages/Docs.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:apps/playground/src/pages/Examples.tsx": {
@@ -2417,27 +2417,27 @@
       ]
     },
     "source:apps/playground/src/pages/Home.tsx": {
-      "fingerprint": "92d6834f5660935041c02057327c22f5611e35e1fcbe6a023749635f6ef56de6",
+      "fingerprint": "86bd2c24bf355fa0a74ca602c82cb17ef1acab7ca56780a93a71b3c4b4bb2980",
       "snapshot": {
-        "apps/playground/src/pages/Home.tsx": "ea8a34cf5e4190da0e746cd101ea496a2e3fc7e851d5498a2587e15f96e70ac0"
+        "apps/playground/src/pages/Home.tsx": "4e64a9c4aad3ba2a9d2caf98aa12a6ad72325532baec6c95918fa1e8db31a8e8"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
       "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:apps/playground/src/pages/Kit.tsx": {
-      "fingerprint": "e7770429288470c64150cccc5670d2aa4ace8f010185af31416e245299e5da37",
+      "fingerprint": "9ad707c38062ebec18ac6e1511286078e919f1c90358aa554591e1bb892b3651",
       "snapshot": {
-        "apps/playground/src/pages/Kit.tsx": "9d446dc38c0866524a8e5e352879b5508af4be84dd37662a9ee6fd9ffc14ee58"
+        "apps/playground/src/pages/Kit.tsx": "0a198be626d644c9e2d629ed47b78b2e6606c7884c4815ff69e275b242337425"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Kit.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: apps/playground/src/pages/Kit.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:apps/playground/src/pages/Mail.tsx": {
@@ -2477,27 +2477,27 @@
       ]
     },
     "source:apps/playground/src/pages/Spec.tsx": {
-      "fingerprint": "226d573e26f665a49af923f18b5af8d2ba6d90607ef175cf8b8bea6476e3a142",
+      "fingerprint": "ff99b7bdef16567461477fb3b3161516680ab6c460f0aa7da16319c883264330",
       "snapshot": {
-        "apps/playground/src/pages/Spec.tsx": "929d1899240a6014b0cab15617603c54caf9bfe403bb0e5217129fdb7f64d906"
+        "apps/playground/src/pages/Spec.tsx": "54225bf27c8ec161d3dfe6217d50c0a93a99766a65ab53d6e5108c150b9edb32"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Spec.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: apps/playground/src/pages/Spec.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:apps/playground/src/pages/Tasks.tsx": {
-      "fingerprint": "bcaa0f4c596d5b45183a0ab1db214b80595cb4df9145a22ce8e8998bc5256d7f",
+      "fingerprint": "7f3f813ab09cc1dc8f57cccf2fa95e67d96240e029a267d24545b70cfc159677",
       "snapshot": {
-        "apps/playground/src/pages/Tasks.tsx": "c00b6bec392b1d2852b1a11b9c39f668459a33a03873bb8bf93afec6faa9e87f"
+        "apps/playground/src/pages/Tasks.tsx": "03cb9d88266969928d8ade676b101fbde0f71db5328b4c7c8b1e7148b8f6d267"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: apps/playground/src/pages/Tasks.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: apps/playground/src/pages/Tasks.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:apps/playground/src/pages/Tickets.tsx": {
@@ -2585,15 +2585,15 @@
       ]
     },
     "source:apps/playground/src/pages/home-previews.tsx": {
-      "fingerprint": "701ca4b0d7df90d0b5b2abd2993a34119ef157a6c1171255e19042b1670b2c36",
+      "fingerprint": "e59dc4eb841fc52c298182a4e7fd933769e90527a1b6edc8fae76ba76ce2699f",
       "snapshot": {
-        "apps/playground/src/pages/home-previews.tsx": "17a76bb3fc3645587ba9053e369c640edb9a0e2dc4a54051ac09a0c2a5d3e66c"
+        "apps/playground/src/pages/home-previews.tsx": "f9b5380ccc74c573421a3b90bcb5f5eb8375f46865cfeee169ada04faa5cfdc6"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
       "evidence": [
-        "Changed: apps/playground/src/pages/home-previews.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:apps/playground/src/pages/settings/SettingsSummary.tsx": {
@@ -2813,15 +2813,15 @@
       ]
     },
     "source:apps/playground/src/shell/SiteLayout.tsx": {
-      "fingerprint": "e13cc77a99507a7f527aeb62aeadc863744719539e8efeba93585235ba8418fc",
+      "fingerprint": "5234f8d4c3135892572d5d2f0e98ba6479c85934064523846ce8a553aa6baa20",
       "snapshot": {
-        "apps/playground/src/shell/SiteLayout.tsx": "55c27f3f6749c5e1f60ebfc01ebeeced28605ff4d7f7acc866a74a3d13380024"
+        "apps/playground/src/shell/SiteLayout.tsx": "8de9e406d92465aee0f3d07c40117905836e5659145b92fe890733ba8884c425"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: apps/playground/src/shell/SiteLayout.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: apps/playground/src/shell/SiteLayout.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:apps/playground/src/shell/ThemeMenu.tsx": {
@@ -4157,15 +4157,15 @@
       ]
     },
     "source:apps/starter/src/pages/Records.tsx": {
-      "fingerprint": "c6314c1cb9f739d768a728c5be76bf72cc4b2b7886c4ea17f4ee1a92a4723010",
+      "fingerprint": "37305808f2e80a48aad98934c52ddc96bb234fe6bb5ce50e9406cec8c16a1239",
       "snapshot": {
-        "apps/starter/src/pages/Records.tsx": "ee099a7a5c8f440bfe257bbc8fff2ab5cf96e21ab556877f6eb0d8ceedbce3f3"
+        "apps/starter/src/pages/Records.tsx": "2797bef6e4b204af89ea435e9c6103bf262eaee8fc534d0129beb5348a3dc57e"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
       "evidence": [
-        "Changed: apps/starter/src/pages/Records.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:apps/starter/src/pages/Settings.tsx": {
@@ -4397,27 +4397,27 @@
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/analytics-dark-1440-chrome-linux.png": {
-      "fingerprint": "309f7fb7bf97e25224f793cf046f2deeaea86acd7fa45d69d91b3359a60a64e2",
+      "fingerprint": "4f5023c22c2e2365333dc93376efcf145156f21cc88aa45150be608f68b2abcf",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/analytics-dark-1440-chrome-linux.png": "e6ed9e62713dbd6c19b030aa817dfca47aa24f0406642c3192e80fbc48f34f60"
+        "e2e/visual.spec.ts-snapshots/analytics-dark-1440-chrome-linux.png": "3af6172daea0a6db7144dce9b8679a8cb6c6fc4352958c6406779e3fafc1aac6"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
       "evidence": [
-        "Changed: e2e/visual.spec.ts-snapshots/analytics-dark-1440-chrome-linux.png at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/analytics-dark-390-chrome-linux.png": {
-      "fingerprint": "be9301951f0b8ff5033c3687dea5d87aaff63bf9080f49c033799f0e1c215e65",
+      "fingerprint": "ee94f6f94a680fa19305250fcef4f8089489bb57f7ea0a516dbb0a72f46c3fed",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/analytics-dark-390-chrome-linux.png": "af7b04082583b948d00dacd11474d1758c5e0365c54e5ff4a88b42c0b50c65e5"
+        "e2e/visual.spec.ts-snapshots/analytics-dark-390-chrome-linux.png": "db766cfce0664ccc91d74c697eee82253ae8d03b932454ac0c18d5dd37a45f60"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: e2e/visual.spec.ts-snapshots/analytics-dark-390-chrome-linux.png at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: e2e/visual.spec.ts-snapshots/analytics-dark-390-chrome-linux.png at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/analytics-dark-768-chrome-linux.png": {
@@ -4433,27 +4433,27 @@
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/analytics-light-1440-chrome-linux.png": {
-      "fingerprint": "b9b13c046c48d463822c63770ecaf986814d9b8b20139b7e2f05f627e5834aeb",
+      "fingerprint": "571d18ec408947f933a8bd697a39d77a5879c09a4ac01ef6d792026f394adc64",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/analytics-light-1440-chrome-linux.png": "608f5b2012f2c35a39175cf27e1d8534eb5340993f9ae25608065a44891b389f"
+        "e2e/visual.spec.ts-snapshots/analytics-light-1440-chrome-linux.png": "deea0dd832187d53c2fa06a1dd068159247badbc30399c0a1f3699885648a608"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
       "evidence": [
-        "Changed: e2e/visual.spec.ts-snapshots/analytics-light-1440-chrome-linux.png at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/analytics-light-390-chrome-linux.png": {
-      "fingerprint": "d97242d9c363cc37d89202578f516b5194b6327733290c4017e80fc825fa84f8",
+      "fingerprint": "eba84b9d8bbc36ebb46e64514c4a24148e1256ab0e4ae63df7b11a57fa780d3e",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/analytics-light-390-chrome-linux.png": "235c5df20d53d7538d4336c4c0f4dbd94080d40b57b8c48be5ecaefc3eb70641"
+        "e2e/visual.spec.ts-snapshots/analytics-light-390-chrome-linux.png": "c27acb6fbe0039ac14f95bc142d5ada9ec72f8c9e737ccaae61eda14f26bb277"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: e2e/visual.spec.ts-snapshots/analytics-light-390-chrome-linux.png at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: e2e/visual.spec.ts-snapshots/analytics-light-390-chrome-linux.png at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/analytics-light-768-chrome-linux.png": {
@@ -4469,51 +4469,51 @@
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/app-shell-collapsed-chrome-linux.png": {
-      "fingerprint": "14a95daf36cdbd57e5cceedb5ae48ac144b8aa8b18c389b4b8d30068ba8e3e4c",
+      "fingerprint": "3f206e613ae1d6c6a6bc35fb2f2d016c0dc2b3685bf00396c7539ce7cfe7d365",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/app-shell-collapsed-chrome-linux.png": "b45eeab1efc5182f8e3c4cbf22bc563b52cd861050afc3e2aea8a1b2cd288424"
+        "e2e/visual.spec.ts-snapshots/app-shell-collapsed-chrome-linux.png": "4f2b43e73ff66481e1aabf2ad9933f7db8c38133158344249d19e75446da3b21"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
       "evidence": [
-        "Changed: e2e/visual.spec.ts-snapshots/app-shell-collapsed-chrome-linux.png at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/app-shell-expanded-chrome-linux.png": {
-      "fingerprint": "59a4a7a3bb7f99b128ed00f10e7a8093ab6f082b76dc47abf2ae653efd83c9fe",
+      "fingerprint": "993d0d9d3385ea5bc544f6e3868d9f99e076ebfadf2e97a732dc9240fb564cbd",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/app-shell-expanded-chrome-linux.png": "5ff9c4493a58240a9feb88647fbf424c9f25f87b5941e31be91985ac59791ee9"
+        "e2e/visual.spec.ts-snapshots/app-shell-expanded-chrome-linux.png": "beae01f0d8d12e60e3e740443cd74dc83334242a689b185963e57df065c4a0d0"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
       "evidence": [
-        "Changed: e2e/visual.spec.ts-snapshots/app-shell-expanded-chrome-linux.png at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png": {
-      "fingerprint": "56e2c1b626ff16de464ebf3eda94007ad1aef078c31e5fca5ba37b05717c4f81",
+      "fingerprint": "b8aa86cf3fed4c21acaa5d535ddb479b54b943f5f433b8932275071d3ea895c3",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png": "9ddbaa8a6d597777f0f3721ef88f20f299f605b6bdcdadc015e5fa62f843a891"
+        "e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png": "79f88833bf4aee52cea1406218881c126fac19e346c505be399b51ecfd69651b"
       },
-      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
       "outcome": "no-change",
-      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+        "Changed: e2e/visual.spec.ts-snapshots/reference-dark-chrome-linux.png at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png": {
-      "fingerprint": "f2c9c917a9fd50d9ebcde453b07d2624bcda202c7be4268d9dfceb498905b1c8",
+      "fingerprint": "bd9850144676ebcda2b86884250a79014fc3e16a15aab701ab9d4f1a7ae805ac",
       "snapshot": {
-        "e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png": "3f4b68a3ec2e34a06e864989b7b6966e1d96cebf95c63216cb4a2471b88a0d99"
+        "e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png": "771b83f274eeed866f57369ca2533f920a091be778d402a8775b6fd35117c635"
       },
-      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
       "outcome": "no-change",
-      "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+        "Changed: e2e/visual.spec.ts-snapshots/reference-light-chrome-linux.png at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:knip.jsonc": {
@@ -4541,15 +4541,15 @@
       ]
     },
     "source:packages/atoms/CHANGELOG.md": {
-      "fingerprint": "22eeaba86fb866938601513f63efabcbed252304609c05f75df771a8d20de2af",
+      "fingerprint": "beb6f0d4f0dbc15bef88dc2adf9290081c1ec7dcbdbcb69b0e65645d388ad5de",
       "snapshot": {
-        "packages/atoms/CHANGELOG.md": "b959c32e6390af237a1434fb0232bdd79f61621a9d2820f48cf72a098d773127"
+        "packages/atoms/CHANGELOG.md": "018711fc621ef50dc3a65030afbc5b8db4fe40d058fc7fbce7a31dbcac59e28e"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
-      "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing item outside this visual refinement batch and absent from the current working diff.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; excluded by current git status."
       ]
     },
     "source:packages/atoms/README.md": {
@@ -4889,15 +4889,15 @@
       ]
     },
     "source:packages/charts/src/NumberCard.tsx": {
-      "fingerprint": "1b12231cd16418da25d6282131ef6e0088efbe1b98eae79fc7fc41086985f58b",
+      "fingerprint": "86e868be99df26ec7fbea18262197d1cd092becabef6b56cf171abb7139c8ba7",
       "snapshot": {
-        "packages/charts/src/NumberCard.tsx": "1b98f800ca539724809a9f9f07f48022e3c96f93264262f6a66f9d4d9a14ad26"
+        "packages/charts/src/NumberCard.tsx": "e857f52323664e4902a7c59e62bbbe776992e0884010c5058cd9e7b8177ea83a"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: packages/charts/src/NumberCard.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: packages/charts/src/NumberCard.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:packages/charts/src/format.test.ts": {
@@ -5069,15 +5069,15 @@
       ]
     },
     "source:packages/molecules/CHANGELOG.md": {
-      "fingerprint": "67cb05681af79e840fbfbcfb41f3169c5578e2f1ca9a72efdca474d6505d78e2",
+      "fingerprint": "ec45197b4c2f6257cedfa57c0d2d2b0671da0ee63deba2eb0b5b4af53c2738a0",
       "snapshot": {
-        "packages/molecules/CHANGELOG.md": "73cee417506f39eb627728b95f8bb41d012d2f004dc9dfcf9362b77962f5ef3f"
+        "packages/molecules/CHANGELOG.md": "cbbd0a6f87130dab97248842d7c39d9173970bdc77474a08e57d828ba099dbb3"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
-      "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing item outside this visual refinement batch and absent from the current working diff.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; excluded by current git status."
       ]
     },
     "source:packages/molecules/README.md": {
@@ -5717,15 +5717,15 @@
       ]
     },
     "source:packages/molecules/src/molecules/Toast/Toast.tsx": {
-      "fingerprint": "b4e3571531462536f9a5d45274fcd7aa3f62401860f61d1cd1596fe9358275dd",
+      "fingerprint": "406dcc66b005e6af22b0cadd693862ee980131482e3454ebea62877f26c78fa7",
       "snapshot": {
-        "packages/molecules/src/molecules/Toast/Toast.tsx": "eacd445235d18e1a96dd2493d989bc9bff5cfa9a9a2b9eec6bc1a6d6d97775e9"
+        "packages/molecules/src/molecules/Toast/Toast.tsx": "065c7d9fb705f3bc72c670f628ec78caefeb0a33125675c44dabbb9754bd6bcc"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
-      "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing item outside this visual refinement batch and absent from the current working diff.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; excluded by current git status."
       ]
     },
     "source:packages/molecules/src/molecules/ToggleGroup/ToggleGroup.a11y.test.tsx": {
@@ -5777,15 +5777,15 @@
       ]
     },
     "source:packages/organisms/CHANGELOG.md": {
-      "fingerprint": "31d8c633a77803a5e5322b5af01c6e876c4589f08e90092fa335a3ecb9d6650c",
+      "fingerprint": "f88199e560d0bd5f717da0c860ad3b8d1ac1679ea6bab7347fc5d73fb7ad865e",
       "snapshot": {
-        "packages/organisms/CHANGELOG.md": "3dad849e524ca23cf7d2f6ad552dd13c347ae22a5ea1a5ece009e867232ef485"
+        "packages/organisms/CHANGELOG.md": "5169124c9a9e5f125e5a521b34f211c83326308c37989b06e4640e855758cbee"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
-      "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing item outside this visual refinement batch and absent from the current working diff.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; excluded by current git status."
       ]
     },
     "source:packages/organisms/README.md": {
@@ -5969,15 +5969,15 @@
       ]
     },
     "source:packages/organisms/src/organisms/KanbanBoard/KanbanBoard.tsx": {
-      "fingerprint": "ead8acfcdd4e1170bfa33052448470a1e320da0de396b0eed6bd9548fc96b9b2",
+      "fingerprint": "f08edaa5672a01d55a1a787b078fc103886884f5b5148b576dbccde3cfb7cb80",
       "snapshot": {
-        "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.tsx": "49abf8d3af31b3acf84a9240fc7c092dc03f7c421ee92a5569b2e2692bc02ad7"
+        "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.tsx": "0ad41cafc2e3f5bc28d4f069ba5df5acbc6d8d743eb0682905c76f7c6b2391ca"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: packages/organisms/src/organisms/KanbanBoard/KanbanBoard.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: packages/organisms/src/organisms/KanbanBoard/KanbanBoard.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:packages/organisms/src/organisms/MobileNav/MobileNav.tsx": {
@@ -6125,27 +6125,27 @@
       ]
     },
     "source:packages/organisms/src/organisms/StatGrid/StatGrid.test.tsx": {
-      "fingerprint": "e73ef53704a56b2c9dad5a66159e4b3a7425be5a7ceec9f1d2a7c8586f986189",
+      "fingerprint": "bf713325219d564abeccdecf8f1020419dae3e230073f092c4c7bff60b011296",
       "snapshot": {
-        "packages/organisms/src/organisms/StatGrid/StatGrid.test.tsx": "651ed9951d6926d2a297c14768abefd513effee1c8b134cfd115b1009bf27b1a"
+        "packages/organisms/src/organisms/StatGrid/StatGrid.test.tsx": "6cfc1bfdc9f8222eb2e35e52edde7825db2cfabbba55ac6f4ad91a4a467f3b9c"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: packages/organisms/src/organisms/StatGrid/StatGrid.test.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: packages/organisms/src/organisms/StatGrid/StatGrid.test.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:packages/organisms/src/organisms/StatGrid/StatGrid.tsx": {
-      "fingerprint": "2fde17cd1c87b6b4887405f67c28661cc6f95fda9829342207555882ff7d737b",
+      "fingerprint": "e62f7615aeb153808298ea33107e37fa261a28bce6fe2ecc72bb5b57b7748ddc",
       "snapshot": {
-        "packages/organisms/src/organisms/StatGrid/StatGrid.tsx": "347c7c88255dde79d4df669890ce31863402c83daa73fc540fc90a5d844768e6"
+        "packages/organisms/src/organisms/StatGrid/StatGrid.tsx": "34d47de05e3c04f0419cf2b359cb3ed58db8e323a336cd32e47f5bba268529ed"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: packages/organisms/src/organisms/StatGrid/StatGrid.tsx at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: packages/organisms/src/organisms/StatGrid/StatGrid.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:packages/organisms/src/organisms/VirtualList/VirtualList.tsx": {
@@ -6293,15 +6293,15 @@
       ]
     },
     "source:packages/templates/CHANGELOG.md": {
-      "fingerprint": "3363dd401e57aead43412fda820e6ce227c0c001505b5a3438d7309294ab895d",
+      "fingerprint": "bb13e20a2a7a2f1b81e6d628cc68b1899de34667f9412cd02ff11d64ab50edf9",
       "snapshot": {
-        "packages/templates/CHANGELOG.md": "aa6e05ce181b808df935fb58e4fa7ae57be6dd41925d6cc49f9ed0c7cca054e5"
+        "packages/templates/CHANGELOG.md": "71431bde84c1d394546725a2462309e318148057f16554092ffaa0cb50917259"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
-      "outcome": "no-change",
-      "reason": "Generated file, site page, changeset, test or spec with no skill guidance attached; the library skills teach composition patterns, not per-file facts.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing item outside this visual refinement batch and absent from the current working diff.",
       "evidence": [
-        "skills/README.md scope: package skills own task guidance; generated/site/spec files carry no SKILL.md coverage."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; excluded by current git status."
       ]
     },
     "source:packages/templates/README.md": {
@@ -7085,15 +7085,15 @@
       ]
     },
     "source:spec/kanban-board.md": {
-      "fingerprint": "236b08de0bd4186d74020eefe5ceb13efef0da48a8198753774a4c1f379b4537",
+      "fingerprint": "d00f688a75fd398cd1c03d59d390b9a3e60cb893941821385d6bafe4b82a468d",
       "snapshot": {
-        "spec/kanban-board.md": "31b1e1f66ecbc410889aaa7e281ce69342a8124974555805708ae47f7865c955"
+        "spec/kanban-board.md": "2aa1ab9df17593647644bd90e68f21bbec1a6f0c7796d0896596d8b5e1accf21"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: spec/kanban-board.md at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: spec/kanban-board.md at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:spec/keyboard-shortcuts-dialog.md": {
@@ -7313,15 +7313,15 @@
       ]
     },
     "source:spec/stat-grid.md": {
-      "fingerprint": "d6086367785ae33393084145bddcb331a4febfbf6c99a0f54a3851b77b7fab6c",
+      "fingerprint": "10f98c4ecc48657b26a3d08dd18d4f26bbfae0d60436158348a93f69a03309b7",
       "snapshot": {
-        "spec/stat-grid.md": "c9a9d3941a2080aea398de4edb6b0336296fd40c89c9aabc90528a62b4e16b08"
+        "spec/stat-grid.md": "3bbce0c24cea008beebc0ac7926f7afc2b1d4fa0cc2cff46275f602226f7982f"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "out-of-scope",
-      "reason": "Unmapped source change outside the two skills declared sources (component, application, test, generated or tooling file). Guidance routes per-component props to installed source, so a file-level change does not alter a rule; the 2.0.0 breaking changes were reviewed against both SKILL.md files separately.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: spec/stat-grid.md at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "Changed: spec/stat-grid.md at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "source:spec/stepper.md": {
@@ -8945,25 +8945,25 @@
       ]
     },
     "skill:packages/charts/skills/newui-charts/SKILL.md": {
-      "fingerprint": "3e16f409c9d5166921e01538e12a60fecad3711334476fe02034912158eb077c",
+      "fingerprint": "6816696c84eca716d85462a4ec2eae4f23851ca5329d835b0e2f20a06f237d96",
       "snapshot": {
         "packages/charts/skills/newui-charts/SKILL.md": "deb02fbe3124bada913655e821f8ff5bd2bd0b193e0a033812a62bf78d1b56e2",
         "packages/charts/src/ChartContainer.tsx": "60459ab1a3764b5f98941db63b1784beb44f3d44d9511343fa04758ede3625d6",
         "packages/charts/src/format.ts": "ccc8c95835fd6651a267f47f32f884c08a9b9b51b28d1971e4177800b2358ecf",
         "packages/charts/src/index.ts": "b1dc68f6db3948ab9acb80c8176da02527a69fa9dbc5ebe0ee61290d862c10c4",
-        "spec/charts.md": "3f86f86e5574e4975e6c500ddd3819fbfe744ac5eee73153ee4bdeb6eb715e68"
+        "spec/charts.md": "7c5f44634022b578b668d196b1037e28a10426318867f098f41d5485a5f9891c"
       },
-      "head": "5f570d35290259928b4031afc573f334fd3872cb",
-      "outcome": "updated",
-      "reason": "Skills batch registered 2026-10-25: four new package skills with source-grounded guidance (source paths corrected to real files), domain_map tasks and covers recorded, five new eval cases (31 total). Existing newui/newui-data skills unaffected.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
       "evidence": [
-        "Changed: packages/charts/skills/newui-charts/SKILL.md, packages/charts/src/format.ts, packages/charts/src/index.ts, spec/charts.md at 5f570d35290259928b4031afc573f334fd3872cb"
+        "Changed: spec/charts.md at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     },
     "skill:packages/molecules/skills/newui-molecules/SKILL.md": {
-      "fingerprint": "38b74db7f558cb41e7f7d8f5908f5965c3ef772f2b286113252bf94b6cc31fa7",
+      "fingerprint": "fee78ce79e43e2056e51bfb307e8f73d9dee913d5e510f06505fc94218a23759",
       "snapshot": {
-        "packages/molecules/skills/newui-molecules/SKILL.md": "e984f77c1d3601a1596d523d9531840f686f0c9fe29df49ac4fd679d07227a92",
+        "packages/molecules/skills/newui-molecules/SKILL.md": "5aa778a78d5a0a5a21aecaff4c81e55ad97060a9dbdf61e3d2e77c06739cd59e",
         "packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx": "d175b641ca521a87bec7a44970c67af81affe93aff54508fe6ab717d8df09d38",
         "packages/molecules/src/molecules/Dialog/Dialog.tsx": "c56ebdef41e077097cf116179d59c62b19003b7092795be886697bc6adeda883",
         "packages/molecules/src/molecules/FormControl/FormControl.tsx": "a684ac76c09c6da14a248f5a132e274ee983f22df178b5c7d23d753fbc26f0ed",
@@ -8974,17 +8974,17 @@
         "spec/form.md": "3298955343be0fbf9961396c8acb668ae3db6e25e146cb4e9256a6daea8c8f92",
         "spec/inputs.md": "c4bc011628cf4b6ceedfc5b6100a452317592ce1a88de8ce42ca3460c47fdde1"
       },
-      "head": "0936e7aba27900ccf22453b238ad8f2680207980",
-      "outcome": "no-change",
-      "reason": "The final commits refine behavior the skill already teaches correctly: disabled-row recolor (ink-gray-6), a test-side Enter submit, and the source-region tab stop. The display-row guidance recorded earlier still holds.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing guidance change outside the visual refinement batch and outside the current working diff.",
       "evidence": [
-        "packages/molecules/skills/newui-molecules/SKILL.md unchanged since the recorded update; changed sources are tests, a recipe-locked color value and generated data."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; current git status contains no edit to this skill."
       ]
     },
     "skill:packages/organisms/skills/newui-organisms/SKILL.md": {
-      "fingerprint": "736963e4722fbbcd5e037caeab46e528018b9197fa71bbc71a7057368dd10f13",
+      "fingerprint": "a3dd8da1473fda4ecb7423fc6bcf225cc8f2b0b1656d8d937386b064d14e2d17",
       "snapshot": {
-        "packages/organisms/skills/newui-organisms/SKILL.md": "07f7e61fc8fe56ebb885e20d8ca0dab778a32226b594a9bbb0ad96b2fb3882e0",
+        "packages/organisms/skills/newui-organisms/SKILL.md": "7e4a3e13999047db7127a2224f282b0bf5f4f326fea574926b70fee723545e3d",
         "packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx": "c4405af938e2ac2d1f168e7549bdbfbd34092ed4b86369f66faab66583d9f53a",
         "packages/organisms/src/organisms/DataState/DataState.tsx": "30b806f142ba8296b7fa71d75e6bb1d4e2d156cfcb409b8a1195e394127e0c00",
         "packages/organisms/src/organisms/DataTable/DataTable.tsx": "5a11e762ab2a3144b78dbda2db50e473027e8c556236b454e8c43ebe797af68c",
@@ -8992,18 +8992,18 @@
         "spec/data-table.md": "b3029eceeed2cb4635e273cf22963fd0f66db581c2aa855462ccd777bd22afe4",
         "spec/sidebar.md": "6223b8aed15ae25df389e4da402e4321e389fe08822ba184f8acac364bd4000f"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
-      "outcome": "no-change",
-      "reason": "DataTable change is behavioral (card-view bulk row renders only when a selection exists); the skill teaches composition, not per-state rendering.",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing guidance change outside the visual refinement batch and outside the current working diff.",
       "evidence": [
-        "packages/organisms/skills/newui-organisms/SKILL.md documents DataTable composition and sources; no guidance statement is invalidated by the bulk-row gating."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; current git status contains no edit to this skill."
       ]
     },
     "skill:packages/templates/skills/newui-templates/SKILL.md": {
-      "fingerprint": "32330b2304853288c1832b471c4bae6b332725ceb5c4c5635b15f262c1fa5a01",
+      "fingerprint": "2a4f9e32a07e66b4454e0cbbdd2323dce2dbd77e8d23f85975cf1cafdd15de41",
       "snapshot": {
-        "packages/templates/skills/newui-templates/SKILL.md": "7010811fce8fc1e72268010b670fa0777adc6eef8e7c7e8c0da467cd7d8a8938",
-        "packages/templates/src/templates/AppShell.tsx": "22259b08ab9f8bf375ba5db8a07779033e9289bbf8b6c9d8a9b746c72ce160ec",
+        "packages/templates/skills/newui-templates/SKILL.md": "cf205b1d8da499cb266e70c5e6c2c0662509a08eef9d740d14b24500a87e870c",
+        "packages/templates/src/templates/AppShell.tsx": "38b9005fa907425439bb7946729476c09e036500bfa848249de4d99d99381c0e",
         "packages/templates/src/templates/AuthLayout.tsx": "f06d54d498158e426d001b03db560b1163451f753e5f0a142fc97d55017584e6",
         "packages/templates/src/templates/PaneLayout/PaneLayout.tsx": "6fe6ebc719b8bd06103712197ce5c29ff3186710fa9341ddfa872a089f0893db",
         "spec/adr/0013-atomic-packages-and-app-shell.md": "9b00e5a4eef17a55d3b8bcd3d35477a8faa0f4a4eddbf37bf96daf3c14eb83c5",
@@ -9011,11 +9011,11 @@
         "spec/auth-layout.md": "6d526afd73da49c2603271aa2a0428dd5e0f6cc43acb93cbec5d06c7bb864059",
         "spec/pane-layout.md": "255ad7ae7e3fd4973abb902321d3764cf07b1434e7561239f39940fc93eb4e49"
       },
-      "head": "d79c4a47ff31950006efe993a532f27c3051bd39",
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
       "outcome": "no-change",
-      "reason": "AuthLayout's aside restyled from a saturated blue field to Cool Paper; the skill's AuthLayout guidance (canvas semantics, app-owned card) is unaffected.",
+      "reason": "AppShell keeps its public API and composition model; only named motion and reading-measure styling changed, so the template guidance remains accurate.",
       "evidence": [
-        "packages/templates/skills/newui-templates/SKILL.md line 71 describes AuthLayout behavior, not the aside palette; no guidance mentions the blue panel."
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
       ]
     },
     "source:.changeset/calendar-new.md": {
@@ -10420,6 +10420,318 @@
       "reason": "Generated data, test fix, recipe value or site fix with no skill guidance attached; package skills teach composition patterns, not per-file facts.",
       "evidence": [
         "skills/README.md scope: package skills own task guidance; generated/site/test files carry no SKILL.md coverage."
+      ]
+    },
+    "source:.changeset/tidy-donkeys-shine.md": {
+      "fingerprint": "4fff17c3544026680d1a79bccc468ab1327e8903988ea150c76fb4ad15d06d5b",
+      "snapshot": {
+        ".changeset/tidy-donkeys-shine.md": "47712bcbc0314ecc280cc47be46f8f278eff3451bc90c7a1e1cd2af6805222a6"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:apps/playground/src/pages/analytics/charts.ts": {
+      "fingerprint": "a37c902370a4205537bc4954ceb4a765f8680f77c89fa4ab61679bca7be03aa4",
+      "snapshot": {
+        "apps/playground/src/pages/analytics/charts.ts": "54ff0e610a939a4cc7d4175c6a01dccc8bf9bfda00844f6d4d137b197e9fda29"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:e2e/design-rhythm.spec.ts": {
+      "fingerprint": "ab0a28b953e75bc5cbed742b77ca80cfa7c2904ef2f8e58f64e7c3ad56282cd3",
+      "snapshot": {
+        "e2e/design-rhythm.spec.ts": "443a369b686ebca40f0eb37457ee7d58ef34967064c7736fe769df0dd46f3051"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
+      "evidence": [
+        "Changed: e2e/design-rhythm.spec.ts at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
+      ]
+    },
+    "source:packages/molecules/src/molecules/Toast/Toast.browser.test.tsx": {
+      "fingerprint": "ffd28dd064ba1dc74f47a9fc01d48378b9eb0c473c49cc5653c7dd9763bd5f5d",
+      "snapshot": {
+        "packages/molecules/src/molecules/Toast/Toast.browser.test.tsx": "a0ef6151ff3a5f04c4dc72d16d85883fc9d83eceb7fbb182752891d8bf612f25"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing item outside this visual refinement batch and absent from the current working diff.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; excluded by current git status."
+      ]
+    },
+    "source:packages/tailwind/font-source/Inter-Italic.var.woff2": {
+      "fingerprint": "0939a6165522fe8711e7e1cc09d10d1cf5ef9c35b3d35b86197bffd9b449ce91",
+      "snapshot": {
+        "packages/tailwind/font-source/Inter-Italic.var.woff2": "d9f448e37a017fd1381e743dff88475dcf4906384ae397e656a23d5a8265039e"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing item outside this visual refinement batch and absent from the current working diff.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; excluded by current git status."
+      ]
+    },
+    "source:packages/tailwind/font-source/Inter.var.woff2": {
+      "fingerprint": "5fde52db13915f32b73487c2394d8f87bd7e12ba4f623ba80c3a77188bd738c4",
+      "snapshot": {
+        "packages/tailwind/font-source/Inter.var.woff2": "d30c3bd04e08f990b25152ab3b7f7550c0ba35f72bf8ad1c7cd791d16d94526e"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "out-of-scope",
+      "reason": "Pre-existing item outside this visual refinement batch and absent from the current working diff.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; excluded by current git status."
+      ]
+    },
+    "source:packages/tailwind/scripts/subset-fonts.py": {
+      "fingerprint": "7fa5ac6ed57a2fb1658f758b73f2f1baf60a1a7372d71dd044d30cf7d4a5adcd",
+      "snapshot": {
+        "packages/tailwind/scripts/subset-fonts.py": "8aa002dae036c1701d3592df81773772b59a183d4369d43002cd4cedf34bbff5"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Font delivery changed without a consumer API or recommended-pattern change; the original glyph coverage and variable-font behavior are preserved.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:packages/tailwind/src/fonts/Inter/Inter-Italic-cjk.var.woff2": {
+      "fingerprint": "366305162da09a6b97c0c7d455c78ba42ad46473b34eacdf26574ea47f24ca14",
+      "snapshot": {
+        "packages/tailwind/src/fonts/Inter/Inter-Italic-cjk.var.woff2": "f3bc6f493368e788b09994e46ff6bfb55fe7c6d87fb35be42d6a44a5b8a31469"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Font delivery changed without a consumer API or recommended-pattern change; the original glyph coverage and variable-font behavior are preserved.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:packages/tailwind/src/fonts/Inter/Inter-Italic-extended.var.woff2": {
+      "fingerprint": "f19be6074567dc81550db686794563e9ad3b8743776c959a12224deda2afeb5e",
+      "snapshot": {
+        "packages/tailwind/src/fonts/Inter/Inter-Italic-extended.var.woff2": "9ffdbc8413de50b43334a1faefecfd313af0b015c52c35def064c250c938bf1c"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Font delivery changed without a consumer API or recommended-pattern change; the original glyph coverage and variable-font behavior are preserved.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:packages/tailwind/src/fonts/Inter/Inter-Italic-latin.var.woff2": {
+      "fingerprint": "cf975cb3503164d3b2bba37d8333dd9922d330cb4db1a8dc7578e2b56ba59534",
+      "snapshot": {
+        "packages/tailwind/src/fonts/Inter/Inter-Italic-latin.var.woff2": "c4d52b7081dd0b2a19491b0fb08bfaf56882145c2887fd8e6611b41ff5941fc4"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Font delivery changed without a consumer API or recommended-pattern change; the original glyph coverage and variable-font behavior are preserved.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:packages/tailwind/src/fonts/Inter/Inter-Italic.var.woff2": {
+      "fingerprint": "ff9ed142ac036d73a0fb465cb4c718a7c64379da31d51720f02ca2f26c655712",
+      "snapshot": {
+        "packages/tailwind/src/fonts/Inter/Inter-Italic.var.woff2": null
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Font delivery changed without a consumer API or recommended-pattern change; the original glyph coverage and variable-font behavior are preserved.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:packages/tailwind/src/fonts/Inter/Inter-cjk.var.woff2": {
+      "fingerprint": "53acf5df49380b35cd617a0022aa12dd367488fad71fec263e7090a81bbd2ffc",
+      "snapshot": {
+        "packages/tailwind/src/fonts/Inter/Inter-cjk.var.woff2": "517c2788f1f69a1b756104fee233fcbd2554235e2de0c6541b27d2102250a330"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Font delivery changed without a consumer API or recommended-pattern change; the original glyph coverage and variable-font behavior are preserved.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:packages/tailwind/src/fonts/Inter/Inter-extended.var.woff2": {
+      "fingerprint": "beed2289e048327b14d805475c3ee37150440e61a87c657a8384bb3ab993badc",
+      "snapshot": {
+        "packages/tailwind/src/fonts/Inter/Inter-extended.var.woff2": "823cb172c06644098cc8301c904a7b8c1f3d1ab30777fc515524360e55faa956"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Font delivery changed without a consumer API or recommended-pattern change; the original glyph coverage and variable-font behavior are preserved.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:packages/tailwind/src/fonts/Inter/Inter-latin.var.woff2": {
+      "fingerprint": "0881ca717b5cdf58339f084280a43363e5cd042e28abe4c3eedee0149ff34e32",
+      "snapshot": {
+        "packages/tailwind/src/fonts/Inter/Inter-latin.var.woff2": "9c0fd14a85c13624a8b5546c0e778e65c12b028809b9c56a189356018579c41f"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Font delivery changed without a consumer API or recommended-pattern change; the original glyph coverage and variable-font behavior are preserved.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:packages/tailwind/src/fonts/Inter/Inter.var.woff2": {
+      "fingerprint": "914ebedacab32cddf6a7d099101fc9f1ed749e815e4afc6f7cb552f4df9e1e44",
+      "snapshot": {
+        "packages/tailwind/src/fonts/Inter/Inter.var.woff2": null
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Font delivery changed without a consumer API or recommended-pattern change; the original glyph coverage and variable-font behavior are preserved.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:packages/tailwind/src/fonts/Inter/inter.css": {
+      "fingerprint": "b5c07bd2ef0e581319171077a971d77fcb8d4ea24dec4221aaf1dbfc4f055436",
+      "snapshot": {
+        "packages/tailwind/src/fonts/Inter/inter.css": "73865d48705317b83015828206373d9787b77dbb565218de3a5cfca871f4d237"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Font delivery changed without a consumer API or recommended-pattern change; the original glyph coverage and variable-font behavior are preserved.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:scripts/lighthouse.ts": {
+      "fingerprint": "7b6701ebd506dfc8d9c8499625665a788927dfd4b3ab3ef98e5464749b2feab0",
+      "snapshot": {
+        "scripts/lighthouse.ts": "b097404a85064f90a86db59088947ca227b5cb30ab9387a3f6a84a6fc29aa7cd"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Visual composition, measurement, and test updates preserve public component APIs and existing newui usage guidance.",
+      "evidence": [
+        "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4; Typecheck, Biome, ESLint, package smoke, font glyph/axis validation, Lighthouse, focused accessibility/rhythm/visual suites passed; full pnpm verify passed all 27 steps, including 1019 browser checks with 3 skipped and no retries. Fresh-consumer check not run: no skill guidance changed."
+      ]
+    },
+    "source:.changeset/tidy-ui-rhythms.md": {
+      "fingerprint": "7646a673d5c59fb3da1b39136f4c9656589d034520d4f0e757deab2a699aef08",
+      "snapshot": {
+        ".changeset/tidy-ui-rhythms.md": "c0c291d369c9a3c884b701c244129d81bbf4760d28fb393291162819f0bee9fe"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
+      "evidence": [
+        "Changed: .changeset/tidy-ui-rhythms.md at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
+      ]
+    },
+    "source:apps/playground/src/lib/CodeBlock.tsx": {
+      "fingerprint": "bbff80d6264e8a1b17e8a2ae12f1bfb890bcf280a2f52804f3e760ce1d330c57",
+      "snapshot": {
+        "apps/playground/src/lib/CodeBlock.tsx": "8d19da731ebc6325e90bb4e6c9a4acc356fbf5f4033a4dfa996e1ee313e098ef"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
+      "evidence": [
+        "Changed: apps/playground/src/lib/CodeBlock.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
+      ]
+    },
+    "source:apps/playground/src/lib/TableOfContents.tsx": {
+      "fingerprint": "5895eb1503e7bc618532e059524bf8de9d60acc078c8d6cd1271820ebdc2f933",
+      "snapshot": {
+        "apps/playground/src/lib/TableOfContents.tsx": "40312d15b850d3775b0e7df9dbcbc2c023109a410304e38aa303bbf0ad522965"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
+      "evidence": [
+        "Changed: apps/playground/src/lib/TableOfContents.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
+      ]
+    },
+    "source:e2e/memory.spec.ts": {
+      "fingerprint": "9fb81d20020f330cb5689d051e1808653f849e7569b41abbfae087093bf35dd5",
+      "snapshot": {
+        "e2e/memory.spec.ts": "6cc35386da7a4a61c1fa25491d8df56dac1f086fca147943b9485256739d1fe7"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
+      "evidence": [
+        "Changed: e2e/memory.spec.ts at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
+      ]
+    },
+    "source:e2e/visual.spec.ts-snapshots/overlay-dark-chrome-linux.png": {
+      "fingerprint": "afd1b71b91d9af8b932b9796142efdb2caa993ad04838118c9e91de57f41ad25",
+      "snapshot": {
+        "e2e/visual.spec.ts-snapshots/overlay-dark-chrome-linux.png": "e5ae8edf33e977b22e12eea832d3e5a33f4c7e30882a6e81536160701cb8c4a4"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
+      "evidence": [
+        "Changed: e2e/visual.spec.ts-snapshots/overlay-dark-chrome-linux.png at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
+      ]
+    },
+    "source:e2e/visual.spec.ts-snapshots/overlay-light-chrome-linux.png": {
+      "fingerprint": "38fa75fdac2302a9983f33d6b17cd54a513f0ab7a2fdc79ced02bb71d9d83729",
+      "snapshot": {
+        "e2e/visual.spec.ts-snapshots/overlay-light-chrome-linux.png": "ddeafaad30b6b9707e0840f596a0990cca6202f871667e1b7916b7c8f4a26be1"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
+      "evidence": [
+        "Changed: e2e/visual.spec.ts-snapshots/overlay-light-chrome-linux.png at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
+      ]
+    },
+    "source:packages/atoms/src/atoms/KeyboardShortcut/KeyboardShortcut.tsx": {
+      "fingerprint": "0dc47ca9e29a443b40a61578766b77445f58f7d1f5c800d8ff7d5e1cc9c4af43",
+      "snapshot": {
+        "packages/atoms/src/atoms/KeyboardShortcut/KeyboardShortcut.tsx": "cbc665ccd3172b3d8385e37efce4457f555a6b48484221c1aec3ed46019e316e"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
+      "evidence": [
+        "Changed: packages/atoms/src/atoms/KeyboardShortcut/KeyboardShortcut.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
+      ]
+    },
+    "source:packages/charts/src/NumberCard.test.tsx": {
+      "fingerprint": "ec569a8a3d733152b8567e88f3100181a8e6fb385c618d623c15fced37846aa0",
+      "snapshot": {
+        "packages/charts/src/NumberCard.test.tsx": "765970eecfcec4ec0f3a6c770452a996cbf12a927c5826b81fa6ae9d35db3ac0"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
+      "evidence": [
+        "Changed: packages/charts/src/NumberCard.test.tsx at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
+      ]
+    },
+    "source:scripts/shots.ts": {
+      "fingerprint": "73e3d5b6885af033249a06cc8cf0274b03ecd966e230798f4f1e48aca02bac7f",
+      "snapshot": {
+        "scripts/shots.ts": "6dc61d206d3b09c10bc2929e41f101e08e4eb0d52e729610d67dc652fa0c348a"
+      },
+      "head": "05fc6f18fadf0bf7efc585bcde570ddedbe30eb4",
+      "outcome": "no-change",
+      "reason": "Presentation-only refinements and review tooling: no public API, developer workflow, or skill recommendation changed. The charts skill still accurately describes token-driven chart loading states after spec/charts.md added concrete NumberCard geometry. All three planning records were inspected and remain accurate. Evidence: focused NumberCard/StatGrid/Kanban unit tests, 1472 unit/accessibility tests, typecheck, Biome, ESLint, package smoke, specs/site checks, 276 focused browser checks covering coherence, rhythm, memory and visuals, and 996 before plus 996 after story captures.",
+      "evidence": [
+        "Changed: scripts/shots.ts at 05fc6f18fadf0bf7efc585bcde570ddedbe30eb4"
       ]
     }
   }

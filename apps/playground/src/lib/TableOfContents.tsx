@@ -57,7 +57,7 @@ export function TableOfContents(props: { entries: TocEntry[] }): JSX.Element {
 
   return (
     <nav aria-label="On this page" class="flex flex-col gap-2">
-      <p class="text-sm-medium text-ink-gray-7">On this page</p>
+      <p class="hidden text-sm-medium text-ink-gray-7 xl:block">On this page</p>
       <ul class="flex flex-col gap-0.5">
         <For each={props.entries}>
           {(entry) => (

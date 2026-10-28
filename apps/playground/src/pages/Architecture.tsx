@@ -1,6 +1,7 @@
 import { A } from '@solidjs/router'
 import { For, type JSX, Show } from 'solid-js'
 import { LADDER, type LadderLevel } from '../generated/ladder'
+import { CodeBlock } from '../lib/CodeBlock'
 import { PageSection } from '../lib/PageSection'
 import { TableOfContents } from '../lib/TableOfContents'
 import { PageIntro } from '../shell/PageIntro'
@@ -284,10 +285,10 @@ export function Architecture(): JSX.Element {
             supplies their state, not their pixels. That is what keeps a control
             from acquiring an opinion about money.
           </p>
-          <pre class="w-fit max-w-full whitespace-pre-wrap break-words rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
-            <code>{`import { createUndo, downloadCsv, optionsOf, usd } from '@talelk/newui-data'
-import { DataProvider, createCollection } from '@talelk/newui-data/query'`}</code>
-          </pre>
+          <CodeBlock
+            code={`import { createUndo, downloadCsv, optionsOf, usd } from '@talelk/newui-data'
+import { DataProvider, createCollection } from '@talelk/newui-data/query'`}
+          />
           <p class="max-w-[30rem]">
             What renders stays in the atomic visual packages. The examples
             copied their status strip eleven times too, but it renders a banner
@@ -313,8 +314,8 @@ import { DataProvider, createCollection } from '@talelk/newui-data/query'`}</cod
           </For>
         </dl>
 
-        <pre class="w-fit max-w-full whitespace-pre-wrap break-words rounded-3 border border-outline-gray-1 bg-surface-elevation-1 p-3 text-interface text-ink-gray-8">
-          <code>{`@talelk/newui-tokens · @talelk/newui-tailwind      foundations
+        <CodeBlock
+          code={`@talelk/newui-tokens · @talelk/newui-tailwind      foundations
   ↓  colour · type · radius · motion · controls' classes
 @talelk/newui-atoms                         atoms
   ↓
@@ -324,8 +325,8 @@ import { DataProvider, createCollection } from '@talelk/newui-data/query'`}</cod
   ↓  sections and widgets
 @talelk/newui-templates                     templates
   ↓  page frames
-apps/playground · apps/starter        pages`}</code>
-        </pre>
+apps/playground · apps/starter        pages`}
+        />
       </PageSection>
     </div>
   )

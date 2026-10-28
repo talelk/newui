@@ -355,6 +355,15 @@ export function KanbanBoard<T extends { id: string }>(
           />
         }
       >
+        <Show when={columnIds().length > 1}>
+          <div
+            aria-hidden="true"
+            class="flex items-center justify-end gap-1 px-card-pad pb-1 text-caption text-ink-gray-6 lg:hidden"
+          >
+            Scroll for more columns
+            <Icon icon="lucide-arrow-right" class="size-3.5" />
+          </div>
+        </Show>
         <ScrollArea.Root class="min-h-0 flex-1">
           <ScrollArea.Viewport>
             <ul

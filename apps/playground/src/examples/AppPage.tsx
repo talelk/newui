@@ -83,7 +83,7 @@ export function AppPage(props: {
           <img
             src={assetUrl('favicon.svg')}
             alt=""
-            class="size-6 rounded-[6px]"
+            class="size-6 rounded-control"
           />
           <span>Acme workspace</span>
         </A>
@@ -97,7 +97,7 @@ export function AppPage(props: {
           <img
             src={assetUrl('favicon.svg')}
             alt=""
-            class="size-7 rounded-[6px]"
+            class="size-7 rounded-control"
           />
         </A>
       }

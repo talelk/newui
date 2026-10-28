@@ -193,11 +193,21 @@ export function Spec(): JSX.Element {
             Open dialog
           </Dialog.Trigger>
           <Dialog.Content>
-            <Dialog.Title>Confirm</Dialog.Title>
-            <Dialog.Description>Are you sure?</Dialog.Description>
-            <Dialog.Close class="rounded-4 px-3 py-1.5 text-base">
-              Close
-            </Dialog.Close>
+            <Dialog.Header>
+              <Dialog.Title>Publish the September report?</Dialog.Title>
+              <Dialog.Description>
+                The current revenue and transaction figures will be shared with
+                the workspace.
+              </Dialog.Description>
+            </Dialog.Header>
+            <Dialog.Footer>
+              <Dialog.Close class="rounded-control border border-outline-gray-2 px-2 py-0.5 text-base text-ink-gray-8">
+                Cancel
+              </Dialog.Close>
+              <Dialog.Close class="rounded-control bg-surface-blue-8 px-2 py-0.5 text-base-medium text-ink-base">
+                Publish report
+              </Dialog.Close>
+            </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Root>
 

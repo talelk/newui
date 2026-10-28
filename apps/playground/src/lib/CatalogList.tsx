@@ -38,11 +38,11 @@ export function CatalogList<T extends CatalogEntry>(props: {
                       class="flex min-h-11 items-center gap-3 rounded-3 p-3 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring"
                     >
                       <CatalogIcon group={section.group} />
-                      <span class="flex min-w-0 flex-1 flex-wrap items-baseline justify-between gap-2">
+                      <span class="flex min-w-0 flex-1 flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
                         <span class="truncate text-base-medium text-ink-gray-9">
                           {entry.name}
                         </span>
-                        <span class="hidden min-w-0 flex-1 truncate text-caption text-ink-gray-7 md:block">
+                        <span class="min-w-0 truncate text-caption text-ink-gray-7 max-md:basis-full md:flex-1">
                           {entry.description}
                         </span>
                       </span>

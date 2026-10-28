@@ -10,7 +10,8 @@
     "examples/BackToExamples.tsx",
     "examples/Notice.tsx",
     "pages/analytics/data.ts",
-    "pages/analytics/ReceiptDialog.tsx"
+    "pages/analytics/ReceiptDialog.tsx",
+    "pages/analytics/charts.ts"
   ],
   "packages": [
     "@solidjs/router",

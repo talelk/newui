@@ -94,9 +94,10 @@ and a card in flight loses the element the gesture is holding.
 ## Narrow screens
 
 Below `lg` the board scrolls sideways with column snapping — a column that lands
-half off the edge is a column you cannot read — and the reference's own mobile
-recipe is the same panner. Wide, it is a drag surface, and snapping under a
-pointer mid-drop is just fighting the user.
+half off the edge is a column you cannot read — and a quiet “Scroll for more
+columns” cue makes the off-screen stages discoverable. The reference's own
+mobile recipe is the same panner. Wide, it is a drag surface, and snapping under
+a pointer mid-drop is just fighting the user.
 
 ## Motion
 

@@ -12,9 +12,16 @@ test('filter controls, KPI cards and the page grid keep one rhythm across widths
     const filters = page.locator('[data-slot="filter-bar"]')
     await expect(filters).toBeVisible()
     const controls = filters.locator('[data-size="sm"]')
-    await expect(controls).toHaveCount(4)
+    await expect(controls).toHaveCount(3)
+    const demo = page
+      .locator('[data-slot="app-shell-header"]')
+      .locator('[data-slot="select-control"]')
+    await expect(demo).toBeVisible()
     const heights = await controls.evaluateAll((elements) =>
       elements.map((element) => element.getBoundingClientRect().height),
+    )
+    heights.push(
+      await demo.evaluate((element) => element.getBoundingClientRect().height),
     )
     expect(
       Math.max(...heights) - Math.min(...heights),
@@ -26,9 +33,18 @@ test('filter controls, KPI cards and the page grid keep one rhythm across widths
     const widths = await cards.evaluateAll((elements) =>
       elements.map((element) => element.getBoundingClientRect().width),
     )
+    const minimumKpiWidth = width >= 360 && width < 640 ? 150 : 180
     expect(Math.min(...widths), `${width}px KPI width`).toBeGreaterThanOrEqual(
-      180,
+      minimumKpiWidth,
     )
+    if (width === 390) {
+      const tops = await cards.evaluateAll((elements) =>
+        elements
+          .slice(0, 2)
+          .map((element) => element.getBoundingClientRect().top),
+      )
+      expect(tops[0], 'phone KPIs share a two-up row').toBe(tops[1])
+    }
 
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - window.innerWidth,

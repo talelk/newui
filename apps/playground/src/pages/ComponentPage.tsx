@@ -14,6 +14,7 @@ import { componentBySlug } from '../generated/components'
 import { STORIES } from '../generated/stories'
 import { ATOMIC } from '../lib/atomic'
 import { stripBase } from '../lib/base'
+import { CodeBlock } from '../lib/CodeBlock'
 // The globs behind the tables and the story source text live here rather than
 // in this page: Vite 8's dep scan cannot parse `.tsx` files that hold a source
 // glob, so a page hosting one breaks pre-bundling.
@@ -58,6 +59,9 @@ function ApiTable(props: { part: string; members: ApiMember[] }): JSX.Element {
       <h3 class="text-base-medium text-ink-gray-8">{props.part}</h3>
       {/* The table keeps its shape and the *container* scrolls: a `w-full`
           table on a phone squeezes the notes column to four words a line. */}
+      <p class="text-caption text-ink-gray-6 md:hidden">
+        Scroll horizontally to compare every property.
+      </p>
       <section
         tabindex="0"
         aria-label={`${props.part} properties`}
@@ -66,7 +70,7 @@ function ApiTable(props: { part: string; members: ApiMember[] }): JSX.Element {
         <table class="w-full min-w-[38rem] border-collapse text-base">
           <thead>
             <tr class="bg-surface-gray-1">
-              <th class="border-b border-outline-gray-1 px-3 py-2 text-start text-sm-medium text-ink-gray-8">
+              <th class="sticky start-0 border-b border-outline-gray-1 bg-surface-gray-1 px-3 py-2 text-start text-sm-medium text-ink-gray-8">
                 prop
               </th>
               <th class="border-b border-outline-gray-1 px-3 py-2 text-start text-sm-medium text-ink-gray-8">
@@ -84,7 +88,7 @@ function ApiTable(props: { part: string; members: ApiMember[] }): JSX.Element {
             <For each={props.members}>
               {(member) => (
                 <tr>
-                  <td class="border-b border-outline-gray-1 px-3 py-2 align-top whitespace-nowrap text-ink-gray-8">
+                  <td class="sticky start-0 border-b border-outline-gray-1 bg-surface-base px-3 py-2 align-top whitespace-nowrap text-ink-gray-8">
                     <code>{member.name}</code>
                     <Show when={!member.optional}>
                       <span class="ms-1 text-ink-red-7" title="required">
@@ -124,7 +128,13 @@ function ApiTables(props: { slug: string }): JSX.Element {
   )
 
   return (
-    <Suspense fallback={<LoadingNote label="Loading props…" />}>
+    <Suspense
+      fallback={
+        <div class="min-h-[60rem]">
+          <LoadingNote label="Loading props…" />
+        </div>
+      }
+    >
       <Show
         when={tables() && Object.keys(tables() ?? {}).length > 0}
         fallback={
@@ -155,7 +165,13 @@ function Contract(props: { slug: string; stripProps: boolean }): JSX.Element {
   )
 
   return (
-    <Suspense fallback={<LoadingNote label="Loading the contract…" />}>
+    <Suspense
+      fallback={
+        <div class="min-h-[36rem]">
+          <LoadingNote label="Loading the contract…" />
+        </div>
+      }
+    >
       <Show
         when={markdown()}
         fallback={
@@ -304,7 +320,7 @@ export function ComponentPage(): JSX.Element {
             ]?.().then((module) => module.default) ?? Promise.resolve('')
 
           return (
-            <article class="flex flex-col gap-4">
+            <article class="flex flex-col gap-6">
               <header class="flex flex-col gap-3">
                 <div class="flex flex-wrap items-center gap-2">
                   <h1 class="text-heading text-ink-gray-9">
@@ -313,23 +329,18 @@ export function ComponentPage(): JSX.Element {
                   <Badge size="sm" theme="gray">
                     {ATOMIC[component().atomic].singular}
                   </Badge>
-                  <Badge size="sm" theme="gray">
-                    {component().group}
-                  </Badge>
-                  <Show when={component().spec}>
-                    <Badge size="sm" theme="blue" label="contract" />
-                  </Show>
                 </div>
                 <p class="max-w-[30rem] text-interface text-ink-gray-7">
                   {component().description}
                 </p>
                 <p class="text-caption text-ink-gray-7">
-                  {component().package} · {component().parts.length} part
+                  {component().package} · {component().group} ·{' '}
+                  {component().parts.length} part
                   {component().parts.length === 1 ? '' : 's'}
                 </p>
                 <nav
                   aria-label="Reference sections"
-                  class="flex flex-wrap gap-3 text-interface text-ink-gray-7"
+                  class="flex flex-wrap gap-3 text-interface text-ink-gray-7 xl:hidden"
                 >
                   <a
                     href="#preview"
@@ -400,7 +411,11 @@ export function ComponentPage(): JSX.Element {
                       fallback={
                         <InlinePreview title={component().name} source={source}>
                           <Suspense
-                            fallback={<LoadingNote label="Loading demo…" />}
+                            fallback={
+                              <div class="grid min-h-32 place-items-center">
+                                <LoadingNote label="Loading demo…" />
+                              </div>
+                            }
                           >
                             <Dynamic component={entry().Component} />
                           </Suspense>
@@ -418,9 +433,9 @@ export function ComponentPage(): JSX.Element {
               </PageSection>
 
               <PageSection id="usage" title="Usage">
-                <pre class="whitespace-pre-wrap break-words rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-4 text-caption">
-                  <code>{`import { ${component().name} } from '${component().package}'`}</code>
-                </pre>
+                <CodeBlock
+                  code={`import { ${component().name} } from '${component().package}'`}
+                />
               </PageSection>
               <PageSection id="props" title="Props">
                 <ApiTables slug={component().slug} />

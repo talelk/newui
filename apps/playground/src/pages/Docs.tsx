@@ -1,5 +1,6 @@
 import { A } from '@solidjs/router'
 import type { JSX } from 'solid-js'
+import { CodeBlock } from '../lib/CodeBlock'
 import { PackageGuides } from '../lib/PackageGuides'
 import { PageSection } from '../lib/PageSection'
 import { TableOfContents } from '../lib/TableOfContents'
@@ -16,11 +17,7 @@ import { usePageToc } from '../shell/SiteLayout'
  */
 
 function Code(props: { children: string }): JSX.Element {
-  return (
-    <pre class="whitespace-pre-wrap break-words rounded-card border border-outline-gray-1 bg-surface-gray-1 p-3 text-sm leading-relaxed text-ink-gray-8">
-      <code>{props.children}</code>
-    </pre>
-  )
+  return <CodeBlock code={props.children} />
 }
 
 export function Docs(): JSX.Element {

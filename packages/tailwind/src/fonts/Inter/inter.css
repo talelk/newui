@@ -3,33 +3,61 @@
 @supports (font-variation-settings: normal) {
   :root { font-family: "InterVar", sans-serif; font-optical-sizing: auto; }
 } */
+
+/* Latin is the common download. Extended scripts and CJK load only when used. */
 @font-face {
   font-family: "InterVar";
   font-weight: 100 900;
   font-display: swap;
   font-style: normal;
-  src:
-    url("Inter.var.woff2?v=3.19") format("woff2-variations"),
-    url("Inter.var.woff2?v=3.19") format("woff2");
-  src: url("Inter.var.woff2?v=3.19") format("woff2") tech("variations");
+  src: url("Inter-latin.var.woff2?v=3.19") format("woff2");
+  unicode-range: U+0000-02FF, U+2000-2FFF, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "InterVar";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  src: url("Inter-extended.var.woff2?v=3.19") format("woff2");
   unicode-range:
-    U+0000-05FF, /* Latin, Greek, Cyrillic, Hebrew */ U+0700-1FFF,
-    /* Extended Latin, Greek, Cyrillic, Armenian, Georgian */ U+2C00-2FFF,
-    /* Additional scripts */ U+4E00-9FFF,
-    /* CJK (Chinese, Japanese, Korean) */ U+AC00-D7AF; /* Hangul (Korean) */
+    U+0300-1FFF, U+2C00-2FFF, U+A000-AFFF, U+E000-F8FF, U+FDFC, U+FE20-FE2D,
+    U+1F12F-1F16B, U+1F850-1F852, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "InterVar";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  src: url("Inter-cjk.var.woff2?v=3.19") format("woff2");
+  unicode-range: U+4E00-9FFF, U+AC00-D7AF, U+FEFF, U+FFFD;
 }
 @font-face {
   font-family: "InterVar";
   font-weight: 100 900;
   font-display: swap;
   font-style: italic;
-  src:
-    url("Inter-Italic.var.woff2?v=3.19") format("woff2-variations"),
-    url("Inter-Italic.var.woff2?v=3.19") format("woff2");
-  src: url("Inter-Italic.var.woff2?v=3.19") format("woff2") tech("variations");
-  unicode-range:
-    U+0000-05FF, U+0700-1FFF, U+2C00-2FFF, U+4E00-9FFF, U+AC00-D7AF;
+  src: url("Inter-Italic-latin.var.woff2?v=3.19") format("woff2");
+  unicode-range: U+0000-02FF, U+2000-2FFF, U+FEFF, U+FFFD;
 }
+@font-face {
+  font-family: "InterVar";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: italic;
+  src: url("Inter-Italic-extended.var.woff2?v=3.19") format("woff2");
+  unicode-range:
+    U+0300-1FFF, U+2C00-2FFF, U+A000-AFFF, U+E000-F8FF, U+FDFC, U+FE20-FE2D,
+    U+1F12F-1F16B, U+1F850-1F852, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "InterVar";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: italic;
+  src: url("Inter-Italic-cjk.var.woff2?v=3.19") format("woff2");
+  unicode-range: U+4E00-9FFF, U+AC00-D7AF, U+FEFF, U+FFFD;
+}
+
 /* Aliased 'InterVar' font as 'Inter' */
 /* To prevent breaking usage of `font-family: 'Inter'` */
 @font-face {
@@ -37,25 +65,50 @@
   font-weight: 100 900;
   font-display: swap;
   font-style: normal;
-  src:
-    url("Inter.var.woff2?v=3.19") format("woff2-variations"),
-    url("Inter.var.woff2?v=3.19") format("woff2");
-  src: url("Inter.var.woff2?v=3.19") format("woff2") tech("variations");
+  src: url("Inter-latin.var.woff2?v=3.19") format("woff2");
+  unicode-range: U+0000-02FF, U+2000-2FFF, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  src: url("Inter-extended.var.woff2?v=3.19") format("woff2");
   unicode-range:
-    U+0000-05FF, /* Latin, Greek, Cyrillic, Hebrew */ U+0700-1FFF,
-    /* Extended Latin, Greek, Cyrillic, Armenian, Georgian */ U+2C00-2FFF,
-    /* Additional scripts */ U+4E00-9FFF,
-    /* CJK (Chinese, Japanese, Korean) */ U+AC00-D7AF; /* Hangul (Korean) */
+    U+0300-1FFF, U+2C00-2FFF, U+A000-AFFF, U+E000-F8FF, U+FDFC, U+FE20-FE2D,
+    U+1F12F-1F16B, U+1F850-1F852, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  src: url("Inter-cjk.var.woff2?v=3.19") format("woff2");
+  unicode-range: U+4E00-9FFF, U+AC00-D7AF, U+FEFF, U+FFFD;
 }
 @font-face {
   font-family: "Inter";
   font-weight: 100 900;
   font-display: swap;
   font-style: italic;
-  src:
-    url("Inter-Italic.var.woff2?v=3.19") format("woff2-variations"),
-    url("Inter-Italic.var.woff2?v=3.19") format("woff2");
-  src: url("Inter-Italic.var.woff2?v=3.19") format("woff2") tech("variations");
+  src: url("Inter-Italic-latin.var.woff2?v=3.19") format("woff2");
+  unicode-range: U+0000-02FF, U+2000-2FFF, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: italic;
+  src: url("Inter-Italic-extended.var.woff2?v=3.19") format("woff2");
   unicode-range:
-    U+0000-05FF, U+0700-1FFF, U+2C00-2FFF, U+4E00-9FFF, U+AC00-D7AF;
+    U+0300-1FFF, U+2C00-2FFF, U+A000-AFFF, U+E000-F8FF, U+FDFC, U+FE20-FE2D,
+    U+1F12F-1F16B, U+1F850-1F852, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: italic;
+  src: url("Inter-Italic-cjk.var.woff2?v=3.19") format("woff2");
+  unicode-range: U+4E00-9FFF, U+AC00-D7AF, U+FEFF, U+FFFD;
 }

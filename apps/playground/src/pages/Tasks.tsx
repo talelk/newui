@@ -481,7 +481,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
       >
         <div class="md:hidden">
           <Select
-            label="Sort task list"
+            aria-label="Sort task list"
             value={taskSort()}
             options={optionsOf([
               'Default order',
@@ -493,40 +493,38 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
           />
         </div>
       </FilterBar>
-      <div class="hidden md:block">
-        <StatGrid
-          compact
-          loading={query.isPending()}
-          stats={[
-            {
-              label: 'Total tasks',
-              value: all().length.toLocaleString('en-US'),
-              hint: 'Across the workspace',
-              icon: 'lucide-list-checks',
-            },
-            {
-              label: 'In progress',
-              value: all().filter((row) => row.status === 'In Progress').length,
-              hint: 'Work moving forward',
-              icon: 'lucide-clock',
-            },
-            {
-              label: 'Completed',
-              value: done(),
-              hint: `${all().length ? Math.round((done() / all().length) * 100) : 0}% of all tasks`,
-              icon: 'lucide-circle-check',
-            },
-            {
-              label: 'High priority',
-              value: all().filter(
-                (row) => row.priority === 'High' && row.status !== 'Done',
-              ).length,
-              hint: 'Open and needs your attention',
-              icon: 'lucide-flag',
-            },
-          ]}
-        />
-      </div>
+      <StatGrid
+        compact
+        loading={query.isPending()}
+        stats={[
+          {
+            label: 'Total tasks',
+            value: all().length.toLocaleString('en-US'),
+            hint: 'Across the workspace',
+            icon: 'lucide-list-checks',
+          },
+          {
+            label: 'In progress',
+            value: all().filter((row) => row.status === 'In Progress').length,
+            hint: 'Work moving forward',
+            icon: 'lucide-clock',
+          },
+          {
+            label: 'Completed',
+            value: done(),
+            hint: `${all().length ? Math.round((done() / all().length) * 100) : 0}% of all tasks`,
+            icon: 'lucide-circle-check',
+          },
+          {
+            label: 'High priority',
+            value: all().filter(
+              (row) => row.priority === 'High' && row.status !== 'Done',
+            ).length,
+            hint: 'Open and needs your attention',
+            icon: 'lucide-flag',
+          },
+        ]}
+      />
       <Notice text={notice()} tone="green" onDismiss={() => setNotice('')} />
       <Show
         when={view() === 'table'}
