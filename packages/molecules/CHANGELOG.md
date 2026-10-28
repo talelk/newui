@@ -1,5 +1,12 @@
 # @talelk/newui-molecules
 
+## 2.2.2
+
+### Patch Changes
+
+- Updated dependencies [bd8dd18]
+  - @talelk/newui-atoms@1.2.1
+
 ## 2.2.1
 
 ### Patch Changes

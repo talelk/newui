@@ -1,6 +1,6 @@
 {
   "name": "@talelk/newui-atoms",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "description": "Atomic controls and shared UI runtime primitives for newui.",
   "repository": {

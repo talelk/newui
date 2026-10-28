@@ -1,5 +1,14 @@
 # @talelk/newui-organisms
 
+## 2.1.3
+
+### Patch Changes
+
+- bd8dd18: Polish compact UI geometry: keep KPI labels and targets readable on narrow screens, align metric loading states with their ready content, add a mobile Kanban scroll cue, and keep keyboard shortcut symbols at the caption size floor.
+- Updated dependencies [bd8dd18]
+  - @talelk/newui-atoms@1.2.1
+  - @talelk/newui-molecules@2.2.2
+
 ## 2.1.2
 
 ### Patch Changes
