@@ -1,5 +1,11 @@
 # @talelk/newui-charts
 
+## 1.0.2
+
+### Patch Changes
+
+- bd8dd18: Polish compact UI geometry: keep KPI labels and targets readable on narrow screens, align metric loading states with their ready content, add a mobile Kanban scroll cue, and keep keyboard shortcut symbols at the caption size floor.
+
 ## 1.0.1
 
 ### Patch Changes

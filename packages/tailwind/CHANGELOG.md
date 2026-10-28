@@ -1,5 +1,11 @@
 # @talelk/newui-tailwind
 
+## 1.0.1
+
+### Patch Changes
+
+- bd8dd18: Refine application-shell spacing and named motion tokens. Split Inter into reproducible Latin, extended-script, and CJK subsets so consumers download only the glyph ranges they render.
+
 ## 1.0.0
 
 ### Major Changes

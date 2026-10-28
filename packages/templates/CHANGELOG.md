@@ -1,5 +1,15 @@
 # @talelk/newui-templates
 
+## 1.1.4
+
+### Patch Changes
+
+- bd8dd18: Refine application-shell spacing and named motion tokens. Split Inter into reproducible Latin, extended-script, and CJK subsets so consumers download only the glyph ranges they render.
+- Updated dependencies [bd8dd18]
+  - @talelk/newui-atoms@1.2.1
+  - @talelk/newui-organisms@2.1.3
+  - @talelk/newui-molecules@2.2.2
+
 ## 1.1.3
 
 ### Patch Changes

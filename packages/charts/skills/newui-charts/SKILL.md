@@ -10,7 +10,7 @@ metadata:
   type: core
   domain: ui
   library: '@talelk/newui-charts'
-  library_version: '1.0.1'
+  library_version: '1.0.2'
 sources:
   - talelk/newui:packages/charts/src/index.ts
   - talelk/newui:packages/charts/src/ChartContainer.tsx

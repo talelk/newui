@@ -23,8 +23,12 @@ export interface PendingChange {
 export const RELEASED: ReleasedPackage[] = [
   {
     "package": "@talelk/newui-atoms",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "sections": [
+      {
+        "version": "1.2.1",
+        "body": "### Patch Changes\n\n- bd8dd18: Polish compact UI geometry: keep KPI labels and targets readable on narrow screens, align metric loading states with their ready content, add a mobile Kanban scroll cue, and keep keyboard shortcut symbols at the caption size floor."
+      },
       {
         "version": "1.2.0",
         "body": "### Minor Changes\n\n- 538d5d2: New `KeyValue` atom: one label/value pair for settings surfaces, with a horizontal default and a stacked `orientation=\"vertical\"`."
@@ -49,8 +53,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-charts",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "sections": [
+      {
+        "version": "1.0.2",
+        "body": "### Patch Changes\n\n- bd8dd18: Polish compact UI geometry: keep KPI labels and targets readable on narrow screens, align metric loading states with their ready content, add a mobile Kanban scroll cue, and keep keyboard shortcut symbols at the caption size floor."
+      },
       {
         "version": "1.0.1",
         "body": "### Patch Changes\n\n- 8710ce8: Application coherence pass across the twelve example applications.\n  \n  - **Atoms:** checked/indeterminate Checkbox now paints a semantic check icon that\n    is legible in both themes and disabled states; Switch thumbs contrast against\n    both track states; required markers use a passing red step; disabled solid\n    blue actions use the neutral disabled treatment; Password keeps its visual\n    size with a larger coarse-pointer hit area.\n  - **Molecules:** Card descriptions use the interface type role; `ListRow` only\n    advertises pointer/hover when it is actionable; TabButtons fluid tracks can\n    shrink at 320/150%; editor mention surfaces use the overlay radius; a\n    controlled DateRangePicker holds the first click as a draft until the range\n    completes.\n  - **Organisms:** DataTable gains `cardBreakpoint`, a stable titled toolbar,\n    humanized column labels, compact mobile paging, guarded external empty\n    actions, a bottom spacer for the sticky selection bar, and selection only\n    when a bulk action exists; Section gains explicit accessible naming; DataState\n    accepts an empty-state icon; SettingsDialog has stable desktop width, true\n    mobile full-bleed, 40px mobile nav/close, an accessible tablist label and\n    logical RTL borders; AuthCard is card-only and flat; KanbanBoard restores\n    focus after keyboard moves, uses 40px touch targets below `lg`, and fits four\n    columns at 1440; PageToolbar uses an ellipsis menu, icons on secondary\n    actions and the section scale for nested headings; FilterBar selects are\n    two-up from 360px; StatGrid compact is four-up at `md`.\n  - **Templates:** AppShell's mobile menu trigger is 40px.\n  - **Charts:** ChartLegend renders static text when it has no handler; NumberCard\n    titles wrap under text zoom and its loading state reserves card geometry;\n    time-axis labels format the numeric timestamp ECharts passes, so monthly\n    plots keep their month ticks; axis charts reserve the label band.\n  - **Editor:** toolbar and mention surfaces follow the card/overlay radius scale.\n  \n  Existing props remain valid; the new state and layout props are additive."
@@ -111,8 +119,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-molecules",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "sections": [
+      {
+        "version": "2.2.2",
+        "body": "### Patch Changes\n\n- Updated dependencies [bd8dd18]\n  - @talelk/newui-atoms@1.2.1"
+      },
       {
         "version": "2.2.1",
         "body": "### Patch Changes\n\n- e0095e2: Toast: the close button works, stacked toasts lift instead of overlapping, and in-place updates (promise loading → success) re-render in the same node. Root causes: the region keyed items by record reference (the store re-syncs fresh objects constantly, remounting each item's machine mid-click), placement depended on group heights without a tracked read, and the placement transform consuming Zag's `--y`/`--x` variables was never written."
@@ -137,8 +149,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-organisms",
-    "version": "2.1.2",
+    "version": "2.1.3",
     "sections": [
+      {
+        "version": "2.1.3",
+        "body": "### Patch Changes\n\n- bd8dd18: Polish compact UI geometry: keep KPI labels and targets readable on narrow screens, align metric loading states with their ready content, add a mobile Kanban scroll cue, and keep keyboard shortcut symbols at the caption size floor.\n- Updated dependencies [bd8dd18]\n  - @talelk/newui-atoms@1.2.1\n  - @talelk/newui-molecules@2.2.2"
+      },
       {
         "version": "2.1.2",
         "body": "### Patch Changes\n\n- Updated dependencies [e0095e2]\n  - @talelk/newui-molecules@2.2.1"
@@ -163,8 +179,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-tailwind",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "sections": [
+      {
+        "version": "1.0.1",
+        "body": "### Patch Changes\n\n- bd8dd18: Refine application-shell spacing and named motion tokens. Split Inter into reproducible Latin, extended-script, and CJK subsets so consumers download only the glyph ranges they render."
+      },
       {
         "version": "1.0.0",
         "body": "### Major Changes\n\n- 6fda044: Adopt compact analytics styling: 32px default controls, outlined text entry,\n  6px control corners, border-led cards and role typography. Style NumberCard,\n  clarify dark chart palettes, and align block controls with the shared defaults.\n  See spec/migrations.md for explicit props that retain previous defaults.\n  \n  Chart engines are registered by their wrapper. Raw ChartBase/useChart consumers\n  register their own mark and coordinate-system modules through ECharts core.\n  \n  Typography utilities retain their names and use rem sizes so user text scaling\n  is respected. Controls, badges and metrics reflow instead of clipping enlarged\n  labels. All input families share Field help/error wiring without remounting\n  uncontrolled state when validation appears. Settings tabs support vertical\n  arrow, Home and End navigation.\n\n### Minor Changes\n\n- 6fda044: Default control sizing is now sm (28px), including buttons, text entry, selectors,\n  date/time triggers, tabs, toggle groups and pagination. Explicit md remains 32px;\n  checkboxes, radios and avatars retain their geometry. Consumers that require the\n  previous default should pass size=\"md\". Cards default to 12px padding; pass\n  padding=\"md\" for the previous 16px. Chart cards, editor toolbar commands and blocks use compact spacing.\n  Page, section, metric and hero typography now follow 24/30, 18/24, 28/32 and\n  36/40px respectively. Existing semantic colors and dialog padding are retained.\n- ba4540f: Stacking and motion become named scales from `@talelk/newui-tokens`: `z-raised`,\n  `z-floating`, `z-overlay`, `z-top`, `duration-fast/base/slow` and\n  `ease-standard` resolve `@theme` variables instead of components hard-coding\n  `z-50`, `z-[100]` and numeric durations. Computed values are unchanged. The\n  disclosure chevron keeps its literal 200ms, paired with the\n  `disclosure-panel` utility's timing.\n\n### Patch Changes\n\n- 6fda044: Refresh workspace dependencies to current stable releases. The Vite integration\n  now requires Vite ^8.3.4. Consumer runtime dependencies, Solid development\n  versions and Tailwind tooling are updated together; application examples migrate\n  to TanStack Table 9. Type checking uses TypeScript 7, with Microsoft's TypeScript 6\n  compatibility API retained for ESLint. Tests use Vitest 5 and Playwright 1.64.1.\n  \n  Keep visible labels in accessible names for calendar view controls and example\n  actions; treat custom navigation avatars as decorative beside their labels.\n  The updated axe checks stay enabled.\n- Updated dependencies [6fda044]\n- Updated dependencies [6fda044]\n- Updated dependencies [ba4540f]\n  - @talelk/newui-tokens@0.1.0"
@@ -177,8 +197,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-templates",
-    "version": "1.1.3",
+    "version": "1.1.4",
     "sections": [
+      {
+        "version": "1.1.4",
+        "body": "### Patch Changes\n\n- bd8dd18: Refine application-shell spacing and named motion tokens. Split Inter into reproducible Latin, extended-script, and CJK subsets so consumers download only the glyph ranges they render.\n- Updated dependencies [bd8dd18]\n  - @talelk/newui-atoms@1.2.1\n  - @talelk/newui-organisms@2.1.3\n  - @talelk/newui-molecules@2.2.2"
+      },
       {
         "version": "1.1.3",
         "body": "### Patch Changes\n\n- Updated dependencies [e0095e2]\n  - @talelk/newui-molecules@2.2.1\n  - @talelk/newui-organisms@2.1.2"
