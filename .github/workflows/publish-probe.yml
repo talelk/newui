@@ -27,6 +27,13 @@ jobs:
       - name: Use the npm version trusted publishing documents
         run: npm install -g npm@11.15.0
 
+      - name: Show the OIDC environment (presence only)
+        run: |
+          npm --version
+          env | grep -E '^ACTIONS_ID_TOKEN' | sed 's/=.*/=<set>/' || echo "no ACTIONS_ID_TOKEN_* env"
+
       - name: Publish with the npm CLI
         working-directory: packages/${{ inputs.package }}
+        env:
+          NPM_CONFIG_PROVENANCE: 'true'
         run: npm publish --provenance --access public
