@@ -1,5 +1,13 @@
 # @talelk/newui-tailwind
 
+## 1.0.2
+
+### Patch Changes
+
+- 80fcde4: Design-system polish sweep: exhaustive, tokenized foundations (motion, radius roles, density, z-layer scale, dark elevation) now consumed consistently across atoms, molecules, organisms, templates, charts and editors via shared `control-styles` recipes instead of per-component one-offs. New props in existing vocabulary: `NumberInput`/`PinInput` gain `size`/`variant`, `Dropdown` gains `disabled`, `IconButton` gains `loading`. `Button` loading no longer sets the native `disabled` attribute. Renames/removals: the `data-color` hook becomes `data-theme`, and `KanbanTone` drops the unused `violet` value. The playground and starter screens adopt the same foundations.
+- Updated dependencies [80fcde4]
+  - @talelk/newui-tokens@0.1.1
+
 ## 1.0.1
 
 ### Patch Changes

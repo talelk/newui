@@ -23,8 +23,12 @@ export interface PendingChange {
 export const RELEASED: ReleasedPackage[] = [
   {
     "package": "@talelk/newui-atoms",
-    "version": "1.2.1",
+    "version": "1.3.0",
     "sections": [
+      {
+        "version": "1.3.0",
+        "body": "### Minor Changes\n\n- 80fcde4: Design-system polish sweep: exhaustive, tokenized foundations (motion, radius roles, density, z-layer scale, dark elevation) now consumed consistently across atoms, molecules, organisms, templates, charts and editors via shared `control-styles` recipes instead of per-component one-offs. New props in existing vocabulary: `NumberInput`/`PinInput` gain `size`/`variant`, `Dropdown` gains `disabled`, `IconButton` gains `loading`. `Button` loading no longer sets the native `disabled` attribute. Renames/removals: the `data-color` hook becomes `data-theme`, and `KanbanTone` drops the unused `violet` value. The playground and starter screens adopt the same foundations."
+      },
       {
         "version": "1.2.1",
         "body": "### Patch Changes\n\n- bd8dd18: Polish compact UI geometry: keep KPI labels and targets readable on narrow screens, align metric loading states with their ready content, add a mobile Kanban scroll cue, and keep keyboard shortcut symbols at the caption size floor."
@@ -53,8 +57,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-charts",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "sections": [
+      {
+        "version": "1.0.3",
+        "body": "### Patch Changes\n\n- 80fcde4: Design-system polish sweep: exhaustive, tokenized foundations (motion, radius roles, density, z-layer scale, dark elevation) now consumed consistently across atoms, molecules, organisms, templates, charts and editors via shared `control-styles` recipes instead of per-component one-offs. New props in existing vocabulary: `NumberInput`/`PinInput` gain `size`/`variant`, `Dropdown` gains `disabled`, `IconButton` gains `loading`. `Button` loading no longer sets the native `disabled` attribute. Renames/removals: the `data-color` hook becomes `data-theme`, and `KanbanTone` drops the unused `violet` value. The playground and starter screens adopt the same foundations."
+      },
       {
         "version": "1.0.2",
         "body": "### Patch Changes\n\n- bd8dd18: Polish compact UI geometry: keep KPI labels and targets readable on narrow screens, align metric loading states with their ready content, add a mobile Kanban scroll cue, and keep keyboard shortcut symbols at the caption size floor."
@@ -71,8 +79,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-code-editor",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "sections": [
+      {
+        "version": "0.1.1",
+        "body": "### Patch Changes\n\n- 80fcde4: Design-system polish sweep: exhaustive, tokenized foundations (motion, radius roles, density, z-layer scale, dark elevation) now consumed consistently across atoms, molecules, organisms, templates, charts and editors via shared `control-styles` recipes instead of per-component one-offs. New props in existing vocabulary: `NumberInput`/`PinInput` gain `size`/`variant`, `Dropdown` gains `disabled`, `IconButton` gains `loading`. `Button` loading no longer sets the native `disabled` attribute. Renames/removals: the `data-color` hook becomes `data-theme`, and `KanbanTone` drops the unused `violet` value. The playground and starter screens adopt the same foundations."
+      },
       {
         "version": "0.1.0",
         "body": "### Minor Changes\n\n- 6fda044: Adopt compact analytics styling: 32px default controls, outlined text entry,\n  6px control corners, border-led cards and role typography. Style NumberCard,\n  clarify dark chart palettes, and align block controls with the shared defaults.\n  See spec/migrations.md for explicit props that retain previous defaults.\n  \n  Chart engines are registered by their wrapper. Raw ChartBase/useChart consumers\n  register their own mark and coordinate-system modules through ECharts core.\n  \n  Typography utilities retain their names and use rem sizes so user text scaling\n  is respected. Controls, badges and metrics reflow instead of clipping enlarged\n  labels. All input families share Field help/error wiring without remounting\n  uncontrolled state when validation appears. Settings tabs support vertical\n  arrow, Home and End navigation.\n\n### Patch Changes\n\n- 6fda044: Refresh workspace dependencies to current stable releases. The Vite integration\n  now requires Vite ^8.3.4. Consumer runtime dependencies, Solid development\n  versions and Tailwind tooling are updated together; application examples migrate\n  to TanStack Table 9. Type checking uses TypeScript 7, with Microsoft's TypeScript 6\n  compatibility API retained for ESLint. Tests use Vitest 5 and Playwright 1.64.1.\n  \n  Keep visible labels in accessible names for calendar view controls and example\n  actions; treat custom navigation avatars as decorative beside their labels.\n  The updated axe checks stay enabled.\n- 6fda044: Support BottomSheet drag dismissal with scroll handling, cancellation,\n  non-dismissible sheets and reduced motion. Load CodeEditor grammars on demand\n  while preserving edits and ignoring stale language requests after changes or\n  unmounting.\n  \n  Expose paragraph, link editing and undo/redo in EditorToolbar. Disable formatting\n  for readonly editors and history actions when their operation is unavailable."
@@ -91,8 +103,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-editor",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "sections": [
+      {
+        "version": "0.1.3",
+        "body": "### Patch Changes\n\n- 80fcde4: Design-system polish sweep: exhaustive, tokenized foundations (motion, radius roles, density, z-layer scale, dark elevation) now consumed consistently across atoms, molecules, organisms, templates, charts and editors via shared `control-styles` recipes instead of per-component one-offs. New props in existing vocabulary: `NumberInput`/`PinInput` gain `size`/`variant`, `Dropdown` gains `disabled`, `IconButton` gains `loading`. `Button` loading no longer sets the native `disabled` attribute. Renames/removals: the `data-color` hook becomes `data-theme`, and `KanbanTone` drops the unused `violet` value. The playground and starter screens adopt the same foundations."
+      },
       {
         "version": "0.1.2",
         "body": "### Patch Changes\n\n- b60e321: \"@talelk/newui-code-editor\": patch\n  ---\n  \n  Both editor packages gain their browser-tier test floor per ADR-0015: typed\n  input reports documents through `onValueChange`, the editable box keeps its\n  metrics, and the code editor's `readonly` compartment rejects input. No\n  public surface changes."
@@ -109,8 +125,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-icons",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "sections": [
+      {
+        "version": "0.0.2",
+        "body": "### Patch Changes\n\n- 80fcde4: Design-system polish sweep: exhaustive, tokenized foundations (motion, radius roles, density, z-layer scale, dark elevation) now consumed consistently across atoms, molecules, organisms, templates, charts and editors via shared `control-styles` recipes instead of per-component one-offs. New props in existing vocabulary: `NumberInput`/`PinInput` gain `size`/`variant`, `Dropdown` gains `disabled`, `IconButton` gains `loading`. `Button` loading no longer sets the native `disabled` attribute. Renames/removals: the `data-color` hook becomes `data-theme`, and `KanbanTone` drops the unused `violet` value. The playground and starter screens adopt the same foundations."
+      },
       {
         "version": "0.0.1",
         "body": "### Patch Changes\n\n- 6fda044: Refresh workspace dependencies to current stable releases. The Vite integration\n  now requires Vite ^8.3.4. Consumer runtime dependencies, Solid development\n  versions and Tailwind tooling are updated together; application examples migrate\n  to TanStack Table 9. Type checking uses TypeScript 7, with Microsoft's TypeScript 6\n  compatibility API retained for ESLint. Tests use Vitest 5 and Playwright 1.64.1.\n  \n  Keep visible labels in accessible names for calendar view controls and example\n  actions; treat custom navigation avatars as decorative beside their labels.\n  The updated axe checks stay enabled."
@@ -119,8 +139,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-molecules",
-    "version": "2.2.2",
+    "version": "2.3.0",
     "sections": [
+      {
+        "version": "2.3.0",
+        "body": "### Minor Changes\n\n- 80fcde4: Design-system polish sweep: exhaustive, tokenized foundations (motion, radius roles, density, z-layer scale, dark elevation) now consumed consistently across atoms, molecules, organisms, templates, charts and editors via shared `control-styles` recipes instead of per-component one-offs. New props in existing vocabulary: `NumberInput`/`PinInput` gain `size`/`variant`, `Dropdown` gains `disabled`, `IconButton` gains `loading`. `Button` loading no longer sets the native `disabled` attribute. Renames/removals: the `data-color` hook becomes `data-theme`, and `KanbanTone` drops the unused `violet` value. The playground and starter screens adopt the same foundations.\n\n### Patch Changes\n\n- Updated dependencies [80fcde4]\n  - @talelk/newui-atoms@1.3.0"
+      },
       {
         "version": "2.2.2",
         "body": "### Patch Changes\n\n- Updated dependencies [bd8dd18]\n  - @talelk/newui-atoms@1.2.1"
@@ -149,8 +173,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-organisms",
-    "version": "2.1.3",
+    "version": "2.2.0",
     "sections": [
+      {
+        "version": "2.2.0",
+        "body": "### Minor Changes\n\n- 80fcde4: Design-system polish sweep: exhaustive, tokenized foundations (motion, radius roles, density, z-layer scale, dark elevation) now consumed consistently across atoms, molecules, organisms, templates, charts and editors via shared `control-styles` recipes instead of per-component one-offs. New props in existing vocabulary: `NumberInput`/`PinInput` gain `size`/`variant`, `Dropdown` gains `disabled`, `IconButton` gains `loading`. `Button` loading no longer sets the native `disabled` attribute. Renames/removals: the `data-color` hook becomes `data-theme`, and `KanbanTone` drops the unused `violet` value. The playground and starter screens adopt the same foundations.\n\n### Patch Changes\n\n- Updated dependencies [80fcde4]\n  - @talelk/newui-atoms@1.3.0\n  - @talelk/newui-molecules@2.3.0"
+      },
       {
         "version": "2.1.3",
         "body": "### Patch Changes\n\n- bd8dd18: Polish compact UI geometry: keep KPI labels and targets readable on narrow screens, align metric loading states with their ready content, add a mobile Kanban scroll cue, and keep keyboard shortcut symbols at the caption size floor.\n- Updated dependencies [bd8dd18]\n  - @talelk/newui-atoms@1.2.1\n  - @talelk/newui-molecules@2.2.2"
@@ -179,8 +207,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-tailwind",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "sections": [
+      {
+        "version": "1.0.2",
+        "body": "### Patch Changes\n\n- 80fcde4: Design-system polish sweep: exhaustive, tokenized foundations (motion, radius roles, density, z-layer scale, dark elevation) now consumed consistently across atoms, molecules, organisms, templates, charts and editors via shared `control-styles` recipes instead of per-component one-offs. New props in existing vocabulary: `NumberInput`/`PinInput` gain `size`/`variant`, `Dropdown` gains `disabled`, `IconButton` gains `loading`. `Button` loading no longer sets the native `disabled` attribute. Renames/removals: the `data-color` hook becomes `data-theme`, and `KanbanTone` drops the unused `violet` value. The playground and starter screens adopt the same foundations.\n- Updated dependencies [80fcde4]\n  - @talelk/newui-tokens@0.1.1"
+      },
       {
         "version": "1.0.1",
         "body": "### Patch Changes\n\n- bd8dd18: Refine application-shell spacing and named motion tokens. Split Inter into reproducible Latin, extended-script, and CJK subsets so consumers download only the glyph ranges they render."
@@ -197,8 +229,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-templates",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "sections": [
+      {
+        "version": "1.1.5",
+        "body": "### Patch Changes\n\n- 80fcde4: Design-system polish sweep: exhaustive, tokenized foundations (motion, radius roles, density, z-layer scale, dark elevation) now consumed consistently across atoms, molecules, organisms, templates, charts and editors via shared `control-styles` recipes instead of per-component one-offs. New props in existing vocabulary: `NumberInput`/`PinInput` gain `size`/`variant`, `Dropdown` gains `disabled`, `IconButton` gains `loading`. `Button` loading no longer sets the native `disabled` attribute. Renames/removals: the `data-color` hook becomes `data-theme`, and `KanbanTone` drops the unused `violet` value. The playground and starter screens adopt the same foundations.\n- Updated dependencies [80fcde4]\n  - @talelk/newui-atoms@1.3.0\n  - @talelk/newui-molecules@2.3.0\n  - @talelk/newui-organisms@2.2.0"
+      },
       {
         "version": "1.1.4",
         "body": "### Patch Changes\n\n- bd8dd18: Refine application-shell spacing and named motion tokens. Split Inter into reproducible Latin, extended-script, and CJK subsets so consumers download only the glyph ranges they render.\n- Updated dependencies [bd8dd18]\n  - @talelk/newui-atoms@1.2.1\n  - @talelk/newui-organisms@2.1.3\n  - @talelk/newui-molecules@2.2.2"
@@ -227,8 +263,12 @@ export const RELEASED: ReleasedPackage[] = [
   },
   {
     "package": "@talelk/newui-tokens",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "sections": [
+      {
+        "version": "0.1.1",
+        "body": "### Patch Changes\n\n- 80fcde4: Design-system polish sweep: exhaustive, tokenized foundations (motion, radius roles, density, z-layer scale, dark elevation) now consumed consistently across atoms, molecules, organisms, templates, charts and editors via shared `control-styles` recipes instead of per-component one-offs. New props in existing vocabulary: `NumberInput`/`PinInput` gain `size`/`variant`, `Dropdown` gains `disabled`, `IconButton` gains `loading`. `Button` loading no longer sets the native `disabled` attribute. Renames/removals: the `data-color` hook becomes `data-theme`, and `KanbanTone` drops the unused `violet` value. The playground and starter screens adopt the same foundations."
+      },
       {
         "version": "0.1.0",
         "body": "### Minor Changes\n\n- 6fda044: Adopt compact analytics styling: 32px default controls, outlined text entry,\n  6px control corners, border-led cards and role typography. Style NumberCard,\n  clarify dark chart palettes, and align block controls with the shared defaults.\n  See spec/migrations.md for explicit props that retain previous defaults.\n  \n  Chart engines are registered by their wrapper. Raw ChartBase/useChart consumers\n  register their own mark and coordinate-system modules through ECharts core.\n  \n  Typography utilities retain their names and use rem sizes so user text scaling\n  is respected. Controls, badges and metrics reflow instead of clipping enlarged\n  labels. All input families share Field help/error wiring without remounting\n  uncontrolled state when validation appears. Settings tabs support vertical\n  arrow, Home and End navigation.\n- 6fda044: Default control sizing is now sm (28px), including buttons, text entry, selectors,\n  date/time triggers, tabs, toggle groups and pagination. Explicit md remains 32px;\n  checkboxes, radios and avatars retain their geometry. Consumers that require the\n  previous default should pass size=\"md\". Cards default to 12px padding; pass\n  padding=\"md\" for the previous 16px. Chart cards, editor toolbar commands and blocks use compact spacing.\n  Page, section, metric and hero typography now follow 24/30, 18/24, 28/32 and\n  36/40px respectively. Existing semantic colors and dialog padding are retained.\n- ba4540f: Stacking and motion become named scales from `@talelk/newui-tokens`: `z-raised`,\n  `z-floating`, `z-overlay`, `z-top`, `duration-fast/base/slow` and\n  `ease-standard` resolve `@theme` variables instead of components hard-coding\n  `z-50`, `z-[100]` and numeric durations. Computed values are unchanged. The\n  disclosure chevron keeps its literal 200ms, paired with the\n  `disclosure-panel` utility's timing."
