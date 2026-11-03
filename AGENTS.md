@@ -346,7 +346,11 @@ packages.
   explicit. `workflow_run` is not the hand-off: it did not fire for the release
   PR's runs (created by `GITHUB_TOKEN`, held in `action_required` until the
   Changesets job approves them), so the Tests workflow dispatches the release
-  from its own `release` job instead.
+  from its own `release` job instead. npm's OIDC exchange returns
+  `404 package not found` for a package whose latest version was not itself
+  published through OIDC (npm/cli#8678), even with a correct publisher: publish
+  one version from an authenticated `npm publish` session first, then the next
+  release goes through OIDC and carries provenance.
 - `pnpm verify` (all) · `pnpm verify:checks` (fast gates) · `pnpm verify:e2e`
   (browser harness) · `pnpm verify:affected` (only the gates the diff can
   dirty — the agent loop: change → affected → full `verify` before pushing)
