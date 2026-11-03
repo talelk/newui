@@ -1,6 +1,7 @@
 import type { ECharts, EChartsCoreOption } from 'echarts/core'
 import { type Accessor, For, type JSX, Show } from 'solid-js'
 import { ChartContainer } from './ChartContainer'
+import { SR_ONLY } from './tokens'
 import type { ChartFallback } from './types'
 import { useChart } from './useChart'
 
@@ -33,18 +34,6 @@ export interface ChartBaseProps {
 const DEFAULT_HEIGHT = 240
 
 /** The standard `sr-only` recipe, inline so the package needs no stylesheet. */
-const SR_ONLY: JSX.CSSProperties = {
-  position: 'absolute',
-  width: '1px',
-  height: '1px',
-  padding: '0',
-  margin: '-1px',
-  overflow: 'hidden',
-  clip: 'rect(0, 0, 0, 0)',
-  'white-space': 'nowrap',
-  'border-width': '0',
-}
-
 /**
  * The echarts-backed shell every chart renders into: the plot element, the
  * loading/error states and the accessible fallback, wrapped in the shared

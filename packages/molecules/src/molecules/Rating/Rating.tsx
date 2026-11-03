@@ -140,7 +140,7 @@ function RatingControl(props: RatingProps): JSX.Element {
                 {...api().getItemProps({ index: item })}
                 data-slot="rating-item"
                 class={cn(
-                  'relative inline-flex shrink-0 rounded-2 focus-visible:focus-ring-blue',
+                  'relative inline-flex shrink-0 rounded-2 outline-none focus-visible:focus-ring',
                   SIZE[size()],
                   local.disabled ? 'cursor-default' : 'cursor-pointer',
                 )}

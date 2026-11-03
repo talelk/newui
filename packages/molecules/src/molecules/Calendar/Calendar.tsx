@@ -8,6 +8,7 @@ import {
 import * as zag from '@zag-js/date-picker'
 import type { JSX } from 'solid-js'
 import { splitProps } from 'solid-js'
+import { card } from '../Card'
 import { CalendarView } from '../DatePicker/CalendarView'
 
 type CalendarApi = ReturnType<typeof zag.connect>
@@ -31,10 +32,7 @@ export interface CalendarProps {
   class?: string
 }
 
-const navButton =
-  'grid size-7 place-items-center rounded-4 text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-9 disabled:pointer-events-none'
-const cellButton =
-  'grid size-8 place-items-center rounded-3 text-base text-ink-gray-8 outline-none transition-colors hover:bg-surface-gray-3 data-[selected]:bg-surface-gray-10 data-[selected]:text-ink-base data-[today]:font-medium data-[outside-range]:text-ink-gray-4 data-[disabled]:pointer-events-none data-[disabled]:text-ink-gray-3 data-[unavailable]:pointer-events-none data-[unavailable]:text-ink-gray-3 data-[unavailable]:line-through'
+// Cell/nav looks are the shared date-family constants in ../DatePicker/CalendarView.
 
 /**
  * The date grid on its own — no input, no popup, no trigger. The same day,
@@ -83,20 +81,17 @@ export function Calendar(props: CalendarProps): JSX.Element {
       data-slot="calendar"
       data-disabled={local.disabled ? '' : undefined}
       class={cn(
-        // `w-max` keeps the grid's natural width; `max-w-full` with
-        // `overflow-x-auto` turns the frame into its own scroll container, so
-        // even a dual-pane grid narrows to its context instead of pushing the
-        // page wide.
-        'inline-flex w-max max-w-full flex-col overflow-x-auto rounded-card border border-outline-gray-1 bg-surface-base p-3',
+        // The frame is the shared Card surface (one elevation/border/radius
+        // recipe for every framed molecule), sized to the grid: `w-max`
+        // keeps its natural width; `max-w-full` with `overflow-x-auto` turns
+        // the frame into its own scroll container, so even a dual-pane grid
+        // narrows to its context instead of pushing the page wide.
+        card({ elevation: 'none', padding: 'none' }),
+        'inline-flex w-max max-w-full overflow-x-auto p-3',
         local.class,
       )}
     >
-      <CalendarView
-        api={api()}
-        cellClass={cellButton}
-        navClass={navButton}
-        dualPane={local.dualPane}
-      />
+      <CalendarView api={api()} dualPane={local.dualPane} />
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import { A, useParams } from '@solidjs/router'
-import { Icon } from '@talelk/newui-atoms'
 import {
   createMemo,
   createResource,
@@ -14,6 +13,7 @@ import { CatalogList } from '../lib/CatalogList'
 import { patternComponents } from '../lib/pattern-sources'
 import { SourcePanel } from '../lib/ResponsivePreview'
 import { PATTERNS, REFERENCE_EXAMPLES } from '../lib/reference-examples'
+import { FilterInput } from '../lib/site-ui'
 import { PageIntro } from '../shell/PageIntro'
 
 const modules = {
@@ -129,7 +129,7 @@ export function Patterns() {
                 {(item) => (
                   <A
                     href={`/kit/recipes/${item.slug}`}
-                    class="flex min-h-11 items-center gap-3 rounded-3 p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
+                    class="flex min-h-11 items-center gap-3 rounded-control p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
                   >
                     <div class="min-w-0 flex-1">
                       <h2 class="text-interface font-medium">{item.title}</h2>
@@ -149,20 +149,13 @@ export function Patterns() {
               <h2 id="registry-heading" class="mb-4 text-section">
                 All {REFERENCE_EXAMPLES.length} reference examples
               </h2>
-              <label class="relative mb-6 flex max-w-sm items-center">
-                <span class="sr-only">Filter reference examples</span>
-                <Icon
-                  icon="lucide-search"
-                  class="pointer-events-none absolute start-2.5 size-4 text-ink-gray-6"
-                />
-                <input
-                  type="search"
-                  value={query()}
-                  onInput={(event) => setQuery(event.currentTarget.value)}
-                  placeholder="Filter by name or destination…"
-                  class="h-7 w-full rounded-4 border border-outline-gray-2 bg-surface-base ps-8 pe-2 text-base text-ink-gray-8 placeholder:text-ink-gray-6 focus-visible:focus-ring"
-                />
-              </label>
+              <FilterInput
+                class="mb-6 max-w-sm"
+                label={'Filter reference examples'}
+                placeholder="Filter by name or destination…"
+                value={query()}
+                onInput={setQuery}
+              />
               <CatalogList
                 sections={exampleSections()}
                 href={(entry) => entry.href}
@@ -198,7 +191,7 @@ export function Patterns() {
                   <li>
                     <A
                       href={component.href}
-                      class="inline-flex min-h-8 items-center gap-1.5 rounded-3 border border-outline-gray-1 bg-surface-elevation-1 px-2.5 text-caption text-ink-gray-8 hover:bg-surface-gray-2 focus-visible:focus-ring"
+                      class="inline-flex min-h-8 items-center gap-1.5 rounded-control border border-outline-gray-1 bg-surface-elevation-1 px-2.5 text-caption text-ink-gray-8 hover:bg-surface-gray-2 focus-visible:focus-ring"
                     >
                       {component.name}
                       <span
@@ -234,7 +227,7 @@ export function Patterns() {
         </Show>
         <A
           href="/kit/recipes"
-          class="w-fit rounded-3 text-ink-blue-link focus-visible:focus-ring"
+          class="w-fit rounded-control text-ink-blue-link focus-visible:focus-ring"
         >
           <span
             aria-hidden="true"

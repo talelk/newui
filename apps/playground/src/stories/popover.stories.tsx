@@ -1,3 +1,4 @@
+import { button } from '@talelk/newui-atoms'
 import { Popover } from '@talelk/newui-molecules'
 import { createSignal, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
@@ -8,7 +9,7 @@ function Example(props: {
 }) {
   return (
     <Popover.Root open={props.open} onOpenChange={props.onOpenChange}>
-      <Popover.Trigger class="rounded-4 border border-outline-gray-2 px-3 py-1.5 text-base">
+      <Popover.Trigger class={button({ variant: 'outline', size: 'sm' })}>
         Filters
       </Popover.Trigger>
       <Popover.Content>

@@ -8,7 +8,7 @@ function Example(props: {
 }) {
   return (
     <HoverCard.Root open={props.open} onOpenChange={props.onOpenChange}>
-      <HoverCard.Trigger class="rounded-3 text-ink-blue-link underline decoration-dotted focus-visible:focus-ring">
+      <HoverCard.Trigger class="rounded-control text-ink-blue-link underline decoration-dotted focus-visible:focus-ring">
         @rhea
       </HoverCard.Trigger>
       <HoverCard.Content>

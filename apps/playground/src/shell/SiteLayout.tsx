@@ -137,7 +137,7 @@ export function Chrome(
                 aria-label={collapsed() ? 'Expand sidebar' : 'Collapse sidebar'}
                 aria-expanded={!collapsed()}
                 onClick={() => persist(!collapsed())}
-                class="ms-auto grid size-7 shrink-0 place-items-center rounded-3 text-ink-gray-6 hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
+                class="ms-auto grid size-7 shrink-0 place-items-center rounded-control text-ink-gray-6 hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
               >
                 <span
                   aria-hidden="true"
@@ -160,7 +160,7 @@ export function Chrome(
             <Show when={toc()}>
               {(activeToc) => (
                 <details class="mb-6 rounded-card border border-outline-gray-1 bg-surface-elevation-1 px-3 py-2 xl:hidden">
-                  <summary class="flex min-h-10 cursor-pointer items-center rounded-3 text-interface font-medium text-ink-gray-8 focus-visible:focus-ring">
+                  <summary class="flex min-h-10 cursor-pointer items-center rounded-control text-interface font-medium text-ink-gray-8 focus-visible:focus-ring">
                     On this page
                   </summary>
                   <div class="pb-2">{activeToc()()}</div>
@@ -200,7 +200,7 @@ export function Chrome(
             autofocus
             onClick={() => drawer?.close()}
             aria-label="Close navigation"
-            class="mb-3 grid size-10 place-items-center rounded-3 focus-visible:focus-ring"
+            class="mb-3 grid size-10 place-items-center rounded-control focus-visible:focus-ring"
           >
             <span aria-hidden="true" class="lucide-x size-4" />
           </button>
@@ -235,7 +235,7 @@ function PrevNext(props: { items?: NavItem[] }): JSX.Element {
           {(previous) => (
             <A
               href={previous().href}
-              class="flex min-w-0 flex-col gap-1 rounded-4 px-3 py-2 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none"
+              class="flex min-w-0 flex-col gap-1 rounded-card px-3 py-2 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none"
             >
               <span class="flex items-center gap-1 text-caption text-ink-gray-7">
                 <Arrow icon="lucide-arrow-left" />
@@ -251,7 +251,7 @@ function PrevNext(props: { items?: NavItem[] }): JSX.Element {
           {(next) => (
             <A
               href={next().href}
-              class="ms-auto flex min-w-0 flex-col items-end gap-1 rounded-4 px-3 py-2 text-end transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none"
+              class="ms-auto flex min-w-0 flex-col items-end gap-1 rounded-card px-3 py-2 text-end transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none"
             >
               <span class="flex items-center gap-1 text-caption text-ink-gray-7">
                 Next

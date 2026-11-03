@@ -179,9 +179,30 @@ describe('site structure', () => {
         'utf8',
       )
       expect(source, file).not.toMatch(
-        /from ['"]@talelk\/(atoms|molecules|organisms|templates|charts|editor|code-editor)['"]/,
+        /from ['"]@talelk\/newui-(atoms|molecules|organisms|templates|charts|editor|code-editor)['"]/,
       )
     }
+  })
+
+  it('models the two sanctioned shell exceptions', () => {
+    // theme.ts is the one runtime singleton: it may import the colour-scheme
+    // primitive and nothing else from a component package.
+    const theme = readFileSync(
+      path.join(process.cwd(), 'apps/playground/src/shell/theme.ts'),
+      'utf8',
+    )
+    expect(theme).toMatch(/createColorScheme/)
+    expect(
+      [...theme.matchAll(/from ['"]@talelk\/newui-[^'"]+['"]/g)].length,
+    ).toBe(1)
+    // PageFinder renders real components, so the masthead may only reach it
+    // through a lazy import — never a static one.
+    const masthead = readFileSync(
+      path.join(process.cwd(), 'apps/playground/src/shell/Masthead.tsx'),
+      'utf8',
+    )
+    expect(masthead).toMatch(/lazy\(\(\) =>\s*import\('\.\/PageFinder'\)/)
+    expect(masthead).not.toMatch(/^import .*PageFinder.*from/m)
   })
 
   it('keeps the flat reading order in step with the tree', () => {

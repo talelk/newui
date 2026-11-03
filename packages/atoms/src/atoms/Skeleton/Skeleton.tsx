@@ -15,7 +15,10 @@ export function Skeleton(props: SkeletonProps): JSX.Element {
       fallback={
         <div
           data-slot="skeleton"
-          class={cn('animate-pulse bg-surface-gray-3', props.class)}
+          class={cn(
+            'animate-pulse rounded-control bg-surface-gray-3',
+            props.class,
+          )}
           aria-hidden="true"
         />
       }
@@ -29,7 +32,7 @@ export function Skeleton(props: SkeletonProps): JSX.Element {
           {() => (
             <div
               data-slot="skeleton-line"
-              class="h-4 w-full animate-pulse rounded-3 bg-surface-gray-3"
+              class="h-4 w-full animate-pulse rounded-control bg-surface-gray-3"
             />
           )}
         </For>

@@ -39,7 +39,7 @@ describe('StatGrid', () => {
     expect(screen.getByText('0.4 pts').className).toContain(
       'bg-surface-green-2',
     )
-    expect(screen.getByText('0.4 pts').className).toContain('rounded-full')
+    expect(screen.getByText('0.4 pts').className).toContain('rounded-pill')
     down.unmount()
 
     render(() => (

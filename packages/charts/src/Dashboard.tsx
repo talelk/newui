@@ -12,7 +12,9 @@ export function Dashboard(props: DashboardProps): JSX.Element {
       ? `repeat(${Math.max(1, props.columns)}, minmax(0, 1fr))`
       : 'repeat(auto-fit, minmax(260px, 1fr))'
   const gap = () =>
-    typeof props.gap === 'number' ? `${props.gap}px` : (props.gap ?? '1rem')
+    typeof props.gap === 'number'
+      ? `${props.gap}px`
+      : (props.gap ?? 'var(--spacing-card-gap)')
 
   return (
     <div

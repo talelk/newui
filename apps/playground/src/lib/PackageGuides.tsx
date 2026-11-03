@@ -48,7 +48,7 @@ export function PackageGuides() {
             }}
             class="rounded-card border border-outline-gray-1 p-4"
           >
-            <summary class="cursor-pointer rounded-3 font-medium focus-visible:focus-ring">
+            <summary class="cursor-pointer rounded-control font-medium focus-visible:focus-ring">
               @talelk/newui-{name}
             </summary>
             <Show when={open() === name}>

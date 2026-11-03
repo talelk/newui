@@ -16,14 +16,14 @@ export function Demo(): JSX.Element {
         src={REMOTE}
         alt="A mountain ridge at dawn"
         ratio="16/9"
-        class="rounded-4"
+        class="rounded-card"
       />
       <Image
         src={REMOTE}
         alt="The same ridge in a square frame"
         ratio="1/1"
         fit="contain"
-        class="rounded-4"
+        class="rounded-card"
       />
     </div>
   )
@@ -54,7 +54,7 @@ export const Fallback: Story = {
       src="/not-a-real-image.png"
       alt="A missing attachment"
       ratio="16/9"
-      class="max-w-xs rounded-4"
+      class="max-w-xs rounded-card"
       fallback={
         <span class="grid h-full w-full place-items-center text-2xs text-ink-gray-6">
           No preview

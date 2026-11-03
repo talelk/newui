@@ -1,4 +1,5 @@
 import { type JSX, Show, splitProps } from 'solid-js'
+import { markGlyphSizes } from '../../lib/control-styles'
 import { cn } from '../../lib/tv'
 
 export type SpinnerSize = 'xs' | 'sm' | 'md' | 'lg'
@@ -13,11 +14,13 @@ export interface SpinnerProps {
   class?: string
 }
 
+// The arc is the shared mark glyph (one step below the control glyph), so a
+// standalone spinner and a loading peer at the same size name match.
 const SIZE: Record<SpinnerSize, string> = {
-  xs: 'size-3 border-[1.5px]',
-  sm: 'size-3.5 border-2',
-  md: 'size-4 border-2',
-  lg: 'size-5 border-2',
+  xs: `${markGlyphSizes.xs} border-[1.5px]`,
+  sm: `${markGlyphSizes.sm} border-2`,
+  md: `${markGlyphSizes.md} border-2`,
+  lg: `${markGlyphSizes.lg} border-2`,
 }
 
 // The arc reads `currentColor`, so a theme is just a text colour. Gray and red
@@ -42,12 +45,13 @@ export function Spinner(props: SpinnerProps): JSX.Element {
       role="status"
       aria-label="Loading"
       data-slot="spinner"
+      data-size={local.size ?? 'md'}
+      data-theme={local.theme}
       class={cn(
-        'inline-block shrink-0 animate-spin rounded-full',
-        'motion-reduce:[animation-duration:1.6s]',
+        'inline-block shrink-0 animate-spin rounded-pill',
         'border-current border-t-transparent',
         local.track && 'border-current/15 border-t-current',
-        local.size ? SIZE[local.size] : 'size-4 border-2',
+        SIZE[local.size ?? 'md'],
         local.theme && THEME[local.theme],
         local.class,
       )}

@@ -101,7 +101,7 @@ function AccountMenu(props: {
         aria-label={props.compact ? 'Account menu' : undefined}
         class={
           props.compact
-            ? 'flex size-7 items-center justify-center rounded-full transition hover:opacity-90 focus-visible:ring-0 focus-visible:focus-ring'
+            ? 'flex size-7 items-center justify-center rounded-pill transition hover:opacity-90 focus-visible:ring-0 focus-visible:focus-ring'
             : 'flex min-h-10 w-full items-center gap-2 rounded-control px-2 text-start transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring lg:min-h-8'
         }
       >
@@ -354,7 +354,7 @@ export function DiscussionsDesktop(props: {
         brand={
           <a
             href={sitePath('/pages/discussions')}
-            class="flex min-h-10 items-center gap-2 rounded-3 px-2 font-semibold focus-visible:focus-ring"
+            class="flex min-h-10 items-center gap-2 rounded-control px-2 font-semibold focus-visible:focus-ring"
           >
             <img
               src={assetUrl('favicon.svg')}
@@ -368,7 +368,7 @@ export function DiscussionsDesktop(props: {
           <a
             href={sitePath('/pages/discussions')}
             aria-label="Acme Community home"
-            class="grid size-10 place-items-center rounded-3 focus-visible:focus-ring"
+            class="grid size-10 place-items-center rounded-control focus-visible:focus-ring"
           >
             <img
               src={assetUrl('favicon.svg')}
@@ -548,7 +548,7 @@ export function DiscussionsDesktop(props: {
                             <button
                               type="button"
                               data-discussion-id={discussion.id}
-                              class="max-w-full truncate rounded-3 text-start focus-visible:focus-ring-blue"
+                              class="max-w-full truncate rounded-control text-start focus-visible:focus-ring-blue"
                               onClick={(event) => {
                                 event.stopPropagation()
                                 discussions.open(discussion)

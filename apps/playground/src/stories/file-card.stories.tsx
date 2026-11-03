@@ -10,14 +10,14 @@ function actions(name: string): JSX.Element {
       <button
         type="button"
         aria-label={`Star ${name}`}
-        class="grid size-7 place-items-center rounded-3 text-ink-gray-6 hover:bg-surface-gray-3 focus-visible:focus-ring"
+        class="grid size-7 place-items-center rounded-control text-ink-gray-6 hover:bg-surface-gray-3 focus-visible:focus-ring"
       >
         <Icon icon="lucide-star" class="size-4" />
       </button>
       <button
         type="button"
         aria-label={`More actions for ${name}`}
-        class="grid size-7 place-items-center rounded-3 text-ink-gray-6 hover:bg-surface-gray-3 focus-visible:focus-ring"
+        class="grid size-7 place-items-center rounded-control text-ink-gray-6 hover:bg-surface-gray-3 focus-visible:focus-ring"
       >
         <Icon icon="lucide-ellipsis-vertical" class="size-4" />
       </button>

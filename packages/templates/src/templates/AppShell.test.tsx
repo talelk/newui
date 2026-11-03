@@ -138,7 +138,8 @@ describe('AppShell', () => {
         const dock = document.querySelector(
           '[data-slot="app-shell-sidebar"]',
         ) as HTMLElement
-        expect(dock.className).toContain('w-64')
+        const rail = dock.querySelector('[data-slot="sidebar"]') as HTMLElement
+        expect(rail.style.width).toBe('16rem')
 
         // The Sidebar keeps inactive slot copies mounted and hides them with
         // CSS, so the fold control's name and the dock width are the jsdom-
@@ -146,13 +147,13 @@ describe('AppShell', () => {
         userEvent.click(
           screen.getByRole('button', { name: 'Collapse sidebar' }),
         )
-        await waitFor(() => expect(dock.className).toContain('w-14'))
+        await waitFor(() => expect(rail.style.width).toBe('3.5rem'))
         expect(
           screen.queryByRole('button', { name: 'Collapse sidebar' }),
         ).toBeNull()
 
         userEvent.click(screen.getByRole('button', { name: 'Expand sidebar' }))
-        await waitFor(() => expect(dock.className).toContain('w-64'))
+        await waitFor(() => expect(rail.style.width).toBe('16rem'))
         expect(
           screen.queryByRole('button', { name: 'Expand sidebar' }),
         ).toBeNull()
@@ -166,6 +167,7 @@ describe('AppShell', () => {
         const dock = document.querySelector(
           '[data-slot="app-shell-sidebar"]',
         ) as HTMLElement
+        const rail = dock.querySelector('[data-slot="sidebar"]') as HTMLElement
         userEvent.click(
           screen.getByRole('button', { name: 'Collapse sidebar' }),
         )
@@ -173,7 +175,7 @@ describe('AppShell', () => {
           expect(onCollapsedChange).toHaveBeenCalledWith(true),
         )
         // Controlled: the shell does not move until the app moves it.
-        expect(dock.className).toContain('w-64')
+        expect(rail.style.width).toBe('16rem')
       })
     })
 

@@ -145,7 +145,7 @@ export function Tickets(): JSX.Element {
       cell: (context) => (
         <button
           type="button"
-          class="max-w-72 rounded-3 text-start font-medium text-ink-blue-link focus-visible:focus-ring"
+          class="max-w-72 rounded-control text-start font-medium text-ink-blue-link focus-visible:focus-ring"
           onClick={() => {
             setActive(context.row.original.id)
             setReply('')
@@ -452,12 +452,12 @@ export function Tickets(): JSX.Element {
                 </div>
                 <section
                   aria-label="Ticket conversation"
-                  class="max-h-64 space-y-3 overflow-y-auto rounded-3 border border-outline-gray-1 bg-surface-gray-1 p-3"
+                  class="max-h-64 space-y-3 overflow-y-auto rounded-control border border-outline-gray-1 bg-surface-gray-1 p-3"
                   tabindex="0"
                 >
                   <For each={ticket().messages}>
                     {(message) => (
-                      <p class="whitespace-pre-wrap rounded-3 bg-surface-elevation-1 p-3 text-interface">
+                      <p class="whitespace-pre-wrap rounded-control bg-surface-elevation-1 p-3 text-interface">
                         {message}
                       </p>
                     )}

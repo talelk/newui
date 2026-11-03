@@ -3,6 +3,7 @@ import type { JSX } from 'solid-js'
 import { CodeBlock } from '../lib/CodeBlock'
 import { PackageGuides } from '../lib/PackageGuides'
 import { PageSection } from '../lib/PageSection'
+import { InlineCode } from '../lib/site-ui'
 import { TableOfContents } from '../lib/TableOfContents'
 import { PageIntro } from '../shell/PageIntro'
 import { usePageToc } from '../shell/SiteLayout'
@@ -158,12 +159,10 @@ export function Docs(): JSX.Element {
           </table>
         </div>
         <p class="text-base text-ink-gray-7">
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @talelk/newui-data
-          </code>{' '}
-          is the logic layer beside the levels — formatting, selection, undo,
-          downloads, and the query/form logic under their own entries. Rendered
-          tables and virtual lists are organisms, not data helpers.
+          <InlineCode>@talelk/newui-data</InlineCode> is the logic layer beside
+          the levels — formatting, selection, undo, downloads, and the
+          query/form logic under their own entries. Rendered tables and virtual
+          lists are organisms, not data helpers.
         </p>
         <Code>{`pnpm add @talelk/newui-atoms @talelk/newui-molecules \\
   @talelk/newui-tailwind @talelk/newui-icons
@@ -172,36 +171,26 @@ export function Docs(): JSX.Element {
 pnpm add @talelk/newui-organisms @talelk/newui-templates \\
   @talelk/newui-data`}</Code>
         <p class="text-base text-ink-gray-7">
-          Add{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @talelk/newui-charts
-          </code>
-          ,{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @talelk/newui-editor
-          </code>{' '}
-          or{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @talelk/newui-code-editor
-          </code>{' '}
-          only when a screen needs them — each drags a large dependency with it
-          (echarts, TipTap, CodeMirror), which is exactly why they are separate
-          packages. Their widgets are filed by composition as organisms or
-          molecules, not by package name.
+          Add <InlineCode>@talelk/newui-charts</InlineCode>,{' '}
+          <InlineCode>@talelk/newui-editor</InlineCode> or{' '}
+          <InlineCode>@talelk/newui-code-editor</InlineCode> only when a screen
+          needs them — each drags a large dependency with it (echarts, TipTap,
+          CodeMirror), which is exactly why they are separate packages. Their
+          widgets are filed by composition as organisms or molecules, not by
+          package name.
         </p>
         <p class="text-base text-ink-gray-7">
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">solid-js</code>{' '}
-          is a peer dependency, so your app owns its version.
+          <InlineCode>solid-js</InlineCode> is a peer dependency, so your app
+          owns its version.
         </p>
       </PageSection>
 
       <PageSection id="stylesheet" title="2 · Stylesheet">
         <p class="text-base text-ink-gray-7">
           One import, once, in your entry stylesheet. It brings Tailwind, the
-          fonts, the generated{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">@theme</code>{' '}
-          tokens and the utilities. Then tell Tailwind where your markup lives —
-          the library scans its own source, your app scans yours.
+          fonts, the generated <InlineCode>@theme</InlineCode> tokens and the
+          utilities. Then tell Tailwind where your markup lives — the library
+          scans its own source, your app scans yours.
         </p>
         <Code>{`/* app.css */
 @import '@talelk/newui-tailwind/style.css';
@@ -216,17 +205,11 @@ pnpm add @talelk/newui-organisms @talelk/newui-templates \\
 
       <PageSection id="provider" title="3 · Provider">
         <p class="text-base text-ink-gray-7">
-          Mount{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            UIProvider
-          </code>{' '}
-          once, near the root. It carries the writing direction and the portal
-          mount point every overlay reads. Add{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            createColorScheme
-          </code>{' '}
-          for light/dark: it flips a document attribute, persists the choice and
-          follows the OS when you pick <em>system</em>.
+          Mount <InlineCode>UIProvider</InlineCode> once, near the root. It
+          carries the writing direction and the portal mount point every overlay
+          reads. Add <InlineCode>createColorScheme</InlineCode> for light/dark:
+          it flips a document attribute, persists the choice and follows the OS
+          when you pick <em>system</em>.
         </p>
         <Code>{`import { createColorScheme, UIProvider } from '@talelk/newui-atoms'
 import { Toaster } from '@talelk/newui-molecules'

@@ -1,11 +1,11 @@
 import { A, useLocation } from '@solidjs/router'
-import { Icon } from '@talelk/newui-atoms'
 import { createMemo, createSignal, For, type JSX, Show } from 'solid-js'
 import { COMPONENTS, GROUPS } from '../generated/components'
 import { ATOMIC, levelOf } from '../lib/atomic'
 import { stripBase } from '../lib/base'
 import { CatalogList } from '../lib/CatalogList'
 import { groupEntries } from '../lib/catalog'
+import { FilterInput } from '../lib/site-ui'
 import { PageIntro } from '../shell/PageIntro'
 
 /**
@@ -20,9 +20,9 @@ const TEMPLATE_SHAPES: { name: string; href: string; shape: JSX.Element }[] = [
     shape: (
       <>
         <span class="flex min-h-0 flex-1 gap-1.5">
-          <span class="w-1/4 rounded-3 border border-outline-gray-1 bg-surface-gray-2" />
+          <span class="w-1/4 rounded-control border border-outline-gray-1 bg-surface-gray-2" />
           <span class="flex min-h-0 flex-1 flex-col gap-1.5">
-            <span class="h-3 rounded-3 border border-outline-gray-1" />
+            <span class="h-3 rounded-control border border-outline-gray-1" />
             <span class="h-1.5 w-2/3 rounded-1 bg-surface-gray-3" />
             <span class="h-1.5 w-1/2 rounded-1 bg-surface-gray-3" />
           </span>
@@ -35,11 +35,11 @@ const TEMPLATE_SHAPES: { name: string; href: string; shape: JSX.Element }[] = [
     href: '/templates/pane-layout',
     shape: (
       <span class="flex min-h-0 flex-1 gap-1.5">
-        <span class="flex min-h-0 flex-1 flex-col justify-center gap-1.5 rounded-3 border border-outline-gray-1 p-1.5">
+        <span class="flex min-h-0 flex-1 flex-col justify-center gap-1.5 rounded-control border border-outline-gray-1 p-1.5">
           <span class="h-1.5 w-full rounded-1 bg-surface-gray-3" />
           <span class="h-1.5 w-3/4 rounded-1 bg-surface-gray-3" />
         </span>
-        <span class="flex min-h-0 flex-1 flex-col justify-center gap-1.5 rounded-3 border border-outline-gray-1 p-1.5">
+        <span class="flex min-h-0 flex-1 flex-col justify-center gap-1.5 rounded-control border border-outline-gray-1 p-1.5">
           <span class="h-1.5 w-3/4 rounded-1 bg-surface-gray-3" />
           <span class="h-1.5 w-full rounded-1 bg-surface-gray-3" />
         </span>
@@ -50,8 +50,8 @@ const TEMPLATE_SHAPES: { name: string; href: string; shape: JSX.Element }[] = [
     name: 'AuthLayout',
     href: '/templates/auth-layout',
     shape: (
-      <span class="flex min-h-0 flex-1 items-center justify-center rounded-3 border border-outline-gray-1 p-2">
-        <span class="flex w-1/2 flex-col gap-1 rounded-3 border border-outline-gray-1 bg-surface-gray-2 p-1.5">
+      <span class="flex min-h-0 flex-1 items-center justify-center rounded-control border border-outline-gray-1 p-2">
+        <span class="flex w-1/2 flex-col gap-1 rounded-control border border-outline-gray-1 bg-surface-gray-2 p-1.5">
           <span class="h-1.5 w-2/3 rounded-1 bg-surface-gray-4" />
           <span class="h-1.5 w-full rounded-1 bg-surface-gray-3" />
           <span class="h-2 w-full rounded-2 bg-surface-gray-5" />
@@ -131,7 +131,7 @@ export function ComponentsIndex(): JSX.Element {
                 >
                   <span
                     aria-hidden="true"
-                    class="flex aspect-[16/9] w-full flex-col gap-1.5 rounded-3 border border-outline-gray-1 bg-surface-base p-2"
+                    class="flex aspect-[16/9] w-full flex-col gap-1.5 rounded-control border border-outline-gray-1 bg-surface-base p-2"
                   >
                     {shape.shape}
                   </span>
@@ -149,20 +149,13 @@ export function ComponentsIndex(): JSX.Element {
         </section>
       </Show>
 
-      <label class="relative mb-6 flex max-w-sm items-center">
-        <span class="sr-only">Filter {meta().label.toLowerCase()}</span>
-        <Icon
-          icon="lucide-search"
-          class="pointer-events-none absolute start-2.5 size-4 text-ink-gray-6"
-        />
-        <input
-          type="search"
-          value={query()}
-          onInput={(event) => setQuery(event.currentTarget.value)}
-          placeholder="Filter by name or group…"
-          class="h-7 w-full rounded-4 border border-outline-gray-2 bg-surface-base ps-8 pe-2 text-base text-ink-gray-8 placeholder:text-ink-gray-6 focus-visible:focus-ring"
-        />
-      </label>
+      <FilterInput
+        class="mb-6 max-w-sm"
+        label={`Filter ${meta().label.toLowerCase()}`}
+        placeholder="Filter by name or group…"
+        value={query()}
+        onInput={setQuery}
+      />
 
       <CatalogList
         sections={grouped()}

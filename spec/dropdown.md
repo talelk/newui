@@ -10,6 +10,7 @@
 | `options` | `DropdownOption[]` | `{ label, value, disabled?, icon?, danger? }` |
 | `children` | `JSX.Element` | the trigger content, rendered inside a button |
 | `onSelect` | `(value: string) => void` | fires with the chosen option's value |
+| `disabled` | `boolean` | disables the trigger; the menu cannot be opened |
 | `class` | `string` | merged into the trigger |
 
 Use `Menu` directly when the trigger or rows need to be customised beyond
@@ -17,7 +18,8 @@ Use `Menu` directly when the trigger or rows need to be customised beyond
 
 ## Behavior
 
-- The trigger is a button; the content is portalled and positioned by Zag.
+- The trigger is a button carrying the shared Button recipe (`subtle`, `sm`);
+  the content is portalled and positioned by Zag.
 - Disabled options are skipped by keyboard navigation and not clickable.
 - `danger` renders the label in `text-ink-red-7`.
 

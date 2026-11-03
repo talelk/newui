@@ -33,7 +33,7 @@ export function Notice(props: {
     <Show when={props.text}>
       <div
         role={tone() === 'red' ? 'alert' : 'status'}
-        class={`flex flex-wrap items-center justify-between gap-3 rounded-3 border p-3 ${TONES[tone()]}`}
+        class={`flex flex-wrap items-center justify-between gap-3 rounded-control border p-3 ${TONES[tone()]}`}
       >
         <span>{props.text}</span>
         <Show when={props.onUndo || props.onDismiss}>

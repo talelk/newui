@@ -6,6 +6,7 @@
     "lib/base.ts",
     "lib/examples.ts",
     "shell/ThemeMenu.tsx",
+    "lib/site-ui.tsx",
     "shell/theme.ts",
     "examples/BackToExamples.tsx",
     "examples/mail-data.ts",

@@ -26,7 +26,7 @@ empty column set.
 interface KanbanColumn<T> {
   id: string
   name: string // heading, accessible name, and the move menu's entry — one string
-  theme?: 'gray' | 'amber' | 'blue' | 'green' | 'red' | 'violet' // status dot
+  theme?: 'gray' | 'amber' | 'blue' | 'green' | 'red' // status dot
   items: T[]
   summary?: JSX.Element
   action?: { label: string; icon?: IconProp; onClick?: () => void }

@@ -146,7 +146,7 @@ export function Authentication(): JSX.Element {
         <div class="pt-12 lg:hidden">
           <A
             href="/"
-            class="flex min-h-10 w-fit items-center gap-2 rounded-3 text-section focus-visible:focus-ring"
+            class="flex min-h-10 w-fit items-center gap-2 rounded-control text-section focus-visible:focus-ring"
           >
             <img src={assetUrl('favicon.svg')} alt="" class="size-8" />
             newui
@@ -157,7 +157,7 @@ export function Authentication(): JSX.Element {
         <>
           <A
             href="/"
-            class="flex w-fit items-center gap-2 rounded-3 text-section focus-visible:focus-ring"
+            class="flex w-fit items-center gap-2 rounded-control text-section focus-visible:focus-ring"
           >
             <img src={assetUrl('favicon.svg')} alt="" class="size-8" />
             newui
@@ -172,7 +172,7 @@ export function Authentication(): JSX.Element {
             {/* The panel's one Signal-Blue moment: a real link, not decoration. */}
             <A
               href="/pages"
-              class="mt-6 flex w-fit items-center gap-1.5 rounded-3 text-interface text-ink-blue-link underline decoration-dotted underline-offset-2 focus-visible:focus-ring"
+              class="mt-6 flex w-fit items-center gap-1.5 rounded-control text-interface text-ink-blue-link underline decoration-dotted underline-offset-2 focus-visible:focus-ring"
             >
               Browse the demo applications
               <span aria-hidden="true" class="lucide-arrow-right size-4" />
@@ -185,7 +185,7 @@ export function Authentication(): JSX.Element {
         <>
           <A
             href="/pages"
-            class="rounded-3 text-caption text-ink-gray-7 focus-visible:focus-ring"
+            class="rounded-control text-caption text-ink-gray-7 focus-visible:focus-ring"
           >
             <span
               aria-hidden="true"
@@ -229,7 +229,7 @@ export function Authentication(): JSX.Element {
         footer={
           session() ? undefined : (
             <span class="flex flex-col items-center gap-2">
-              <span class="inline-flex min-h-5 items-center rounded-full bg-surface-gray-2 px-1.5 text-caption text-ink-gray-6">
+              <span class="inline-flex min-h-5 items-center rounded-pill bg-surface-gray-2 px-1.5 text-caption text-ink-gray-6">
                 Interactive demo
               </span>
               <span class="text-caption text-ink-gray-7">

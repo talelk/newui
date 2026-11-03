@@ -420,7 +420,7 @@ export function Compose(): JSX.Element {
               fallback={
                 <article
                   aria-label="Post preview"
-                  class="flex flex-col gap-4 rounded-3 border border-outline-gray-1 p-3"
+                  class="flex flex-col gap-4 rounded-control border border-outline-gray-1 p-3"
                 >
                   <header class="flex flex-col gap-2">
                     <div class="flex flex-wrap items-center gap-2 text-caption text-ink-gray-7">
@@ -436,11 +436,11 @@ export function Compose(): JSX.Element {
                         </Show>
                       </span>
                     </div>
-                    <h3 class="max-w-[30rem] text-heading text-ink-gray-9 [overflow-wrap:anywhere]">
+                    <h3 class="site-measure text-heading text-ink-gray-9 [overflow-wrap:anywhere]">
                       {title().trim() || 'Untitled post'}
                     </h3>
                     <Show when={excerpt().trim()}>
-                      <p class="max-w-[30rem] text-base text-ink-gray-7 [overflow-wrap:anywhere]">
+                      <p class="site-measure text-base text-ink-gray-7 [overflow-wrap:anywhere]">
                         {excerpt()}
                       </p>
                     </Show>
@@ -499,7 +499,7 @@ export function Compose(): JSX.Element {
             <Show when={saved() && dirty()}>
               <button
                 type="button"
-                class="rounded-3 text-ink-blue-link focus-visible:focus-ring"
+                class="rounded-control text-ink-blue-link focus-visible:focus-ring"
                 onClick={restoreDraft}
               >
                 Restore saved draft

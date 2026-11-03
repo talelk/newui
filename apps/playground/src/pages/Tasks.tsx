@@ -66,7 +66,7 @@ const taskColumns = (
         </Badge>
         <button
           type="button"
-          class="rounded-3 text-start font-medium text-ink-blue-link focus-visible:focus-ring"
+          class="rounded-control text-start font-medium text-ink-blue-link focus-visible:focus-ring"
           onClick={() => onOpen(context.row.original.id)}
         >
           {context.getValue<string>()}
@@ -586,7 +586,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
         </Section>
       </Show>
       <details class="text-caption text-ink-gray-7">
-        <summary class="w-fit cursor-pointer rounded-3 focus-visible:focus-ring">
+        <summary class="w-fit cursor-pointer rounded-control focus-visible:focus-ring">
           Explore loading and error states
         </summary>
         <div class="mt-3 flex flex-wrap gap-2">
@@ -612,7 +612,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
       </details>
       {/* Keep the fixed mobile navigation from covering the last content row. */}
       <div class="h-20 sm:hidden" aria-hidden="true" />
-      <div class="fixed inset-x-0 bottom-0 z-30 sm:hidden">
+      <div class="fixed inset-x-0 bottom-0 z-floating sm:hidden">
         <MobileNav aria-label="Tasks navigation">
           <MobileNavItem
             label="Inbox"
@@ -684,7 +684,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
             {(row) => (
               <>
                 <div class="flex shrink-0 items-center justify-between gap-2 border-b border-outline-gray-1 p-card-pad-compact">
-                  <Dialog.Close class="inline-flex min-h-10 items-center rounded-3 px-2 text-interface font-medium text-ink-gray-7 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring">
+                  <Dialog.Close class="inline-flex min-h-10 items-center rounded-control px-2 text-interface font-medium text-ink-gray-7 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring">
                     Back to tasks
                   </Dialog.Close>
                   <span class="text-caption tabular-nums text-ink-gray-7">
@@ -778,7 +778,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
                     <h3 class="text-base-medium">Comments</h3>
                     <For each={row().comments}>
                       {(text) => (
-                        <p class="rounded-3 bg-surface-gray-1 p-3">
+                        <p class="rounded-control bg-surface-gray-1 p-3">
                           Rhea Kapoor: {text}
                         </p>
                       )}

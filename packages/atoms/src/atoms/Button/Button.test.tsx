@@ -1,5 +1,5 @@
-import { render } from '@solidjs/testing-library'
-import { describe, expect, it } from 'vitest'
+import { fireEvent, render } from '@solidjs/testing-library'
+import { describe, expect, it, vi } from 'vitest'
 import { Button } from './Button'
 
 describe('Button', () => {
@@ -26,11 +26,31 @@ describe('Button', () => {
     expect(className).toContain('text-lg-medium')
   })
 
-  it('is disabled and pointer-events-none while loading', () => {
+  it('keeps resting colours while loading (busy is not disabled)', () => {
     const { getByRole } = render(() => <Button loading>Busy</Button>)
     const el = getByRole('button') as HTMLButtonElement
-    expect(el.disabled).toBe(true)
+    expect(el.disabled).toBe(false)
+    expect(el.getAttribute('aria-busy')).toBe('true')
+    expect(el.getAttribute('aria-disabled')).toBe('true')
+    expect(el.getAttribute('data-state')).toBe('loading')
     expect(el.className).toContain('pointer-events-none')
+    expect(el.className).toContain('bg-surface-gray-2')
+  })
+
+  it('swallows clicks while loading', () => {
+    const onClick = vi.fn()
+    const { getByRole } = render(() => (
+      <Button loading onClick={onClick}>
+        Busy
+      </Button>
+    ))
+    fireEvent.click(getByRole('button'))
+    expect(onClick).not.toHaveBeenCalled()
+  })
+
+  it('stamps the theme axis as data-theme', () => {
+    const { getByRole } = render(() => <Button theme="blue">Go</Button>)
+    expect(getByRole('button').getAttribute('data-theme')).toBe('blue')
   })
 
   it('preserves a caller aria-label on icon-only buttons', () => {

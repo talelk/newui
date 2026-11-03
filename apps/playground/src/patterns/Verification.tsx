@@ -46,7 +46,7 @@ export default function Verification() {
       <div aria-hidden="true" class="flex gap-2">
         <For each={Array.from({ length: 6 })}>
           {(_, index) => (
-            <span class="grid h-12 min-w-0 flex-1 place-items-center rounded-3 border border-outline-gray-2 bg-surface-gray-1 text-section tabular-nums">
+            <span class="grid h-12 min-w-0 flex-1 place-items-center rounded-control border border-outline-gray-2 bg-surface-gray-1 text-section tabular-nums">
               {code()[index()] ?? '·'}
             </span>
           )}

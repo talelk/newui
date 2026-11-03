@@ -17,7 +17,7 @@ export function DemoFrame(props: {
       // A fixed-height stage that clips is a scroll path waiting to happen:
       // `auto` renders identically to `hidden` while the content fits and
       // keeps the bottom reachable when it does not.
-      class="overflow-auto rounded-6 border border-outline-gray-2"
+      class="overflow-auto rounded-overlay border border-outline-gray-2 bg-surface-base text-interface text-ink-gray-9"
       classList={{
         'h-80': props.medium === true,
         'h-[26rem]': props.tall === true,

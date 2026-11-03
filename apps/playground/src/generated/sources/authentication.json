@@ -3,6 +3,7 @@
     "pages/Authentication.tsx",
     "lib/base.ts",
     "shell/ThemeMenu.tsx",
+    "lib/site-ui.tsx",
     "shell/theme.ts"
   ],
   "packages": [

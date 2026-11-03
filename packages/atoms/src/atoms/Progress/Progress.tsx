@@ -20,7 +20,7 @@ export interface ProgressProps {
 }
 
 const SIZE: Record<ProgressSize, string> = {
-  sm: 'h-[2px]',
+  sm: 'h-0.5',
   md: 'h-1',
   lg: 'h-2',
   xl: 'h-3',
@@ -45,7 +45,11 @@ export function Progress(props: ProgressProps): JSX.Element {
   const filled = () => Math.round((clamped() / 100) * intervalCount())
 
   return (
-    <div data-slot="progress" class={cn('w-full space-y-[10px]', local.class)}>
+    <div
+      data-slot="progress"
+      data-size={size()}
+      class={cn('w-full space-y-2.5', local.class)}
+    >
       <Show when={showHeader()}>
         <div class="flex items-baseline justify-between">
           <span class="text-base-medium text-ink-gray-8">{local.label}</span>
@@ -65,7 +69,7 @@ export function Progress(props: ProgressProps): JSX.Element {
         aria-valuemax={100}
         aria-valuenow={local.indeterminate ? undefined : clamped()}
         class={cn(
-          'transform-gpu overflow-hidden rounded-7',
+          'transform-gpu overflow-hidden rounded-pill',
           SIZE[size()],
           useIntervals() ? 'flex gap-1' : 'bg-surface-gray-2',
         )}
@@ -75,7 +79,7 @@ export function Progress(props: ProgressProps): JSX.Element {
           fallback={
             <div
               data-slot="progress-fill"
-              class="h-full w-1/3 animate-[progress_1.4s_ease-in-out_infinite] bg-surface-gray-10"
+              class="h-full w-1/3 animate-progress bg-surface-gray-10"
             />
           }
         >
@@ -84,7 +88,7 @@ export function Progress(props: ProgressProps): JSX.Element {
             fallback={
               <div
                 data-slot="progress-fill"
-                class="h-full bg-surface-gray-10 transition-[width] duration-[660ms] ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none"
+                class="h-full bg-surface-gray-10 transition-[width] duration-progress ease-standard motion-reduce:transition-none"
                 style={{ width: `${clamped()}%` }}
               />
             }
@@ -93,7 +97,7 @@ export function Progress(props: ProgressProps): JSX.Element {
               {(_, index) => (
                 <div
                   class={cn(
-                    'h-full flex-1 rounded-full',
+                    'h-full flex-1 rounded-pill',
                     index() < filled()
                       ? 'bg-surface-gray-10'
                       : 'bg-surface-gray-2',

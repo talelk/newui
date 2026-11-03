@@ -35,8 +35,9 @@ describe('Dialog', () => {
     expect(backdrop).not.toBeNull()
     // The card must paint a real (non-transparent) surface token.
     expect(content?.className).toContain('bg-surface-elevation-1')
-    // And the overlay must dim the page behind it.
-    expect(backdrop?.className).toContain('bg-black-overlay-200')
+    // And the overlay must dim the page behind it — the mode-flipping scrim
+    // token, so one class covers light and dark.
+    expect(backdrop?.className).toContain('bg-surface-scrim')
     // Portalled out of the app tree, so no ancestor stacking context traps it.
     expect(content?.closest('#root')).toBeNull()
   })

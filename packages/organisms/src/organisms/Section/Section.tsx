@@ -1,4 +1,5 @@
 import { cn } from '@talelk/newui-atoms'
+import { card } from '@talelk/newui-molecules'
 import type { JSX } from 'solid-js'
 import { Show } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
@@ -64,8 +65,7 @@ export function Section(props: SectionProps): JSX.Element {
       class={cn(
         'flex min-w-0 flex-col',
         density() === 'compact' ? 'gap-2' : 'gap-3',
-        surface() === 'card' &&
-          'rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad',
+        surface() === 'card' && card({ padding: 'md' }),
         surface() === 'inset' && 'rounded-card bg-surface-gray-1 p-card-pad',
         props.class,
       )}

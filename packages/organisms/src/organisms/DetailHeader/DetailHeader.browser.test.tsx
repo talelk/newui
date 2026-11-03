@@ -3,16 +3,15 @@ import { describe, expect, it } from 'vitest'
 import { DetailHeader } from './DetailHeader'
 
 describe('DetailHeader (browser, real CSS)', () => {
-  it('sets the title in the metric scale above the muted subtitle', () => {
+  it('sets the title in the heading scale above the muted subtitle', () => {
     const { container } = render(() => (
       <DetailHeader title="Q3 report.pdf" subtitle="1.2 MB · updated 2h ago" />
     ))
     const title = container.querySelector('h1') as HTMLElement
     const subtitle = container.querySelector('p') as HTMLElement
-    // `text-metric` is 1.75rem — the largest type on a record page.
-    expect(Number.parseFloat(getComputedStyle(title).fontSize)).toBeGreaterThan(
-      24,
-    )
+    // `text-heading` is 24px — the h1 scale PageToolbar and AppShell also
+    // use; `text-metric` (28px) is the numbers scale, not a prose title.
+    expect(Number.parseFloat(getComputedStyle(title).fontSize)).toBe(24)
     expect(Number.parseFloat(getComputedStyle(subtitle).fontSize)).toBeLessThan(
       Number.parseFloat(getComputedStyle(title).fontSize),
     )

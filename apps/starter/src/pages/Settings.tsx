@@ -56,7 +56,7 @@ export function Settings(): JSX.Element {
           />
         </Show>
 
-        <Card class="p-4">
+        <Card padding="md">
           <Form form={form} class="flex flex-col gap-5">
             <div>
               <h2 class="text-section">General</h2>

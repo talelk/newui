@@ -60,12 +60,12 @@ export default function AnalyticsWidgets() {
               <li>
                 <button
                   type="button"
-                  class="relative flex min-h-10 w-full items-center justify-between gap-3 overflow-hidden rounded-3 px-3 py-2 text-start focus-visible:focus-ring"
+                  class="relative flex min-h-10 w-full items-center justify-between gap-3 overflow-hidden rounded-control px-3 py-2 text-start focus-visible:focus-ring"
                   onClick={() => setSelected(channel.name)}
                 >
                   <span
                     aria-hidden="true"
-                    class="absolute inset-y-0 start-0 rounded-3 bg-surface-blue-1"
+                    class="absolute inset-y-0 start-0 rounded-control bg-surface-blue-1"
                     style={{ width: `${(channel.value / 8420) * 100}%` }}
                   />
                   <span class="relative font-medium">{channel.name}</span>

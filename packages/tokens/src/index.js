@@ -88,6 +88,13 @@ export const semanticColors = {
   dark: resolveThemedLayer(colorsData.themedVariables.dark),
 }
 
+// Mode-flipping scrim (alias layer — the generated `colors.js` stays
+// untouched). One `--surface-scrim` runtime var replaces every hand-copied
+// `bg-black-overlay-200 dark:bg-black-overlay-700` backdrop pair, so overlays
+// name the role and the theme flip lives here, never in a `dark:` variant.
+semanticColors.light.surface.scrim = colorsData.overlay.black[200]
+semanticColors.dark.surface.scrim = colorsData.overlay.black[700]
+
 // ---------- RADIUS ----------
 
 /**
@@ -120,10 +127,11 @@ export const radius = { ...radiusTokens, ...radiusRoles }
  * frappe-ui stylesheet can still paint the shadow. `plugin.js` reads the key
  * list from here and points each Tailwind key at its variable.
  *
- * Only the light steps ship. Espresso 2.0 references `elevation/light/*` on
- * its dark-mode page too, so `elevation.dark` in `effects.js` is not what
- * frappe-ui renders and is not exported. Focus is a separate shape, and a
- * different CSS property: see `focusRing`.
+ * This flat map carries the light steps (a consumer with no stylesheet picks
+ * a side itself); the runtime `--elevation-*` variables in `cssVariables`
+ * additionally ship `elevation.dark` under the dark selector, so a themed
+ * page gets dark-tuned depth. Focus is a separate shape, and a different CSS
+ * property: see `focusRing`.
  */
 export const shadows = buildShadows()
 
@@ -138,6 +146,21 @@ function buildShadows() {
     if (step === 'base') out.DEFAULT = value
   }
   return { ...out, ...effectsData.elevation.custom }
+}
+
+/**
+ * Stable component roles mapped onto the primitive elevation steps, the
+ * shadow counterpart of `radiusRoles`. Components name the role
+ * (`shadow-popover`) so retuning a surface family's depth is one edit here,
+ * not a sweep of every recipe's step pick.
+ */
+export const shadowRoles = {
+  card: 'sm',
+  raised: 'base',
+  popover: 'md',
+  dialog: 'lg',
+  toast: 'xl',
+  drag: '2xl',
 }
 
 // Focus tokens arrive as single-layer `0 0 0 <spread> <color>` shadows.
@@ -262,14 +285,25 @@ export const layoutSpacing = {
   'page-gutter': '1.5rem',
   'page-gutter-wide': '2rem',
   'page-stack': '2rem',
+  // Region roles codified from the values menus, dialogs, toolbars and data
+  // tables already repeat numerically, so density retunes in one place.
+  'menu-pad': '0.25rem',
+  'dialog-pad': '1rem',
+  'table-cell-x': '1rem',
+  'table-cell-y': '0.5rem',
+  'toolbar-pad': '0.5rem',
+  stack: '1rem',
+  inline: '0.5rem',
 }
 
 /** Breakpoint minimums. Not in the Figma export — decided in code. */
 export const screens = {
+  xs: '360px',
   sm: '640px',
   md: '768px',
   lg: '1024px',
   xl: '1280px',
+  '2xl': '1536px',
 }
 
 // ---------- CSS VARIABLES ----------
@@ -326,6 +360,12 @@ function effectVariables() {
   for (const [name, value] of Object.entries(effectsData.elevation.custom)) {
     light[`--elevation-${name}`] = value
   }
+  // Dark elevation ships: `--elevation-*` re-values under the dark selector
+  // (deeper ambient + key shadows, fainter inset highlight), so dark mode no
+  // longer renders the light shadow stack unchanged.
+  for (const [step, value] of Object.entries(effectsData.elevation.dark)) {
+    dark[`--elevation-${step}`] = value
+  }
   for (const [name, value] of Object.entries(focusRing.light)) {
     light[`--focus-outline-${name}`] = value
   }
@@ -351,12 +391,12 @@ function radiusVariables() {
  *   cssVariables.dark['--surface-base']
  *
  * `light` goes on `:root`, `dark` on `[data-theme="dark"]`. Neither is a
- * subset of the other. `dark` re-values the semantic and focus properties
- * that `light` already declares, and adds the dark ramps under their own
- * `--dark-*` names. Those are the only keys it has that `light` lacks.
- * `light` additionally carries the light ramps (`--gray-500`), elevation and
- * radius. None of those three flip by theme, so a property `dark` leaves out
- * keeps its `:root` value.
+ * subset of the other. `dark` re-values the semantic, elevation and focus
+ * properties that `light` already declares, and adds the dark ramps under
+ * their own `--dark-*` names. Those are the only keys it has that `light`
+ * lacks. `light` additionally carries the light ramps (`--gray-500`) and
+ * radius, which do not flip by theme, so a property `dark` leaves out keeps
+ * its `:root` value.
  *
  * `plugin.js` emits both into the base layer, which is how a frappe-ui page
  * gets them. Read this map directly when you need a token's value somewhere

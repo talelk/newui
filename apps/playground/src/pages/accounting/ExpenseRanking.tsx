@@ -54,11 +54,11 @@ export default function ExpenseRanking(props: {
                     </span>
                   </div>
                   <div
-                    class="h-1 overflow-hidden rounded-full bg-surface-gray-2"
+                    class="h-1 overflow-hidden rounded-pill bg-surface-gray-2"
                     aria-hidden="true"
                   >
                     <div
-                      class="h-full rounded-full"
+                      class="h-full rounded-pill"
                       classList={{
                         'bg-surface-blue-6': index() === 0,
                         'bg-surface-gray-4': index() !== 0,

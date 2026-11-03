@@ -30,6 +30,17 @@
   outline-offset: 0px;
 }
 
+/* The padded-row outline: the row (Checkbox/Switch `padded`) draws the ring
+ * around itself while its hidden control holds keyboard focus. Same outline
+ * mechanism as `focus-ring` — never a `ring-*` box-shadow, which would
+ * collide with `shadow-*` and vanish in forced-colors mode. */
+@utility focus-ring-within {
+  &:has(:focus-visible) {
+    outline: var(--focus-outline-default);
+    outline-offset: 0px;
+  }
+}
+
 /* Stacking and motion scales. The numbers live in `@theme` (`--z-*`,
  * `--duration-*`, generated from `@talelk/newui-tokens`); these utilities are the
  * named vocabulary components use, so a layer change is a token edit and the
@@ -46,14 +57,23 @@
 @utility z-top {
   z-index: var(--z-top);
 }
+@utility duration-instant {
+  transition-duration: var(--duration-instant);
+}
 @utility duration-fast {
   transition-duration: var(--duration-fast);
 }
 @utility duration-base {
   transition-duration: var(--duration-base);
 }
+@utility duration-moderate {
+  transition-duration: var(--duration-moderate);
+}
 @utility duration-slow {
   transition-duration: var(--duration-slow);
+}
+@utility duration-progress {
+  transition-duration: var(--duration-progress);
 }
 
 /* A disclosure panel — the body of an `Accordion` item or a `Collapsible`.
@@ -74,15 +94,15 @@
   grid-template-rows: 1fr;
   visibility: visible;
   transition:
-    grid-template-rows 200ms cubic-bezier(0.23, 1, 0.32, 1),
+    grid-template-rows var(--duration-moderate) var(--ease-out),
     visibility 0s 0s;
 
   &[data-state="closed"] {
     grid-template-rows: 0fr;
     visibility: hidden;
     transition:
-      grid-template-rows 200ms cubic-bezier(0.23, 1, 0.32, 1),
-      visibility 0s 200ms;
+      grid-template-rows var(--duration-moderate) var(--ease-out),
+      visibility 0s var(--duration-moderate);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -102,6 +122,43 @@
   }
   100% {
     transform: translateX(410%);
+  }
+}
+
+/* Overlay entrances (speeds are the `--animate-*` tokens in `@theme`; the
+ * global reduced-motion block below collapses every one of them). Popups and
+ * modals fade in over a 2px settle — no scale, no slide theatrics. */
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Bottom-anchored sheets rise the last few pixels into place. */
+@keyframes drawer-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skeleton sheen: sweeps a wide background gradient across the block. The
+ * consumer supplies the gradient and `background-size: 200% 100%`. */
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
   }
 }
 

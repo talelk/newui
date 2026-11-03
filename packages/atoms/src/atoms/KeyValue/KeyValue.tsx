@@ -49,7 +49,7 @@ export function KeyValue(props: KeyValueProps): JSX.Element {
           <Show when={props.value !== undefined}>
             <span
               data-slot="key-value-value"
-              class="min-w-0 text-base font-medium text-ink-gray-9 tabular-nums"
+              class="min-w-0 text-base-medium text-ink-gray-9 tabular-nums"
             >
               {props.value}
             </span>
@@ -58,7 +58,7 @@ export function KeyValue(props: KeyValueProps): JSX.Element {
       >
         <span
           data-slot="key-value-value"
-          class="min-w-0 text-base font-medium text-ink-gray-9 tabular-nums"
+          class="min-w-0 text-base-medium text-ink-gray-9 tabular-nums"
         >
           {props.children}
         </span>

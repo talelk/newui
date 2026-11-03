@@ -9,7 +9,7 @@ function Example(props: {
   onCollapsedChange?: (collapsed: boolean) => void
 }): JSX.Element {
   return (
-    <div class="h-[32rem] overflow-auto rounded-6 border border-outline-gray-2">
+    <div class="h-[32rem] overflow-auto rounded-overlay border border-outline-gray-2">
       <AppSidebar
         brand={
           <span class="flex min-h-10 items-center gap-2 px-2 font-semibold">

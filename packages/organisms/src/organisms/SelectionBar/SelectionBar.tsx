@@ -1,4 +1,5 @@
 import { Button, cn, type IconProp } from '@talelk/newui-atoms'
+import { card } from '@talelk/newui-molecules'
 import { type JSX, Show } from 'solid-js'
 
 export interface SelectionPrimaryAction {
@@ -34,9 +35,10 @@ export function SelectionBar(props: SelectionBarProps): JSX.Element {
         data-slot="selection-bar"
         data-placement={props.placement ?? 'inline'}
         class={cn(
-          'flex flex-wrap items-center justify-between gap-2 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-2 shadow-sm',
+          card({ elevation: 'sm', padding: 'none' }),
+          'flex-row flex-wrap items-center justify-between gap-2 p-toolbar-pad',
           props.placement === 'sticky' &&
-            'max-sm:fixed max-sm:inset-x-4 max-sm:bottom-4 max-sm:z-top max-sm:shadow-lg',
+            'max-sm:fixed max-sm:inset-x-4 max-sm:bottom-4 max-sm:z-top max-sm:shadow-dialog',
           props.class,
         )}
       >

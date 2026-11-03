@@ -272,7 +272,9 @@ function ariaLabelFor(
 }
 
 export const keyboardShortcut = tv({
-  base: 'inline-flex items-center gap-0.5',
+  // The root owns the quiet ink step (secondary-text floor) instead of
+  // inheriting whatever text colour the host row happens to set.
+  base: 'inline-flex items-center gap-0.5 text-ink-gray-7',
   variants: {
     size: {
       sm: 'text-xs',
@@ -300,7 +302,7 @@ export const keyboardShortcutKey = tv({
     {
       bg: true,
       class:
-        'h-6 min-w-6 rounded-4 bg-surface-gray-2 px-1.5 text-xs-medium text-ink-gray-7',
+        'h-6 min-w-6 rounded-card bg-surface-gray-2 px-1.5 text-xs-medium text-ink-gray-7',
     },
     {
       bg: false,
@@ -379,6 +381,7 @@ export function KeyboardShortcut(props: KeyboardShortcutProps): JSX.Element {
     // biome-ignore lint/a11y/useAriaPropsSupportedByRole: role="img" is set whenever a combo is present, which is when aria-label is too; without a combo there is no label and the fallback content stays readable.
     <span
       data-slot="keyboard-shortcut"
+      data-size={local.size ?? 'md'}
       data-bg={local.bg ? 'true' : undefined}
       role={label() ? 'img' : undefined}
       aria-label={label()}

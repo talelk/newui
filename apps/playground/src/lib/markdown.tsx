@@ -1,6 +1,8 @@
 import { cn } from '@talelk/newui-atoms'
 import { For, type JSX, Match, Switch } from 'solid-js'
 import { CodeBlock } from './CodeBlock'
+import { SiteTable } from './SiteTable'
+import { INLINE_CODE } from './site-ui'
 
 /**
  * A markdown subset, rendered to JSX.
@@ -229,11 +231,7 @@ export function renderInline(text: string): JSX.Element {
     <For each={parts}>
       {(part) => {
         if (part.startsWith('`') && part.endsWith('`')) {
-          return (
-            <code class="rounded-3 bg-surface-gray-2 px-1 py-0.5 text-sm text-ink-gray-8">
-              {part.slice(1, -1)}
-            </code>
-          )
+          return <code class={INLINE_CODE}>{part.slice(1, -1)}</code>
         }
         if (part.startsWith('**') && part.endsWith('**')) {
           return <strong class="font-medium">{part.slice(2, -2)}</strong>
@@ -299,7 +297,7 @@ export function Markdown(props: {
 
             <Match when={block.kind === 'paragraph' && block}>
               {(paragraph) => (
-                <p class="max-w-[30rem] text-base leading-relaxed text-ink-gray-7">
+                <p class="site-measure text-base leading-relaxed text-ink-gray-8">
                   {renderInline(paragraph().text)}
                 </p>
               )}
@@ -311,43 +309,13 @@ export function Markdown(props: {
 
             <Match when={block.kind === 'table' && block}>
               {(table) => (
-                <section
-                  tabindex="0"
-                  aria-label={`Contract table ${index() + 1}`}
-                  class="overflow-x-auto"
-                >
-                  <table class="w-full min-w-[32rem] border-collapse text-base">
-                    <thead>
-                      <tr>
-                        <For each={table().head}>
-                          {(cell) => (
-                            <th
-                              scope="col"
-                              class="border-b border-outline-gray-2 px-3 py-2 text-start text-sm-medium text-ink-gray-8"
-                            >
-                              {renderInline(cell)}
-                            </th>
-                          )}
-                        </For>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <For each={table().rows}>
-                        {(row) => (
-                          <tr>
-                            <For each={row}>
-                              {(cell) => (
-                                <td class="border-b border-outline-gray-1 px-3 py-2 align-top text-ink-gray-7">
-                                  {renderInline(cell)}
-                                </td>
-                              )}
-                            </For>
-                          </tr>
-                        )}
-                      </For>
-                    </tbody>
-                  </table>
-                </section>
+                <SiteTable
+                  label={`Contract table ${index() + 1}`}
+                  head={table().head.map((cell) => renderInline(cell))}
+                  rows={table().rows.map((row) =>
+                    row.map((cell) => renderInline(cell)),
+                  )}
+                />
               )}
             </Match>
 
@@ -355,14 +323,14 @@ export function Markdown(props: {
               {(list) => (
                 <Switch>
                   <Match when={list().ordered}>
-                    <ol class="flex list-decimal flex-col gap-1 ps-5 text-base text-ink-gray-7">
+                    <ol class="flex list-decimal flex-col gap-1 ps-5 text-base text-ink-gray-8">
                       <For each={list().items}>
                         {(item) => <li>{renderInline(item)}</li>}
                       </For>
                     </ol>
                   </Match>
                   <Match when={!list().ordered}>
-                    <ul class="flex list-disc flex-col gap-1 ps-5 text-base text-ink-gray-7">
+                    <ul class="flex list-disc flex-col gap-1 ps-5 text-base text-ink-gray-8">
                       <For each={list().items}>
                         {(item) => <li>{renderInline(item)}</li>}
                       </For>
@@ -374,7 +342,7 @@ export function Markdown(props: {
 
             <Match when={block.kind === 'quote' && block}>
               {(quote) => (
-                <blockquote class="border-s-2 border-outline-gray-2 ps-4 text-base text-ink-gray-7">
+                <blockquote class="border-s-2 border-outline-gray-2 ps-4 text-base text-ink-gray-8">
                   {renderInline(quote().text)}
                 </blockquote>
               )}

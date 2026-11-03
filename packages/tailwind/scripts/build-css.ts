@@ -20,7 +20,9 @@ import {
   fontWeight,
   layoutSpacing,
   radius,
+  screens,
   semanticColors,
+  shadowRoles,
   shadows,
   spacing,
   tracking,
@@ -102,6 +104,10 @@ for (const [key] of Object.entries(shadows)) {
   if (key === 'DEFAULT') decl('--shadow', 'var(--elevation-base)')
   else decl(`--shadow-${key}`, `var(--elevation-${key})`)
 }
+comment('shadow roles — shadow-<role> resolves its mapped elevation step')
+for (const [role, step] of Object.entries(shadowRoles)) {
+  decl(`--shadow-${role}`, `var(--elevation-${step})`)
+}
 
 /** Keep the documented pixel scale at a 16px root while respecting text zoom. */
 function relativeType(value: string | number): string {
@@ -136,6 +142,17 @@ for (const [key, style] of Object.entries(fontSize)) {
 
 comment('fonts')
 decl('--font-sans', "'InterVar', ui-sans-serif, system-ui, sans-serif")
+decl(
+  '--font-mono',
+  "ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace",
+)
+
+comment(
+  'breakpoints — xs/sm/md/lg/xl/2xl variants resolve the token screens, never a literal',
+)
+for (const [key, value] of Object.entries(screens)) {
+  decl(`--breakpoint-${key}`, value)
+}
 
 comment('line-heights — leading-tighter pins single-line chrome to 1.15')
 decl('--leading-tighter', '1.15')
@@ -147,13 +164,25 @@ for (const [key, value] of Object.entries(zIndex)) {
   decl(`--z-${key}`, String(value))
 }
 
-comment('motion — duration-fast/base/slow and the standard ease')
+comment(
+  'motion — named durations and eases; components name the speed, never a number',
+)
 for (const [key, value] of Object.entries(duration)) {
   decl(`--duration-${key}`, value)
 }
 for (const [key, value] of Object.entries(easing)) {
   decl(`--ease-${key}`, value)
 }
+comment(
+  'animations — @keyframes live in utilities.css; speeds compose the tokens above',
+)
+decl('--animate-overlay-in', `overlay-in ${duration['fast']} ${easing['out']}`)
+decl(
+  '--animate-drawer-in',
+  `drawer-in ${duration['moderate']} ${easing['out']}`,
+)
+decl('--animate-shimmer', 'shimmer 1400ms linear infinite')
+decl('--animate-progress', `progress 1400ms ${easing['in-out']} infinite`)
 
 lines.push('}')
 lines.push('')

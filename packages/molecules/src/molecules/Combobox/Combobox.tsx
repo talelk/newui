@@ -5,8 +5,15 @@ import {
   createControllableSignal,
   createId,
   createZagApi,
+  disabledPopup,
   Field,
+  fieldFocusWithin,
   fieldSizes,
+  invalidField,
+  listboxLabel,
+  listboxRow,
+  overlayLayers,
+  overlayPanel,
   Portal,
   popupFieldVariants,
   useField,
@@ -20,6 +27,7 @@ import {
   Show,
   splitProps,
 } from 'solid-js'
+import { ListboxCheck, normalizeGroups } from './listbox'
 
 type ComboboxApi = ReturnType<typeof zag.connect>
 
@@ -86,56 +94,9 @@ export interface ComboboxProps {
   class?: string
 }
 
-const ROW =
-  'flex cursor-pointer items-center justify-between gap-2 rounded-3 px-2 py-1.5 text-base text-ink-gray-8 outline-none transition-colors'
-
-interface NormalizedGroup {
-  key: string
-  group: string
-  hideLabel: boolean
-  options: ComboboxOption[]
-}
-
-function isGroup(
-  option: ComboboxOption | ComboboxGroup,
-): option is ComboboxGroup {
-  return 'group' in option
-}
-
-/** Split a flat/grouped option list into labelled groups; ungrouped runs become one hidden group. */
-function normalizeGroups(options: ComboboxOptions): NormalizedGroup[] {
-  const groups: NormalizedGroup[] = []
-  let pending: ComboboxOption[] = []
-
-  const flush = () => {
-    if (!pending.length) return
-    groups.push({
-      key: `__ungrouped__${groups.length}`,
-      group: '',
-      hideLabel: true,
-      options: pending,
-    })
-    pending = []
-  }
-
-  for (const [index, option] of options.entries()) {
-    if (isGroup(option)) {
-      flush()
-      if (!option.options.length) continue
-      groups.push({
-        key: `group-${index}`,
-        group: option.group,
-        hideLabel: Boolean(option.hideLabel),
-        options: option.options,
-      })
-      continue
-    }
-    pending.push(option)
-  }
-
-  flush()
-  return groups
-}
+// Row/label looks and group normalization are shared with MultiSelect:
+// `listboxRow` / `listboxLabel` from control-styles, `normalizeGroups` and
+// the check glyph from ./listbox.
 
 type ControlProps = Omit<
   ComboboxProps,
@@ -274,8 +235,9 @@ function ComboboxControl(props: ControlProps): JSX.Element {
           'relative flex w-full items-center transition-colors',
           fieldSizes[size()],
           popupFieldVariants[local.variant ?? 'outline'],
-          'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:opacity-60',
-          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
+          disabledPopup,
+          fieldFocusWithin,
+          invalidField,
         )}
       >
         <input
@@ -307,12 +269,15 @@ function ComboboxControl(props: ControlProps): JSX.Element {
           <div
             {...api().getPositionerProps()}
             data-slot="combobox-positioner"
-            class="z-overlay"
+            class={overlayLayers.popup}
           >
             <div
               {...api().getContentProps()}
               data-slot="combobox-content"
-              class="max-h-60 min-w-40 overflow-y-auto rounded-6 border border-outline-gray-1 bg-surface-elevation-1 p-1 text-ink-gray-9 shadow-lg focus-visible:outline-none"
+              class={cn(
+                overlayPanel({ kind: 'popup' }),
+                'max-h-60 min-w-40 overflow-y-auto',
+              )}
             >
               <Show
                 when={!local.loading}
@@ -324,7 +289,7 @@ function ComboboxControl(props: ControlProps): JSX.Element {
                     class="flex items-center gap-2 px-2 py-1.5 text-base text-ink-gray-6"
                   >
                     <span aria-hidden="true">
-                      <Spinner class="size-4" />
+                      <Spinner theme="gray" class="size-4" />
                     </span>
                     <span>Loading...</span>
                   </div>
@@ -348,7 +313,7 @@ function ComboboxControl(props: ControlProps): JSX.Element {
                         <Show when={group.group && !group.hideLabel}>
                           <div
                             data-slot="combobox-group-label"
-                            class="flex h-7 items-center px-2 text-sm-medium leading-tighter text-ink-gray-6"
+                            class={listboxLabel}
                           >
                             {group.group}
                           </div>
@@ -358,12 +323,7 @@ function ComboboxControl(props: ControlProps): JSX.Element {
                             <div
                               {...api().getItemProps({ item: option })}
                               data-slot="combobox-item"
-                              class={cn(
-                                ROW,
-                                'data-[highlighted]:bg-surface-gray-3',
-                                'data-[state=checked]:text-ink-blue-6',
-                                'data-[disabled]:cursor-not-allowed data-[disabled]:text-ink-gray-4',
-                              )}
+                              class={listboxRow}
                             >
                               <span class="flex min-w-0 flex-1 items-center gap-2">
                                 <Show when={option.icon}>
@@ -392,22 +352,9 @@ function ComboboxControl(props: ControlProps): JSX.Element {
                                 {...api().getItemIndicatorProps({
                                   item: option,
                                 })}
-                                class="text-ink-blue-6"
+                                class="text-ink-blue-8"
                               >
-                                <svg
-                                  viewBox="0 0 12 12"
-                                  class="size-3"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2"
-                                  aria-hidden="true"
-                                >
-                                  <path
-                                    d="M2 6.5 4.5 9 10 3"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                  />
-                                </svg>
+                                <ListboxCheck />
                               </span>
                             </div>
                           )}

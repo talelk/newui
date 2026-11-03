@@ -2591,6 +2591,12 @@
         "optional": true
       },
       {
+        "name": "loading",
+        "type": "boolean",
+        "optional": true,
+        "description": "Busy: shows the shared spinner, keeps resting colours, blocks clicks."
+      },
+      {
         "name": "href",
         "type": "string",
         "optional": true,
@@ -4150,18 +4156,6 @@
         "description": "The connected Zag `date-picker` api; reads stay reactive through the prop."
       },
       {
-        "name": "cellClass",
-        "type": "string",
-        "optional": false,
-        "description": "Classes for the day/month/year cell buttons."
-      },
-      {
-        "name": "navClass",
-        "type": "string",
-        "optional": false,
-        "description": "Classes for the prev/next/view-trigger buttons."
-      },
-      {
         "name": "dualPane",
         "type": "boolean",
         "optional": true,
@@ -4811,6 +4805,12 @@
         "type": "(value: string) => void",
         "optional": true,
         "description": "Called with the selected option's value."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true,
+        "description": "Disables the trigger; the menu cannot be opened."
       },
       {
         "name": "class",
@@ -6352,6 +6352,47 @@
       }
     ]
   },
+  "packages/molecules/src/molecules/Menu/menu-parts.tsx": {
+    "MenuPartProps": [
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
+      }
+    ],
+    "MenuItemPartProps": [
+      {
+        "name": "value",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "valueText",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true
+      }
+    ]
+  },
   "packages/molecules/src/molecules/Menu/Menu.tsx": {
     "MenuRootProps": [
       {
@@ -6748,6 +6789,19 @@
         "optional": true
       },
       {
+        "name": "size",
+        "type": "NumberInputSize",
+        "optional": true,
+        "description": "Control height/typography. Matches the input scale.",
+        "default": "sm"
+      },
+      {
+        "name": "variant",
+        "type": "NumberInputVariant",
+        "optional": true,
+        "description": "Control surface. `outline` is the default; `subtle` is filled."
+      },
+      {
         "name": "label",
         "type": "JSX.Element",
         "optional": true
@@ -6994,6 +7048,19 @@
         "name": "readOnly",
         "type": "boolean",
         "optional": true
+      },
+      {
+        "name": "size",
+        "type": "PinInputSize",
+        "optional": true,
+        "description": "Cell height/typography. Matches the input scale.",
+        "default": "sm"
+      },
+      {
+        "name": "variant",
+        "type": "PinInputVariant",
+        "optional": true,
+        "description": "Cell surface. `outline` is the default; `subtle` is filled."
       },
       {
         "name": "name",

@@ -1,5 +1,10 @@
-import { Button, cn, Icon, TextInput } from '@talelk/newui-atoms'
-import { Select, type SelectOption, TabButtons } from '@talelk/newui-molecules'
+import { Button, cn, Icon, IconButton, TextInput } from '@talelk/newui-atoms'
+import {
+  card,
+  Select,
+  type SelectOption,
+  TabButtons,
+} from '@talelk/newui-molecules'
 import { For, type JSX, onCleanup, onMount, Show } from 'solid-js'
 
 export interface FilterOption {
@@ -125,7 +130,7 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
       class={cn(
         'flex max-w-full flex-col gap-control-gap',
         (props.surface ?? 'card') === 'card'
-          ? 'rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-control-pad'
+          ? cn(card({ padding: 'none' }), 'p-control-pad')
           : 'p-0',
         props.class,
       )}
@@ -214,19 +219,18 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
             {(chip) => (
               <span
                 data-slot="filter-chip"
-                class={`inline-flex items-center gap-1 rounded-full border border-outline-gray-2 bg-surface-base py-0.5 ps-2 text-caption text-ink-gray-8 ${chip.onRemove ? 'pe-1' : 'pe-2'}`}
+                class={`inline-flex items-center gap-1 rounded-pill border border-outline-gray-2 bg-surface-base py-0.5 ps-2 text-caption text-ink-gray-8 ${chip.onRemove ? 'pe-1' : 'pe-2'}`}
               >
                 {chip.label}
                 <Show when={chip.onRemove}>
                   {(onRemove) => (
-                    <button
-                      type="button"
-                      aria-label={`Remove filter: ${chip.label}`}
-                      class="grid size-6 place-items-center rounded-full text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
+                    <IconButton
+                      label={`Remove filter: ${chip.label}`}
+                      icon="lucide-x"
+                      size="xs"
+                      class="rounded-pill"
                       onClick={() => onRemove()()}
-                    >
-                      <Icon icon="lucide-x" class="size-3" />
-                    </button>
+                    />
                   )}
                 </Show>
               </span>

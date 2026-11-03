@@ -72,7 +72,7 @@ export function Demo() {
         settings={<span class="px-2 py-2 text-sm">Workspace settings</span>}
         account={<span class="px-2 py-2 text-sm">Rhea Kapoor</span>}
         accountCollapsed={
-          <span class="grid size-8 place-items-center rounded-full bg-surface-blue-2">
+          <span class="grid size-8 place-items-center rounded-pill bg-surface-blue-2">
             <span class="sr-only">Rhea Kapoor</span>R
           </span>
         }

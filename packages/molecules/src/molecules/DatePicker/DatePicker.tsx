@@ -4,8 +4,13 @@ import {
   cn,
   createId,
   createZagApi,
+  disabledPopup,
   Field,
+  fieldFocusWithin,
   fieldSizes,
+  invalidField,
+  overlayLayers,
+  overlayPanel,
   Portal,
   popupFieldVariants,
   toDate,
@@ -14,6 +19,10 @@ import {
 } from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/date-picker'
 import { For, type JSX, Show, splitProps } from 'solid-js'
+import {
+  calendarCellButton as cellButton,
+  calendarNavButton as navButton,
+} from './CalendarView'
 
 type DatePickerApi = ReturnType<typeof zag.connect>
 
@@ -80,10 +89,7 @@ export interface DatePickerProps {
   class?: string
 }
 
-const navButton =
-  'grid size-7 place-items-center rounded-4 text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-9 disabled:pointer-events-none'
-const cellButton =
-  'grid size-8 place-items-center rounded-3 text-base text-ink-gray-8 outline-none transition-colors hover:bg-surface-gray-3 data-[selected]:bg-surface-gray-10 data-[selected]:text-ink-base data-[today]:font-medium data-[outside-range]:text-ink-gray-4 data-[disabled]:pointer-events-none data-[disabled]:text-ink-gray-3 data-[unavailable]:pointer-events-none data-[unavailable]:text-ink-gray-3 data-[unavailable]:line-through'
+// Cell/nav looks are the shared date-family constants in ./CalendarView.
 
 type ControlProps = Omit<
   DatePickerProps,
@@ -186,8 +192,9 @@ function DatePickerControl(props: ControlProps): JSX.Element {
           'flex w-full items-center transition-colors',
           fieldSizes[size()],
           popupFieldVariants[local.variant ?? 'outline'],
-          'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:opacity-60',
-          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
+          disabledPopup,
+          fieldFocusWithin,
+          invalidField,
         )}
       >
         <input
@@ -230,12 +237,12 @@ function DatePickerControl(props: ControlProps): JSX.Element {
           <div
             {...api().getPositionerProps()}
             data-slot="date-picker-positioner"
-            class="z-overlay"
+            class={overlayLayers.popup}
           >
             <div
               {...api().getContentProps()}
               data-slot="date-picker-content"
-              class="w-fit rounded-overlay border border-outline-gray-1 bg-surface-elevation-1 p-3 text-ink-gray-9 shadow-lg focus-visible:outline-none"
+              class={cn(overlayPanel({ kind: 'popup' }), 'w-fit p-3')}
             >
               <Show when={api().view === 'day'}>
                 <div
@@ -256,7 +263,7 @@ function DatePickerControl(props: ControlProps): JSX.Element {
                     {...api().getViewTriggerProps({ view: 'day' })}
                     aria-label={`${api().visibleRangeText.start}, choose month`}
                     type="button"
-                    class="rounded-3 px-2 py-0.5 text-base-medium text-ink-gray-9 transition-colors hover:bg-surface-gray-3"
+                    class="rounded-control px-2 py-0.5 text-base-medium text-ink-gray-9 outline-none transition-colors hover:bg-surface-gray-3 focus-visible:focus-ring"
                   >
                     {api().visibleRangeText.start}
                   </button>
@@ -336,7 +343,7 @@ function DatePickerControl(props: ControlProps): JSX.Element {
                     {...api().getViewTriggerProps({ view: 'month' })}
                     aria-label={`${api().visibleRange.start.year}, choose year`}
                     type="button"
-                    class="rounded-3 px-2 py-0.5 text-base-medium text-ink-gray-9 transition-colors hover:bg-surface-gray-3"
+                    class="rounded-control px-2 py-0.5 text-base-medium text-ink-gray-9 outline-none transition-colors hover:bg-surface-gray-3 focus-visible:focus-ring"
                   >
                     {api().visibleRange.start.year}
                   </button>

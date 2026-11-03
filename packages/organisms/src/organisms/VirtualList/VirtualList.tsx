@@ -1,3 +1,5 @@
+import { cn } from '@talelk/newui-atoms'
+import { card } from '@talelk/newui-molecules'
 import { createVirtualizer } from '@tanstack/solid-virtual'
 import { For, type JSX, Show, untrack } from 'solid-js'
 import { DataState } from '../DataState'
@@ -67,7 +69,10 @@ export function VirtualList<T>(props: VirtualListProps<T>): JSX.Element {
       aria-label={props.label}
       tabindex="0"
       style={{ height: props.height ?? '24rem' }}
-      class="relative overflow-auto rounded-3 focus-visible:focus-ring"
+      class={cn(
+        card({ padding: 'none' }),
+        'relative block overflow-auto overscroll-contain focus-visible:focus-ring',
+      )}
       data-slot="virtual-list"
     >
       <Show

@@ -2,9 +2,18 @@ import type { InputSize, InputVariant } from '@talelk/newui-atoms'
 import { Icon, type IconProp } from '@talelk/newui-atoms'
 import {
   cn,
+  controlDensity,
   createId,
   createZagApi,
+  disabledPopup,
   Field,
+  fieldFocusWithin,
+  fieldPads,
+  fieldSizes,
+  invalidField,
+  listboxRow,
+  overlayLayers,
+  overlayPanel,
   Portal,
   popupFieldVariants,
   useField,
@@ -64,34 +73,9 @@ export interface SelectMultiProps extends SelectBaseProps {
 
 export type SelectProps = SelectSingleProps | SelectMultiProps
 
-const SIZE: Record<SelectSize, string> = {
-  xs: 'min-h-6 rounded-3',
-  sm: 'min-h-7 rounded-3',
-  md: 'min-h-8 rounded-3',
-  lg: 'min-h-10 rounded-3',
-}
-
-const PAD: Record<SelectSize, string> = {
-  xs: 'px-1.5 text-xs',
-  sm: 'px-2 text-base',
-  md: 'px-2.5 text-base',
-  lg: 'px-3 text-lg',
-}
-
-function Chevron() {
-  return (
-    <svg
-      viewBox="0 0 12 12"
-      class="size-3"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.5"
-      aria-hidden="true"
-    >
-      <path d="m3 5 3 3 3-3" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-  )
-}
+// Field geometry is the shared density table (control-styles): `fieldSizes`
+// on the control, `fieldPads` + the density text composite on the trigger —
+// no per-component SIZE/PAD copies.
 
 /**
  * A selection control over a fixed option list. Zag's accessible element is the
@@ -186,10 +170,11 @@ function SelectControl(props: SelectProps): JSX.Element {
         data-variant={local.variant ?? 'outline'}
         class={cn(
           'flex w-full items-stretch transition-colors',
-          SIZE[size()],
+          fieldSizes[size()],
           popupFieldVariants[local.variant ?? 'outline'],
-          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
-          'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-1 data-[disabled]:opacity-60',
+          fieldFocusWithin,
+          invalidField,
+          disabledPopup,
         )}
       >
         <button
@@ -209,7 +194,8 @@ function SelectControl(props: SelectProps): JSX.Element {
           }
           class={cn(
             'flex w-full items-center justify-between gap-2 text-left text-ink-gray-8 disabled:cursor-not-allowed disabled:text-ink-gray-4',
-            PAD[size()],
+            fieldPads[size()].base,
+            controlDensity[size()].text,
           )}
         >
           <span class="flex min-w-0 items-center gap-2">
@@ -226,7 +212,7 @@ function SelectControl(props: SelectProps): JSX.Element {
             {...api().getIndicatorProps()}
             class="shrink-0 text-ink-gray-6 transition-transform data-[state=open]:rotate-180"
           >
-            <Chevron />
+            <Icon icon="lucide-chevron-down" class="size-3.5" />
           </span>
         </button>
       </div>
@@ -236,24 +222,22 @@ function SelectControl(props: SelectProps): JSX.Element {
           <div
             {...api().getPositionerProps()}
             data-slot="select-positioner"
-            class="z-overlay"
+            class={overlayLayers.popup}
           >
             <div
               {...api().getContentProps()}
               data-slot="select-content"
-              class="min-w-40 w-[var(--reference-width)] rounded-overlay border border-outline-gray-1 bg-surface-elevation-1 p-1 text-ink-gray-9 shadow-lg focus-visible:outline-none"
+              class={cn(
+                overlayPanel({ kind: 'popup' }),
+                'min-w-40 w-[var(--reference-width)]',
+              )}
             >
               <For each={local.options}>
                 {(option) => (
                   <div
                     {...api().getItemProps({ item: option })}
                     data-slot="select-item"
-                    class={cn(
-                      'flex cursor-pointer items-center justify-between gap-2 rounded-3 px-2 py-1.5 text-base text-ink-gray-8 outline-none transition-colors',
-                      'data-[highlighted]:bg-surface-gray-3',
-                      'data-[state=checked]:text-ink-blue-6',
-                      'data-[disabled]:cursor-not-allowed data-[disabled]:text-ink-gray-4',
-                    )}
+                    class={listboxRow}
                   >
                     <span class="flex min-w-0 flex-1 items-center gap-2">
                       <Show when={option.icon}>
@@ -278,22 +262,9 @@ function SelectControl(props: SelectProps): JSX.Element {
                     </span>
                     <span
                       {...api().getItemIndicatorProps({ item: option })}
-                      class="text-ink-blue-6"
+                      class="text-ink-blue-8"
                     >
-                      <svg
-                        viewBox="0 0 12 12"
-                        class="size-3"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M2 6.5 4.5 9 10 3"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
+                      <Icon icon="lucide-check" class="size-3.5" />
                     </span>
                   </div>
                 )}

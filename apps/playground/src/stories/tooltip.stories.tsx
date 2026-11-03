@@ -12,7 +12,7 @@ function Example(props: {
       open={props.open}
       onOpenChange={props.onOpenChange}
     >
-      <span class="rounded-4 bg-surface-gray-2 px-3 py-1.5 text-base">
+      <span class="rounded-card bg-surface-gray-2 px-3 py-1.5 text-base">
         Hover me
       </span>
     </Tooltip>

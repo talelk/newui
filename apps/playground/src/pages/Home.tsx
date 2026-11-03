@@ -11,6 +11,7 @@ import {
 } from 'solid-js'
 import { LADDER_COUNTS } from '../generated/counts'
 import { LADDER } from '../generated/ladder'
+import { InlineCode } from '../lib/site-ui'
 
 /**
  * The home page.
@@ -131,23 +132,23 @@ function PreviewSection(): JSX.Element {
                   never reads as an empty box.
                 */}
                 <div aria-hidden="true" class="flex w-full max-w-xl gap-3">
-                  <div class="flex flex-1 flex-col gap-2 rounded-3 border border-outline-gray-1 bg-surface-base p-3">
+                  <div class="flex flex-1 flex-col gap-2 rounded-control border border-outline-gray-1 bg-surface-base p-3">
                     <span class="h-1.5 w-10 rounded-1 bg-surface-gray-4" />
                     <span class="h-3 w-14 rounded-1 bg-surface-gray-3" />
                     <span class="h-1.5 w-8 rounded-1 bg-surface-gray-4" />
                   </div>
-                  <div class="flex flex-1 flex-col justify-between gap-1.5 rounded-3 border border-outline-gray-1 bg-surface-base p-3">
+                  <div class="flex flex-1 flex-col justify-between gap-1.5 rounded-control border border-outline-gray-1 bg-surface-base p-3">
                     <For each={[0, 1, 2, 3]}>
                       {() => (
                         <span class="flex items-center gap-1.5">
-                          <span class="size-1.5 rounded-full bg-surface-gray-4" />
+                          <span class="size-1.5 rounded-pill bg-surface-gray-4" />
                           <span class="h-1.5 flex-1 rounded-1 bg-surface-gray-3" />
                           <span class="h-1.5 w-6 rounded-1 bg-surface-gray-4" />
                         </span>
                       )}
                     </For>
                   </div>
-                  <div class="flex flex-1 items-end gap-1 rounded-3 border border-outline-gray-1 bg-surface-base p-3">
+                  <div class="flex flex-1 items-end gap-1 rounded-control border border-outline-gray-1 bg-surface-base p-3">
                     <For
                       each={['h-4', 'h-7', 'h-5', 'h-9', 'h-6', 'h-8', 'h-10']}
                     >
@@ -170,7 +171,7 @@ function PreviewSection(): JSX.Element {
                   </span>
                   <A
                     href="/atoms"
-                    class="rounded-3 text-interface text-ink-blue-link underline decoration-dotted focus-visible:focus-ring"
+                    class="rounded-control text-interface text-ink-blue-link underline decoration-dotted focus-visible:focus-ring"
                   >
                     Browse the live components
                   </A>
@@ -222,7 +223,7 @@ export function Home(): JSX.Element {
         <h1 class="max-w-3xl text-hero text-ink-gray-9">
           Clarity for your next data application.
         </h1>
-        <p class="max-w-[30rem] text-lg text-ink-gray-7">
+        <p class="site-measure text-lg text-ink-gray-7">
           Compact controls, thoughtful charts and composed layouts for ambitious
           business software. Built with SolidJS, accessible by design, and ready
           for your data.
@@ -250,7 +251,7 @@ export function Home(): JSX.Element {
           <span>{LADDER_COUNTS.templates} templates</span>
           <A
             href="/pages"
-            class="rounded-3 text-ink-blue-link underline decoration-dotted focus-visible:focus-ring"
+            class="rounded-control text-ink-blue-link underline decoration-dotted focus-visible:focus-ring"
           >
             {LADDER_COUNTS.pages} complete apps
           </A>
@@ -264,7 +265,7 @@ export function Home(): JSX.Element {
           <h2 class="text-section text-ink-gray-9">The ladder</h2>
           <A
             href="/architecture"
-            class="rounded-3 text-caption text-ink-blue-link focus-visible:focus-ring"
+            class="rounded-control text-caption text-ink-blue-link focus-visible:focus-ring"
           >
             How the levels fit together →
           </A>
@@ -275,7 +276,7 @@ export function Home(): JSX.Element {
               <li>
                 <A
                   href={level.href}
-                  class="flex items-center gap-3 rounded-3 p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
+                  class="flex items-center gap-3 rounded-control p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
                 >
                   <span
                     aria-hidden="true"
@@ -327,10 +328,9 @@ export function Home(): JSX.Element {
 
       <section class="flex flex-col gap-4">
         <h2 class="text-section text-ink-gray-9">Why it is small</h2>
-        <p class="max-w-[30rem] text-base text-ink-gray-7">
+        <p class="site-measure text-base text-ink-gray-7">
           Components are priced. A gzip budget per entry and a tree-shaking
-          assertion run in CI, so importing{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">Button</code>{' '}
+          assertion run in CI, so importing <InlineCode>Button</InlineCode>{' '}
           cannot drag the dialog machine in behind it. The site you are reading
           holds itself to the same rule: every route is its own chunk, and the
           shell imports no component at all.

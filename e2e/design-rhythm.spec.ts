@@ -11,7 +11,15 @@ test('filter controls, KPI cards and the page grid keep one rhythm across widths
 
     const filters = page.locator('[data-slot="filter-bar"]')
     await expect(filters).toBeVisible()
-    const controls = filters.locator('[data-size="sm"]')
+    // Field peers share the sm field height. The bar's Switch also stamps
+    // data-size (hook uniformity), but a toggle row is label-height, not a
+    // field-height peer — pin its hook, exclude it from the height parity.
+    await expect(
+      filters.locator('[data-slot="switch-root"][data-size="sm"]'),
+    ).toHaveCount(1)
+    const controls = filters.locator(
+      '[data-size="sm"]:not([data-slot="switch-root"])',
+    )
     await expect(controls).toHaveCount(3)
     const demo = page
       .locator('[data-slot="app-shell-header"]')

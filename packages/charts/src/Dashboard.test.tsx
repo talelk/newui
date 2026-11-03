@@ -39,6 +39,6 @@ describe('Dashboard', () => {
     expect(grid.style.gridTemplateColumns).toBe(
       'repeat(auto-fit, minmax(260px, 1fr))',
     )
-    expect(grid.style.gap).toBe('1rem')
+    expect(grid.style.gap).toBe('var(--spacing-card-gap)')
   })
 })

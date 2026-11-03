@@ -1,5 +1,5 @@
 import { A, useLocation, useParams } from '@solidjs/router'
-import { Badge, Button } from '@talelk/newui-atoms'
+import { Badge, Button, Skeleton } from '@talelk/newui-atoms'
 import {
   createMemo,
   createResource,
@@ -130,8 +130,8 @@ function ApiTables(props: { slug: string }): JSX.Element {
   return (
     <Suspense
       fallback={
-        <div class="min-h-[60rem]">
-          <LoadingNote label="Loading props…" />
+        <div class="min-h-[60rem]" role="status" aria-label="Loading props">
+          <Skeleton lines={12} />
         </div>
       }
     >
@@ -167,8 +167,12 @@ function Contract(props: { slug: string; stripProps: boolean }): JSX.Element {
   return (
     <Suspense
       fallback={
-        <div class="min-h-[36rem]">
-          <LoadingNote label="Loading the contract…" />
+        <div
+          class="min-h-[36rem]"
+          role="status"
+          aria-label="Loading the contract"
+        >
+          <Skeleton lines={8} />
         </div>
       }
     >
@@ -330,7 +334,7 @@ export function ComponentPage(): JSX.Element {
                     {ATOMIC[component().atomic].singular}
                   </Badge>
                 </div>
-                <p class="max-w-[30rem] text-interface text-ink-gray-7">
+                <p class="site-measure text-interface text-ink-gray-7">
                   {component().description}
                 </p>
                 <p class="text-caption text-ink-gray-7">
@@ -338,35 +342,6 @@ export function ComponentPage(): JSX.Element {
                   {component().parts.length} part
                   {component().parts.length === 1 ? '' : 's'}
                 </p>
-                <nav
-                  aria-label="Reference sections"
-                  class="flex flex-wrap gap-3 text-interface text-ink-gray-7 xl:hidden"
-                >
-                  <a
-                    href="#preview"
-                    class="rounded-3 hover:underline focus-visible:focus-ring"
-                  >
-                    Preview
-                  </a>
-                  <a
-                    href="#usage"
-                    class="rounded-3 hover:underline focus-visible:focus-ring"
-                  >
-                    Usage
-                  </a>
-                  <a
-                    href="#props"
-                    class="rounded-3 hover:underline focus-visible:focus-ring"
-                  >
-                    Props
-                  </a>
-                  <a
-                    href="#contract"
-                    class="rounded-3 hover:underline focus-visible:focus-ring"
-                  >
-                    Contract
-                  </a>
-                </nav>
                 <div class="flex flex-wrap gap-2">
                   {/* A plain anchor, absolute: the story lives on Storybook's
                     origin, so it is an href and not an in-app `route`. */}

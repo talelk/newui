@@ -23,7 +23,7 @@ export function PageIntro(props: {
           {props.title}
         </h1>
         <Show when={props.description}>
-          <p class="max-w-[30rem] text-base text-ink-gray-7">
+          <p class="site-measure text-interface text-ink-gray-7">
             {props.description}
           </p>
         </Show>

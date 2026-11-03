@@ -118,8 +118,10 @@ const ROUTES: RouteBudget[] = [
   },
   // 280.0 measured: the shell now carries the ladder's counts, and a budget
   // with no headroom turns the next honest shell addition into a red gate.
-  // Re-raised to 290 when the registry grew by four more molecules.
-  { route: '/organisms/bar-chart', budget: 290 },
+  // Re-raised to 290 when the registry grew by four more molecules, and to
+  // 300 at 290.6 measured after the foundation sweep (shared control-styles
+  // and density tables in the chunks this route already fetched).
+  { route: '/organisms/bar-chart', budget: 300 },
   // 280.0 measured: the shell's registry counts grew with the new atoms and
   // molecules — same headroom rule as bar-chart above.
   { route: '/organisms/code-editor', budget: 285 },
@@ -229,11 +231,14 @@ const ROUTES: RouteBudget[] = [
       'full analytics workspace with SVG charts in the shared AppShell frame',
   },
   {
+    // 60.5 measured after the foundation sweep: the shared chunks carry the
+    // unified control-styles/density tables every preview on the page uses.
     route: '/',
-    budget: 60,
+    budget: 63,
     unless: 'the shell, the router and the toast host',
   },
-  { route: '/docs', budget: 63, unless: 'prose only' },
+  // 64.5 measured, same shared-chunk growth as `/` above.
+  { route: '/docs', budget: 67, unless: 'prose only' },
   { route: '/foundations', budget: 88, unless: 'token swatches' },
   {
     route: '/atoms',

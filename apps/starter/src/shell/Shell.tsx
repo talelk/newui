@@ -63,7 +63,7 @@ export function Shell(props: {
       brand={
         <A
           href="/"
-          class="flex min-h-10 items-center gap-2 rounded-3 px-2 font-semibold focus-visible:focus-ring"
+          class="flex min-h-10 items-center gap-2 rounded-control px-2 font-semibold focus-visible:focus-ring"
         >
           <span
             aria-hidden="true"
@@ -76,7 +76,7 @@ export function Shell(props: {
         <A
           href="/"
           aria-label="Acme workspace home"
-          class="grid size-10 place-items-center rounded-3 focus-visible:focus-ring"
+          class="grid size-10 place-items-center rounded-control focus-visible:focus-ring"
         >
           <span
             aria-hidden="true"

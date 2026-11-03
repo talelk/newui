@@ -17,6 +17,8 @@ A fixed-length code — verification digits, an OTP from a text message.
 | `placeholder` | `string` | `○` | |
 | `blurOnComplete` | `boolean` | — | |
 | `disabled` / `readOnly` | `boolean` | — | |
+| `size` | `PinInputSize` (`xs`–`lg`) | `sm` | cell height/typography from the shared density table; cells stay square |
+| `variant` | `PinInputVariant` (`subtle` \| `outline` \| `ghost`) | `outline` | cell surface, the shared text-field variants |
 | `name` | `string` | — | form submission name on the hidden input |
 | `label` / `description` / `error` / `required` | shared labelling contract (P5) | — | names every cell |
 | `id` / `'aria-label'` / `class` | | | |

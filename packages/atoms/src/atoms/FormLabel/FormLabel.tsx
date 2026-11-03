@@ -41,7 +41,7 @@ export function FormLabel(props: FormLabelProps): JSX.Element {
       for={local.id}
       data-slot="label"
       class={cn(
-        'block text-caption font-medium',
+        'block text-caption-medium',
         local.disabled ? 'text-ink-gray-4' : 'text-ink-gray-6',
         local.class,
       )}

@@ -33,6 +33,10 @@ export const radiusRoles: Record<
 >
 
 export const shadows: Record<string, string>
+export const shadowRoles: Record<
+  'card' | 'raised' | 'popover' | 'dialog' | 'toast' | 'drag',
+  string
+>
 
 export const focusRing: {
   light: Record<string, string>

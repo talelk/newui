@@ -109,7 +109,7 @@ const Scrollbar: ParentComponent<ScrollAreaScrollbarProps> = (props) => {
         class={cn(
           // Fades in with the pointer or a scroll, and only then accepts a drag
           // — an invisible thumb that still grabs is a dead 10px strip.
-          'relative flex-1 rounded-full bg-surface-gray-5 opacity-0 transition-opacity duration-base ease-out',
+          'relative flex-1 rounded-pill bg-surface-gray-5 opacity-0 transition-opacity duration-base ease-out',
           'group-data-[hover]:pointer-events-auto group-data-[dragging]:pointer-events-auto',
           'group-data-[hover]:opacity-100 group-data-[scrolling]:opacity-100 group-data-[dragging]:opacity-100',
           horizontal() ? 'h-full' : 'w-full',

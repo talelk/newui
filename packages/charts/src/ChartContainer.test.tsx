@@ -79,7 +79,7 @@ describe('ChartContainer', () => {
         </ChartContainer>
       ))
       expect(container(root).getAttribute('data-state')).toBe('empty')
-      expect(root.textContent).toContain('No data to show')
+      expect(root.textContent).toContain('Nothing here yet')
     })
 
     it('takes error over loading and over empty', () => {
@@ -90,7 +90,7 @@ describe('ChartContainer', () => {
       ))
       expect(container(root).getAttribute('data-state')).toBe('error')
       expect(root.querySelector('[data-slot="chart-loading"]')).toBeNull()
-      expect(root.textContent).not.toContain('No data to show')
+      expect(root.textContent).not.toContain('Nothing here yet')
     })
 
     it('takes loading over empty', () => {
@@ -100,7 +100,7 @@ describe('ChartContainer', () => {
         </ChartContainer>
       ))
       expect(container(root).getAttribute('data-state')).toBe('loading')
-      expect(root.textContent).not.toContain('No data to show')
+      expect(root.textContent).not.toContain('Nothing here yet')
     })
 
     // Unmounting the plot would dispose the echarts instance and pay to build
@@ -154,7 +154,7 @@ describe('ChartContainer', () => {
       expect(root.textContent).not.toContain('Could not render this chart')
     })
 
-    it('takes a caller’s own line in place of “No data to show”', () => {
+    it('takes a caller’s own line in place of “Nothing here yet”', () => {
       const { container: root } = render(() => (
         <ChartContainer
           empty
@@ -164,7 +164,7 @@ describe('ChartContainer', () => {
         </ChartContainer>
       ))
       expect(root.querySelector('#own')).not.toBeNull()
-      expect(root.textContent).not.toContain('No data to show')
+      expect(root.textContent).not.toContain('Nothing here yet')
     })
   })
 

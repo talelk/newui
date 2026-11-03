@@ -1,10 +1,14 @@
 import type { InputSize, InputVariant } from '@talelk/newui-atoms'
 import {
   cn,
+  controlDensity,
   createControllableSignal,
   createId,
+  disabledPopup,
   Field,
-  fieldSizes,
+  fieldFocusWithin,
+  invalidField,
+  textFieldVariants,
   useField,
 } from '@talelk/newui-atoms/internal'
 import { For, type JSX, splitProps } from 'solid-js'
@@ -39,20 +43,11 @@ export interface TagInputProps {
   class?: string
 }
 
-const SIZE: Record<TagInputSize, string> = {
-  xs: 'min-h-6',
-  sm: 'min-h-7',
-  md: 'min-h-8',
-  lg: 'min-h-10',
-}
-
-const VARIANT: Record<TagInputVariant, string> = {
-  subtle:
-    'border border-surface-gray-2 bg-surface-gray-2 focus-within:border-outline-gray-4 focus-within:bg-surface-base',
-  outline:
-    'border border-outline-gray-2 bg-surface-base focus-within:border-outline-gray-4',
-  ghost: 'border-0 bg-transparent',
-}
+// Tokens wrap, so the control floors at the density min-height rather than
+// the fixed field height — geometry and surface still come from the shared
+// density table + `textFieldVariants` (control-styles), never local maps.
+const controlGeometry = (size: TagInputSize): string =>
+  `${controlDensity[size].minHeight} rounded-control ${controlDensity[size].text}`
 
 /**
  * A token editor: type and press Enter or comma to add a tag, Backspace on
@@ -148,13 +143,14 @@ function TagInputControl(props: ControlProps): JSX.Element {
       data-size={size()}
       data-variant={local.variant ?? 'outline'}
       data-invalid={field?.hasError() ? '' : undefined}
+      data-disabled={local.disabled ? '' : undefined}
       class={cn(
         'flex w-full flex-wrap items-center gap-1 px-1.5 py-1 transition-colors',
-        SIZE[size()],
-        fieldSizes[size()],
-        VARIANT[local.variant ?? 'outline'],
-        'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
-        'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-1 data-[disabled]:opacity-60',
+        controlGeometry(size()),
+        textFieldVariants[local.variant ?? 'outline'],
+        fieldFocusWithin,
+        invalidField,
+        disabledPopup,
         local.class,
       )}
     >
@@ -162,7 +158,7 @@ function TagInputControl(props: ControlProps): JSX.Element {
         {(tag) => (
           <span
             data-slot="tag-input-token"
-            class="inline-flex max-w-full items-center gap-1 rounded-3 bg-surface-gray-3 py-0.5 ps-2 text-xs text-ink-gray-8"
+            class="inline-flex max-w-full items-center gap-1 rounded-control bg-surface-gray-3 py-0.5 ps-2 text-xs text-ink-gray-8"
           >
             <span class="truncate">{tag}</span>
             <button

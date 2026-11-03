@@ -11,18 +11,6 @@ export const API = {
       "description": "The connected Zag `date-picker` api; reads stay reactive through the prop."
     },
     {
-      "name": "cellClass",
-      "type": "string",
-      "optional": false,
-      "description": "Classes for the day/month/year cell buttons."
-    },
-    {
-      "name": "navClass",
-      "type": "string",
-      "optional": false,
-      "description": "Classes for the prev/next/view-trigger buttons."
-    },
-    {
       "name": "dualPane",
       "type": "boolean",
       "optional": true,

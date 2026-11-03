@@ -4,6 +4,8 @@ import {
   createId,
   createZagApi,
   createZagContext,
+  overlayLayers,
+  overlayPanel,
   Portal,
 } from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/hover-card'
@@ -75,15 +77,12 @@ const Content: ParentComponent<PartProps> = (props) => {
         <div
           {...api().getPositionerProps()}
           data-slot="hover-card-positioner"
-          class="z-top"
+          class={overlayLayers.popup}
         >
           <div
             {...api().getContentProps()}
             data-slot="hover-card-content"
-            class={cn(
-              'rounded-overlay bg-surface-elevation-2 text-ink-gray-9 shadow-2xl ring-1 ring-outline-gray-1',
-              props.class,
-            )}
+            class={cn(overlayPanel({ kind: 'popup' }), props.class)}
           >
             {props.children}
           </div>

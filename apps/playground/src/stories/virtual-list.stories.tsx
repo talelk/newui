@@ -20,7 +20,7 @@ export function Demo() {
     >
       {(row) => (
         <div class="flex h-full items-center gap-3 border-b border-outline-gray-1 px-4">
-          <span class="grid size-8 shrink-0 place-items-center rounded-full bg-surface-blue-2 text-caption text-ink-blue-8">
+          <span class="grid size-8 shrink-0 place-items-center rounded-pill bg-surface-blue-2 text-caption text-ink-blue-8">
             {row.owner
               .split(' ')
               .map((part) => part[0])

@@ -23,6 +23,12 @@ export const API = {
       "description": "Called with the selected option's value."
     },
     {
+      "name": "disabled",
+      "type": "boolean",
+      "optional": true,
+      "description": "Disables the trigger; the menu cannot be opened."
+    },
+    {
       "name": "class",
       "type": "string",
       "optional": true,

@@ -17,7 +17,7 @@ export function CodeBlock(props: {
         <button
           type="button"
           aria-label="Copy code"
-          class="absolute end-2 top-2 rounded-3 border border-outline-gray-2 bg-surface-elevation-1 px-2 py-1 text-caption text-ink-gray-8 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none"
+          class="absolute end-2 top-2 rounded-control border border-outline-gray-2 bg-surface-elevation-1 px-2 py-1 text-caption text-ink-gray-8 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none"
           onClick={() => {
             void navigator.clipboard?.writeText(props.code).then(
               () => setCopyStatus('Copied'),

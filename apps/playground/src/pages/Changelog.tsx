@@ -37,7 +37,7 @@ export function Changelog(): JSX.Element {
           <ul class="mt-3 flex flex-col gap-3">
             <For each={PENDING}>
               {(change) => (
-                <li class="rounded-card border border-outline-gray-1 bg-surface-base p-4">
+                <li class="rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad">
                   <div class="flex flex-wrap items-baseline gap-2">
                     <span class="text-interface font-medium text-ink-gray-9">
                       {change.package}

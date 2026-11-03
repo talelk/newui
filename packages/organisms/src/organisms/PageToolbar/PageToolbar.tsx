@@ -63,7 +63,7 @@ export function PageToolbar(props: PageToolbarProps): JSX.Element {
             >
               <Menu.Trigger
                 aria-label="Page actions"
-                class="grid size-7 shrink-0 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
+                class="grid size-8 shrink-0 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
               >
                 <Icon icon="lucide-ellipsis" class="size-4" />
               </Menu.Trigger>

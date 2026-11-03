@@ -3,9 +3,13 @@ import path from 'node:path'
 import { extendTailwindMerge } from 'tailwind-merge'
 import { twMerge } from './tw-merge'
 import {
+  animateNames,
+  durationNames,
+  easingNames,
   isLength,
   layoutSpacingNames,
   radiusRoleNames,
+  shadowRoleNames,
   twMergeConfig,
   zLayerNames,
 } from './tw-merge.config'
@@ -46,13 +50,18 @@ const isTextSize = (value: string) =>
 const isOurRadius = (value: string) =>
   /^(\d|full|none)$/.test(value) || radiusRoleNames.includes(value)
 const isOurShadow = (value: string) =>
-  ['', 'base', 'sm', 'md', 'lg', 'xl', '2xl', 'none'].includes(value)
+  ['', 'base', 'sm', 'md', 'lg', 'xl', '2xl', 'none'].includes(value) ||
+  shadowRoleNames.includes(value)
 const isOurLeading = (value: string) =>
   /^(none|tighter|tight|snug|normal|relaxed|loose|\d+)$/.test(value)
 const isOurZ = (value: string) =>
   /^\d+$/.test(value) || zLayerNames.includes(value)
 const isOurDuration = (value: string) =>
-  isLength(value) || ['fast', 'base', 'slow'].includes(value)
+  isLength(value) || durationNames.includes(value)
+const isOurAnimate = (value: string) => animateNames.includes(value)
+const isOurEasing = (value: string) =>
+  ['linear', 'in', 'out', 'in-out'].includes(value) ||
+  easingNames.includes(value)
 
 export const reference = extendTailwindMerge({
   extend: {
@@ -82,6 +91,8 @@ export const reference = extendTailwindMerge({
       // The stacking scale's named layers sit on the same axis as `z-<n>`.
       z: [{ z: [isOurZ] }],
       duration: [{ duration: [isOurDuration] }],
+      animate: [{ animate: [isOurAnimate] }],
+      ease: [{ ease: [isOurEasing] }],
     },
   },
 })

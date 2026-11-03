@@ -20,7 +20,7 @@ export function Demo(props: { collapsed?: boolean }): JSX.Element {
       title="Projects"
       description="One responsive shell, one sidebar, grouped navigation."
       brand={
-        <span class="flex min-h-10 items-center gap-2 rounded-3 px-2 font-semibold">
+        <span class="flex min-h-10 items-center gap-2 rounded-control px-2 font-semibold">
           <span
             aria-hidden="true"
             class="lucide-boxes size-5 text-ink-blue-6"

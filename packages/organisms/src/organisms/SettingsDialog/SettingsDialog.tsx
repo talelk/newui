@@ -2,6 +2,7 @@ import {
   cn,
   createControllableSignal,
   createId,
+  listboxLabel,
 } from '@talelk/newui-atoms/internal'
 import { Dialog } from '@talelk/newui-molecules'
 import {
@@ -139,7 +140,7 @@ const Sidebar: ParentComponent<SettingsSidebarProps> = (props) => (
     aria-orientation="vertical"
     data-slot="settings-sidebar"
     class={cn(
-      'flex max-h-[38vh] w-full shrink-0 flex-col gap-4 overflow-y-auto border-b border-outline-gray-1 bg-surface-sidebar p-2',
+      'flex max-h-[38vh] w-full shrink-0 flex-col gap-4 overflow-y-auto overscroll-contain border-b border-outline-gray-1 bg-surface-sidebar p-2',
       'max-sm:pe-12 sm:max-h-none sm:w-[220px] sm:border-b-0 sm:border-e',
       props.class,
     )}
@@ -167,7 +168,7 @@ const NavGroup: ParentComponent<SettingsNavGroupProps> = (props) => (
       <div
         role="presentation"
         data-slot="settings-nav-group-label"
-        class="flex h-7 items-center px-2 text-base text-ink-gray-6"
+        class={listboxLabel}
       >
         {props.label}
       </div>
@@ -386,7 +387,10 @@ export interface SettingsHeaderProps {
 const Header: ParentComponent<SettingsHeaderProps> = (props) => (
   <div
     data-slot="settings-header"
-    class={cn('shrink-0 ps-4 pe-12 pt-6 sm:ps-6', props.class)}
+    class={cn(
+      'shrink-0 ps-page-gutter-compact pe-12 pt-6 sm:ps-page-gutter',
+      props.class,
+    )}
   >
     <Show
       when={props.children}
@@ -437,7 +441,7 @@ const Body: ParentComponent<SettingsBodyProps> = (props) => (
   <div
     data-slot="settings-body"
     class={cn(
-      'min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 sm:px-6',
+      'min-h-0 flex-1 overflow-y-auto overscroll-contain px-page-gutter-compact pb-6 sm:px-page-gutter',
       props.class,
     )}
   >

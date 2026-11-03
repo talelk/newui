@@ -22,7 +22,7 @@ export function ScrollTable(props: ScrollTableProps): JSX.Element {
       tabindex="0"
       aria-label={props.label}
       data-slot="scroll-table"
-      class={`overflow-x-auto rounded-3 focus-visible:focus-ring ${
+      class={`overflow-x-auto rounded-control focus-visible:focus-ring ${
         props.stickyHeader
           ? '[&_thead]:sticky [&_thead]:top-0 [&_thead]:z-raised'
           : ''

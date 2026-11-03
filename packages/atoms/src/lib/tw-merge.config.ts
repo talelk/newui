@@ -32,11 +32,41 @@ const LAYOUT_SPACING = new Set([
   'page-gutter',
   'page-gutter-wide',
   'page-stack',
+  'menu-pad',
+  'dialog-pad',
+  'table-cell-x',
+  'table-cell-y',
+  'toolbar-pad',
+  'stack',
+  'inline',
 ])
 const RADIUS_ROLES = new Set(['control', 'card', 'overlay', 'pill'])
 
 /** The stacking scale (`@utility z-<name>`); one merge axis with `z-<n>`. */
 const Z_LAYERS = new Set(['raised', 'floating', 'overlay', 'top'])
+
+/** The motion scale (`@utility duration-<name>`); one axis with `duration-<n>`. */
+const DURATIONS = new Set([
+  'instant',
+  'fast',
+  'base',
+  'moderate',
+  'slow',
+  'progress',
+])
+
+/**
+ * Shadow roles over the elevation steps (`shadow-popover`, …). Spelled as one
+ * string so the size gate's Zag-machine markers (`"dialog"`, `"toast"` as
+ * standalone literals) stay unambiguous in a `cn()` bundle.
+ */
+const SHADOW_ROLES = new Set('card raised popover dialog toast drag'.split(' '))
+
+/** The `--animate-*` token names (`animate-overlay-in`, …). */
+const ANIMATES = new Set(['overlay-in', 'drawer-in', 'shimmer', 'progress'])
+
+/** Named easings beyond the stock set (`ease-standard`, …). */
+const EASINGS = new Set(['standard'])
 
 /** Semantic layout spacing names; shared with the merge sweep's reference. */
 export const layoutSpacingNames = [...LAYOUT_SPACING]
@@ -46,6 +76,18 @@ export const radiusRoleNames = [...RADIUS_ROLES]
 
 /** Stacking layer names; shared with the merge sweep's reference. */
 export const zLayerNames = [...Z_LAYERS]
+
+/** Named duration names; shared with the merge sweep's reference. */
+export const durationNames = [...DURATIONS]
+
+/** Shadow role names; shared with the merge sweep's reference. */
+export const shadowRoleNames = [...SHADOW_ROLES]
+
+/** Animation token names; shared with the merge sweep's reference. */
+export const animateNames = [...ANIMATES]
+
+/** Named easing names; shared with the merge sweep's reference. */
+export const easingNames = [...EASINGS]
 
 /** Our type scale: `2xs`…`11xl` and `p-…`, each with an optional weight. */
 const SIZE =
@@ -102,6 +144,7 @@ const isRadius = (value: string) =>
 const isShadow = (value: string) =>
   value === '' ||
   ['sm', 'base', 'md', 'lg', 'xl', '2xl', 'none'].includes(value) ||
+  SHADOW_ROLES.has(value) ||
   isArbitrary(value)
 
 const isLeading = (value: string) =>
@@ -532,7 +575,7 @@ export const twMergeConfig = {
 
     // ---- transition / animation ----
     transition: ['transition', 'transition-none', { transition: [() => true] }],
-    duration: [{ duration: [isLength, 'fast', 'base', 'slow'] }],
+    duration: [{ duration: [isLength, ...durationNames] }],
     ease: [{ ease: [() => true] }],
     delay: [{ delay: [isLength] }],
     animate: [{ animate: [() => true] }],

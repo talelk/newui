@@ -3,6 +3,9 @@ import {
   createDisclosure,
   createId,
   createZagApi,
+  overlayLayers,
+  overlayPanel,
+  overlayScrim,
   Portal,
 } from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/dialog'
@@ -80,12 +83,21 @@ export function BottomSheet(props: BottomSheetProps): JSX.Element {
       content?.animate &&
       !matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
+      // WAAPI takes numbers, not utilities: read the motion tokens
+      // (--duration-base / --ease-out) off the sheet so the sheet settles on
+      // the same scale as every utility-driven peer.
+      const style = getComputedStyle(content)
+      const duration =
+        Number.parseFloat(style.getPropertyValue('--duration-base')) || 150
+      const easing =
+        style.getPropertyValue('--ease-out').trim() ||
+        'cubic-bezier(0.23, 1, 0.32, 1)'
       animation = content.animate(
         [
           { transform: `translateY(${distance}px)` },
           { transform: 'translateY(0)' },
         ],
-        { duration: 160, easing: 'ease-out' },
+        { duration, easing },
       )
     }
   }
@@ -120,12 +132,15 @@ export function BottomSheet(props: BottomSheetProps): JSX.Element {
         <div
           {...api().getBackdropProps()}
           data-slot="bottom-sheet-backdrop"
-          class="fixed inset-0 z-overlay bg-black-overlay-200 dark:bg-black-overlay-700"
+          class={overlayScrim}
         />
         <div
           {...api().getPositionerProps()}
           data-slot="bottom-sheet-positioner"
-          class="fixed inset-0 z-overlay flex items-end justify-center"
+          class={cn(
+            'fixed inset-0 flex items-end justify-center',
+            overlayLayers.modal,
+          )}
         >
           <div
             {...api().getContentProps()}
@@ -162,8 +177,11 @@ export function BottomSheet(props: BottomSheetProps): JSX.Element {
             role="dialog"
             aria-label={local.title ? undefined : 'Bottom sheet'}
             class={cn(
-              'relative z-overlay flex max-h-[90dvh] w-full max-w-2xl flex-col rounded-t-overlay border border-outline-gray-1 bg-surface-elevation-2 text-ink-gray-9 shadow-lg',
-              'focus-visible:outline-none',
+              overlayPanel({ kind: 'modal', enter: 'drawer' }),
+              // A sheet is a modal panel anchored to the bottom edge: squared
+              // bottom corners, and the handle/body own the padding instead
+              // of the panel pad.
+              'relative flex max-h-[90dvh] w-full max-w-2xl flex-col rounded-b-none p-0',
               local.class,
             )}
           >
@@ -202,7 +220,7 @@ export function BottomSheet(props: BottomSheetProps): JSX.Element {
                 finish(true)
               }}
             >
-              <div class="h-1.5 w-10 rounded-full bg-surface-gray-3" />
+              <div class="h-1.5 w-10 rounded-pill bg-surface-gray-3" />
             </div>
 
             <Show when={local.title}>

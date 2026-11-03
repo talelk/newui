@@ -28,16 +28,18 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), Math.max(min, max))
 }
 
+// The popup peer of the shared overlay panel: overlay radius, elevation-1,
+// the popover shadow role and the top layer, mirrored as runtime vars.
 const SURFACE: JSX.CSSProperties = {
   position: 'fixed',
-  'z-index': '100',
+  'z-index': 'var(--z-top)',
   'pointer-events': 'none',
   'max-width': '20rem',
-  'border-radius': 'var(--radius-card)',
+  'border-radius': 'var(--radius-overlay)',
   border: '1px solid var(--outline-gray-1)',
-  'background-color': 'var(--surface-elevation-2)',
-  padding: '0.625rem 0.75rem',
-  'box-shadow': 'var(--shadow-lg)',
+  'background-color': 'var(--surface-elevation-1)',
+  padding: 'var(--spacing-card-pad-compact)',
+  'box-shadow': 'var(--shadow-popover)',
 }
 
 export function ChartTooltip(props: ChartTooltipProps): JSX.Element {

@@ -10,7 +10,8 @@
     "pages/DiscussionsDesktop.tsx",
     "examples/BackToExamples.tsx",
     "lib/base.ts",
-    "shell/ThemeMenu.tsx"
+    "shell/ThemeMenu.tsx",
+    "lib/site-ui.tsx"
   ],
   "packages": [
     "@solidjs/router",

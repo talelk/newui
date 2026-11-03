@@ -5,8 +5,13 @@ import {
   createDisclosure,
   createId,
   createZagApi,
+  disabledPopup,
   Field,
+  fieldFocusWithin,
   fieldSizes,
+  invalidField,
+  overlayLayers,
+  overlayPanel,
   Portal,
   popupFieldVariants,
   useField,
@@ -90,7 +95,7 @@ export interface TimePickerProps {
 }
 
 const OPTION =
-  'flex h-7 w-full cursor-pointer items-center rounded-4 px-2 text-left leading-tighter tabular-nums outline-none text-ink-gray-6 hover:bg-surface-gray-2 hover:text-ink-gray-8 data-[highlighted]:bg-surface-gray-3 data-[highlighted]:text-ink-gray-8 data-[selected]:bg-surface-gray-3 data-[selected]:text-ink-gray-8'
+  'flex h-7 w-full cursor-pointer items-center rounded-control px-2 text-left leading-tighter tabular-nums outline-none text-ink-gray-6 hover:bg-surface-gray-2 hover:text-ink-gray-8 data-[highlighted]:bg-surface-gray-3 data-[highlighted]:text-ink-gray-8 data-[selected]:bg-surface-gray-3 data-[selected]:text-ink-gray-8'
 
 type ControlProps = Omit<
   TimePickerProps,
@@ -341,8 +346,9 @@ function TimePickerControl(props: ControlProps): JSX.Element {
           'relative flex w-full items-center transition-colors',
           fieldSizes[size()],
           popupFieldVariants[local.variant ?? 'outline'],
-          'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:opacity-60',
-          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
+          disabledPopup,
+          fieldFocusWithin,
+          invalidField,
         )}
         data-disabled={local.disabled ? '' : undefined}
       >
@@ -403,14 +409,17 @@ function TimePickerControl(props: ControlProps): JSX.Element {
           <div
             {...api().getPositionerProps()}
             data-slot="time-picker-positioner"
-            class="z-overlay"
+            class={overlayLayers.popup}
           >
             <div
               {...api().getContentProps()}
               role="listbox"
               aria-label={bareName()}
               data-slot="time-picker-listbox"
-              class="max-h-48 w-44 overflow-y-auto rounded-overlay border border-outline-gray-1 bg-surface-elevation-1 p-1 text-ink-gray-9 shadow-lg focus-visible:outline-none"
+              class={cn(
+                overlayPanel({ kind: 'popup' }),
+                'max-h-48 w-44 overflow-y-auto',
+              )}
             >
               <For each={options()}>
                 {(option, index) => (

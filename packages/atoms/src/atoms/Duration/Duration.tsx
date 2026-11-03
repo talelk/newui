@@ -1,5 +1,12 @@
 import { createSignal, type JSX, splitProps } from 'solid-js'
-import { fieldSizes } from '../../lib/control-styles'
+import {
+  disabledField,
+  fieldFocus,
+  fieldPads,
+  fieldSizes,
+  invalidField,
+  textFieldVariants,
+} from '../../lib/control-styles'
 import { createControllableSignal } from '../../lib/controllable'
 import { Field, useField } from '../../lib/field'
 import { cn } from '../../lib/tv'
@@ -36,21 +43,6 @@ export interface DurationProps {
   error?: JSX.Element | false
   required?: boolean
   'aria-label'?: string
-}
-
-const PAD: Record<InputSize, string> = {
-  xs: 'ps-1.5 pe-1.5',
-  sm: 'ps-2 pe-2',
-  md: 'ps-2.5 pe-2.5',
-  lg: 'ps-3 pe-3',
-}
-
-const VARIANT: Record<InputVariant, string> = {
-  subtle:
-    'border border-surface-gray-2 bg-surface-gray-2 placeholder:text-ink-gray-6 hover:border-outline-gray-3 hover:bg-surface-gray-3 focus:border-outline-gray-4 focus:bg-surface-base focus:shadow-sm',
-  outline:
-    'border border-outline-gray-2 bg-surface-base placeholder:text-ink-gray-6 hover:border-outline-gray-3 hover:shadow-sm focus:border-outline-gray-4 focus:bg-surface-base focus:shadow-sm',
-  ghost: 'border-0 bg-transparent placeholder:text-ink-gray-6',
 }
 
 const INVALID_ERROR =
@@ -97,14 +89,17 @@ function DurationControl(props: DurationControlProps): JSX.Element {
       placeholder={local.placeholder ?? '1h 30m 45s'}
       disabled={local.disabled}
       data-slot="duration"
+      data-size={size()}
+      data-variant={local.variant ?? 'outline'}
+      data-disabled={local.disabled ? '' : undefined}
       class={cn(
-        'w-full leading-tighter transition-colors outline-none focus-visible:focus-ring-blue aria-[invalid=true]:border-outline-red-6',
+        'w-full text-ink-gray-8 leading-tighter transition-colors',
+        fieldFocus,
+        invalidField,
+        disabledField,
         fieldSizes[size()],
-        PAD[size()],
-        VARIANT[local.variant ?? 'outline'],
-        local.disabled ? 'text-ink-gray-6' : 'text-ink-gray-8',
-        local.disabled &&
-          'border bg-surface-gray-1 placeholder:text-ink-gray-3 hover:shadow-none',
+        fieldPads[size()].base,
+        textFieldVariants[local.variant ?? 'outline'],
         local.class,
       )}
       aria-invalid={field?.hasError() ? 'true' : undefined}

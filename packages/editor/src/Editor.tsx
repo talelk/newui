@@ -496,13 +496,18 @@ export function Editor(props: EditorProps): JSX.Element {
   return (
     <EditorContext.Provider value={editor}>
       <EditorEditableContext.Provider value={editable}>
-        <div {...rest} class={local.class} data-slot="editor">
+        <div
+          {...rest}
+          class={`flex flex-col overflow-hidden rounded-card border border-outline-gray-1 bg-surface-elevation-1 text-ink-gray-9 focus-within:focus-ring-blue ${local.class ?? ''}`}
+          data-slot="editor"
+        >
           {local.children}
           <div
             ref={(el) => {
               container = el
             }}
             data-slot="editor-surface"
+            class="[&_[data-slot=editor-content]]:min-h-40 [&_[data-slot=editor-content]]:px-card-pad [&_[data-slot=editor-content]]:py-3 [&_[data-slot=editor-content]]:leading-relaxed [&_[data-slot=editor-content]]:outline-none [&_a]:text-ink-blue-link [&_a]:underline [&_h1]:text-heading [&_h2]:text-section [&_ol]:list-decimal [&_ol]:ps-5 [&_p]:my-1 [&_ul]:list-disc [&_ul]:ps-5"
           />
         </div>
       </EditorEditableContext.Provider>

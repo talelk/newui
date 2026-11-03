@@ -1,8 +1,10 @@
 import { A } from '@solidjs/router'
 import { For, type JSX, Show } from 'solid-js'
 import { LADDER, type LadderLevel } from '../generated/ladder'
+import { Article } from '../lib/Article'
 import { CodeBlock } from '../lib/CodeBlock'
 import { PageSection } from '../lib/PageSection'
+import { InlineCode } from '../lib/site-ui'
 import { TableOfContents } from '../lib/TableOfContents'
 import { PageIntro } from '../shell/PageIntro'
 import { usePageToc } from '../shell/SiteLayout'
@@ -66,10 +68,8 @@ const RULES: { title: string; body: JSX.Element }[] = [
       <>
         A level may import the level below it and nothing above it. The rule is
         enforced, not agreed:{' '}
-        <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-          the-ladder-only-points-down
-        </code>{' '}
-        fails the architecture gate on the first upward import.
+        <InlineCode>the-ladder-only-points-down</InlineCode> fails the
+        architecture gate on the first upward import.
       </>
     ),
   },
@@ -78,9 +78,9 @@ const RULES: { title: string; body: JSX.Element }[] = [
     body: (
       <>
         An entry is filed once, by what it *is*, and the registry records that
-        as <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">atomic</code>.
-        A chart widget is an organism even though its package calls it a
-        component; the package is where the code lives, not what the thing is.
+        as <InlineCode>atomic</InlineCode>. A chart widget is an organism even
+        though its package calls it a component; the package is where the code
+        lives, not what the thing is.
       </>
     ),
   },
@@ -104,7 +104,7 @@ function Rung(props: { level: LadderLevel; index: number }): JSX.Element {
       <div class="flex w-9 shrink-0 flex-col items-center">
         <span
           aria-hidden="true"
-          class="grid size-9 shrink-0 place-items-center rounded-full border border-outline-gray-2 bg-surface-elevation-1 text-sm-medium tabular-nums text-ink-gray-7"
+          class="grid size-9 shrink-0 place-items-center rounded-pill border border-outline-gray-2 bg-surface-elevation-1 text-sm-medium tabular-nums text-ink-gray-7"
         >
           {String(props.index + 1).padStart(2, '0')}
         </span>
@@ -116,7 +116,7 @@ function Rung(props: { level: LadderLevel; index: number }): JSX.Element {
       <div class="mb-4 min-w-0 flex-1 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-4">
         <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <h3 class="text-base-medium text-ink-gray-9">{props.level.title}</h3>
-          <code class="rounded-3 border border-outline-gray-1 bg-surface-gray-1 px-1 text-xs text-ink-gray-7">
+          <code class="rounded-control border border-outline-gray-1 bg-surface-gray-1 px-1 text-xs text-ink-gray-7">
             {props.level.package}
           </code>
           <span class="ms-auto text-caption tabular-nums text-ink-gray-7">
@@ -128,13 +128,13 @@ function Rung(props: { level: LadderLevel; index: number }): JSX.Element {
         <p class="mt-1 text-base italic text-ink-gray-8">
           “{props.level.question}”
         </p>
-        <p class="mt-2 max-w-[30rem] text-base text-ink-gray-7">
+        <p class="mt-2 site-measure text-base text-ink-gray-7">
           {props.level.blurb}
         </p>
 
         <A
           href={props.level.href}
-          class="mt-3 inline-flex items-center gap-1 rounded-3 text-interface text-ink-blue-link focus-visible:focus-ring"
+          class="mt-3 inline-flex items-center gap-1 rounded-control text-interface text-ink-blue-link focus-visible:focus-ring"
         >
           Browse {props.level.title.toLowerCase()}
           <span aria-hidden="true" class="lucide-arrow-right size-3.5" />
@@ -158,7 +158,7 @@ export function Architecture(): JSX.Element {
   ))
 
   return (
-    <div class="flex flex-col gap-8">
+    <Article>
       <PageIntro
         title="Atomic design"
         description="Five levels, one question each. Every level may import the one below it and nothing above it — that is what keeps a button from knowing what a page is."
@@ -182,45 +182,36 @@ export function Architecture(): JSX.Element {
         description="One level per entry, decided by composition rather than by package. These are the judgement calls; they live in one file and the registry records the result."
       >
         <div class="flex flex-col gap-3 text-base text-ink-gray-7">
-          <p class="max-w-[30rem]">
+          <p class="site-measure">
             <strong class="text-ink-gray-8">Atom</strong> — one element or
             control, with no other kit component inside it: a button, a mark, an
             input, a label, the scroll viewport itself.
           </p>
-          <p class="max-w-[30rem]">
+          <p class="site-measure">
             <strong class="text-ink-gray-8">Molecule</strong> — one interaction
             or small unit assembled from atoms: a field, a picker, a menu, a
             card, a list row, a dialog shell, a chart's legend.
           </p>
-          <p class="max-w-[30rem]">
+          <p class="site-measure">
             <strong class="text-ink-gray-8">Organism</strong> — a independent
             region of a page: a sidebar, a block, a chart widget, an editor, a
             full search surface.
           </p>
-          <p class="max-w-[30rem]">
+          <p class="site-measure">
             <strong class="text-ink-gray-8">Template</strong> — the arrangement
             of a page: a shell or a page layout. It may contain everything below
             and is the thing a route mounts.
           </p>
-          <p class="max-w-[30rem]">
+          <p class="site-measure">
             The package axis still says where code lives:{' '}
-            <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-              @talelk/newui-charts
-            </code>{' '}
-            ships molecules (a legend) and organisms (a bar chart) in one
-            package, and{' '}
-            <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-              @talelk/newui-atoms
-            </code>{' '}
-            ships organisms (a sidebar) beside atoms. Filing by package instead
-            would have hidden that; filing by composition is what makes the
-            levels useful.
+            <InlineCode>@talelk/newui-charts</InlineCode> ships molecules (a
+            legend) and organisms (a bar chart) in one package, and{' '}
+            <InlineCode>@talelk/newui-atoms</InlineCode> ships organisms (a
+            sidebar) beside atoms. Filing by package instead would have hidden
+            that; filing by composition is what makes the levels useful.
           </p>
-          <p class="max-w-[30rem]">
-            The classification is in{' '}
-            <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-              scripts/atomic.ts
-            </code>{' '}
+          <p class="site-measure">
+            The classification is in <InlineCode>scripts/atomic.ts</InlineCode>{' '}
             — an exhaustive map: a new public entry has no implicit level.
           </p>
         </div>
@@ -273,23 +264,21 @@ export function Architecture(): JSX.Element {
         description="One level is not visual. Formatting, selection, undo and downloads behave the same in every app, and no two apps agree on them when they each write their own — so they are a package too."
       >
         <div class="flex flex-col gap-3 text-base text-ink-gray-7">
-          <p class="max-w-[30rem]">
-            <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-              @talelk/newui-data
-            </code>{' '}
-            sits <em>beside</em> the levels rather than on them: a page uses it
-            the way it uses a component, but nothing above it is made of it. It
-            is headless by contract — it imports <code>solid-js</code> for
-            signals and nothing from the visual packages — and no component may
-            import it. Tables and virtual lists are organisms; the data package
-            supplies their state, not their pixels. That is what keeps a control
-            from acquiring an opinion about money.
+          <p class="site-measure">
+            <InlineCode>@talelk/newui-data</InlineCode> sits <em>beside</em> the
+            levels rather than on them: a page uses it the way it uses a
+            component, but nothing above it is made of it. It is headless by
+            contract — it imports <code>solid-js</code> for signals and nothing
+            from the visual packages — and no component may import it. Tables
+            and virtual lists are organisms; the data package supplies their
+            state, not their pixels. That is what keeps a control from acquiring
+            an opinion about money.
           </p>
           <CodeBlock
             code={`import { createUndo, downloadCsv, optionsOf, usd } from '@talelk/newui-data'
 import { DataProvider, createCollection } from '@talelk/newui-data/query'`}
           />
-          <p class="max-w-[30rem]">
+          <p class="site-measure">
             What renders stays in the atomic visual packages. The examples
             copied their status strip eleven times too, but it renders a banner
             with buttons — promoting it here would have made the layer lie about
@@ -328,6 +317,6 @@ import { DataProvider, createCollection } from '@talelk/newui-data/query'`}
 apps/playground · apps/starter        pages`}
         />
       </PageSection>
-    </div>
+    </Article>
   )
 }

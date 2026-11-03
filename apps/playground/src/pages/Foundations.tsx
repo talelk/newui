@@ -6,7 +6,9 @@ import {
   semanticColors,
 } from '@talelk/newui-tokens'
 import { For, type JSX } from 'solid-js'
+import { Article } from '../lib/Article'
 import { PageSection } from '../lib/PageSection'
+import { INLINE_CODE, InlineCode } from '../lib/site-ui'
 import { TableOfContents } from '../lib/TableOfContents'
 import { PageIntro } from '../shell/PageIntro'
 import { usePageToc } from '../shell/SiteLayout'
@@ -260,7 +262,7 @@ function tokenValue(
 /** An inline token name, set in the same chip the docs use for code. */
 function Token(props: { children: JSX.Element }): JSX.Element {
   return (
-    <code class="rounded-3 bg-surface-gray-2 px-1 py-px font-mono text-caption break-words text-ink-gray-8">
+    <code class={`${INLINE_CODE} text-caption break-words`}>
       {props.children}
     </code>
   )
@@ -386,12 +388,15 @@ export function Foundations(): JSX.Element {
         { id: 'radius', label: 'Radius' },
         { id: 'elevation', label: 'Elevation' },
         { id: 'focus-rings', label: 'Focus rings' },
+        { id: 'motion', label: 'Motion' },
+        { id: 'stacking', label: 'Stacking' },
+        { id: 'measure-density', label: 'Measure & density' },
       ]}
     />
   ))
 
   return (
-    <div class="flex flex-col gap-8">
+    <Article>
       <PageIntro
         title="Design tokens"
         description="The vocabulary every component is built from. Colours are semantic — surface-*, ink-*, outline-* — so light and dark come from one document attribute rather than a second set of classes."
@@ -429,7 +434,7 @@ export function Foundations(): JSX.Element {
                 </div>
               </div>
             </section>
-            <p class="max-w-[30rem] text-caption text-ink-gray-7">
+            <p class="site-measure text-caption text-ink-gray-7">
               Found under three prefixes: <Token>surface-</Token> for a fill,{' '}
               <Token>ink-</Token> for text and icons, <Token>outline-</Token>{' '}
               for a border. Step 1 is the plane nearest the page; step 10
@@ -458,7 +463,7 @@ export function Foundations(): JSX.Element {
                 )}
               </For>
             </div>
-            <p class="max-w-[30rem] text-caption text-ink-gray-7">
+            <p class="site-measure text-caption text-ink-gray-7">
               Gray is the working surface ramp. <Token>base</Token> is the page
               and card plane; <Token>elevation-*</Token> and{' '}
               <Token>sidebar</Token> are the planes that sit on it.
@@ -489,7 +494,7 @@ export function Foundations(): JSX.Element {
                 </span>
               </div>
             </div>
-            <p class="max-w-[30rem] text-caption text-ink-gray-7">
+            <p class="site-measure text-caption text-ink-gray-7">
               <Token>ink-gray-5</Token> is the disabled step. It is never used
               for body copy, and a disabled control always keeps its label.
             </p>
@@ -583,7 +588,7 @@ export function Foundations(): JSX.Element {
                 </tbody>
               </table>
             </section>
-            <p class="max-w-[30rem] text-caption text-ink-gray-7">
+            <p class="site-measure text-caption text-ink-gray-7">
               Wash is a selected or informational fill; outline is a removable
               filter or a quiet chip; solid is one emphasised status. The label
               always names the state — colour never carries it alone.
@@ -601,7 +606,7 @@ export function Foundations(): JSX.Element {
           <ThemeProof title="Light" layer={semanticColors.light} />
           <ThemeProof title="Dark" layer={semanticColors.dark} />
         </div>
-        <p class="mt-field-gap max-w-[30rem] text-caption text-ink-gray-7">
+        <p class="mt-field-gap site-measure text-caption text-ink-gray-7">
           The masthead stores the reader's choice — light, dark or the system
           preference — and the CSS <code>color-scheme</code> property follows,
           so native scrollbars and controls match the page.
@@ -658,7 +663,7 @@ export function Foundations(): JSX.Element {
           </For>
           <div class="border-b border-outline-gray-1" />
         </div>
-        <p class="mt-field-gap max-w-[30rem] text-caption text-ink-gray-7">
+        <p class="mt-field-gap site-measure text-caption text-ink-gray-7">
           Numbers that can sit in a column — money, counts, percentages — get{' '}
           <Token>tabular-nums</Token>, so the figures line up and a changing
           value does not move its neighbours.
@@ -817,7 +822,7 @@ export function Foundations(): JSX.Element {
             )}
           </For>
         </div>
-        <p class="mt-field-gap max-w-[30rem] text-caption text-ink-gray-7">
+        <p class="mt-field-gap site-measure text-caption text-ink-gray-7">
           Dialogs, popovers and menus take <Token>shadow-xl</Token>; a hover
           lift on a control takes <Token>shadow-sm</Token>. Dark mode swaps each
           step for its dark counterpart instead of reusing a light shadow.
@@ -852,18 +857,65 @@ export function Foundations(): JSX.Element {
             </For>
           </div>
         </div>
-        <p class="mt-field-gap max-w-[30rem] text-caption text-ink-gray-7">
+        <p class="mt-field-gap site-measure text-caption text-ink-gray-7">
           A control's ring follows its theme: a red field draws the red ring, a
           neutral one the default. Tab through this page to see the live
           version.
         </p>
       </PageSection>
 
-      <p class="max-w-[30rem] text-caption text-ink-gray-7">
+      <PageSection
+        id="motion"
+        title="Motion"
+        description="Durations and easings are named speeds, never numeric literals. Every transition pairs a duration token with an ease token and turns off under reduced motion."
+      >
+        <div class="flex flex-wrap gap-2">
+          <For
+            each={[
+              'duration-instant',
+              'duration-fast',
+              'duration-base',
+              'duration-moderate',
+              'duration-slow',
+              'duration-progress',
+              'ease-standard',
+              'ease-out',
+            ]}
+          >
+            {(name) => <InlineCode>{name}</InlineCode>}
+          </For>
+        </div>
+      </PageSection>
+
+      <PageSection
+        id="stacking"
+        title="Stacking"
+        description="Four named layers: raised, floating, overlay, top. Popups float, modals overlay, toasts and tooltips sit on top — a numeric z-index is a bug."
+      >
+        <div class="flex flex-wrap gap-2">
+          <For each={['z-raised', 'z-floating', 'z-overlay', 'z-top']}>
+            {(name) => <InlineCode>{name}</InlineCode>}
+          </For>
+        </div>
+      </PageSection>
+
+      <PageSection
+        id="measure-density"
+        title="Measure & density"
+        description="Long-form text keeps one 30rem measure. Controls share one density table per size, so a button, a field and a select in one row resolve to the same height."
+      >
+        <p class="site-measure text-base leading-relaxed text-ink-gray-8">
+          This paragraph sits on the shared measure. Peer controls consume the
+          shared size table — retuning a size moves every peer at once, which is
+          what keeps a form row aligned.
+        </p>
+      </PageSection>
+
+      <p class="site-measure text-caption text-ink-gray-7">
         The data lives in <Token>@talelk/newui-tokens</Token>; the utilities
         live in <Token>@talelk/newui-tailwind</Token>. A token that is not in
         either package does not reach a component.
       </p>
-    </div>
+    </Article>
   )
 }

@@ -12,7 +12,7 @@ import {
   sparklineLinePath,
   sparklinePoints,
 } from './sparkline'
-import { useChartTokens } from './tokens'
+import { CARD_SURFACE, useChartTokens } from './tokens'
 import type { NumberCardProps } from './types'
 
 // A page full of these should cost nothing but HTML: no echarts, sparkline
@@ -96,10 +96,7 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
         display: 'flex',
         'flex-direction': 'column',
         margin: '0',
-        padding: 'var(--spacing-card-pad)',
-        border: '1px solid var(--outline-gray-1)',
-        'border-radius': 'var(--radius-card)',
-        background: 'var(--surface-elevation-1)',
+        ...CARD_SURFACE,
         color: 'var(--ink-gray-9)',
       }}
     >
@@ -109,7 +106,7 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
           'flex-wrap': 'wrap',
           'align-items': 'flex-start',
           'justify-content': 'space-between',
-          gap: '0.5rem',
+          gap: 'var(--spacing-control-gap)',
         }}
       >
         <figcaption
@@ -117,7 +114,7 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
           style={{
             flex: '1 1 auto',
             'min-width': '0',
-            'font-size': '0.875rem',
+            'font-size': 'var(--text-interface)',
             'line-height': '1.25rem',
             'font-weight': '500',
             color: 'var(--ink-gray-7)',
@@ -135,10 +132,10 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
               gap: '4px',
               'flex-shrink': '0',
               padding: '2px 6px',
-              'border-radius': '9999px',
+              'border-radius': 'var(--radius-pill)',
               'background-color': TONE_SURFACE[tone()],
               color: TONE_COLOR[tone()],
-              'font-size': '0.75rem',
+              'font-size': 'var(--text-caption)',
               'line-height': '1rem',
               'font-weight': '500',
               'font-variant-numeric': 'tabular-nums',
@@ -158,7 +155,7 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
           role="status"
           style={{
             'margin-top': '8px',
-            'font-size': '0.875rem',
+            'font-size': 'var(--text-interface)',
             color: 'var(--ink-red-8)',
           }}
         >
@@ -261,7 +258,7 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
               aria-valuenow={Math.round(value())}
               style={{
                 height: '6px',
-                'border-radius': '9999px',
+                'border-radius': 'var(--radius-pill)',
                 'background-color': 'var(--surface-gray-2)',
                 overflow: 'hidden',
                 'margin-bottom': '8px',
@@ -271,7 +268,7 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
                 style={{
                   height: '100%',
                   width: `${value()}%`,
-                  'border-radius': '9999px',
+                  'border-radius': 'var(--radius-pill)',
                   'background-color': color(),
                 }}
               />
@@ -282,9 +279,12 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
         <Show when={isEmpty()}>
           <div
             data-slot="number-card-empty"
-            style={{ 'font-size': '0.75rem', color: 'var(--ink-gray-7)' }}
+            style={{
+              'font-size': 'var(--text-caption)',
+              color: 'var(--ink-gray-7)',
+            }}
           >
-            No data
+            Nothing here yet
           </div>
         </Show>
 
@@ -292,7 +292,7 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
           <div
             data-slot="number-card-caption"
             style={{
-              'font-size': '0.75rem',
+              'font-size': 'var(--text-caption)',
               'line-height': '1rem',
               color: 'var(--ink-gray-7)',
             }}
@@ -366,7 +366,7 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
                       top: `calc(${point().y}% - 3px)`,
                       width: '6px',
                       height: '6px',
-                      'border-radius': '9999px',
+                      'border-radius': 'var(--radius-pill)',
                       'background-color': color(),
                       border: '1px solid var(--surface-elevation-1)',
                       'box-sizing': 'border-box',

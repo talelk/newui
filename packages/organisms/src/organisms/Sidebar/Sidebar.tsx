@@ -1,5 +1,6 @@
 import {
   Icon,
+  IconButton,
   type IconProp,
   TextInput,
   TooltipContent,
@@ -11,7 +12,9 @@ import {
   createControllableSignal,
   createId,
   createMediaQuery,
+  screenDown,
 } from '@talelk/newui-atoms/internal'
+import { card } from '@talelk/newui-molecules'
 import {
   type Accessor,
   type Component,
@@ -28,7 +31,7 @@ import {
 import { Dynamic } from 'solid-js/web'
 
 /** Width below which an uncontrolled sidebar collapses on its own. */
-const COLLAPSE_QUERY = '(max-width: 639px)'
+const COLLAPSE_QUERY = screenDown('sm')
 
 interface SidebarContextValue {
   collapsed: Accessor<boolean>
@@ -121,11 +124,11 @@ export const Sidebar: ParentComponent<SidebarProps> = (props) => {
         aria-label={local.ariaLabel ?? 'Main'}
         style={{
           width: shouldCollapse()
-            ? (local.collapsedWidth ?? '3rem')
-            : (local.width ?? '15rem'),
+            ? (local.collapsedWidth ?? '3.5rem')
+            : (local.width ?? '16rem'),
         }}
         class={cn(
-          'flex h-full shrink-0 flex-col overflow-x-hidden bg-surface-sidebar transition-[width] duration-slow ease-in-out',
+          'flex h-full shrink-0 flex-col overflow-x-hidden border-e border-outline-gray-1 bg-surface-sidebar transition-[width] duration-slow ease-in-out',
           local.class,
         )}
       >
@@ -174,7 +177,7 @@ export const SidebarHeader: ParentComponent<SidebarHeaderProps> = (props) => {
     >
       <div class="flex min-w-0 flex-1 items-center">
         <Show when={showLogo()}>
-          <div class="size-7 shrink-0 overflow-hidden rounded-[6px]">
+          <div class="size-7 shrink-0 overflow-hidden rounded-control">
             <Show
               when={local.logo}
               fallback={
@@ -245,7 +248,7 @@ export const SidebarLabel: ParentComponent<SidebarLabelProps> = (props) => {
     >
       <div
         class={cn(
-          'text-xs font-medium text-ink-gray-6',
+          'text-sm-medium leading-tighter text-ink-gray-6',
           collapsed() ? 'w-0 overflow-hidden opacity-0' : 'w-auto opacity-100',
         )}
       >
@@ -258,7 +261,7 @@ export const SidebarLabel: ParentComponent<SidebarLabelProps> = (props) => {
       </Show>
       <Show when={local.divider && collapsed()}>
         <div aria-hidden="true" class="absolute inset-0 flex items-center">
-          <hr class="w-full border-t border-ink-gray-3" />
+          <hr class="w-full border-t border-outline-gray-1" />
         </div>
       </Show>
     </div>
@@ -682,7 +685,8 @@ export function SidebarCard(props: SidebarCardProps): JSX.Element {
         data-slot="sidebar-card"
         data-theme={theme()}
         class={cn(
-          'flex flex-col gap-control-gap rounded-card border border-outline-gray-2 bg-surface-base p-card-pad-compact text-ink-gray-8',
+          card({ padding: 'sm' }),
+          'gap-control-gap text-ink-gray-8',
           local.class,
         )}
       >
@@ -703,14 +707,13 @@ export function SidebarCard(props: SidebarCardProps): JSX.Element {
             </Show>
           </div>
           <Show when={local.dismissible}>
-            <button
-              type="button"
-              aria-label="Dismiss"
+            <IconButton
+              label="Dismiss"
+              icon="lucide-x"
+              size="xs"
               onClick={() => local.onDismiss?.()}
-              class="-m-1 shrink-0 rounded-3 p-1 text-ink-gray-5 transition-colors hover:text-ink-gray-8"
-            >
-              <span class="lucide-x size-3.5" aria-hidden="true" />
-            </button>
+              class="-m-1 shrink-0"
+            />
           </Show>
         </div>
         <Show when={local.action}>
@@ -720,7 +723,7 @@ export function SidebarCard(props: SidebarCardProps): JSX.Element {
               onClick={() =>
                 action().onClick?.({ dismiss: () => local.onDismiss?.() })
               }
-              class="w-fit rounded-3 px-1.5 py-0.5 text-sm-medium text-ink-blue-link transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring-blue motion-reduce:transition-none"
+              class="w-fit rounded-control px-1.5 py-0.5 text-sm-medium text-ink-blue-link transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none"
             >
               {action().label}
             </button>

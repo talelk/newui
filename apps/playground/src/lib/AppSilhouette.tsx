@@ -13,7 +13,7 @@ export type AppSilhouetteKind =
   | 'settings'
 
 const bar = 'h-1.5 rounded-1 bg-surface-gray-3'
-const dot = 'size-1.5 shrink-0 rounded-full bg-surface-gray-4'
+const dot = 'size-1.5 shrink-0 rounded-pill bg-surface-gray-4'
 
 /**
  * One wireframe per screen shape, drawn in tokens only. Static decor: these
@@ -24,11 +24,11 @@ const SHAPES: Record<AppSilhouetteKind, () => JSX.Element> = {
   analytics: () => (
     <div class="flex min-h-0 flex-1 flex-col gap-1.5">
       <div class="flex gap-1.5">
-        <span class="h-6 flex-1 rounded-3 border border-outline-gray-1" />
-        <span class="h-6 flex-1 rounded-3 border border-outline-gray-1" />
-        <span class="h-6 flex-1 rounded-3 border border-outline-gray-1" />
+        <span class="h-6 flex-1 rounded-control border border-outline-gray-1" />
+        <span class="h-6 flex-1 rounded-control border border-outline-gray-1" />
+        <span class="h-6 flex-1 rounded-control border border-outline-gray-1" />
       </div>
-      <div class="flex min-h-0 flex-1 items-end gap-1 rounded-3 border border-outline-gray-1 p-1.5">
+      <div class="flex min-h-0 flex-1 items-end gap-1 rounded-control border border-outline-gray-1 p-1.5">
         <For each={[5, 9, 7, 12, 8, 14, 11]}>
           {(height, index) => (
             <span
@@ -44,7 +44,7 @@ const SHAPES: Record<AppSilhouetteKind, () => JSX.Element> = {
     <div class="flex min-h-0 flex-1 gap-1.5">
       <For each={[3, 2, 4]}>
         {(cards) => (
-          <div class="flex min-h-0 flex-1 flex-col gap-1 rounded-3 border border-outline-gray-1 p-1.5">
+          <div class="flex min-h-0 flex-1 flex-col gap-1 rounded-control border border-outline-gray-1 p-1.5">
             <For each={[...Array(cards)]}>
               {() => <span class="h-3 w-full rounded-2 bg-surface-gray-2" />}
             </For>
@@ -54,7 +54,7 @@ const SHAPES: Record<AppSilhouetteKind, () => JSX.Element> = {
     </div>
   ),
   table: () => (
-    <div class="flex min-h-0 flex-1 flex-col gap-1 rounded-3 border border-outline-gray-1 p-1.5">
+    <div class="flex min-h-0 flex-1 flex-col gap-1 rounded-control border border-outline-gray-1 p-1.5">
       <For each={[0, 1, 2, 3]}>
         {() => (
           <span class="flex flex-1 items-center gap-1.5">
@@ -68,7 +68,7 @@ const SHAPES: Record<AppSilhouetteKind, () => JSX.Element> = {
   ),
   mail: () => (
     <div class="flex min-h-0 flex-1 gap-1.5">
-      <div class="flex min-h-0 flex-1 flex-col gap-1 rounded-3 border border-outline-gray-1 p-1.5">
+      <div class="flex min-h-0 flex-1 flex-col gap-1 rounded-control border border-outline-gray-1 p-1.5">
         <For each={[0, 1, 2]}>
           {() => (
             <span class="flex items-center gap-1.5">
@@ -78,7 +78,7 @@ const SHAPES: Record<AppSilhouetteKind, () => JSX.Element> = {
           )}
         </For>
       </div>
-      <div class="flex min-h-0 flex-[1.4] flex-col gap-1.5 rounded-3 border border-outline-gray-1 p-1.5">
+      <div class="flex min-h-0 flex-[1.4] flex-col gap-1.5 rounded-control border border-outline-gray-1 p-1.5">
         <span class={`w-2/3 ${bar}`} />
         <span class={`w-full ${bar}`} />
         <span class={`w-5/6 ${bar}`} />
@@ -86,7 +86,7 @@ const SHAPES: Record<AppSilhouetteKind, () => JSX.Element> = {
     </div>
   ),
   compose: () => (
-    <div class="flex min-h-0 flex-1 flex-col gap-1.5 rounded-3 border border-outline-gray-1 p-1.5">
+    <div class="flex min-h-0 flex-1 flex-col gap-1.5 rounded-control border border-outline-gray-1 p-1.5">
       <span class={`w-1/3 ${bar}`} />
       <span class={`w-full ${bar}`} />
       <span class={`w-full ${bar}`} />
@@ -98,7 +98,7 @@ const SHAPES: Record<AppSilhouetteKind, () => JSX.Element> = {
     <div class="grid min-h-0 flex-1 grid-cols-3 gap-1.5">
       <For each={[0, 1, 2, 3, 4, 5]}>
         {() => (
-          <span class="flex flex-col justify-end gap-1 rounded-3 border border-outline-gray-1 p-1.5">
+          <span class="flex flex-col justify-end gap-1 rounded-control border border-outline-gray-1 p-1.5">
             <span class={`w-full ${bar}`} />
           </span>
         )}
@@ -109,8 +109,8 @@ const SHAPES: Record<AppSilhouetteKind, () => JSX.Element> = {
     <div class="grid min-h-0 flex-1 grid-cols-2 gap-1.5">
       <For each={[0, 1, 2, 3]}>
         {() => (
-          <span class="flex flex-col gap-1 rounded-3 border border-outline-gray-1 p-1.5">
-            <span class="size-2 rounded-full bg-surface-gray-4" />
+          <span class="flex flex-col gap-1 rounded-control border border-outline-gray-1 p-1.5">
+            <span class="size-2 rounded-pill bg-surface-gray-4" />
             <span class={`w-3/4 ${bar}`} />
           </span>
         )}
@@ -119,8 +119,8 @@ const SHAPES: Record<AppSilhouetteKind, () => JSX.Element> = {
   ),
   auth: () => (
     <div class="flex min-h-0 flex-1 gap-1.5">
-      <span class="flex-1 rounded-3 border border-outline-gray-1 bg-surface-gray-2" />
-      <span class="flex flex-1 items-center justify-center rounded-3 border border-outline-gray-1 p-2">
+      <span class="flex-1 rounded-control border border-outline-gray-1 bg-surface-gray-2" />
+      <span class="flex flex-1 items-center justify-center rounded-control border border-outline-gray-1 p-2">
         <span class="flex w-full flex-col gap-1">
           <span class={`w-full ${bar}`} />
           <span class={`w-full ${bar}`} />
@@ -130,7 +130,7 @@ const SHAPES: Record<AppSilhouetteKind, () => JSX.Element> = {
     </div>
   ),
   threads: () => (
-    <div class="flex min-h-0 flex-1 flex-col gap-1 rounded-3 border border-outline-gray-1 p-1.5">
+    <div class="flex min-h-0 flex-1 flex-col gap-1 rounded-control border border-outline-gray-1 p-1.5">
       <For each={[0, 1, 2, 3]}>
         {() => (
           <span class="flex flex-1 items-center gap-1.5">
@@ -144,11 +144,11 @@ const SHAPES: Record<AppSilhouetteKind, () => JSX.Element> = {
   ),
   settings: () => (
     <div class="flex min-h-0 flex-1 gap-1.5">
-      <span class="flex w-1/4 flex-col justify-center gap-1 rounded-3 border border-outline-gray-1 p-1.5">
+      <span class="flex w-1/4 flex-col justify-center gap-1 rounded-control border border-outline-gray-1 p-1.5">
         <span class={`w-full ${bar}`} />
         <span class={`w-2/3 ${bar}`} />
       </span>
-      <span class="flex min-h-0 flex-1 flex-col justify-center gap-1.5 rounded-3 border border-outline-gray-1 p-1.5">
+      <span class="flex min-h-0 flex-1 flex-col justify-center gap-1.5 rounded-control border border-outline-gray-1 p-1.5">
         <span class={`w-1/2 ${bar}`} />
         <span class="h-3 w-full rounded-2 border border-outline-gray-1" />
         <span class="h-3 w-2/3 rounded-2 border border-outline-gray-1" />
@@ -168,7 +168,7 @@ export function AppSilhouette(props: { kind: AppSilhouetteKind }): JSX.Element {
   return (
     <div
       aria-hidden="true"
-      class="flex aspect-[16/9] w-full flex-col gap-1.5 rounded-3 border border-outline-gray-1 bg-surface-base p-2"
+      class="flex aspect-[16/9] w-full flex-col gap-1.5 rounded-control border border-outline-gray-1 bg-surface-base p-2"
     >
       <span class="h-1.5 w-10 shrink-0 rounded-1 bg-surface-gray-3" />
       {SHAPES[props.kind]()}

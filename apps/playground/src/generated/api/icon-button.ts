@@ -37,6 +37,12 @@ export const API = {
       "optional": true
     },
     {
+      "name": "loading",
+      "type": "boolean",
+      "optional": true,
+      "description": "Busy: shows the shared spinner, keeps resting colours, blocks clicks."
+    },
+    {
       "name": "href",
       "type": "string",
       "optional": true,

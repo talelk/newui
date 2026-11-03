@@ -118,7 +118,7 @@ export function Masthead(props: {
     onCleanup(() => window.removeEventListener('keydown', find))
   })
   return (
-    <header class="sticky top-0 z-30 border-b border-outline-gray-1 bg-surface-base">
+    <header class="sticky top-0 z-floating border-b border-outline-gray-1 bg-surface-base">
       <div class="flex min-h-12 flex-wrap items-center gap-1 px-2 sm:gap-2 sm:px-4">
         <button
           ref={props.menuRef}
@@ -126,22 +126,26 @@ export function Masthead(props: {
           aria-label="Open navigation"
           aria-haspopup="dialog"
           onClick={() => props.onMenu()}
-          class="grid size-10 shrink-0 place-items-center rounded-3 focus-visible:focus-ring lg:hidden"
+          class="grid size-10 shrink-0 place-items-center rounded-control focus-visible:focus-ring lg:hidden"
         >
           <span aria-hidden="true" class="lucide-menu size-4" />
         </button>
         <A
           href="/"
           aria-label="newui home"
-          class="flex shrink-0 items-center gap-2 rounded-3 focus-visible:focus-ring"
+          class="flex shrink-0 items-center gap-2 rounded-control focus-visible:focus-ring"
         >
-          <img src={assetUrl('favicon.svg')} alt="" class="size-6 rounded-3" />
+          <img
+            src={assetUrl('favicon.svg')}
+            alt=""
+            class="size-6 rounded-control"
+          />
           <span class="hidden font-semibold sm:inline">newui</span>
         </A>
         <A
           href="/changelog"
           aria-label={`Version ${LIBRARY_VERSION} — changelog`}
-          class="hidden shrink-0 rounded-full border border-outline-gray-1 px-1.5 py-0.5 text-caption text-ink-gray-6 hover:bg-surface-gray-1 hover:text-ink-gray-8 focus-visible:focus-ring sm:block"
+          class="hidden shrink-0 rounded-pill border border-outline-gray-1 px-1.5 py-0.5 text-caption text-ink-gray-6 hover:bg-surface-gray-1 hover:text-ink-gray-8 focus-visible:focus-ring sm:block"
         >
           v{LIBRARY_VERSION}
         </A>
@@ -155,7 +159,7 @@ export function Masthead(props: {
           />
           <A
             href={section()?.items[0]?.href ?? '/'}
-            class="rounded-3 hover:underline focus-visible:focus-ring"
+            class="rounded-control hover:underline focus-visible:focus-ring"
           >
             {section()?.title}
           </A>
@@ -190,11 +194,11 @@ export function Masthead(props: {
           aria-label="Find a page"
           aria-haspopup="dialog"
           onClick={() => setFinding(true)}
-          class="ms-auto flex size-10 shrink-0 items-center justify-center gap-2 rounded-4 text-ink-gray-7 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none sm:h-8 sm:w-auto sm:justify-start sm:border sm:border-outline-gray-1 sm:bg-surface-gray-1 sm:ps-2.5 sm:pe-1.5 lg:ms-0"
+          class="ms-auto flex size-10 shrink-0 items-center justify-center gap-2 rounded-card text-ink-gray-7 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring motion-reduce:transition-none sm:h-8 sm:w-auto sm:justify-start sm:border sm:border-outline-gray-1 sm:bg-surface-gray-1 sm:ps-2.5 sm:pe-1.5 lg:ms-0"
         >
           <span aria-hidden="true" class="lucide-search size-4 shrink-0" />
           <span class="hidden text-caption sm:inline">Find a page</span>
-          <kbd class="hidden rounded-3 border border-outline-gray-1 bg-surface-base px-1 text-xs text-ink-gray-7 sm:inline">
+          <kbd class="hidden rounded-control border border-outline-gray-1 bg-surface-base px-1 text-xs text-ink-gray-7 sm:inline">
             ⌘ K
           </kbd>
         </button>
@@ -204,7 +208,7 @@ export function Masthead(props: {
           target="_blank"
           rel="noreferrer"
           aria-label="Source on GitHub"
-          class="grid size-10 shrink-0 place-items-center rounded-3 text-ink-gray-6 hover:bg-surface-gray-2 focus-visible:focus-ring"
+          class="grid size-10 shrink-0 place-items-center rounded-control text-ink-gray-6 hover:bg-surface-gray-2 focus-visible:focus-ring"
         >
           <GithubMark class="size-4" />
         </a>

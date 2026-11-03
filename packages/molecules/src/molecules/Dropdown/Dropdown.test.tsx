@@ -29,6 +29,18 @@ describe('Dropdown', () => {
     expect(onSelect).toHaveBeenCalledWith('edit')
   })
 
+  it('disables the trigger and stays closed', async () => {
+    render(() => (
+      <Dropdown options={OPTIONS} disabled>
+        Actions
+      </Dropdown>
+    ))
+    const trigger = screen.getByRole('button', { name: /Actions/ })
+    expect((trigger as HTMLButtonElement).disabled).toBe(true)
+    await userEvent.click(trigger)
+    expect(screen.queryByRole('menu')).toBeNull()
+  })
+
   it('marks a disabled option', async () => {
     render(() => <Dropdown options={OPTIONS}>Actions</Dropdown>)
     await userEvent.click(screen.getByRole('button', { name: /Actions/ }))

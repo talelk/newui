@@ -39,7 +39,7 @@ export function StarterDevtoolsPanel(): JSX.Element {
         </div>
         <button
           type="button"
-          class="shrink-0 rounded-3 border border-current/20 px-2 py-1 text-caption transition-opacity hover:opacity-80 focus-visible:focus-ring"
+          class="shrink-0 rounded-control border border-current/20 px-2 py-1 text-caption transition-opacity hover:opacity-80 focus-visible:focus-ring"
           onClick={clearStarterEvents}
         >
           Clear
@@ -49,7 +49,7 @@ export function StarterDevtoolsPanel(): JSX.Element {
       <Show
         when={starterEventLog().length > 0}
         fallback={
-          <div class="grid flex-1 place-items-center rounded-3 border border-current/20 border-dashed p-4 text-center">
+          <div class="grid flex-1 place-items-center rounded-control border border-current/20 border-dashed p-4 text-center">
             <p class="max-w-64 opacity-70">
               Interact with the app. Filters, records, sessions and settings
               land here as typed events.
@@ -60,7 +60,7 @@ export function StarterDevtoolsPanel(): JSX.Element {
         <ul class="flex min-h-0 flex-1 flex-col gap-2 overflow-auto pe-1">
           <For each={starterEventLog()}>
             {(event) => (
-              <li class="rounded-3 border border-current/20 p-2">
+              <li class="rounded-control border border-current/20 p-2">
                 <div class="flex items-baseline justify-between gap-2">
                   <code class="truncate font-mono font-semibold">
                     {event.name}

@@ -218,7 +218,7 @@ export const AccordionTrigger: ParentComponent<AccordionTriggerProps> = (
             disabled: item.disabled(),
           })}
           data-slot="accordion-indicator"
-          class="grid size-4 shrink-0 place-items-center text-ink-gray-5 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-disabled:text-ink-gray-4 group-data-[state=open]:rotate-180 group-hover:text-ink-gray-8 motion-reduce:transition-none"
+          class="grid size-4 shrink-0 place-items-center text-ink-gray-5 transition-transform duration-moderate ease-out group-disabled:text-ink-gray-4 group-data-[state=open]:rotate-180 group-hover:text-ink-gray-8 motion-reduce:transition-none"
         >
           <Icon icon="lucide-chevron-down" class="size-4" />
         </span>

@@ -1,4 +1,10 @@
-import { createMediaQuery, UIProvider, useUI } from '@talelk/newui-atoms'
+import {
+  createMediaQuery,
+  IconButton,
+  screenUp,
+  UIProvider,
+  useUI,
+} from '@talelk/newui-atoms'
 import { closeDialog, showDialog } from '@talelk/newui-atoms/internal'
 import { type BreadcrumbItem, Breadcrumbs } from '@talelk/newui-molecules'
 import { AppSidebar, type AppSidebarGroup } from '@talelk/newui-organisms'
@@ -67,7 +73,7 @@ export interface AppShellProps {
   class?: string
 }
 
-const DESKTOP = '(min-width: 1024px)'
+const DESKTOP = screenUp('lg')
 
 export function AppShell(props: AppShellProps): JSX.Element {
   const desktop = createMediaQuery(DESKTOP)
@@ -133,12 +139,10 @@ export function AppShell(props: AppShellProps): JSX.Element {
       <Show when={desktop()}>
         <div
           data-slot="app-shell-sidebar"
-          class={`h-full shrink-0 overflow-hidden border-e border-outline-gray-1 bg-surface-sidebar transition-[width] duration-base motion-reduce:transition-none ${collapsed() ? 'w-14' : 'w-64'}`}
+          class="h-full shrink-0 overflow-hidden bg-surface-sidebar"
         >
           <AppSidebar
             {...sidebarProps()}
-            width="100%"
-            collapsedWidth="100%"
             collapsed={collapsed()}
             onCollapsedChange={setCollapsed}
           />
@@ -153,17 +157,16 @@ export function AppShell(props: AppShellProps): JSX.Element {
           >
             <div class="flex min-w-0 items-center gap-2">
               <Show when={!desktop()}>
-                <button
+                <IconButton
                   ref={trigger}
-                  type="button"
-                  aria-label="Open application navigation"
+                  label="Open application navigation"
+                  icon="lucide-menu"
+                  size="lg"
                   aria-haspopup="dialog"
                   aria-expanded={drawerOpen()}
                   onClick={openDrawer}
-                  class="grid size-10 shrink-0 place-items-center rounded-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
-                >
-                  <span aria-hidden="true" class="lucide-menu size-4" />
-                </button>
+                  class="shrink-0"
+                />
                 <span class="min-w-0 truncate font-medium">{title()}</span>
               </Show>
             </div>
@@ -222,25 +225,25 @@ export function AppShell(props: AppShellProps): JSX.Element {
           const control = target.closest('a, button, [data-navigates]')
           if (control && !control.closest('[data-keep-drawer]')) closeDrawer()
         }}
-        class="open:flex m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-2rem)] flex-col overflow-hidden border-e border-outline-gray-1 bg-surface-gray-1 p-0 text-ink-gray-9 shadow-xl backdrop:bg-black-overlay-200"
+        class="open:flex m-0 h-dvh max-h-none w-64 max-w-[calc(100vw-2rem)] flex-col overflow-hidden border-e border-outline-gray-1 bg-surface-sidebar p-0 text-ink-gray-9 shadow-dialog backdrop:bg-surface-scrim"
       >
-        <div class="flex h-10 shrink-0 items-center justify-between border-b border-outline-gray-1 ps-3 pe-2">
-          <span class="text-xs font-medium text-ink-gray-7">Navigation</span>
-          <button
-            type="button"
-            aria-label="Close navigation"
+        <div class="flex h-12 shrink-0 items-center justify-between border-b border-outline-gray-1 ps-3 pe-2">
+          <span class="text-sm-medium leading-tighter text-ink-gray-6">
+            Navigation
+          </span>
+          <IconButton
+            label="Close navigation"
+            icon="lucide-x"
+            size="lg"
             onClick={closeDrawer}
-            class="grid size-10 shrink-0 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
-          >
-            <span aria-hidden="true" class="lucide-x size-4" />
-          </button>
+            class="shrink-0"
+          />
         </div>
         <UIProvider dir={ui?.dir()} portalTarget={drawerPortal}>
           <div class="flex min-h-0 flex-1 flex-col">
             <AppSidebar
               {...sidebarProps()}
               width="100%"
-              collapsedWidth="100%"
               collapsed={false}
               collapsible={false}
             />

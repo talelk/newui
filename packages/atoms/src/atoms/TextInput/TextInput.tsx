@@ -1,5 +1,13 @@
 import { type JSX, Show, splitProps } from 'solid-js'
-import { fieldSizes } from '../../lib/control-styles'
+import {
+  controlGlyphSizes,
+  disabledField,
+  fieldFocus,
+  fieldPads,
+  fieldSizes,
+  invalidField,
+  textFieldVariants,
+} from '../../lib/control-styles'
 import { Field, useField } from '../../lib/field'
 import { cn } from '../../lib/tv'
 
@@ -29,14 +37,7 @@ export interface TextInputProps
   required?: boolean
 }
 
-const PAD: Record<InputSize, [string, string, string]> = {
-  // [no adornment, with prefix, with suffix]
-  xs: ['ps-1.5 pe-1.5', 'ps-7 pe-1.5', 'ps-1.5 pe-7'],
-  sm: ['ps-2 pe-2', 'ps-8 pe-2', 'ps-2 pe-8'],
-  md: ['ps-2.5 pe-2.5', 'ps-9 pe-2.5', 'ps-2.5 pe-9'],
-  lg: ['ps-3 pe-3', 'ps-10 pe-3', 'ps-3 pe-10'],
-}
-
+// Adornment inset per size: the field pad's leading/trailing step.
 const PREFIX_PAD: Record<InputSize, string> = {
   xs: 'ps-1.5',
   sm: 'ps-2',
@@ -49,14 +50,6 @@ const SUFFIX_PAD: Record<InputSize, string> = {
   sm: 'pe-2',
   md: 'pe-2.5',
   lg: 'pe-3',
-}
-
-const VARIANT: Record<InputVariant, string> = {
-  subtle:
-    'border border-surface-gray-2 bg-surface-gray-2 placeholder:text-ink-gray-6 hover:border-outline-gray-3 hover:bg-surface-gray-3 focus:border-outline-gray-4 focus:bg-surface-base focus:shadow-sm',
-  outline:
-    'border border-outline-gray-2 bg-surface-base placeholder:text-ink-gray-6 hover:border-outline-gray-3 hover:shadow-sm focus:border-outline-gray-4 focus:bg-surface-base focus:shadow-sm',
-  ghost: 'border-0 bg-transparent placeholder:text-ink-gray-6',
 }
 
 type ControlProps = Omit<
@@ -80,8 +73,8 @@ function TextInputControl(props: ControlProps): JSX.Element {
   const size = () => local.size ?? 'sm'
   const pad = () =>
     cn(
-      PAD[size()][local.prefix ? 1 : 0],
-      local.suffix && PAD[size()][2].split(' ')[1],
+      local.prefix ? fieldPads[size()].prefix : fieldPads[size()].base,
+      local.suffix && fieldPads[size()].suffix.split(' ')[1],
     )
 
   const input = (
@@ -96,13 +89,13 @@ function TextInputControl(props: ControlProps): JSX.Element {
       value={local.value}
       disabled={local.disabled}
       class={cn(
-        'w-full leading-tighter transition-colors outline-none focus-visible:focus-ring-blue aria-[invalid=true]:border-outline-red-6',
+        'w-full text-ink-gray-8 leading-tighter transition-colors',
+        fieldFocus,
+        invalidField,
+        disabledField,
         fieldSizes[size()],
         pad(),
-        VARIANT[local.variant ?? 'outline'],
-        local.disabled ? 'text-ink-gray-6' : 'text-ink-gray-8',
-        local.disabled &&
-          'border bg-surface-gray-1 placeholder:text-ink-gray-3 hover:shadow-none',
+        textFieldVariants[local.variant ?? 'outline'],
         local.class,
       )}
       aria-invalid={field?.hasError() ? 'true' : undefined}
@@ -118,24 +111,36 @@ function TextInputControl(props: ControlProps): JSX.Element {
         <Show when={local.prefix}>
           <span
             class={cn(
-              'pointer-events-none absolute inset-y-0 start-0 flex items-center',
-              local.disabled ? 'text-ink-gray-6' : 'text-ink-gray-8',
+              'pointer-events-none absolute inset-y-0 start-0 flex items-center text-ink-gray-8',
               PREFIX_PAD[size()],
             )}
           >
-            {local.prefix}
+            <span
+              class={cn(
+                'flex items-center justify-center [&>*]:shrink-0 [&_svg]:size-full',
+                controlGlyphSizes[size()],
+              )}
+            >
+              {local.prefix}
+            </span>
           </span>
         </Show>
         {input}
         <Show when={local.suffix}>
           <span
             class={cn(
-              'pointer-events-none absolute inset-y-0 end-0 flex items-center',
-              local.disabled ? 'text-ink-gray-6' : 'text-ink-gray-8',
+              'pointer-events-none absolute inset-y-0 end-0 flex items-center text-ink-gray-8',
               SUFFIX_PAD[size()],
             )}
           >
-            {local.suffix}
+            <span
+              class={cn(
+                'flex items-center justify-center [&>*]:shrink-0 [&_svg]:size-full',
+                controlGlyphSizes[size()],
+              )}
+            >
+              {local.suffix}
+            </span>
           </span>
         </Show>
       </div>

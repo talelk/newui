@@ -1,5 +1,9 @@
 import { Icon, type IconProp } from '@talelk/newui-atoms'
-import { cn } from '@talelk/newui-atoms/internal'
+import {
+  cn,
+  fieldFocusWithin,
+  listboxLabel,
+} from '@talelk/newui-atoms/internal'
 import { Dialog } from '@talelk/newui-molecules'
 import {
   type Accessor,
@@ -262,10 +266,15 @@ export function CommandPalette(props: CommandPaletteProps): JSX.Element {
             {props.label ?? 'Commands'}
           </Dialog.Title>
           <div data-slot="command-palette" role="presentation">
-            <div class="flex items-center gap-2 border-b border-outline-gray-1 px-3">
+            <div
+              class={cn(
+                'flex items-center gap-2 border-b border-outline-gray-1 px-3',
+                fieldFocusWithin,
+              )}
+            >
               <Icon
                 icon="lucide-search"
-                class="size-4 shrink-0 text-ink-gray-5"
+                class="size-4 shrink-0 text-ink-gray-6"
                 aria-hidden="true"
               />
               <input
@@ -292,7 +301,7 @@ export function CommandPalette(props: CommandPaletteProps): JSX.Element {
                     accept()
                   }
                 }}
-                class="h-11 min-w-0 flex-1 bg-transparent text-base text-ink-gray-9 placeholder:text-ink-gray-5 focus:outline-none"
+                class="h-11 min-w-0 flex-1 bg-transparent text-base text-ink-gray-9 placeholder:text-ink-gray-6 focus:outline-none"
               />
             </div>
 
@@ -300,7 +309,7 @@ export function CommandPalette(props: CommandPaletteProps): JSX.Element {
               id={`${id}-list`}
               role="listbox"
               aria-label={props.label ?? 'Commands'}
-              class="max-h-[50vh] overflow-y-auto p-1.5"
+              class="max-h-[50vh] overflow-y-auto overscroll-contain p-1.5"
             >
               {/*
                 The items are *always* rendered, never behind a `Show` that
@@ -355,10 +364,7 @@ export function CommandGroup(props: CommandGroupProps): JSX.Element {
   return (
     <div role="group" aria-label={props.label}>
       <Show when={context.query() === ''}>
-        <div
-          data-slot="command-group-label"
-          class="px-2 pt-2 pb-1 text-sm-medium text-ink-gray-6"
-        >
+        <div data-slot="command-group-label" class={cn(listboxLabel, 'pt-2')}>
           {props.label}
         </div>
       </Show>

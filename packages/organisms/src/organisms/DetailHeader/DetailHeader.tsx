@@ -54,7 +54,7 @@ export function DetailHeader(props: DetailHeaderProps): JSX.Element {
           <div class="flex min-w-0 items-center gap-control-gap">
             <Dynamic
               component={`h${props.headingLevel ?? 1}`}
-              class="min-w-0 text-metric text-ink-gray-9 [overflow-wrap:anywhere]"
+              class="min-w-0 text-heading text-ink-gray-9 [overflow-wrap:anywhere]"
             >
               {props.title}
             </Dynamic>

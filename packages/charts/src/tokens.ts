@@ -1,4 +1,10 @@
-import { type Accessor, createSignal, onCleanup, onMount } from 'solid-js'
+import {
+  type Accessor,
+  createSignal,
+  type JSX,
+  onCleanup,
+  onMount,
+} from 'solid-js'
 import type { ChartTokens } from './types'
 
 /** The `--chart-1…8` categorical ramp, light or dark, whichever is on the page. */
@@ -21,6 +27,33 @@ export const EMPTY_TOKENS: ChartTokens = {
  * properties they stand for are the outline stops, so those are the fallback
  * when a build inlines the theme instead of emitting the alias.
  */
+/** The visually-hidden box, shared by every chart shell (one copy, no drift). */
+export const SR_ONLY: JSX.CSSProperties = {
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  padding: '0',
+  margin: '-1px',
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  'white-space': 'nowrap',
+  'border-width': '0',
+}
+
+/**
+ * The one card surface every chart widget sits on: the Card recipe's chrome
+ * (card radius, outline-gray-1 edge, elevation-1, card-pad) mirrored as
+ * runtime vars, because this package imports no component package.
+ */
+export const CARD_SURFACE: JSX.CSSProperties = {
+  'border-width': '1px',
+  'border-style': 'solid',
+  'border-color': 'var(--outline-gray-1)',
+  'background-color': 'var(--surface-elevation-1)',
+  'border-radius': 'var(--radius-card)',
+  padding: 'var(--spacing-card-pad)',
+}
+
 export function readChartTokens(el?: Element | null): ChartTokens {
   if (typeof window === 'undefined' || typeof getComputedStyle !== 'function') {
     return EMPTY_TOKENS

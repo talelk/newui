@@ -11,9 +11,9 @@ import {
 } from '@codemirror/commands'
 import {
   bracketMatching,
-  defaultHighlightStyle,
   foldGutter,
   foldKeymap,
+  HighlightStyle,
   indentOnInput,
   indentUnit,
   syntaxHighlighting,
@@ -30,6 +30,7 @@ import {
   keymap,
   lineNumbers,
 } from '@codemirror/view'
+import { tags as t } from '@lezer/highlight'
 import {
   createEffect,
   createSignal,
@@ -137,9 +138,9 @@ const codeTheme = EditorView.theme({
   '&': {
     backgroundColor: 'var(--surface-base)',
     color: 'var(--ink-gray-8)',
-    border: '1px solid var(--outline-gray-2)',
-    borderRadius: '0.625rem',
-    fontSize: '0.875rem',
+    border: '1px solid var(--outline-gray-1)',
+    borderRadius: 'var(--radius-card)',
+    fontSize: 'var(--text-interface)',
     lineHeight: '1.4286',
     overflow: 'hidden',
   },
@@ -148,7 +149,7 @@ const codeTheme = EditorView.theme({
     outlineOffset: '-1px',
   },
   '.cm-content': {
-    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+    fontFamily: 'var(--font-mono)',
     padding: '0.5rem 0',
     caretColor: 'var(--ink-gray-8)',
   },
@@ -162,9 +163,71 @@ const codeTheme = EditorView.theme({
   '.cm-cursor, .cm-dropCursor': { borderLeftColor: 'var(--ink-gray-8)' },
   '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection':
     {
-      backgroundColor: 'var(--surface-gray-3)',
+      backgroundColor: 'var(--surface-blue-2)',
     },
 })
+
+/**
+ * Syntax colours from the same runtime ink steps the rest of the kit asserts
+ * for text (step 8 on the editor surface), so code flips with the color
+ * scheme and keeps AA parity in dark instead of CodeMirror's stock palette.
+ */
+const codeHighlightStyle = HighlightStyle.define([
+  { tag: t.keyword, color: 'var(--ink-blue-8)' },
+  {
+    tag: [t.name, t.deleted, t.character, t.propertyName, t.macroName],
+    color: 'var(--ink-gray-9)',
+  },
+  {
+    tag: [t.function(t.variableName), t.labelName],
+    color: 'var(--ink-blue-8)',
+  },
+  {
+    tag: [t.color, t.constant(t.name), t.standard(t.name)],
+    color: 'var(--ink-amber-8)',
+  },
+  { tag: [t.definition(t.name), t.separator], color: 'var(--ink-gray-8)' },
+  {
+    tag: [
+      t.typeName,
+      t.className,
+      t.number,
+      t.changed,
+      t.annotation,
+      t.modifier,
+      t.self,
+      t.namespace,
+    ],
+    color: 'var(--ink-amber-8)',
+  },
+  {
+    tag: [
+      t.operator,
+      t.operatorKeyword,
+      t.url,
+      t.escape,
+      t.regexp,
+      t.link,
+      t.special(t.string),
+    ],
+    color: 'var(--ink-green-8)',
+  },
+  { tag: [t.meta, t.comment], color: 'var(--ink-gray-6)', fontStyle: 'italic' },
+  { tag: t.strong, fontWeight: 'bold' },
+  { tag: t.emphasis, fontStyle: 'italic' },
+  { tag: t.strikethrough, textDecoration: 'line-through' },
+  { tag: t.link, color: 'var(--ink-blue-8)', textDecoration: 'underline' },
+  { tag: t.heading, fontWeight: 'bold', color: 'var(--ink-blue-8)' },
+  {
+    tag: [t.atom, t.bool, t.special(t.variableName)],
+    color: 'var(--ink-amber-8)',
+  },
+  {
+    tag: [t.processingInstruction, t.string, t.inserted],
+    color: 'var(--ink-green-8)',
+  },
+  { tag: t.invalid, color: 'var(--ink-red-8)' },
+])
 
 /**
  * A CodeMirror 6 editor as a Solid component.
@@ -243,7 +306,7 @@ export function CodeEditor(props: CodeEditorProps): JSX.Element {
         autocompletion(),
         highlightActiveLine(),
         highlightSelectionMatches(),
-        syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+        syntaxHighlighting(codeHighlightStyle, { fallback: true }),
         indentUnit.of('  '),
         foldGutter(),
         keymap.of([

@@ -334,7 +334,7 @@ export function Settings(): JSX.Element {
               suffix={
                 profileDirty() ? (
                   <span
-                    class="block size-1.5 rounded-full bg-surface-amber-9"
+                    class="block size-1.5 rounded-pill bg-surface-amber-9"
                     aria-hidden="true"
                   />
                 ) : undefined
@@ -347,7 +347,7 @@ export function Settings(): JSX.Element {
               suffix={
                 notificationsDirty() ? (
                   <span
-                    class="block size-1.5 rounded-full bg-surface-amber-9"
+                    class="block size-1.5 rounded-pill bg-surface-amber-9"
                     aria-hidden="true"
                   />
                 ) : undefined
@@ -379,7 +379,7 @@ export function Settings(): JSX.Element {
                   profileDirty() ? (
                     <span class="inline-flex items-center gap-1.5 whitespace-nowrap text-ink-amber-8">
                       <span
-                        class="size-1.5 rounded-full bg-surface-amber-9"
+                        class="size-1.5 rounded-pill bg-surface-amber-9"
                         aria-hidden="true"
                       />
                       Unsaved changes
@@ -505,7 +505,7 @@ export function Settings(): JSX.Element {
                   notificationsDirty() ? (
                     <span class="inline-flex items-center gap-1.5 whitespace-nowrap text-ink-amber-8">
                       <span
-                        class="size-1.5 rounded-full bg-surface-amber-9"
+                        class="size-1.5 rounded-pill bg-surface-amber-9"
                         aria-hidden="true"
                       />
                       Unsaved changes
@@ -736,7 +736,7 @@ export function Settings(): JSX.Element {
                     >
                       <Menu.Trigger
                         aria-label={`Actions for ${profile().name}`}
-                        class="grid size-10 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring sm:size-8"
+                        class="grid size-10 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring sm:size-8"
                       >
                         <span
                           class="lucide-ellipsis size-4"
@@ -783,7 +783,7 @@ export function Settings(): JSX.Element {
                         >
                           <Menu.Trigger
                             aria-label={`Actions for ${member.name}`}
-                            class="grid size-10 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring sm:size-8"
+                            class="grid size-10 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring sm:size-8"
                           >
                             <span
                               class="lucide-ellipsis size-4"

@@ -27,6 +27,20 @@ describe('NumberInput', () => {
       getByRole('alert').id,
     )
   })
+  it('takes the shared size/variant axes (density height, not a hard-coded h-7)', () => {
+    const { container } = render(() => (
+      <NumberInput size="lg" variant="subtle" defaultValue="5" />
+    ))
+    const control = container.querySelector(
+      '[data-slot="number-input-control"]',
+    )
+    expect(control?.getAttribute('data-size')).toBe('lg')
+    expect(control?.getAttribute('data-variant')).toBe('subtle')
+    expect(control?.className).toContain('h-10')
+    expect(control?.className).toContain('rounded-control')
+    expect(control?.className).not.toContain('h-7')
+  })
+
   it('renders a spinbutton with the value', () => {
     const { getByRole } = render(() => <NumberInput defaultValue="5" />)
     expect((getByRole('spinbutton') as HTMLInputElement).value).toBe('5')

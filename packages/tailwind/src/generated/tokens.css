@@ -125,6 +125,7 @@
   --surface-pink-8: oklch(0.481 0.17 346.479);
   --surface-pink-9: oklch(0.408 0.155 348.063);
   --surface-pink-10: oklch(0.316 0.115 345.791);
+  --surface-scrim: oklch(0 0 0 / 0.271);
   --surface-alpha-base: oklch(1 0 0);
   --surface-alpha-gray-1: oklch(0 0 0 / 0.031);
   --surface-alpha-gray-2: oklch(0 0 0 / 0.043);
@@ -674,6 +675,7 @@
   --surface-pink-8: oklch(0.667 0.192 346.848);
   --surface-pink-9: oklch(0.726 0.166 344.979);
   --surface-pink-10: oklch(0.796 0.128 343.745);
+  --surface-scrim: oklch(0 0 0 / 0.722);
   --surface-alpha-base: oklch(0 0 0 / 0.039);
   --surface-alpha-gray-1: oklch(1 0 0 / 0.055);
   --surface-alpha-gray-2: oklch(1 0 0 / 0.078);
@@ -1078,6 +1080,12 @@
   --dark-gray-alpha-800: oklch(1 0 0 / 0.055);
   --dark-gray-alpha-900: oklch(1 0 0 / 0.035);
   --dark-gray-alpha-950: oklch(0 0 0 / 0.039);
+  --elevation-sm: inset 0px 0.5px 0.5px 0.5px #ffffff08, 0px 0px 14px 0px #0000002e, 0px 1px 3px 0px #000000b2;
+  --elevation-base: inset 0px 0.5px 0.5px 0.5px #ffffff08, 0px 0px 14px 0px #0000002e, 0px 2px 5px 0px #00000099;
+  --elevation-md: inset 0px 0.5px 0.5px 0.5px #ffffff08, 0px 0px 16px 2px #00000033, 0px 6px 12px -2px #00000099;
+  --elevation-lg: inset 0px 0.5px 1.5px 0.5px #ffffff0a, 0px 0px 16px 0px #0000001a, 0px 18px 20px -8px #00000085;
+  --elevation-xl: inset 0px 0.5px 1.5px 0.5px #ffffff0a, 0px 0px 14px 2px #0000001f, 0px 26px 34px -6px #0000006b;
+  --elevation-2xl: inset 0px 0.5px 1.5px 0.5px #ffffff0f, 0px 0px 14px 10px #0000001f, 0px 44px 52px -4px #0000006b;
   --focus-outline-default: 3px solid #464646cc;
   --focus-outline-red: 3px solid #751819cc;
   --focus-outline-green: 3px solid #1d563bcc;

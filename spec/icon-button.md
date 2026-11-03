@@ -12,6 +12,7 @@ A square, icon-only command sharing the Button recipe's box and states.
 | `theme` | `'gray' \| 'blue' \| 'green' \| 'red'` | `gray` | |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg'` | `sm` | square box at every step |
 | `disabled` | `boolean` | — | |
+| `loading` | `boolean` | — | busy + spinner; keeps the resting look, never a navigable anchor |
 | `href` | `string` | — | external URL; renders an anchor, opens a new tab |
 | `route` | `string` | — | in-app destination; wins over `href` |
 | `target` | `string` | — | |
@@ -25,4 +26,5 @@ follows Button: `route`/`href` render an anchor (in-app vs new-tab, per the
 shared vocabulary). The box is the Button recipe's `icon` variant — same rest,
 pressed, disabled and focus looks; the recipe keeps a touch-safe box.
 Styling hooks: `data-slot="icon-button"`, `data-size`, `data-variant`,
-`data-color`, `data-disabled` (P10).
+`data-theme`, `data-disabled` (P10). A `disabled` or `loading` control never
+renders a navigable anchor, mirroring Button.

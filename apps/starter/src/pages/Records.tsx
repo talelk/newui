@@ -16,6 +16,7 @@ import {
   createSignal,
   type JSX,
   on,
+  onCleanup,
   Show,
   untrack,
 } from 'solid-js'
@@ -67,6 +68,16 @@ interface Notice {
  * immediately and roll back if the repository fails (spec/data.md).
  */
 export function Records(): JSX.Element {
+  const [narrow, setNarrow] = createSignal(
+    typeof window !== 'undefined' &&
+      window.matchMedia('(max-width: 639px)').matches,
+  )
+  if (typeof window !== 'undefined') {
+    const query = window.matchMedia('(max-width: 639px)')
+    const onChange = (event: MediaQueryListEvent) => setNarrow(event.matches)
+    query.addEventListener('change', onChange)
+    onCleanup(() => query.removeEventListener('change', onChange))
+  }
   const [status, setStatus] = createSignal('all')
   const [notice, setNotice] = createSignal<Notice | null>(null)
   const [createOpen, setCreateOpen] = createSignal(false)
@@ -109,7 +120,7 @@ export function Records(): JSX.Element {
       cell: (context) => (
         <button
           type="button"
-          class="rounded-3 text-start font-medium text-ink-gray-9 hover:text-ink-blue-7 focus-visible:focus-ring"
+          class="rounded-control text-start font-medium text-ink-gray-9 hover:text-ink-blue-7 focus-visible:focus-ring"
           onClick={() => {
             const project = context.row.original
             emitStarterEvent('record:open', {
@@ -269,8 +280,7 @@ export function Records(): JSX.Element {
           />
         </Show>
 
-        <StatGrid compact class="sm:hidden" stats={stats()} />
-        <StatGrid class="hidden sm:grid" stats={stats()} />
+        <StatGrid compact={narrow()} stats={stats()} />
 
         <FilterBar
           selects={[
@@ -538,14 +548,14 @@ function ProjectDialog(props: {
                   fallback={
                     <button
                       type="button"
-                      class="self-start rounded-3 text-sm text-ink-red-6 focus-visible:focus-ring"
+                      class="self-start rounded-control text-sm text-ink-red-6 focus-visible:focus-ring"
                       onClick={() => setConfirming(true)}
                     >
                       Delete this project
                     </button>
                   }
                 >
-                  <div class="flex flex-wrap items-center gap-2 rounded-3 border border-outline-red-3 bg-surface-red-1 p-3">
+                  <div class="flex flex-wrap items-center gap-2 rounded-control border border-outline-red-3 bg-surface-red-1 p-3">
                     <p class="flex-1 text-sm text-ink-red-7">
                       This removes the record. It cannot be undone.
                     </p>

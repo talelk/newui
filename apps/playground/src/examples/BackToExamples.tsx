@@ -10,7 +10,7 @@ export function BackToExamples(): JSX.Element {
     <footer class="border-t border-outline-gray-1 p-3">
       <A
         href="/pages"
-        class="flex w-fit items-center gap-1.5 rounded-3 px-1 py-1 text-caption text-ink-gray-7 hover:text-ink-gray-9 focus-visible:focus-ring"
+        class="flex w-fit items-center gap-1.5 rounded-control px-1 py-1 text-caption text-ink-gray-7 hover:text-ink-gray-9 focus-visible:focus-ring"
       >
         <span aria-hidden="true" class="lucide-arrow-left size-3.5" />
         Back to examples

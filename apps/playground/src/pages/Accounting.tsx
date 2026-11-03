@@ -1153,7 +1153,7 @@ export function Accounting(): JSX.Element {
             }
           >
             <section
-              class="overflow-x-auto rounded-3 focus-visible:focus-ring"
+              class="overflow-x-auto rounded-control focus-visible:focus-ring"
               tabindex="0"
               aria-label="Profit and loss figures"
             >

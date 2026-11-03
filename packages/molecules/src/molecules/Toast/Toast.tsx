@@ -2,6 +2,7 @@ import {
   cn,
   createId,
   createZagApi,
+  overlayLayers,
   Portal,
 } from '@talelk/newui-atoms/internal'
 import * as zagToast from '@zag-js/toast'
@@ -170,7 +171,7 @@ function ToastItem(props: {
     <div
       {...api().getRootProps()}
       data-slot="toast"
-      class="pointer-events-auto flex w-[360px] items-center rounded-card bg-surface-gray-9 px-4 py-2.5 shadow-xl [transform:translate(var(--x,0),var(--y,0))] [z-index:var(--z-index,0)] transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none data-[state=closed]:opacity-0"
+      class="pointer-events-auto flex w-[360px] items-center rounded-card bg-surface-gray-9 px-4 py-2.5 shadow-toast [transform:translate(var(--x,0),var(--y,0))] [z-index:var(--z-index,0)] transition-[transform,opacity] duration-moderate ease-out motion-reduce:transition-none data-[state=closed]:opacity-0"
     >
       <Show when={render()} fallback={defaultBody()}>
         {(custom) => <>{custom()({ dismiss: api().dismiss })}</>}
@@ -206,7 +207,8 @@ export function ToastRegion(props: ToastRegionProps): JSX.Element {
         {...api().getGroupProps()}
         data-slot="toast-region"
         class={cn(
-          'pointer-events-none z-overlay flex flex-col gap-2',
+          'pointer-events-none flex flex-col gap-2',
+          overlayLayers.toast,
           props.class,
         )}
       >

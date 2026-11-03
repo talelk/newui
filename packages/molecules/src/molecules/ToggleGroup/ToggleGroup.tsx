@@ -60,11 +60,11 @@ export const toggleGroupItem = tv({
   variants: {
     variant: {
       subtle:
-        'rounded-3 hover:text-ink-gray-9 data-[state=on]:bg-surface-base data-[state=on]:text-ink-gray-9 data-[state=on]:shadow-sm',
+        'rounded-control hover:text-ink-gray-9 data-[state=on]:bg-surface-base data-[state=on]:text-ink-gray-9 data-[state=on]:shadow-sm',
       outline:
         'rounded-none border border-outline-gray-2 not-first:-ms-px hover:bg-surface-gray-2 data-[state=on]:bg-surface-gray-3 data-[state=on]:text-ink-gray-9 first:rounded-s-4 last:rounded-e-4',
       ghost:
-        'rounded-3 hover:bg-surface-gray-2 data-[state=on]:bg-surface-gray-3 data-[state=on]:text-ink-gray-9',
+        'rounded-control hover:bg-surface-gray-2 data-[state=on]:bg-surface-gray-3 data-[state=on]:text-ink-gray-9',
     },
     size: {
       sm: 'h-7 min-w-6 px-2 text-base',

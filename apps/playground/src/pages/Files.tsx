@@ -364,7 +364,7 @@ export function Files(): JSX.Element {
               type="button"
               data-file-id={context.row.original.id}
               data-file-open
-              class="rounded-3 text-start text-ink-blue-link focus-visible:focus-ring"
+              class="rounded-control text-start text-ink-blue-link focus-visible:focus-ring"
               onClick={() => void open(context.row.original)}
             >
               {context.row.original.name}
@@ -754,7 +754,7 @@ export function Files(): JSX.Element {
                         <button
                           type="button"
                           data-file-open
-                          class="block max-w-full truncate rounded-3 text-start font-medium text-ink-blue-link focus-visible:focus-ring"
+                          class="block max-w-full truncate rounded-control text-start font-medium text-ink-blue-link focus-visible:focus-ring"
                           onClick={() => void open(item)}
                         >
                           {item.name}
@@ -924,7 +924,7 @@ export function Files(): JSX.Element {
           <Show when={current()}>
             {(item) => (
               <>
-                <Dialog.Close class="absolute end-4 top-4 grid size-10 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring sm:size-7">
+                <Dialog.Close class="absolute end-4 top-4 grid size-10 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring sm:size-7">
                   <span class="lucide-x size-4" aria-hidden="true" />
                   <span class="sr-only">Close preview</span>
                 </Dialog.Close>
@@ -935,7 +935,7 @@ export function Files(): JSX.Element {
                   </Dialog.Description>
                 </Dialog.Header>
                 <section
-                  class="my-5 max-h-64 overflow-auto whitespace-pre-wrap break-words rounded-3 border border-outline-gray-1 bg-surface-gray-1 p-3 text-caption focus-visible:focus-ring"
+                  class="my-5 max-h-64 overflow-auto whitespace-pre-wrap break-words rounded-control border border-outline-gray-1 bg-surface-gray-1 p-3 text-caption focus-visible:focus-ring"
                   tabindex="0"
                   aria-label="File preview"
                 >

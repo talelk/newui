@@ -21,10 +21,10 @@ const SIZE: Record<
   ProgressCircleSize,
   { box: string; boxPx: number; strokePx: number; text: string }
 > = {
-  sm: { box: 'size-8', boxPx: 32, strokePx: 3, text: 'text-2xs' },
-  md: { box: 'size-10', boxPx: 40, strokePx: 4, text: 'text-xs' },
-  lg: { box: 'size-14', boxPx: 56, strokePx: 5, text: 'text-sm' },
-  xl: { box: 'size-18', boxPx: 72, strokePx: 6, text: 'text-base' },
+  sm: { box: 'size-8', boxPx: 32, strokePx: 3, text: 'text-2xs-medium' },
+  md: { box: 'size-10', boxPx: 40, strokePx: 4, text: 'text-xs-medium' },
+  lg: { box: 'size-14', boxPx: 56, strokePx: 5, text: 'text-sm-medium' },
+  xl: { box: 'size-18', boxPx: 72, strokePx: 6, text: 'text-base-medium' },
 }
 
 /** An SVG unit circle scaled to the box: radius 16, centre 16. */
@@ -135,14 +135,14 @@ export function ProgressCircle(props: ProgressCircleProps): JSX.Element {
               // named utility guarantees Tailwind emits the `@keyframes`.
               local.indeterminate
                 ? 'animate-spin'
-                : 'transition-[stroke-dashoffset] duration-[660ms] ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none',
+                : 'transition-[stroke-dashoffset] duration-progress ease-standard motion-reduce:transition-none',
             )}
           />
         </svg>
         <Show when={local.children}>
           <span
             class={cn(
-              'absolute grid place-items-center font-medium text-ink-gray-8',
+              'absolute grid place-items-center text-ink-gray-8',
               size().text,
             )}
           >

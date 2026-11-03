@@ -4,8 +4,13 @@ import {
   createId,
   createZagApi,
   type DateRangeValue,
+  disabledPopup,
   Field,
+  fieldFocusWithin,
   fieldSizes,
+  invalidField,
+  overlayLayers,
+  overlayPanel,
   Portal,
   popupFieldVariants,
   toDate,
@@ -21,7 +26,10 @@ import type {
   DatePickerSize,
   DatePickerVariant,
 } from '../DatePicker'
-import { CalendarView } from '../DatePicker/CalendarView'
+import {
+  CalendarView,
+  calendarNavButton as navButton,
+} from '../DatePicker/CalendarView'
 
 type DateRangePickerApi = ReturnType<typeof zag.connect>
 
@@ -88,10 +96,7 @@ export interface DateRangePickerProps {
   class?: string
 }
 
-const navButton =
-  'grid size-7 place-items-center rounded-4 text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-9 disabled:pointer-events-none'
-const cellButton =
-  'grid size-8 place-items-center rounded-3 text-base text-ink-gray-8 outline-none transition-colors hover:bg-surface-gray-3 data-[selected]:bg-surface-gray-10 data-[selected]:text-ink-base data-[in-range]:bg-surface-gray-3 data-[today]:font-medium data-[outside-range]:text-ink-gray-4 data-[disabled]:pointer-events-none data-[disabled]:text-ink-gray-3 data-[unavailable]:pointer-events-none data-[unavailable]:text-ink-gray-3 data-[unavailable]:line-through'
+// Cell/nav looks are the shared date-family constants in ../DatePicker/CalendarView.
 
 type ControlProps = Omit<
   DateRangePickerProps,
@@ -226,8 +231,9 @@ function DateRangePickerControl(props: ControlProps): JSX.Element {
           'flex w-full items-center transition-colors',
           fieldSizes[size()],
           popupFieldVariants[local.variant ?? 'outline'],
-          'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:opacity-60',
-          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
+          disabledPopup,
+          fieldFocusWithin,
+          invalidField,
         )}
       >
         <input
@@ -277,19 +283,14 @@ function DateRangePickerControl(props: ControlProps): JSX.Element {
           <div
             {...api().getPositionerProps()}
             data-slot="date-range-picker-positioner"
-            class="z-overlay"
+            class={overlayLayers.popup}
           >
             <div
               {...api().getContentProps()}
               data-slot="date-range-picker-content"
-              class="w-fit rounded-overlay border border-outline-gray-1 bg-surface-elevation-1 p-3 text-ink-gray-9 shadow-lg focus-visible:outline-none"
+              class={cn(overlayPanel({ kind: 'popup' }), 'w-fit p-3')}
             >
-              <CalendarView
-                api={api()}
-                cellClass={cellButton}
-                navClass={navButton}
-                dualPane={local.dualPane}
-              />
+              <CalendarView api={api()} dualPane={local.dualPane} />
             </div>
           </div>
         </Portal>

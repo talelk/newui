@@ -113,7 +113,7 @@ function RadioGroupControl(props: RadioGroupProps): JSX.Element {
 
   const itemClasses = (item: RadioGroupItem) =>
     cn(
-      'group flex items-start gap-2 rounded-4 text-start transition-colors',
+      'group flex items-start gap-2 rounded-card text-start transition-colors',
       'focus:outline-none focus-visible:focus-ring',
       'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-60',
       local.padded &&
@@ -148,7 +148,7 @@ function RadioGroupControl(props: RadioGroupProps): JSX.Element {
               offset: 'mt-1',
             }
     return cn(
-      'box-border shrink-0 rounded-full border border-outline-gray-4 bg-surface-base transition-colors',
+      'box-border shrink-0 rounded-pill border border-outline-gray-4 bg-surface-base transition-colors',
       // The row is `items-start`, so the circle is centred on the label's first
       // line unless a padded label-only row centres the whole row.
       item.description || !local.padded ? offset : undefined,
@@ -160,7 +160,11 @@ function RadioGroupControl(props: RadioGroupProps): JSX.Element {
       'data-[state=checked]:border-surface-gray-10',
       'group-[[data-state=checked]:hover]:border-surface-gray-9',
       'group-[[data-state=checked]:active]:border-surface-gray-8',
-      'data-[focus-visible]:focus-ring-blue',
+      // One focus rule (control-styles): discrete controls ring neutral,
+      // invalid rings red — the row above already rings neutral.
+      field?.hasError()
+        ? 'data-[focus-visible]:focus-ring-red'
+        : 'data-[focus-visible]:focus-ring',
       field?.hasError() && 'border-outline-red-6',
     )
   }

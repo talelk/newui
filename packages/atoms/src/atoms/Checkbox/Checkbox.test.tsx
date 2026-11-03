@@ -60,7 +60,7 @@ describe('Checkbox', () => {
     unmount()
 
     const { getByRole: xs } = render(() => <Checkbox label="Agree" size="xs" />)
-    expect(xs('checkbox').className).toContain('size-[13px]')
+    expect(xs('checkbox').className).toContain('size-3')
   })
 
   it('toggles from the padded row surface', async () => {

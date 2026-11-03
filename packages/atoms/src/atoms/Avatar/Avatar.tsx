@@ -32,37 +32,38 @@ const SIZE: Record<AvatarSize, string> = {
   '3xl': 'size-11.5',
 }
 
+// Nested-geometry scale steps (the square-corner exception to radius roles).
 const SQUARE_RADIUS: Record<AvatarSize, string> = {
-  xs: 'rounded-[4px]',
-  sm: 'rounded-[5px]',
-  md: 'rounded-[5px]',
-  lg: 'rounded-[6px]',
-  xl: 'rounded-[6px]',
-  '2xl': 'rounded-[8px]',
-  '3xl': 'rounded-[10px]',
+  xs: 'rounded-1',
+  sm: 'rounded-2',
+  md: 'rounded-2',
+  lg: 'rounded-3',
+  xl: 'rounded-3',
+  '2xl': 'rounded-4',
+  '3xl': 'rounded-overlay',
 }
 
 const LABEL_SIZE: Record<AvatarSize, string> = {
-  xs: 'text-2xs',
-  sm: 'text-sm',
-  md: 'text-base',
-  lg: 'text-base',
-  xl: 'text-lg',
-  '2xl': 'text-2xl',
-  '3xl': 'text-3xl',
+  xs: 'text-2xs-medium',
+  sm: 'text-sm-medium',
+  md: 'text-base-medium',
+  lg: 'text-base-medium',
+  xl: 'text-lg-medium',
+  '2xl': 'text-2xl-medium',
+  '3xl': 'text-3xl-medium',
 }
 
 // Per-size box the default slot is wrapped in, so a glyph dropped in as
 // children (an icon, a component) is scaled to the avatar. Mirrors frappe-ui's
 // `iconClasses`.
 const ICON_SIZE: Record<AvatarSize, string> = {
-  xs: 'h-2.5 w-2.5',
-  sm: 'h-3 w-3',
-  md: 'h-4 w-4',
-  lg: 'h-4 w-4',
-  xl: 'h-4 w-4',
-  '2xl': 'h-5 w-5',
-  '3xl': 'h-5 w-5',
+  xs: 'size-2.5',
+  sm: 'size-3',
+  md: 'size-4',
+  lg: 'size-4',
+  xl: 'size-4',
+  '2xl': 'size-5',
+  '3xl': 'size-5',
 }
 
 // Indicator container (the ring that lifts the dot off the avatar) and the dot
@@ -132,11 +133,15 @@ export function Avatar(props: AvatarProps): JSX.Element {
   const size = () => local.size ?? 'md'
   const shape = () => local.shape ?? 'circle'
   const radius = () =>
-    shape() === 'circle' ? 'rounded-full' : SQUARE_RADIUS[size()]
+    shape() === 'circle' ? 'rounded-pill' : SQUARE_RADIUS[size()]
   const showImage = () => Boolean(local.image) && !failed()
 
   return (
     <div
+      data-slot="avatar"
+      data-size={size()}
+      data-shape={shape()}
+      data-theme={local.theme ?? 'gray'}
       class={cn(
         'relative inline-block shrink-0',
         !hasSizeOverride(local.class) && SIZE[size()],
@@ -148,7 +153,7 @@ export function Avatar(props: AvatarProps): JSX.Element {
         fallback={
           <div
             class={cn(
-              'flex h-full w-full select-none items-center justify-center font-medium uppercase',
+              'flex h-full w-full select-none items-center justify-center uppercase',
               radius(),
               LABEL_SIZE[size()],
               THEME[local.theme ?? 'gray'],
@@ -172,12 +177,12 @@ export function Avatar(props: AvatarProps): JSX.Element {
         <div
           data-slot="avatar-indicator"
           class={cn(
-            'absolute bottom-0 end-0 grid place-items-center rounded-full bg-surface-base',
+            'absolute bottom-0 end-0 grid place-items-center rounded-pill bg-surface-base',
             INDICATOR_CONTAINER[size()],
           )}
         >
           <div
-            class={cn('overflow-hidden rounded-full', INDICATOR_DOT[size()])}
+            class={cn('overflow-hidden rounded-pill', INDICATOR_DOT[size()])}
           >
             {local.indicator}
           </div>

@@ -1,4 +1,5 @@
-import { Button, Divider } from '@talelk/newui-atoms'
+import { Button, cn, Divider } from '@talelk/newui-atoms'
+import { card } from '@talelk/newui-molecules'
 import { For, type JSX, Show } from 'solid-js'
 
 export interface AuthProvider {
@@ -40,7 +41,11 @@ export function AuthCard(props: AuthCardProps): JSX.Element {
   return (
     <div
       data-slot="auth-card"
-      class={`flex w-full max-w-sm flex-col gap-section-gap rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad-wide ${props.class ?? ''}`}
+      class={cn(
+        card({ padding: 'lg' }),
+        'w-full max-w-sm gap-section-gap',
+        props.class,
+      )}
     >
       <div class="flex flex-col items-center gap-3 text-center">
         <Show when={props.logo}>{props.logo}</Show>

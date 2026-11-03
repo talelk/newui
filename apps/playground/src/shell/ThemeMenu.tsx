@@ -1,4 +1,5 @@
 import { For, type JSX } from 'solid-js'
+import { ICON_BTN, SEGMENTED, SEGMENTED_BTN } from '../lib/site-ui'
 import { colorScheme, setColorScheme } from './theme'
 
 const SCHEMES = ['light', 'dark', 'system'] as const
@@ -26,7 +27,7 @@ const LABEL: Record<(typeof SCHEMES)[number], string> = {
  */
 export function ThemeMenu(): JSX.Element {
   return (
-    <fieldset class="m-0 flex w-fit shrink-0 items-center gap-0.5 rounded-3 border-0 bg-surface-gray-2 p-0.5">
+    <fieldset class={SEGMENTED}>
       <legend class="sr-only">Colour scheme</legend>
       <For each={SCHEMES}>
         {(scheme) => (
@@ -36,7 +37,7 @@ export function ThemeMenu(): JSX.Element {
             aria-pressed={colorScheme() === scheme}
             aria-label={LABEL[scheme]}
             title={LABEL[scheme]}
-            class="grid size-10 sm:size-7 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:text-ink-gray-9 aria-pressed:bg-surface-base aria-pressed:text-ink-gray-9 aria-pressed:shadow-sm focus-visible:focus-ring-blue"
+            class={SEGMENTED_BTN}
           >
             <span aria-hidden="true" class={`${ICON[scheme]} size-3.5`} />
           </button>
@@ -64,7 +65,7 @@ export function ThemeMenuCompact(): JSX.Element {
       onClick={() => setColorScheme(next())}
       aria-label={label()}
       title={label()}
-      class="grid size-8 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
+      class={ICON_BTN}
     >
       <span aria-hidden="true" class={`${ICON[colorScheme()]} size-4`} />
     </button>

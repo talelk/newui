@@ -7,6 +7,7 @@ import {
   splitProps,
 } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
+import { overlayLayers } from '../../lib/control-styles'
 import { createDisclosure } from '../../lib/disclosure'
 import { createId } from '../../lib/id'
 import { Portal } from '../../lib/portal'
@@ -94,13 +95,13 @@ export function TooltipContent(props: TooltipContentProps): JSX.Element {
         <div
           {...api().getPositionerProps()}
           data-slot="tooltip-positioner"
-          class="z-top"
+          class={overlayLayers.tooltip}
         >
           <div
             {...api().getContentProps()}
             data-slot="tooltip-content"
             class={cn(
-              'rounded-4 bg-surface-gray-10 px-2 py-1 text-xs text-ink-base shadow-xl',
+              'rounded-card bg-surface-gray-10 px-2 py-1 text-caption text-ink-base shadow-lg',
               props.class,
             )}
           >

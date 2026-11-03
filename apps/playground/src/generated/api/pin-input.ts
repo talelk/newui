@@ -75,6 +75,19 @@ export const API = {
       "optional": true
     },
     {
+      "name": "size",
+      "type": "PinInputSize",
+      "optional": true,
+      "description": "Cell height/typography. Matches the input scale.",
+      "default": "sm"
+    },
+    {
+      "name": "variant",
+      "type": "PinInputVariant",
+      "optional": true,
+      "description": "Cell surface. `outline` is the default; `subtle` is filled."
+    },
+    {
       "name": "name",
       "type": "string",
       "optional": true

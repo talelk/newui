@@ -652,7 +652,7 @@ export function Mail(): JSX.Element {
                         />
                         <button
                           type="button"
-                          class="min-w-0 flex-1 rounded-3 text-start focus-visible:focus-ring"
+                          class="min-w-0 flex-1 rounded-control text-start focus-visible:focus-ring"
                           aria-current={
                             active() === message.id ? 'true' : undefined
                           }
@@ -825,7 +825,7 @@ export function Mail(): JSX.Element {
                       </p>
                       <For each={message().replies}>
                         {(text) => (
-                          <div class="mt-5 rounded-3 border border-outline-gray-1 bg-surface-gray-1 p-3">
+                          <div class="mt-5 rounded-control border border-outline-gray-1 bg-surface-gray-1 p-3">
                             <p class="mb-2 text-caption font-medium text-ink-gray-7">
                               Rhea Kapoor · Local reply
                             </p>
@@ -991,7 +991,7 @@ export function Mail(): JSX.Element {
                   Write a local demo email. Nothing is sent externally.
                 </Dialog.Description>
               </div>
-              <Dialog.Close class="grid size-10 shrink-0 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none">
+              <Dialog.Close class="grid size-10 shrink-0 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none">
                 <span class="sr-only">Close composer</span>
                 <span aria-hidden="true" class="lucide-x size-4" />
               </Dialog.Close>

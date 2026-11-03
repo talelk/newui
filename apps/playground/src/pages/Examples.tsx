@@ -33,7 +33,7 @@ export function Examples(): JSX.Element {
           {(example) => (
             <A
               href={example.href}
-              class="group flex min-h-11 flex-col gap-3 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-3 hover:bg-surface-gray-2 focus-visible:focus-ring"
+              class="group flex min-h-11 flex-col gap-3 rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad-compact transition-colors duration-base ease-standard hover:bg-surface-gray-2 motion-reduce:transition-none focus-visible:focus-ring"
             >
               <AppSilhouette kind={SILHOUETTES[example.href] ?? 'table'} />
               <div class="flex min-w-0 flex-1 items-start gap-3">

@@ -5,6 +5,8 @@ import {
   createZagApi,
   createZagContext,
   mergeProps,
+  overlayLayers,
+  overlayPanel,
   Portal,
 } from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/popover'
@@ -108,16 +110,12 @@ const Content: ParentComponent<PartProps> = (props) => {
         <div
           {...api().getPositionerProps()}
           data-slot="popover-positioner"
-          class="z-top"
+          class={overlayLayers.popup}
         >
           <div
             {...api().getContentProps()}
             data-slot="popover-content"
-            class={cn(
-              'relative z-overlay rounded-overlay bg-surface-elevation-2 text-ink-gray-9 shadow-2xl ring-1 ring-outline-gray-1',
-              'focus-visible:outline-none',
-              props.class,
-            )}
+            class={cn(overlayPanel({ kind: 'popup' }), 'relative', props.class)}
           >
             {props.children}
           </div>

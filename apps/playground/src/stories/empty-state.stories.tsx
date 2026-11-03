@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from 'storybook-solidjs-vite'
  */
 export function Demo(): JSX.Element {
   return (
-    <div class="max-w-lg rounded-6 border border-outline-gray-2">
+    <div class="max-w-lg rounded-overlay border border-outline-gray-2">
       <EmptyState
         icon="lucide-inbox"
         title="No invoices yet"

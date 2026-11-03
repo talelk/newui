@@ -35,7 +35,7 @@ export function CatalogList<T extends CatalogEntry>(props: {
                   <li>
                     <A
                       href={props.href(entry)}
-                      class="flex min-h-11 items-center gap-3 rounded-3 p-3 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring"
+                      class="flex min-h-11 items-center gap-3 rounded-control p-3 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring"
                     >
                       <CatalogIcon group={section.group} />
                       <span class="flex min-w-0 flex-1 flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">

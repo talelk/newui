@@ -59,6 +59,29 @@ const PAIRS: Pair[] = [
     what: 'chart subtitle and card caption',
   },
 
+  // the shared overlay panel (atoms/lib overlayPanel + listboxRow): body ink
+  // and the checked step on the panel and on the highlighted row
+  {
+    fg: 'ink-gray-8',
+    bg: 'surface-elevation-1',
+    what: 'overlay panel body and listbox row',
+  },
+  {
+    fg: 'ink-gray-8',
+    bg: 'surface-gray-3',
+    what: 'highlighted listbox row',
+  },
+  {
+    fg: 'ink-blue-8',
+    bg: 'surface-elevation-1',
+    what: 'checked listbox row',
+  },
+  {
+    fg: 'ink-blue-8',
+    bg: 'surface-gray-3',
+    what: 'checked and highlighted listbox row',
+  },
+
   // a board column is the one tinted region muted text lands on
   { fg: 'ink-gray-8', bg: 'surface-gray-1', what: 'column heading' },
   { fg: 'ink-gray-6', bg: 'surface-gray-1', what: 'muted on a board column' },

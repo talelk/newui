@@ -8,7 +8,7 @@ function Example(props: {
 }) {
   return (
     <Menu.Root open={props.open} onOpenChange={props.onOpenChange}>
-      <Menu.Trigger class="rounded-4 bg-surface-gray-10 px-3 py-1.5 text-base text-ink-base">
+      <Menu.Trigger class="rounded-control bg-surface-gray-10 px-3 py-1.5 text-base text-ink-base transition-colors duration-base ease-standard hover:bg-surface-gray-9 focus-visible:focus-ring motion-reduce:transition-none">
         Actions
       </Menu.Trigger>
       <Menu.Content>

@@ -1,8 +1,14 @@
+import type { InputSize, InputVariant } from '@talelk/newui-atoms'
 import {
   cn,
   createId,
   createZagApi,
+  disabledField,
   Field,
+  fieldFocus,
+  invalidField,
+  squareFieldSizes,
+  textFieldVariants,
   useField,
 } from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/pin-input'
@@ -11,6 +17,8 @@ import { For, type JSX, splitProps } from 'solid-js'
 type PinInputApi = ReturnType<typeof zag.connect>
 
 export type PinInputType = 'numeric' | 'alphanumeric' | 'alphabetic'
+export type PinInputSize = InputSize
+export type PinInputVariant = InputVariant
 
 export interface PinInputProps {
   /** How many cells render. @default 6 */
@@ -36,6 +44,10 @@ export interface PinInputProps {
   blurOnComplete?: boolean
   disabled?: boolean
   readOnly?: boolean
+  /** Cell height/typography. Matches the input scale. @default sm */
+  size?: PinInputSize
+  /** Cell surface. `outline` is the default; `subtle` is filled. */
+  variant?: PinInputVariant
   name?: string
   label?: JSX.Element
   description?: JSX.Element
@@ -62,6 +74,8 @@ function PinInputControl(props: PinInputProps): JSX.Element {
     'blurOnComplete',
     'disabled',
     'readOnly',
+    'size',
+    'variant',
     'label',
     'aria-label',
     'class',
@@ -89,13 +103,25 @@ function PinInputControl(props: PinInputProps): JSX.Element {
       local.onValueComplete?.(details),
   }))
 
-  const cellBase =
-    'h-7 w-7 rounded-3 border bg-surface-base text-center text-base text-ink-gray-8 caret-transparent outline-none transition-colors placeholder:text-ink-gray-4 disabled:cursor-not-allowed disabled:bg-surface-gray-2 disabled:text-ink-gray-4 focus-visible:focus-ring-blue'
+  const size = (): PinInputSize => local.size ?? 'sm'
+  // A cell is a square field at the density height, on the shared
+  // text-entry surface and state strings — no hard-coded h-7 cell.
+  const cellClass = (): string =>
+    cn(
+      squareFieldSizes[size()],
+      'text-center text-ink-gray-8 caret-transparent transition-colors',
+      textFieldVariants[local.variant ?? 'outline'],
+      fieldFocus,
+      invalidField,
+      disabledField,
+    )
 
   return (
     <div
       {...api().getRootProps()}
       data-slot="pin-input"
+      data-size={size()}
+      data-variant={local.variant ?? 'outline'}
       class={cn('flex w-full flex-col gap-1', local.class)}
     >
       <div
@@ -116,12 +142,7 @@ function PinInputControl(props: PinInputProps): JSX.Element {
                 field?.hasError() ? field.errorId() : undefined
               }
               data-invalid={field?.hasError() ? '' : undefined}
-              class={cn(
-                cellBase,
-                field?.hasError()
-                  ? 'border-outline-red-6'
-                  : 'border-outline-gray-2 hover:border-outline-gray-3',
-              )}
+              class={cellClass()}
             />
           )}
         </For>

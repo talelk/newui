@@ -2,6 +2,7 @@ import {
   Avatar,
   Badge,
   Button,
+  button,
   Checkbox,
   Divider,
   Progress,
@@ -189,7 +190,7 @@ export function Spec(): JSX.Element {
 
       <section class="flex flex-wrap items-center gap-3">
         <Dialog.Root>
-          <Dialog.Trigger class="rounded-4 bg-surface-gray-10 px-3 py-1.5 text-base text-ink-base">
+          <Dialog.Trigger class="rounded-control bg-surface-gray-10 px-3 py-1.5 text-base text-ink-base transition-colors duration-base ease-standard hover:bg-surface-gray-9 focus-visible:focus-ring motion-reduce:transition-none">
             Open dialog
           </Dialog.Trigger>
           <Dialog.Content>
@@ -212,7 +213,7 @@ export function Spec(): JSX.Element {
         </Dialog.Root>
 
         <Popover.Root>
-          <Popover.Trigger class="rounded-4 border border-outline-gray-2 px-3 py-1.5 text-base">
+          <Popover.Trigger class={button({ variant: 'outline', size: 'sm' })}>
             Filters
           </Popover.Trigger>
           <Popover.Content>
@@ -221,7 +222,7 @@ export function Spec(): JSX.Element {
         </Popover.Root>
 
         <Tooltip text="Add a new item">
-          <span class="rounded-4 bg-surface-gray-2 px-3 py-1.5 text-base">
+          <span class="rounded-card bg-surface-gray-2 px-3 py-1.5 text-base">
             Hover me
           </span>
         </Tooltip>

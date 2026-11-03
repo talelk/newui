@@ -1,4 +1,5 @@
 import { For, type JSX, Show } from 'solid-js'
+import { SR_ONLY } from './tokens'
 import type { ChartContainerProps } from './types'
 
 /**
@@ -13,20 +14,6 @@ import type { ChartContainerProps } from './types'
  * The container reads runtime custom properties, so it follows the light/dark
  * axis without a second recipe; the package ships no stylesheet.
  */
-
-/** The standard `sr-only` recipe, inline so the package needs no stylesheet. */
-const SR_ONLY: JSX.CSSProperties = {
-  position: 'absolute',
-  width: '1px',
-  height: '1px',
-  padding: '0',
-  margin: '-1px',
-  overflow: 'hidden',
-  clip: 'rect(0, 0, 0, 0)',
-  'white-space': 'normal',
-  'overflow-wrap': 'anywhere',
-  'border-width': '0',
-}
 
 function cssHeight(height: number | string | undefined): string {
   if (height === undefined) return '100%'
@@ -75,7 +62,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
       style={{
         display: 'flex',
         'flex-direction': 'column',
-        gap: '0.5rem',
+        gap: 'var(--spacing-control-gap)',
         width: '100%',
         'min-width': '0',
         height: cssHeight(props.height),
@@ -116,7 +103,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
               <div
                 data-slot="chart-subtitle"
                 style={{
-                  'font-size': '0.75rem',
+                  'font-size': 'var(--text-caption)',
                   'line-height': '1rem',
                   'margin-top': '0.125rem',
                   color: 'var(--ink-gray-7)',
@@ -194,7 +181,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                     height: '100%',
                     display: 'flex',
                     'align-items': 'flex-end',
-                    gap: '0.5rem',
+                    gap: 'var(--spacing-control-gap)',
                     padding: '1rem 0.25rem 0.25rem',
                     'box-sizing': 'border-box',
                   }}
@@ -205,7 +192,8 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                         style={{
                           flex: '1 1 0%',
                           height,
-                          'border-radius': '0.375rem 0.375rem 0 0',
+                          'border-radius':
+                            'var(--radius-control) var(--radius-control) 0 0',
                           'background-color': 'var(--surface-gray-2)',
                         }}
                       />
@@ -229,7 +217,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
               'flex-direction': 'column',
               'align-items': 'center',
               'justify-content': 'center',
-              gap: '0.5rem',
+              gap: 'var(--spacing-control-gap)',
               'text-align': 'center',
             }}
           >
@@ -239,7 +227,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                 <>
                   <span
                     style={{
-                      'font-size': '0.875rem',
+                      'font-size': 'var(--text-interface)',
                       'font-weight': '500',
                       color: 'var(--ink-red-7)',
                     }}
@@ -249,7 +237,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                   <Show when={props.error}>
                     <span
                       style={{
-                        'font-size': '0.75rem',
+                        'font-size': 'var(--text-caption)',
                         color: 'var(--ink-gray-7)',
                         'max-width': '24rem',
                       }}
@@ -274,7 +262,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
               'flex-direction': 'column',
               'align-items': 'center',
               'justify-content': 'center',
-              gap: '0.5rem',
+              gap: 'var(--spacing-control-gap)',
               'text-align': 'center',
             }}
           >
@@ -287,8 +275,8 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                   <span
                     aria-hidden="true"
                     style={{
-                      'font-size': '1.5rem',
-                      'line-height': '2rem',
+                      'font-size': 'var(--text-heading)',
+                      'line-height': 'var(--text-heading--line-height)',
                       'font-weight': '600',
                       color: 'var(--ink-gray-7)',
                     }}
@@ -297,11 +285,11 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
                   </span>
                   <span
                     style={{
-                      'font-size': '0.75rem',
+                      'font-size': 'var(--text-caption)',
                       color: 'var(--ink-gray-7)',
                     }}
                   >
-                    No data to show
+                    Nothing here yet
                   </span>
                 </>
               }

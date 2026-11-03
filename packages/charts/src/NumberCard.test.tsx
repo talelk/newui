@@ -53,7 +53,7 @@ describe('NumberCard', () => {
       '[data-slot="number-card-delta"]',
     ) as HTMLElement
     expect(pill.style.backgroundColor).toBe('var(--surface-green-2)')
-    expect(pill.style.borderRadius).toBe('9999px')
+    expect(pill.style.borderRadius).toBe('var(--radius-pill)')
     expect(
       container.querySelector('[data-slot="number-card-caption"]')?.textContent,
     ).toBe('from $77.6k last month')

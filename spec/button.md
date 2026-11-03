@@ -12,7 +12,7 @@
 | `label` | `string` | — | text label |
 | `icon` | `string \| Component` | — | icon-only form when no label/children |
 | `iconLeft` / `iconRight` | `string \| Component` | — | adornments (string = `lucide-*`) |
-| `loading` | `boolean` | `false` | disables + spinner; keeps the resting look |
+| `loading` | `boolean` | `false` | busy + spinner; keeps the resting look (no native `disabled`) |
 | `href` | `string` | — | renders an `<a>` (new tab) |
 | `route` | `string` | — | in-app destination; wins over `href`; renders an `<a>` with no `target` |
 | `disabled` | `boolean` | `false` | |
@@ -26,8 +26,10 @@
   as an enabled blue button in dark mode.
 
 - Without `label`/`children`, renders the icon-only square form.
-- `loading` sets `aria-busy` and `disabled`, and adds `pointer-events-none`
-  while keeping the resting colour (an explicit `disabled` dims instead).
+- `loading` sets `aria-busy`, `aria-disabled` and `data-state="loading"`,
+  and adds `pointer-events-none` while keeping the resting colour — busy is
+  not disabled, so the native `disabled` attribute (and its dimmed palette)
+  is reserved for an explicit `disabled`.
 - The pressed look is driven by `data-state` (`open`/`active`), so a Button
   used as a menu trigger holds the pressed look with no JS.
 - `aria-label` falls back to `label`; icon-only buttons must supply one.
@@ -41,4 +43,4 @@
 
 ## Styling hooks
 
-`data-slot="button"`, `data-size`, `data-variant`, `data-color` and `data-disabled` expose the root. State is read from `:disabled` and `[data-state]`.
+`data-slot="button"`, `data-size`, `data-variant`, `data-theme` and `data-disabled` expose the root. State is read from `:disabled` and `[data-state]` (`open`/`active`/`loading`).

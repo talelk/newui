@@ -1,5 +1,5 @@
 import { Icon } from '@talelk/newui-atoms'
-import { cn } from '@talelk/newui-atoms/internal'
+import { button, cn } from '@talelk/newui-atoms/internal'
 import { For, type JSX, Show, splitProps } from 'solid-js'
 import { Menu } from '../Menu'
 
@@ -20,6 +20,8 @@ export interface DropdownProps {
   children?: JSX.Element
   /** Called with the selected option's value. */
   onSelect?: (value: string) => void
+  /** Disables the trigger; the menu cannot be opened. */
+  disabled?: boolean
   /** Merged into the trigger. */
   class?: string
 }
@@ -29,12 +31,18 @@ export interface DropdownProps {
  * the compound `Menu` (same Zag `menu` machine): it renders the trigger and one
  * `Menu.Item` per option. Use `Menu` directly when the trigger or rows need to
  * be customised beyond `label`/`icon`/`danger`.
+ *
+ * The trigger is the shared Button recipe (`subtle` / `sm`, the frappe
+ * default) applied to `Menu.Trigger`'s button element — `Menu.Trigger` owns
+ * the Zag trigger props, so the recipe is composed as classes rather than
+ * nesting a `Button` inside a button.
  */
 export function Dropdown(props: DropdownProps): JSX.Element {
   const [local] = splitProps(props, [
     'options',
     'children',
     'onSelect',
+    'disabled',
     'class',
   ])
 
@@ -42,20 +50,16 @@ export function Dropdown(props: DropdownProps): JSX.Element {
     <Menu.Root onSelect={local.onSelect}>
       <Menu.Trigger
         data-slot="dropdown-trigger"
+        disabled={local.disabled}
         class={cn(
-          // frappe's default trigger is a subtle gray `Button` (size `sm`):
-          // `h-7 text-base px-2 rounded-4`, not a bordered input-like box.
-          'inline-flex h-8 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-3 bg-surface-gray-2 px-2 text-base text-ink-gray-8 transition-colors',
-          'hover:bg-surface-gray-3 active:bg-surface-gray-4',
-          'focus-visible:focus-ring',
-          'data-[state=open]:bg-surface-gray-4',
+          button({ variant: 'subtle', theme: 'gray', size: 'sm' }),
           local.class,
         )}
       >
         {local.children}
-        <span
-          class="lucide-chevron-down size-4 shrink-0 text-ink-gray-5"
-          aria-hidden="true"
+        <Icon
+          icon="lucide-chevron-down"
+          class="size-4 shrink-0 text-ink-gray-5"
         />
       </Menu.Trigger>
       <Menu.Content data-slot="dropdown-content">

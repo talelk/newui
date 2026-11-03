@@ -385,7 +385,7 @@ const ItemIndicator: ParentComponent<TreeNodeProps> = (props) => {
         indexPath: props.indexPath,
       })}
       data-slot="tree-item-indicator"
-      class={cn('lucide-check size-3.5 shrink-0 text-ink-blue-6', props.class)}
+      class={cn('lucide-check size-3.5 shrink-0 text-ink-blue-8', props.class)}
     />
   )
 }

@@ -1,4 +1,5 @@
 import type { JSX } from 'solid-js'
+import { CARD_SURFACE } from './tokens'
 import type { ChartCardProps } from './types'
 
 /**
@@ -9,17 +10,8 @@ import type { ChartCardProps } from './types'
  * The surface reads runtime custom properties, so it follows the light/dark
  * axis without a second recipe; the package ships no stylesheet.
  */
-const SURFACE: JSX.CSSProperties = {
-  'border-width': '1px',
-  'border-style': 'solid',
-  'border-color': 'var(--outline-gray-1)',
-  'background-color': 'var(--surface-elevation-1)',
-  'border-radius': 'var(--radius-card)',
-  padding: 'var(--spacing-card-pad)',
-}
-
 export function ChartCard(props: ChartCardProps): JSX.Element {
-  const surface = () => (props.card === false ? undefined : SURFACE)
+  const surface = () => (props.card === false ? undefined : CARD_SURFACE)
 
   return (
     <div

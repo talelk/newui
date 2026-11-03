@@ -3,6 +3,7 @@ import { For, type JSX } from 'solid-js'
 import { LADDER_COUNTS } from '../generated/counts'
 import { CodeBlock } from '../lib/CodeBlock'
 import { PageSection } from '../lib/PageSection'
+import { InlineCode } from '../lib/site-ui'
 import { TableOfContents } from '../lib/TableOfContents'
 import { PageIntro } from '../shell/PageIntro'
 import { usePageToc } from '../shell/SiteLayout'
@@ -251,10 +252,8 @@ export function Kit(): JSX.Element {
         <p class="text-base text-ink-gray-7">
           A repository is the seam between a page and wherever its records live.
           It has four methods and no domain verbs — "complete" is{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            update(id, {'{ status: "Done" }'})
-          </code>{' '}
-          at the call site.
+          <InlineCode>update(id, {'{ status: "Done" }'})</InlineCode> at the
+          call site.
         </p>
         <Code title="src/data/records.ts — the only file that knows where records live">
           {`
@@ -276,10 +275,8 @@ export function createProjectRepository(): Repository<Project, NewProject> {
         </Code>
         <p class="text-base text-ink-gray-7">
           A page never touches the cache. It reads{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            collection.query.rows()
-          </code>{' '}
-          and calls mutations; updates are optimistic and roll back on failure.
+          <InlineCode>collection.query.rows()</InlineCode> and calls mutations;
+          updates are optimistic and roll back on failure.
         </p>
         <Code title="src/pages/Records.tsx — one list, four actions">
           {`
@@ -297,18 +294,15 @@ collection.remove.mutate({ ids })
         </Code>
         <p class="text-base text-ink-gray-7">
           Forms are the same idea: TanStack Form stays the engine, and{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            @talelk/newui-data/form
-          </code>{' '}
-          adds the submit lifecycle and the field-error bridge. A submit button
-          reads{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
+          <InlineCode>@talelk/newui-data/form</InlineCode> adds the submit
+          lifecycle and the field-error bridge. A submit button reads{' '}
+          <InlineCode>
             loading={'{'}submitting(){'}'}
-          </code>{' '}
+          </InlineCode>{' '}
           and each control takes{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
+          <InlineCode>
             error={'{'}fieldError(field()){'}'}
-          </code>
+          </InlineCode>
           .
         </p>
         <Code title="src/pages/SignIn.tsx — a validated form">
@@ -335,11 +329,7 @@ const { form, submitting } = createAppForm({
         </Code>
         <p class="text-base text-ink-gray-7">
           The full contract — optimistic semantics, rollback, what a create does
-          not do — is in{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            spec/data.md
-          </code>{' '}
-          beside the code.
+          not do — is in <InlineCode>spec/data.md</InlineCode> beside the code.
         </p>
       </PageSection>
 
@@ -383,17 +373,11 @@ pnpm build:starter   # 138 kB gzip: frame, router, data layer, table, forms
           </table>
         </div>
         <p class="text-base text-ink-gray-7">
-          To use it as your own: copy{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            apps/starter
-          </code>{' '}
-          out of the repository, rename its `package.json`, point the
+          To use it as your own: copy <InlineCode>apps/starter</InlineCode> out
+          of the repository, rename its `package.json`, point the
           `@talelk/newui-*` dependencies at the published versions, and replace{' '}
-          <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-            src/data/records.ts
-          </code>{' '}
-          with your API. Nothing above that file changes — which is the property
-          the layer exists for.
+          <InlineCode>src/data/records.ts</InlineCode> with your API. Nothing
+          above that file changes — which is the property the layer exists for.
         </p>
         <p class="text-base text-ink-gray-7">
           It deliberately leaves out an auth backend, an HTTP client and

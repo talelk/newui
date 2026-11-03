@@ -12,6 +12,7 @@ import {
 } from 'solid-js'
 import { BASE_PATH, sitePath, stripBase } from './base'
 import { LoadingNote } from './LoadingNote'
+import { SEGMENTED, SEGMENTED_BTN } from './site-ui'
 import { type StoryGlobals, storyUrl } from './storybook'
 
 export const VIEWPORTS = {
@@ -97,7 +98,7 @@ export function SourcePanel(props: {
                         setSelectedFile(event.currentTarget.value)
                         setCopyStatus('')
                       }}
-                      class="h-7 min-w-0 max-w-full rounded-3 border border-outline-gray-2 bg-surface-elevation-1 px-2 focus-visible:focus-ring"
+                      class="h-7 min-w-0 max-w-full rounded-control border border-outline-gray-2 bg-surface-elevation-1 px-2 focus-visible:focus-ring"
                     >
                       <For each={files().files}>
                         {(file) => (
@@ -109,7 +110,7 @@ export function SourcePanel(props: {
                   <button
                     type="button"
                     onClick={() => copy(true)}
-                    class="h-7 rounded-3 border border-outline-gray-2 px-2 text-caption focus-visible:focus-ring"
+                    class="h-7 rounded-control border border-outline-gray-2 px-2 text-caption focus-visible:focus-ring"
                   >
                     Copy all files
                   </button>
@@ -119,7 +120,7 @@ export function SourcePanel(props: {
             <button
               type="button"
               onClick={() => copy(false)}
-              class="h-7 rounded-3 border border-outline-gray-2 px-2 text-caption focus-visible:focus-ring"
+              class="h-7 rounded-control border border-outline-gray-2 px-2 text-caption focus-visible:focus-ring"
             >
               Copy source
             </button>
@@ -134,7 +135,7 @@ export function SourcePanel(props: {
           <Show when={bundle()}>
             {(files) => (
               <details class="px-3 pb-2 text-caption text-ink-gray-7">
-                <summary class="cursor-pointer rounded-3 focus-visible:focus-ring">
+                <summary class="cursor-pointer rounded-control focus-visible:focus-ring">
                   Package setup
                 </summary>
                 <p class="py-2">
@@ -353,10 +354,7 @@ function Preview(props: {
         data-slot="preview-controls"
         class="flex flex-wrap items-center gap-2 border-b border-outline-gray-1 bg-surface-elevation-1 p-2"
       >
-        <fieldset
-          aria-label="Example view"
-          class="flex gap-0.5 rounded-control bg-surface-gray-2 p-0.5"
-        >
+        <fieldset aria-label="Example view" class={SEGMENTED}>
           <For each={['preview', 'source'] as const}>
             {(value) => (
               <button
@@ -366,7 +364,7 @@ function Preview(props: {
                   setTab(value)
                   if (value === 'source') setSourceOpened(true)
                 }}
-                class="h-7 rounded-control px-2.5 text-interface text-ink-gray-7 capitalize transition-colors hover:text-ink-gray-9 aria-pressed:bg-surface-base aria-pressed:font-medium aria-pressed:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
+                class="h-7 rounded-control px-2.5 text-interface text-ink-gray-7 capitalize transition-colors duration-base ease-standard hover:text-ink-gray-9 aria-pressed:bg-surface-base aria-pressed:font-medium aria-pressed:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
               >
                 {value === 'preview' ? 'Preview' : 'Source'}
               </button>
@@ -376,7 +374,7 @@ function Preview(props: {
         <Show when={props.src ?? props.story}>
           <fieldset
             aria-label="Preview viewport"
-            class="ms-auto flex gap-0.5 rounded-control bg-surface-gray-2 p-0.5"
+            class={`ms-auto ${SEGMENTED}`}
           >
             <For
               each={
@@ -393,7 +391,7 @@ function Preview(props: {
                   title={value.label}
                   aria-pressed={viewport() === key}
                   onClick={() => select(key)}
-                  class="grid size-10 sm:size-7 place-items-center rounded-control text-ink-gray-6 transition-colors hover:text-ink-gray-9 aria-pressed:bg-surface-base aria-pressed:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
+                  class={SEGMENTED_BTN}
                 >
                   <span
                     aria-hidden="true"

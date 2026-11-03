@@ -43,7 +43,7 @@ export type PaginationSize = 'sm' | 'md' | 'lg'
 
 /** Square hit areas, so the numbers and the arrows line up as one row. */
 export const paginationItem = tv({
-  base: 'grid shrink-0 cursor-pointer place-items-center rounded-3 text-base tabular-nums transition-colors outline-none focus-visible:focus-ring',
+  base: 'grid shrink-0 cursor-pointer place-items-center rounded-control text-base tabular-nums transition-colors outline-none focus-visible:focus-ring',
   variants: {
     size: {
       sm: 'size-7 min-w-7 px-1.5',

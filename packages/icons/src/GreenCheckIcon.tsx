@@ -11,11 +11,11 @@ export function GreenCheckIcon(props: { class?: string }): JSX.Element {
     >
       <path
         d="M16 32c8.837 0 16-7.163 16-16S24.837 0 16 0 0 7.163 0 16s7.163 16 16 16z"
-        fill="#59B179"
+        class="fill-surface-green-6"
       />
       <path
         d="M9.333 17.227l1.333 1.333 2.667 2.667 5.333-5.333 2.667-2.667 1.333-1.333"
-        stroke="#fff"
+        class="stroke-ink-base"
         stroke-width="2"
         stroke-miterlimit="10"
         stroke-linecap="round"

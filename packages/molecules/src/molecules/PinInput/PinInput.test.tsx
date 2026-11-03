@@ -15,6 +15,19 @@ describe('PinInput', () => {
     expect(four.container.querySelectorAll('input').length).toBe(4)
   })
 
+  it('takes the shared size/variant axes (square density cells)', () => {
+    const { container } = render(() => (
+      <PinInput length={4} size="md" variant="subtle" aria-label="Code" />
+    ))
+    const root = container.querySelector('[data-slot="pin-input"]')
+    expect(root?.getAttribute('data-size')).toBe('md')
+    expect(root?.getAttribute('data-variant')).toBe('subtle')
+    const cell = container.querySelector('input')
+    expect(cell?.className).toContain('size-8')
+    expect(cell?.className).toContain('rounded-control')
+    expect(cell?.className).not.toContain('size-7')
+  })
+
   it('types digits across the cells and reports the joined value', async () => {
     const onValueChange = vi.fn()
     render(() => (

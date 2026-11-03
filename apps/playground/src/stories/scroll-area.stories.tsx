@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from 'storybook-solidjs-vite'
  */
 export function Demo(): JSX.Element {
   return (
-    <ScrollArea.Root class="h-32 w-64 rounded-4 border border-outline-gray-1">
+    <ScrollArea.Root class="h-32 w-64 rounded-card border border-outline-gray-1">
       <ScrollArea.Viewport class="p-3">
         <For each={Array.from({ length: 12 })}>
           {(_, i) => <p class="text-base text-ink-gray-7">Row {i() + 1}</p>}

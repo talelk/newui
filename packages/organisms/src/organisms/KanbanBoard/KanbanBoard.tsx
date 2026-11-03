@@ -19,7 +19,7 @@ import {
 import { DataState } from '../DataState'
 import { createKanbanDrag, type KanbanSlot } from './drag'
 
-export type KanbanTone = 'gray' | 'amber' | 'blue' | 'green' | 'red' | 'violet'
+export type KanbanTone = 'gray' | 'amber' | 'blue' | 'green' | 'red'
 
 /**
  * Literal classes: Tailwind scans for whole names, so `bg-surface-${tone}-7`
@@ -31,11 +31,23 @@ const TONES: Record<KanbanTone, string> = {
   blue: 'bg-surface-blue-7',
   green: 'bg-surface-green-7',
   red: 'bg-surface-red-7',
-  violet: 'bg-surface-violet-7',
 }
 
-/** ms the cards around a moving slot take to slide to their new places. */
-const FLIP_MS = 200
+/**
+ * The FLIP timing, read off the element from the motion tokens
+ * (--duration-moderate / --ease-out): WAAPI takes numbers, not utilities, and
+ * the slide must settle on the same scale as every utility-driven peer.
+ */
+function flipTiming(el: HTMLElement): { duration: number; easing: string } {
+  const style = getComputedStyle(el)
+  return {
+    duration:
+      Number.parseFloat(style.getPropertyValue('--duration-moderate')) || 200,
+    easing:
+      style.getPropertyValue('--ease-out').trim() ||
+      'cubic-bezier(0.23, 1, 0.32, 1)',
+  }
+}
 
 export interface KanbanColumn<T> {
   id: string
@@ -258,7 +270,7 @@ export function KanbanBoard<T extends { id: string }>(
       if (dx === 0 && dy === 0) continue
       card.animate(
         [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }],
-        { duration: FLIP_MS, easing: 'ease' },
+        flipTiming(card),
       )
     }
   }
@@ -389,7 +401,7 @@ export function KanbanBoard<T extends { id: string }>(
                     <li
                       ref={(element) => columnRoots.set(columnId, element)}
                       data-kanban-column={columnId}
-                      class="flex min-h-0 w-72 shrink-0 flex-col rounded-card border border-outline-gray-1 bg-surface-gray-1 max-lg:snap-start min-[1440px]:w-64 2xl:w-72 dark:bg-transparent"
+                      class="flex min-h-0 w-72 shrink-0 flex-col rounded-card border border-outline-gray-1 bg-surface-gray-1 max-lg:snap-start min-[1440px]:w-64 2xl:w-72"
                     >
                       <div class="flex items-center justify-between gap-2 pe-1 ps-3 pt-1 pb-2">
                         <div class="flex min-w-0 items-center gap-2">
@@ -491,7 +503,7 @@ export function KanbanBoard<T extends { id: string }>(
                                               <Menu.Trigger
                                                 data-kanban-action=""
                                                 aria-label={`Actions for ${nameOf(item)}`}
-                                                class="flex size-7 cursor-pointer items-center justify-center rounded-3 text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-8 focus-visible:focus-ring max-lg:size-10"
+                                                class="flex size-8 cursor-pointer items-center justify-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-8 focus-visible:focus-ring motion-reduce:transition-none max-lg:size-10"
                                               >
                                                 <Icon
                                                   icon="lucide-ellipsis"
@@ -559,8 +571,11 @@ export function KanbanBoard<T extends { id: string }>(
             >
               <KanbanCardFrame
                 ghost
+                // Drag-ghost exception (the one named scale/tilt in the kit):
+                // the lifted proxy tilts while carried and settles flat; depth
+                // is the shared shadow-drag role, not a one-off step.
                 class={cn(
-                  !state().settling && 'scale-[1.02] rotate-2 shadow-xl',
+                  !state().settling && 'scale-[1.02] rotate-2 shadow-drag',
                 )}
               >
                 <div class="flex items-start justify-between gap-1">
@@ -604,7 +619,9 @@ function KanbanCardFrame(props: {
       padding="sm"
       class={cn(
         'group relative border-outline-gray-1',
-        props.ghost ? 'cursor-grabbing' : 'cursor-grab hover:shadow-sm',
+        props.ghost
+          ? 'cursor-grabbing'
+          : 'cursor-grab transition-[border-color] hover:border-outline-gray-3 motion-reduce:transition-none',
         props.class,
       )}
     >

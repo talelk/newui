@@ -1,6 +1,11 @@
 import { createSignal, type JSX, Show, splitProps } from 'solid-js'
+import {
+  controlFocus,
+  invalidField,
+  markGlyphSizes,
+} from '../../lib/control-styles'
 import { Field, FieldLabelContent, useField } from '../../lib/field'
-import { cn } from '../../lib/tv'
+import { cn, tv } from '../../lib/tv'
 import { Icon } from '../Icon'
 
 type CheckboxSize = 'xs' | 'sm' | 'md'
@@ -28,11 +33,28 @@ export interface CheckboxProps {
   class?: string
 }
 
-const SIZE: Record<CheckboxSize, string> = {
-  xs: 'size-[13px]',
-  sm: 'size-3.5',
-  md: 'size-4',
-}
+// State is selectors, not JS branches (P-state rule): the native input's own
+// `disabled:` / `checked:` / `indeterminate:` variants own every look, with
+// the shared neutral focus and red invalid edge from control-styles. The
+// forms-plugin checkmark is white on a `currentColor` fill, and a `bg-*`
+// utility outranks that base rule — the explicit checked fill keeps the
+// check visible in light mode.
+const checkboxBox = tv({
+  base: [
+    'shrink-0 rounded-1 border-outline-gray-4 bg-surface-base text-ink-gray-9 transition',
+    'checked:bg-ink-gray-9 checked:[background-image:none] indeterminate:bg-ink-gray-9 indeterminate:[background-image:none]',
+    'hover:border-outline-gray-5 active:border-outline-gray-6',
+    'disabled:cursor-not-allowed disabled:border-outline-gray-3 disabled:text-ink-gray-5',
+    'disabled:checked:bg-ink-gray-5 disabled:indeterminate:bg-ink-gray-5 disabled:hover:border-outline-gray-3',
+    'focus:ring-0 focus:ring-offset-0',
+  ],
+  variants: {
+    size: { xs: 'size-3.25', sm: 'size-3.5', md: 'size-4' },
+    // Padded rows drive hover from the row (`group`); otherwise the box does.
+    padded: { true: 'group-hover:border-outline-gray-5', false: '' },
+  },
+  defaultVariants: { size: 'sm', padded: false },
+})
 
 /**
  * A native `<input type="checkbox">`, styled by `@tailwindcss/forms`.
@@ -80,55 +102,51 @@ function CheckboxControl(props: CheckboxProps): JSX.Element {
     const sizeClass = hasDetail()
       ? size() === 'md'
         ? 'px-3 py-2'
-        : 'px-1.5 py-1.5'
+        : size() === 'sm'
+          ? 'px-2 py-1.5'
+          : 'px-1.5 py-1.5'
       : size() === 'md'
         ? 'h-8 px-3'
         : size() === 'sm'
-          ? 'h-7 px-1.5'
+          ? 'h-7 px-2'
           : 'h-6 px-1.5'
     return cn(
-      'group rounded-4 transition-colors',
+      'group rounded-card transition-colors',
       sizeClass,
       !hasDetail() && 'justify-center',
       local.disabled
         ? 'cursor-not-allowed'
-        : 'cursor-pointer hover:bg-surface-gray-3 active:bg-surface-gray-4 [&:has(:focus-visible)]:ring-2 [&:has(:focus-visible)]:ring-outline-gray-3',
+        : 'cursor-pointer hover:bg-surface-gray-3 active:bg-surface-gray-4 focus-ring-within',
     )
   }
 
-  const inputClasses = () => {
-    const base = cn(SIZE[size()], 'shrink-0 rounded-1 bg-surface-base')
-    if (local.disabled) {
-      return cn(
-        base,
-        'cursor-not-allowed border-outline-gray-3 text-ink-gray-5',
-        'checked:bg-ink-gray-5 checked:[background-image:none] indeterminate:bg-ink-gray-5 indeterminate:[background-image:none]',
-        'focus:ring-0 focus:ring-offset-0',
-      )
-    }
-    return cn(
-      base,
-      'border-outline-gray-4 transition',
-      // The `@tailwindcss/forms` checkmark is white and its `:checked` fill is
-      // `currentColor` — but a `bg-*` utility outranks that base-layer rule, so
-      // without an explicit checked fill the box stays `surface-base` and the
-      // white check is invisible in light mode.
-      'text-ink-gray-9 checked:bg-ink-gray-9 checked:[background-image:none] indeterminate:bg-ink-gray-9 indeterminate:[background-image:none]',
-      // Padded rows drive hover from the row (`group`); otherwise the box does.
-      local.padded
-        ? 'group-hover:border-outline-gray-5'
-        : 'hover:border-outline-gray-5 active:border-outline-gray-6',
-      'focus:ring-0 focus:ring-offset-0 focus-visible:focus-ring-blue aria-[invalid=true]:border-outline-red-6',
+  const inputClasses = () =>
+    cn(
+      checkboxBox({ size: size(), padded: Boolean(local.padded) }),
+      // A padded row owns the ring (focus-ring-within); standalone boxes ring.
+      !local.padded && controlFocus,
+      invalidField,
     )
-  }
 
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: the padded surface forwards clicks from its padding to the control; the row label is the real interactive element.
     // biome-ignore lint/a11y/useKeyWithClickEvents: the control stays keyboard-reachable through the hidden input.
     <div
       data-slot="checkbox-root"
+      data-variant={local.padded ? 'padded' : 'plain'}
+      data-size={size()}
+      data-state={
+        local.indeterminate
+          ? 'indeterminate'
+          : checked()
+            ? 'checked'
+            : 'unchecked'
+      }
+      data-disabled={local.disabled ? '' : undefined}
       class={cn(
-        'relative flex-col gap-1',
+        // The root owns the label's type + ink so a dense host (a table
+        // cell at caption size) cannot shrink the control's text metrics.
+        'group relative flex-col gap-1 text-base text-ink-gray-8',
         local.padded ? 'flex' : 'inline-flex',
         containerClasses(),
         local.class,
@@ -144,10 +162,7 @@ function CheckboxControl(props: CheckboxProps): JSX.Element {
     >
       <label
         data-slot="checkbox"
-        class={cn(
-          'inline-flex items-center gap-2 rounded-4',
-          local.disabled ? 'cursor-not-allowed' : 'cursor-pointer',
-        )}
+        class="inline-flex cursor-pointer items-center gap-2 rounded-card group-data-[disabled]:cursor-not-allowed"
       >
         <span class="relative inline-flex shrink-0">
           <input
@@ -162,6 +177,14 @@ function CheckboxControl(props: CheckboxProps): JSX.Element {
             checked={checked()}
             disabled={local.disabled}
             data-slot="checkbox-control"
+            data-state={
+              local.indeterminate
+                ? 'indeterminate'
+                : checked()
+                  ? 'checked'
+                  : 'unchecked'
+            }
+            data-disabled={local.disabled ? '' : undefined}
             aria-describedby={field?.describedBy()}
             aria-invalid={field?.hasError() ? 'true' : undefined}
             aria-errormessage={field?.hasError() ? field?.errorId() : undefined}
@@ -180,7 +203,7 @@ function CheckboxControl(props: CheckboxProps): JSX.Element {
             >
               <Icon
                 icon={local.indeterminate ? 'lucide-minus' : 'lucide-check'}
-                class="size-3"
+                class={markGlyphSizes[size()]}
               />
             </span>
           </Show>
@@ -189,10 +212,7 @@ function CheckboxControl(props: CheckboxProps): JSX.Element {
           <span
             data-slot="label"
             id={field?.labelId()}
-            class={cn(
-              'select-none text-base leading-tighter',
-              local.disabled ? 'text-ink-gray-4' : 'text-ink-gray-8',
-            )}
+            class="select-none leading-tighter group-data-[disabled]:text-ink-gray-4"
           >
             <FieldLabelContent required={field?.required()}>
               {local.label}
@@ -201,7 +221,7 @@ function CheckboxControl(props: CheckboxProps): JSX.Element {
         </Show>
       </label>
       <Show when={local.description && !field}>
-        <span class="ps-[1.35rem] text-p-sm text-ink-gray-6">
+        <span class="ps-5.5 text-p-sm text-ink-gray-6">
           {local.description}
         </span>
       </Show>

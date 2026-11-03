@@ -1,5 +1,6 @@
 import * as zag from '@zag-js/slider'
 import { For, type JSX, splitProps } from 'solid-js'
+import { controlFocus, invalidToggle } from '../../lib/control-styles'
 import { Field, useField } from '../../lib/field'
 import { createId } from '../../lib/id'
 import { cn } from '../../lib/tv'
@@ -69,6 +70,7 @@ function SliderControl(props: SliderProps): JSX.Element {
     <div
       {...api().getRootProps()}
       data-slot="slider"
+      data-size={size()}
       data-invalid={field?.hasError() ? '' : undefined}
       class={cn(
         'relative flex w-full touch-none select-none items-center',
@@ -85,14 +87,14 @@ function SliderControl(props: SliderProps): JSX.Element {
           {...api().getTrackProps()}
           data-slot="slider-track"
           class={cn(
-            'relative grow rounded-4 bg-surface-gray-3 data-[disabled]:bg-surface-gray-2',
+            'relative grow rounded-pill bg-surface-gray-3 data-[disabled]:bg-surface-gray-2',
             size() === 'md' ? 'h-1.5' : 'h-1',
           )}
         />
         <div
           {...api().getRangeProps()}
           data-slot="slider-range"
-          class="absolute h-full rounded-4 bg-surface-gray-10 data-[disabled]:bg-surface-gray-4"
+          class="absolute h-full rounded-pill bg-surface-gray-10 data-[disabled]:bg-surface-gray-4"
         />
         <For each={api().value}>
           {(_, index) => (
@@ -106,12 +108,13 @@ function SliderControl(props: SliderProps): JSX.Element {
               aria-invalid={field?.hasError() ? 'true' : undefined}
               aria-label={local['aria-label']}
               class={cn(
-                'rounded-full bg-surface-base shadow-md transition-shadow duration-200 ease-out',
+                'rounded-pill bg-surface-base shadow-md transition-shadow duration-moderate ease-out',
                 size() === 'md' ? 'size-5' : 'size-4',
                 'hover:ring-[6px] hover:ring-outline-gray-3/40',
-                'focus:outline-none focus-visible:focus-ring-blue motion-reduce:transition-none',
-                field?.hasError() && 'ring-1 ring-outline-red-6',
-                'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-60',
+                'focus:outline-none motion-reduce:transition-none',
+                controlFocus,
+                invalidToggle,
+                'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:shadow-none data-[disabled]:hover:ring-0',
               )}
             />
           )}

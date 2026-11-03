@@ -43,6 +43,29 @@ describe('IconButton', () => {
     expect(link.getAttribute('target')).toBeNull()
   })
 
+  it('never renders a navigable anchor while disabled', () => {
+    render(() => (
+      <IconButton
+        label="Open settings"
+        route="/settings"
+        disabled
+        icon="lucide-settings"
+      />
+    ))
+    expect(screen.queryByRole('link')).toBeNull()
+    const button = screen.getByRole('button', { name: 'Open settings' })
+    expect((button as HTMLButtonElement).disabled).toBe(true)
+  })
+
+  it('shows the shared spinner while loading, keeping resting colours', () => {
+    render(() => <IconButton label="Save" loading icon="lucide-check" />)
+    const button = screen.getByRole('button', { name: 'Save' })
+    expect((button as HTMLButtonElement).disabled).toBe(false)
+    expect(button.getAttribute('aria-busy')).toBe('true')
+    expect(button.getAttribute('data-state')).toBe('loading')
+    expect(button.querySelector('[data-slot="spinner"]')).toBeTruthy()
+  })
+
   it('treats `href` as external', () => {
     render(() => (
       <IconButton
@@ -68,7 +91,7 @@ describe('IconButton', () => {
     ))
     const button = container.querySelector('button') as HTMLElement
     expect(button.getAttribute('data-variant')).toBe('solid')
-    expect(button.getAttribute('data-color')).toBe('red')
+    expect(button.getAttribute('data-theme')).toBe('red')
     expect(button.getAttribute('data-size')).toBe('lg')
     expect(button.className).toContain('bg-surface-red-8')
   })

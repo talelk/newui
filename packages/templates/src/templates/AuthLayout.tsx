@@ -24,11 +24,11 @@ export function AuthLayout(props: AuthLayoutProps): JSX.Element {
       <Show when={props.aside}>
         {/* Cool Paper, not a saturated brand field: the One Signal Rule keeps
             blue for the interactive moment, which the app's aside content owns. */}
-        <aside class="hidden flex-col justify-between border-s border-outline-gray-1 bg-surface-gray-2 p-6 text-ink-gray-9 lg:flex">
+        <aside class="hidden flex-col justify-between border-e border-outline-gray-1 bg-surface-gray-2 p-page-gutter text-ink-gray-9 lg:flex">
           {props.aside}
         </aside>
       </Show>
-      <main class="relative grid min-h-dvh place-items-center p-4">
+      <main class="relative grid min-h-dvh place-items-center p-page-gutter-compact">
         <Show when={props.header}>
           <div class="absolute inset-x-0 top-0 flex items-center justify-between p-3">
             {props.header}

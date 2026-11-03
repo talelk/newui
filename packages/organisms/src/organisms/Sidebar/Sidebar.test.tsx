@@ -34,7 +34,7 @@ describe('Sidebar', () => {
     const { container } = render(() => <Sidebar collapsed />)
     const nav = container.querySelector('[data-slot="sidebar"]') as HTMLElement
     expect(nav.getAttribute('data-state')).toBe('collapsed')
-    expect(nav.style.width).toBe('3rem')
+    expect(nav.style.width).toBe('3.5rem')
   })
 
   it('reports a toggle through onCollapsedChange', async () => {

@@ -245,7 +245,7 @@ export function EditorToolbar(props: EditorToolbarProps): JSX.Element {
       {...rest}
       role="toolbar"
       aria-label={local['aria-label'] ?? 'Formatting'}
-      class={`flex flex-wrap gap-1 rounded-card border border-outline-gray-1 bg-surface-gray-1 p-2 ${local.class ?? ''}`}
+      class={`flex flex-wrap gap-1 border-b border-outline-gray-1 bg-surface-gray-1 p-2 ${local.class ?? ''}`}
       data-slot="editor-toolbar"
     >
       <For each={ACTIONS}>
@@ -265,10 +265,11 @@ export function EditorToolbar(props: EditorToolbarProps): JSX.Element {
                 : undefined
             }
             data-active={action.toggle && isActive(action) ? '' : undefined}
+            data-disabled={isDisabled(action) ? '' : undefined}
             aria-pressed={action.toggle ? isActive(action) : undefined}
             aria-label={action.label}
             disabled={isDisabled(action)}
-            class="h-7 rounded-3 border border-outline-gray-2 bg-surface-elevation-1 px-2 text-base font-medium text-ink-gray-7 hover:bg-surface-gray-2 data-[active]:bg-surface-gray-3 data-[active]:text-ink-gray-9 focus-visible:focus-ring-blue disabled:opacity-50"
+            class="h-7 rounded-control px-2 text-sm-medium text-ink-gray-7 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 data-[active]:bg-surface-gray-3 data-[active]:text-ink-gray-9 focus-visible:focus-ring disabled:text-ink-gray-4 motion-reduce:transition-none"
             onClick={() => {
               const instance = editor()
               if (instance && !isDisabled(action)) action.run(instance)

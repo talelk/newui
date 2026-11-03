@@ -47,12 +47,12 @@ export default function Navigation() {
         <h2 class="mb-4 text-section">Menu bar</h2>
         <nav
           aria-label="Workspace menu bar"
-          class="flex flex-wrap gap-2 rounded-3 border border-outline-gray-1 p-2"
+          class="flex flex-wrap gap-2 rounded-control border border-outline-gray-1 p-2"
         >
           <For each={['File', 'Edit', 'View']}>
             {(label) => (
               <Menu.Root onSelect={action}>
-                <Menu.Trigger class="h-8 rounded-3 px-3 text-interface hover:bg-surface-gray-2 focus-visible:focus-ring">
+                <Menu.Trigger class="h-8 rounded-control px-3 text-interface hover:bg-surface-gray-2 focus-visible:focus-ring">
                   {label}
                 </Menu.Trigger>
                 <Menu.Content>
@@ -76,7 +76,7 @@ export default function Navigation() {
           class="flex flex-wrap items-start gap-3"
         >
           <details class="relative">
-            <summary class="max-w-full cursor-pointer whitespace-normal break-words rounded-3 border border-outline-gray-2 px-3 py-2 text-interface focus-visible:focus-ring">
+            <summary class="max-w-full cursor-pointer whitespace-normal break-words rounded-control border border-outline-gray-2 px-3 py-2 text-interface focus-visible:focus-ring">
               Explore components
             </summary>
             <ul class="mt-2 space-y-1 rounded-card border border-outline-gray-1 bg-surface-elevation-2 p-3 shadow-sm">
@@ -91,7 +91,7 @@ export default function Navigation() {
                   <li>
                     <A
                       href={entry[1] ?? '/atoms'}
-                      class="block rounded-3 px-3 py-2 text-ink-blue-link hover:bg-surface-gray-2 focus-visible:focus-ring"
+                      class="block rounded-control px-3 py-2 text-ink-blue-link hover:bg-surface-gray-2 focus-visible:focus-ring"
                     >
                       {entry[0]}
                     </A>
@@ -102,13 +102,13 @@ export default function Navigation() {
           </details>
           <A
             href="/pages/analytics"
-            class="min-w-0 max-w-full break-words rounded-3 px-3 py-2 text-ink-blue-link focus-visible:focus-ring"
+            class="min-w-0 max-w-full break-words rounded-control px-3 py-2 text-ink-blue-link focus-visible:focus-ring"
           >
             Analytics dashboard
           </A>
           <A
             href="/docs"
-            class="min-w-0 max-w-full break-words rounded-3 px-3 py-2 text-ink-blue-link focus-visible:focus-ring"
+            class="min-w-0 max-w-full break-words rounded-control px-3 py-2 text-ink-blue-link focus-visible:focus-ring"
           >
             Documentation
           </A>

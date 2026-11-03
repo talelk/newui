@@ -89,12 +89,12 @@ function KpiLoadingCards(): JSX.Element {
           class="flex min-h-48 flex-col rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-card-pad"
         >
           <div class="flex items-start justify-between gap-2">
-            <Skeleton class="h-4 w-28 rounded-3" />
-            <Skeleton class="h-5 w-14 rounded-full" />
+            <Skeleton class="h-4 w-28 rounded-control" />
+            <Skeleton class="h-5 w-14 rounded-pill" />
           </div>
-          <Skeleton class="mt-3 h-8 w-32 rounded-3" />
-          <Skeleton class="mt-3 h-3 w-40 rounded-3" />
-          <Skeleton class="mt-auto h-12 w-full rounded-3" />
+          <Skeleton class="mt-3 h-8 w-32 rounded-control" />
+          <Skeleton class="mt-3 h-3 w-40 rounded-control" />
+          <Skeleton class="mt-auto h-12 w-full rounded-control" />
         </div>
       )}
     </For>
@@ -229,7 +229,7 @@ export function Analytics(): JSX.Element {
           <button
             type="button"
             aria-label={`View invoice ${context.row.original.id} for ${context.row.original.customer}`}
-            class="rounded-3 text-start font-medium hover:text-ink-blue-link focus-visible:focus-ring"
+            class="rounded-control text-start font-medium hover:text-ink-blue-link focus-visible:focus-ring"
             onClick={() => setReceiptId(context.row.original.id)}
           >
             {context.row.original.customer}

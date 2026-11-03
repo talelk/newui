@@ -2,10 +2,18 @@ import type { InputSize, InputVariant } from '@talelk/newui-atoms'
 import { Icon, type IconProp, Spinner } from '@talelk/newui-atoms'
 import {
   cn,
+  controlDensity,
   createControllableSignal,
   createId,
   createZagApi,
+  disabledPopup,
   Field,
+  fieldFocusWithin,
+  invalidField,
+  listboxLabel,
+  listboxRow,
+  overlayLayers,
+  overlayPanel,
   Portal,
   popupFieldVariants,
   useField,
@@ -19,6 +27,7 @@ import {
   Show,
   splitProps,
 } from 'solid-js'
+import { ListboxCheck, normalizeGroups } from '../Combobox/listbox'
 
 type MultiSelectApi = ReturnType<typeof zag.connect>
 
@@ -85,63 +94,13 @@ export interface MultiSelectProps {
   class?: string
 }
 
-const SIZE: Record<MultiSelectSize, string> = {
-  xs: 'min-h-6 rounded-3 text-xs',
-  sm: 'min-h-7 rounded-3 text-base',
-  md: 'min-h-8 rounded-3 text-base',
-  lg: 'min-h-10 rounded-3 text-lg',
-}
-
-const ROW =
-  'flex cursor-pointer items-center justify-between gap-2 rounded-3 px-2 py-1.5 text-base text-ink-gray-8 outline-none transition-colors'
-
-interface NormalizedGroup {
-  key: string
-  group: string
-  hideLabel: boolean
-  options: MultiSelectOption[]
-}
-
-function isGroup(
-  option: MultiSelectOption | MultiSelectGroup,
-): option is MultiSelectGroup {
-  return 'group' in option
-}
-
-/** Split a flat/grouped option list into labelled groups; ungrouped runs become one hidden group. */
-function normalizeGroups(options: MultiSelectOptions): NormalizedGroup[] {
-  const groups: NormalizedGroup[] = []
-  let pending: MultiSelectOption[] = []
-
-  const flush = () => {
-    if (!pending.length) return
-    groups.push({
-      key: `__ungrouped__${groups.length}`,
-      group: '',
-      hideLabel: true,
-      options: pending,
-    })
-    pending = []
-  }
-
-  for (const [index, option] of options.entries()) {
-    if (isGroup(option)) {
-      flush()
-      if (!option.options.length) continue
-      groups.push({
-        key: `group-${index}`,
-        group: option.group,
-        hideLabel: Boolean(option.hideLabel),
-        options: option.options,
-      })
-      continue
-    }
-    pending.push(option)
-  }
-
-  flush()
-  return groups
-}
+// Chips wrap, so the control floors at the density min-height rather than
+// the fixed field height — geometry still comes from the one density table
+// (control-styles), never a local SIZE map. Row/label looks are
+// `listboxRow` / `listboxLabel`; group normalization and the check glyph are
+// shared with Combobox (../Combobox/listbox).
+const controlGeometry = (size: MultiSelectSize): string =>
+  `${controlDensity[size].minHeight} rounded-control ${controlDensity[size].text}`
 
 type ControlProps = Omit<
   MultiSelectProps,
@@ -308,17 +267,18 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
         data-variant={local.variant ?? 'outline'}
         class={cn(
           'flex w-full flex-wrap items-center gap-1 px-1.5 py-0.5 transition-colors',
-          SIZE[size()],
+          controlGeometry(size()),
           popupFieldVariants[local.variant ?? 'outline'],
-          'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-2 data-[disabled]:opacity-60',
-          'focus-within:focus-ring-blue data-[invalid]:border-outline-red-6',
+          disabledPopup,
+          fieldFocusWithin,
+          invalidField,
         )}
       >
         <For each={selected()}>
           {(value) => (
             <span
               data-slot="multiselect-chip"
-              class="inline-flex items-center gap-1 rounded-3 bg-surface-gray-3 px-1.5 py-0.5 text-xs text-ink-gray-8"
+              class="inline-flex items-center gap-1 rounded-control bg-surface-gray-3 px-1.5 py-0.5 text-xs text-ink-gray-8"
             >
               {optionByValue(value)?.label ?? value}
               <button
@@ -367,18 +327,23 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
           <div
             {...api().getPositionerProps()}
             data-slot="multiselect-positioner"
-            class="z-overlay"
+            class={overlayLayers.popup}
           >
             {/*
               The panel is presentation and the listbox owns only the rows: a
               listbox may contain options and nothing else, so the select-all
               footer lives beside the list, not inside it.
             */}
-            <div class="flex max-h-60 min-w-40 flex-col rounded-overlay border border-outline-gray-1 bg-surface-elevation-1 text-ink-gray-9 shadow-lg">
+            <div
+              class={cn(
+                overlayPanel({ kind: 'popup' }),
+                'flex max-h-60 min-w-40 flex-col',
+              )}
+            >
               <div
                 {...api().getContentProps()}
                 data-slot="multiselect-content"
-                class="min-h-0 flex-1 overflow-y-auto p-1 focus-visible:outline-none"
+                class="min-h-0 flex-1 overflow-y-auto focus-visible:outline-none"
               >
                 <Show
                   when={!local.loading}
@@ -390,7 +355,7 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
                       class="flex items-center gap-2 px-2 py-1.5 text-base text-ink-gray-6"
                     >
                       <span aria-hidden="true">
-                        <Spinner class="size-4" />
+                        <Spinner theme="gray" class="size-4" />
                       </span>
                       <span>Loading...</span>
                     </div>
@@ -414,7 +379,7 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
                           <Show when={group.group && !group.hideLabel}>
                             <div
                               data-slot="multiselect-group-label"
-                              class="flex h-7 items-center px-2 text-sm-medium leading-tighter text-ink-gray-6"
+                              class={listboxLabel}
                             >
                               {group.group}
                             </div>
@@ -424,12 +389,7 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
                               <div
                                 {...api().getItemProps({ item: option })}
                                 data-slot="multiselect-item"
-                                class={cn(
-                                  ROW,
-                                  'data-[highlighted]:bg-surface-gray-3',
-                                  'data-[state=checked]:text-ink-blue-6',
-                                  'data-[disabled]:cursor-not-allowed data-[disabled]:text-ink-gray-4',
-                                )}
+                                class={listboxRow}
                               >
                                 <span class="flex min-w-0 flex-1 items-center gap-2">
                                   <Show when={option.icon}>
@@ -460,22 +420,9 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
                                   {...api().getItemIndicatorProps({
                                     item: option,
                                   })}
-                                  class="text-ink-blue-6"
+                                  class="text-ink-blue-8"
                                 >
-                                  <svg
-                                    viewBox="0 0 12 12"
-                                    class="size-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    aria-hidden="true"
-                                  >
-                                    <path
-                                      d="M2 6.5 4.5 9 10 3"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                    />
-                                  </svg>
+                                  <ListboxCheck />
                                 </span>
                               </div>
                             )}
@@ -495,7 +442,7 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
                   type="button"
                   disabled={local.disabled}
                   onClick={selectAll}
-                  class="rounded-3 px-1.5 py-0.5 text-xs text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-8 disabled:pointer-events-none"
+                  class="rounded-control px-1.5 py-0.5 text-xs text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-8 focus-visible:focus-ring disabled:pointer-events-none"
                 >
                   Select all
                 </button>
@@ -503,7 +450,7 @@ function MultiSelectControl(props: ControlProps): JSX.Element {
                   type="button"
                   disabled={local.disabled || selected().length === 0}
                   onClick={clearAll}
-                  class="rounded-3 px-1.5 py-0.5 text-xs text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-8 disabled:pointer-events-none disabled:text-ink-gray-4"
+                  class="rounded-control px-1.5 py-0.5 text-xs text-ink-gray-6 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-8 focus-visible:focus-ring disabled:pointer-events-none disabled:text-ink-gray-4"
                 >
                   Clear all
                 </button>

@@ -449,20 +449,33 @@ export async function collectStyleVectors(page: Page): Promise<StyleVector[]> {
         if (style.display === 'none' || style.visibility === 'hidden') continue
         const rect = el.getBoundingClientRect()
         if (rect.width <= 1 || rect.height <= 1) continue
-        const key = [
-          el.getAttribute('data-slot'),
-          el.getAttribute('data-variant') ?? '',
-          el.getAttribute('data-size') ?? '',
-          el.getAttribute('data-state')
-            ? `state=${el.getAttribute('data-state')}`
-            : '',
-          el.getAttribute('data-highlighted') ? 'highlighted' : '',
+        // Peers share every axis the kit stamps: variant + theme (the two
+        // colour axes, P4), size, state — and disabled however the sampled
+        // element itself expresses it (hook, ARIA, or the native attribute
+        // Zag/forms set). Ancestor state does not reclassify inner parts:
+        // a glyph inside a disabled root is still the same glyph peer.
+        const disabled =
           el.hasAttribute('data-disabled') ||
-          el.getAttribute('aria-disabled') === 'true'
-            ? 'disabled'
-            : '',
-          theme,
-        ].join('|')
+          el.getAttribute('aria-disabled') === 'true' ||
+          (el as HTMLButtonElement).disabled === true
+        // The colour-theme axis is a conditional suffix: elements that do
+        // not stamp `data-theme` keep the exact key they have always had,
+        // so the pinned baseline identities stay stable.
+        const colourTheme = el.getAttribute('data-theme')
+        const key =
+          [
+            el.getAttribute('data-slot'),
+            el.getAttribute('data-variant') ?? '',
+            el.getAttribute('data-size') ?? '',
+            el.getAttribute('data-state')
+              ? `state=${el.getAttribute('data-state')}`
+              : '',
+            el.getAttribute('data-highlighted') ? 'highlighted' : '',
+            disabled ? 'disabled' : '',
+            theme,
+          ].join('|') +
+          (colourTheme ? `|theme=${colourTheme}` : '') +
+          (el.hasAttribute('data-icon-only') ? '|icon-only' : '')
         const seen = perKey.get(key) ?? 0
         if (seen >= CAP) continue
         perKey.set(key, seen + 1)

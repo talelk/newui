@@ -171,8 +171,8 @@ function AppSidebarFooter(props: {
 export function AppSidebar(props: AppSidebarProps): JSX.Element {
   return (
     <Sidebar
-      width={props.width ?? '16rem'}
-      collapsedWidth={props.collapsedWidth ?? '3.5rem'}
+      width={props.width}
+      collapsedWidth={props.collapsedWidth}
       collapsed={props.collapsed}
       onCollapsedChange={props.onCollapsedChange}
       collapsible={props.collapsible}

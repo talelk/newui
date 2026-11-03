@@ -18,8 +18,9 @@ describe('Spinner', () => {
     expect(getByRole('status').className).not.toContain('text-ink-')
   })
 
-  it('sizes with the size enum', () => {
+  it('sizes with the shared mark-glyph scale', () => {
     const { getByRole } = render(() => <Spinner size="lg" />)
-    expect(getByRole('status').className).toContain('size-5')
+    expect(getByRole('status').className).toContain('size-4.5')
+    expect(getByRole('status').getAttribute('data-size')).toBe('lg')
   })
 })

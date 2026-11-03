@@ -4,13 +4,22 @@ import { For, Index, type JSX, Show } from 'solid-js'
 
 type DatePickerApi = ReturnType<typeof zag.connect>
 
+/**
+ * The one calendar cell + nav look for the whole date family. These used to
+ * arrive as `cellClass` / `navClass` props — class-injection props (P10) that
+ * every caller filled with the same copied string. The defaults live here;
+ * `DatePicker`'s inline grid and the pickers' clear/trigger buttons import
+ * the same constants, so the four copies cannot drift apart again.
+ */
+export const calendarNavButton =
+  'grid size-7 place-items-center rounded-card text-ink-gray-6 outline-none transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-9 focus-visible:focus-ring disabled:pointer-events-none'
+
+export const calendarCellButton =
+  'grid size-8 place-items-center rounded-control text-base text-ink-gray-8 outline-none transition-colors hover:bg-surface-gray-3 focus-visible:focus-ring data-[selected]:bg-surface-gray-10 data-[selected]:text-ink-base data-[in-range]:bg-surface-gray-3 data-[today]:font-medium data-[outside-range]:text-ink-gray-4 data-[disabled]:pointer-events-none data-[disabled]:text-ink-gray-3 data-[unavailable]:pointer-events-none data-[unavailable]:text-ink-gray-3 data-[unavailable]:line-through'
+
 export interface CalendarViewProps {
   /** The connected Zag `date-picker` api; reads stay reactive through the prop. */
   api: DatePickerApi
-  /** Classes for the day/month/year cell buttons. */
-  cellClass: string
-  /** Classes for the prev/next/view-trigger buttons. */
-  navClass: string
   /** Render two months side by side in the day view. */
   dualPane?: boolean
 }
@@ -73,7 +82,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
                           visibleRange: gridProps.visibleRange,
                         })}
                         type="button"
-                        class={props.cellClass}
+                        class={calendarCellButton}
                       >
                         {value().day}
                       </button>
@@ -98,7 +107,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
           <button
             {...props.api.getPrevTriggerProps({ view: 'day' })}
             aria-label="Previous month"
-            class={props.navClass}
+            class={calendarNavButton}
           >
             <span class="lucide-chevron-left size-4" aria-hidden="true" />
           </button>
@@ -106,7 +115,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
             {...props.api.getViewTriggerProps({ view: 'day' })}
             aria-label={`${props.dualPane ? props.api.visibleRangeText.formatted : props.api.visibleRangeText.start}, choose month`}
             type="button"
-            class="rounded-3 px-2 py-0.5 text-base-medium text-ink-gray-9 transition-colors hover:bg-surface-gray-3"
+            class="rounded-control px-2 py-0.5 text-base-medium text-ink-gray-9 outline-none transition-colors hover:bg-surface-gray-3 focus-visible:focus-ring"
           >
             {props.dualPane
               ? props.api.visibleRangeText.formatted
@@ -115,7 +124,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
           <button
             {...props.api.getNextTriggerProps({ view: 'day' })}
             aria-label="Next month"
-            class={props.navClass}
+            class={calendarNavButton}
           >
             <span class="lucide-chevron-right size-4" aria-hidden="true" />
           </button>
@@ -145,7 +154,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
           <button
             {...props.api.getPrevTriggerProps({ view: 'month' })}
             aria-label="Previous year"
-            class={props.navClass}
+            class={calendarNavButton}
           >
             <span class="lucide-chevron-left size-4" aria-hidden="true" />
           </button>
@@ -153,14 +162,14 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
             {...props.api.getViewTriggerProps({ view: 'month' })}
             aria-label={`${props.api.visibleRange.start.year}, choose year`}
             type="button"
-            class="rounded-3 px-2 py-0.5 text-base-medium text-ink-gray-9 transition-colors hover:bg-surface-gray-3"
+            class="rounded-control px-2 py-0.5 text-base-medium text-ink-gray-9 outline-none transition-colors hover:bg-surface-gray-3 focus-visible:focus-ring"
           >
             {props.api.visibleRange.start.year}
           </button>
           <button
             {...props.api.getNextTriggerProps({ view: 'month' })}
             aria-label="Next year"
-            class={props.navClass}
+            class={calendarNavButton}
           >
             <span class="lucide-chevron-right size-4" aria-hidden="true" />
           </button>
@@ -188,7 +197,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
                           })}
                           aria-label={`${month.label}, ${props.api.getMonthTableCellTriggerProps({ ...month, columns: 4 })['aria-label']}`}
                           type="button"
-                          class={props.cellClass}
+                          class={calendarCellButton}
                         >
                           {month.label}
                         </button>
@@ -210,7 +219,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
           <button
             {...props.api.getPrevTriggerProps({ view: 'year' })}
             aria-label="Previous decade"
-            class={props.navClass}
+            class={calendarNavButton}
           >
             <span class="lucide-chevron-left size-4" aria-hidden="true" />
           </button>
@@ -220,7 +229,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
           <button
             {...props.api.getNextTriggerProps({ view: 'year' })}
             aria-label="Next decade"
-            class={props.navClass}
+            class={calendarNavButton}
           >
             <span class="lucide-chevron-right size-4" aria-hidden="true" />
           </button>
@@ -245,7 +254,7 @@ export function CalendarView(props: CalendarViewProps): JSX.Element {
                             columns: 4,
                           })}
                           type="button"
-                          class={props.cellClass}
+                          class={calendarCellButton}
                         >
                           {year.label}
                         </button>

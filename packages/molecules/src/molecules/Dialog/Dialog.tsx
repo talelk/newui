@@ -13,6 +13,9 @@ import {
   createZagApi,
   createZagContext,
   mergeProps,
+  overlayLayers,
+  overlayPanel,
+  overlayScrim,
   Portal,
 } from '@talelk/newui-atoms/internal'
 import * as zag from '@zag-js/dialog'
@@ -160,7 +163,7 @@ const Header: ParentComponent<DialogHeaderProps> = (props) => (
           data-slot="dialog-icon"
           data-theme={props.theme}
           class={cn(
-            'flex size-7 shrink-0 items-center justify-center rounded-full',
+            'flex size-7 shrink-0 items-center justify-center rounded-pill',
             props.theme ? ICON_BG[props.theme] : 'bg-surface-gray-2',
           )}
         >
@@ -303,14 +306,15 @@ const Content: ParentComponent<DialogContentProps> = (props) => {
         <div
           {...api().getBackdropProps()}
           data-slot="dialog-backdrop"
-          class="fixed inset-0 z-overlay bg-black-overlay-200 dark:bg-black-overlay-700"
+          class={overlayScrim}
         />
         <div
           {...api().getPositionerProps()}
           data-slot="dialog-positioner"
           data-position={position()}
           class={cn(
-            'fixed inset-0 z-overlay flex justify-center overflow-y-auto p-4',
+            'fixed inset-0 flex justify-center overflow-y-auto p-4',
+            overlayLayers.modal,
             position() === 'top' ? 'items-start pt-[20vh]' : 'items-center',
           )}
         >
@@ -319,10 +323,10 @@ const Content: ParentComponent<DialogContentProps> = (props) => {
             data-slot="dialog-content"
             data-size={size()}
             class={cn(
-              'relative z-overlay w-full overflow-hidden rounded-overlay border border-outline-gray-1 bg-surface-elevation-1 text-ink-gray-9 shadow-xl',
-              'focus-visible:outline-none',
+              overlayPanel({ kind: 'modal' }),
+              'relative w-full overflow-hidden',
               SIZE[size()],
-              props.bare ? '' : 'p-card-pad',
+              props.bare ? 'p-0' : '',
               props.class,
             )}
           >

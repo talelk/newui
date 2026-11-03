@@ -1,5 +1,6 @@
 import { A } from '@solidjs/router'
 import type { JSX } from 'solid-js'
+import { InlineCode } from '../lib/site-ui'
 
 /** The catch-all. Names the URL, because a typo is the usual cause. */
 export function NotFound(): JSX.Element {
@@ -8,22 +9,19 @@ export function NotFound(): JSX.Element {
       <p class="text-sm text-ink-gray-7">404</p>
       <h1 class="text-heading text-ink-gray-9">There is no page here.</h1>
       <p class="text-base text-ink-gray-7">
-        No route matches{' '}
-        <code class="rounded-3 bg-surface-gray-2 px-1 text-sm">
-          {window.location.pathname}
-        </code>
-        . The sidebar lists everything that exists.
+        No route matches <InlineCode>{window.location.pathname}</InlineCode>.
+        The sidebar lists everything that exists.
       </p>
       <div class="flex gap-3">
         <A
           href="/"
-          class="inline-flex h-7 items-center rounded-4 bg-surface-gray-10 px-3 text-base-medium text-ink-base transition-colors hover:bg-surface-gray-9 focus-visible:focus-ring"
+          class="inline-flex h-7 items-center rounded-card bg-surface-gray-10 px-3 text-base-medium text-ink-base transition-colors hover:bg-surface-gray-9 focus-visible:focus-ring"
         >
           Home
         </A>
         <A
           href="/atoms/button"
-          class="inline-flex h-7 items-center rounded-4 border border-outline-gray-2 px-3 text-base text-ink-gray-8 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring"
+          class="inline-flex h-7 items-center rounded-card border border-outline-gray-2 px-3 text-base text-ink-gray-8 transition-colors hover:bg-surface-gray-2 focus-visible:focus-ring"
         >
           Atoms
         </A>

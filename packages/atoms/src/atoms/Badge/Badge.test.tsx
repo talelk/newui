@@ -7,7 +7,7 @@ describe('Badge', () => {
     const { getByText } = render(() => <Badge label="Draft" />)
     const el = getByText('Draft').closest('[data-slot=badge]') as HTMLElement
     expect(el.className).toContain('bg-surface-gray-2')
-    expect(el.className).toContain('rounded-full')
+    expect(el.className).toContain('rounded-pill')
   })
 
   it('applies theme and variant', () => {

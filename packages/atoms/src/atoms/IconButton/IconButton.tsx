@@ -1,6 +1,7 @@
 import type { Component, JSX } from 'solid-js'
-import { splitProps } from 'solid-js'
+import { Show, splitProps } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
+import { controlGlyphSizes } from '../../lib/control-styles'
 import { cn } from '../../lib/tv'
 import {
   type ButtonSize,
@@ -8,6 +9,7 @@ import {
   type ButtonVariant,
   button,
 } from '../Button/recipe'
+import { Spinner } from '../Spinner'
 
 type IconProp = string | Component<{ class?: string }>
 
@@ -24,6 +26,8 @@ export interface IconButtonProps
   /** @default sm */
   size?: ButtonSize
   disabled?: boolean
+  /** Busy: shows the shared spinner, keeps resting colours, blocks clicks. */
+  loading?: boolean
   /** External URL, opened in a new tab. */
   href?: string
   /**
@@ -35,13 +39,6 @@ export interface IconButtonProps
   target?: string
   type?: 'button' | 'submit' | 'reset'
   class?: string
-}
-
-const GLYPH_SIZE: Record<ButtonSize, string> = {
-  xs: 'size-3.5',
-  sm: 'size-4',
-  md: 'size-4.5',
-  lg: 'size-5',
 }
 
 /**
@@ -56,24 +53,32 @@ export function IconButton(props: IconButtonProps): JSX.Element {
     'theme',
     'size',
     'disabled',
+    'loading',
     'href',
     'route',
     'target',
     'type',
     'class',
+    'onClick',
   ])
 
   const size = () => local.size ?? 'sm'
-  const tag = () => ((local.route ?? local.href) ? 'a' : 'button')
+  const isDisabled = () => Boolean(local.disabled) || Boolean(local.loading)
+  // Mirrors Button: a disabled/loading control never renders a navigable
+  // anchor, and loading keeps the resting palette (no native `disabled`).
+  const tag = () =>
+    (local.route ?? local.href) && !isDisabled() ? 'a' : 'button'
 
   const glyph = () => {
     const icon = local.icon
     if (!icon) return null
     if (typeof icon === 'string') {
       if (!icon.startsWith('lucide-')) return null
-      return <span class={cn(icon, GLYPH_SIZE[size()])} aria-hidden="true" />
+      return (
+        <span class={cn(icon, controlGlyphSizes[size()])} aria-hidden="true" />
+      )
     }
-    return <Dynamic component={icon} class={GLYPH_SIZE[size()]} />
+    return <Dynamic component={icon} class={controlGlyphSizes[size()]} />
   }
 
   const rootProps = () => {
@@ -85,7 +90,7 @@ export function IconButton(props: IconButtonProps): JSX.Element {
         rel: 'noreferrer noopener',
       }
     }
-    return { type: local.type ?? 'button', disabled: local.disabled }
+    return { type: local.type ?? 'button', disabled: Boolean(local.disabled) }
   }
 
   return (
@@ -96,9 +101,22 @@ export function IconButton(props: IconButtonProps): JSX.Element {
       data-slot="icon-button"
       data-size={size()}
       data-variant={local.variant ?? 'subtle'}
-      data-color={local.theme ?? 'gray'}
+      data-theme={local.theme ?? 'gray'}
       data-disabled={local.disabled ? '' : undefined}
+      data-state={local.loading ? 'loading' : undefined}
+      aria-busy={local.loading ? 'true' : undefined}
+      aria-disabled={local.loading && !local.disabled ? 'true' : undefined}
       aria-label={local.label}
+      onClick={(event: MouseEvent) => {
+        if (local.loading && !local.disabled) {
+          event.preventDefault()
+          return
+        }
+        const handler = local.onClick as
+          | ((event: MouseEvent) => void)
+          | undefined
+        handler?.(event)
+      }}
       class={cn(
         button({
           variant: local.variant,
@@ -106,10 +124,15 @@ export function IconButton(props: IconButtonProps): JSX.Element {
           size: size(),
           icon: true,
         }),
+        local.loading && !local.disabled ? 'pointer-events-none' : '',
         local.class,
       )}
     >
-      {glyph()}
+      <Show when={local.loading} fallback={glyph()}>
+        <span aria-hidden="true" class="inline-flex shrink-0">
+          <Spinner size={size()} />
+        </span>
+      </Show>
     </Dynamic>
   )
 }

@@ -40,6 +40,19 @@ export const API = {
       "optional": true
     },
     {
+      "name": "size",
+      "type": "NumberInputSize",
+      "optional": true,
+      "description": "Control height/typography. Matches the input scale.",
+      "default": "sm"
+    },
+    {
+      "name": "variant",
+      "type": "NumberInputVariant",
+      "optional": true,
+      "description": "Control surface. `outline` is the default; `subtle` is filled."
+    },
+    {
       "name": "label",
       "type": "JSX.Element",
       "optional": true

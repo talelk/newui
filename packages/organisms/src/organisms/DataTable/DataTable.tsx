@@ -1,7 +1,9 @@
-import { Button, Checkbox, cn, TextInput } from '@talelk/newui-atoms'
+import { Button, button, Checkbox, cn, TextInput } from '@talelk/newui-atoms'
 import { createControllableSignal } from '@talelk/newui-atoms/internal'
 import {
+  card,
   Pagination,
+  Popover,
   ScrollTable,
   ScrollTableHead,
 } from '@talelk/newui-molecules'
@@ -346,7 +348,9 @@ export function DataTable<T extends { id: string }>(
     table.resetRowSelection()
   }
   const cellPad = () =>
-    props.density === 'compact' ? 'px-4 py-2' : 'px-4 py-3'
+    props.density === 'compact'
+      ? 'px-table-cell-x py-table-cell-y'
+      : 'px-table-cell-x py-3'
   const cardHiddenClass = () =>
     props.cardBreakpoint === 'lg'
       ? 'lg:hidden'
@@ -394,37 +398,35 @@ export function DataTable<T extends { id: string }>(
     typeof column.columnDef.header === 'string'
       ? column.columnDef.header
       : column.id
-  const columnMenu = (placement: 'up' | 'down') => (
-    <details
-      data-slot="data-table-columns"
-      class="relative max-sm:hidden"
-      open={false}
-    >
-      <summary class="list-none cursor-pointer rounded-3 border border-outline-gray-2 px-3 py-1.5 text-interface focus-visible:focus-ring [&::-webkit-details-marker]:hidden">
-        Columns
-      </summary>
-      <div
-        class={`absolute end-0 z-floating flex min-w-44 flex-col gap-2 rounded-6 border border-outline-gray-1 bg-surface-elevation-2 p-3 shadow-md ${placement === 'up' ? 'bottom-full mb-2' : 'mt-2'}`}
-      >
-        <For
-          each={table
-            .getAllLeafColumns()
-            .filter((column) => column.getCanHide())}
-        >
-          {(column) => (
-            <Checkbox
-              label={columnLabel(column)}
-              checked={column.getIsVisible()}
-              onCheckedChange={(value) => column.toggleVisibility(value)}
-            />
-          )}
-        </For>
-      </div>
-    </details>
+  const columnMenu = () => (
+    <div data-slot="data-table-columns" class="max-sm:hidden">
+      <Popover.Root>
+        <Popover.Trigger class={button({ variant: 'outline', size: 'sm' })}>
+          Columns
+        </Popover.Trigger>
+        <Popover.Content>
+          <div class="flex min-w-44 flex-col gap-2 p-1">
+            <For
+              each={table
+                .getAllLeafColumns()
+                .filter((column) => column.getCanHide())}
+            >
+              {(column) => (
+                <Checkbox
+                  label={columnLabel(column)}
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) => column.toggleVisibility(value)}
+                />
+              )}
+            </For>
+          </div>
+        </Popover.Content>
+      </Popover.Root>
+    </div>
   )
   return (
     <section
-      class="min-w-0 rounded-card border border-outline-gray-1 bg-surface-elevation-1"
+      class={cn(card({ padding: 'none' }), 'block min-w-0')}
       aria-label={props.title}
       data-slot="data-table"
     >
@@ -463,7 +465,7 @@ export function DataTable<T extends { id: string }>(
               {props.actionLabel ?? 'Update selected'} ({selected().length})
             </Button>
           </Show>
-          {columnMenu('down')}
+          {columnMenu()}
         </div>
       </div>
       <Show
@@ -512,7 +514,7 @@ export function DataTable<T extends { id: string }>(
                     )
                 return (
                   <div
-                    class="rounded-4 border border-outline-gray-1 p-3"
+                    class={card({ padding: 'sm' })}
                     classList={{ 'bg-surface-blue-1': row.getIsSelected() }}
                     data-selected={row.getIsSelected() ? '' : undefined}
                   >

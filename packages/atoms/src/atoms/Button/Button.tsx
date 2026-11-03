@@ -1,7 +1,9 @@
 import type { Component, JSX } from 'solid-js'
 import { Show, splitProps } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
+import { controlGlyphSizes } from '../../lib/control-styles'
 import { cn } from '../../lib/tv'
+import { Spinner } from '../Spinner'
 import {
   type ButtonSize,
   type ButtonTheme,
@@ -40,25 +42,6 @@ export interface ButtonProps
   children?: JSX.Element
 }
 
-const GLYPH_SIZE: Record<ButtonSize, string> = {
-  xs: 'size-3.5',
-  sm: 'size-4',
-  md: 'size-4.5',
-  lg: 'size-5',
-}
-
-function Spinner(props: { size: ButtonSize }) {
-  return (
-    <span
-      class={cn(
-        GLYPH_SIZE[props.size],
-        'animate-spin rounded-full border-2 border-current border-t-transparent',
-      )}
-      aria-hidden="true"
-    />
-  )
-}
-
 export function Button(props: ButtonProps) {
   const [local, rest] = splitProps(props, [
     'variant',
@@ -85,6 +68,11 @@ export function Button(props: ButtonProps) {
 
   const size = () => local.size ?? 'sm'
   const isDisabled = () => Boolean(local.disabled) || Boolean(local.loading)
+  // Loading keeps the resting palette (busy is not disabled): the native
+  // `disabled` attribute — and with it the recipe's disabled colours — is
+  // reserved for a real `disabled`; loading blocks interaction via
+  // `pointer-events-none` + `aria-busy`/`aria-disabled` instead.
+  const nativeDisabled = () => Boolean(local.disabled)
   const isIconButton = () =>
     local.children === undefined && local.label === undefined
   const tag = () =>
@@ -106,9 +94,11 @@ export function Button(props: ButtonProps) {
     if (!icon) return null
     if (typeof icon === 'string') {
       if (!icon.startsWith('lucide-')) return null
-      return <span class={cn(icon, GLYPH_SIZE[size()])} aria-hidden="true" />
+      return (
+        <span class={cn(icon, controlGlyphSizes[size()])} aria-hidden="true" />
+      )
     }
-    return <Dynamic component={icon} class={GLYPH_SIZE[size()]} />
+    return <Dynamic component={icon} class={controlGlyphSizes[size()]} />
   }
 
   const main = () => {
@@ -122,7 +112,9 @@ export function Button(props: ButtonProps) {
           when={local.loading}
           fallback={local.prefix ?? renderIcon(local.iconLeft)}
         >
-          <Spinner size={size()} />
+          <span aria-hidden="true" class="inline-flex shrink-0">
+            <Spinner size={size()} />
+          </span>
         </Show>
         <span class="min-w-0 whitespace-normal break-words leading-tighter">
           {local.children ?? local.label}
@@ -143,7 +135,7 @@ export function Button(props: ButtonProps) {
         rel: 'noreferrer noopener',
       }
     }
-    return { type: local.type ?? 'button', disabled: isDisabled() }
+    return { type: local.type ?? 'button', disabled: nativeDisabled() }
   }
 
   const triggerProps = () => ({
@@ -151,13 +143,28 @@ export function Button(props: ButtonProps) {
     'data-slot': 'button',
     'data-size': size(),
     'data-variant': local.variant ?? 'subtle',
-    'data-color': local.theme ?? 'gray',
-    'data-disabled': isDisabled() ? '' : undefined,
+    'data-theme': local.theme ?? 'gray',
+    'data-disabled': nativeDisabled() ? '' : undefined,
+    // The square icon-only presentation is a distinct peer of the labelled
+    // button (recipe `icon: true`, zero inline padding) — the hook says so.
+    'data-icon-only': isIconButton() ? '' : undefined,
     class: classes(),
     'aria-label':
       local['aria-label'] ?? (isIconButton() ? undefined : local.label),
     'aria-busy': local.loading ? ('true' as const) : undefined,
-    onClick: local.onClick,
+    'aria-disabled':
+      local.loading && !local.disabled ? ('true' as const) : undefined,
+    // Keyboard activation still reaches a `pointer-events-none` button, so a
+    // loading button swallows the click instead of firing it.
+    onClick: (event: MouseEvent) => {
+      if (local.loading && !local.disabled) {
+        event.preventDefault()
+        return
+      }
+      const handler = local.onClick as ((event: MouseEvent) => void) | undefined
+      handler?.(event)
+    },
+    ...(local.loading ? { 'data-state': 'loading' } : {}),
   })
 
   const plainButton = () => (

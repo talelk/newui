@@ -21,7 +21,7 @@ export function ThemeToggle(): JSX.Element {
           buttons; the settings screen still shows the full choice. */}
       <button
         type="button"
-        class="grid size-10 shrink-0 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:text-ink-gray-9 focus-visible:focus-ring-blue sm:hidden"
+        class="grid size-10 shrink-0 place-items-center rounded-control text-ink-gray-6 transition-colors duration-base ease-standard hover:text-ink-gray-9 focus-visible:focus-ring-blue motion-reduce:transition-none sm:hidden"
         aria-label={`Switch to ${resolved() === 'dark' ? 'light' : 'dark'} theme`}
         onClick={() => setColorScheme(resolved() === 'dark' ? 'light' : 'dark')}
       >
@@ -30,7 +30,7 @@ export function ThemeToggle(): JSX.Element {
           class={`${resolved() === 'dark' ? 'lucide-sun' : 'lucide-moon'} size-4`}
         />
       </button>
-      <fieldset class="m-0 hidden shrink-0 items-center gap-0.5 rounded-3 border-0 bg-surface-gray-2 p-0.5 sm:flex">
+      <fieldset class="m-0 hidden shrink-0 items-center gap-0.5 rounded-control border-0 bg-surface-gray-2 p-0.5 sm:flex">
         <legend class="sr-only">Colour scheme</legend>
         <For each={SCHEMES}>
           {(scheme) => (
@@ -38,9 +38,9 @@ export function ThemeToggle(): JSX.Element {
               type="button"
               onClick={() => setColorScheme(scheme)}
               aria-pressed={colorScheme() === scheme}
-              aria-label={scheme}
-              title={scheme}
-              class="grid size-10 place-items-center rounded-3 text-ink-gray-6 transition-colors hover:text-ink-gray-9 focus-visible:focus-ring-blue aria-pressed:bg-surface-base aria-pressed:text-ink-gray-9 aria-pressed:shadow-sm sm:size-7"
+              aria-label={`Use ${scheme} theme`}
+              title={`Use ${scheme} theme`}
+              class="grid size-10 place-items-center rounded-control text-ink-gray-6 transition-colors duration-base ease-standard hover:text-ink-gray-9 focus-visible:focus-ring-blue motion-reduce:transition-none aria-pressed:bg-surface-base aria-pressed:text-ink-gray-9 aria-pressed:shadow-sm sm:size-7"
             >
               <span aria-hidden="true" class={`${ICON[scheme]} size-3.5`} />
             </button>

@@ -1,13 +1,51 @@
 import * as zag from '@zag-js/switch'
 import { type JSX, Show, splitProps } from 'solid-js'
+import { invalidToggle } from '../../lib/control-styles'
 import { Field, FieldLabelContent, useField } from '../../lib/field'
 import { createId } from '../../lib/id'
-import { cn } from '../../lib/tv'
+import { cn, tv } from '../../lib/tv'
 import { createZagApi } from '../../lib/zag'
 import { Icon, type IconProp } from '../Icon'
 
 type SwitchApi = ReturnType<typeof zag.connect>
 type SwitchSize = 'xs' | 'sm' | 'md'
+
+// State is selectors, not JS branches: Zag stamps `data-state` /
+// `data-disabled` on the control and thumb, and CSS reads them. Padded rows
+// own the ring (focus-ring-within on the container), so the control's own
+// focus ring only applies standalone (`padded: false`).
+const switchControl = tv({
+  base: [
+    'relative inline-flex shrink-0 items-center rounded-pill border-transparent bg-surface-gray-4 transition-colors duration-fast ease-in-out motion-reduce:transition-none',
+    'hover:bg-surface-gray-5 active:bg-surface-gray-6 group-hover:bg-surface-gray-5',
+    'data-[state=checked]:bg-surface-gray-10 data-[state=checked]:hover:bg-surface-gray-9 data-[state=checked]:active:bg-surface-gray-8 data-[state=checked]:group-hover:bg-surface-gray-9',
+    'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-3 data-[disabled]:hover:bg-surface-gray-3 data-[disabled]:group-hover:bg-surface-gray-3',
+  ],
+  variants: {
+    size: {
+      xs: 'h-3.5 w-6 border-2',
+      sm: 'h-4 w-6.5 border-2',
+      md: 'h-5 w-8 border-[3px]',
+    },
+    padded: {
+      true: '',
+      false: 'data-[focus-visible]:focus-ring',
+    },
+  },
+  defaultVariants: { size: 'sm', padded: false },
+})
+
+const switchThumb = tv({
+  base: 'pointer-events-none inline-block rounded-pill bg-surface-gray-10 shadow ring-0 transition duration-fast ease-in-out data-[state=checked]:bg-surface-base motion-reduce:transition-none',
+  variants: {
+    size: {
+      xs: 'size-2.5 data-[state=checked]:translate-x-2.5',
+      sm: 'size-3 data-[state=checked]:translate-x-2.5',
+      md: 'size-3.5 data-[state=checked]:translate-x-3',
+    },
+  },
+  defaultVariants: { size: 'sm' },
+})
 
 export interface SwitchProps {
   checked?: boolean
@@ -87,39 +125,13 @@ function SwitchControl(props: SwitchProps): JSX.Element {
   const controlPosition = () => local.controlPosition ?? 'end'
   const hasDetail = () => Boolean(local.description)
 
-  const controlClasses = () => {
-    const sizeClass =
-      size() === 'md'
-        ? 'h-5 w-8 border-[3px]'
-        : size() === 'sm'
-          ? 'h-4 w-[26px] border-2'
-          : 'h-3.5 w-[24px] border-2'
-    return cn(
-      'relative inline-flex shrink-0 items-center rounded-full border-transparent transition-colors duration-fast ease-in-out',
-      // Padded rows show the ring on the surface (`[&:has(:focus-visible)]`),
-      // so the control's own ring is suppressed there.
-      !local.padded && 'data-[focus-visible]:focus-ring-blue',
-      api().checked ? 'bg-surface-gray-10' : 'bg-surface-gray-4',
-      api().disabled
-        ? 'cursor-not-allowed bg-surface-gray-3'
-        : api().checked
-          ? 'hover:bg-surface-gray-9 active:bg-surface-gray-8 group-hover:bg-surface-gray-9'
-          : 'hover:bg-surface-gray-5 active:bg-surface-gray-6 group-hover:bg-surface-gray-5',
-      sizeClass,
-      field?.hasError() && 'ring-1 ring-outline-red-6',
-      'motion-reduce:transition-none',
-    )
-  }
-
-  const thumbClasses = () =>
+  const controlClasses = () =>
     cn(
-      'pointer-events-none inline-block rounded-full bg-surface-gray-10 shadow ring-0 transition duration-fast ease-in-out data-[state=checked]:bg-surface-base motion-reduce:transition-none',
-      size() === 'md'
-        ? 'size-3.5 data-[state=checked]:translate-x-3'
-        : size() === 'sm'
-          ? 'size-3 data-[state=checked]:translate-x-2.5'
-          : 'size-2.5 data-[state=checked]:translate-x-2.5',
+      switchControl({ size: size(), padded: Boolean(local.padded) }),
+      invalidToggle,
     )
+
+  const thumbClasses = () => switchThumb({ size: size() })
 
   const labelClasses = () =>
     cn(
@@ -149,7 +161,7 @@ function SwitchControl(props: SwitchProps): JSX.Element {
         : 'justify-between gap-x-3',
     ]
     if (!local.padded) {
-      classes.push('rounded-4 py-1.5')
+      classes.push('rounded-card py-1.5')
       classes.push(local.disabled ? 'cursor-not-allowed' : 'cursor-pointer')
     }
     return cn(...classes)
@@ -169,13 +181,13 @@ function SwitchControl(props: SwitchProps): JSX.Element {
           ? 'h-7 px-2'
           : 'h-6 px-1.5'
     return cn(
-      'group rounded-4 transition-colors',
+      'group rounded-card transition-colors',
       sizeClass,
       !hasDetail() && 'justify-center',
       controlPosition() === 'start' ? 'w-fit' : 'w-full',
       local.disabled
         ? 'cursor-not-allowed'
-        : 'cursor-pointer hover:bg-surface-gray-3 active:bg-surface-gray-4 [&:has(:focus-visible)]:ring-2 [&:has(:focus-visible)]:ring-outline-gray-3',
+        : 'cursor-pointer hover:bg-surface-gray-3 active:bg-surface-gray-4 focus-ring-within',
     )
   }
 
@@ -184,6 +196,10 @@ function SwitchControl(props: SwitchProps): JSX.Element {
     // biome-ignore lint/a11y/useKeyWithClickEvents: the control stays keyboard-reachable through the hidden input.
     <div
       data-slot="switch-root"
+      data-variant={local.padded ? 'padded' : 'plain'}
+      data-size={size()}
+      data-state={api().checked ? 'checked' : 'unchecked'}
+      data-disabled={local.disabled ? '' : undefined}
       class={cn('relative flex flex-col', containerClasses(), local.class)}
       onClick={(event) => {
         if (!local.padded || local.disabled) return
@@ -246,11 +262,7 @@ function SwitchControl(props: SwitchProps): JSX.Element {
             // Align the helper under the label, not the switch, when the switch
             // leads the row (switch width + `gap-x`).
             controlPosition() === 'start' &&
-              (size() === 'md'
-                ? 'ps-[42px]'
-                : size() === 'sm'
-                  ? 'ps-9'
-                  : 'ps-8'),
+              (size() === 'md' ? 'ps-10.5' : size() === 'sm' ? 'ps-9' : 'ps-8'),
           )}
         >
           {local.description}

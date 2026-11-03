@@ -222,7 +222,7 @@ function NavLink(props: {
       <span class="min-w-0 flex-1 truncate">{props.item.title}</span>
       <Show when={props.item.status}>
         {(status) => (
-          <span class="shrink-0 rounded-3 bg-surface-gray-3 px-1 text-xs text-ink-gray-7">
+          <span class="shrink-0 rounded-control bg-surface-gray-3 px-1 text-xs text-ink-gray-7">
             {status()}
           </span>
         )}

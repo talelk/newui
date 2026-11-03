@@ -448,7 +448,7 @@ export function DiscussionSettings(props: {
               <div class="flex flex-wrap gap-2 pt-6">
                 <For each={CUSTOM_EMOJIS}>
                   {(emoji) => (
-                    <div class="grid size-10 place-content-center rounded-6 border border-outline-gray-2 text-xl">
+                    <div class="grid size-10 place-content-center rounded-overlay border border-outline-gray-2 text-xl">
                       {emoji}
                     </div>
                   )}

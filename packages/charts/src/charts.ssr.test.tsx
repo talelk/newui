@@ -130,7 +130,7 @@ describe('charts SSR smoke', () => {
     expect(html).toContain('data-slot="chart-container"')
     expect(html).toContain('data-state="empty"')
     expect(html).toContain('Revenue')
-    expect(html).toContain('No data to show')
+    expect(html).toContain('Nothing here yet')
   })
 
   it('renders no tooltip without a DOM to hang it off', () => {

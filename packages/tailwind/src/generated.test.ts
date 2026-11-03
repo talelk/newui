@@ -6,7 +6,9 @@ import {
   easing,
   fontSize,
   radius,
+  screens,
   semanticColors,
+  shadowRoles,
   shadows,
   spacing,
   tracking,
@@ -77,6 +79,9 @@ function expectedShadows(): Set<string> {
     if (key === 'none') continue
     names.add(key === 'DEFAULT' ? '--shadow' : `--shadow-${key}`)
   }
+  for (const role of Object.keys(shadowRoles)) {
+    names.add(`--shadow-${role}`)
+  }
   return names
 }
 
@@ -134,6 +139,21 @@ describe('generated theme parity with @talelk/newui-tokens', () => {
       ...Object.keys(zIndex).map((key) => `--z-${key}`),
       ...Object.keys(duration).map((key) => `--duration-${key}`),
       ...Object.keys(easing).map((key) => `--ease-${key}`),
+    ]
+    const missing = expected.filter((name) => !defined.has(name))
+    expect(missing).toEqual([])
+  })
+
+  it('emits the breakpoint, animation and mono scales', () => {
+    // The animation names are composed in build-css.ts from the duration and
+    // easing tokens; the list is mirrored here so a dropped branch fails.
+    const expected = [
+      ...Object.keys(screens).map((key) => `--breakpoint-${key}`),
+      '--animate-overlay-in',
+      '--animate-drawer-in',
+      '--animate-shimmer',
+      '--animate-progress',
+      '--font-mono',
     ]
     const missing = expected.filter((name) => !defined.has(name))
     expect(missing).toEqual([])
