@@ -38,21 +38,6 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      # Temporary: ask npm's OIDC exchange about the packages pnpm reports as
-      # 404, from inside the workflow the Trusted Publisher names.
-      - name: Probe the OIDC exchange
-        if: ${{ !cancelled() }}
-        run: |
-          for pkg in tokens icons code-editor tailwind molecules atoms; do
-            NAME=$(node -p "require('./packages/$pkg/package.json').name")
-            ENCODED=$(node -p "encodeURIComponent('$NAME')")
-            TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npm:registry.npmjs.org" | jq -r .value)
-            CODE=$(curl -sS -o /tmp/exchange.json -w '%{http_code}' -X POST \
-              -H "Authorization: Bearer $TOKEN" \
-              "https://registry.npmjs.org/-/npm/v1/oidc/token/exchange/package/$ENCODED") || true
-            echo "[probe] $NAME -> HTTP $CODE $(head -c 300 /tmp/exchange.json || true)"
-          done
-
       - name: Create or update the Version Packages PR
         uses: changesets/action@v2.1.2
         with:
