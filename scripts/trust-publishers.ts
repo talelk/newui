@@ -44,6 +44,8 @@ const packages = [
 const enable = !process.argv.includes('--no-enable')
 const npm = ['--yes', 'npm@11.15.0', 'trust', 'github']
 const configured: string[] = []
+const existing: string[] = []
+const failed: string[] = []
 
 const tokenEnv = ['NPM_TOKEN', 'NODE_AUTH_TOKEN'].filter(
   (key) => process.env[key],
@@ -56,6 +58,8 @@ if (tokenEnv.length > 0) {
 
 for (const [index, name] of packages.entries()) {
   process.stdout.write(`\n[trust] ${name} (${index + 1}/${packages.length})\n`)
+  // stdin stays inherited so npm's 2FA prompt can read Enter; the output is
+  // captured only so a 409 can be told apart from a real failure.
   const result = spawnSync(
     'npx',
     [
@@ -68,19 +72,40 @@ for (const [index, name] of packages.entries()) {
       '--allow-publish',
       '--yes',
     ],
-    { stdio: 'inherit' },
+    { stdio: ['inherit', 'pipe', 'pipe'], encoding: 'utf8' },
   )
-  if (result.status !== 0) {
-    process.stderr.write(
-      `\n[trust] ${name} was not configured. \`npm trust\` requires an interactive \`npm login\` session with 2FA; a long-lived NPM_TOKEN/NODE_AUTH_TOKEN cannot perform this operation. Run \`npm logout\`, \`npm login --auth-type=web\`, then retry. If a Trusted Publisher already exists, run \`npm trust list ${name}\`, revoke it, and retry.\n`,
+  const output = `${result.stdout ?? ''}${result.stderr ?? ''}`
+  process.stdout.write(result.stdout ?? '')
+  process.stderr.write(result.stderr ?? '')
+  if (result.status === 0) {
+    configured.push(name)
+  } else if (/E409|already exists for this package/i.test(output)) {
+    // `npm trust` refuses to write a second configuration; the one already
+    // there is the one publishing uses, so this is the idempotent case.
+    existing.push(name)
+    process.stdout.write(
+      `[trust] ${name} already has a Trusted Publisher; left as is.\n`,
     )
-    process.exit(result.status ?? 1)
+  } else {
+    failed.push(name)
+    if (/E401|must be logged in/i.test(output)) {
+      process.stderr.write(
+        `\n[trust] ${name} was not configured: not logged in. Run \`npm login --auth-type=web\`, then retry.\n`,
+      )
+      break
+    }
+    process.stderr.write(
+      `\n[trust] ${name} was not configured. Run \`npm trust list ${name}\` to inspect the existing configuration.\n`,
+    )
+    break
   }
-  configured.push(name)
   await new Promise((resolve) => setTimeout(resolve, 2_000))
 }
 
-process.stdout.write(`\n[trust] configured ${configured.length} packages.\n`)
+process.stdout.write(
+  `\n[trust] configured ${configured.length}, already configured ${existing.length}${failed.length ? `, failed ${failed.join(', ')}` : ''}.\n`,
+)
+if (failed.length > 0) process.exit(1)
 
 if (enable) {
   const result = spawnSync(

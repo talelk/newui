@@ -1,0 +1,32 @@
+name: Publish probe
+
+# Temporary: does the npm CLI's OIDC exchange succeed where pnpm's publish
+# returns 404? Dispatch with a package directory name, then delete this file.
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Package directory under packages/
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+
+      - name: Use the npm version trusted publishing documents
+        run: npm install -g npm@11.15.0
+
+      - name: Publish with the npm CLI
+        working-directory: packages/${{ inputs.package }}
+        run: npm publish --provenance --access public
