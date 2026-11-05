@@ -41,10 +41,12 @@ skills:
         package: packages/data,
         path: skills/newui-data/SKILL.md,
         description: "Use the headless newui data layer for SolidJS collections,
-          repository queries, optimistic mutations, TanStack Query caching and
-          form submit lifecycles. Use when a page needs to load a list,
-          create/update/delete records, share a cache, or wire TanStack Form
-          through the kit's Form and field-error contract.",
+          repository queries, optimistic mutations, TanStack Query caching, form
+          submit lifecycles, URL-synced state, saved-view/dashboard-config
+          storage and aggregation/rollup transforms. Use when a page needs to
+          load a list, create/update/delete records, share a cache, sync filters
+          or views to the URL, persist saved views, build chart series, or wire
+          TanStack Form through the kit's Form and field-error contract.",
         sources:
           [
             talelk/newui:spec/data.md,
@@ -53,7 +55,11 @@ skills:
             talelk/newui:packages/data/src/query/client.tsx,
             talelk/newui:packages/data/src/query/collection.ts,
             talelk/newui:packages/data/src/query/repository.ts,
-            talelk/newui:packages/data/src/form/form.tsx
+            talelk/newui:packages/data/src/form/form.tsx,
+            talelk/newui:packages/data/src/url-state.ts,
+            talelk/newui:packages/data/src/config-store.ts,
+            talelk/newui:packages/data/src/aggregate.ts,
+            talelk/newui:packages/data/src/resource/connect-realtime.ts
           ],
         requires: []
       },

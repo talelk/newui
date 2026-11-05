@@ -9,14 +9,14 @@ the visual guidance, the data guidance, or both, at the installed version.
 | Domain | Description | Skills |
 | --- | --- | --- |
 | UI composition | The visual ladder, semantic tokens, labels and overlays. | `newui` |
-| Data and forms | Collections, cache, mutations and form lifecycles. | `newui-data` |
+| Data and forms | Collections, cache, mutations, form lifecycles, URL state, config storage and transforms. | `newui-data` |
 
 ## Skill Inventory
 
 | Skill | Type | Domain | What it covers | Failure modes |
 | --- | --- | --- | --- | --- |
 | `newui` | core | UI composition | Atoms, molecules, organisms, templates, semantic tokens, the shared Field contract and overlay state. | 6 non-negotiables in `SKILL.md` |
-| `newui-data` | core | Data and forms | `createCollection`, `DataProvider`, optimistic mutations, `createAppForm`, `Form` and `fieldError`. | 4 contracts in `SKILL.md` |
+| `newui-data` | core | Data and forms | `createCollection`, `DataProvider`, optimistic mutations, `createAppForm`, `Form` and `fieldError`, `createUrlState`, `createConfigStore`, `aggregate`/`timeBucket`/`rollup`, `connectRealtime` and `refetchInterval`. | 4 contracts in `SKILL.md` |
 
 ## Coverage and decisions
 

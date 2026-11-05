@@ -34,6 +34,11 @@ composition) until it earns its own surface.
 | `optionsOf` | `(values: readonly string[]) => SelectOption[]` | `['Size']` → `[{ label: 'Size', value: 'Size' }]` |
 | `first` | `(value: string[], fallback: string) => string` | the single-select unwrap, with a fallback |
 | `createUndo` | `<T>() => Undo<T>` | snapshot, capture, undo-once, clear |
+| `aggregate` | `(rows, { by, metrics }) => rows` | group-by with the eleven shared metric names |
+| `timeBucket` | `(date, unit) => Date` | floor a date to its hour/day/week/month/quarter/year |
+| `rollup` | `(rows, { field, unit, metric? }) => points` | time-column → chart series |
+| `createUrlState` | `(initial, { adapter? }) => signals` | link-reproducible state in `URLSearchParams` |
+| `createConfigStore` | `({ key, storage?, migrate? }) => store` | versioned documents for saved views and dashboard config |
 | `downloadBlob` | `(name: string, blob: Blob) => void` | the Blob / anchor / revoke dance |
 | `downloadText` | `(name, text, mime?) => void` | text, `text/plain` unless told otherwise |
 | `csvText` | `(rows: (string \| number)[][]) => string` | every cell quoted, inner quotes doubled, CRLF |
@@ -124,6 +129,10 @@ tasks.remove.mutate({ ids })
 - **Updates and removals are optimistic and reversible.** The patch lands on
   screen before the request, and a failure restores the previous list — proven
   in `collection.test.tsx` with a gated promise, not by inspecting the cache.
+- **Polling is opt-in.** `refetchInterval?: number | false` (default off) is
+  the explicit dial for data that changes on its own; the client's
+  `refetchOnWindowFocus: false` stays, so returning to the tab is still not a
+  refresh.
 - **Creates are not optimistic.** A new record's id and defaults are the
   repository's to decide; guessing them would show a row that then changes
   identity. `mutateAsync` resolves after the refresh, which is what lets a
@@ -161,6 +170,134 @@ The bridge deliberately **does not render fields**. `TextInput`, `Select`,
 a wrapper that picked one for you would either grow a variant per control or
 take the control as a prop and become a second component tree. The shared call
 shape is `value` / `error={fieldError(field())}` / `handleChange`.
+
+## URL state — `createUrlState`
+
+The state that makes a page reproducible by link — filters, view/tab, page
+index, sort, density, time range — lives in the URL, and the kit stays
+router-agnostic by contract: the app supplies the adapter.
+
+```ts
+import { createUrlState } from '@talelk/newui-data'
+
+const state = createUrlState(
+  { 'board.view': 'kanban', 'board.page': 1, q: '' },
+  { adapter, debounce: ['q'] },
+)
+
+state['board.view']()      // read, like any signal
+state.set('q', 'invoice')  // write; `undefined` means absent, never ""
+```
+
+- **The adapter is the seam.** `search()` is read **once on mount** — first
+  paint renders from the URL, so a shared link deep-links without a client
+  redirect — and `replace(params)` writes. Solid Start's `useNavigate`,
+  TanStack Router or a `history.replaceState` shim all satisfy it. Without an
+  adapter the primitive is a plain controllable signal and the URL is never
+  touched, which is what keeps tests and SSR clean.
+- **Replace, not push.** State changes within a page replace the query string
+  (the back button leaves the page, it does not walk a filter history), and
+  writes coalesce into one `replace` per tick.
+- **Search-like keys debounce.** `debounce: ['q']` waits out 300ms of idle
+  before writing, so typing does not spam the history; `debounceMs` moves the
+  window.
+- **Serialization is typed by `initial`.** Primitives go in as-is, arrays and
+  objects as JSON with stable key order, and a value that no longer parses
+  falls back to the initial — a stale link is a reset, not a crash.
+- **Keys are the app's, not the table's** — `board.sort` rather than `sort` —
+  so one URL can host several surfaces without collisions. Transient UI
+  (popover `open`, hover, scroll) and secrets do not belong here.
+
+## Config store — `createConfigStore`
+
+One storage abstraction for user-authored views, with two consumers: the
+**saved view** (a named filter + column + sort bundle) and the **dashboard
+config** (the widget-layout document). Both are documents in the same store,
+distinguished by a `type` discriminator in the envelope — never by separate
+stores.
+
+```ts
+import { createConfigStore } from '@talelk/newui-data'
+
+const views = createConfigStore({ key: 'acme.views' })
+
+views.save('week-only', { filters: [], sorting: [] }, { type: 'saved-view' })
+views.load<{ filters: unknown[] }>('week-only') // { v, name, type?, updatedAt, doc }
+views.list()                                    // newest first
+views.rename('week-only', 'this-week')
+views.remove('week-only')
+```
+
+- **Documents are versioned envelopes** (`{ v, name, type?, updatedAt, doc }`)
+  so a future shape migrates per-store, not globally. `migrate(doc, from)`
+  upgrades older reads; without one, a version mismatch is unreadable rather
+  than silently wrong. `updatedAt` is what makes conflict resolution a later
+  decision, not a later accident.
+- **Storage is a seam.** The default is `localStorage` (an in-memory Map under
+  SSR — importing and using the store never throws); a server-backed adapter
+  drops in without touching consumers. `key` namespaces the entries, so
+  stores never collide.
+- **Documents are capped at 64KB with a loud dev warning** — a widget grid
+  that grows unbounded is caught in development, not in a quota error. A
+  backend that throws drops the write and warns; it never fails the caller.
+- **Sharing is data, not a second API**: a saved view is portable as its
+  document — "copy link" encodes it through `createUrlState` when it fits,
+  otherwise it exports as JSON.
+
+## Transforms — `aggregate`, `timeBucket`, `rollup`
+
+Pure functions over rows the app already fetched. No signals, no query, no
+components — and past their size the answer is server-side, per server mode's
+own doctrine.
+
+```ts
+import { aggregate, rollup, timeBucket } from '@talelk/newui-data'
+
+const byRegion = aggregate(rows, {
+  by: 'region',
+  metrics: { total: { field: 'amount', metric: 'sum' }, n: { field: 'id', metric: 'count' } },
+})
+
+const series = rollup(rows, {
+  field: 'createdAt',
+  unit: 'month',
+  metric: { field: 'amount', metric: 'sum' },
+}) // { bucket: Date, value }[] ascending — chart-ready
+```
+
+- **One metric vocabulary** spans tables and transforms: `sum`, `count`,
+  `min`, `max`, `extent`, `mean`, `median`, `unique`, `uniqueCount`, `first`,
+  `last`. `count` counts rows; the numeric metrics skip non-numeric values;
+  `unique` keeps first-seen order.
+- **`timeBucket` floors to local time** — weeks start on Monday — and accepts
+  a `Date`, an ISO string or an epoch. An unparseable date yields an Invalid
+  Date, and `rollup` skips those rows instead of leaving a hole in the series.
+- **`rollup` is `aggregate` over time**: a bare metric name counts rows per
+  bucket; a `{ field, metric }` spec aggregates a value column.
+
+## Realtime — `connectRealtime`
+
+The socket finally has a consumer. `connectRealtime` (from
+`@talelk/newui-data/resource`) subscribes to a `createRealtime` socket and
+invalidates the matching query keys — **list events the `[doctype]` prefix,
+doc events exactly `[doctype, name]`**. It is a function, not a hook: the
+cache is the integration point.
+
+```ts
+import { createRealtime, connectRealtime } from '@talelk/newui-data/resource'
+
+const socket = createRealtime({ url: realtimeUrl })
+const connection = connectRealtime(queryClient, {
+  realtime: socket,
+  doctype: 'Task',
+  onEvent: (event) => console.debug(event.type, event.doctype, event.name),
+})
+
+connection.close() // stop listening; the socket stays open for other consumers
+```
+
+A payload's `type` wins when present; otherwise a `name` means one document
+changed and its absence means the list did.
 
 ## Rendered collections belong to organisms
 

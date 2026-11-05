@@ -1,10 +1,12 @@
 ---
 name: newui-data
 description: Use the headless newui data layer for SolidJS collections,
-  repository queries, optimistic mutations, TanStack Query caching and form
-  submit lifecycles. Use when a page needs to load a list, create/update/delete
-  records, share a cache, or wire TanStack Form through the kit's Form and
-  field-error contract.
+  repository queries, optimistic mutations, TanStack Query caching, form submit
+  lifecycles, URL-synced state, saved-view/dashboard-config storage and
+  aggregation/rollup transforms. Use when a page needs to load a list,
+  create/update/delete records, share a cache, sync filters or views to the
+  URL, persist saved views, build chart series, or wire TanStack Form through
+  the kit's Form and field-error contract.
 metadata:
   type: core
   domain: data
@@ -18,6 +20,10 @@ sources:
   - talelk/newui:packages/data/src/query/collection.ts
   - talelk/newui:packages/data/src/query/repository.ts
   - talelk/newui:packages/data/src/form/form.tsx
+  - talelk/newui:packages/data/src/url-state.ts
+  - talelk/newui:packages/data/src/config-store.ts
+  - talelk/newui:packages/data/src/aggregate.ts
+  - talelk/newui:packages/data/src/resource/connect-realtime.ts
 ---
 
 # newui-data
@@ -114,3 +120,33 @@ const { form, submitting } = createAppForm({
   de-duplicates the same validator message.
 - Pass the same message to `onChange` and `onSubmit` when the field should
   validate on both; `fieldError` will not print it twice.
+
+## URL state, saved views and transforms
+
+```ts
+import { createConfigStore, createUrlState, rollup } from '@talelk/newui-data'
+
+// Link-reproducible state; the app owns the router through `adapter`.
+const filters = createUrlState(
+  { 'board.view': 'kanban', q: '' },
+  { adapter, debounce: ['q'] },
+)
+filters['board.view']()
+filters.set('q', 'invoice') // undefined = absent, never ""
+
+// Saved views and dashboard configs: versioned envelopes, storage-agnostic.
+const views = createConfigStore({ key: 'acme.views' })
+views.save('week-only', { filters: [] }, { type: 'saved-view' })
+
+// Chart series from a time column — pure, no query, no components.
+const series = rollup(rows, { field: 'createdAt', unit: 'day', metric: { field: 'amount', metric: 'sum' } })
+```
+
+- `createUrlState` reads the URL once on mount and **replaces** (never pushes);
+  without an adapter it is a plain signal, so tests and SSR stay clean.
+- `createConfigStore` documents are capped at 64KB with a dev warning; a
+  server-backed adapter drops in by passing `storage`, no consumer changes.
+- `aggregate`/`rollup` run over rows the app already fetched — past that size
+  the answer is server-side, not a client pivot.
+- A collection can poll with `refetchInterval`; `connectRealtime` (from
+  `@talelk/newui-data/resource`) invalidates query keys from socket events.
