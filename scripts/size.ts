@@ -44,6 +44,27 @@ const ENTRIES: Entry[] = [
     ],
   },
   {
+    name: 'Sparkline',
+    file: 'scripts/fixtures/sparkline.ts',
+    // Pure SVG: importing the trend line must not drag in the echarts runtime.
+    budget: 12,
+    forbid: ['echarts'],
+  },
+  {
+    name: 'Calendar heatmap',
+    file: 'scripts/fixtures/calendar-heatmap.ts',
+    // SVG runtime plus the calendar coordinate system and heatmap mark.
+    budget: 260,
+    forbid: ['series.gauge', '"date-picker"', '"dialog"'],
+  },
+  {
+    name: 'Gauge chart',
+    file: 'scripts/fixtures/gauge-chart.ts',
+    // SVG runtime plus the gauge mark only.
+    budget: 250,
+    forbid: ['series.heatmap', 'series.sankey', '"date-picker"', '"dialog"'],
+  },
+  {
     name: 'cn() only',
     file: 'scripts/fixtures/cn.ts',
     budget: 8,

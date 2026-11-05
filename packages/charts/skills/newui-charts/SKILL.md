@@ -2,10 +2,11 @@
 name: newui-charts
 description: >
   Use when rendering charts with @talelk/newui-charts — AreaChart, BarChart,
-  LineChart, DonutChart, FunnelChart, HeatmapChart, ScatterChart, SankeyChart,
-  Dashboard and NumberCard, or tuning series, axes, palettes and empty/loading
-  chart states. Use when the user mentions these chart components or asks for
-  analytics visuals in newui.
+  LineChart, DonutChart, FunnelChart, HeatmapChart, CalendarHeatmapChart,
+  GaugeChart, ScatterChart, SankeyChart, Sparkline, Dashboard and NumberCard,
+  or tuning series, axes, palettes and empty/loading chart states. Use when
+  the user mentions these chart components or asks for analytics visuals in
+  newui.
 metadata:
   type: core
   domain: ui

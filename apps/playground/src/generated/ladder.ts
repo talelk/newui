@@ -41,7 +41,7 @@ export const LADDER: LadderLevel[] = [
     "question": "What is this single element?",
     "unit": "atom",
     "package": "@talelk/newui-atoms",
-    "count": 28,
+    "count": 29,
     "href": "/atoms",
     "blurb": "One control or mark, with nothing else inside: a Button, an input, a Badge, the scroll viewport itself."
   },
@@ -61,7 +61,7 @@ export const LADDER: LadderLevel[] = [
     "question": "What is this section?",
     "unit": "organism",
     "package": "@talelk/newui-organisms · @talelk/newui-charts · @talelk/newui-editor",
-    "count": 27,
+    "count": 29,
     "href": "/organisms",
     "blurb": "Self-contained regions of a page: a sidebar, a filter bar, a board, a chart, an editor."
   },

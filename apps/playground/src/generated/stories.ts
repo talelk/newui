@@ -80,6 +80,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'molecules-selection-calendar--default',
     load: () => import('../stories/calendar.stories'),
   },
+  "CalendarHeatmapChart": {
+    id: 'organisms-calendarheatmapchart--default',
+    load: () => import('../stories/calendar-heatmap-chart.stories'),
+  },
   "Card": {
     id: 'molecules-display-card--default',
     load: () => import('../stories/card.stories'),
@@ -223,6 +227,10 @@ export const STORIES: Record<string, StoryEntry> = {
   "FunnelChart": {
     id: 'organisms-funnelchart--default',
     load: () => import('../stories/funnel-chart.stories'),
+  },
+  "GaugeChart": {
+    id: 'organisms-gaugechart--default',
+    load: () => import('../stories/gauge-chart.stories'),
   },
   "Grouped documentation sidebar": {
     id: 'organisms-grouped-documentation-sidebar--default',
@@ -399,6 +407,10 @@ export const STORIES: Record<string, StoryEntry> = {
   "Slider": {
     id: 'atoms-inputs-slider--default',
     load: () => import('../stories/slider.stories'),
+  },
+  "Sparkline": {
+    id: 'atoms-sparkline--default',
+    load: () => import('../stories/sparkline.stories'),
   },
   "Spinner": {
     id: 'atoms-feedback-spinner--default',

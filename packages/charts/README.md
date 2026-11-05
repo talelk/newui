@@ -2,10 +2,11 @@
 
 Solid wrappers over [echarts](https://echarts.apache.org/), drawn with the
 **SVG renderer** and themed with the newui chart tokens. Bar, line, area,
-donut, funnel, heatmap, scatter and sankey charts, a number card, and a
-dashboard grid, with the pure option builders kept separate from the components
-so they can be tested without a DOM. The shell (`ChartContainer`), the legend
-and the tooltip wrap any plot — echarts-backed or an app's own.
+donut, funnel, heatmap, calendar heatmap, gauge, scatter and sankey charts, a
+sparkline, a number card, and a dashboard grid, with the pure option builders
+kept separate from the components so they can be tested without a DOM. The
+shell (`ChartContainer`), the legend and the tooltip wrap any plot —
+echarts-backed or an app's own.
 
 The plots read the `--chart-1…8` ramp and the `--chart-grid` / `--chart-axis`
 hairlines back through `getComputedStyle`, so light/dark flips with the page —
@@ -123,6 +124,36 @@ column, the row and the magnitude. `palette` defaults to `'sequential'`;
 landing on the same cell collapse to one, the later row winning.
 `showDataLabels` prints each value, dropping any label with no room.
 
+### CalendarHeatmapChart
+
+Activity per day, laid out as a year: a heatmap on the calendar coordinate
+system. `data` is one row per day, `date` (default `'date'`) and `value`
+(default `'value'`) name the columns, and `range` takes a year or a
+`[start, end]` span — the data's own span is the default. Days without a
+numeric value stay undrawn rather than reading as zero. `palette` is `'blue'`
+(the house single-hue ramp) or `'amber'` (the warning ramp), both read from the
+semantic surface steps, so they flip with the theme; an explicit list overrides
+both. `showMonthLabels` / `showDayLabels` default on. A day click emits
+`onPointClick` with `{ date, value, row }`; what the click drives is the page's
+business.
+
+### GaugeChart
+
+One reading against one span, drawn as the house dial: a 1px track, a single
+blue progress arc and the value centered in metric type. `value` is the
+reading (`null` leaves the dial empty), `min` / `max` default to 0 / 100,
+`format` prints the center value and `caption` prints a line under it. The
+palette is locked to tokens — there is no `palette` prop.
+
+### Sparkline
+
+A trend without axes, drawn as plain SVG (no echarts). `data` is the series,
+`type` is `'area'` (default), `'line'` or `'bar'`, and `width` / `height` take
+CSS lengths. `tone` is `'ink'` (the surrounding text color) or the chart
+palette vocabulary; the default is the palette's first blue. The drawing is
+`aria-hidden` and the values ride in a visually-hidden summary. `NumberCard`
+draws its trend with this same component.
+
 ### ScatterChart
 
 One point per row on a pair of value axes. `x` and `y` are the measures,
@@ -221,6 +252,10 @@ Override any of them on the chart or an ancestor to retune it; no component
 change is needed.
 
 ## Follow-ups
+
+Radar is deferred, not rejected: it graduates when an acceptance page asks for
+one. A map is out of scope for the chart catalog — it needs geo data, offline
+tiles or a geocoding dependency, which is a different destination.
 
 Scatter reference lines (thresholds and quadrant dividers) are not ported yet.
 The external `ChartTooltip` and its `buildTooltipItems` core ship, but the

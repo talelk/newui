@@ -60,6 +60,8 @@ export type ChartTokens = {
   axis: string
   /** Axis labels: `--ink-gray-6`. */
   label: string
+  /** Metric readings, e.g. a gauge's center value: `--ink-gray-9`. */
+  metric?: string
 }
 
 /** A visually-hidden table that carries a plot's data to a screen reader. */
@@ -865,4 +867,170 @@ export type SankeyGraph = {
   /** Nodes in the order the rows first mention them, source before target. */
   nodes: SankeyNode[]
   links: SankeyLink[]
+}
+
+// ---------------------------------------------------------------------------
+// Sparkline.
+// ---------------------------------------------------------------------------
+
+/**
+ * What draws the line. `'ink'` follows the surrounding text color; otherwise
+ * the chart palette vocabulary — a named ramp or an explicit color list. This
+ * is chart-only vocabulary: a sparkline `tone` never takes a component `theme`
+ * value.
+ */
+export type SparklineTone = 'ink' | ChartPalette
+
+export type SparklineProps = {
+  /** Oldest reading first. Gaps are skipped, not drawn as zero. */
+  data: (number | null | undefined)[]
+  /** The mark. `'area'` draws a line over a fill, `'line'` the stroke, `'bar'` bars. */
+  type?: ChartMark
+  /** The color. Defaults to the chart palette's first blue. */
+  tone?: SparklineTone
+  /** CSS length. Defaults to `'100%'`. */
+  width?: number | string
+  /** CSS length. Defaults to `'2rem'`. */
+  height?: number | string
+  /** Draws the placeholder in place of the trend. */
+  loading?: boolean
+  /** Switches the sparkline into its error state and prints this message. */
+  error?: string | null
+  /** Root class fallthrough, merged last (P10). */
+  class?: string
+}
+
+// ---------------------------------------------------------------------------
+// CalendarHeatmapChart.
+// ---------------------------------------------------------------------------
+
+/**
+ * The ramp the days shade along: `'blue'` is the house single-hue ramp,
+ * `'amber'` the warning ramp. An explicit list of stops overrides both. These
+ * are chart-only vocabulary — never component `theme` values.
+ */
+export type CalendarHeatmapPalette = 'blue' | 'amber' | string[]
+
+/** The day behind a click, with the row that carried it. */
+export type CalendarHeatmapPoint = {
+  /** The day as `YYYY-MM-DD`, the key echarts drew the cell under. */
+  date: string
+  /** The day's reading, or `null` when the cell drew without one. */
+  value: number | null
+  /** The row behind the point. */
+  row: Record<string, unknown>
+}
+
+export type CalendarHeatmapChartProps = {
+  /** One row per day. Rows with no numeric value leave that day undrawn. */
+  data: Record<string, unknown>[]
+  /** Row key holding the day. Defaults to `'date'`. */
+  date?: string
+  /** Row key holding the magnitude. Defaults to `'value'`. */
+  value?: string
+  /** A year, or the `[start, end]` day span. Defaults to the data's own span. */
+  range?: number | [string, string]
+  /** Cell side in px, or `[width, height]`. Defaults to fitting the calendar. */
+  cellSize?: number | [number, number]
+  /** The ramp. Defaults to `'blue'`; `'amber'` is the warning ramp. */
+  palette?: CalendarHeatmapPalette
+  /** Prints the value of the day the legend scale names. */
+  format?: ChartValueFormatter
+  /** Prints month names across the top. Defaults to true. */
+  showMonthLabels?: boolean
+  /** Prints weekday names down the left. Defaults to true. */
+  showDayLabels?: boolean
+  /** A day was clicked. What the click does — `cross`, a drilldown — is the caller's. */
+  onPointClick?: (point: CalendarHeatmapPoint) => void
+  /** Heads the chart. */
+  title?: string
+  /** A second line under the title. */
+  subtitle?: string
+  /** Draws the placeholder in place of the reading. */
+  loading?: boolean
+  /** Puts the chart in its error state and prints this message. */
+  error?: string | null
+  /** Plot height. A number is px; a string is used verbatim. */
+  height?: number | string
+  /** Root class fallthrough, merged last (P10). */
+  class?: string
+  /** Accessible name for the plot. */
+  'aria-label'?: string
+  /** Escape hatch: deep-merged into the echarts option the props built. */
+  echartOptions?: EchartOptionsOverride
+}
+
+export type CalendarHeatmapConfig = {
+  data: Record<string, unknown>[]
+  dateColumn: string
+  valueColumn: string
+  range?: number | [string, string]
+  cellSize?: number | [number, number]
+  palette?: CalendarHeatmapPalette
+  showMonthLabels?: boolean
+  showDayLabels?: boolean
+  echartOptions?: EchartOptionsOverride
+}
+
+/** One drawn day, after date parsing and last-row-wins collapsing. */
+export type CalendarHeatmapCell = {
+  /** The day as `YYYY-MM-DD`. */
+  date: string
+  value: number
+  row: Record<string, unknown>
+}
+
+/** The calendar as the plot and the click handler both read it. */
+export type CalendarHeatmapCalendar = {
+  /** The `range` key handed to echarts: a year, or `[start, end]`. */
+  range: string | [string, string]
+  cells: CalendarHeatmapCell[]
+  /** Rows keyed by the `YYYY-MM-DD` key their cell draws under. */
+  rowsByDate: Map<string, Record<string, unknown>>
+  /** Bottom of the color scale, data only. */
+  min: number
+  /** Top of the color scale, data only. */
+  max: number
+}
+
+// ---------------------------------------------------------------------------
+// GaugeChart.
+// ---------------------------------------------------------------------------
+
+export type GaugeChartProps = {
+  /** The reading. `null` leaves the dial empty. */
+  value: number | null
+  /** Bottom of the dial. Defaults to 0. */
+  min?: number
+  /** Top of the dial. Defaults to 100. */
+  max?: number
+  /** Prints the reading in the middle. Defaults to a shortened number. */
+  format?: ChartValueFormatter
+  /** A caption under the reading, e.g. `'of target'`. */
+  caption?: string
+  /** Heads the chart. */
+  title?: string
+  /** A second line under the title. */
+  subtitle?: string
+  /** Draws the placeholder in place of the reading. */
+  loading?: boolean
+  /** Puts the chart in its error state and prints this message. */
+  error?: string | null
+  /** Plot height. A number is px; a string is used verbatim. */
+  height?: number | string
+  /** Root class fallthrough, merged last (P10). */
+  class?: string
+  /** Accessible name for the plot. */
+  'aria-label'?: string
+  /** Escape hatch: deep-merged into the echarts option the props built. */
+  echartOptions?: EchartOptionsOverride
+}
+
+export type GaugeChartConfig = {
+  value: number | null
+  min: number
+  max: number
+  caption?: string
+  title?: string
+  echartOptions?: EchartOptionsOverride
 }

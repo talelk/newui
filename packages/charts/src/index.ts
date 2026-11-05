@@ -10,12 +10,21 @@
 // Components
 export { AreaChart } from './AreaChart'
 export { BarChart } from './BarChart'
+export { CalendarHeatmapChart } from './CalendarHeatmapChart'
 // The shared shell and the echarts lifecycle
 export { ChartBase, type ChartBaseProps } from './ChartBase'
 export { ChartCard } from './ChartCard'
 export { ChartContainer } from './ChartContainer'
 export { ChartLegend } from './ChartLegend'
 export { ChartTooltip } from './ChartTooltip'
+// Calendar heatmap
+export {
+  buildCalendarHeatmapCalendar,
+  buildCalendarHeatmapOption,
+  type CalendarHeatmapOptionContext,
+  calendarDayKey,
+  calendarHeatmapRamp,
+} from './calendarHeatmapOptions'
 export { Dashboard } from './Dashboard'
 export { DonutChart } from './DonutChart'
 export { FunnelChart } from './FunnelChart'
@@ -38,6 +47,13 @@ export {
   type FunnelOptionContext,
   funnelRamp,
 } from './funnelOptions'
+export { GaugeChart } from './GaugeChart'
+// Gauge
+export {
+  buildGaugeOption,
+  type GaugeOptionContext,
+  METRIC_FONT_SIZE,
+} from './gaugeOptions'
 export { HeatmapChart } from './HeatmapChart'
 // Heatmap
 export {
@@ -54,12 +70,16 @@ export { NumberCard } from './NumberCard'
 export {
   axisFallback,
   axisFormat,
+  calendarHeatmapFallback,
   donutFallback,
   funnelFallback,
+  gaugeFallback,
   heatmapFallback,
   normalizeAxisChart,
+  normalizeCalendarHeatmapChart,
   normalizeDonutChart,
   normalizeFunnelChart,
+  normalizeGaugeChart,
   normalizeHeatmapChart,
   normalizeSankeyChart,
   normalizeScatterChart,
@@ -114,6 +134,7 @@ export {
 } from './options'
 export { SankeyChart } from './SankeyChart'
 export { ScatterChart } from './ScatterChart'
+export { Sparkline } from './Sparkline'
 // Sankey
 export {
   buildSankeyGraph,
@@ -137,7 +158,12 @@ export {
   sparklinePoints,
 } from './sparkline'
 // Tokens
-export { EMPTY_TOKENS, readChartTokens, useChartTokens } from './tokens'
+export {
+  EMPTY_TOKENS,
+  readChartTokens,
+  readPaletteRamp,
+  useChartTokens,
+} from './tokens'
 // Tooltip
 export {
   buildTooltipItems,
@@ -152,6 +178,12 @@ export type {
   AxisChartSeriesConfig,
   AxisTitlePlacement,
   BarChartProps,
+  CalendarHeatmapCalendar,
+  CalendarHeatmapCell,
+  CalendarHeatmapChartProps,
+  CalendarHeatmapConfig,
+  CalendarHeatmapPalette,
+  CalendarHeatmapPoint,
   ChartCardProps,
   ChartCategoryFormatter,
   ChartContainerProps,
@@ -180,6 +212,8 @@ export type {
   FunnelChartConfig,
   FunnelChartProps,
   FunnelStage,
+  GaugeChartConfig,
+  GaugeChartProps,
   HeatmapAxisOptions,
   HeatmapCell,
   HeatmapChartConfig,
@@ -200,6 +234,8 @@ export type {
   ScatterPoint,
   ScatterSeries,
   SeriesStyle,
+  SparklineProps,
+  SparklineTone,
   TimeGrain,
 } from './types'
 export { type UseChartOptions, useChart } from './useChart'

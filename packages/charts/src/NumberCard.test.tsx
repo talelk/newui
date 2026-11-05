@@ -126,7 +126,7 @@ describe('NumberCard', () => {
       area.container.querySelector('[data-slot="number-card-sparkline"] svg'),
     ).not.toBeNull()
     expect(
-      area.container.querySelector('[data-slot="number-card-sparkline-end"]'),
+      area.container.querySelector('[data-slot="sparkline-end"]'),
     ).not.toBeNull()
 
     const bars = render(() => (
