@@ -47,6 +47,14 @@ Distinct from `dir` (writing direction). _Avoid_: direction, placement.
 
 **align** — placement along a side (`start | center | end`).
 
+**config form** — a settings/configuration UI the *builder* defines (fields,
+dependencies, repeaters) for an end user to edit settings; built from
+TanStack Form. _Avoid_: settings page, admin form, config wizard.
+
+**dashboard config** — the *end user's* personalization of a dashboard:
+widget layout, saved views, persisted preferences. Distinct from config form:
+one is authored, the other is edited. _Avoid_: using "configuration" for both.
+
 **bare** — a prop that suppresses default chrome so content fills the shell.
 Currently only Dialog (`bare?: boolean` drops the body padding).
 
@@ -63,3 +71,12 @@ Solid replacement for a named slot.
 
 **machine** — a Zag state machine. Components never reimplement keyboard/ARIA
 that Zag provides.
+
+**server mode** — a data surface (currently `DataTable`) where the backend
+owns pagination/sorting/filtering over the full result set; switched by the
+presence of `server`, with the table's state slices mirrored as query keys.
+_Avoid_: remote mode, async mode, "manual" as a user-facing prop.
+
+**prune** — dropping a hidden field's value from a form's submitted document.
+Config forms prune by default (`pruneHidden`): a value for a setting that is
+not shown is a lie to the backend. _Avoid_: clear, reset (for this case).
