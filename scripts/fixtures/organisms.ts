@@ -16,4 +16,5 @@ export {
   PageToolbar,
   StatGrid,
   VirtualList,
+  WidgetGrid,
 } from '../../packages/organisms/src/index'

@@ -291,4 +291,11 @@ export const RELEASED: ReleasedPackage[] = [
   }
 ]
 
-export const PENDING: PendingChange[] = []
+export const PENDING: PendingChange[] = [
+  {
+    "package": "@talelk/newui-newui-organisms",
+    "bump": "minor",
+    "summary": "New `WidgetGrid` organism: a tiling dashboard with header drag, corner resize,\n12-column snap and push-down reflow. The layout is one JSON document\n(`{ v: 1, widgets: { [id]: { x, y, span, rows, hidden? } } }`) that the grid\nemits through `config`/`onConfigChange` and never stores — persist it with\n`createConfigStore`. Tombstones keep undo-remove, `editable` gates every\naffordance, the resize handle is a keyboard-operable `role=\"separator\"`, and\nbelow `md` the grid stacks without clobbering desktop geometry.",
+    "file": "widget-grid-new.md"
+  }
+]

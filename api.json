@@ -10263,6 +10263,125 @@
       }
     ]
   },
+  "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.tsx": {
+    "WidgetGridProps": [
+      {
+        "name": "config",
+        "type": "WidgetGridConfig",
+        "optional": true,
+        "description": "The layout document, controlled. When given, the grid moves only when the\napp applies what `onConfigChange` reports — the same contract as\nPaneLayout's `size`."
+      },
+      {
+        "name": "defaultConfig",
+        "type": "WidgetGridConfig",
+        "optional": true,
+        "description": "The document an uncontrolled grid starts from.",
+        "default": "empty"
+      },
+      {
+        "name": "onConfigChange",
+        "type": "(config: WidgetGridConfig) => void",
+        "optional": true,
+        "description": "The whole document, emitted on every user change. The grid never stores."
+      },
+      {
+        "name": "columns",
+        "type": "number",
+        "optional": true,
+        "description": "Column tracks.",
+        "default": "12"
+      },
+      {
+        "name": "rowHeight",
+        "type": "number",
+        "optional": true,
+        "description": "One row's height, in px.",
+        "default": "64"
+      },
+      {
+        "name": "editable",
+        "type": "boolean",
+        "optional": true,
+        "description": "Enter edit mode: drag, resize and remove become available and their\nhandles appear. View-only by default — a dashboard that is always\ndraggable is a dashboard you ruin by accident."
+      },
+      {
+        "name": "resettable",
+        "type": "boolean",
+        "optional": true,
+        "description": "Render a \"Reset layout\" control that emits the code defaults (tombstones\nkept).",
+        "default": "false"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "optional": true,
+        "description": "Accessible name for the grid region.",
+        "default": "'Widgets'"
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ],
+    "WidgetGridWidgetProps": [
+      {
+        "name": "id",
+        "type": "string",
+        "optional": false,
+        "description": "The widget's identity across sessions. Renaming it loses its position,\nso it is required and stable."
+      },
+      {
+        "name": "span",
+        "type": "number",
+        "optional": true,
+        "description": "Default columns to span, used until the user's layout overrides it.",
+        "default": "12"
+      },
+      {
+        "name": "rows",
+        "type": "number",
+        "optional": true,
+        "description": "Default rows to span.",
+        "default": "1"
+      },
+      {
+        "name": "minSpan",
+        "type": "number",
+        "optional": true,
+        "description": "Smallest the resize may take it, in columns.",
+        "default": "1"
+      },
+      {
+        "name": "minRows",
+        "type": "number",
+        "optional": true,
+        "description": "Smallest the resize may take it, in rows.",
+        "default": "1"
+      },
+      {
+        "name": "title",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "The header's text. It doubles as the widget's accessible name."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ]
+  },
   "packages/templates/src/templates/PaneLayout/PaneLayout.tsx": {
     "PaneLayoutProps": [
       {

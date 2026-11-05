@@ -2907,6 +2907,30 @@
       ]
     },
     {
+      "id": "organisms-widgetgrid--default",
+      "title": "Organisms/WidgetGrid",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/widget-grid.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-widgetgrid--read-only",
+      "title": "Organisms/WidgetGrid",
+      "name": "Read Only",
+      "exportName": "ReadOnly",
+      "importPath": "src/stories/widget-grid.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "pages-recordspage--default",
       "title": "Pages/RecordsPage",
       "name": "Default",

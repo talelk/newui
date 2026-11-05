@@ -133,6 +133,7 @@ const FAMILIES: Record<string, string> = {
   TreeRoot: 'Tree',
   PaginationRoot: 'Pagination',
   PaginationTrigger: 'Pagination',
+  WidgetGridWidget: 'WidgetGrid',
 }
 
 /** Interfaces that are types, not a part's props. */
@@ -257,6 +258,7 @@ const GROUPS: Record<string, string> = {
   PageToolbar: 'Layout',
   DetailHeader: 'Layout',
   KanbanBoard: 'Layout',
+  WidgetGrid: 'Layout',
   FilterBar: 'Data',
   StatGrid: 'Data',
   DataTable: 'Data',

@@ -1271,6 +1271,21 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "WidgetGrid",
+    "description": "A dashboard that tiles widgets, drags them around, and keeps the whole layout as one JSON document.",
+    "slug": "widget-grid",
+    "group": "Layout",
+    "package": "@talelk/newui-organisms",
+    "source": "packages/organisms/src/organisms/WidgetGrid",
+    "atomic": "organism",
+    "parts": [
+      "WidgetGridProps",
+      "WidgetGridWidgetProps"
+    ],
+    "spec": "widget-grid",
+    "shipped": true
+  },
+  {
     "name": "Breadcrumbs",
     "description": "A trail showing where the current page sits in a hierarchy and letting the user step back to a parent.",
     "slug": "breadcrumbs",
