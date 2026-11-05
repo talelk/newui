@@ -1,4 +1,11 @@
 import { type Accessor, createSignal, onCleanup, type Setter } from 'solid-js'
+import {
+  encodeValue,
+  type UrlStateAdapter,
+  type UrlStateValue,
+} from './url-serialize'
+
+export type { UrlStateAdapter, UrlStateValue } from './url-serialize'
 
 /**
  * URL state, router-agnostic by contract.
@@ -16,26 +23,6 @@ import { type Accessor, createSignal, onCleanup, type Setter } from 'solid-js'
  * into one `replace` per frame. Search-like keys can be debounced so typing
  * does not spam the history.
  */
-
-/** A value that serializes into a query parameter. */
-export type UrlStateValue =
-  | string
-  | number
-  | boolean
-  | readonly UrlStateValue[]
-  | { readonly [key: string]: UrlStateValue }
-
-/** The router side of {@link createUrlState}. */
-export interface UrlStateAdapter {
-  /**
-   * The current query string (`"?a=1"` or `"a=1"`). Read **once** on creation,
-   * so first paint renders from the URL and a shared link deep-links without
-   * a client redirect.
-   */
-  search(): string
-  /** Replace the query string. Must not push a history entry. */
-  replace(params: URLSearchParams): void
-}
 
 /** Options for {@link createUrlState}. */
 export interface UrlStateOptions {
@@ -58,28 +45,6 @@ export type UrlState<T extends Record<string, UrlStateValue>> = {
 }
 
 const DEFAULT_DEBOUNCE_MS = 300
-
-/** JSON with object keys in sorted order, so a round-trip is stable. */
-function stableStringify(value: unknown): string {
-  return JSON.stringify(value, (_key, part: unknown) => {
-    if (part !== null && typeof part === 'object' && !Array.isArray(part)) {
-      const record = part as Record<string, unknown>
-      const sorted: Record<string, unknown> = {}
-      for (const key of Object.keys(record).sort()) sorted[key] = record[key]
-      return sorted
-    }
-    return part
-  })
-}
-
-/** Encode one value for its query parameter. Primitives stay as-is. */
-function encode(value: UrlStateValue): string {
-  if (typeof value === 'string') return value
-  if (typeof value === 'number' || typeof value === 'boolean') {
-    return String(value)
-  }
-  return stableStringify(value)
-}
 
 /** Decode one raw param back, trusting the initial value's type. */
 function decode(raw: string, initial: UrlStateValue): UrlStateValue {
@@ -110,7 +75,7 @@ export function createUrlState<T extends Record<string, UrlStateValue>>(
   const keys = Object.keys(initial) as (keyof T & string)[]
   const params = new URLSearchParams()
   for (const key of keys) {
-    params.set(key, encode(initial[key] as UrlStateValue))
+    params.set(key, encodeValue(initial[key] as UrlStateValue))
   }
 
   const signals = new Map<
@@ -137,7 +102,7 @@ export function createUrlState<T extends Record<string, UrlStateValue>>(
         const raw = search.get(key)
         if (raw === null) continue
         const value = decode(raw, initial[key] as UrlStateValue)
-        params.set(key, encode(value))
+        params.set(key, encodeValue(value))
         signals.get(key)?.[1](() => value)
       }
     } catch {
@@ -180,7 +145,7 @@ export function createUrlState<T extends Record<string, UrlStateValue>>(
       params.delete(key)
       set(() => initial[key] as UrlStateValue)
     } else {
-      params.set(key, encode(value))
+      params.set(key, encodeValue(value))
       set(() => value)
     }
     if (debounceKeys.has(key)) {
