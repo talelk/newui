@@ -39,6 +39,10 @@ composition) until it earns its own surface.
 | `rollup` | `(rows, { field, unit, metric? }) => points` | time-column → chart series |
 | `createUrlState` | `(initial, { adapter? }) => signals` | link-reproducible state in `URLSearchParams` |
 | `createConfigStore` | `({ key, storage?, migrate? }) => store` | versioned documents for saved views and dashboard config |
+| `createDashboardState` | `({ timeRange?, filters?, adapter?, sync? }) => state` | the shared time range, filters and cross-filter of one dashboard |
+| `DashboardProvider` / `useDashboardState` | provider + hook | the same state, read three levels down without prop-drilling |
+| `createTablePersist` | `({ id, url?, storage?, onPersistError? }) => persist` | what a table remembers — URL half and document half |
+| `exportCsv` | `(table, { scope?, columns? }) => Promise<Blob>` | the table's view as CSV, built on `csvText` |
 | `downloadBlob` | `(name: string, blob: Blob) => void` | the Blob / anchor / revoke dance |
 | `downloadText` | `(name, text, mime?) => void` | text, `text/plain` unless told otherwise |
 | `csvText` | `(rows: (string \| number)[][]) => string` | every cell quoted, inner quotes doubled, CRLF |
@@ -274,6 +278,98 @@ const series = rollup(rows, {
   Date, and `rollup` skips those rows instead of leaving a hole in the series.
 - **`rollup` is `aggregate` over time**: a bare metric name counts rows per
   bucket; a `{ field, metric }` spec aggregates a value column.
+
+## Dashboard state — `createDashboardState`
+
+The connective tissue of an analytics dashboard: one shared time range, one
+shared filter record and one cross-filter slot that charts, KPI cards and
+tables all read and write.
+
+```ts
+import { createDashboardState, DashboardProvider, useDashboardState } from '@talelk/newui-data'
+
+const dashboard = createDashboardState({
+  timeRange: { preset: '30d' },
+  filters: { region: 'EMEA' },
+  adapter, // optional — the state round-trips to the URL
+})
+
+// Deep in the widget grid, no prop on any card:
+const dashboardState = useDashboardState()
+dashboardState.setTimeRange('qtd')
+dashboardState.setCross({ column: 'region', value: 'EMEA' })
+```
+
+- **Presets are computed from a clock seam.** `7d` and `30d` end at today's
+  end-of-day and start 6 and 29 days back at midnight; `qtd` and `ytd` floor
+  to the quarter and the year. `now()` is an option so the math is testable;
+  setting `from`/`to` marks the range `'custom'`, and a preset switch clears
+  the custom dates.
+- **The cross-filter is one slot.** `setCross({ column, value })` replaces
+  whatever held the slot; the same column and value twice is a toggle, not a
+  second filter, and `null` clears it.
+- **Filters are a shared record.** Declared keys get their own URL params
+  (`f:<key>`); undeclared keys work and serialize too. `undefined` returns a
+  declared key to its default rather than to nothing.
+- **The URL is the sync surface, via `createUrlState`.** `range`, `from`,
+  `to`, `cross` and the filter keys round-trip through the app's adapter,
+  pruned to what differs from the default; `sync: false` keeps the state a
+  plain signal while `params()` still serializes it for "copy link".
+
+## Table persistence — `createTablePersist`
+
+What a table remembers, split by who owns the question. The **URL half** —
+sorting, column filters, density, page size — makes a link reproducible and
+serializes through `createUrlState`; the **storage half** — the column layout
+(visibility, order, sizing, pinning) — is a personal preference that survives
+a shared link, so it lives in a versioned `createConfigStore` document named
+by the table id. The document carries the whole state, so a returning user
+gets their sort back even when the URL says nothing; **the URL wins when it
+does**.
+
+```ts
+import { createTablePersist } from '@talelk/newui-data'
+
+const persist = createTablePersist({ id: 'orders', url: { adapter } })
+
+const initial = persist.hydrate(['date', 'amount', 'status'])
+// { columns?, sorting?, columnFilters?, density?, pageSize?, dropped }
+persist.commit({ sorting: [{ id: 'date', desc: true }], pageSize: 25 })
+persist.reset() // forget everything persisted for this id
+```
+
+- **Columns are dropped, not hidden forever.** A persisted column that no
+  longer exists in the table is removed from the layout, named in `dropped`,
+  and new columns are appended to the order, visible.
+- **The document is versioned.** A payload without `v` predates the shape —
+  `columns` as the visible ids, `sort` not `sorting` — and is migrated on
+  read; fields that fail validation are dropped rather than trusted.
+- **Failures are reported, not thrown.** A storage backend that rejects the
+  write or a document that no longer parse reaches `onPersistError`; the
+  table keeps working either way.
+
+## CSV export — `exportCsv`
+
+The table→CSV binding: export what the user sees. `exportCsv` reads the row
+models and column state through a structural interface — TanStack Table
+satisfies it, tests can hand it a literal — renders cells through the
+column's `meta.format` when it has one, and resolves with a `Blob` built on
+`csvText`; `downloadBlob(name, await exportCsv(table))` finishes the job.
+
+```ts
+import { downloadBlob, exportCsv } from '@talelk/newui-data'
+
+const blob = await exportCsv(table, { scope: 'page', columns: 'visible' })
+downloadBlob('orders.csv', blob)
+```
+
+- **`scope`** is `'page'` (the current slice of the filtered, sorted view),
+  `'filtered'` (every filtered row, across pages — the default) or `'all'`
+  (the raw data, ignoring filters).
+- **`columns`** is `'visible'` (default) or `'all'`; a column with
+  `meta.exportable: false` never ships, `meta.exportName` names the header.
+- **It is a promise on purpose.** A server-side or streaming export can
+  replace the in-browser one without the call site noticing.
 
 ## Realtime — `connectRealtime`
 
