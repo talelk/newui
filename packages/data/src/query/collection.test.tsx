@@ -50,11 +50,15 @@ function makeRepository(initial: Row[]) {
 function Harness(props: {
   repository: Repository<Row, { title: string }>
   ready: (collection: Collection<Row, { title: string }>) => void
+  interval?: number | false
 }): JSX.Element {
   const collection = createCollection(() => ({
     key: ['rows'],
     repository: props.repository,
     retry: false,
+    ...(props.interval !== undefined
+      ? { refetchInterval: props.interval }
+      : {}),
   }))
   untrack(() => props.ready(collection))
   return (
@@ -64,12 +68,16 @@ function Harness(props: {
   )
 }
 
-function mount(repository: Repository<Row, { title: string }>) {
+function mount(
+  repository: Repository<Row, { title: string }>,
+  interval?: number | false,
+) {
   let collection!: Collection<Row, { title: string }>
   render(() => (
     <DataProvider>
       <Harness
         repository={repository}
+        interval={interval}
         ready={(value) => (collection = value)}
       />
     </DataProvider>
@@ -147,5 +155,32 @@ describe('createCollection', () => {
 
     await collection().remove.mutateAsync({ ids: ['1', '2'] })
     await waitFor(() => expect(screen.queryByText('Done')).toBeNull())
+  })
+
+  it('polls the list on the interval it is given', async () => {
+    const { repository } = makeRepository([{ id: '1', title: 'One' }])
+    const list = vi.fn(repository.list)
+    const polled: Repository<Row, { title: string }> = { ...repository, list }
+    mount(polled, 30)
+    await waitFor(() => expect(list).toHaveBeenCalledTimes(1))
+
+    // The explicit dial: focus-refetch stays off, the interval does the work.
+    await waitFor(
+      () => expect(list.mock.calls.length).toBeGreaterThanOrEqual(3),
+      {
+        timeout: 2000,
+      },
+    )
+  })
+
+  it('never polls when refetchInterval is false', async () => {
+    const { repository } = makeRepository([{ id: '1', title: 'One' }])
+    const list = vi.fn(repository.list)
+    const quiet: Repository<Row, { title: string }> = { ...repository, list }
+    mount(quiet, false)
+    await waitFor(() => expect(list).toHaveBeenCalledTimes(1))
+
+    await new Promise((resolve) => setTimeout(resolve, 120))
+    expect(list).toHaveBeenCalledTimes(1)
   })
 })

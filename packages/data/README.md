@@ -21,6 +21,15 @@ The first four surfaces are the ones the examples had already copied:
 | `undo` | `createUndo` — a snapshot, a restore and a clear, without the page's notice copy |
 | `download` | `downloadBlob`, `downloadText`, `downloadCsv`, `csvText` — the Blob/anchor/revoke dance and RFC-shaped quoting |
 
+The analytics primitives, decided in issues #22, #23, #24 and #32, round out the
+headless layer:
+
+| surface | what it owns |
+| --- | --- |
+| `url-state` | `createUrlState` — link-reproducible signals behind a router adapter, replace-not-push, debounced search keys |
+| `config-store` | `createConfigStore` — versioned envelopes for saved views and dashboard config over a storage seam |
+| `aggregate` | `aggregate`, `timeBucket`, `rollup` — pure group-by and time-series transforms over rows the app already fetched |
+
 ## Query
 
 ```tsx
@@ -51,5 +60,7 @@ has shipped.
 The Frappe DocType client: `request`/`frappeRequest` transport with
 `setConfig`, document and list hooks (`useDoc`, `useDoctype`, `useList`,
 `useNewDoc`, `useCall`), an IndexedDB cache, and a shared WebSocket realtime
-multiplexer. It lives behind its own entry so importing `usd` never pulls a
-fetch stack, and it is app-specific — generic query needs belong on `/query`.
+multiplexer (`createRealtime`, plus `connectRealtime` to invalidate query keys
+from socket events). It lives behind its own entry so importing `usd` never
+pulls a fetch stack, and it is app-specific — generic query needs belong on
+`/query`.

@@ -26,9 +26,14 @@ const ENTRIES = {
 const SURFACE: Record<keyof typeof ENTRIES, string[]> = {
   // Formatting, selection, undo, downloads — and nothing that renders.
   '.': [
+    'CONFIG_DOCUMENT_LIMIT',
+    'CONFIG_SCHEMA_VERSION',
+    'aggregate',
     'bytes',
     'count',
+    'createConfigStore',
     'createUndo',
+    'createUrlState',
     'csvText',
     'downloadBlob',
     'downloadCsv',
@@ -36,6 +41,8 @@ const SURFACE: Record<keyof typeof ENTRIES, string[]> = {
     'first',
     'isEmail',
     'optionsOf',
+    'rollup',
+    'timeBucket',
     'usd',
     'usdK',
   ],
@@ -48,6 +55,7 @@ const SURFACE: Record<keyof typeof ENTRIES, string[]> = {
   './form': ['Form', 'createAppForm', 'fieldError'],
   './resource': [
     'RequestError',
+    'connectRealtime',
     'createDocumentResource',
     'createIdbStore',
     'createListResource',
@@ -89,8 +97,16 @@ describe('@talelk/newui-data', () => {
 
   it('keeps the root entry headless', () => {
     // The root is the only entry with no component, no query client and no
-    // validator; every value it exports is a function over plain data.
-    for (const value of Object.values(root)) {
+    // validator; every value it exports is a function over plain data — with
+    // the exception of the config-store constants, plain numbers by design.
+    for (const [name, value] of Object.entries(root)) {
+      if (
+        name === 'CONFIG_SCHEMA_VERSION' ||
+        name === 'CONFIG_DOCUMENT_LIMIT'
+      ) {
+        expect(typeof value).toBe('number')
+        continue
+      }
       expect(typeof value).toBe('function')
     }
   })

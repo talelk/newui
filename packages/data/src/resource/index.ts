@@ -22,6 +22,13 @@ export {
   setConfig,
 } from './client'
 export type {
+  ConnectRealtimeOptions,
+  RealtimeConnection,
+  RealtimeEvent,
+  RealtimeResource,
+} from './connect-realtime'
+export { connectRealtime } from './connect-realtime'
+export type {
   DocumentOperationOptions,
   DocumentResource,
   DocumentResourceOptions,

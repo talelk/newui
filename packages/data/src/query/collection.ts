@@ -62,6 +62,12 @@ export interface CollectionOptions<
   staleTime?: number
   /** Retries after the first failure. Defaults to the client's. */
   retry?: number | false
+  /**
+   * Poll the list on an interval. Off (`false`) by default — the client's
+   * `refetchOnWindowFocus: false` says returning to the tab is not a refresh;
+   * this is the explicit dial for data that genuinely changes on its own.
+   */
+  refetchInterval?: number | false
   /** Every mutation reports here first, so a page can word one notice. */
   onError?: (error: Error) => void
 }
@@ -79,6 +85,7 @@ export function createListQuery<T extends { id: string }>(
     queryFn: ({ signal }) => options().repository.list({ signal }),
     staleTime: options().staleTime,
     retry: options().retry,
+    refetchInterval: options().refetchInterval,
     throwOnError: false,
   }))
   return {
