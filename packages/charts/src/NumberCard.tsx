@@ -1,4 +1,4 @@
-import { createMemo, For, type JSX, Show } from 'solid-js'
+import { type JSX, Show } from 'solid-js'
 import {
   type DeltaTone,
   deltaDirection,
@@ -6,24 +6,13 @@ import {
   formatCardDelta,
   formatCardValue,
 } from './numberCardFormat'
-import {
-  sparklineAreaPath,
-  sparklineBars,
-  sparklineLinePath,
-  sparklinePoints,
-} from './sparkline'
+import { Sparkline } from './Sparkline'
 import { CARD_SURFACE, useChartTokens } from './tokens'
 import type { NumberCardProps } from './types'
 
 // A page full of these should cost nothing but HTML: no echarts, sparkline
-// included. The sparkline is drawn as an inline SVG (or boxes), so a card with
-// no trend is plain text.
-
-/** `preserveAspectRatio="none"` makes the horizontal unit meaningless, so the geometry is computed once. */
-const VIEW_WIDTH = 100
-const VIEW_HEIGHT = 100
-/** Room for the 1.5px stroke at the series' peak and trough. */
-const VIEW_INSET = 3
+// included. The trend is the `Sparkline` component, so one implementation of
+// the geometry serves the card and the standalone strip alike.
 
 /**
  * The delta tones, as runtime custom properties rather than Tailwind classes:
@@ -57,29 +46,19 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
   const mark = () => props.sparkline?.type ?? 'area'
   const color = () =>
     props.sparkline?.color ?? tokens().series[0] ?? 'currentColor'
+  // A named color is one explicit palette entry: the same override, handed to
+  // the `Sparkline` in the vocabulary it takes.
+  const sparklineTone = () =>
+    props.sparkline?.color ? [props.sparkline.color] : undefined
 
-  const points = createMemo(() =>
-    mark() !== 'bar'
-      ? sparklinePoints(props.sparkline?.data, {
-          width: VIEW_WIDTH,
-          height: VIEW_HEIGHT,
-          inset: VIEW_INSET,
-        })
-      : [],
-  )
-  const bars = createMemo(() =>
-    mark() === 'bar'
-      ? sparklineBars(props.sparkline?.data, {
-          width: VIEW_WIDTH,
-          height: VIEW_HEIGHT,
-          inset: VIEW_INSET,
-        })
-      : [],
-  )
+  // A sparkline with nothing present is not a flat line; the card prints its
+  // value instead and leaves the trend out.
   const showSparkline = () =>
-    !isEmpty() && (points().length > 0 || bars().length > 0)
+    !isEmpty() &&
+    (props.sparkline?.data ?? []).some(
+      (value) => value !== null && value !== undefined && !Number.isNaN(value),
+    )
   const showDelta = () => !isEmpty() && Boolean(deltaText())
-  const lastPoint = () => points()[points().length - 1]
   // A progress bar only means something for two numbers and a positive goal.
   const progress = (): number | undefined => {
     if (typeof props.value !== 'number') return undefined
@@ -314,67 +293,13 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
               'box-sizing': 'content-box',
             }}
           >
-            <Show when={mark() === 'bar'}>
-              <For each={bars()}>
-                {(bar) => (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: '0',
-                      left: `${bar.x}%`,
-                      width: `${bar.width}%`,
-                      height: `${bar.height}%`,
-                      'background-color': color(),
-                    }}
-                  />
-                )}
-              </For>
-            </Show>
-            <Show when={mark() !== 'bar'}>
-              <svg
-                viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`}
-                preserveAspectRatio="none"
-                aria-hidden="true"
-                style={{ width: '100%', height: '100%' }}
-              >
-                <Show when={mark() === 'area'}>
-                  <path
-                    d={sparklineAreaPath(points(), VIEW_HEIGHT)}
-                    fill={color()}
-                    opacity={0.16}
-                  />
-                </Show>
-                <path
-                  d={sparklineLinePath(points())}
-                  fill="none"
-                  stroke={color()}
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  vector-effect="non-scaling-stroke"
-                />
-              </svg>
-              {/* An HTML dot, not an SVG circle: `preserveAspectRatio="none"`
-                  would stretch a circle into an ellipse. */}
-              <Show when={lastPoint()}>
-                {(point) => (
-                  <span
-                    data-slot="number-card-sparkline-end"
-                    style={{
-                      position: 'absolute',
-                      left: `calc(${point().x}% - 3px)`,
-                      top: `calc(${point().y}% - 3px)`,
-                      width: '6px',
-                      height: '6px',
-                      'border-radius': 'var(--radius-pill)',
-                      'background-color': color(),
-                      border: '1px solid var(--surface-elevation-1)',
-                      'box-sizing': 'border-box',
-                    }}
-                  />
-                )}
-              </Show>
-            </Show>
+            <Sparkline
+              data={props.sparkline?.data ?? []}
+              type={mark()}
+              tone={sparklineTone()}
+              width="100%"
+              height="100%"
+            />
           </div>
         </Show>
       </Show>

@@ -79,7 +79,31 @@ export function readChartTokens(el?: Element | null): ChartTokens {
     grid: read('--chart-grid') || read('--outline-gray-1'),
     axis: read('--chart-axis') || read('--outline-gray-3'),
     label: read('--ink-gray-6') || read('--outline-gray-3'),
+    metric: read('--ink-gray-9') || read('--ink-gray-7'),
   }
+}
+
+/** The steps a single-hue ramp samples from the semantic surface scale. */
+const RAMP_STEPS = [2, 3, 4, 5, 6, 7, 8, 9]
+
+/**
+ * A single-hue ramp, low end first, read from the `--surface-{hue}-{2…9}`
+ * steps. The surface scale re-values under `[data-theme]`, so one ramp reads
+ * pale-to-saturated in light and deep-to-bright in dark without a second
+ * palette — and it is tokens all the way down, which is what a chart ramp may
+ * be built from.
+ */
+export function readPaletteRamp(hue: 'blue' | 'amber'): string[] {
+  if (typeof window === 'undefined' || typeof getComputedStyle !== 'function') {
+    return []
+  }
+  const styles = getComputedStyle(document.documentElement)
+  const stops: string[] = []
+  for (const step of RAMP_STEPS) {
+    const value = styles.getPropertyValue(`--surface-${hue}-${step}`).trim()
+    if (value) stops.push(value)
+  }
+  return stops
 }
 
 /**

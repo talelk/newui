@@ -16,6 +16,19 @@ copyable source and generated props.
 - HeatmapChart takes `x`, `y`, `value` and optional min/max. Missing values do
   not invent zero cells. ScatterChart takes numeric `x`/`y`, optional size,
   splitBy and label columns. SankeyChart takes source/target/value flow rows.
+- CalendarHeatmapChart takes `date`/`value` row keys and an optional `range`
+  (a year or a `[start, end]` span; the data's own span is the default). Days
+  without a numeric value stay undrawn rather than reading as zero. A day click
+  emits `onPointClick` with the day, its value and the row behind it — what the
+  click drives (a `cross`, a drilldown) belongs to the page, not the chart.
+- GaugeChart takes `value`, `min`/`max` (0/100 by default) and an optional
+  `caption`; the palette is locked to tokens — 1px track, single blue progress
+  arc, metric typography centered.
+- Sparkline is plain SVG, not echarts: `data` of numbers, `type` (`area`,
+  `line`, `bar`), `width`/`height`, and a `tone` that is either `ink` (the
+  surrounding text color) or the chart palette vocabulary. The drawing is
+  `aria-hidden` and the values ride in a visually-hidden summary. NumberCard
+  draws its trend with the same component.
 - NumberCard displays title/value, optional target, delta and sparkline.
   negativeIsBetter reverses delta colour for costs.
 - Dashboard arranges children, automatically fitting columns unless columns is
@@ -74,6 +87,13 @@ default 240). Allow enough space for labels at 320px and at 200% text size.
 The palette and typography follow live colour-scheme tokens. RTL follows the
 document unless dir is supplied. Reduced motion is respected by the chart
 lifecycle.
+
+The chart palette vocabulary is chart-only: the categorical ramp and the
+single-hue ramps (`blue`, `amber`) are what plots may draw with, and `orange`
+and `yellow` exist only here — never as component `theme` values. A calendar
+heatmap defaults to the blue ramp and takes `amber` for warning-shaped
+metrics; a gauge locks its palette to tokens (no `palette` prop) because it
+reads a KPI at a glance.
 
 ## Helpers
 

@@ -9,6 +9,7 @@ const PUBLIC = [
   // components
   'AreaChart',
   'BarChart',
+  'CalendarHeatmapChart',
   'ChartCard',
   'ChartContainer',
   'ChartLegend',
@@ -16,16 +17,19 @@ const PUBLIC = [
   'Dashboard',
   'DonutChart',
   'FunnelChart',
+  'GaugeChart',
   'HeatmapChart',
   'LineChart',
   'NumberCard',
   'SankeyChart',
   'ScatterChart',
+  'Sparkline',
   'ChartBase',
   // lifecycle
   'useChart',
   'useChartTokens',
   'readChartTokens',
+  'readPaletteRamp',
   // option builders
   'buildAxisChartOption',
   'buildDonutChartOption',
@@ -49,6 +53,14 @@ const PUBLIC = [
   'buildHeatmapOption',
   'heatmapRampStops',
   'heatmapCategoryLabel',
+  // calendar heatmap
+  'buildCalendarHeatmapCalendar',
+  'buildCalendarHeatmapOption',
+  'calendarDayKey',
+  'calendarHeatmapRamp',
+  // gauge
+  'buildGaugeOption',
+  'METRIC_FONT_SIZE',
   // scatter
   'buildScatterSeries',
   'buildScatterOption',

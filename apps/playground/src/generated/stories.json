@@ -567,6 +567,54 @@
       ]
     },
     {
+      "id": "atoms-sparkline--default",
+      "title": "Atoms/Sparkline",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/sparkline.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "atoms-sparkline--empty",
+      "title": "Atoms/Sparkline",
+      "name": "Empty",
+      "exportName": "Empty",
+      "importPath": "src/stories/sparkline.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "atoms-sparkline--error",
+      "title": "Atoms/Sparkline",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/sparkline.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "atoms-sparkline--loading",
+      "title": "Atoms/Sparkline",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/sparkline.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "molecules-actions-contextmenu--default",
       "title": "Molecules/Actions/ContextMenu",
       "name": "Default",
@@ -2151,6 +2199,42 @@
       ]
     },
     {
+      "id": "organisms-calendarheatmapchart--default",
+      "title": "Organisms/CalendarHeatmapChart",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/calendar-heatmap-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-calendarheatmapchart--error",
+      "title": "Organisms/CalendarHeatmapChart",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/calendar-heatmap-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-calendarheatmapchart--loading",
+      "title": "Organisms/CalendarHeatmapChart",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/calendar-heatmap-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "organisms-codeeditor--default",
       "title": "Organisms/CodeEditor",
       "name": "Default",
@@ -2432,6 +2516,42 @@
       "name": "Loading",
       "exportName": "Loading",
       "importPath": "src/stories/funnel-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-gaugechart--default",
+      "title": "Organisms/GaugeChart",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/gauge-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-gaugechart--error",
+      "title": "Organisms/GaugeChart",
+      "name": "Error",
+      "exportName": "Error",
+      "importPath": "src/stories/gauge-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-gaugechart--loading",
+      "title": "Organisms/GaugeChart",
+      "name": "Loading",
+      "exportName": "Loading",
+      "importPath": "src/stories/gauge-chart.stories.tsx",
       "tags": [
         "dev",
         "test",

@@ -123,8 +123,10 @@ const ROUTES: RouteBudget[] = [
   // and density tables in the chunks this route already fetched).
   { route: '/organisms/bar-chart', budget: 300 },
   // 280.0 measured: the shell's registry counts grew with the new atoms and
-  // molecules — same headroom rule as bar-chart above.
-  { route: '/organisms/code-editor', budget: 285 },
+  // molecules — same headroom rule as bar-chart above. Re-raised to 290 at
+  // 285.3 measured after the chart catalog added three registry entries
+  // (Sparkline, CalendarHeatmapChart, GaugeChart) to the shared registry chunk.
+  { route: '/organisms/code-editor', budget: 290 },
   { route: '/organisms/page-toolbar', budget: 190 },
   {
     route: '/kit/recipes',

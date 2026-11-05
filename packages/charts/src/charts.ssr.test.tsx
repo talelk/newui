@@ -3,17 +3,20 @@ import { describe, expect, it } from 'vitest'
 import {
   AreaChart,
   BarChart,
+  CalendarHeatmapChart,
   ChartCard,
   ChartContainer,
   ChartTooltip,
   Dashboard,
   DonutChart,
   FunnelChart,
+  GaugeChart,
   HeatmapChart,
   LineChart,
   NumberCard,
   SankeyChart,
   ScatterChart,
+  Sparkline,
 } from './index'
 
 const axisData = [
@@ -107,6 +110,31 @@ describe('charts SSR smoke', () => {
     ))
     expect(html).toContain('data-slot="chart-container"')
     expect(html).toContain('data-slot="chart-fallback"')
+  })
+
+  it('renders a calendar heatmap chart', () => {
+    const html = renderToString(() => (
+      <CalendarHeatmapChart
+        data={[{ date: '2026-01-05', value: 3 }]}
+        aria-label="Activity"
+      />
+    ))
+    expect(html).toContain('data-slot="chart-container"')
+    expect(html).toContain('2026-01-05')
+  })
+
+  it('renders a gauge chart', () => {
+    const html = renderToString(() => (
+      <GaugeChart value={72} title="Quarter to target" />
+    ))
+    expect(html).toContain('data-slot="chart-container"')
+    expect(html).toContain('Quarter to target')
+  })
+
+  it('renders a sparkline with its hidden summary', () => {
+    const html = renderToString(() => <Sparkline data={[1, 2, 3]} />)
+    expect(html).toContain('data-slot="sparkline"')
+    expect(html).toContain('3 values from 1 to 3, ending at 3')
   })
 
   it('renders a dashboard of cards', () => {

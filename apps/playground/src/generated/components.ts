@@ -165,6 +165,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "CalendarHeatmapChart",
+    "description": "Activity per day, on a calendar grid.",
+    "slug": "calendar-heatmap-chart",
+    "group": "Charts",
+    "package": "@talelk/newui-charts",
+    "source": "packages/charts/src",
+    "atomic": "organism",
+    "parts": [
+      "CalendarHeatmapChartProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
     "name": "ChartBase",
     "description": "The shared ECharts host every chart renders through.",
     "slug": "chart-base",
@@ -278,6 +292,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "GaugeChart",
+    "description": "One reading against its span, as a dial.",
+    "slug": "gauge-chart",
+    "group": "Charts",
+    "package": "@talelk/newui-charts",
+    "source": "packages/charts/src",
+    "atomic": "organism",
+    "parts": [
+      "GaugeChartProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
     "name": "HeatmapChart",
     "description": "Density across two categorical axes.",
     "slug": "heatmap-chart",
@@ -343,6 +371,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "atomic": "organism",
     "parts": [
       "ScatterChartProps"
+    ],
+    "spec": "charts",
+    "shipped": true
+  },
+  {
+    "name": "Sparkline",
+    "description": "A trend without axes, drawn as plain SVG.",
+    "slug": "sparkline",
+    "group": "Charts",
+    "package": "@talelk/newui-charts",
+    "source": "packages/charts/src",
+    "atomic": "atom",
+    "parts": [
+      "SparklineProps"
     ],
     "spec": "charts",
     "shipped": true

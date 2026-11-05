@@ -3,6 +3,9 @@ import type {
   AxisChartConfig,
   AxisChartProps,
   AxisChartSeriesConfig,
+  CalendarHeatmapCalendar,
+  CalendarHeatmapChartProps,
+  CalendarHeatmapConfig,
   ChartFallback,
   ChartMark,
   ChartValueFormatter,
@@ -10,6 +13,8 @@ import type {
   DonutChartProps,
   FunnelChartConfig,
   FunnelChartProps,
+  GaugeChartConfig,
+  GaugeChartProps,
   HeatmapChartConfig,
   HeatmapChartProps,
   SankeyChartConfig,
@@ -259,6 +264,62 @@ export function sankeyFallback(config: SankeyChartConfig): ChartFallback {
       stringify(row[config.targetColumn]),
       stringify(row[config.valueColumn]),
     ]),
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Calendar heatmap and gauge. Same two layers: props flatten into a config,
+// and the config carries no formatters or chrome.
+// ---------------------------------------------------------------------------
+
+export function normalizeCalendarHeatmapChart(
+  source: CalendarHeatmapChartProps,
+): CalendarHeatmapConfig {
+  return {
+    data: source.data,
+    dateColumn: source.date ?? 'date',
+    valueColumn: source.value ?? 'value',
+    range: source.range,
+    cellSize: source.cellSize,
+    palette: source.palette,
+    // Both label rows default on: a calendar without its month names is a
+    // grid of unlabeled squares.
+    showMonthLabels: source.showMonthLabels ?? true,
+    showDayLabels: source.showDayLabels ?? true,
+    echartOptions: source.echartOptions,
+  }
+}
+
+/** The days as a table: the day, then the value. Undrawn days carry no row. */
+export function calendarHeatmapFallback(
+  config: CalendarHeatmapConfig,
+  calendar: CalendarHeatmapCalendar,
+): ChartFallback {
+  return {
+    columns: [config.dateColumn, config.valueColumn],
+    rows: calendar.cells.map((cell) => [cell.date, cell.value]),
+  }
+}
+
+export function normalizeGaugeChart(source: GaugeChartProps): GaugeChartConfig {
+  return {
+    value: source.value,
+    min: source.min ?? 0,
+    max: source.max ?? 100,
+    caption: source.caption,
+    title: source.title,
+    echartOptions: source.echartOptions,
+  }
+}
+
+/** The dial as a table: the metric, then the reading. No reading, no row. */
+export function gaugeFallback(config: GaugeChartConfig): ChartFallback {
+  if (config.value === null || config.value === undefined) {
+    return { columns: ['Metric', 'Value'], rows: [] }
+  }
+  return {
+    columns: ['Metric', 'Value'],
+    rows: [[config.title ?? 'Reading', config.value]],
   }
 }
 
