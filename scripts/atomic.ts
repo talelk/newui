@@ -126,6 +126,7 @@ export const CLASSIFICATION: Record<string, AtomicLevel> = {
   Tree: 'molecule',
   VirtualList: 'organism',
   VisuallyHidden: 'atom',
+  WidgetGrid: 'organism',
 }
 
 export function atomicOf(name: string): AtomicLevel {

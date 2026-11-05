@@ -8093,6 +8093,18 @@
   },
   {
     "package": "@talelk/newui-organisms",
+    "name": "emptyWidgetGridConfig",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
     "name": "FilterBar",
     "implementation": "packages/organisms/src/organisms/FilterBar/FilterBar.tsx",
     "documentation": "/organisms/filter-bar",
@@ -8228,6 +8240,18 @@
   },
   {
     "package": "@talelk/newui-organisms",
+    "name": "materializeWidgetGridConfig",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
     "name": "MobileNav",
     "implementation": "packages/organisms/src/organisms/MobileNav/MobileNav.tsx",
     "documentation": "/organisms/mobile-nav",
@@ -8280,6 +8304,30 @@
   },
   {
     "package": "@talelk/newui-organisms",
+    "name": "moveWidgetGrid",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "normalizeWidgetGridConfig",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
     "name": "PageToolbar",
     "implementation": "packages/organisms/src/organisms/PageToolbar/PageToolbar.tsx",
     "documentation": "/organisms/page-toolbar",
@@ -8325,6 +8373,66 @@
       "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.browser.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/KanbanBoard.test.tsx",
       "packages/organisms/src/organisms/KanbanBoard/drag.test.ts"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "removeWidgetGrid",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "resetWidgetGridConfig",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "resizeWidgetGrid",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "resolveLayout",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "restoreWidgetGrid",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -9101,6 +9209,126 @@
     "tests": [
       "packages/organisms/src/organisms/VirtualList/VirtualList.a11y.test.tsx",
       "packages/organisms/src/organisms/VirtualList/VirtualList.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WIDGET_GRID_COLUMNS",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WIDGET_GRID_SCHEMA_VERSION",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WidgetDeclaration",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WidgetGrid",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.tsx",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WidgetGridConfig",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WidgetGridEntry",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WidgetGridProps",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.tsx",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WidgetGridWidget",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.tsx",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WidgetGridWidgetProps",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.tsx",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WidgetPlacement",
+    "implementation": "packages/organisms/src/organisms/WidgetGrid/layout.ts",
+    "documentation": "/organisms/widget-grid",
+    "contract": "spec/widget-grid.md",
+    "tests": [
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.a11y.test.tsx",
+      "packages/organisms/src/organisms/WidgetGrid/WidgetGrid.test.tsx"
     ],
     "acceptance": "pending"
   },

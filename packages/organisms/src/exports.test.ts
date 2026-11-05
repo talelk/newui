@@ -18,6 +18,7 @@ const PUBLIC = [
   'Sidebar',
   'StatGrid',
   'VirtualList',
+  'WidgetGrid',
   'placeKanbanItem',
 ]
 

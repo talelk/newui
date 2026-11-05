@@ -80,6 +80,10 @@ export const REQUIRED_STATES: Record<string, string[]> = {
   CodeEditor: ['ReadOnly'],
   Editor: ['ReadOnly'],
 
+  // A dashboard you cannot rearrange is a different surface than a dashboard
+  // you can — `editable` is the gate, and both sides must be visible.
+  WidgetGrid: ['ReadOnly'],
+
   // Charts — loading and failure replace the plot; emptiness is the container's
   // designed surface (`ChartContainer`), not a chart's zero-data rendering.
   ChartContainer: ['Loading', 'Empty', 'Error'],

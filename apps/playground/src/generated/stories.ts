@@ -500,4 +500,8 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'atoms-display-visuallyhidden--default',
     load: () => import('../stories/visually-hidden.stories'),
   },
+  "WidgetGrid": {
+    id: 'organisms-widgetgrid--default',
+    load: () => import('../stories/widget-grid.stories'),
+  },
 }
