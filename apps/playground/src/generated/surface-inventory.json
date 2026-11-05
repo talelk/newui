@@ -9165,6 +9165,17 @@
   },
   {
     "package": "@talelk/newui-templates",
+    "name": "PaneCollapse",
+    "implementation": "packages/templates/src/templates/PaneLayout/PaneLayout.tsx",
+    "documentation": "/templates/pane-layout",
+    "contract": "spec/pane-layout.md",
+    "tests": [
+      "packages/templates/src/templates/PaneLayout/PaneLayout.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-templates",
     "name": "PaneLayout",
     "implementation": "packages/templates/src/templates/PaneLayout/PaneLayout.tsx",
     "documentation": "/templates/pane-layout",
@@ -9177,6 +9188,17 @@
   {
     "package": "@talelk/newui-templates",
     "name": "PaneLayoutProps",
+    "implementation": "packages/templates/src/templates/PaneLayout/PaneLayout.tsx",
+    "documentation": "/templates/pane-layout",
+    "contract": "spec/pane-layout.md",
+    "tests": [
+      "packages/templates/src/templates/PaneLayout/PaneLayout.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-templates",
+    "name": "PaneSide",
     "implementation": "packages/templates/src/templates/PaneLayout/PaneLayout.tsx",
     "documentation": "/templates/pane-layout",
     "contract": "spec/pane-layout.md",

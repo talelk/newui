@@ -17,46 +17,96 @@ export const API = {
       "description": "The second pane: the record the start pane selects."
     },
     {
+      "name": "size",
+      "type": "number",
+      "optional": true,
+      "description": "Percent of the frame the start pane takes, controlled. When set, the\nlayout moves only when the app does — every drag or key reports itself\nthrough `onSizeChange` first."
+    },
+    {
+      "name": "defaultSize",
+      "type": "number",
+      "optional": true,
+      "description": "Percent the uncontrolled layout starts at.",
+      "default": "36"
+    },
+    {
       "name": "startSize",
       "type": "number",
       "optional": true,
-      "description": "Percent of the frame the start pane takes. Default `36`."
+      "description": "Superseded by `defaultSize`; the same value under its old name."
+    },
+    {
+      "name": "onSizeChange",
+      "type": "(size: number) => void",
+      "optional": true,
+      "description": "The requested percent, in percent, on every user-initiated change."
     },
     {
       "name": "minStartSize",
       "type": "number",
       "optional": true,
-      "description": "Narrowest the split may go, in percent. Default `20`."
+      "description": "Narrowest the split may go, in percent.",
+      "default": "20"
     },
     {
       "name": "maxStartSize",
       "type": "number",
       "optional": true,
-      "description": "Widest the split may go, in percent. Default `70`."
+      "description": "Widest the split may go, in percent.",
+      "default": "70"
     },
     {
       "name": "compactAt",
       "type": "PaneBreakpoint",
       "optional": true,
-      "description": "Below this breakpoint only one pane shows. Default `lg`."
+      "description": "Below this breakpoint one pane shows.",
+      "default": "'lg'"
     },
     {
       "name": "active",
-      "type": "'start' | 'end'",
+      "type": "PaneSide",
       "optional": true,
-      "description": "Which pane a compact viewport shows. Default `start`."
+      "description": "Which pane a compact viewport shows.",
+      "default": "'start'"
     },
     {
       "name": "resizable",
       "type": "boolean",
       "optional": true,
-      "description": "Allow dragging the divider. Default `true`."
+      "description": "Allow dragging the divider.",
+      "default": "true"
     },
     {
       "name": "resizeLabel",
       "type": "string",
       "optional": true,
-      "description": "Accessible name of the resize control. Default `Resize panes`."
+      "description": "Accessible name of the resize control.",
+      "default": "'Resize panes'"
+    },
+    {
+      "name": "collapsible",
+      "type": "'start' | 'end' | 'both'",
+      "optional": true,
+      "description": "Which panes may fold away with Enter/Space on the divider."
+    },
+    {
+      "name": "collapsed",
+      "type": "PaneCollapse",
+      "optional": true,
+      "description": "Which panes are folded, controlled."
+    },
+    {
+      "name": "defaultCollapsed",
+      "type": "PaneCollapse",
+      "optional": true,
+      "description": "Which panes are folded when uncontrolled.",
+      "default": "'none'"
+    },
+    {
+      "name": "onCollapseChange",
+      "type": "(collapsed: PaneCollapse) => void",
+      "optional": true,
+      "description": "The whole fold state on every user-initiated change."
     },
     {
       "name": "class",

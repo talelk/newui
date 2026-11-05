@@ -505,7 +505,7 @@ export function Mail(): JSX.Element {
           <MailboxItems />
         </BottomSheet>
         <PaneLayout
-          startSize={50}
+          defaultSize={50}
           compactAt="lg"
           active={active() ? 'end' : 'start'}
           resizeLabel="Resize the conversation list"

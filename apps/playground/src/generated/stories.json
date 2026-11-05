@@ -2967,6 +2967,18 @@
       ]
     },
     {
+      "id": "templates-panelayout--collapsed",
+      "title": "Templates/PaneLayout",
+      "name": "Collapsed",
+      "exportName": "Collapsed",
+      "importPath": "src/stories/pane-layout.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "templates-panelayout--default",
       "title": "Templates/PaneLayout",
       "name": "Default",
@@ -2983,6 +2995,18 @@
       "title": "Templates/PaneLayout",
       "name": "Record Open",
       "exportName": "RecordOpen",
+      "importPath": "src/stories/pane-layout.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "templates-panelayout--three-pane-workspace",
+      "title": "Templates/PaneLayout",
+      "name": "Three Pane Workspace",
+      "exportName": "ThreePaneWorkspace",
       "importPath": "src/stories/pane-layout.stories.tsx",
       "tags": [
         "dev",

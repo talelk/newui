@@ -1,4 +1,5 @@
 import { cn } from '@talelk/newui-atoms'
+import { createControllableSignal } from '@talelk/newui-atoms/internal'
 import {
   createEffect,
   createSignal,
@@ -19,17 +20,33 @@ import {
  *
  * **The divider is the control.** `role="separator"` with a value: it drags with
  * a pointer, moves with the arrow keys (Shift for a coarse step), jumps to the
- * bounds with Home/End, and returns to the default split on double-click. Its
- * value is the start pane's width as a percentage, so the split survives a
- * resize of the window.
+ * bounds with Home/End, returns to the default split on double-click, and — when
+ * `collapsible` allows — folds a pane away with Enter/Space. Its value is the
+ * start pane's width as a percentage, so the split survives a resize of the
+ * window.
+ *
+ * **Nothing is stored here.** Size and collapse are plain controllable signals
+ * (`size`/`onSizeChange`, `collapsed`/`onCollapseChange`): "remember this split"
+ * is the app's config store, not the layout's.
  *
  * **One pane on a narrow viewport.** Below `compactAt` the layout becomes a
  * single column showing `active`; the app switches it when a record opens and
- * renders its own back affordance. Nothing here hides content the reader cannot
- * get back to.
+ * renders its own back affordance. Collapsing the detail pane is that same
+ * mobile state — below the breakpoint a collapsed pane simply shows the other.
+ * Nothing here hides content the reader cannot get back to.
+ *
+ * **Three panes are two layouts.** A `PaneLayout` inside either pane gives a
+ * three-panel workspace with independent separators; nesting is legal because
+ * panes accept any children.
  */
 
 export type PaneBreakpoint = 'sm' | 'md' | 'lg'
+
+/** Which pane a fold belongs to. */
+export type PaneSide = 'start' | 'end'
+
+/** The whole fold state: which panes are collapsed. */
+export type PaneCollapse = 'none' | PaneSide | 'both'
 
 /** Below the breakpoint one pane shows; above it, both. */
 const HIDE_BELOW: Record<PaneBreakpoint, string> = {
@@ -64,20 +81,65 @@ export interface PaneLayoutProps {
   start: JSX.Element
   /** The second pane: the record the start pane selects. */
   end: JSX.Element
-  /** Percent of the frame the start pane takes. Default `36`. */
+  /**
+   * Percent of the frame the start pane takes, controlled. When set, the
+   * layout moves only when the app does — every drag or key reports itself
+   * through `onSizeChange` first.
+   */
+  size?: number
+  /**
+   * Percent the uncontrolled layout starts at.
+   * @default 36
+   */
+  defaultSize?: number
+  /**
+   * Superseded by `defaultSize`; the same value under its old name.
+   * @deprecated Use `defaultSize` (and `size`/`onSizeChange` to control it).
+   */
   startSize?: number
-  /** Narrowest the split may go, in percent. Default `20`. */
+  /** The requested percent, in percent, on every user-initiated change. */
+  onSizeChange?: (size: number) => void
+  /**
+   * Narrowest the split may go, in percent.
+   * @default 20
+   */
   minStartSize?: number
-  /** Widest the split may go, in percent. Default `70`. */
+  /**
+   * Widest the split may go, in percent.
+   * @default 70
+   */
   maxStartSize?: number
-  /** Below this breakpoint only one pane shows. Default `lg`. */
+  /**
+   * Below this breakpoint one pane shows.
+   * @default 'lg'
+   */
   compactAt?: PaneBreakpoint
-  /** Which pane a compact viewport shows. Default `start`. */
-  active?: 'start' | 'end'
-  /** Allow dragging the divider. Default `true`. */
+  /**
+   * Which pane a compact viewport shows.
+   * @default 'start'
+   */
+  active?: PaneSide
+  /**
+   * Allow dragging the divider.
+   * @default true
+   */
   resizable?: boolean
-  /** Accessible name of the resize control. Default `Resize panes`. */
+  /**
+   * Accessible name of the resize control.
+   * @default 'Resize panes'
+   */
   resizeLabel?: string
+  /** Which panes may fold away with Enter/Space on the divider. */
+  collapsible?: 'start' | 'end' | 'both'
+  /** Which panes are folded, controlled. */
+  collapsed?: PaneCollapse
+  /**
+   * Which panes are folded when uncontrolled.
+   * @default 'none'
+   */
+  defaultCollapsed?: PaneCollapse
+  /** The whole fold state on every user-initiated change. */
+  onCollapseChange?: (collapsed: PaneCollapse) => void
   class?: string
 }
 
@@ -85,24 +147,94 @@ export function PaneLayout(props: PaneLayoutProps): JSX.Element {
   const [local] = splitProps(props, [
     'start',
     'end',
+    'size',
+    'defaultSize',
     'startSize',
+    'onSizeChange',
     'minStartSize',
     'maxStartSize',
     'compactAt',
     'active',
     'resizable',
     'resizeLabel',
+    'collapsible',
+    'collapsed',
+    'defaultCollapsed',
+    'onCollapseChange',
     'class',
   ])
   const breakpoint = () => local.compactAt ?? 'lg'
   const resizable = () => local.resizable !== false
   const min = () => local.minStartSize ?? 20
   const max = () => local.maxStartSize ?? 70
+  const defaultSize = () => local.defaultSize ?? local.startSize ?? 36
   const clamp = (value: number) =>
     Math.min(max(), Math.max(min(), Math.round(value * 10) / 10))
 
-  const [size, setSize] = createSignal<number | undefined>(undefined)
-  const split = () => clamp(size() ?? local.startSize ?? 36)
+  const [size, setSize] = createControllableSignal<number>({
+    value: () => local.size,
+    defaultValue: defaultSize(),
+    onChange: (value) => local.onSizeChange?.(value),
+  })
+
+  const [collapsed, setCollapsed] = createControllableSignal<PaneCollapse>({
+    value: () => local.collapsed,
+    defaultValue: local.defaultCollapsed ?? 'none',
+    onChange: (value) => local.onCollapseChange?.(value),
+  })
+  const collapsedStart = () => collapsed() === 'start' || collapsed() === 'both'
+  const collapsedEnd = () => collapsed() === 'end' || collapsed() === 'both'
+  const collapsibleSides = (): PaneSide[] =>
+    local.collapsible === 'start'
+      ? ['start']
+      : local.collapsible === 'end'
+        ? ['end']
+        : local.collapsible === 'both'
+          ? ['start', 'end']
+          : []
+
+  // A folded pane is 0% or 100%; the remembered size survives the fold so the
+  // split returns to where the reader left it.
+  const split = () => {
+    if (collapsedStart() && !collapsedEnd()) return 0
+    if (collapsedEnd() && !collapsedStart()) return 100
+    return clamp(size())
+  }
+
+  const expand = () => {
+    if (collapsed() !== 'none') setCollapsed('none')
+  }
+
+  const toggleCollapse = (side: PaneSide) => {
+    const now = collapsed()
+    setCollapsed(
+      side === 'start'
+        ? now === 'none'
+          ? 'start'
+          : now === 'start'
+            ? 'none'
+            : now === 'both'
+              ? 'end'
+              : 'both'
+        : now === 'none'
+          ? 'end'
+          : now === 'end'
+            ? 'none'
+            : now === 'both'
+              ? 'start'
+              : 'both',
+    )
+  }
+
+  // The fold target is the pane the divider is nearer — the narrower one — so
+  // Enter folds what the reader is looking away from and unfolds what they
+  // folded. With one collapsible side there is nothing to choose.
+  const foldTarget = (): PaneSide => {
+    const sides = collapsibleSides()
+    if (sides.length === 1) return sides[0] as PaneSide
+    return split() <= 50 ? 'start' : 'end'
+  }
+
   const startId = createUniqueId()
   const label = () => local.resizeLabel ?? 'Resize panes'
 
@@ -133,7 +265,15 @@ export function PaneLayout(props: PaneLayoutProps): JSX.Element {
   const moveDrag = (event: PointerEvent) => {
     if (!dragging()) return
     const delta = ((event.clientX - originX) / frameWidth) * 100
-    setSize(clamp(originSize + delta))
+    const target = Math.min(100, Math.max(0, originSize + delta))
+    if (collapsedStart() || collapsedEnd()) {
+      // Dragging at a folded edge: stay folded until the pointer crosses back
+      // over the divider, then unfold and hand the size to the drag.
+      if (target <= 0 && collapsedStart()) return
+      if (target >= 100 && collapsedEnd()) return
+      expand()
+    }
+    setSize(clamp(target))
   }
 
   const endDrag = (event: PointerEvent) => {
@@ -144,20 +284,36 @@ export function PaneLayout(props: PaneLayoutProps): JSX.Element {
       element.releasePointerCapture(event.pointerId)
   }
 
+  const nudge = (step: number) => {
+    if (collapsed() !== 'none') {
+      // Any arrow from a fold unfolds and moves from the remembered size.
+      expand()
+      setSize(clamp(size() + step))
+    } else {
+      setSize(clamp(split() + step))
+    }
+  }
+
   const onKeyDown = (event: KeyboardEvent) => {
     const step = event.shiftKey ? 10 : 2
     if (event.key === 'ArrowLeft') {
       event.preventDefault()
-      setSize(clamp(split() - step))
+      nudge(-step)
     } else if (event.key === 'ArrowRight') {
       event.preventDefault()
-      setSize(clamp(split() + step))
+      nudge(step)
     } else if (event.key === 'Home') {
       event.preventDefault()
+      expand()
       setSize(clamp(min()))
     } else if (event.key === 'End') {
       event.preventDefault()
+      expand()
       setSize(clamp(max()))
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      if (collapsibleSides().length === 0) return
+      event.preventDefault()
+      toggleCollapse(foldTarget())
     }
   }
 
@@ -166,6 +322,7 @@ export function PaneLayout(props: PaneLayoutProps): JSX.Element {
       ref={frame}
       data-slot="pane-layout"
       data-resizing={dragging() ? '' : undefined}
+      data-collapsed={collapsed() === 'none' ? undefined : collapsed()}
       class={cn(
         'grid min-h-0 min-w-0 flex-1',
         resizable() ? SPLIT_FROM[breakpoint()] : FIXED_FROM[breakpoint()],
@@ -176,9 +333,14 @@ export function PaneLayout(props: PaneLayoutProps): JSX.Element {
       <div
         id={startId}
         data-slot="pane-start"
+        data-state={collapsedStart() ? 'collapsed' : undefined}
         class={cn(
           'min-h-0 min-w-0',
-          local.active === 'end' && HIDE_BELOW[breakpoint()],
+          collapsedStart()
+            ? 'hidden'
+            : local.active === 'end' &&
+                !collapsedEnd() &&
+                HIDE_BELOW[breakpoint()],
         )}
       >
         {local.start}
@@ -199,14 +361,17 @@ export function PaneLayout(props: PaneLayoutProps): JSX.Element {
             aria-label={label()}
             aria-controls={startId}
             aria-valuenow={Math.round(split())}
-            aria-valuemin={min()}
-            aria-valuemax={max()}
+            aria-valuemin={collapsedStart() ? 0 : min()}
+            aria-valuemax={collapsedEnd() ? 100 : max()}
             class="absolute inset-y-0 -end-2 -start-2 z-raised cursor-col-resize rounded-3 focus-visible:focus-ring"
             onPointerDown={beginDrag}
             onPointerMove={moveDrag}
             onPointerUp={endDrag}
             onPointerCancel={endDrag}
-            onDblClick={() => setSize(undefined)}
+            onDblClick={() => {
+              expand()
+              setSize(clamp(defaultSize()))
+            }}
             onKeyDown={onKeyDown}
           />
         </div>
@@ -214,9 +379,14 @@ export function PaneLayout(props: PaneLayoutProps): JSX.Element {
 
       <div
         data-slot="pane-end"
+        data-state={collapsedEnd() ? 'collapsed' : undefined}
         class={cn(
           'min-h-0 min-w-0',
-          local.active !== 'end' && HIDE_BELOW[breakpoint()],
+          collapsedEnd()
+            ? 'hidden'
+            : local.active !== 'end' &&
+                !collapsedStart() &&
+                HIDE_BELOW[breakpoint()],
         )}
       >
         {local.end}
