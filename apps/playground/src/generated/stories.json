@@ -2475,6 +2475,18 @@
       ]
     },
     {
+      "id": "organisms-datatable--grouping",
+      "title": "Organisms/DataTable",
+      "name": "Grouping",
+      "exportName": "Grouping",
+      "importPath": "src/stories/data-table.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "organisms-datatable--loading",
       "title": "Organisms/DataTable",
       "name": "Loading",

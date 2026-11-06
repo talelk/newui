@@ -55,6 +55,15 @@ a whole data region.
 | `columnFilters` / `onColumnFiltersChange` | `ColumnFiltersState` / `(state) => void` | controlled column filters, e.g. from a FilterBar |
 | `globalFilter` / `onGlobalFilterChange` | `string` / `(value) => void` | controlled search term (server mode) |
 | `pagination` / `onPaginationChange` | `PaginationState` / `(state) => void` | controlled pagination slice |
+| `grouping` / `onGroupingChange` | `string[]` / `(grouping) => void` | column ids rows are grouped by, in order; controlled |
+| `groupingMode` | `'reorder' \| 'remove'` | what happens to a grouped column's own column; default `reorder` |
+| `renderGroupedCell` | `(row) => JSX.Element` | override the default grouped cell |
+| `summary` | `'none' \| 'page' \| 'all'` | footer row of totals; `page` totals the visible page, `all` the whole result |
+| `aggregates` | `Record<string, number>` | server-computed totals by column id (server mode) |
+| `getSubRows` | `(row) => T[] \| undefined` | nested data: a row's children, the same shape as `rows` |
+| `renderDetail` | `(row) => JSX.Element` | detail panel rendered under an expanded row |
+| `onRowExpand` | `(row) => void` | fires when a row expands — the hook for server-side lazy children |
+| `filterFromLeafRows` | `boolean` | filter tree data from its leaves, so a parent survives on a descendant's match |
 
 ## Behavior
 
@@ -114,5 +123,39 @@ a whole data region.
   selection survives paging. The query-key half of this mode is
   `createServerTableState` in `@talelk/newui-data/query`.
 - The root is `data-slot="data-table"` for stable browser-level integration.
+- **Header groups.** A column definition may carry `columns`, and the header
+  stacks into as many rows as the tree is deep. No new prop: the column tree
+  is the API. Placeholders keep the grid aligned and are never interactive.
+- **Row grouping.** `grouping` is a list of column ids, in order, and the table
+  reports every change through `onGroupingChange`. A group row is the recessed
+  surface (`bg-surface-gray-1`) spanning the record columns: expander, the
+  grouped column's name, the shared value, the count under it, and the
+  aggregated values of the columns that ask for them. A column opts out of
+  grouping with `groupable: false` (the other column option), and
+  `groupingMode` decides whether the grouped column keeps its own column
+  (`reorder`, the default) or leaves the list (`remove`). In server mode `grouping` is echoed from the app
+  and the rows arrive with `subRows` populated — server grouping is real rows,
+  not synthetic ones.
+- **Aggregation.** A column option — `aggregate` on the column definition, not
+  a table prop — declares one of the eleven built-ins
+  (`sum`, `count`, `min`, `max`, `extent`, `mean`, `median`, `unique`,
+  `uniqueCount`, `first`, `last`) or a function over the group's records.
+  `summary` renders the footer row: `page` over the visible page, `all` over
+  the whole filtered result. In server mode `aggregates` carries the totals the
+  backend computed and the table computes nothing.
+- **Tree data and detail rows.** `getSubRows` gives a row children of the same
+  shape; `renderDetail` gives any row a panel that opens beneath it. Both make
+  the row expandable, and the expander button is the keyboard affordance —
+  there is no Escape gesture to learn. `onRowExpand` fires the moment a row
+  opens, which is where a server page fetches children it has not sent yet.
+  Filtering a tree uses `filterFromLeafRows` so a parent survives because a
+  descendant matches.
+- **Grouped and detail rows follow the active `density`.** Below the card
+  breakpoint, a group becomes a section header and its records stay flat cards
+  — cards never nest inside cards.
+- **Selection.** `rowSelectable` gates parents as well as records, and
+  select-all skips what is ineligible. Selecting a parent selects its eligible
+  descendants; the bulk action receives the record ids, including a tree row
+  selected under a parent that is not itself selectable.
 - `ScrollTable` is a separate molecule at `@talelk/newui-molecules`; importing it does
   not import the table engine into a route that renders its own semantic table.

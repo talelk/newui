@@ -9859,6 +9859,65 @@
         "name": "onPaginationChange",
         "type": "(pagination: PaginationState) => void",
         "optional": true
+      },
+      {
+        "name": "grouping",
+        "type": "GroupingState",
+        "optional": true,
+        "description": "Column ids rows are grouped by, in order. Controlled: the table reports\nthrough `onGroupingChange` and renders whatever the next `rows` carry.\nIn server mode the app echoes it back and rows arrive with `subRows`\npopulated — server grouping is real rows, not synthetic ones."
+      },
+      {
+        "name": "onGroupingChange",
+        "type": "(grouping: GroupingState) => void",
+        "optional": true
+      },
+      {
+        "name": "groupingMode",
+        "type": "'reorder' | 'remove'",
+        "optional": true,
+        "description": "What happens to a grouped column's own column: `reorder` (default) moves\nit to the front, `remove` takes it out of the column list."
+      },
+      {
+        "name": "renderGroupedCell",
+        "type": "(row: DataTableRow<T>) => JSX.Element",
+        "optional": true,
+        "description": "Override the default grouped cell — expander, column name, row count and\nthe aggregated values of the columns that ask for them."
+      },
+      {
+        "name": "summary",
+        "type": "'none' | 'page' | 'all'",
+        "optional": true,
+        "description": "Footer row of totals: `page` aggregates the visible page, `all` the whole\nfiltered result. Defaults to `none`."
+      },
+      {
+        "name": "aggregates",
+        "type": "Record<string, number>",
+        "optional": true,
+        "description": "Server-computed totals keyed by column id (server mode). Presence sets\n`manualAggregation`: the table renders these and computes nothing."
+      },
+      {
+        "name": "getSubRows",
+        "type": "(row: T) => T[] | undefined",
+        "optional": true,
+        "description": "Nested data: a row's children, the same shape as `rows`."
+      },
+      {
+        "name": "renderDetail",
+        "type": "(row: T) => JSX.Element",
+        "optional": true,
+        "description": "Detail panel rendered under an expanded row. Turns every row into one\nthat can expand, and the expander is the keyboard affordance."
+      },
+      {
+        "name": "onRowExpand",
+        "type": "(row: T) => void",
+        "optional": true,
+        "description": "Fires when a row expands, before its children are on screen — the hook\nfor server-side lazy children."
+      },
+      {
+        "name": "filterFromLeafRows",
+        "type": "boolean",
+        "optional": true,
+        "description": "Filter tree data from its leaves: a parent survives because a descendant\nmatches, not because its own fields do."
       }
     ]
   },

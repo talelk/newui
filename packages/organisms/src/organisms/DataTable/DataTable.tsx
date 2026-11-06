@@ -8,18 +8,39 @@ import {
   ScrollTableHead,
 } from '@talelk/newui-molecules'
 import {
+  type AggregationFnDef,
+  aggregationFn_count,
+  aggregationFn_extent,
+  aggregationFn_first,
+  aggregationFn_last,
+  aggregationFn_max,
+  aggregationFn_mean,
+  aggregationFn_median,
+  aggregationFn_min,
+  aggregationFn_sum,
+  aggregationFn_unique,
+  aggregationFn_uniqueCount,
   type ColumnDef,
   type ColumnFiltersState,
   columnFilteringFeature,
+  columnGroupingFeature,
   columnPinningFeature,
   columnVisibilityFeature,
+  createExpandedRowModel,
   createFilteredRowModel,
+  createGroupedRowModel,
   createPaginatedRowModel,
   createSortedRowModel,
   createTable,
+  type ExpandedState,
+  type ExpandedStateList,
   flexRender,
+  type GroupingState,
   globalFilteringFeature,
   type PaginationState,
+  type Row,
+  rowAggregationFeature,
+  rowExpandingFeature,
   rowPaginationFeature,
   rowSelectionFeature,
   rowSortingFeature,
@@ -44,6 +65,25 @@ import { DataState } from '../DataState'
 import { SelectionBar } from '../SelectionBar'
 
 /**
+ * The eleven aggregations a column can ask for by name. They are TanStack's
+ * own, registered so the string a page writes resolves to the function that
+ * computes it.
+ */
+const aggregationFns = {
+  count: aggregationFn_count,
+  extent: aggregationFn_extent,
+  first: aggregationFn_first,
+  last: aggregationFn_last,
+  max: aggregationFn_max,
+  mean: aggregationFn_mean,
+  median: aggregationFn_median,
+  min: aggregationFn_min,
+  sum: aggregationFn_sum,
+  unique: aggregationFn_unique,
+  uniqueCount: aggregationFn_uniqueCount,
+}
+
+/**
  * Built on the first table, not when the module is evaluated.
  *
  * A page can import this entry for `ScrollTable` alone (the accounting ledger
@@ -53,15 +93,21 @@ import { SelectionBar } from '../SelectionBar'
 function createFeatures() {
   return tableFeatures({
     columnFilteringFeature,
+    columnGroupingFeature,
     columnPinningFeature,
     columnVisibilityFeature,
     globalFilteringFeature,
+    rowAggregationFeature,
+    rowExpandingFeature,
     rowPaginationFeature,
     rowSelectionFeature,
     rowSortingFeature,
+    expandedRowModel: createExpandedRowModel(),
     filteredRowModel: createFilteredRowModel(),
+    groupedRowModel: createGroupedRowModel(),
     paginatedRowModel: createPaginatedRowModel(),
     sortedRowModel: createSortedRowModel(),
+    aggregationFns,
     sortFns: {
       alphanumeric: sortFn_alphanumeric,
       datetime: sortFn_datetime,
@@ -72,7 +118,71 @@ function createFeatures() {
 
 type Features = ReturnType<typeof createFeatures>
 
-export type DataTableColumn<T extends object> = ColumnDef<Features, T>
+/** A row as the table sees it: identity, sub-rows, and the state it carries. */
+export type DataTableRow<T extends object> = Row<Features, T>
+
+/** The eleven built-in aggregations, named the way TanStack names them. */
+export type AggregationFnName =
+  | 'count'
+  | 'extent'
+  | 'first'
+  | 'last'
+  | 'max'
+  | 'mean'
+  | 'median'
+  | 'min'
+  | 'sum'
+  | 'unique'
+  | 'uniqueCount'
+
+/** Aggregates a column's values across one group's rows. */
+export type AggregationFn<T extends object> = (rows: T[]) => unknown
+
+/**
+ * TanStack's column definition plus the two kit-level knobs that do not live
+ * on its own options: `aggregate` (what the summary footer and grouped cells
+ * compute) and `groupable` (whether the column may be grouped).
+ */
+export type DataTableColumn<T extends object> = ColumnDef<Features, T> & {
+  /** Aggregation for this column's grouped cells and summary footer. */
+  aggregate?: AggregationFnName | AggregationFn<T>
+  /** Allow this column in `grouping`. Defaults to `true`. */
+  groupable?: boolean
+}
+
+/** Maps `aggregate` onto TanStack's `aggregationFn` option. */
+function aggregationOption<T extends object>(
+  aggregate: AggregationFnName | AggregationFn<T> | undefined,
+): AggregationFnDef<Features, T> | AggregationFnName | undefined {
+  if (aggregate === undefined) return undefined
+  if (typeof aggregate === 'string') return aggregate
+  return {
+    aggregate: (context) => aggregate(context.rows.map((row) => row.original)),
+  }
+}
+
+/**
+ * Resolves the kit-level column knobs onto TanStack's options. Nested column
+ * groups (multi-level headers) carry their leaves, so the walk recurses.
+ */
+function resolveColumns<T extends object>(
+  columns: readonly DataTableColumn<T>[],
+): ColumnDef<Features, T>[] {
+  return columns.map((column) => {
+    const nested = (column as { columns?: readonly DataTableColumn<T>[] })
+      .columns
+    const aggregate = aggregationOption(column.aggregate)
+    const resolved: ColumnDef<Features, T> = {
+      ...column,
+      ...(aggregate === undefined ? {} : { aggregationFn: aggregate }),
+      ...(column.groupable === undefined
+        ? {}
+        : { enableGrouping: column.groupable }),
+      ...(nested ? { columns: resolveColumns(nested) } : {}),
+    }
+    return resolved
+  })
+}
 
 /** Where a column appears in the mobile card, when `meta.mobile` is set. */
 export type DataTableMobileRole =
@@ -175,6 +285,51 @@ export interface DataTableProps<T extends { id: string }> {
   /** Controlled pagination slice. `pageSize` alone stays initial-only. */
   pagination?: PaginationState
   onPaginationChange?: (pagination: PaginationState) => void
+  /**
+   * Column ids rows are grouped by, in order. Controlled: the table reports
+   * through `onGroupingChange` and renders whatever the next `rows` carry.
+   * In server mode the app echoes it back and rows arrive with `subRows`
+   * populated — server grouping is real rows, not synthetic ones.
+   */
+  grouping?: GroupingState
+  onGroupingChange?: (grouping: GroupingState) => void
+  /**
+   * What happens to a grouped column's own column: `reorder` (default) moves
+   * it to the front, `remove` takes it out of the column list.
+   */
+  groupingMode?: 'reorder' | 'remove'
+  /**
+   * Override the default grouped cell — expander, column name, row count and
+   * the aggregated values of the columns that ask for them.
+   */
+  renderGroupedCell?: (row: DataTableRow<T>) => JSX.Element
+  /**
+   * Footer row of totals: `page` aggregates the visible page, `all` the whole
+   * filtered result. Defaults to `none`.
+   */
+  summary?: 'none' | 'page' | 'all'
+  /**
+   * Server-computed totals keyed by column id (server mode). Presence sets
+   * `manualAggregation`: the table renders these and computes nothing.
+   */
+  aggregates?: Record<string, number>
+  /** Nested data: a row's children, the same shape as `rows`. */
+  getSubRows?: (row: T) => T[] | undefined
+  /**
+   * Detail panel rendered under an expanded row. Turns every row into one
+   * that can expand, and the expander is the keyboard affordance.
+   */
+  renderDetail?: (row: T) => JSX.Element
+  /**
+   * Fires when a row expands, before its children are on screen — the hook
+   * for server-side lazy children.
+   */
+  onRowExpand?: (row: T) => void
+  /**
+   * Filter tree data from its leaves: a parent survives because a descendant
+   * matches, not because its own fields do.
+   */
+  filterFromLeafRows?: boolean
 }
 
 /**
@@ -246,8 +401,40 @@ function EditableCell(props: {
 }
 
 /**
+ * The control that opens a row: children, or the detail panel. It is a button
+ * so keyboard users reach expansion the same way they reach everything else,
+ * and it carries no Escape handling — closing is the same click that opened.
+ */
+function Expander<T extends { id: string }>(props: {
+  row: Row<Features, T>
+  /** What the control names, defaulting to the row's own id. A synthetic
+   *  group row has no id of its own, so the group value stands in. */
+  label?: string
+}): JSX.Element {
+  return (
+    <button
+      type="button"
+      data-slot="data-table-expander"
+      aria-expanded={props.row.getIsExpanded()}
+      aria-label={`Expand ${props.label ?? props.row.original.id}`}
+      class="inline-flex size-6 shrink-0 items-center justify-center rounded-3 focus-visible:focus-ring hover:bg-surface-gray-2"
+      onClick={() => props.row.toggleExpanded()}
+    >
+      <span
+        aria-hidden="true"
+        class={cn(
+          'lucide-chevron-right size-4 transition-transform',
+          props.row.getIsExpanded() && 'rotate-90',
+        )}
+      />
+    </button>
+  )
+}
+
+/**
  * A collection as a table: search, sort, page, hide columns, select rows,
- * pin one column to each scroll edge, edit cells in place.
+ * pin one column to each scroll edge, edit cells in place, group rows,
+ * total them, and open any row to its children or its detail.
  *
  * TanStack Table is the engine; this is the kit's composition of it. The surface
  * lives in `@talelk/newui-organisms`: it composes controls and owns the TanStack Table
@@ -284,7 +471,9 @@ export function DataTable<T extends { id: string }>(
     ),
   }
   const resolvedColumns = createMemo(() =>
-    selectable() ? [selection, ...props.columns] : props.columns,
+    resolveColumns(
+      selectable() ? [selection, ...props.columns] : props.columns,
+    ),
   )
   const [pinned] = createControllableSignal<DataTablePinned>({
     value: () => ({
@@ -332,6 +521,55 @@ export function DataTable<T extends { id: string }>(
       },
       onChange: (next) => props.onPaginationChange?.(next),
     })
+  // Grouping is controllable in both modes: the table reports, the app owns
+  // the list. In server mode the app echoes it back and the rows it sends
+  // carry their own sub-rows, so `manualGrouping` stops the engine from
+  // re-deriving groups the backend already made.
+  const [groupingSlice, setGroupingSlice] =
+    createControllableSignal<GroupingState>({
+      value: () => props.grouping,
+      defaultValue: [],
+      onChange: (next) => props.onGroupingChange?.(next),
+    })
+  /**
+   * Expanded rows live here so the expander can fire `onRowExpand` before the
+   * children arrive. The slice is what the engine reads, so flattening
+   * sub-rows into view stays TanStack's job.
+   */
+  const [expandedSlice, setExpandedSlice] = createControllableSignal<
+    ExpandedState | undefined
+  >({
+    defaultValue: {},
+  })
+  /**
+   * A row that opens is the signal to go fetch its children; a row that
+   * closes is not. Comparing the two id maps is what keeps the callback off
+   * every unrelated state change.
+   */
+  const handleExpandedChange = (updater: Updater<ExpandedState>) => {
+    const current: ExpandedState | undefined = expandedSlice()
+    const before: ExpandedStateList =
+      current === undefined || current === true ? {} : current
+    const after =
+      typeof updater === 'function'
+        ? (updater as (old: ExpandedState) => ExpandedState)(before)
+        : updater
+    setExpandedSlice(after)
+    if (!props.onRowExpand) return
+    const wasOpen = (id: string) => after !== true && before[id] === true
+    if (after === true) {
+      // `true` means "every row": the ones that were closed just opened.
+      for (const row of table.getCoreRowModel().flatRows) {
+        if (!wasOpen(row.id)) props.onRowExpand(row.original)
+      }
+      return
+    }
+    for (const [id, open] of Object.entries(after)) {
+      if (!open || wasOpen(id)) continue
+      const row = table.getRow(id)
+      if (row) props.onRowExpand(row.original)
+    }
+  }
   /**
    * TanStack routes every state change through `setStateSlice`, handing the
    * handler a resolver of the current value. The slices above are the source
@@ -413,9 +651,14 @@ export function DataTable<T extends { id: string }>(
         start: pinnedValue.start ? [pinnedValue.start] : [],
         end: pinnedValue.end ? [pinnedValue.end] : [],
       }
-      if (!serverMode()) return { columnPinning }
-      return {
+      const shared = {
         columnPinning,
+        grouping: groupingSlice(),
+        expanded: expandedSlice() ?? {},
+      }
+      if (!serverMode()) return shared
+      return {
+        ...shared,
         sorting: sortingSlice(),
         columnFilters: columnFiltersSlice(),
         globalFilter: globalFilterSlice(),
@@ -423,8 +666,19 @@ export function DataTable<T extends { id: string }>(
       }
     },
     getRowId: (row) => props.getRowId?.(row) ?? row.id,
+    get getSubRows() {
+      return props.getSubRows
+    },
+    /**
+     * A row can expand when it has children, and also when the page asked for
+     * a detail panel — the panel is the payload of that expansion.
+     */
+    get getRowCanExpand() {
+      return (row: Row<Features, T>) =>
+        row.subRows.length > 0 || props.renderDetail !== undefined
+    },
     get enableRowSelection() {
-      return (row: { original: T }) =>
+      return (row: Row<Features, T>) =>
         props.rowSelectable?.(row.original) ?? true
     },
     initialState: {
@@ -448,11 +702,36 @@ export function DataTable<T extends { id: string }>(
     get manualPagination() {
       return serverMode()
     },
+    /**
+     * Server grouping is real rows, not synthetic ones: the backend returned
+     * the groups, so the engine must not re-derive them.
+     */
+    get manualGrouping() {
+      return serverMode()
+    },
+    /** Totals the backend computed are totals the table renders verbatim. */
+    get manualAggregation() {
+      return props.aggregates !== undefined
+    },
+    /** Expanded rows are paginated with their parents, so a page holds them. */
+    get paginateExpandedRows() {
+      return true
+    },
+    get filterFromLeafRows() {
+      return props.filterFromLeafRows === true
+    },
+    get groupedColumnMode() {
+      return props.groupingMode ?? 'reorder'
+    },
     get pageCount() {
       if (!serverMode()) return undefined
       if (!totalKnown()) return -1
       return Math.max(1, Math.ceil(serverTotal() / paginationSlice().pageSize))
     },
+    onGroupingChange: (updater) => {
+      if (applySlice(groupingSlice, setGroupingSlice, updater)) resetPageIndex()
+    },
+    onExpandedChange: handleExpandedChange,
     ...(serverMode()
       ? {
           onSortingChange: handleSortingChange,
@@ -482,8 +761,10 @@ export function DataTable<T extends { id: string }>(
   const hasMobileCards = createMemo(() =>
     props.columns.some((column) => mobileRole(column.meta)),
   )
+  // `flatRows`, not `rows`: a tree row can be selected under a parent that is
+  // not, and the bulk action must still see it.
   const selected = () =>
-    table.getFilteredSelectedRowModel().rows.map((row) => row.original.id)
+    table.getFilteredSelectedRowModel().flatRows.map((row) => row.original.id)
   const status = () =>
     props.loading
       ? ('loading' as const)
@@ -582,6 +863,132 @@ export function DataTable<T extends { id: string }>(
       </Popover.Root>
     </div>
   )
+  /**
+   * Rows that stand for a group rather than a record: TanStack's synthetic
+   * grouped rows, and in server mode the real rows the backend grouped.
+   */
+  const isGroupRow = (row: Row<Features, T>) =>
+    row.getIsGrouped() ||
+    (serverMode() &&
+      groupingSlice().length > 0 &&
+      row.subRows.length > 0 &&
+      row.parentId === undefined)
+  /** How many records sit under one group row, counting through nesting. */
+  const groupRowCount = (row: Row<Features, T>): number =>
+    row.subRows.length === 0
+      ? 1
+      : row.subRows.reduce((total, sub) => total + groupRowCount(sub), 0)
+  /** The grouped column's header text, so the cell names what it groups. */
+  const groupColumnLabel = (row: Row<Features, T>) => {
+    const columnId = row.groupingColumnId ?? groupingSlice()[0]
+    const column = columnId ? table.getColumn(columnId) : undefined
+    return column ? columnLabel(column) : (columnId ?? '')
+  }
+  /** The value every row in the group shares. A server-grouped row carries
+   *  no `groupingValue`, so the grouped column's own value stands in. */
+  const groupValue = (row: Row<Features, T>) =>
+    row.groupingValue ??
+    row.getValue(row.groupingColumnId ?? groupingSlice()[0] ?? '')
+  /** Aggregated values a grouped cell shows next to the count. */
+  const aggregatedCells = (row: Row<Features, T>) =>
+    row.getVisibleCells().filter((cell) => cell.getIsAggregated?.() === true)
+  const spanCells = () =>
+    table.getVisibleLeafColumns().filter((column) => column.id !== 'select')
+      .length
+  /**
+   * A group row reads as a drawer pulled out from behind the records: the
+   * recessed surface, the expander as the keyboard affordance, and the count
+   * the group exists to summarize.
+   */
+  const groupRow = (row: Row<Features, T>) => (
+    <tr
+      data-slot="data-table-group-row"
+      class="group/row border-b border-outline-gray-1 bg-surface-gray-1 hover:bg-surface-gray-2"
+    >
+      <td colspan={spanCells()} class={cn(cellPad(), 'text-interface')}>
+        <Show
+          when={props.renderGroupedCell}
+          fallback={
+            <div class="flex flex-wrap items-center gap-2">
+              <Expander row={row} label={String(groupValue(row))} />
+              <span class="font-medium">{groupColumnLabel(row)}</span>
+              <span class="text-ink-gray-7">{String(groupValue(row))}</span>
+              <span class="text-caption text-ink-gray-7 tabular-nums">
+                {groupRowCount(row)}
+              </span>
+              <For each={aggregatedCells(row)}>
+                {(cell) => (
+                  <span class="text-caption text-ink-gray-7 tabular-nums">
+                    {columnLabel(cell.column)}: {String(cell.getValue())}
+                  </span>
+                )}
+              </For>
+            </div>
+          }
+        >
+          {props.renderGroupedCell?.(row)}
+        </Show>
+      </td>
+    </tr>
+  )
+  /** The detail panel, spanning the record's own columns. */
+  const detailRow = (row: Row<Features, T>) => (
+    <tr data-slot="data-table-detail">
+      <td
+        colspan={spanCells()}
+        class={cn(cellPad(), 'bg-surface-gray-1 text-interface')}
+      >
+        {props.renderDetail?.(row.original)}
+      </td>
+    </tr>
+  )
+  /**
+   * The summary row's value for one column: the server's total when it sent
+   * one, otherwise the aggregation over exactly the rows this summary covers.
+   */
+  const summaryValue = (columnId: string): unknown => {
+    const totals = props.aggregates
+    if (totals !== undefined) return totals[columnId]
+    if (props.summary !== 'page' && props.summary !== 'all') return undefined
+    const column = table.getColumn(columnId)
+    if (!column) return undefined
+    return props.summary === 'page'
+      ? column.getAggregationValue({
+          rows: table.getRowModel().rows,
+          maxDepth: Number.POSITIVE_INFINITY,
+        })
+      : column.getAggregationValue({
+          rows: table.getFilteredRowModel().rows,
+          maxDepth: Number.POSITIVE_INFINITY,
+        })
+  }
+  const hasSummary = () => props.summary === 'page' || props.summary === 'all'
+  const summaryRow = () => (
+    <tfoot>
+      <tr data-slot="data-table-summary">
+        <For
+          each={table
+            .getVisibleLeafColumns()
+            .filter((column) => column.id !== 'select')}
+        >
+          {(column) => (
+            <td
+              class={cn(
+                alignEnd(column.columnDef.meta)
+                  ? `${cellPad()} text-end text-interface`
+                  : `${cellPad()} text-interface`,
+                'border-t border-outline-gray-1 font-medium',
+              )}
+            >
+              <Show when={summaryValue(column.id) !== undefined}>
+                {String(summaryValue(column.id))}
+              </Show>
+            </td>
+          )}
+        </For>
+      </tr>
+    </tfoot>
+  )
   return (
     <section
       class={cn(card({ padding: 'none' }), 'block min-w-0')}
@@ -664,6 +1071,29 @@ export function DataTable<T extends { id: string }>(
             </Show>
             <For each={table.getRowModel().rows}>
               {(row) => {
+                // Cards never nest: a group becomes a section header and its
+                // records stay flat cards under it.
+                if (isGroupRow(row)) {
+                  return (
+                    <div
+                      data-slot="data-table-group-card"
+                      class="mt-2 flex items-center justify-between gap-2 rounded-3 bg-surface-gray-1 px-3 py-2 first:mt-0"
+                    >
+                      <div class="flex min-w-0 items-center gap-2">
+                        <Expander row={row} label={String(groupValue(row))} />
+                        <span class="truncate text-interface font-medium">
+                          {groupColumnLabel(row)}
+                        </span>
+                        <span class="truncate text-caption text-ink-gray-7">
+                          {String(groupValue(row))}
+                        </span>
+                      </div>
+                      <span class="text-caption text-ink-gray-7 tabular-nums">
+                        {groupRowCount(row)}
+                      </span>
+                    </div>
+                  )
+                }
                 const cells = (role: DataTableMobileRole) =>
                   row
                     .getVisibleCells()
@@ -755,62 +1185,79 @@ export function DataTable<T extends { id: string }>(
             <ScrollTable label={`${props.title} table`} stickyHeader>
               <table class="w-full min-w-[720px] border-collapse text-start">
                 <ScrollTableHead>
+                  {/* Nested column definitions stack into as many header rows
+                      as the tree is deep. A placeholder is the empty cell that
+                      keeps the row aligned; a `rowSpan` of 0 means a cell above
+                      already covers this one, so it is not rendered at all. */}
                   <For each={table.getHeaderGroups()}>
                     {(group) => (
                       <tr>
                         <For each={group.headers}>
                           {(header) => (
-                            <th
-                              scope="col"
-                              class={cn(
-                                alignEnd(header.column.columnDef.meta)
-                                  ? `${cellPad()} text-end`
-                                  : `${cellPad()} text-start`,
-                                pinClass(pinOf(header.column.id)),
-                              )}
-                              aria-sort={
-                                header.column.getIsSorted() === 'asc'
-                                  ? 'ascending'
-                                  : header.column.getIsSorted() === 'desc'
-                                    ? 'descending'
+                            <Show when={header.rowSpan !== 0}>
+                              <th
+                                scope="col"
+                                colspan={
+                                  header.colSpan > 1
+                                    ? header.colSpan
                                     : undefined
-                              }
-                            >
-                              <Show when={!header.isPlaceholder}>
-                                <Show
-                                  when={header.column.getCanSort()}
-                                  fallback={flexRender(
-                                    header.column.columnDef.header,
-                                    header.getContext(),
-                                  )}
-                                >
-                                  <button
-                                    type="button"
-                                    class="inline-flex items-center gap-2 rounded-3 focus-visible:focus-ring"
-                                    onClick={header.column.getToggleSortingHandler()}
-                                  >
-                                    {flexRender(
+                                }
+                                rowspan={
+                                  header.rowSpan > 1
+                                    ? header.rowSpan
+                                    : undefined
+                                }
+                                class={cn(
+                                  alignEnd(header.column.columnDef.meta)
+                                    ? `${cellPad()} text-end`
+                                    : `${cellPad()} text-start`,
+                                  pinClass(pinOf(header.column.id)),
+                                )}
+                                aria-sort={
+                                  header.column.getIsSorted() === 'asc'
+                                    ? 'ascending'
+                                    : header.column.getIsSorted() === 'desc'
+                                      ? 'descending'
+                                      : undefined
+                                }
+                              >
+                                <Show when={!header.isPlaceholder}>
+                                  <Show
+                                    when={header.column.getCanSort()}
+                                    fallback={flexRender(
                                       header.column.columnDef.header,
                                       header.getContext(),
                                     )}
-                                    <span aria-hidden="true">
-                                      <span
-                                        aria-hidden="true"
-                                        class={cn(
-                                          'inline-block size-4 align-middle',
-                                          header.column.getIsSorted() === 'asc'
-                                            ? 'lucide-arrow-up'
-                                            : header.column.getIsSorted() ===
-                                                'desc'
-                                              ? 'lucide-arrow-down'
-                                              : 'lucide-arrow-up-down',
-                                        )}
-                                      />
-                                    </span>
-                                  </button>
+                                  >
+                                    <button
+                                      type="button"
+                                      class="inline-flex items-center gap-2 rounded-3 focus-visible:focus-ring"
+                                      onClick={header.column.getToggleSortingHandler()}
+                                    >
+                                      {flexRender(
+                                        header.column.columnDef.header,
+                                        header.getContext(),
+                                      )}
+                                      <span aria-hidden="true">
+                                        <span
+                                          aria-hidden="true"
+                                          class={cn(
+                                            'inline-block size-4 align-middle',
+                                            header.column.getIsSorted() ===
+                                              'asc'
+                                              ? 'lucide-arrow-up'
+                                              : header.column.getIsSorted() ===
+                                                  'desc'
+                                                ? 'lucide-arrow-down'
+                                                : 'lucide-arrow-up-down',
+                                          )}
+                                        />
+                                      </span>
+                                    </button>
+                                  </Show>
                                 </Show>
-                              </Show>
-                            </th>
+                              </th>
+                            </Show>
                           )}
                         </For>
                       </tr>
@@ -820,67 +1267,99 @@ export function DataTable<T extends { id: string }>(
                 <tbody>
                   <For each={table.getRowModel().rows}>
                     {(row) => (
-                      <tr
-                        class="group/row border-b border-outline-gray-1 hover:bg-surface-gray-1 data-[selected]:bg-surface-blue-1 data-[selected]:hover:bg-surface-blue-2"
-                        data-selected={row.getIsSelected() ? '' : undefined}
-                      >
-                        <For each={row.getVisibleCells()}>
-                          {(cell) => {
-                            const edge = pinOf(cell.column.id)
-                            const editingMeta = editable()
-                              ? editMeta(cell.column.columnDef.meta)
-                              : undefined
-                            const raw = (
-                              row.original as Record<string, unknown>
-                            )[cell.column.id]
-                            return (
-                              <td
-                                class={cn(
-                                  alignEnd(cell.column.columnDef.meta)
-                                    ? `${cellPad()} text-end text-interface`
-                                    : `${cellPad()} text-interface`,
-                                  pinClass(edge),
-                                )}
-                                data-selected={
-                                  row.getIsSelected() ? '' : undefined
-                                }
-                              >
-                                <Show
-                                  when={editingMeta}
-                                  fallback={flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext(),
-                                  )}
-                                >
-                                  <EditableCell
-                                    id={row.original.id}
-                                    columnId={cell.column.id}
-                                    value={raw == null ? '' : String(raw)}
-                                    label={columnLabel(
-                                      cell.column as unknown as {
-                                        id: string
-                                        columnDef: { header?: unknown }
-                                      },
+                      <>
+                        <Show when={isGroupRow(row)}>{groupRow(row)}</Show>
+                        <Show when={!isGroupRow(row)}>
+                          <tr
+                            class="group/row border-b border-outline-gray-1 hover:bg-surface-gray-1 data-[selected]:bg-surface-blue-1 data-[selected]:hover:bg-surface-blue-2"
+                            data-selected={row.getIsSelected() ? '' : undefined}
+                          >
+                            <For each={row.getVisibleCells()}>
+                              {(cell, index) => {
+                                const edge = pinOf(cell.column.id)
+                                const editingMeta = editable()
+                                  ? editMeta(cell.column.columnDef.meta)
+                                  : undefined
+                                const raw = (
+                                  row.original as Record<string, unknown>
+                                )[cell.column.id]
+                                return (
+                                  <td
+                                    class={cn(
+                                      alignEnd(cell.column.columnDef.meta)
+                                        ? `${cellPad()} text-end text-interface`
+                                        : `${cellPad()} text-interface`,
+                                      pinClass(edge),
                                     )}
-                                    type={
-                                      editingMeta?.input === 'number'
-                                        ? 'number'
-                                        : 'text'
+                                    data-selected={
+                                      row.getIsSelected() ? '' : undefined
                                     }
-                                    alignEnd={alignEnd(
-                                      cell.column.columnDef.meta,
-                                    )}
-                                    onCommit={props.onCellChange ?? (() => {})}
-                                  />
-                                </Show>
-                              </td>
-                            )
-                          }}
-                        </For>
-                      </tr>
+                                  >
+                                    {/* The first cell of a row that opens carries
+                                        the expander, so keyboard users reach it. */}
+                                    <Show
+                                      when={
+                                        index() === 0 &&
+                                        (row.subRows.length > 0 ||
+                                          props.renderDetail !== undefined)
+                                      }
+                                    >
+                                      <span class="me-1 inline-flex align-middle">
+                                        <Expander row={row} />
+                                      </span>
+                                    </Show>
+                                    <Show
+                                      when={editingMeta}
+                                      fallback={flexRender(
+                                        cell.column.columnDef.cell,
+                                        cell.getContext(),
+                                      )}
+                                    >
+                                      <EditableCell
+                                        id={row.original.id}
+                                        columnId={cell.column.id}
+                                        value={raw == null ? '' : String(raw)}
+                                        label={columnLabel(
+                                          cell.column as unknown as {
+                                            id: string
+                                            columnDef: { header?: unknown }
+                                          },
+                                        )}
+                                        type={
+                                          editingMeta?.input === 'number'
+                                            ? 'number'
+                                            : 'text'
+                                        }
+                                        alignEnd={alignEnd(
+                                          cell.column.columnDef.meta,
+                                        )}
+                                        onCommit={
+                                          props.onCellChange ?? (() => {})
+                                        }
+                                      />
+                                    </Show>
+                                  </td>
+                                )
+                              }}
+                            </For>
+                          </tr>
+                        </Show>
+                        {/* A detail panel belongs to the row it describes, so
+                            it opens directly beneath it. */}
+                        <Show
+                          when={
+                            props.renderDetail !== undefined &&
+                            row.getIsExpanded() &&
+                            !isGroupRow(row)
+                          }
+                        >
+                          {detailRow(row)}
+                        </Show>
+                      </>
                     )}
                   </For>
                 </tbody>
+                <Show when={hasSummary()}>{summaryRow()}</Show>
               </table>
             </ScrollTable>
           </div>

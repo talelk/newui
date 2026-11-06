@@ -124,6 +124,47 @@ export const PinnedEditable: Story = {
 }
 
 /**
+ * Grouping, aggregation and detail rows: rows group by status, the footer
+ * totals the visible page, and every row opens to its own detail.
+ */
+export const Grouping: Story = {
+  render: () => {
+    const [rows] = createSignal(seedTasks())
+    const [grouping, setGrouping] = createSignal<string[]>(['status'])
+    return (
+      <DataTable
+        title="Tasks"
+        rows={rows()}
+        columns={[
+          { accessorKey: 'id', header: 'Task', meta: { mobile: 'subtitle' } },
+          { accessorKey: 'title', header: 'Title', meta: { mobile: 'title' } },
+          {
+            accessorKey: 'status',
+            header: 'Status',
+            groupable: true,
+            meta: { mobile: 'status' },
+          },
+          {
+            accessorKey: 'priority',
+            header: 'Priority',
+            aggregate: 'count',
+            meta: { mobile: 'meta' },
+          },
+        ]}
+        grouping={grouping()}
+        onGroupingChange={setGrouping}
+        summary="page"
+        renderDetail={(row) => (
+          <p class="text-caption text-ink-gray-7">
+            {row.id} — {row.title} · {row.status}
+          </p>
+        )}
+      />
+    )
+  },
+}
+
+/**
  * Server mode: `createServerTableState` owns the slices and a local fake
  * stands in for the backend — sort, slice, hand the page over. A real app
  * swaps the fake for `createCollection` keyed by `state.key(...)`.
