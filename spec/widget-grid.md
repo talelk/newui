@@ -18,7 +18,7 @@ the whole layout as one JSON document. From `@talelk/newui-organisms`.
 | `class` | `string` | — | merged into the root |
 | `children` | `JSX.Element` | required | `WidgetGrid.Widget` tiles |
 
-## `WidgetGrid.Widget` props
+### `WidgetGrid.Widget`
 
 | prop | type | default | notes |
 | --- | --- | --- | --- |
