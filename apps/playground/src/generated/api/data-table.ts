@@ -152,6 +152,62 @@ export const API = {
       "name": "onCellChange",
       "type": "(id: string, columnId: string, value: string) => void",
       "optional": true
+    },
+    {
+      "name": "server",
+      "type": "{ total: number }",
+      "optional": true,
+      "description": "Server mode: the backend owns sorting, filtering and pagination over the\nwhole result set, and `rows` is the current page. Presence of `server` is\nthe switch — the table stops deriving those axes from `rows` and mirrors\nthe app's state instead. `total` is the only count the table trusts;\n`-1` means unknown, and the pager drives Next from `getCanNextPage()`."
+    },
+    {
+      "name": "getRowId",
+      "type": "(row: T) => string",
+      "optional": true,
+      "description": "Row identity, defaulting to `row.id`. Required stable across requests in\nserver mode so selection survives paging."
+    },
+    {
+      "name": "sorting",
+      "type": "SortingState",
+      "optional": true,
+      "description": "Controlled sorting slice; changes report through `onSortingChange`."
+    },
+    {
+      "name": "onSortingChange",
+      "type": "(sorting: SortingState) => void",
+      "optional": true
+    },
+    {
+      "name": "columnFilters",
+      "type": "ColumnFiltersState",
+      "optional": true,
+      "description": "Controlled column filters; the table reports, the app decides."
+    },
+    {
+      "name": "onColumnFiltersChange",
+      "type": "(filters: ColumnFiltersState) => void",
+      "optional": true
+    },
+    {
+      "name": "globalFilter",
+      "type": "string",
+      "optional": true,
+      "description": "Controlled search term (server mode)."
+    },
+    {
+      "name": "onGlobalFilterChange",
+      "type": "(value: string) => void",
+      "optional": true
+    },
+    {
+      "name": "pagination",
+      "type": "PaginationState",
+      "optional": true,
+      "description": "Controlled pagination slice. `pageSize` alone stays initial-only."
+    },
+    {
+      "name": "onPaginationChange",
+      "type": "(pagination: PaginationState) => void",
+      "optional": true
     }
   ]
 } as const

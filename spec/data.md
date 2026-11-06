@@ -143,6 +143,43 @@ tasks.remove.mutate({ ids })
   once through `onError`, so a page words one notice for every failure.
 - **`key` is the cache identity** — two panes reading the same collection share
   one request and one update.
+- **`keepPreviousData` keeps the page alive across keys.** With it on, a key
+  change (server-mode paging, a new sort) keeps the previous rows on screen
+  until the next response lands — stale for one round trip, never blank.
+
+### `createServerTableState`
+
+The store behind a server-mode `DataTable`: the slices the table mirrors, as
+one object that also serializes to a query key and — with a router adapter —
+to the URL.
+
+```ts
+import { createServerTableState } from '@talelk/newui-data/query'
+
+const tableState = createServerTableState({
+  initial: { pagination: { pageSize: 25 } },
+  sync: { adapter, namespace: 'tasks' }, // keys become `tasks.sorting`, …
+})
+
+tableState.sorting() // ServerTableSort[]
+tableState.pagination() // { pageIndex, pageSize }
+tableState.setSorting([{ id: 'title', desc: true }]) // returns to page 0
+tableState.key(['tasks']) // query key: base + every slice
+```
+
+- **The reset rule lives here and in the table**: `setSorting`,
+  `setColumnFilters` and `setGlobalFilter` return `pageIndex` to 0, because
+  page 3 of a result set that just changed shape is not a page anyone asked
+  for. `setPageSize` keeps the top row instead.
+- **The slices are structural copies of TanStack's state shapes** — this
+  package never imports the table engine, so the app is the only place the
+  two meet (`sorting={tableState.sorting()}` etc.).
+- **`key(base)` is the request identity.** Pass it to `createCollection`'s
+  `key` (with `keepPreviousData`) and the same table state that renders is
+  the state that fetches.
+- **Without `sync.adapter` the store is plain signals**; with one it is
+  `createUrlState` under the namespace, so a shared link deep-links the
+  table's view.
 
 ## Form — `@talelk/newui-data/form`
 

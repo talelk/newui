@@ -1,5 +1,6 @@
+import { createServerTableState } from '@talelk/newui-data/query'
 import { DataTable } from '@talelk/newui-organisms'
-import { createSignal } from 'solid-js'
+import { createMemo, createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { seedTasks } from '../examples/tasks-data'
 
@@ -117,6 +118,59 @@ export const PinnedEditable: Story = {
             ),
           )
         }
+      />
+    )
+  },
+}
+
+/**
+ * Server mode: `createServerTableState` owns the slices and a local fake
+ * stands in for the backend — sort, slice, hand the page over. A real app
+ * swaps the fake for `createCollection` keyed by `state.key(...)`.
+ */
+export const ServerMode: Story = {
+  render: () => {
+    const all = seedTasks()
+    const state = createServerTableState({
+      initial: { pagination: { pageSize: 5 } },
+    })
+    const sorted = createMemo(() => {
+      const sort = state.sorting()[0]
+      const rows = [...all]
+      if (sort) {
+        rows.sort((a, b) => {
+          const before =
+            String(a[sort.id as keyof typeof a]) <
+            String(b[sort.id as keyof typeof a])
+          return (before ? 1 : -1) * (sort.desc ? -1 : 1)
+        })
+      }
+      return rows
+    })
+    const page = createMemo(() => {
+      const { pageIndex, pageSize } = state.pagination()
+      return sorted().slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
+    })
+    return (
+      <DataTable
+        title="Tasks"
+        rows={page()}
+        columns={[
+          { accessorKey: 'id', header: 'Task', meta: { mobile: 'subtitle' } },
+          { accessorKey: 'title', header: 'Title', meta: { mobile: 'title' } },
+          {
+            accessorKey: 'status',
+            header: 'Status',
+            meta: { mobile: 'status' },
+          },
+        ]}
+        server={{ total: all.length }}
+        sorting={state.sorting()}
+        onSortingChange={state.setSorting}
+        pagination={state.pagination()}
+        onPaginationChange={state.setPagination}
+        globalFilter={state.globalFilter()}
+        onGlobalFilterChange={state.setGlobalFilter}
       />
     )
   },

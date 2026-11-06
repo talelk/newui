@@ -1,6 +1,7 @@
 import {
   createMutation,
   createQuery,
+  keepPreviousData,
   type QueryKey,
   useQueryClient,
 } from '@tanstack/solid-query'
@@ -68,6 +69,12 @@ export interface CollectionOptions<
    * this is the explicit dial for data that genuinely changes on its own.
    */
   refetchInterval?: number | false
+  /**
+   * Keep the previous response on screen while the next one is in flight, so
+   * a server-mode page change never blanks the table. The rows are stale for
+   * one round trip; an empty table is not the alternative anyone asked for.
+   */
+  keepPreviousData?: boolean
   /** Every mutation reports here first, so a page can word one notice. */
   onError?: (error: Error) => void
 }
@@ -86,6 +93,7 @@ export function createListQuery<T extends { id: string }>(
     staleTime: options().staleTime,
     retry: options().retry,
     refetchInterval: options().refetchInterval,
+    placeholderData: options().keepPreviousData ? keepPreviousData : undefined,
     throwOnError: false,
   }))
   return {

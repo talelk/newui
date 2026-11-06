@@ -49,6 +49,12 @@ a whole data region.
 | `onPinnedColumnsChange` | `(pinned: DataTablePinned) => void` | pinning is app-owned state; the table renders, never mutates it |
 | `editable` | `boolean` | turn on inline editing for columns with `meta.editable` |
 | `onCellChange` | `(id: string, columnId: string, value: string) => void` | committed cell edits; values are app-owned through `rows` |
+| `server` | `{ total: number }` | server mode: the backend owns sorting, filtering and pagination; `total` is the only count the table trusts, `-1` means unknown |
+| `getRowId` | `(row: T) => string` | row identity, defaulting to `row.id`; required stable in server mode so selection survives paging |
+| `sorting` / `onSortingChange` | `SortingState` / `(state) => void` | controlled sort slice; a change also resets the page (server mode) |
+| `columnFilters` / `onColumnFiltersChange` | `ColumnFiltersState` / `(state) => void` | controlled column filters, e.g. from a FilterBar |
+| `globalFilter` / `onGlobalFilterChange` | `string` / `(value) => void` | controlled search term (server mode) |
+| `pagination` / `onPaginationChange` | `PaginationState` / `(state) => void` | controlled pagination slice |
 
 ## Behavior
 
@@ -76,7 +82,8 @@ a whole data region.
   `meta.mobile` stay table-only. With no such metadata the table keeps its
   horizontal scroll at every width.
 - Search, sorting, visibility and pagination are local table state. A new
-  externally filtered row set resets the current page.
+  externally filtered row set resets the current page. **Server mode** flips
+  sorting, filtering and pagination to the app; see below.
 - Column alignment is set with `meta: { align: 'end' }` for numeric columns.
 - **Pinning.** One column per edge stays visible while the rest scroll
   horizontally (`pinnedStart` — the identifier; `pinnedEnd` — typically the
@@ -92,6 +99,20 @@ a whole data region.
   formatted `cell` render (e.g. `$10`) is replaced by the editor while
   editing and restored after. Values are app-owned: the table never mutates
   `rows`; it shows whatever the next `rows` carry.
+- **Server mode.** With `server={{ total }}` set, the backend owns
+  sorting, filtering and pagination over the whole result set and `rows` is
+  the current page. Presence of `server` is the switch — TanStack's `manual*`
+  flags stop the table from re-deriving those axes, and the state slices stay
+  controllable (`sorting`, `columnFilters`, `globalFilter`, `pagination`, each
+  with its `on…Change`). The table resets the page index to 0 inside its
+  sorting/filtering change handlers, and it does not repaginate on row churn:
+  new rows arriving is the paging, not a new query. `server.total` is the only
+  count the table trusts — the footer shows it, the pager derives its numbers
+  from it; `total: -1` means unknown, so the pager drops the numbered pages
+  and the range and drives Next from `getCanNextPage()`. Selection keys rows
+  by `getRowId` (default `row.id`), which must be stable across requests so a
+  selection survives paging. The query-key half of this mode is
+  `createServerTableState` in `@talelk/newui-data/query`.
 - The root is `data-slot="data-table"` for stable browser-level integration.
 - `ScrollTable` is a separate molecule at `@talelk/newui-molecules`; importing it does
   not import the table engine into a route that renders its own semantic table.

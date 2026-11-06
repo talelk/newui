@@ -9,6 +9,7 @@ import {
 } from '@talelk/newui-molecules'
 import {
   type ColumnDef,
+  type ColumnFiltersState,
   columnFilteringFeature,
   columnPinningFeature,
   columnVisibilityFeature,
@@ -18,13 +19,16 @@ import {
   createTable,
   flexRender,
   globalFilteringFeature,
+  type PaginationState,
   rowPaginationFeature,
   rowSelectionFeature,
   rowSortingFeature,
+  type SortingState,
   sortFn_alphanumeric,
   sortFn_datetime,
   sortFn_text,
   tableFeatures,
+  type Updater,
 } from '@tanstack/solid-table'
 import {
   createEffect,
@@ -146,6 +150,31 @@ export interface DataTableProps<T extends { id: string }> {
    */
   editable?: boolean
   onCellChange?: (id: string, columnId: string, value: string) => void
+  /**
+   * Server mode: the backend owns sorting, filtering and pagination over the
+   * whole result set, and `rows` is the current page. Presence of `server` is
+   * the switch — the table stops deriving those axes from `rows` and mirrors
+   * the app's state instead. `total` is the only count the table trusts;
+   * `-1` means unknown, and the pager drives Next from `getCanNextPage()`.
+   */
+  server?: { total: number }
+  /**
+   * Row identity, defaulting to `row.id`. Required stable across requests in
+   * server mode so selection survives paging.
+   */
+  getRowId?: (row: T) => string
+  /** Controlled sorting slice; changes report through `onSortingChange`. */
+  sorting?: SortingState
+  onSortingChange?: (sorting: SortingState) => void
+  /** Controlled column filters; the table reports, the app decides. */
+  columnFilters?: ColumnFiltersState
+  onColumnFiltersChange?: (filters: ColumnFiltersState) => void
+  /** Controlled search term (server mode). */
+  globalFilter?: string
+  onGlobalFilterChange?: (value: string) => void
+  /** Controlled pagination slice. `pageSize` alone stays initial-only. */
+  pagination?: PaginationState
+  onPaginationChange?: (pagination: PaginationState) => void
 }
 
 /**
@@ -268,6 +297,87 @@ export function DataTable<T extends { id: string }>(
     },
     onChange: (next) => props.onPinnedColumnsChange?.(next),
   })
+  // ── server mode ────────────────────────────────────────────────────────
+  // `server` presence is the switch: the table mirrors the slices the app
+  // owns and lets TanStack's `manual*` flags stop the row models from
+  // re-deriving what the backend already decided. In client mode none of
+  // this is wired, so the engine keeps today's behavior untouched.
+  const serverMode = () => props.server !== undefined
+  const serverTotal = () => props.server?.total ?? 0
+  const totalKnown = () => serverTotal() >= 0
+  const [sortingSlice, setSortingSlice] =
+    createControllableSignal<SortingState>({
+      value: () => props.sorting,
+      defaultValue: [],
+      onChange: (next) => props.onSortingChange?.(next),
+    })
+  const [columnFiltersSlice, setColumnFiltersSlice] =
+    createControllableSignal<ColumnFiltersState>({
+      value: () => props.columnFilters,
+      defaultValue: [],
+      onChange: (next) => props.onColumnFiltersChange?.(next),
+    })
+  const [globalFilterSlice, setGlobalFilterSlice] =
+    createControllableSignal<string>({
+      value: () => props.globalFilter,
+      defaultValue: '',
+      onChange: (next) => props.onGlobalFilterChange?.(next),
+    })
+  const [paginationSlice, setPaginationSlice] =
+    createControllableSignal<PaginationState>({
+      value: () => props.pagination,
+      defaultValue: {
+        pageIndex: 0,
+        pageSize: untrack(() => props.pageSize) ?? 10,
+      },
+      onChange: (next) => props.onPaginationChange?.(next),
+    })
+  /**
+   * TanStack routes every state change through `setStateSlice`, handing the
+   * handler a resolver of the current value. The slices above are the source
+   * of truth in server mode, so the resolver is applied to the signal, not to
+   * the table's internal atoms.
+   */
+  const applySlice = <S,>(
+    get: () => S,
+    set: (next: S) => void,
+    updater: Updater<S>,
+  ): boolean => {
+    const current = get()
+    const next =
+      typeof updater === 'function'
+        ? (updater as (old: S) => S)(current)
+        : updater
+    if (next === current) return false
+    set(next)
+    return true
+  }
+  /** The reset rule: a changed query starts over at page 0. */
+  const resetPageIndex = () => {
+    if (paginationSlice().pageIndex !== 0) table.setPageIndex(0)
+  }
+  const handleSortingChange = (updater: Updater<SortingState>) => {
+    if (applySlice(sortingSlice, setSortingSlice, updater)) resetPageIndex()
+  }
+  const handleColumnFiltersChange = (updater: Updater<ColumnFiltersState>) => {
+    if (applySlice(columnFiltersSlice, setColumnFiltersSlice, updater))
+      resetPageIndex()
+  }
+  const handleGlobalFilterChange = (updater: Updater<string | undefined>) => {
+    // `resetGlobalFilter` hands over `undefined`; the store's empty string is
+    // the same "no search" the input shows, so normalize before comparing.
+    const current = globalFilterSlice()
+    const next =
+      (typeof updater === 'function'
+        ? (updater as (old: string) => string)(current)
+        : updater) ?? ''
+    if (next === current) return
+    setGlobalFilterSlice(next)
+    resetPageIndex()
+  }
+  const handlePaginationChange = (updater: Updater<PaginationState>) => {
+    applySlice(paginationSlice, setPaginationSlice, updater)
+  }
   const editable = () =>
     props.editable === true && props.onCellChange !== undefined
   const editMeta = (meta: unknown) => {
@@ -299,14 +409,20 @@ export function DataTable<T extends { id: string }>(
     },
     get state() {
       const pinnedValue = pinned()
+      const columnPinning = {
+        start: pinnedValue.start ? [pinnedValue.start] : [],
+        end: pinnedValue.end ? [pinnedValue.end] : [],
+      }
+      if (!serverMode()) return { columnPinning }
       return {
-        columnPinning: {
-          start: pinnedValue.start ? [pinnedValue.start] : [],
-          end: pinnedValue.end ? [pinnedValue.end] : [],
-        },
+        columnPinning,
+        sorting: sortingSlice(),
+        columnFilters: columnFiltersSlice(),
+        globalFilter: globalFilterSlice(),
+        pagination: paginationSlice(),
       }
     },
-    getRowId: (row) => row.id,
+    getRowId: (row) => props.getRowId?.(row) ?? row.id,
     get enableRowSelection() {
       return (row: { original: T }) =>
         props.rowSelectable?.(row.original) ?? true
@@ -318,13 +434,44 @@ export function DataTable<T extends { id: string }>(
         pageSize: untrack(() => props.pageSize) ?? 10,
       },
     },
+    // Server mode (issue #18): the `manual*` flags are TanStack's own
+    // vocabulary for "this axis happens outside the table". The row-model
+    // getters above then return the current page as-is, and the controlled
+    // slices carry the app's state. `pageCount` drives clamping and the
+    // pager; `-1` is the engine's own "unknown".
+    get manualSorting() {
+      return serverMode()
+    },
+    get manualFiltering() {
+      return serverMode()
+    },
+    get manualPagination() {
+      return serverMode()
+    },
+    get pageCount() {
+      if (!serverMode()) return undefined
+      if (!totalKnown()) return -1
+      return Math.max(1, Math.ceil(serverTotal() / paginationSlice().pageSize))
+    },
+    ...(serverMode()
+      ? {
+          onSortingChange: handleSortingChange,
+          onColumnFiltersChange: handleColumnFiltersChange,
+          onGlobalFilterChange: handleGlobalFilterChange,
+          onPaginationChange: handlePaginationChange,
+        }
+      : {}),
   })
   // Externally filtered pages hand over a new row set per filter change;
-  // staying on page 3 of a 6-row result would show an empty page.
+  // staying on page 3 of a 6-row result would show an empty page. In server
+  // mode the churn is the paging — every page change arrives as new rows —
+  // so the page index belongs to the slices, not to this effect.
   createEffect(
     on(
       () => props.rows,
-      () => table.setPageIndex(0),
+      () => {
+        if (!serverMode()) table.setPageIndex(0)
+      },
       { defer: true },
     ),
   )
@@ -384,13 +531,24 @@ export function DataTable<T extends { id: string }>(
    * fills the space, so a selection never inserts a row or moves the menu.
    */
   const pageCount = () =>
-    Math.max(
-      1,
-      Math.ceil(
-        table.getFilteredRowModel().rows.length /
-          table.atoms.pagination.get().pageSize,
-      ),
-    )
+    serverMode()
+      ? totalKnown()
+        ? Math.max(1, Math.ceil(serverTotal() / paginationSlice().pageSize))
+        : Number.POSITIVE_INFINITY
+      : Math.max(
+          1,
+          Math.ceil(
+            table.getFilteredRowModel().rows.length /
+              table.atoms.pagination.get().pageSize,
+          ),
+        )
+  /** Zag's page count derives from a row count, so unknown total needs a floor. */
+  const pagerCount = () => {
+    if (!serverMode()) return table.getFilteredRowModel().rows.length
+    if (totalKnown()) return serverTotal()
+    const { pageIndex, pageSize } = paginationSlice()
+    return (pageIndex + 2) * pageSize
+  }
   const columnLabel = (column: {
     id: string
     columnDef: { header?: unknown }
@@ -741,29 +899,40 @@ export function DataTable<T extends { id: string }>(
           <div class="flex flex-wrap items-center justify-between gap-control-gap border-t border-outline-gray-1 p-card-pad-compact">
             <span class="text-caption text-ink-gray-7" role="status">
               <Show when={selectable()}>{selected().length} selected · </Show>
-              {table.getFilteredRowModel().rows.length}{' '}
-              {props.recordsLabel ?? 'records'}
+              <Show when={!serverMode() || totalKnown()}>
+                {serverMode()
+                  ? serverTotal()
+                  : table.getFilteredRowModel().rows.length}{' '}
+                {props.recordsLabel ?? 'records'}
+              </Show>
             </span>
             <div class="flex flex-wrap items-center gap-2">
               <Pagination.Root
                 class="max-sm:flex-nowrap"
                 page={table.atoms.pagination.get().pageIndex + 1}
                 pageSize={table.atoms.pagination.get().pageSize}
-                count={table.getFilteredRowModel().rows.length}
+                count={pagerCount()}
                 onPageChange={(page) => table.setPageIndex(page - 1)}
               >
-                <span class="contents max-sm:hidden">
-                  <Pagination.Range />
-                </span>
+                <Show when={!serverMode() || totalKnown()}>
+                  <span class="contents max-sm:hidden">
+                    <Pagination.Range />
+                  </span>
+                </Show>
                 <Show when={pageCount() > 1}>
                   <span class="text-caption text-ink-gray-7 tabular-nums sm:hidden">
-                    Page {table.atoms.pagination.get().pageIndex + 1} of{' '}
-                    {pageCount()}
+                    Page {table.atoms.pagination.get().pageIndex + 1}
+                    <Show when={Number.isFinite(pageCount())}>
+                      {' of '}
+                      {pageCount()}
+                    </Show>
                   </span>
                   <Pagination.PrevTrigger />
-                  <span class="contents max-sm:hidden">
-                    <Pagination.Pages />
-                  </span>
+                  <Show when={!serverMode() || totalKnown()}>
+                    <span class="contents max-sm:hidden">
+                      <Pagination.Pages />
+                    </span>
+                  </Show>
                   <Pagination.NextTrigger />
                 </Show>
               </Pagination.Root>

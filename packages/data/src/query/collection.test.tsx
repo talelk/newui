@@ -1,8 +1,13 @@
 import { render, screen, waitFor } from '@solidjs/testing-library'
-import { For, type JSX, untrack } from 'solid-js'
+import type { QueryKey } from '@tanstack/solid-query'
+import { createSignal, For, type JSX, untrack } from 'solid-js'
 import { describe, expect, it, vi } from 'vitest'
 import { DataProvider } from './client'
-import { type Collection, createCollection } from './collection'
+import {
+  type Collection,
+  createCollection,
+  createListQuery,
+} from './collection'
 import type { Repository } from './repository'
 
 interface Row {
@@ -182,5 +187,92 @@ describe('createCollection', () => {
 
     await new Promise((resolve) => setTimeout(resolve, 120))
     expect(list).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('createListQuery keepPreviousData', () => {
+  /** One deferred response per key tag, so a key change gates on demand. */
+  function keyedRepository(tag: () => string) {
+    const pending = new Map<string, Deferred<Row[]>>()
+    const repository: Repository<Row, never> = {
+      list: () => {
+        const gate = deferred<Row[]>()
+        pending.set(tag(), gate)
+        return gate.promise
+      },
+      create: async () => {
+        throw new Error('not used')
+      },
+      update: async () => {
+        throw new Error('not used')
+      },
+      remove: async () => {},
+    }
+    return { repository, pending }
+  }
+
+  function ListHarness(props: {
+    queryKey: () => QueryKey
+    repository: Repository<Row, never>
+    keepPreviousData?: boolean
+  }): JSX.Element {
+    const list = createListQuery(() => ({
+      key: props.queryKey(),
+      repository: props.repository,
+      retry: false,
+      ...(props.keepPreviousData ? { keepPreviousData: true } : {}),
+    }))
+    return (
+      <ul>
+        <For each={list.rows()}>{(row) => <li>{row.title}</li>}</For>
+      </ul>
+    )
+  }
+
+  function mountList(keepPreviousData?: boolean) {
+    const [key, setKey] = createSignal<QueryKey>(['list', 'a'])
+    const { repository, pending } = keyedRepository(() =>
+      String(untrack(key)[1]),
+    )
+    render(() => (
+      <DataProvider>
+        <ListHarness
+          queryKey={key}
+          repository={repository}
+          keepPreviousData={keepPreviousData}
+        />
+      </DataProvider>
+    ))
+    return {
+      setKey: (tag: string) => setKey(['list', tag]),
+      pending,
+    }
+  }
+
+  it('holds the old page while the new key is in flight', async () => {
+    const { setKey, pending } = mountList(true)
+    await waitFor(() => {
+      pending.get('a')?.resolve([{ id: '1', title: 'One' }])
+      expect(screen.getByText('One')).toBeTruthy()
+    })
+
+    setKey('b')
+    // The request is in flight; the table must not blank.
+    await waitFor(() => expect(screen.getByText('One')).toBeTruthy())
+    pending.get('b')?.resolve([{ id: '2', title: 'Two' }])
+    await waitFor(() => expect(screen.getByText('Two')).toBeTruthy())
+    expect(screen.queryByText('One')).toBeNull()
+  })
+
+  it('without it the rows clear while the new key loads', async () => {
+    const { setKey, pending } = mountList(false)
+    await waitFor(() => {
+      pending.get('a')?.resolve([{ id: '1', title: 'One' }])
+      expect(screen.getByText('One')).toBeTruthy()
+    })
+    setKey('b')
+    await waitFor(() => expect(screen.queryByText('One')).toBeNull())
+    pending.get('b')?.resolve([{ id: '2', title: 'Two' }])
+    await waitFor(() => expect(screen.getByText('Two')).toBeTruthy())
   })
 })
