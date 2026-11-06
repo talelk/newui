@@ -209,6 +209,7 @@ const GROUPS: Record<string, string> = {
   TransferList: 'Selection',
   PinInput: 'Inputs',
   FormControl: 'Inputs',
+  Repeater: 'Inputs',
   FormLabel: 'Inputs',
   ErrorMessage: 'Inputs',
   Select: 'Selection',
@@ -256,6 +257,7 @@ const GROUPS: Record<string, string> = {
   Tooltip: 'Overlays',
   ScrollArea: 'Overlays',
   SettingsDialog: 'Patterns',
+  ConfigForm: 'Patterns',
   // Organisms — composed page regions rather than single controls.
   AppSidebar: 'Layout',
   PageToolbar: 'Layout',

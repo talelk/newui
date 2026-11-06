@@ -51,7 +51,7 @@ export const LADDER: LadderLevel[] = [
     "question": "What is this interaction?",
     "unit": "molecule",
     "package": "@talelk/newui-molecules · @talelk/newui-charts",
-    "count": 56,
+    "count": 57,
     "href": "/molecules",
     "blurb": "Atoms assembled into one interaction: a field, a picker, a menu, a card, a chart legend."
   },
@@ -61,7 +61,7 @@ export const LADDER: LadderLevel[] = [
     "question": "What is this section?",
     "unit": "organism",
     "package": "@talelk/newui-organisms · @talelk/newui-charts · @talelk/newui-editor",
-    "count": 30,
+    "count": 31,
     "href": "/organisms",
     "blurb": "Self-contained regions of a page: a sidebar, a filter bar, a board, a chart, an editor."
   },

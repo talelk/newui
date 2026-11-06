@@ -20,6 +20,7 @@
   "dependencies": {
     "@talelk/newui-atoms": "workspace:*",
     "@talelk/newui-molecules": "workspace:*",
+    "@tanstack/solid-form": "^1.33.5",
     "@tanstack/solid-table": "^9.3.1",
     "@tanstack/solid-virtual": "^3.13.47"
   },

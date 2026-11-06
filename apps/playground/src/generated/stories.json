@@ -1515,6 +1515,42 @@
       ]
     },
     {
+      "id": "molecules-inputs-repeater--collapsible",
+      "title": "Molecules/Inputs/Repeater",
+      "name": "Collapsible",
+      "exportName": "Collapsible",
+      "importPath": "src/stories/repeater.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-repeater--default",
+      "title": "Molecules/Inputs/Repeater",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/repeater.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "molecules-inputs-repeater--maxed",
+      "title": "Molecules/Inputs/Repeater",
+      "name": "Maxed",
+      "exportName": "Maxed",
+      "importPath": "src/stories/repeater.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "molecules-navigation-breadcrumbs--default",
       "title": "Molecules/Navigation/Breadcrumbs",
       "name": "Default",
@@ -2312,6 +2348,30 @@
       "name": "Default",
       "exportName": "Default",
       "importPath": "src/stories/demo-sidebar.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-configform--default",
+      "title": "Organisms/ConfigForm",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/config-form.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-configform--hidden",
+      "title": "Organisms/ConfigForm",
+      "name": "Hidden",
+      "exportName": "Hidden",
+      "importPath": "src/stories/config-form.stories.tsx",
       "tags": [
         "dev",
         "test",

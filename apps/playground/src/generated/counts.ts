@@ -7,8 +7,8 @@
 export const LADDER_COUNTS = {
   "foundations": 385,
   "atoms": 29,
-  "molecules": 56,
-  "organisms": 30,
+  "molecules": 57,
+  "organisms": 31,
   "templates": 3,
   "pages": 12
 } as const

@@ -566,6 +566,9 @@ importers:
       '@talelk/newui-atoms':
         specifier: workspace:*
         version: link:../atoms
+      '@tanstack/solid-form':
+        specifier: ^1.33.5
+        version: 1.33.5(solid-js@1.9.17)
       '@zag-js/accordion':
         specifier: ^1.46.0
         version: 1.46.0
@@ -639,6 +642,9 @@ importers:
       '@talelk/newui-molecules':
         specifier: workspace:*
         version: link:../molecules
+      '@tanstack/solid-form':
+        specifier: ^1.33.5
+        version: 1.33.5(solid-js@1.9.17)
       '@tanstack/solid-table':
         specifier: ^9.3.1
         version: 9.3.1(solid-js@1.9.17)

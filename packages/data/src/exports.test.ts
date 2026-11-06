@@ -58,7 +58,15 @@ const SURFACE: Record<keyof typeof ENTRIES, string[]> = {
     'createListQuery',
     'createServerTableState',
   ],
-  './form': ['Form', 'createAppForm', 'fieldError'],
+  './form': [
+    'Form',
+    'createAppForm',
+    'createAutoSave',
+    'fieldError',
+    'hiddenPaths',
+    'isUnderHidden',
+    'pruneHiddenValues',
+  ],
   './resource': [
     'RequestError',
     'connectRealtime',

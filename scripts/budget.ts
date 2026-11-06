@@ -126,10 +126,9 @@ const ROUTES: RouteBudget[] = [
   // 335 at 322.5 measured now that axis charts ship the dataZoom/brush chunk.
   { route: '/organisms/bar-chart', budget: 335 },
   // 280.0 measured: the shell's registry counts grew with the new atoms and
-  // molecules — same headroom rule as bar-chart above. Re-raised to 290 at
-  // 285.3 measured after the chart catalog added three registry entries
-  // (Sparkline, CalendarHeatmapChart, GaugeChart) to the shared registry chunk.
-  { route: '/organisms/code-editor', budget: 290 },
+  // molecules — same headroom rule as bar-chart above. Raised for the chart
+  // catalog (+3 registry entries) and the form engine (+2) landing together.
+  { route: '/organisms/code-editor', budget: 300 },
   { route: '/organisms/page-toolbar', budget: 190 },
   {
     route: '/kit/recipes',

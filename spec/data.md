@@ -188,16 +188,17 @@ tableState.key(['tasks']) // query key: base + every slice
 ## Form — `@talelk/newui-data/form`
 
 ```ts
-import { createAppForm, fieldError, Form } from '@talelk/newui-data/form'
+import { createAppForm, createAutoSave, fieldError, Form } from '@talelk/newui-data/form'
 ```
 
 TanStack Form stays the engine — validators, field state, reset. This surface
 adds the three things every page was writing by hand:
 
-- **`createAppForm({ defaultValues, onSubmit })`** returns `{ form, submitting }`.
-  `submitting()` is true while the submit handler's promise is pending, which is
-  exactly what a submit button's `loading` reads. `onSubmit` receives
-  `(value, api)`; `api.reset()` clears the form after a successful submit.
+- **`createAppForm({ defaultValues, onSubmit, schema?, ui?, pruneHidden? })`**
+  returns `{ form, submitting, ui }`. `submitting()` is true while the submit
+  handler's promise is pending, which is exactly what a submit button's
+  `loading` reads. `onSubmit` receives `(value, api)`; `api.reset()` clears the
+  form after a successful submit.
 - **`<Form form={form}>`** is the element, wired: `noValidate` because the kit's
   field messages are the error UI (the native bubble appears first, says less and
   disappears on the next keystroke), and `preventDefault` because a real submit
@@ -211,6 +212,34 @@ The bridge deliberately **does not render fields**. `TextInput`, `Select`,
 a wrapper that picked one for you would either grow a variant per control or
 take the control as a prop and become a second component tree. The shared call
 shape is `value` / `error={fieldError(field())}` / `handleChange`.
+
+### The config-form engine
+
+The same `createAppForm` grows a declarative layer, driven by a `ui` sidecar
+(`FieldConfig`, keyed by field path) that says *how* each field behaves. The
+engine reads only `when` and `dependsOn`; the rest is renderer vocabulary the
+`ConfigForm` organism consumes from the same object.
+
+- **`schema`** is a Standard Schema (Zod, Valibot, Ark), validated on change and
+  on submit with issues mapped onto fields. It validates the *submitted*
+  document: hidden fields are pruned before the check, and issues under hidden
+  paths are dropped, so a field the user cannot see never blocks the submit.
+- **`ui`** is the sidecar. Each `FieldConfig` carries `when` (a predicate over
+  the form values) and `dependsOn` (paths that revalidate this field, compiled
+  onto a TanStack `onChange` listener with the `dynamic` cause). Visibility
+  itself needs no wiring — `when` reads the form's reactive values.
+- **`pruneHidden`** (default `true`) drops fields hidden by `when` from the
+  document handed to `onSubmit`, so a hidden setting is not required of it.
+- **`createAutoSave(form, { save, debounce = 800, filter? })`** is
+  isDirty-driven, debounced persistence: it waits for the form to settle, runs
+  `validateAllFields('submit')` and only calls `save` when the document is
+  valid, drafting to `createConfigStore` under `newui.form-draft` per change and
+  clearing the draft after a successful write. It returns `{ saving, saved,
+  flush, dispose }` for the `ConfigForm` autosave chrome.
+
+The rendered face of this layer is the `ConfigForm` organism and the `Repeater`
+molecule — see `spec/config-form.md` and `spec/repeater.md`.
+
 
 ## URL state — `createUrlState`
 

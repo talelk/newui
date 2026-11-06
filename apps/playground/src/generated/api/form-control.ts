@@ -67,6 +67,12 @@ export const API = {
       "optional": true
     },
     {
+      "name": "onBlur",
+      "type": "() => void",
+      "optional": true,
+      "description": "Fires when the control loses focus; drives the touched state."
+    },
+    {
       "name": "placeholder",
       "type": "string",
       "optional": true

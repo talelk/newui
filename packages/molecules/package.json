@@ -20,6 +20,7 @@
   "dependencies": {
     "@internationalized/date": "^3.12.4",
     "@talelk/newui-atoms": "workspace:*",
+    "@tanstack/solid-form": "^1.33.5",
     "@zag-js/accordion": "^1.46.0",
     "@zag-js/collapsible": "^1.46.0",
     "@zag-js/collection": "^1.46.0",

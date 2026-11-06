@@ -479,3 +479,19 @@ pnpm test:e2e:all   # the e2e harness on chrome, webkit, firefox and touch
 - Invent new public API vocabulary without checking `PRINCIPLES.md`/`spec/`.
 - Add class-name or style-injection props.
 - Edit the read-only reference checkouts under `references/`.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues for `talelk/newui`, via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five canonical roles, each labelled with its own name (`needs-triage`, `needs-info`,
+`ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` at the root is the shared vocabulary, `spec/adr/` holds the ADRs.
+See `docs/agents/domain.md`.

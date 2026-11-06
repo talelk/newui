@@ -1131,6 +1131,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "Repeater",
+    "description": "A dynamic array of rows over a mode=\"array\" field: add, remove, copy, and (optionally) a collapse per row, with maxItems/minItems bounds.",
+    "slug": "repeater",
+    "group": "Inputs",
+    "package": "@talelk/newui-molecules",
+    "source": "packages/molecules/src/molecules/Repeater",
+    "atomic": "molecule",
+    "parts": [
+      "RepeaterProps"
+    ],
+    "spec": "repeater",
+    "shipped": true
+  },
+  {
     "name": "Slider",
     "description": "A Zag slider with a controlled value/onValueChange or an uncontrolled defaultValue, expressed as a number array.",
     "slug": "slider",
@@ -1508,6 +1522,20 @@ export const COMPONENTS: ComponentEntry[] = [
       "AuthCardProps"
     ],
     "spec": "auth-card",
+    "shipped": true
+  },
+  {
+    "name": "ConfigForm",
+    "description": "The config-form organism: a schema-driven <form> that renders every field from its ui sidecar entry — the FormControl vocabulary for plain fields,…",
+    "slug": "config-form",
+    "group": "Patterns",
+    "package": "@talelk/newui-organisms",
+    "source": "packages/organisms/src/organisms/ConfigForm",
+    "atomic": "organism",
+    "parts": [
+      "ConfigFormProps"
+    ],
+    "spec": "config-form",
     "shipped": true
   },
   {
