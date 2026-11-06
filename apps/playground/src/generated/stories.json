@@ -2931,6 +2931,54 @@
       ]
     },
     {
+      "id": "organisms-patterns-wizard--default",
+      "title": "Organisms/Patterns/Wizard",
+      "name": "Default",
+      "exportName": "Default",
+      "importPath": "src/stories/wizard.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-patterns-wizard--invalid",
+      "title": "Organisms/Patterns/Wizard",
+      "name": "Invalid",
+      "exportName": "Invalid",
+      "importPath": "src/stories/wizard.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-patterns-wizard--resumed",
+      "title": "Organisms/Patterns/Wizard",
+      "name": "Resumed",
+      "exportName": "Resumed",
+      "importPath": "src/stories/wizard.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-patterns-wizard--review",
+      "title": "Organisms/Patterns/Wizard",
+      "name": "Review",
+      "exportName": "Review",
+      "importPath": "src/stories/wizard.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "organisms-sankeychart--default",
       "title": "Organisms/SankeyChart",
       "name": "Default",

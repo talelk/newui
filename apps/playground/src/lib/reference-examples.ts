@@ -87,7 +87,7 @@ export const PATTERNS = [
     slug: 'forms',
     title: 'Multi-step forms',
     description:
-      'A responsive setup wizard with validation, review, back/continue flow and a completion state.',
+      'A setup wizard built from the Wizard organism: per-step validation, a generated review and a completion state.',
   },
   {
     slug: 'overlays',

@@ -64,7 +64,8 @@ Non-component recipes cover:
 - A single paste-friendly numeric verification field with a six-cell visual
   readout, validation and demo resend feedback.
 - Delta badges, change bars, ranked bar lists and dismissible analytical callouts.
-- A multi-step setup form with validation, review and completion states.
+- A multi-step setup form built from the `Wizard` organism, with per-step
+  validation, a generated review and completion states.
 - Confirmation, edit-form and mobile-sheet overlay examples.
 
 These remain Kit recipes until a pattern earns a stable public API. They load

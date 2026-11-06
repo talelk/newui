@@ -9551,6 +9551,114 @@
     "acceptance": "pending"
   },
   {
+    "package": "@talelk/newui-organisms",
+    "name": "Wizard",
+    "implementation": "packages/organisms/src/organisms/Wizard/Wizard.tsx",
+    "documentation": "/organisms/wizard",
+    "contract": "spec/wizard.md",
+    "tests": [
+      "packages/organisms/src/organisms/Wizard/Wizard.a11y.test.tsx",
+      "packages/organisms/src/organisms/Wizard/Wizard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WIZARD_REVIEW_STEP",
+    "implementation": "packages/organisms/src/organisms/Wizard/Wizard.tsx",
+    "documentation": "/organisms/wizard",
+    "contract": "spec/wizard.md",
+    "tests": [
+      "packages/organisms/src/organisms/Wizard/Wizard.a11y.test.tsx",
+      "packages/organisms/src/organisms/Wizard/Wizard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WizardFormApi",
+    "implementation": "packages/organisms/src/organisms/Wizard/Wizard.tsx",
+    "documentation": "/organisms/wizard",
+    "contract": "spec/wizard.md",
+    "tests": [
+      "packages/organisms/src/organisms/Wizard/Wizard.a11y.test.tsx",
+      "packages/organisms/src/organisms/Wizard/Wizard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WizardProps",
+    "implementation": "packages/organisms/src/organisms/Wizard/Wizard.tsx",
+    "documentation": "/organisms/wizard",
+    "contract": "spec/wizard.md",
+    "tests": [
+      "packages/organisms/src/organisms/Wizard/Wizard.a11y.test.tsx",
+      "packages/organisms/src/organisms/Wizard/Wizard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WizardResume",
+    "implementation": "packages/organisms/src/organisms/Wizard/Wizard.tsx",
+    "documentation": "/organisms/wizard",
+    "contract": "spec/wizard.md",
+    "tests": [
+      "packages/organisms/src/organisms/Wizard/Wizard.a11y.test.tsx",
+      "packages/organisms/src/organisms/Wizard/Wizard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WizardResumeStore",
+    "implementation": "packages/organisms/src/organisms/Wizard/Wizard.tsx",
+    "documentation": "/organisms/wizard",
+    "contract": "spec/wizard.md",
+    "tests": [
+      "packages/organisms/src/organisms/Wizard/Wizard.a11y.test.tsx",
+      "packages/organisms/src/organisms/Wizard/Wizard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WizardStep",
+    "implementation": "packages/organisms/src/organisms/Wizard/Wizard.tsx",
+    "documentation": "/organisms/wizard",
+    "contract": "spec/wizard.md",
+    "tests": [
+      "packages/organisms/src/organisms/Wizard/Wizard.a11y.test.tsx",
+      "packages/organisms/src/organisms/Wizard/Wizard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WizardStepErrors",
+    "implementation": "packages/organisms/src/organisms/Wizard/Wizard.tsx",
+    "documentation": "/organisms/wizard",
+    "contract": "spec/wizard.md",
+    "tests": [
+      "packages/organisms/src/organisms/Wizard/Wizard.a11y.test.tsx",
+      "packages/organisms/src/organisms/Wizard/Wizard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "WizardStepField",
+    "implementation": "packages/organisms/src/organisms/Wizard/Wizard.tsx",
+    "documentation": "/organisms/wizard",
+    "contract": "spec/wizard.md",
+    "tests": [
+      "packages/organisms/src/organisms/Wizard/Wizard.a11y.test.tsx",
+      "packages/organisms/src/organisms/Wizard/Wizard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
     "package": "@talelk/newui-templates",
     "name": "AppShell",
     "implementation": "packages/templates/src/templates/AppShell.tsx",

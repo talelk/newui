@@ -10,6 +10,11 @@ the stepper into a progress overview where every enabled step navigates.
 Clicking a reachable step reports its `value` — rendering the matching panel
 is the caller's job.
 
+For a flow over a form, reach for [`Wizard`](wizard.md) instead: it is this
+component plus the step panels, the per-step gate, the review and the resume.
+`Stepper` is what it composes for the progress UI, and stays the right choice
+when there is no form behind the steps.
+
 ## Props
 
 | prop | type | default | notes |

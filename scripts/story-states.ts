@@ -89,6 +89,9 @@ export const REQUIRED_STATES: Record<string, string[]> = {
   // you can — `editable` is the gate, and both sides must be visible.
   WidgetGrid: ['ReadOnly'],
 
+  // A wizard is its steps plus the two things that close and validate them.
+  Wizard: ['Review', 'Invalid'],
+
   // Charts — loading and failure replace the plot; emptiness is the container's
   // designed surface (`ChartContainer`), not a chart's zero-data rendering.
   ChartContainer: ['Loading', 'Empty', 'Error'],
