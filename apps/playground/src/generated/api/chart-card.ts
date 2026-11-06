@@ -27,6 +27,12 @@ export const API = {
       "type": "JSX.Element",
       "optional": true,
       "description": "The card's contents. The card supplies the surface and clips them."
+    },
+    {
+      "name": "group",
+      "type": "string",
+      "optional": true,
+      "description": "Links the charts inside this card to every chart in the same group. Prefer the namespaced id from `useChartGroup`."
     }
   ]
 } as const

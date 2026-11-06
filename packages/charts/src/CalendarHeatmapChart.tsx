@@ -66,6 +66,7 @@ export function CalendarHeatmapChart(
       subtitle={props.subtitle}
       loading={props.loading}
       error={props.error}
+      group={props.group}
       fallback={calendarHeatmapFallback(config(), calendar())}
       onInit={(chart) => {
         chart.on('click', emitClick)

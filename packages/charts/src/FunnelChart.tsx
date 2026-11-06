@@ -35,6 +35,7 @@ export function FunnelChart(props: FunnelChartProps): JSX.Element {
       subtitle={props.subtitle}
       loading={props.loading}
       error={props.error}
+      group={props.group}
       fallback={funnelFallback(config())}
     />
   )

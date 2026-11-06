@@ -31,12 +31,15 @@ const ENTRIES: Entry[] = [
   {
     name: 'Analytics charts',
     file: 'scripts/fixtures/analytics.ts',
-    // SVG runtime plus only the marks rendered by the dashboard (~241 kB).
-    budget: 250,
+    // SVG runtime, the marks the dashboard renders and the time-series
+    // interactions' components — the dataZoom slider and the brush (~253 kB).
+    budget: 256,
     forbid: [
       '"date-picker"',
       '"dialog"',
-      '"slider"',
+      // The atoms Slider's `data-slot`, not the word "slider": the dataZoom
+      // slider legitimately puts `"slider"` in this bundle as an echarts type.
+      '"slider-thumb"',
       'series.sankey',
       'series.heatmap',
       'series.scatter',

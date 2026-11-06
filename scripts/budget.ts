@@ -74,10 +74,12 @@ const ROUTES: RouteBudget[] = [
     ['files', 230],
     ['deals', 240],
     ['tickets', 230],
-    ['accounting', 390],
+    // Raised when chart interactions shipped: the dataZoom/brush chunk is
+    // now fetched by every route that renders an axis chart.
+    ['accounting', 410],
     ['compose', 380],
     ['discussions', 215],
-    ['analytics', 420],
+    ['analytics', 455],
     ['authentication', 200],
     ['cards', 210],
     ['settings', 160],
@@ -120,8 +122,9 @@ const ROUTES: RouteBudget[] = [
   // with no headroom turns the next honest shell addition into a red gate.
   // Re-raised to 290 when the registry grew by four more molecules, and to
   // 300 at 290.6 measured after the foundation sweep (shared control-styles
-  // and density tables in the chunks this route already fetched).
-  { route: '/organisms/bar-chart', budget: 300 },
+  // and density tables in the chunks this route already fetched). Re-raised to
+  // 335 at 322.5 measured now that axis charts ship the dataZoom/brush chunk.
+  { route: '/organisms/bar-chart', budget: 335 },
   // 280.0 measured: the shell's registry counts grew with the new atoms and
   // molecules — same headroom rule as bar-chart above. Re-raised to 290 at
   // 285.3 measured after the chart catalog added three registry entries
@@ -167,7 +170,7 @@ const ROUTES: RouteBudget[] = [
   },
   {
     route: '/pages/accounting/fullscreen',
-    budget: 380,
+    budget: 405,
     unless: 'interactive accounting workspace in the shared AppShell frame',
   },
 
@@ -228,7 +231,7 @@ const ROUTES: RouteBudget[] = [
 
   {
     route: '/pages/analytics/fullscreen',
-    budget: 420,
+    budget: 450,
     unless:
       'full analytics workspace with SVG charts in the shared AppShell frame',
   },

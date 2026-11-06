@@ -66,6 +66,30 @@
         "type": "(chart: ECharts) => void",
         "optional": true,
         "description": "Called once the echarts instance exists."
+      },
+      {
+        "name": "actions",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Heads the header row, e.g. the brush-range entry when the plot brushes."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this plot's highlight to every chart in the same group. Prefer the\nnamespaced id from `useChartGroup`; a chart inside its `Provider` needs\nnone."
+      },
+      {
+        "name": "plotFocusable",
+        "type": "boolean",
+        "optional": true,
+        "description": "Lets the plot take keyboard focus — set when an interaction needs it."
+      },
+      {
+        "name": "onPlotKeyDown",
+        "type": "(event: KeyboardEvent) => void",
+        "optional": true,
+        "description": "Keyboard handler for the focused plot, e.g. zoom steps."
       }
     ]
   },
@@ -220,6 +244,48 @@
         "type": "EchartOptionsOverride",
         "optional": true,
         "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "zoom",
+        "type": "ChartZoomWindow",
+        "optional": true,
+        "description": "The visible window over the x column, as data values. When supplied the\nchart is zoom-controlled: the window round-trips through `onZoomChange`\nand survives an option rebuild."
+      },
+      {
+        "name": "defaultZoom",
+        "type": "ChartZoomWindow",
+        "optional": true,
+        "description": "The starting window, for an uncontrolled zoomable chart."
+      },
+      {
+        "name": "onZoomChange",
+        "type": "(window: ChartZoomWindow) => void",
+        "optional": true,
+        "description": "The window moved — by the slider, the wheel or the keyboard."
+      },
+      {
+        "name": "brush",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws a range brush over the x axis; drag or the toolbar picks a range."
+      },
+      {
+        "name": "onBrushChange",
+        "type": "(selection: ChartBrushSelection | null) => void",
+        "optional": true,
+        "description": "The brush moved over the x column, or `null` when it was cleared."
+      },
+      {
+        "name": "onPointDblClick",
+        "type": "(datum: AxisChartDatum) => void",
+        "optional": true,
+        "description": "A point was double-clicked — the drilldown cue. What it navigates to is the page's business (`route`)."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this chart's hover and axis-pointer highlight to every chart in the\nsame group. Prefer the namespaced id from `useChartGroup`; a raw string\nlinks every instance carrying it, app-wide."
       }
     ],
     "BarChartProps": [
@@ -372,6 +438,48 @@
         "type": "EchartOptionsOverride",
         "optional": true,
         "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "zoom",
+        "type": "ChartZoomWindow",
+        "optional": true,
+        "description": "The visible window over the x column, as data values. When supplied the\nchart is zoom-controlled: the window round-trips through `onZoomChange`\nand survives an option rebuild."
+      },
+      {
+        "name": "defaultZoom",
+        "type": "ChartZoomWindow",
+        "optional": true,
+        "description": "The starting window, for an uncontrolled zoomable chart."
+      },
+      {
+        "name": "onZoomChange",
+        "type": "(window: ChartZoomWindow) => void",
+        "optional": true,
+        "description": "The window moved — by the slider, the wheel or the keyboard."
+      },
+      {
+        "name": "brush",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws a range brush over the x axis; drag or the toolbar picks a range."
+      },
+      {
+        "name": "onBrushChange",
+        "type": "(selection: ChartBrushSelection | null) => void",
+        "optional": true,
+        "description": "The brush moved over the x column, or `null` when it was cleared."
+      },
+      {
+        "name": "onPointDblClick",
+        "type": "(datum: AxisChartDatum) => void",
+        "optional": true,
+        "description": "A point was double-clicked — the drilldown cue. What it navigates to is the page's business (`route`)."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this chart's hover and axis-pointer highlight to every chart in the\nsame group. Prefer the namespaced id from `useChartGroup`; a raw string\nlinks every instance carrying it, app-wide."
       },
       {
         "name": "horizontal",
@@ -530,6 +638,48 @@
         "type": "EchartOptionsOverride",
         "optional": true,
         "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "zoom",
+        "type": "ChartZoomWindow",
+        "optional": true,
+        "description": "The visible window over the x column, as data values. When supplied the\nchart is zoom-controlled: the window round-trips through `onZoomChange`\nand survives an option rebuild."
+      },
+      {
+        "name": "defaultZoom",
+        "type": "ChartZoomWindow",
+        "optional": true,
+        "description": "The starting window, for an uncontrolled zoomable chart."
+      },
+      {
+        "name": "onZoomChange",
+        "type": "(window: ChartZoomWindow) => void",
+        "optional": true,
+        "description": "The window moved — by the slider, the wheel or the keyboard."
+      },
+      {
+        "name": "brush",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws a range brush over the x axis; drag or the toolbar picks a range."
+      },
+      {
+        "name": "onBrushChange",
+        "type": "(selection: ChartBrushSelection | null) => void",
+        "optional": true,
+        "description": "The brush moved over the x column, or `null` when it was cleared."
+      },
+      {
+        "name": "onPointDblClick",
+        "type": "(datum: AxisChartDatum) => void",
+        "optional": true,
+        "description": "A point was double-clicked — the drilldown cue. What it navigates to is the page's business (`route`)."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this chart's hover and axis-pointer highlight to every chart in the\nsame group. Prefer the namespaced id from `useChartGroup`; a raw string\nlinks every instance carrying it, app-wide."
       }
     ],
     "AreaChartProps": [
@@ -682,6 +832,48 @@
         "type": "EchartOptionsOverride",
         "optional": true,
         "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "zoom",
+        "type": "ChartZoomWindow",
+        "optional": true,
+        "description": "The visible window over the x column, as data values. When supplied the\nchart is zoom-controlled: the window round-trips through `onZoomChange`\nand survives an option rebuild."
+      },
+      {
+        "name": "defaultZoom",
+        "type": "ChartZoomWindow",
+        "optional": true,
+        "description": "The starting window, for an uncontrolled zoomable chart."
+      },
+      {
+        "name": "onZoomChange",
+        "type": "(window: ChartZoomWindow) => void",
+        "optional": true,
+        "description": "The window moved — by the slider, the wheel or the keyboard."
+      },
+      {
+        "name": "brush",
+        "type": "boolean",
+        "optional": true,
+        "description": "Draws a range brush over the x axis; drag or the toolbar picks a range."
+      },
+      {
+        "name": "onBrushChange",
+        "type": "(selection: ChartBrushSelection | null) => void",
+        "optional": true,
+        "description": "The brush moved over the x column, or `null` when it was cleared."
+      },
+      {
+        "name": "onPointDblClick",
+        "type": "(datum: AxisChartDatum) => void",
+        "optional": true,
+        "description": "A point was double-clicked — the drilldown cue. What it navigates to is the page's business (`route`)."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this chart's hover and axis-pointer highlight to every chart in the\nsame group. Prefer the namespaced id from `useChartGroup`; a raw string\nlinks every instance carrying it, app-wide."
       }
     ],
     "DonutChartProps": [
@@ -798,6 +990,12 @@
         "type": "EchartOptionsOverride",
         "optional": true,
         "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`."
       }
     ],
     "NumberCardProps": [
@@ -934,6 +1132,12 @@
         "type": "JSX.Element",
         "optional": true,
         "description": "The card's contents. The card supplies the surface and clips them."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links the charts inside this card to every chart in the same group. Prefer the namespaced id from `useChartGroup`."
       }
     ],
     "ChartLegendProps": [
@@ -1258,6 +1462,12 @@
         "type": "EchartOptionsOverride",
         "optional": true,
         "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`."
       }
     ],
     "HeatmapChartProps": [
@@ -1380,6 +1590,12 @@
         "type": "EchartOptionsOverride",
         "optional": true,
         "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`."
       }
     ],
     "ScatterChartProps": [
@@ -1508,6 +1724,12 @@
         "type": "EchartOptionsOverride",
         "optional": true,
         "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`."
       }
     ],
     "SankeyChartProps": [
@@ -1612,6 +1834,12 @@
         "type": "EchartOptionsOverride",
         "optional": true,
         "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`."
       }
     ],
     "SparklineProps": [
@@ -1772,6 +2000,12 @@
         "type": "EchartOptionsOverride",
         "optional": true,
         "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`."
       }
     ],
     "GaugeChartProps": [
@@ -1852,6 +2086,12 @@
         "type": "EchartOptionsOverride",
         "optional": true,
         "description": "Escape hatch: deep-merged into the echarts option the props built."
+      },
+      {
+        "name": "group",
+        "type": "string",
+        "optional": true,
+        "description": "Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`."
       }
     ]
   },

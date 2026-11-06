@@ -9,6 +9,11 @@
 
 // Components
 export { AreaChart } from './AreaChart'
+// The interaction layer the time-series charts share.
+export {
+  type AxisInteractions,
+  createAxisInteractions,
+} from './axisInteractions'
 export { BarChart } from './BarChart'
 export { CalendarHeatmapChart } from './CalendarHeatmapChart'
 // The shared shell and the echarts lifecycle
@@ -25,6 +30,13 @@ export {
   calendarDayKey,
   calendarHeatmapRamp,
 } from './calendarHeatmapOptions'
+// Chart grouping: linked highlighting across charts.
+export {
+  ChartGroupProvider,
+  joinChartGroup,
+  leaveChartGroup,
+  useChartGroup,
+} from './chartGroup'
 export { Dashboard } from './Dashboard'
 export { DonutChart } from './DonutChart'
 export { FunnelChart } from './FunnelChart'
@@ -64,6 +76,19 @@ export {
   heatmapCategoryLabel,
   heatmapRampStops,
 } from './heatmapOptions'
+// Interactions: zoom windows, brush selections, keyboard steps.
+export {
+  type AxisValues,
+  brushCoords,
+  brushFromEvent,
+  buildBrushOption,
+  buildZoomOption,
+  windowCaption,
+  windowCoords,
+  windowedRows,
+  zoomFromEvent,
+  zoomStep,
+} from './interactions'
 export { LineChart } from './LineChart'
 export { NumberCard } from './NumberCard'
 // Props normalization (what a component hands the builder)

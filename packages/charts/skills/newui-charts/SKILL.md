@@ -57,6 +57,15 @@ wrap charts in `DataState`.
 (`normalize.ts`, palette tokens, format helpers) — prefer them over raw
 ECharts option objects so the theme stays token-driven.
 
+**Interaction state is a signal, not an echarts side-channel.** On
+LineChart/AreaChart/BarChart, `zoom`/`defaultZoom` + `onZoomChange` and
+`brush` + `onBrushChange` round-trip through the option builder, so an
+option rebuild restores the window instead of erasing it. Callback payloads
+are data values — a category label, a date, a number — never echarts
+indices or percents. `onPointDblClick` emits the datum; navigation stays
+app-side. Link charts with `useChartGroup(name)` (namespaced ids) rather
+than a raw `group` string, which links every instance carrying it.
+
 ## Common mistakes
 
 **Don't import charts from the core barrels.** `@talelk/newui-atoms` /

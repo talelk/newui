@@ -36,6 +36,7 @@ export function ScatterChart(props: ScatterChartProps): JSX.Element {
       subtitle={props.subtitle}
       loading={props.loading}
       error={props.error}
+      group={props.group}
       fallback={scatterFallback(config())}
     />
   )

@@ -1,4 +1,5 @@
-import type { JSX } from 'solid-js'
+import { type JSX, Show } from 'solid-js'
+import { ChartGroupProvider } from './chartGroup'
 import { CARD_SURFACE } from './tokens'
 import type { ChartCardProps } from './types'
 
@@ -26,7 +27,13 @@ export function ChartCard(props: ChartCardProps): JSX.Element {
         ...surface(),
       }}
     >
-      {props.children}
+      {/* The card's group reaches the charts inside it through context, so
+          linking a card's plots is one prop, not a prop per chart. */}
+      <Show when={props.group} keyed fallback={props.children}>
+        {(id) => (
+          <ChartGroupProvider id={id}>{props.children}</ChartGroupProvider>
+        )}
+      </Show>
     </div>
   )
 }

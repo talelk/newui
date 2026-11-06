@@ -89,6 +89,22 @@ const PUBLIC = [
   'sparklineLinePath',
   'sparklineAreaPath',
   'sparklineBars',
+  // interactions: zoom windows, brush selections, keyboard steps
+  'buildZoomOption',
+  'buildBrushOption',
+  'zoomFromEvent',
+  'brushFromEvent',
+  'zoomStep',
+  'windowCoords',
+  'brushCoords',
+  'windowedRows',
+  'windowCaption',
+  'createAxisInteractions',
+  // grouping: linked highlighting across charts
+  'useChartGroup',
+  'ChartGroupProvider',
+  'joinChartGroup',
+  'leaveChartGroup',
   // constants
   'OTHERS_KEY',
   'OTHERS_LABEL',

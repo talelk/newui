@@ -345,13 +345,15 @@ export function axisChartBase(
 export function buildAxisGrid(opts: {
   horizontal: boolean
   xAxisTitle?: string
+  /** Room for anything drawn under the plot, e.g. a zoom slider. */
+  extraBottom?: number
 }) {
   const { horizontal, xAxisTitle } = opts
   return {
     top: 8,
     // Reserve the x-axis label band. With `bottom: 0` the temporal axis
     // renders its ticks outside the plot and they disappear.
-    bottom: 40,
+    bottom: 40 + (opts.extraBottom ?? 0),
     containLabel: true,
     left: 2,
     right: xAxisTitle && horizontal ? 24 : 2,
@@ -725,6 +727,12 @@ export type AxisChartOptionContext = {
   hiddenSeries?: string[]
   /** What a value prints when its series and its axis name no format. */
   format?: { y?: ChartValueFormatter; y2?: ChartValueFormatter }
+  /**
+   * The dataZoom/brush fragments the current signals imply, from
+   * `createAxisInteractions.extras`. Re-emitted on every build, so a
+   * `notMerge` rebuild restores the user's window instead of erasing it.
+   */
+  interactions?: Record<string, unknown>
 }
 
 /**
@@ -734,7 +742,12 @@ export type AxisChartOptionContext = {
  */
 export function buildAxisChartOption(
   config: AxisChartConfig,
-  { tokens, hiddenSeries = [], format = {} }: AxisChartOptionContext,
+  {
+    tokens,
+    hiddenSeries = [],
+    format = {},
+    interactions = {},
+  }: AxisChartOptionContext,
 ): EChartsCoreOption {
   const isRTL = config.dir === 'rtl'
   const horizontal = Boolean(config.horizontal)
@@ -774,7 +787,13 @@ export function buildAxisChartOption(
 
   const option = {
     ...axisChartBase(tokens, hasBars ? 'shadow' : 'line'),
-    grid: buildAxisGrid({ horizontal, xAxisTitle: config.xAxis.title }),
+    // A zoom slider lives under the plot; give the axis labels room above it.
+    grid: buildAxisGrid({
+      horizontal,
+      xAxisTitle: config.xAxis.title,
+      extraBottom: interactions['dataZoom'] ? 28 : 0,
+    }),
+    ...interactions,
     xAxis: horizontal ? valueAxes : xColumnAxis,
     yAxis: horizontal ? xColumnAxis : valueAxes,
     series: visible.map((entry) =>

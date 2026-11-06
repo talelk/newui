@@ -1,6 +1,10 @@
 import { ChartCard, LineChart } from '@talelk/newui-charts'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
-import { ChartDemoControls, MONTHLY_ACTIVITY } from './chart-demo-state'
+import {
+  ChartDemoControls,
+  MONTHLY_ACTIVITY,
+  MONTHLY_TREND,
+} from './chart-demo-state'
 
 function ActivityChart(props: {
   loading?: boolean
@@ -57,4 +61,37 @@ export const Loading: Story = {
 
 export const Error: Story = {
   render: () => <ActivityChart error="Could not load activity." />,
+}
+
+/**
+ * Zoom: a range slider under the plot, keyboard zoom on the focused plot
+ * (`+`/`-`, arrows) and a fallback table that tracks the window.
+ */
+export const Zoomable: Story = {
+  render: () => (
+    <ChartCard>
+      <LineChart
+        title="Monthly activity"
+        data={MONTHLY_TREND}
+        x="month"
+        y="value"
+        defaultZoom={{ from: 'Apr', to: 'Sep' }}
+      />
+    </ChartCard>
+  ),
+}
+
+/** Brush: drag over the plot or type the range in the toolbar inputs. */
+export const Brushable: Story = {
+  render: () => (
+    <ChartCard>
+      <LineChart
+        title="Monthly activity"
+        data={MONTHLY_TREND}
+        x="month"
+        y="value"
+        brush
+      />
+    </ChartCard>
+  ),
 }
