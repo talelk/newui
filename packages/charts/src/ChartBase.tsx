@@ -1,6 +1,14 @@
 import type { ECharts, EChartsCoreOption } from 'echarts/core'
-import { type Accessor, For, type JSX, Show } from 'solid-js'
+import {
+  type Accessor,
+  createEffect,
+  For,
+  type JSX,
+  onCleanup,
+  Show,
+} from 'solid-js'
 import { ChartContainer } from './ChartContainer'
+import { joinChartGroup, leaveChartGroup, useChartGroupId } from './chartGroup'
 import { SR_ONLY } from './tokens'
 import type { ChartFallback } from './types'
 import { useChart } from './useChart'
@@ -28,6 +36,18 @@ export interface ChartBaseProps {
   overlay?: JSX.Element
   /** Called once the echarts instance exists. */
   onInit?: (chart: ECharts) => void
+  /** Heads the header row, e.g. the brush-range entry when the plot brushes. */
+  actions?: JSX.Element
+  /**
+   * Links this plot's highlight to every chart in the same group. Prefer the
+   * namespaced id from `useChartGroup`; a chart inside its `Provider` needs
+   * none.
+   */
+  group?: string
+  /** Lets the plot take keyboard focus — set when an interaction needs it. */
+  plotFocusable?: boolean
+  /** Keyboard handler for the focused plot, e.g. zoom steps. */
+  onPlotKeyDown?: (event: KeyboardEvent) => void
 }
 
 /** The default plot height, when a chart names none. */
@@ -46,10 +66,34 @@ const DEFAULT_HEIGHT = 240
 export function ChartBase(props: ChartBaseProps): JSX.Element {
   let plot: HTMLDivElement | undefined
 
-  useChart({
+  // The group can arrive from the `group` prop or from the enclosing
+  // `useChartGroup` provider; the prop wins, the context is the default.
+  const contextGroup = useChartGroupId()
+  const groupId = () => props.group ?? contextGroup()
+  let joinedId: string | undefined
+
+  const { chart } = useChart({
     element: () => plot,
     option: () => props.option(),
-    onInit: (chart) => props.onInit?.(chart),
+    onInit: (instance) => props.onInit?.(instance),
+  })
+
+  // Join when the instance and the group both exist, re-tag when either
+  // moves, and leave on unmount — disposal ends the linkage for this
+  // instance, so nothing here needs a global `disconnect`.
+  createEffect(() => {
+    const instance = chart()
+    const id = groupId()
+    if (!instance) return
+    if (joinedId === id) return
+    if (joinedId) leaveChartGroup(joinedId, instance)
+    if (id) joinChartGroup(id, instance)
+    joinedId = id
+  })
+  onCleanup(() => {
+    const instance = chart()
+    if (joinedId && instance) leaveChartGroup(joinedId, instance)
+    joinedId = undefined
   })
 
   return (
@@ -58,9 +102,13 @@ export function ChartBase(props: ChartBaseProps): JSX.Element {
       height={props.height ?? DEFAULT_HEIGHT}
       title={props.title}
       subtitle={props.subtitle}
+      actions={props.actions}
       loading={props.loading}
       error={props.error}
-      empty={props.fallback !== undefined && props.fallback.rows.length === 0}
+      empty={
+        props.fallback !== undefined &&
+        (props.fallback.totalRows ?? props.fallback.rows.length) === 0
+      }
     >
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
         <div
@@ -70,7 +118,9 @@ export function ChartBase(props: ChartBaseProps): JSX.Element {
           data-slot="chart-canvas"
           role="img"
           aria-label={props.label}
+          tabindex={props.plotFocusable ? 0 : undefined}
           style={{ width: '100%', height: '100%' }}
+          onKeyDown={(event) => props.onPlotKeyDown?.(event)}
         />
         {props.overlay}
       </div>
@@ -85,6 +135,9 @@ export function ChartBase(props: ChartBaseProps): JSX.Element {
 function FallbackTable(props: ChartFallback): JSX.Element {
   return (
     <table data-slot="chart-fallback" style={SR_ONLY}>
+      <Show when={props.caption}>
+        {(caption) => <caption>{caption()}</caption>}
+      </Show>
       <thead>
         <tr>
           <For each={props.columns}>

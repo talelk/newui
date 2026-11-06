@@ -2103,6 +2103,18 @@
       ]
     },
     {
+      "id": "organisms-areachart--brushable",
+      "title": "Organisms/AreaChart",
+      "name": "Brushable",
+      "exportName": "Brushable",
+      "importPath": "src/stories/area-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "organisms-areachart--default",
       "title": "Organisms/AreaChart",
       "name": "Default",
@@ -2139,6 +2151,18 @@
       ]
     },
     {
+      "id": "organisms-areachart--zoomable",
+      "title": "Organisms/AreaChart",
+      "name": "Zoomable",
+      "exportName": "Zoomable",
+      "importPath": "src/stories/area-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "organisms-authcard--default",
       "title": "Organisms/AuthCard",
       "name": "Default",
@@ -2156,6 +2180,18 @@
       "name": "Error",
       "exportName": "Error",
       "importPath": "src/stories/auth-card.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-barchart--brushable",
+      "title": "Organisms/BarChart",
+      "name": "Brushable",
+      "exportName": "Brushable",
+      "importPath": "src/stories/bar-chart.stories.tsx",
       "tags": [
         "dev",
         "test",
@@ -2191,6 +2227,18 @@
       "title": "Organisms/BarChart",
       "name": "Loading",
       "exportName": "Loading",
+      "importPath": "src/stories/bar-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-barchart--zoomable",
+      "title": "Organisms/BarChart",
+      "name": "Zoomable",
+      "exportName": "Zoomable",
       "importPath": "src/stories/bar-chart.stories.tsx",
       "tags": [
         "dev",
@@ -2655,6 +2703,18 @@
       ]
     },
     {
+      "id": "organisms-linechart--brushable",
+      "title": "Organisms/LineChart",
+      "name": "Brushable",
+      "exportName": "Brushable",
+      "importPath": "src/stories/line-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "organisms-linechart--default",
       "title": "Organisms/LineChart",
       "name": "Default",
@@ -2683,6 +2743,18 @@
       "title": "Organisms/LineChart",
       "name": "Loading",
       "exportName": "Loading",
+      "importPath": "src/stories/line-chart.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
+      "id": "organisms-linechart--zoomable",
+      "title": "Organisms/LineChart",
+      "name": "Zoomable",
+      "exportName": "Zoomable",
       "importPath": "src/stories/line-chart.stories.tsx",
       "tags": [
         "dev",

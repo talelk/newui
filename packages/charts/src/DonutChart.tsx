@@ -34,6 +34,7 @@ export function DonutChart(props: DonutChartProps): JSX.Element {
       subtitle={props.subtitle}
       loading={props.loading}
       error={props.error}
+      group={props.group}
       fallback={donutFallback(config())}
     />
   )

@@ -69,6 +69,30 @@ export const API = {
       "type": "(chart: ECharts) => void",
       "optional": true,
       "description": "Called once the echarts instance exists."
+    },
+    {
+      "name": "actions",
+      "type": "JSX.Element",
+      "optional": true,
+      "description": "Heads the header row, e.g. the brush-range entry when the plot brushes."
+    },
+    {
+      "name": "group",
+      "type": "string",
+      "optional": true,
+      "description": "Links this plot's highlight to every chart in the same group. Prefer the\nnamespaced id from `useChartGroup`; a chart inside its `Provider` needs\nnone."
+    },
+    {
+      "name": "plotFocusable",
+      "type": "boolean",
+      "optional": true,
+      "description": "Lets the plot take keyboard focus — set when an interaction needs it."
+    },
+    {
+      "name": "onPlotKeyDown",
+      "type": "(event: KeyboardEvent) => void",
+      "optional": true,
+      "description": "Keyboard handler for the focused plot, e.g. zoom steps."
     }
   ]
 } as const

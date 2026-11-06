@@ -68,6 +68,18 @@ export type ChartTokens = {
 export type ChartFallback = {
   columns: string[]
   rows: (string | number)[][]
+  /**
+   * What the table currently stands for, e.g. the window a zoomed plot is
+   * showing. A table that quietly narrowed with the plot is a lie; a caption
+   * says so.
+   */
+  caption?: string
+  /**
+   * How many rows the data really has, when the table shows a narrowed view.
+   * The empty check reads this, so a window with no rows in it is not the
+   * chart's empty state — the data is there, the window is not.
+   */
+  totalRows?: number
 }
 
 // ---------------------------------------------------------------------------
@@ -185,11 +197,59 @@ export type AxisChartProps = {
   dir?: ChartDir
   /** Escape hatch: deep-merged into the echarts option the props built. */
   echartOptions?: EchartOptionsOverride
+  // ---------------------------------------------------------------------
+  // Interactions (LineChart, AreaChart and BarChart).
+  // ---------------------------------------------------------------------
+  /**
+   * The visible window over the x column, as data values. When supplied the
+   * chart is zoom-controlled: the window round-trips through `onZoomChange`
+   * and survives an option rebuild.
+   */
+  zoom?: ChartZoomWindow
+  /** The starting window, for an uncontrolled zoomable chart. */
+  defaultZoom?: ChartZoomWindow
+  /** The window moved — by the slider, the wheel or the keyboard. */
+  onZoomChange?: (window: ChartZoomWindow) => void
+  /** Draws a range brush over the x axis; drag or the toolbar picks a range. */
+  brush?: boolean
+  /** The brush moved over the x column, or `null` when it was cleared. */
+  onBrushChange?: (selection: ChartBrushSelection | null) => void
+  /** A point was double-clicked — the drilldown cue. What it navigates to is the page's business (`route`). */
+  onPointDblClick?: (datum: AxisChartDatum) => void
+  /**
+   * Links this chart's hover and axis-pointer highlight to every chart in the
+   * same group. Prefer the namespaced id from `useChartGroup`; a raw string
+   * links every instance carrying it, app-wide.
+   */
+  group?: string
 }
 
 export type BarChartProps = AxisChartProps & {
   /** Bars run left-to-right; the category axis moves to Y. Bars only. */
   horizontal?: boolean
+}
+
+/**
+ * A window over the x column, as data values: a category label, a date or a
+ * number, never an echarts index or percent. The same shape reads a zoom
+ * window and a brush selection.
+ */
+export type ChartZoomWindow = {
+  /** The first x value inside the window, inclusive. */
+  from: number | string
+  /** The last x value inside the window, inclusive. */
+  to: number | string
+}
+
+/** The x values a brush rectangle covers, as data values. */
+export type ChartBrushSelection = ChartZoomWindow
+
+/** One point of an axis chart, the datum behind a click. */
+export type AxisChartDatum = {
+  /** The x value the point sits at, as the data holds it. */
+  x: number | string
+  /** The row behind the point. */
+  row: Record<string, unknown>
 }
 
 /** A line chart is an axis chart whose unmarked series draw as lines. */
@@ -272,6 +332,8 @@ export type DonutChartProps = {
   dir?: ChartDir
   /** Escape hatch: deep-merged into the echarts option the props built. */
   echartOptions?: EchartOptionsOverride
+  /** Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`. */
+  group?: string
 }
 
 export type DonutChartConfig = {
@@ -369,6 +431,8 @@ export type ChartCardProps = {
   class?: string
   /** The card's contents. The card supplies the surface and clips them. */
   children?: JSX.Element
+  /** Links the charts inside this card to every chart in the same group. Prefer the namespaced id from `useChartGroup`. */
+  group?: string
 }
 
 /** One entry of a legend: a series' identity, its color and its visibility. */
@@ -565,6 +629,8 @@ export type FunnelChartProps = {
   dir?: ChartDir
   /** Escape hatch: deep-merged into the echarts option the props built. */
   echartOptions?: EchartOptionsOverride
+  /** Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`. */
+  group?: string
 }
 
 export type FunnelChartConfig = {
@@ -649,6 +715,8 @@ export type HeatmapChartProps = {
   dir?: ChartDir
   /** Escape hatch: deep-merged into the echarts option the props built. */
   echartOptions?: EchartOptionsOverride
+  /** Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`. */
+  group?: string
 }
 
 export type HeatmapChartConfig = {
@@ -743,6 +811,8 @@ export type ScatterChartProps = {
   dir?: ChartDir
   /** Escape hatch: deep-merged into the echarts option the props built. */
   echartOptions?: EchartOptionsOverride
+  /** Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`. */
+  group?: string
 }
 
 export type ScatterChartConfig = {
@@ -827,6 +897,8 @@ export type SankeyChartProps = {
   dir?: ChartDir
   /** Escape hatch: deep-merged into the echarts option the props built. */
   echartOptions?: EchartOptionsOverride
+  /** Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`. */
+  group?: string
 }
 
 export type SankeyChartConfig = {
@@ -958,6 +1030,8 @@ export type CalendarHeatmapChartProps = {
   'aria-label'?: string
   /** Escape hatch: deep-merged into the echarts option the props built. */
   echartOptions?: EchartOptionsOverride
+  /** Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`. */
+  group?: string
 }
 
 export type CalendarHeatmapConfig = {
@@ -1024,6 +1098,8 @@ export type GaugeChartProps = {
   'aria-label'?: string
   /** Escape hatch: deep-merged into the echarts option the props built. */
   echartOptions?: EchartOptionsOverride
+  /** Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`. */
+  group?: string
 }
 
 export type GaugeChartConfig = {

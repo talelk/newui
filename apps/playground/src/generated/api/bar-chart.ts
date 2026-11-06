@@ -155,6 +155,48 @@ export const API = {
       "description": "Escape hatch: deep-merged into the echarts option the props built."
     },
     {
+      "name": "zoom",
+      "type": "ChartZoomWindow",
+      "optional": true,
+      "description": "The visible window over the x column, as data values. When supplied the\nchart is zoom-controlled: the window round-trips through `onZoomChange`\nand survives an option rebuild."
+    },
+    {
+      "name": "defaultZoom",
+      "type": "ChartZoomWindow",
+      "optional": true,
+      "description": "The starting window, for an uncontrolled zoomable chart."
+    },
+    {
+      "name": "onZoomChange",
+      "type": "(window: ChartZoomWindow) => void",
+      "optional": true,
+      "description": "The window moved — by the slider, the wheel or the keyboard."
+    },
+    {
+      "name": "brush",
+      "type": "boolean",
+      "optional": true,
+      "description": "Draws a range brush over the x axis; drag or the toolbar picks a range."
+    },
+    {
+      "name": "onBrushChange",
+      "type": "(selection: ChartBrushSelection | null) => void",
+      "optional": true,
+      "description": "The brush moved over the x column, or `null` when it was cleared."
+    },
+    {
+      "name": "onPointDblClick",
+      "type": "(datum: AxisChartDatum) => void",
+      "optional": true,
+      "description": "A point was double-clicked — the drilldown cue. What it navigates to is the page's business (`route`)."
+    },
+    {
+      "name": "group",
+      "type": "string",
+      "optional": true,
+      "description": "Links this chart's hover and axis-pointer highlight to every chart in the\nsame group. Prefer the namespaced id from `useChartGroup`; a raw string\nlinks every instance carrying it, app-wide."
+    },
+    {
       "name": "horizontal",
       "type": "boolean",
       "optional": true,

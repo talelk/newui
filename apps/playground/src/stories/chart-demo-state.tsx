@@ -20,6 +20,25 @@ export const MONTHLY_ACTIVITY = [
   { month: 'Mar', value: 15 },
 ]
 
+/**
+ * A longer monthly series for the interaction demos: a zoom window or a
+ * brush range needs more than three points to mean anything.
+ */
+export const MONTHLY_TREND = [
+  { month: 'Jan', value: 12 },
+  { month: 'Feb', value: 18 },
+  { month: 'Mar', value: 15 },
+  { month: 'Apr', value: 22 },
+  { month: 'May', value: 28 },
+  { month: 'Jun', value: 24 },
+  { month: 'Jul', value: 31 },
+  { month: 'Aug', value: 36 },
+  { month: 'Sep', value: 30 },
+  { month: 'Oct', value: 34 },
+  { month: 'Nov', value: 41 },
+  { month: 'Dec', value: 46 },
+]
+
 /** The stage series the donut and funnel demos share. */
 export const STAGE_ACTIVITY = [
   { name: 'Visits', value: 100 },

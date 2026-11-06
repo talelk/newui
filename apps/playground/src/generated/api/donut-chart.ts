@@ -117,6 +117,12 @@ export const API = {
       "type": "EchartOptionsOverride",
       "optional": true,
       "description": "Escape hatch: deep-merged into the echarts option the props built."
+    },
+    {
+      "name": "group",
+      "type": "string",
+      "optional": true,
+      "description": "Links this chart’s highlight to every chart in the same group. Prefer the namespaced id from `useChartGroup`."
     }
   ]
 } as const

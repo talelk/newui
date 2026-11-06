@@ -95,6 +95,42 @@ heatmap defaults to the blue ramp and takes `amber` for warning-shaped
 metrics; a gauge locks its palette to tokens (no `palette` prop) because it
 reads a KPI at a glance.
 
+## Interactions
+
+LineChart, AreaChart and BarChart speak the kit's controlled-signal pattern
+for interaction state. The window, the selection and the group are signals
+the page owns; the chart never keeps private interaction state that a
+rebuild would erase.
+
+- `zoom={{ from, to }}` (controlled) or `defaultZoom` (uncontrolled) opens a
+  range slider under the plot; `onZoomChange` reports the window as data
+  values — a category label, a date, a number — never an echarts index or
+  percent. The option builder re-emits the window on every build, so an
+  option rebuild restores it; programmatic changes go through
+  `dispatchAction`, not a rebuild. A horizontal `BarChart`'s categories sit
+  on the other axis, where the range interactions do not apply.
+- `brush` draws a range brush over the x axis; `onBrushChange` reports the
+  selected span as data values, or `null` when cleared. `brushSelected`'s
+  raw per-series indices are translated at the wrapper boundary — no echarts
+  internals in public props.
+- Keyboard twins make both pointer gestures operable without a pointer: the
+  plot takes focus when it zooms (`+`/`-` zoom in and out, arrows pan), and
+  the brush range can be typed into two number inputs in the container's
+  toolbar. The fallback table tracks the current window — its rows narrow
+  with it and a caption names the window — so a table beside a zoomed plot
+  never quietly claims more rows than are shown.
+- `onPointDblClick` emits the datum behind a double-click (the x value and
+  its row). What it navigates to is the page's business — the `route`
+  vocabulary — not a chart API. Sunburst and treemap drilldowns are not
+  shipped components; when they ship, `onNodeClick` will follow this rule.
+- `group` links hover and axis-pointer highlight across charts, the way
+  `echarts.connect` does. `useChartGroup(name)` owns the namespacing — ids
+  are `newui.<name>.<id>`, so unrelated widgets cannot link by accident —
+  and its `Provider` (or a `ChartCard` carrying the same `group`) links the
+  charts inside it without a prop per chart. Cross-filtering is not this
+  file's business: it lives in `createDashboardState`'s `cross`, consumed
+  and emitted through the callbacks the page wires.
+
 ## Helpers
 
 The package guide at `packages/charts/README.md` documents formatting,
