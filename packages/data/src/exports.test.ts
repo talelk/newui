@@ -56,6 +56,7 @@ const SURFACE: Record<keyof typeof ENTRIES, string[]> = {
     'createCollection',
     'createDataClient',
     'createListQuery',
+    'createServerTableState',
   ],
   './form': ['Form', 'createAppForm', 'fieldError'],
   './resource': [

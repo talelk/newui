@@ -7983,6 +7983,7 @@
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -7996,6 +7997,7 @@
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -8009,6 +8011,7 @@
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -8022,6 +8025,7 @@
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -8035,6 +8039,7 @@
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
@@ -8048,6 +8053,7 @@
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
