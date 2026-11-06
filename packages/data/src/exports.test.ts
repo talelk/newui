@@ -52,7 +52,15 @@ const SURFACE: Record<keyof typeof ENTRIES, string[]> = {
     'createDataClient',
     'createListQuery',
   ],
-  './form': ['Form', 'createAppForm', 'fieldError'],
+  './form': [
+    'Form',
+    'createAppForm',
+    'createAutoSave',
+    'fieldError',
+    'hiddenPaths',
+    'isUnderHidden',
+    'pruneHiddenValues',
+  ],
   './resource': [
     'RequestError',
     'connectRealtime',

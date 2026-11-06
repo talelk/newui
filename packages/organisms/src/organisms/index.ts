@@ -1,6 +1,7 @@
 export * from './AppSidebar'
 export * from './AuthCard'
 export * from './CommandPalette'
+export * from './ConfigForm'
 export * from './DataState'
 export * from './DataTable'
 export * from './DetailHeader'

@@ -37,6 +37,7 @@ const PUBLIC = [
   'Popover',
   'RadioGroup',
   'Rating',
+  'Repeater',
   'Select',
   'ScrollTable',
   'ScrollTableHead',

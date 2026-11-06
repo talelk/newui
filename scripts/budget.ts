@@ -123,8 +123,10 @@ const ROUTES: RouteBudget[] = [
   // and density tables in the chunks this route already fetched).
   { route: '/organisms/bar-chart', budget: 300 },
   // 280.0 measured: the shell's registry counts grew with the new atoms and
-  // molecules — same headroom rule as bar-chart above.
-  { route: '/organisms/code-editor', budget: 285 },
+  // molecules — same headroom rule as bar-chart above. Re-raised to 295 when
+  // `ConfigForm` and `Repeater` joined the registry (the shared organisms index
+  // this route already fetches grew by two entries).
+  { route: '/organisms/code-editor', budget: 295 },
   { route: '/organisms/page-toolbar', budget: 190 },
   {
     route: '/kit/recipes',

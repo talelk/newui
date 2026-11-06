@@ -5052,6 +5052,20 @@
   },
   {
     "package": "@talelk/newui-molecules",
+    "name": "FormControlDateTimeProps",
+    "implementation": "packages/molecules/src/molecules/FormControl/FormControl.tsx",
+    "documentation": "/molecules/form-control",
+    "contract": "spec/form.md",
+    "tests": [
+      "packages/molecules/src/molecules/FormControl/FormControl.a11y.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.browser.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.ssr.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
     "name": "FormControlMultiSelectProps",
     "implementation": "packages/molecules/src/molecules/FormControl/FormControl.tsx",
     "documentation": "/molecules/form-control",
@@ -5080,7 +5094,35 @@
   },
   {
     "package": "@talelk/newui-molecules",
+    "name": "FormControlSelectMultiProps",
+    "implementation": "packages/molecules/src/molecules/FormControl/FormControl.tsx",
+    "documentation": "/molecules/form-control",
+    "contract": "spec/form.md",
+    "tests": [
+      "packages/molecules/src/molecules/FormControl/FormControl.a11y.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.browser.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.ssr.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
     "name": "FormControlSelectProps",
+    "implementation": "packages/molecules/src/molecules/FormControl/FormControl.tsx",
+    "documentation": "/molecules/form-control",
+    "contract": "spec/form.md",
+    "tests": [
+      "packages/molecules/src/molecules/FormControl/FormControl.a11y.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.browser.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.ssr.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "FormControlSelectSingleProps",
     "implementation": "packages/molecules/src/molecules/FormControl/FormControl.tsx",
     "documentation": "/molecules/form-control",
     "contract": "spec/form.md",
@@ -5123,6 +5165,20 @@
   {
     "package": "@talelk/newui-molecules",
     "name": "FormControlTextType",
+    "implementation": "packages/molecules/src/molecules/FormControl/FormControl.tsx",
+    "documentation": "/molecules/form-control",
+    "contract": "spec/form.md",
+    "tests": [
+      "packages/molecules/src/molecules/FormControl/FormControl.a11y.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.browser.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.ssr.test.tsx",
+      "packages/molecules/src/molecules/FormControl/FormControl.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "FormControlTimeProps",
     "implementation": "packages/molecules/src/molecules/FormControl/FormControl.tsx",
     "documentation": "/molecules/form-control",
     "contract": "spec/form.md",
@@ -6328,6 +6384,54 @@
       "packages/molecules/src/molecules/Rating/Rating.a11y.test.tsx",
       "packages/molecules/src/molecules/Rating/Rating.browser.test.tsx",
       "packages/molecules/src/molecules/Rating/Rating.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "Repeater",
+    "implementation": "packages/molecules/src/molecules/Repeater/Repeater.tsx",
+    "documentation": "/molecules/repeater",
+    "contract": "spec/repeater.md",
+    "tests": [
+      "packages/molecules/src/molecules/Repeater/Repeater.a11y.test.tsx",
+      "packages/molecules/src/molecules/Repeater/Repeater.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "RepeaterFormApi",
+    "implementation": "packages/molecules/src/molecules/Repeater/Repeater.tsx",
+    "documentation": "/molecules/repeater",
+    "contract": "spec/repeater.md",
+    "tests": [
+      "packages/molecules/src/molecules/Repeater/Repeater.a11y.test.tsx",
+      "packages/molecules/src/molecules/Repeater/Repeater.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "RepeaterProps",
+    "implementation": "packages/molecules/src/molecules/Repeater/Repeater.tsx",
+    "documentation": "/molecules/repeater",
+    "contract": "spec/repeater.md",
+    "tests": [
+      "packages/molecules/src/molecules/Repeater/Repeater.a11y.test.tsx",
+      "packages/molecules/src/molecules/Repeater/Repeater.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-molecules",
+    "name": "RepeaterRow",
+    "implementation": "packages/molecules/src/molecules/Repeater/Repeater.tsx",
+    "documentation": "/molecules/repeater",
+    "contract": "spec/repeater.md",
+    "tests": [
+      "packages/molecules/src/molecules/Repeater/Repeater.a11y.test.tsx",
+      "packages/molecules/src/molecules/Repeater/Repeater.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -7924,6 +8028,102 @@
   },
   {
     "package": "@talelk/newui-organisms",
+    "name": "ConfigFieldProps",
+    "implementation": "packages/organisms/src/organisms/ConfigForm/renderer.tsx",
+    "documentation": "/organisms/config-form",
+    "contract": "spec/config-form.md",
+    "tests": [
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.a11y.test.tsx",
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ConfigForm",
+    "implementation": "packages/organisms/src/organisms/ConfigForm/ConfigForm.tsx",
+    "documentation": "/organisms/config-form",
+    "contract": "spec/config-form.md",
+    "tests": [
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.a11y.test.tsx",
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ConfigFormApi",
+    "implementation": "packages/organisms/src/organisms/ConfigForm/renderer.tsx",
+    "documentation": "/organisms/config-form",
+    "contract": "spec/config-form.md",
+    "tests": [
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.a11y.test.tsx",
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ConfigFormControlComponent",
+    "implementation": "packages/organisms/src/organisms/ConfigForm/renderer.tsx",
+    "documentation": "/organisms/config-form",
+    "contract": "spec/config-form.md",
+    "tests": [
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.a11y.test.tsx",
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ConfigFormControlProps",
+    "implementation": "packages/organisms/src/organisms/ConfigForm/renderer.tsx",
+    "documentation": "/organisms/config-form",
+    "contract": "spec/config-form.md",
+    "tests": [
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.a11y.test.tsx",
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ConfigFormField",
+    "implementation": "packages/organisms/src/organisms/ConfigForm/renderer.tsx",
+    "documentation": "/organisms/config-form",
+    "contract": "spec/config-form.md",
+    "tests": [
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.a11y.test.tsx",
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ConfigFormProps",
+    "implementation": "packages/organisms/src/organisms/ConfigForm/ConfigForm.tsx",
+    "documentation": "/organisms/config-form",
+    "contract": "spec/config-form.md",
+    "tests": [
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.a11y.test.tsx",
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "createFormRenderer",
+    "implementation": "packages/organisms/src/organisms/ConfigForm/renderer.tsx",
+    "documentation": "/organisms/config-form",
+    "contract": "spec/config-form.md",
+    "tests": [
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.a11y.test.tsx",
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
     "name": "DataSkeleton",
     "implementation": "packages/organisms/src/organisms/DataState/DataState.tsx",
     "documentation": "/organisms/data-state",
@@ -8088,6 +8288,18 @@
       "packages/organisms/src/organisms/DetailHeader/DetailHeader.a11y.test.tsx",
       "packages/organisms/src/organisms/DetailHeader/DetailHeader.browser.test.tsx",
       "packages/organisms/src/organisms/DetailHeader/DetailHeader.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "FieldList",
+    "implementation": "packages/organisms/src/organisms/ConfigForm/renderer.tsx",
+    "documentation": "/organisms/config-form",
+    "contract": "spec/config-form.md",
+    "tests": [
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.a11y.test.tsx",
+      "packages/organisms/src/organisms/ConfigForm/ConfigForm.test.tsx"
     ],
     "acceptance": "pending"
   },

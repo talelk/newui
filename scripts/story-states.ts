@@ -58,6 +58,11 @@ export const REQUIRED_STATES: Record<string, string[]> = {
   PinInput: ['Disabled', 'Invalid'],
   ColorPicker: ['Disabled', 'Invalid'],
   ToggleGroup: ['Disabled'],
+  Repeater: ['Collapsible', 'Maxed'],
+
+  // Config forms — a field the `when` predicate hides is a state an author must
+  // see before trusting the document that gets submitted.
+  ConfigForm: ['Hidden'],
 
   // Disclosure and navigation.
   Accordion: ['Disabled'],

@@ -84,6 +84,8 @@ export interface FormControlTextProps extends FormControlShared {
   value?: string
   onInput?: JSX.EventHandlerUnion<HTMLInputElement, InputEvent>
   onChange?: JSX.EventHandlerUnion<HTMLInputElement, Event>
+  /** Fires when the control loses focus; drives the touched state. */
+  onBlur?: () => void
   placeholder?: string
   /** Helper text; `TextInput` draws it. */
   description?: JSX.Element
@@ -102,6 +104,8 @@ export interface FormControlTextareaProps extends FormControlShared {
   type: 'textarea'
   value?: string
   onInput?: JSX.EventHandlerUnion<HTMLTextAreaElement, InputEvent>
+  /** Fires when the control loses focus; drives the touched state. */
+  onBlur?: () => void
   placeholder?: string
   description?: JSX.Element
   error?: JSX.Element | false
@@ -426,6 +430,7 @@ function renderTextarea(props: FormControlTextareaProps): JSX.Element {
       id={props.id}
       value={props.value}
       onInput={props.onInput}
+      onBlur={props.onBlur}
       placeholder={props.placeholder}
       name={props.name}
       disabled={props.disabled}
@@ -451,6 +456,7 @@ function renderText(props: FormControlTextProps): JSX.Element {
       value={props.value}
       onInput={props.onInput}
       onChange={props.onChange}
+      onBlur={props.onBlur}
       placeholder={props.placeholder}
       name={props.name}
       disabled={props.disabled}

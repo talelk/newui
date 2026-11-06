@@ -5,6 +5,7 @@ const PUBLIC = [
   'AppSidebar',
   'AuthCard',
   'CommandPalette',
+  'ConfigForm',
   'DataState',
   'DataTable',
   'DetailHeader',

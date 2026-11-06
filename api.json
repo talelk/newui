@@ -5061,6 +5061,12 @@
         "optional": true
       },
       {
+        "name": "onBlur",
+        "type": "() => void",
+        "optional": true,
+        "description": "Fires when the control loses focus; drives the touched state."
+      },
+      {
         "name": "placeholder",
         "type": "string",
         "optional": true
@@ -5159,6 +5165,12 @@
         "name": "onInput",
         "type": "JSX.EventHandlerUnion<HTMLTextAreaElement, InputEvent>",
         "optional": true
+      },
+      {
+        "name": "onBlur",
+        "type": "() => void",
+        "optional": true,
+        "description": "Fires when the control loses focus; drives the touched state."
       },
       {
         "name": "placeholder",
@@ -7321,6 +7333,79 @@
       }
     ]
   },
+  "packages/molecules/src/molecules/Repeater/Repeater.tsx": {
+    "RepeaterProps": [
+      {
+        "name": "form",
+        "type": "RepeaterFormApi",
+        "optional": false,
+        "description": "The TanStack form — pass `appForm.form`."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": false,
+        "description": "The array field's path."
+      },
+      {
+        "name": "maxItems",
+        "type": "number",
+        "optional": true,
+        "description": "The ceiling on rows; the add button disappears at it."
+      },
+      {
+        "name": "minItems",
+        "type": "number",
+        "optional": true,
+        "description": "The floor on rows; remove is disabled at it.",
+        "default": "0"
+      },
+      {
+        "name": "addLabel",
+        "type": "string",
+        "optional": true,
+        "description": "Label for the add button.",
+        "default": "Add"
+      },
+      {
+        "name": "copyable",
+        "type": "boolean",
+        "optional": true,
+        "description": "Show a copy button per row."
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean",
+        "optional": true,
+        "description": "Wrap each row in a collapse, so long arrays stay scannable."
+      },
+      {
+        "name": "rowTitle",
+        "type": "(index: number) => JSX.Element",
+        "optional": true,
+        "description": "Row title drawn in the collapse header.",
+        "default": "Item N"
+      },
+      {
+        "name": "newItem",
+        "type": "() => unknown",
+        "optional": true,
+        "description": "The value a new row starts from.",
+        "default": "{}"
+      },
+      {
+        "name": "children",
+        "type": "(row: RepeaterRow) => JSX.Element",
+        "optional": false,
+        "description": "Rendered per row."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      }
+    ]
+  },
   "packages/molecules/src/molecules/ScrollTable/ScrollTable.tsx": {
     "ScrollTableProps": [
       {
@@ -8925,6 +9010,106 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": false
+      }
+    ]
+  },
+  "packages/organisms/src/organisms/ConfigForm/ConfigForm.tsx": {
+    "ConfigFormProps": [
+      {
+        "name": "form",
+        "type": "ConfigFormApi",
+        "optional": false,
+        "description": "The TanStack form — pass `appForm.form`."
+      },
+      {
+        "name": "fields",
+        "type": "Record<string, ConfigFormField<TValues>>",
+        "optional": false,
+        "description": "The field map, keyed by path — the same object passed to `createAppForm`\nas `ui`. Fields render in key order."
+      },
+      {
+        "name": "components",
+        "type": "Record<string, ConfigFormControlComponent>",
+        "optional": true,
+        "description": "Custom controls by `type`, joined onto the `FormControl` vocabulary."
+      },
+      {
+        "name": "autosave",
+        "type": "{ saving: Accessor<boolean>; saved: Accessor<boolean> }",
+        "optional": true,
+        "description": "The autosave chrome: renders \"Saving…/Saved\" where the form chrome sits."
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": true,
+        "description": "Extra chrome after the fields — usually the submit button."
+      }
+    ]
+  },
+  "packages/organisms/src/organisms/ConfigForm/renderer.tsx": {
+    "ConfigFormControlProps": [
+      {
+        "name": "name",
+        "type": "string",
+        "optional": false,
+        "description": "The field's path in the form."
+      },
+      {
+        "name": "value",
+        "type": "unknown",
+        "optional": false
+      },
+      {
+        "name": "onChange",
+        "type": "(value: unknown) => void",
+        "optional": false,
+        "description": "Commits the value and runs the `onChange` validators."
+      },
+      {
+        "name": "onBlur",
+        "type": "() => void",
+        "optional": false,
+        "description": "Marks the field touched and runs the `onBlur` validators."
+      },
+      {
+        "name": "error",
+        "type": "string",
+        "optional": true,
+        "description": "The field's error, joined to one string — the `Field` contract."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "optional": true
+      }
+    ],
+    "ConfigFieldProps": [
+      {
+        "name": "form",
+        "type": "ConfigFormApi",
+        "optional": false
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "field",
+        "type": "ConfigFormField<TValues>",
+        "optional": false
+      },
+      {
+        "name": "values",
+        "type": "Accessor<TValues>",
+        "optional": false,
+        "description": "The form's values, reactive — `when` is evaluated against these."
       }
     ]
   },

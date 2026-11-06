@@ -132,6 +132,10 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'organisms-overlays-commandpalette--default',
     load: () => import('../stories/command-palette.stories'),
   },
+  "ConfigForm": {
+    id: 'organisms-configform--default',
+    load: () => import('../stories/config-form.stories'),
+  },
   "ContextMenu": {
     id: 'molecules-actions-contextmenu--default',
     load: () => import('../stories/context-menu.stories'),
@@ -355,6 +359,10 @@ export const STORIES: Record<string, StoryEntry> = {
   "RecordsPage": {
     id: 'pages-recordspage--default',
     load: () => import('../stories/records-page.stories'),
+  },
+  "Repeater": {
+    id: 'molecules-inputs-repeater--default',
+    load: () => import('../stories/repeater.stories'),
   },
   "SankeyChart": {
     id: 'organisms-sankeychart--default',
