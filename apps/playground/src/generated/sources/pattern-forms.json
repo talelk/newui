@@ -3,8 +3,9 @@
     "patterns/Forms.tsx"
   ],
   "packages": [
-    "@talelk/newui-atoms",
+    "@talelk/newui-data",
     "@talelk/newui-molecules",
+    "@talelk/newui-organisms",
     "solid-js"
   ],
   "components": [
@@ -14,24 +15,14 @@
       "href": "/molecules/alert"
     },
     {
-      "name": "Button",
-      "slug": "button",
-      "href": "/atoms/button"
-    },
-    {
       "name": "Card",
       "slug": "card",
       "href": "/molecules/card"
     },
     {
-      "name": "Switch",
-      "slug": "switch",
-      "href": "/atoms/switch"
-    },
-    {
-      "name": "TextInput",
-      "slug": "text-input",
-      "href": "/atoms/text-input"
+      "name": "Wizard",
+      "slug": "wizard",
+      "href": "/organisms/wizard"
     }
   ]
 }

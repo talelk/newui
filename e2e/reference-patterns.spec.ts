@@ -162,19 +162,27 @@ test('the multi-step form validates, reviews and completes', async ({
   page,
 }) => {
   await page.goto('/kit/recipes/forms')
-  await page.getByRole('button', { name: 'Continue', exact: true }).click()
+  await page.getByRole('button', { name: 'Next', exact: true }).click()
   await expect(
     page.getByRole('alert').filter({
-      hasText: 'Enter a workspace name to continue.',
+      hasText: 'Enter a workspace name of at least two characters',
     }),
   ).toBeVisible()
 
   await page.getByRole('textbox', { name: 'Workspace name' }).fill('Northstar')
-  await page.getByRole('button', { name: 'Continue', exact: true }).click()
+  await page.getByRole('button', { name: 'Next', exact: true }).click()
+
+  // The email belongs to the invitation, so it is not there until it is on.
+  await expect(
+    page.getByRole('textbox', { name: 'Teammate email' }),
+  ).toBeHidden()
+  await page.getByRole('checkbox', { name: 'Invite a teammate' }).check()
   await page
     .getByRole('textbox', { name: 'Teammate email' })
     .fill('team@northstar.test')
-  await page.getByRole('button', { name: 'Continue', exact: true }).click()
+  await page.getByRole('button', { name: 'Next', exact: true }).click()
+
+  // The review is generated from the document, not written by the page.
   await expect(page.getByText('Northstar', { exact: true })).toBeVisible()
   await expect(
     page.getByText('team@northstar.test', { exact: true }),

@@ -1561,6 +1561,20 @@ export const COMPONENTS: ComponentEntry[] = [
     "shipped": true
   },
   {
+    "name": "Wizard",
+    "description": "A multi-step flow over a form: Stepper for progress and navigation, ConfigForm's renderer for the fields, and the three things every multi-step page…",
+    "slug": "wizard",
+    "group": "Patterns",
+    "package": "@talelk/newui-organisms",
+    "source": "packages/organisms/src/organisms/Wizard",
+    "atomic": "organism",
+    "parts": [
+      "WizardProps"
+    ],
+    "spec": "wizard",
+    "shipped": true
+  },
+  {
     "name": "Calendar",
     "description": "The date grid on its own — no input, no popup, no trigger.",
     "slug": "calendar",

@@ -264,6 +264,7 @@ const GROUPS: Record<string, string> = {
   DetailHeader: 'Layout',
   KanbanBoard: 'Layout',
   WidgetGrid: 'Layout',
+  Wizard: 'Patterns',
   FilterBar: 'Data',
   StatGrid: 'Data',
   DataTable: 'Data',

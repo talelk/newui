@@ -20,6 +20,7 @@ const PUBLIC = [
   'StatGrid',
   'VirtualList',
   'WidgetGrid',
+  'Wizard',
   'placeKanbanItem',
 ]
 
