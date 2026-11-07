@@ -3,13 +3,16 @@ import { type Accessor, createSignal, onCleanup } from 'solid-js'
 import { type ConfigStorage, createConfigStore } from '../config-store'
 
 /**
- * Draft autosave for a live form.
+ * Autosave and drafts for a live form.
  *
- * `isDirty`-driven and debounced: every change re-arms the timer, and when it
- * fires the form validates itself before anything is written — an invalid
- * document is never saved behind the user's back. Drafts persist through the
- * config store under the `newui.form-draft` namespace (document name = `id`),
- * so a closed tab loses nothing.
+ * Two stores, two rules. The **autosave** is a debounced backend write of a
+ * valid, pruned document: every change re-arms the timer, and when it fires
+ * the form validates itself before anything is written — an invalid document
+ * is never saved behind the user's back. It is not a submit; the submit
+ * lifecycle does not move. The **draft** is the local, unpruned copy written
+ * on every change (through the config store under `newui.form-draft`, document
+ * name = `id`), so a closed tab loses nothing and re-showing a hidden field
+ * gives back what was typed. A successful autosave or submit drops the draft.
  */
 export interface AutoSaveOptions<T extends object> {
   /** Persists the valid, dirty document — usually a query mutation. */
@@ -27,6 +30,14 @@ export interface AutoSaveOptions<T extends object> {
   storage?: ConfigStorage
 }
 
+/**
+ * What autosave watches: a TanStack form, or the `createAppForm` result —
+ * pass the latter so `save` receives the same pruned document submit sends.
+ */
+export type AutoSaveSource<T extends object> =
+  | AnyFormApi
+  | { form: AnyFormApi; document: (values: T) => T }
+
 /** What `createAutoSave` returns; the chrome reads the accessors. */
 export interface AutoSave<T extends object = Record<string, unknown>> {
   /** True while a save is in flight. */
@@ -37,9 +48,13 @@ export interface AutoSave<T extends object = Record<string, unknown>> {
   dirty: Accessor<boolean>
   /** Save now instead of waiting out the debounce. */
   flush: () => Promise<void>
-  /** Whether a stored draft exists. */
+  /** Whether a stored draft exists, reactive. */
   hasDraft: Accessor<boolean>
-  /** The stored draft, if any — the app decides whether to apply it. */
+  /**
+   * The stored draft, if any — the app decides whether to apply it. A draft
+   * may predate the current schema or field map: treat it as untrusted input
+   * and let the form's validation report what no longer fits.
+   */
   restoreDraft: () => T | undefined
   /** Drop the stored draft (on submit, discard, or after `restoreDraft`). */
   discardDraft: () => void
@@ -73,14 +88,23 @@ function deepEqual(a: unknown, b: unknown): boolean {
   )
 }
 
+function isAppForm<T extends object>(
+  source: AutoSaveSource<T>,
+): source is { form: AnyFormApi; document: (values: T) => T } {
+  return 'document' in source && typeof source.document === 'function'
+}
+
 export function createAutoSave<T extends object>(
-  form: AnyFormApi,
+  source: AutoSaveSource<T>,
   options: AutoSaveOptions<T>,
 ): AutoSave<T> {
+  const form = isAppForm(source) ? source.form : source
+  const document = isAppForm(source) ? source.document : (values: T) => values
   const debounce = options.debounce ?? 800
   const store = options.id
     ? createConfigStore({ key: 'newui.form-draft', storage: options.storage })
     : undefined
+  const id = options.id
 
   let lastSaved: T = clone(form.state.values as T)
   let running: Promise<void> = Promise.resolve()
@@ -88,6 +112,20 @@ export function createAutoSave<T extends object>(
   const [saving, setSaving] = createSignal(false)
   const [saved, setSaved] = createSignal(false)
   const [dirty, setDirty] = createSignal(false)
+  const [hasDraft, setHasDraft] = createSignal(
+    store !== undefined && id !== undefined && store.load(id) !== undefined,
+  )
+  const writeDraft = (values: T) => {
+    if (!store || !id) return
+    store.save(id, values, { type: 'form-draft' })
+    setHasDraft(true)
+  }
+  const dropDraft = () => {
+    if (!store || !id) return
+    store.remove(id)
+    setHasDraft(false)
+  }
+  let submissions = form.state.submissionAttempts as number
 
   const run = async (): Promise<void> => {
     const values = clone(form.state.values as T)
@@ -97,11 +135,11 @@ export function createAutoSave<T extends object>(
     try {
       await form.validateAllFields('submit')
       if ((form.state.errors as unknown[]).length === 0) {
-        await options.save(values)
+        await options.save(document(values))
         lastSaved = values
         setSaved(true)
         setDirty(false)
-        if (store && options.id) store.remove(options.id)
+        dropDraft()
       }
     } finally {
       setSaving(false)
@@ -109,12 +147,27 @@ export function createAutoSave<T extends object>(
   }
 
   const subscription = form.store.subscribe(() => {
-    const values = form.state.values as T
+    const state = form.state
+    // A successful submit wrote the document: nothing is unsaved, the draft
+    // goes, and the values it sent are the new baseline.
+    if (
+      state.isSubmitSuccessful &&
+      (state.submissionAttempts as number) !== submissions
+    ) {
+      submissions = state.submissionAttempts as number
+      clearTimeout(timer)
+      lastSaved = clone(state.values as T)
+      setDirty(false)
+      dropDraft()
+      return
+    }
+    // Mid-submit changes (an `onSubmit` reset) are the submit's, not edits.
+    if (state.isSubmitting) return
+    const values = state.values as T
     if (deepEqual(values, lastSaved)) return
     setDirty(true)
     setSaved(false)
-    if (store && options.id)
-      store.save(options.id, values, { type: 'form-draft' })
+    writeDraft(values)
     clearTimeout(timer)
     timer = setTimeout(() => {
       running = run()
@@ -134,14 +187,8 @@ export function createAutoSave<T extends object>(
       await running
       await run()
     },
-    hasDraft: () =>
-      store !== undefined && options.id !== undefined
-        ? store.load(options.id) !== undefined
-        : false,
-    restoreDraft: () =>
-      store && options.id ? store.load<T>(options.id)?.doc : undefined,
-    discardDraft: () => {
-      if (store && options.id) store.remove(options.id)
-    },
+    hasDraft,
+    restoreDraft: () => (store && id ? store.load<T>(id)?.doc : undefined),
+    discardDraft: dropDraft,
   }
 }

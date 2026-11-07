@@ -1,8 +1,9 @@
 import { render, screen, waitFor } from '@solidjs/testing-library'
 import type { StandardSchemaV1 } from '@tanstack/solid-form'
 import userEvent from '@testing-library/user-event'
+import { createRoot } from 'solid-js'
 import { describe, expect, it, vi } from 'vitest'
-import { hiddenPaths, pruneHiddenValues } from './config'
+import { type FieldConfig, hiddenPaths, pruneHiddenValues } from './config'
 import { createAppForm, Form } from './form'
 
 /** A minimal Standard Schema: `name` must be non-empty, `city` must be a URL. */
@@ -43,15 +44,30 @@ describe('pruneHiddenValues', () => {
     expect(values.smtp.host).toBe('a')
   })
 
-  it('drops indexed paths', () => {
-    const values = { items: [{ keep: true }, { drop: true }] }
-    const pruned = pruneHiddenValues(values, {
-      'items[1]': { when: () => false },
-    })
-    expect(pruned.items).toHaveLength(1)
-    expect(pruned.items[0]).toEqual({ keep: true })
+  it('drops a hidden row field from its row and keeps the row', () => {
+    const values = {
+      items: [
+        { kind: 'file', url: 'x' },
+        { kind: 'link', url: 'y' },
+      ],
+    }
+    const pruned = pruneHiddenValues(values, rowUi)
+    expect(pruned.items).toEqual([{ kind: 'file' }, { kind: 'link', url: 'y' }])
+    expect(values.items[0]).toEqual({ kind: 'file', url: 'x' })
   })
 })
+
+/** A repeater whose `url` row field shows only for `link` rows. */
+// biome-ignore lint/suspicious/noExplicitAny: fixtures shared across documents of different shapes.
+const rowUi: Record<string, FieldConfig<any>> = {
+  items: {
+    type: 'repeater',
+    fields: {
+      kind: { type: 'text' },
+      url: { when: (row: { kind: string }) => row.kind === 'link' },
+    },
+  },
+}
 
 describe('hiddenPaths', () => {
   it('lists the paths whose when is false', () => {
@@ -61,7 +77,128 @@ describe('hiddenPaths', () => {
     }
     expect(hiddenPaths({ on: false }, ui)).toEqual(['a'])
   })
+
+  it('expands a row field per row, passing the row and the form values', () => {
+    const values = {
+      flag: true,
+      items: [{ kind: 'file' }, { kind: 'link' }, { kind: 'file' }],
+    }
+    expect(hiddenPaths(values, rowUi)).toEqual(['items[0].url', 'items[2].url'])
+    const seen: unknown[] = []
+    hiddenPaths(values, {
+      items: {
+        fields: {
+          url: {
+            when: (row: unknown, all: unknown) => {
+              seen.push([row, all])
+              return true
+            },
+          },
+        },
+      },
+    })
+    expect(seen[0]).toEqual([{ kind: 'file' }, values])
+  })
+
+  it('does not expand the rows of a hidden repeater', () => {
+    const values = { on: false, items: [{ kind: 'file' }] }
+    expect(
+      hiddenPaths(values, {
+        items: { ...rowUi['items'], when: (v: typeof values) => v.on },
+      }),
+    ).toEqual(['items'])
+  })
 })
+
+describe('createAppForm field-map keys', () => {
+  it('rejects a key that names an array position', () => {
+    expect(() =>
+      createRoot(() =>
+        createAppForm({
+          defaultValues: { items: [] as unknown[] },
+          ui: { 'items[1]': { when: () => false } },
+          onSubmit: () => {},
+        }),
+      ),
+    ).toThrow(/static path/)
+  })
+
+  it('does not block submit on an issue under a hidden row field', async () => {
+    const onSubmit = vi.fn()
+    const rowSchema: StandardSchemaV1<RowDoc, RowDoc> = {
+      '~standard': {
+        version: 1,
+        vendor: 'test',
+        validate: (value) => {
+          const doc = value as RowDoc
+          const issues = doc.items.flatMap((row, index) =>
+            row.url === undefined || row.url === ''
+              ? [
+                  {
+                    message: 'URL is required.',
+                    path: [{ key: 'items' }, { key: index }, { key: 'url' }],
+                  },
+                ]
+              : [],
+          )
+          return issues.length ? { issues } : { value: doc }
+        },
+      },
+    }
+    let app!: ReturnType<typeof createAppForm<RowDoc>>
+    createRoot(() => {
+      app = createAppForm<RowDoc>({
+        defaultValues: {
+          items: [
+            { kind: 'file', url: '' },
+            { kind: 'link', url: 'https://a' },
+          ],
+        },
+        schema: rowSchema,
+        ui: rowUi,
+        onSubmit,
+      })
+    })
+    await app.form.handleSubmit()
+    expect(onSubmit).toHaveBeenCalledWith(
+      { items: [{ kind: 'file' }, { kind: 'link', url: 'https://a' }] },
+      expect.anything(),
+    )
+  })
+})
+
+describe('createAppForm hidden requirements', () => {
+  it('does not block submit when the schema requires a hidden top-level field', async () => {
+    type Doc = { mode: string; host?: string }
+    const onSubmit = vi.fn()
+    let app!: ReturnType<typeof createAppForm<Doc>>
+    createRoot(() => {
+      app = createAppForm<Doc>({
+        defaultValues: { mode: 'simple', host: '' },
+        schema: {
+          '~standard': {
+            version: 1,
+            vendor: 'test',
+            validate: (value) =>
+              (value as Doc).host
+                ? { value: value as Doc }
+                : {
+                    issues: [{ message: 'Host is required.', path: ['host'] }],
+                  },
+          },
+        },
+        ui: { host: { when: (values) => values.mode === 'advanced' } },
+        onSubmit,
+      })
+    })
+    await app.form.handleSubmit()
+    expect(onSubmit).toHaveBeenCalledWith({ mode: 'simple' }, expect.anything())
+  })
+})
+
+interface RowDoc {
+  items: { kind: string; url?: string }[]
+}
 
 function Harness(props: {
   onSubmit: (value: Record<string, unknown>) => void

@@ -80,3 +80,21 @@ _Avoid_: remote mode, async mode, "manual" as a user-facing prop.
 **prune** — dropping a hidden field's value from a form's submitted document.
 Config forms prune by default (`pruneHidden`): a value for a setting that is
 not shown is a lie to the backend. _Avoid_: clear, reset (for this case).
+
+**field map** — the per-path description of how a config form renders each
+field and when it is shown. Keys are static paths (`smtp.host`); array
+positions never appear in a key — a repeater's row fields are declared once
+and apply to every row. _Avoid_: sidecar, schema (the schema is the
+validator, which carries no rendering information).
+
+**row** — one entry of a repeater: the group of row fields at one position of
+an array value. _Avoid_: item (outside prop names such as `maxItems`).
+
+**draft** — the local, possibly invalid, unpruned copy of a form that has
+unsaved changes, kept so a closed tab loses nothing. Never sent to the
+backend; unpruned so hiding and re-showing a field gives back what the user
+typed. _Avoid_: autosave, save (for the local copy).
+
+**autosave** — a debounced write of a valid, pruned document to the backend
+without the user submitting. It is not a submit: the submit lifecycle
+(submitting, submit count) does not move. _Avoid_: save draft.

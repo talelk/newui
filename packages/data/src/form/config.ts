@@ -1,15 +1,22 @@
 import type { JSX } from 'solid-js'
 
 /**
- * The config-form vocabulary: what the engine reads from a `ui` sidecar.
+ * One entry of a config form's field map: what the engine reads, and what the
+ * `ConfigForm` organism renders.
  *
- * The schema validates; this is the sidecar that says how to render. A
- * Standard Schema carries zero UI information, so `createAppForm` accepts a
- * map of field paths to these entries and reads only `when` and `dependsOn`
- * from them — everything else is renderer vocabulary (see the `ConfigForm`
- * organism), and the same object serves both sides.
+ * The schema validates; the field map says how to render. A Standard Schema
+ * carries zero UI information, so `createAppForm` accepts a map of static
+ * field paths to these entries and reads only `when` and `dependsOn` from
+ * them — everything else is renderer vocabulary, and the same object serves
+ * both sides.
+ *
+ * `TScope` is what `when` sees first: the form's values for a top-level entry,
+ * the row for a repeater's row field.
  */
-export interface FieldConfig<TValues = Record<string, unknown>> {
+export interface FieldConfig<
+  TValues = Record<string, unknown>,
+  TScope = TValues,
+> {
   /**
    * Which control renders. The default mapping is the molecule
    * `FormControl` vocabulary (`text`, `select`, `checkbox`, `date`, …), plus
@@ -41,10 +48,16 @@ export interface FieldConfig<TValues = Record<string, unknown>> {
    * Returning `false` hides the field. Unless `pruneHidden` is off, a hidden
    * field is also dropped from the submitted document — submitting a value
    * for a setting that is not shown is a lie to the backend.
+   *
+   * `scope` is the form's values for a top-level entry and the row for a
+   * repeater's row field; `values` is always the whole form.
    */
-  when?: (values: TValues) => boolean
-  /** For `type: 'repeater'`: the row's fields, keyed by subfield name. */
-  fields?: Record<string, FieldConfig<any>>
+  when?: (scope: TScope, values: TValues) => boolean
+  /**
+   * For `type: 'repeater'`: the row's fields, keyed by subfield name. Their
+   * `when` receives the row first.
+   */
+  fields?: Record<string, FieldConfig<TValues, any>>
   /** For `type: 'repeater'`: the ceiling on rows. */
   maxItems?: number
 }
@@ -63,26 +76,57 @@ export interface FieldControlProps {
   disabled?: boolean
 }
 
-/** Every path the `ui` map currently hides. */
+/** The slice of a field-map entry the engine reads for visibility. */
+interface VisibilityEntry {
+  when?: (scope: any, values: any) => boolean
+  fields?: Record<string, VisibilityEntry>
+}
+
+/**
+ * Every path the field map currently hides.
+ *
+ * Top-level entries are called `when(values, values)`. A repeater's row fields
+ * are expanded per row — `when(row, values)` — and reported as
+ * `items[1].url`; a hidden repeater hides its rows with it, so they are not
+ * expanded.
+ */
 export function hiddenPaths<T>(
   values: T,
-  ui: Record<string, { when?: (values: T) => boolean }>,
+  ui: Record<string, VisibilityEntry>,
 ): string[] {
   const hidden: string[] = []
-  for (const [path, config] of Object.entries(ui)) {
-    if (config.when && !config.when(values)) hidden.push(path)
+  const walk = (
+    scope: unknown,
+    entries: Record<string, VisibilityEntry>,
+    prefix: string,
+  ) => {
+    for (const [key, config] of Object.entries(entries)) {
+      const path = prefix ? `${prefix}.${key}` : key
+      if (config.when && !config.when(scope, values)) {
+        hidden.push(path)
+        continue
+      }
+      if (!config.fields) continue
+      const rows = readPath(scope, key)
+      if (!Array.isArray(rows)) continue
+      rows.forEach((row, index) => {
+        walk(row, config.fields ?? {}, `${path}[${index}]`)
+      })
+    }
   }
+  walk(values, ui, '')
   return hidden
 }
 
 /**
- * Drop every hidden field from `values`, keyed by the `ui` map's paths.
- * Paths may nest (`smtp.host`) and index (`items[1].title`); the result is a
- * copy, never a mutation of the form's state.
+ * Drop every hidden field from `values`. Paths may nest (`smtp.host`) and,
+ * inside a repeater, address a row field (`items[1].url`) — the field leaves
+ * its row, the row stays. The result is a copy, never a mutation of the
+ * form's state.
  */
 export function pruneHiddenValues<T extends object>(
   values: T,
-  ui: Record<string, { when?: (values: T) => boolean }>,
+  ui: Record<string, VisibilityEntry>,
 ): T {
   let pruned: T = values
   for (const path of hiddenPaths(values, ui)) {
@@ -104,23 +148,28 @@ export function isUnderHidden(
   )
 }
 
+function splitPath(path: string): string[] {
+  return path.replace(/\[/g, '.').replace(/\]/g, '').split('.').filter(Boolean)
+}
+
+function readPath(root: unknown, path: string): unknown {
+  let node = root
+  for (const key of splitPath(path)) {
+    if (node === null || typeof node !== 'object') return undefined
+    node = (node as Record<string, unknown>)[key]
+  }
+  return node
+}
+
 function deletePath(root: unknown, path: string): unknown {
-  const keys = path
-    .replace(/\[/g, '.')
-    .replace(/\]/g, '')
-    .split('.')
-    .filter(Boolean)
+  const keys = splitPath(path)
   if (keys.length === 0) return root
   const [head, ...rest] = keys as [string, ...string[]]
   if (root === null || typeof root !== 'object') return root
   if (Array.isArray(root)) {
+    // A static field-map path never ends on a position: rows are not removed.
+    if (rest.length === 0) return root
     const copy = [...(root as unknown[])]
-    if (rest.length === 0) {
-      const index = Number(head)
-      if (!Number.isNaN(index) && index >= 0 && index < copy.length)
-        copy.splice(index, 1)
-      return copy
-    }
     copy[Number(head)] = deletePath(copy[Number(head)], rest.join('.'))
     return copy
   }

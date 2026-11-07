@@ -1,7 +1,8 @@
 import { type AnyFormApi, createForm } from '@tanstack/solid-form'
-import { createRoot } from 'solid-js'
+import { createEffect, createRoot } from 'solid-js'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createAutoSave } from './autosave'
+import { createAppForm } from './form'
 
 function memoryStorage() {
   const map = new Map<string, string>()
@@ -91,5 +92,94 @@ describe('createAutoSave', () => {
     await vi.advanceTimersByTimeAsync(50)
     expect(save).toHaveBeenCalled()
     expect(auto.hasDraft()).toBe(false)
+  })
+
+  it('tracks hasDraft reactively', async () => {
+    const form = harness()
+    const seen: boolean[] = []
+    createRoot(() => {
+      const auto = createAutoSave<{ name: string }>(form, {
+        save: vi.fn(),
+        debounce: 50,
+        id: 'reactive',
+        storage: memoryStorage(),
+      })
+      createEffect(() => {
+        seen.push(auto.hasDraft())
+      })
+    })
+    form.setFieldValue('name', 'Ada Lovelace')
+    await vi.advanceTimersByTimeAsync(50)
+    expect(seen).toEqual([false, true, false])
+  })
+})
+
+interface Doc {
+  mode: string
+  host: string
+  name: string
+}
+
+/** An app form whose `host` is hidden unless `mode` is `advanced`. */
+function appHarness(onSubmit: (doc: Doc) => void = () => {}) {
+  let app!: ReturnType<typeof createAppForm<Doc>>
+  createRoot(() => {
+    app = createAppForm<Doc>({
+      defaultValues: { mode: 'simple', host: 'stale.example', name: '' },
+      ui: { host: { when: (values) => values.mode === 'advanced' } },
+      onSubmit,
+    })
+  })
+  return app
+}
+
+describe('createAutoSave with an app form', () => {
+  it('saves the pruned document, the one submit sends', async () => {
+    const app = appHarness()
+    const save = vi.fn()
+    createAutoSave<Doc>(app, { save, debounce: 50 })
+
+    app.form.setFieldValue('name', 'Ada')
+    await vi.advanceTimersByTimeAsync(50)
+
+    expect(save).toHaveBeenCalledWith({ mode: 'simple', name: 'Ada' })
+  })
+
+  it('keeps the draft unpruned', () => {
+    const app = appHarness()
+    const auto = createAutoSave<Doc>(app, {
+      save: vi.fn(),
+      debounce: 50,
+      id: 'settings',
+      storage: memoryStorage(),
+    })
+
+    app.form.setFieldValue('name', 'Ada')
+
+    expect(auto.restoreDraft()).toEqual({
+      mode: 'simple',
+      host: 'stale.example',
+      name: 'Ada',
+    })
+  })
+
+  it('drops the draft on a successful submit and does not autosave after it', async () => {
+    const app = appHarness()
+    const save = vi.fn()
+    const auto = createAutoSave<Doc>(app, {
+      save,
+      debounce: 50,
+      id: 'settings',
+      storage: memoryStorage(),
+    })
+
+    app.form.setFieldValue('name', 'Ada')
+    expect(auto.hasDraft()).toBe(true)
+    await app.form.handleSubmit()
+
+    expect(auto.hasDraft()).toBe(false)
+    expect(auto.dirty()).toBe(false)
+    await vi.advanceTimersByTimeAsync(50)
+    expect(save).not.toHaveBeenCalled()
   })
 })

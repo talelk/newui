@@ -9582,7 +9582,7 @@
       },
       {
         "name": "field",
-        "type": "ConfigFormField<TValues>",
+        "type": "ConfigFormField<TValues, any>",
         "optional": false
       },
       {
@@ -9590,6 +9590,12 @@
         "type": "Accessor<TValues>",
         "optional": false,
         "description": "The form's values, reactive — `when` is evaluated against these."
+      },
+      {
+        "name": "scope",
+        "type": "Accessor<unknown>",
+        "optional": true,
+        "description": "The row, reactive, for a repeater's row field; `when` sees it first."
       }
     ]
   },

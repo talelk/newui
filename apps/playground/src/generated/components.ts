@@ -1526,7 +1526,7 @@ export const COMPONENTS: ComponentEntry[] = [
   },
   {
     "name": "ConfigForm",
-    "description": "The config-form organism: a schema-driven <form> that renders every field from its ui sidecar entry — the FormControl vocabulary for plain fields,…",
+    "description": "The config-form organism: a schema-driven <form> that renders every field from its field-map entry — the FormControl vocabulary for plain fields,…",
     "slug": "config-form",
     "group": "Patterns",
     "package": "@talelk/newui-organisms",
