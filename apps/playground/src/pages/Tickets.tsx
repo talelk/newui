@@ -412,17 +412,24 @@ export function Tickets(): JSX.Element {
           if (!value) setActive(undefined)
         }}
       >
-        <Dialog.Content>
+        {/* The ticket opens as a side sheet beside the queue it came from. */}
+        <Dialog.Content position="end" size="xl">
           <Show when={current()}>
             {(ticket) => (
               <>
+                <Dialog.Close
+                  aria-label="Close ticket"
+                  class="absolute end-2 top-2 grid size-8 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
+                >
+                  <span aria-hidden="true" class="lucide-x size-4" />
+                </Dialog.Close>
                 <Dialog.Header>
                   <Dialog.Title>{ticket().subject}</Dialog.Title>
                   <Dialog.Description>
                     {ticket().id} · {ticket().customer}
                   </Dialog.Description>
                 </Dialog.Header>
-                <div class="my-5 grid gap-3 sm:grid-cols-2">
+                <div class="my-5 grid gap-3 sm:grid-cols-3">
                   <Select
                     label="Ticket status"
                     value={ticket().status}
@@ -455,19 +462,19 @@ export function Tickets(): JSX.Element {
                 </div>
                 <section
                   aria-label="Ticket conversation"
-                  class="max-h-64 space-y-3 overflow-y-auto rounded-control border border-outline-gray-1 bg-surface-gray-1 p-3"
-                  tabindex="0"
+                  class="flex flex-col gap-2 border-t border-outline-gray-1 pt-4"
                 >
+                  <h3 class="text-section">Conversation</h3>
                   <For each={ticket().messages}>
                     {(message) => (
-                      <p class="whitespace-pre-wrap rounded-control bg-surface-elevation-1 p-3 text-interface">
+                      <p class="whitespace-pre-wrap rounded-card border border-outline-gray-1 border-s-2 border-s-outline-gray-3 px-3 py-2 text-interface">
                         {message}
                       </p>
                     )}
                   </For>
                 </section>
                 <form
-                  class="mt-4 flex flex-col gap-3"
+                  class="mt-4 flex flex-1 flex-col gap-3"
                   onSubmit={(event) => {
                     event.preventDefault()
                     if (!reply().trim()) return

@@ -98,7 +98,7 @@ const Trigger: ParentComponent<{ class?: string }> = (props) => {
     <Menu.Trigger
       aria-label={`${menu.label} column menu`}
       class={cn(
-        'inline-flex size-6 shrink-0 items-center justify-center rounded-3 focus-visible:focus-ring hover:bg-surface-gray-2',
+        'inline-flex size-6 shrink-0 items-center justify-center rounded-control focus-visible:focus-ring hover:bg-surface-gray-2',
         props.class,
       )}
     >

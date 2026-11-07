@@ -50,7 +50,7 @@ export function ConfigForm<TValues extends object = Record<string, unknown>>(
     <form
       data-slot="config-form"
       noValidate
-      class={cn('flex flex-col gap-4', props.class)}
+      class={cn('flex flex-col gap-field-gap', props.class)}
       onSubmit={(event) => {
         event.preventDefault()
         event.stopPropagation()

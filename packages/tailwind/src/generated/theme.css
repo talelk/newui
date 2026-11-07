@@ -1502,6 +1502,8 @@
   /* animations — @keyframes live in utilities.css; speeds compose the tokens above */
   --animate-overlay-in: overlay-in 100ms cubic-bezier(0.23, 1, 0.32, 1);
   --animate-drawer-in: drawer-in 200ms cubic-bezier(0.23, 1, 0.32, 1);
+  --animate-sheet-in: sheet-in 200ms cubic-bezier(0.23, 1, 0.32, 1);
+  --animate-sheet-in-rtl: sheet-in-rtl 200ms cubic-bezier(0.23, 1, 0.32, 1);
   --animate-shimmer: shimmer 1400ms linear infinite;
   --animate-progress: progress 1400ms cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }

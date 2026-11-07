@@ -185,6 +185,11 @@ decl(
   '--animate-drawer-in',
   `drawer-in ${duration['moderate']} ${easing['out']}`,
 )
+decl('--animate-sheet-in', `sheet-in ${duration['moderate']} ${easing['out']}`)
+decl(
+  '--animate-sheet-in-rtl',
+  `sheet-in-rtl ${duration['moderate']} ${easing['out']}`,
+)
 decl('--animate-shimmer', 'shimmer 1400ms linear infinite')
 decl('--animate-progress', `progress 1400ms ${easing['in-out']} infinite`)
 

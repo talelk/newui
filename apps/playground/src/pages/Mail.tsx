@@ -428,61 +428,65 @@ export function Mail(): JSX.Element {
       section="Mail"
       description="A clear home for conversations, updates and the work that happens between them."
       actions={
-        <Button
-          class="max-sm:min-h-10"
-          variant="solid"
-          theme="blue"
-          iconLeft="lucide-pen-line"
-          onClick={newMessage}
-        >
-          Compose email
-        </Button>
-      }
-    >
-      <div class="flex flex-wrap items-end gap-3">
-        <Select
-          label="Mail account"
-          value={account()}
-          options={['rhea@acme.com', 'team@acme.com'].map((value) => ({
-            value,
-            label: value,
-          }))}
-          onValueChange={(value) => {
-            const next = value ?? 'rhea@acme.com'
-            accounts.set(account(), messages())
-            setMessages(
-              accounts.get(next) ??
-                initialMail.map((message) => ({
-                  ...message,
-                  replies: [],
-                  subject:
-                    next === 'team@acme.com'
-                      ? `Team: ${message.subject}`
-                      : message.subject,
-                })),
-            )
-            setAccount(next)
-            selectFolder('Inbox')
-            mailUndo.clear()
-          }}
-        />
-        <Button
-          class="hidden sm:inline-flex"
-          aria-expanded={navigationOpen()}
-          aria-controls="mail-mailboxes"
-          onClick={() => setNavigationOpen(!navigationOpen())}
-        >
-          Toggle mail navigation
-        </Button>
-        <div class="sm:hidden">
+        <>
+          {/* Account and pane controls are page chrome: they ride in the
+              header beside Compose instead of spending a labelled row. */}
+          <div class="flex flex-wrap items-center gap-2">
+            <Select
+              aria-label="Mail account"
+              value={account()}
+              options={['rhea@acme.com', 'team@acme.com'].map((value) => ({
+                value,
+                label: value,
+              }))}
+              onValueChange={(value) => {
+                const next = value ?? 'rhea@acme.com'
+                accounts.set(account(), messages())
+                setMessages(
+                  accounts.get(next) ??
+                    initialMail.map((message) => ({
+                      ...message,
+                      replies: [],
+                      subject:
+                        next === 'team@acme.com'
+                          ? `Team: ${message.subject}`
+                          : message.subject,
+                    })),
+                )
+                setAccount(next)
+                selectFolder('Inbox')
+                mailUndo.clear()
+              }}
+            />
+            <Button
+              class="hidden sm:inline-flex"
+              aria-expanded={navigationOpen()}
+              aria-controls="mail-mailboxes"
+              onClick={() => setNavigationOpen(!navigationOpen())}
+            >
+              Toggle mail navigation
+            </Button>
+            <div class="sm:hidden">
+              <Button
+                class="max-sm:min-h-10"
+                onClick={() => setMailboxesOpen(true)}
+              >
+                Mailboxes · {folder()}
+              </Button>
+            </div>
+          </div>
           <Button
             class="max-sm:min-h-10"
-            onClick={() => setMailboxesOpen(true)}
+            variant="solid"
+            theme="blue"
+            iconLeft="lucide-pen-line"
+            onClick={newMessage}
           >
-            Mailboxes · {folder()}
+            Compose email
           </Button>
-        </div>
-      </div>
+        </>
+      }
+    >
       <div
         ref={(element) => (frame = element)}
         style={{ height: `${frameHeight()}px` }}

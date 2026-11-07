@@ -265,6 +265,8 @@ export const overlayPanel = tv({
     enter: {
       overlay: 'data-[state=open]:animate-overlay-in',
       drawer: 'data-[state=open]:animate-drawer-in',
+      sheet:
+        'data-[state=open]:animate-sheet-in rtl:data-[state=open]:animate-sheet-in-rtl',
       none: '',
     },
   },

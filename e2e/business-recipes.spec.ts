@@ -64,7 +64,12 @@ test('mobile tickets use cards, closed queues and local resolution', async ({
   await expect(
     page.getByText('1 ticket resolved.', { exact: true }),
   ).toBeVisible()
-  await expect(page.getByText('No tickets match this view')).toBeVisible()
+  // On a phone the empty state sits in the card column (the table is hidden).
+  await expect(
+    page
+      .locator('[data-slot="data-table-cards-empty"]')
+      .getByText('No tickets match this view'),
+  ).toBeVisible()
   await page.getByRole('radio', { name: 'Resolved tickets' }).click()
   await expect(cards).toContainText('TKT-1024')
   await expect(cards).toContainText('Resolved')
@@ -166,7 +171,10 @@ test('tickets replies, assigns, resolves and creates a support request', async (
     .getByRole('button', { name: 'Resolve ticket', exact: true })
     .click()
   await expect(page.getByRole('dialog')).toBeHidden()
-  await expect(page.locator('tbody tr')).toHaveCount(0)
+  // The table stays mounted when a view empties; the empty state is its row.
+  await expect(
+    page.locator('tbody').getByText('No tickets match this view'),
+  ).toBeVisible()
   await page.getByRole('button', { name: 'New ticket', exact: true }).click()
   await page
     .getByRole('textbox', { name: 'Ticket subject', exact: false })

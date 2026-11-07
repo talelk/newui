@@ -46,7 +46,12 @@ export type DialogSize =
   | '7xl'
 
 /** Vertical placement: centred, or anchored near the top of the viewport. */
-export type DialogPosition = 'center' | 'top'
+/**
+ * Where the dialog sits: centred, near the top (command-style), or `end` — a
+ * full-height side sheet on the inline-end edge, for reading or editing a
+ * record without leaving the list behind it.
+ */
+export type DialogPosition = 'center' | 'top' | 'end'
 
 /** Tone of the header icon badge. Unset renders the neutral gray badge. */
 export type DialogTheme = 'amber' | 'blue' | 'red' | 'green'
@@ -263,7 +268,13 @@ const Footer: ParentComponent<DialogFooterProps> = (props) => {
   return (
     <footer
       data-slot="dialog-footer"
-      class={cn('mt-4 flex justify-end gap-2', props.class)}
+      class={cn(
+        'mt-4 flex justify-end gap-2',
+        // In a side sheet the actions stay reachable: pinned to the bottom
+        // edge over the scrolling body, on the sheet's own surface.
+        'group-data-[position=end]/dialog:sticky group-data-[position=end]/dialog:bottom-[calc(var(--spacing-dialog-pad)*-1)] group-data-[position=end]/dialog:-mx-dialog-pad group-data-[position=end]/dialog:-mb-dialog-pad group-data-[position=end]/dialog:mt-auto group-data-[position=end]/dialog:border-t group-data-[position=end]/dialog:border-outline-gray-1 group-data-[position=end]/dialog:bg-surface-elevation-1 group-data-[position=end]/dialog:px-dialog-pad group-data-[position=end]/dialog:py-3',
+        props.class,
+      )}
     >
       <Show when={props.actions?.length} fallback={props.children}>
         <For each={props.actions}>
@@ -290,7 +301,10 @@ const Close: ParentComponent<PartProps> = (props) => {
 export interface DialogContentProps extends PartProps {
   /** Max-width of the dialog. Default `'lg'`. */
   size?: DialogSize
-  /** Vertical placement. Default `'center'`. */
+  /**
+   * Placement. Default `'center'`. `'end'` is a full-height side sheet: the
+   * body scrolls and the footer stays pinned to the bottom edge.
+   */
   position?: DialogPosition
   /** Drop the default padding so content fills the card. */
   bare?: boolean
@@ -313,19 +327,32 @@ const Content: ParentComponent<DialogContentProps> = (props) => {
           data-slot="dialog-positioner"
           data-position={position()}
           class={cn(
-            'fixed inset-0 flex justify-center overflow-y-auto p-4',
+            'fixed inset-0 flex',
             overlayLayers.modal,
-            position() === 'top' ? 'items-start pt-[20vh]' : 'items-center',
+            position() === 'end'
+              ? 'justify-end'
+              : cn(
+                  'justify-center overflow-y-auto p-4',
+                  position() === 'top'
+                    ? 'items-start pt-[20vh]'
+                    : 'items-center',
+                ),
           )}
         >
           <div
             {...api().getContentProps()}
             data-slot="dialog-content"
             data-size={size()}
+            data-position={position()}
             class={cn(
-              overlayPanel({ kind: 'modal' }),
-              'relative w-full overflow-hidden',
+              overlayPanel({
+                kind: 'modal',
+                enter: position() === 'end' ? 'sheet' : 'overlay',
+              }),
+              'group/dialog relative w-full overflow-hidden',
               SIZE[size()],
+              position() === 'end' &&
+                'flex h-dvh max-h-dvh flex-col overflow-y-auto rounded-none border-y-0 border-e-0',
               props.bare ? 'p-0' : '',
               props.class,
             )}

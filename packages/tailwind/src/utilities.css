@@ -151,6 +151,29 @@
   }
 }
 
+/* Side sheets settle in from their inline-end edge: the last few pixels
+ * only, mirrored for right-to-left documents. */
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes sheet-in-rtl {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* Skeleton sheen: sweeps a wide background gradient across the block. The
  * consumer supplies the gradient and `background-size: 200% 100%`. */
 @keyframes shimmer {

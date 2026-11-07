@@ -173,7 +173,12 @@ or any content in its default slot.
 ### Setting rows
 
 `SettingsRow` shows a setting's title and description on the left and its
-control on the right. The title becomes a `<label>` pointing at the control's id
+control on the right, in two columns: a flexible title track and a fixed
+12–18rem control track. A text field (`[data-slot="field"]`) fills the control
+track; a switch or checkbox keeps its size at the track's end, so every control
+starts on the same line. Rows are ruled with a 1px hairline (the last row is
+not), so the eye carries from a setting to its control; below `sm` the control
+stacks under the title. The title becomes a `<label>` pointing at the control's id
 when one is detected (a `[data-slot="control"]`, `[role="switch"]`,
 `[role="checkbox"]`, `input`, `select` or `textarea` inside the row), so a
 a control such as `Switch` needs no wiring. Set `labelFor` to point the

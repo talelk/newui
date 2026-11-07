@@ -136,7 +136,10 @@ test('changes a status optimistically and deletes after confirming', async ({
   await dialog.getByRole('button', { name: 'Delete this project' }).click()
   await dialog.getByRole('button', { name: 'Delete forever' }).click()
   await expect(dialog).toBeHidden()
-  await expect(rows(page)).toHaveCount(0)
+  // The table stays mounted when it empties; its one row is the empty state.
+  await expect(
+    rows(page).getByRole('button', { name: 'Ledger migration' }),
+  ).toHaveCount(0)
   await expect(page.getByText('Ledger migration was deleted.')).toBeVisible()
 })
 

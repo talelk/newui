@@ -483,7 +483,7 @@ function EditableCell(props: {
           // they see must still land on this control.
           aria-label={`${props.value || '—'} — edit ${props.label} of ${props.id}`}
           class={cn(
-            '-mx-1 w-full cursor-text rounded-3 px-1 py-0.5 text-start hover:bg-surface-gray-2 focus-visible:focus-ring',
+            '-mx-1 w-full cursor-text rounded-control px-1 py-0.5 text-start hover:bg-surface-gray-2 focus-visible:focus-ring',
             props.alignEnd && 'text-end',
           )}
           onClick={() => {
@@ -536,7 +536,7 @@ function Expander<T extends { id: string }>(props: {
       data-slot="data-table-expander"
       aria-expanded={props.row.getIsExpanded()}
       aria-label={`Expand ${props.label ?? props.row.original.id}`}
-      class="inline-flex size-6 shrink-0 items-center justify-center rounded-3 focus-visible:focus-ring hover:bg-surface-gray-2"
+      class="inline-flex size-6 shrink-0 items-center justify-center rounded-control focus-visible:focus-ring hover:bg-surface-gray-2"
       onClick={() => props.row.toggleExpanded()}
     >
       <span
@@ -1151,7 +1151,7 @@ export function DataTable<T extends { id: string }>(
     >
       <button
         type="button"
-        class="group/sort inline-flex items-center gap-1 rounded-3 focus-visible:focus-ring"
+        class="group/sort inline-flex items-center gap-1 rounded-control focus-visible:focus-ring"
         onClick={header.column.getToggleSortingHandler()}
       >
         {flexRender(header.column.columnDef.header, header.getContext())}
@@ -1608,7 +1608,7 @@ export function DataTable<T extends { id: string }>(
                   return (
                     <div
                       data-slot="data-table-group-card"
-                      class="mt-2 flex items-center justify-between gap-2 rounded-3 bg-surface-gray-1 px-3 py-2 first:mt-0"
+                      class="mt-2 flex items-center justify-between gap-2 rounded-control bg-surface-gray-1 px-3 py-2 first:mt-0"
                     >
                       <div class="flex min-w-0 items-center gap-2">
                         <Expander row={row} label={String(groupValue(row))} />
@@ -1709,6 +1709,25 @@ export function DataTable<T extends { id: string }>(
                 )
               }}
             </For>
+          </div>
+        </Show>
+        {/* Below the card breakpoint the table is hidden, so an emptied view
+            needs the empty state in the card column too — otherwise a phone
+            shows nothing at all where the records were. */}
+        <Show when={hasMobileCards() && table.getRowModel().rows.length === 0}>
+          <div
+            data-slot="data-table-cards-empty"
+            class={`p-card-pad-compact ${cardHiddenClass()}`}
+          >
+            <DataState
+              status="empty"
+              title={props.emptyTitle ?? 'No matching records'}
+              description={
+                props.emptyHint ??
+                'Try a different search or clear your filters.'
+              }
+              action={emptyAction()}
+            />
           </div>
         </Show>
         {/* The table stays mounted when a filter empties it: the header is

@@ -384,7 +384,7 @@ export function ColumnFilter(props: {
         aria-label={`Filter by ${props.label}`}
         data-active={active() ? '' : undefined}
         class={cn(
-          'inline-flex size-6 shrink-0 items-center justify-center rounded-3 focus-visible:focus-ring hover:bg-surface-gray-2',
+          'inline-flex size-6 shrink-0 items-center justify-center rounded-control focus-visible:focus-ring hover:bg-surface-gray-2',
           active() ? 'text-interface' : 'text-ink-gray-6',
         )}
       >
@@ -496,7 +496,7 @@ export function ColumnFilter(props: {
                     type="button"
                     data-slot="data-table-filter-facet"
                     aria-pressed={String(value() ?? '') === facet.value}
-                    class="flex items-center justify-between gap-4 rounded-3 px-2 py-1 text-start text-caption hover:bg-surface-gray-2 focus-visible:focus-ring"
+                    class="flex items-center justify-between gap-4 rounded-control px-2 py-1 text-start text-caption hover:bg-surface-gray-2 focus-visible:focus-ring"
                     onClick={() => {
                       set(facet.value)
                       setOpen(false)

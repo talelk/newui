@@ -14,7 +14,7 @@ export const API = {
       "name": "position",
       "type": "DialogPosition",
       "optional": true,
-      "description": "Vertical placement. Default `'center'`."
+      "description": "Placement. Default `'center'`. `'end'` is a full-height side sheet: the\nbody scrolls and the footer stays pinned to the bottom edge."
     },
     {
       "name": "bare",
