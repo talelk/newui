@@ -1,5 +1,73 @@
 # @talelk/newui-molecules
 
+## 2.4.0
+
+### Minor Changes
+
+- 73f9b95: The config-form engine (issue #30): a schema-driven form that renders itself.
+  
+  - **`createAppForm` grows a declarative layer** in `@talelk/newui-data/form`.
+    A field map (`ui`: `FieldConfig` entries keyed by static field path) and a Standard `schema`
+    drive the whole document: the schema validates the *submitted* document, so
+    fields hidden by `when` are pruned before validation and issues under hidden
+    paths are dropped — a field the user cannot see never blocks the submit.
+    `dependsOn` compiles onto a TanStack `onChange` listener that revalidates the
+    dependent field with the `dynamic` cause; `pruneHidden` (default `true`) drops
+    hidden fields from the document handed to `onSubmit` — including a repeater's
+    row fields, whose `when(row, values)` sees the row first. `document(values)`
+    exposes that submitted document.
+  - **`createAutoSave(source, { save, debounce = 800, filter?, id?, storage? })`**
+    is debounced backend persistence that validates before writing. Given the
+    `createAppForm` result it saves the same pruned document submit sends. With
+    `id` it also keeps a local, unpruned draft under `newui.form-draft`, dropped
+    after a successful autosave or submit; `hasDraft` is reactive.
+  - **`Repeater`** (molecules) is a dynamic array over a `mode="array"` field —
+    add/remove/copy with `maxItems`/`minItems` bounds and an optional collapse per
+    row. Rows iterate with `Index`, so a removal never takes the wrong row's
+    values, and structural changes revalidate from the changed index onward.
+  - **`ConfigForm`** (organisms) is the rendered face: a `<form>` that renders
+    every field from its field-map entry — the `FormControl` vocabulary for plain
+    fields, `Repeater` for arrays, and `when` predicates for visibility, bound to
+    the live form state.
+  - **`FormControl`** now forwards `onBlur` on the text-like and `textarea` types,
+    so a config field can mark itself touched.
+- 1f9dd81: The instrument-panel look (ADR-0016): the kit retuned for people who work
+  inside records all day. This is a visible change for every consumer.
+  
+  - **Tokens.** A hand-authored layer over the Figma export: a cool gray family
+    (a Mist frame, white sheets for data, Graphite ink), the `blue` theme retuned
+    to Petrol as the single accent, a solid Petrol focus ring, radius by role
+    (4px controls, 6px sheets, 8px overlays) and one new semantic token,
+    `surface-canvas`.
+  - **Type.** IBM Plex Sans replaces Inter (self-hosted, SIL OFL), with 13px
+    interface text. Its figures are tabular by default; table headers use its
+    semi-condensed width. `font-stretch-*` joins the merge vocabulary.
+  - **Density.** `DataTable` defaults to `density="compact"` (about 28px rows;
+    `comfortable` is about 36px), and table cell spacing tightens everywhere,
+    including the `Table` molecule.
+  - **AppShell** paints the Mist frame and folds the page header into one compact
+    band: the trail, then the title with its description and the actions.
+  - **StatGrid** is one ruled strip instead of a row of cards; deltas are toned
+    text.
+  - **FilterBar** keeps a lone result count on the control row.
+  - **Sidebar** items are 28px; the current destination is a white sheet with a
+    Petrol icon; counts are plain figures.
+  - **DataTable** marks the row holding keyboard focus with a Petrol edge.
+  - **Checked controls are Petrol.** Switch, Checkbox, RadioGroup and Tree
+    checkboxes fill with the accent when checked, instead of near-black.
+  - **Menus and listboxes** use 26px rows (`listboxRow`).
+  - **Charts.** `NumberCard` deltas are toned text, its title is 12px, and a new
+    `bare` prop drops its border and radius so several share one ruled KPI strip.
+    `ChartCard` and `NumberCard` use the compact card pad; chart titles use the
+    section type.
+  - **KanbanBoard** columns sit closer (12px gaps, compact board padding).
+  - **AuthLayout** paints the Mist canvas.
+
+### Patch Changes
+
+- Updated dependencies [1f9dd81]
+  - @talelk/newui-atoms@1.4.0
+
 ## 2.3.0
 
 ### Minor Changes

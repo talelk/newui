@@ -1,6 +1,6 @@
 {
   "name": "@talelk/newui-tokens",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "description": "Framework-neutral design tokens (colors, radius, typography, spacing, elevation, focus).",
   "exports": {

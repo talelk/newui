@@ -3,15 +3,14 @@ name: newui-charts
 description: >
   Use when rendering charts with @talelk/newui-charts — AreaChart, BarChart,
   LineChart, DonutChart, FunnelChart, HeatmapChart, CalendarHeatmapChart,
-  GaugeChart, ScatterChart, SankeyChart, Sparkline, Dashboard and NumberCard,
-  or tuning series, axes, palettes and empty/loading chart states. Use when
-  the user mentions these chart components or asks for analytics visuals in
-  newui.
+  GaugeChart, ScatterChart, SankeyChart, Sparkline, Dashboard and NumberCard, or
+  tuning series, axes, palettes and empty/loading chart states. Use when the
+  user mentions these chart components or asks for analytics visuals in newui.
 metadata:
   type: core
   domain: ui
   library: '@talelk/newui-charts'
-  library_version: '1.0.3'
+  library_version: '1.1.0'
 sources:
   - talelk/newui:packages/charts/src/index.ts
   - talelk/newui:packages/charts/src/ChartContainer.tsx
