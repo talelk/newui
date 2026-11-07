@@ -118,10 +118,24 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
   const hasLeading = () =>
     Boolean(props.query) || (props.selects?.length ?? 0) > 0
   const showClearAll = () => props.onClearAll !== undefined && activeCount() > 0
+  const hasChips = () => (props.chips?.length ?? 0) > 0
+  // A count alone does not earn a row of its own: it sits at the end of the
+  // control row, and drops to the meta row only beside chips or a clear-all.
+  const countInline = () =>
+    props.resultCount !== undefined && !hasChips() && !showClearAll()
   const showMetaRow = () =>
-    (props.chips?.length ?? 0) > 0 ||
-    props.resultCount !== undefined ||
+    hasChips() ||
+    (props.resultCount !== undefined && !countInline()) ||
     showClearAll()
+  const count = () => (
+    <span
+      aria-live="polite"
+      data-slot="filter-bar-count"
+      class="me-1 text-caption tabular-nums text-ink-gray-6"
+    >
+      {props.resultCount} {props.resultCount === 1 ? 'result' : 'results'}
+    </span>
+  )
 
   return (
     <div
@@ -187,6 +201,7 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
             hasLeading() ? 'sm:justify-end xl:ms-auto' : 'sm:justify-start',
           )}
         >
+          <Show when={countInline()}>{count()}</Show>
           <Show when={props.tabs}>
             {(tabs) => (
               <TabButtons
@@ -206,14 +221,8 @@ export function FilterBar(props: FilterBarProps): JSX.Element {
           data-slot="filter-bar-meta"
           class="flex max-w-full flex-wrap items-center gap-1.5 px-control-pad"
         >
-          <Show when={props.resultCount !== undefined}>
-            <span
-              aria-live="polite"
-              class="me-1 text-caption tabular-nums text-ink-gray-7"
-            >
-              {props.resultCount}{' '}
-              {props.resultCount === 1 ? 'result' : 'results'}
-            </span>
+          <Show when={props.resultCount !== undefined && !countInline()}>
+            {count()}
           </Show>
           <For each={props.chips ?? []}>
             {(chip) => (

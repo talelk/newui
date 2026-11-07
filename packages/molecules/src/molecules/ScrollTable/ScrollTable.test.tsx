@@ -58,6 +58,8 @@ describe('ScrollTable', () => {
       'thead[data-slot="scroll-table-head"]',
     ) as HTMLElement
     expect(head.className).toContain('bg-surface-gray-1')
-    expect(head.className).toContain('text-caption')
+    expect(head.className).toContain('text-sm-medium')
+    // Headers use Plex's condensed width so dense tables fit more columns.
+    expect(head.className).toContain('font-stretch-semi-condensed')
   })
 })

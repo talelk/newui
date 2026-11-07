@@ -22,3 +22,4 @@ Statuses: `accepted`, `superseded by ADR-XXXX`, `proposed`.
 | [0011](./0011-zag-via-createzagapi.md) | Zag primitives only via `createZagApi`/`createZagContext` |
 | [0012](./0012-kit-ladder.md) | Original kit ladder: layouts, logic, Storybook and starter (superseded) |
 | [0013](./0013-atomic-packages-and-app-shell.md) | Atomic packages, exactly three templates, one responsive AppShell sidebar |
+| [0016](./0016-instrument-panel-layer.md) | A hand-authored instrument-panel token layer over the Figma export: cool gray, Petrol accent, IBM Plex, dense tables |

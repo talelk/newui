@@ -328,9 +328,11 @@ export const SidebarItem: ParentComponent<SidebarItemProps> = (props) => {
 
   const rowClasses = () =>
     cn(
-      'group relative flex h-8 w-full items-center rounded-control text-interface text-ink-gray-7',
-      'transition-colors hover:bg-surface-gray-2 motion-reduce:transition-none',
-      'data-[active]:bg-surface-blue-1 data-[active]:font-medium data-[active]:text-ink-blue-8',
+      'group relative flex h-7 w-full items-center rounded-control text-interface text-ink-gray-7',
+      'transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-9 motion-reduce:transition-none',
+      // The current destination is a piece of sheet lifted out of the Mist
+      // frame — the same white the page's data sits on.
+      'data-[active]:bg-surface-elevation-1 data-[active]:font-medium data-[active]:text-ink-gray-9 data-[active]:shadow-sm',
       local.class,
     )
   const innerClasses = () =>
@@ -344,7 +346,12 @@ export const SidebarItem: ParentComponent<SidebarItemProps> = (props) => {
     <>
       <Show when={local.prefix ?? local.icon} fallback={null}>
         <span class="shrink-0">
-          {local.prefix ?? <Icon icon={local.icon} class="size-4" />}
+          {local.prefix ?? (
+            <Icon
+              icon={local.icon}
+              class="size-4 group-data-[active]:text-ink-blue-7"
+            />
+          )}
         </span>
       </Show>
       <span class={cn('flex-1 truncate', collapsed() && 'sr-only')}>

@@ -4,7 +4,7 @@
  *
  * Everything below is generated or framework-neutral; nothing here is
  * app-specific. The consuming app adds its own `@source` globs. */
-@import "./fonts/Inter/inter.css";
+@import "./fonts/IBMPlexSans/plex.css";
 @import "tailwindcss";
 @import "./generated/tokens.css";
 @import "./generated/theme.css";

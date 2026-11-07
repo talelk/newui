@@ -88,10 +88,19 @@ const PAIRS: Pair[] = [
 
   { fg: 'ink-blue-link', bg: 'surface-base', what: 'blue link on base' },
   { fg: 'ink-blue-link', bg: 'surface-elevation-1', what: 'blue link on card' },
+  // The Mist frame carries the page header's description and the sidebar.
+  { fg: 'ink-gray-6', bg: 'surface-canvas', what: 'muted text on the frame' },
+  { fg: 'ink-gray-7', bg: 'surface-canvas', what: 'nav label on the frame' },
   { fg: 'ink-blue-link', bg: 'surface-gray-1', what: 'blue link on canvas' },
 
   // required marker on a label, on the page or a card
   { fg: 'ink-red-8', bg: 'surface-base', what: 'required marker on base' },
+  // StatGrid deltas are toned text straight on the strip's cells, no pill.
+  {
+    fg: 'ink-green-8',
+    bg: 'surface-elevation-1',
+    what: 'good delta on a stat cell',
+  },
   {
     fg: 'ink-red-8',
     bg: 'surface-elevation-1',

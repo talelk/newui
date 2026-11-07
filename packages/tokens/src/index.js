@@ -27,10 +27,27 @@
  * none may be renamed or removed.
  */
 
-import colorsData from './tokens/colors.js'
+import exportedColors from './tokens/colors.js'
 import effectsData from './tokens/effects.js'
+import * as instrument from './tokens/instrument.js'
 import radiusTokens from './tokens/radius.js'
 import typographyTokens from './tokens/typography.js'
+
+// The Figma export stays untouched; the instrument-panel layer replaces ramp
+// steps on a copy, before anything resolves against them (ADR-0016).
+const colorsData = {
+  ...exportedColors,
+  lightMode: withRamps(exportedColors.lightMode, instrument.ramps.lightMode),
+  darkMode: withRamps(exportedColors.darkMode, instrument.ramps.darkMode),
+}
+
+function withRamps(palette, overrides) {
+  const out = { ...palette }
+  for (const [family, steps] of Object.entries(overrides)) {
+    out[family] = { ...palette[family], ...steps }
+  }
+  return out
+}
 
 // ---------- COLORS ----------
 
@@ -95,6 +112,16 @@ export const semanticColors = {
 semanticColors.light.surface.scrim = colorsData.overlay.black[200]
 semanticColors.dark.surface.scrim = colorsData.overlay.black[700]
 
+// Instrument-panel semantic entries: the Mist frame (`surface-canvas`) behind
+// sheets, shared by the sidebar.
+for (const theme of ['light', 'dark']) {
+  for (const [category, entries] of Object.entries(
+    instrument.semantic[theme],
+  )) {
+    Object.assign(semanticColors[theme][category], entries)
+  }
+}
+
 // ---------- RADIUS ----------
 
 /**
@@ -108,9 +135,9 @@ semanticColors.dark.surface.scrim = colorsData.overlay.black[700]
  * recipe independently.
  */
 export const radiusRoles = {
-  control: radiusTokens[3],
-  card: radiusTokens[4],
-  overlay: radiusTokens[6],
+  control: instrument.radiusRoles.control,
+  card: instrument.radiusRoles.card,
+  overlay: instrument.radiusRoles.overlay,
   pill: radiusTokens.full,
 }
 
@@ -191,8 +218,8 @@ function toOutlines(layer) {
  * dark ones 3px, which is why this one does mode-swap and `shadows` does not.
  */
 export const focusRing = {
-  light: toOutlines(effectsData.focus.light),
-  dark: toOutlines(effectsData.focus.dark),
+  light: toOutlines({ ...effectsData.focus.light, ...instrument.focus.light }),
+  dark: toOutlines({ ...effectsData.focus.dark, ...instrument.focus.dark }),
 }
 
 // ---------- TYPOGRAPHY ----------
@@ -214,7 +241,7 @@ export const fontSize = buildFontSize()
 function buildFontSize() {
   const out = {}
   for (const [key, [size, meta]] of Object.entries(typographyTokens.fontSize)) {
-    out[key] = { fontSize: size, ...meta }
+    out[key] = { fontSize: size, ...meta, ...instrument.fontSize[key] }
   }
   // Only these two. The paragraph family is the text family at a looser
   // line-height with its own tracking, and nothing else. Spreading the whole
@@ -226,6 +253,7 @@ function buildFontSize() {
       ...out[key],
       lineHeight: p.lineHeight,
       letterSpacing: p.letterSpacing,
+      ...instrument.fontSize[`p-${key}`],
     }
   }
   return out
@@ -238,13 +266,34 @@ function buildFontSize() {
  */
 export const fontWeight = typographyTokens.fontWeight
 
-export const fontFamily = typographyTokens.fontFamily
+export const fontFamily = {
+  ...typographyTokens.fontFamily,
+  ...instrument.fontFamily,
+}
 
 /**
  * Letter-spacing per (size, weight), for the `text` and `paragraph` families
  * separately. The only token property that varies by weight.
  */
-export const tracking = typographyTokens.tracking
+export const tracking = retrack(typographyTokens.tracking)
+
+// Plex wants the size's own tracking at every weight: the export's per-weight
+// spread was tuned for Inter.
+function retrack(table) {
+  const out = {}
+  for (const [group, sizes] of Object.entries(table)) {
+    out[group] = {}
+    for (const [size, weights] of Object.entries(sizes)) {
+      const key = group === 'paragraph' ? `p-${size}` : size
+      const value = instrument.trackingFor(key)
+      out[group][size] =
+        value === undefined
+          ? weights
+          : Object.fromEntries(Object.keys(weights).map((w) => [w, value]))
+    }
+  }
+  return out
+}
 
 // ---------- SIZING ----------
 
@@ -289,8 +338,8 @@ export const layoutSpacing = {
   // tables already repeat numerically, so density retunes in one place.
   'menu-pad': '0.25rem',
   'dialog-pad': '1rem',
-  'table-cell-x': '1rem',
-  'table-cell-y': '0.5rem',
+  'table-cell-x': '0.625rem',
+  'table-cell-y': '0.25rem',
   'toolbar-pad': '0.5rem',
   stack: '1rem',
   inline: '0.5rem',

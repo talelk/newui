@@ -2,67 +2,66 @@
 name: newui
 description: A compact, data-dense SolidJS component library and the documentation site that proves it.
 colors:
-  canvas: "oklch(1 0 0)"
-  canvas-recessed: "oklch(0.979 0.006 255)"
-  canvas-dark: "oklch(0.205 0.006 255)"
-  surface-dark: "oklch(0.26 0.006 255)"
-  panel: "oklch(0.964 0.006 255)"
-  ink: "oklch(0.168 0.006 255)"
-  ink-secondary: "oklch(0.341 0.006 255)"
-  ink-muted: "oklch(0.439 0.006 255)"
-  ink-faint: "oklch(0.586 0.006 255)"
-  ink-on-dark: "oklch(0.979 0.006 255)"
-  border: "oklch(0.946 0.006 255)"
-  border-dark: "oklch(0.341 0.006 255)"
-  signal-blue: "oklch(0.561 0.168 252.355)"
-  signal-blue-deep: "oklch(0.477 0.149 253.403)"
-  signal-blue-wash: "oklch(0.96 0.021 241.348)"
+  canvas: "oklch(0.954 0.005 247.9)"
+  sheet: "oklch(1 0 0)"
+  canvas-dark: "oklch(0.171 0.012 254.2)"
+  sheet-dark: "oklch(0.203 0.016 256.8)"
+  panel: "oklch(0.976 0.003 264.5)"
+  ink: "oklch(0.189 0.019 255.8)"
+  ink-secondary: "oklch(0.241 0.024 256.4)"
+  ink-muted: "oklch(0.489 0.028 256.2)"
+  ink-faint: "oklch(0.612 0.025 254.5)"
+  ink-on-dark: "oklch(0.966 0.005 247.9)"
+  border: "oklch(0.923 0.008 253.9)"
+  border-dark: "oklch(0.375 0.025 253.1)"
+  petrol: "oklch(0.443 0.079 224.9)"
+  petrol-deep: "oklch(0.389 0.069 224.6)"
+  petrol-wash: "oklch(0.968 0.009 214.3)"
   success: "oklch(0.53 0.122 156.15)"
   warning: "oklch(0.612 0.136 63.758)"
   danger: "oklch(0.497 0.185 27.335)"
   accent-violet: "oklch(0.545 0.18 287.523)"
 typography:
   hero:
-    fontFamily: "Inter Variable, Inter, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "36px"
+    fontFamily: "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "32px"
     fontWeight: 600
-    lineHeight: "40px"
-    letterSpacing: "-0.035em"
+    lineHeight: "38px"
+    letterSpacing: "-0.025em"
   heading:
-    fontFamily: "Inter Variable, Inter, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "24px"
+    fontFamily: "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "20px"
     fontWeight: 600
-    lineHeight: "30px"
-    letterSpacing: "-0.025em"
-  section:
-    fontFamily: "Inter Variable, Inter, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "18px"
-    fontWeight: 600
-    lineHeight: "24px"
+    lineHeight: "26px"
     letterSpacing: "-0.015em"
-  metric:
-    fontFamily: "Inter Variable, Inter, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "28px"
+  section:
+    fontFamily: "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "15px"
     fontWeight: 600
-    lineHeight: "32px"
-    letterSpacing: "-0.025em"
-    fontFeature: "tnum"
-  interface:
-    fontFamily: "Inter Variable, Inter, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "14px"
-    fontWeight: 420
     lineHeight: "20px"
+    letterSpacing: "-0.005em"
+  metric:
+    fontFamily: "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "22px"
+    fontWeight: 600
+    lineHeight: "28px"
+    letterSpacing: "-0.02em"
+  interface:
+    fontFamily: "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "13px"
+    fontWeight: 420
+    lineHeight: "18px"
     letterSpacing: "0em"
   caption:
-    fontFamily: "Inter Variable, Inter, ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
     fontSize: "12px"
     fontWeight: 420
     lineHeight: "16px"
     letterSpacing: "0em"
 rounded:
-  control: "6px"
-  card: "8px"
-  overlay: "12px"
+  control: "4px"
+  card: "6px"
+  overlay: "8px"
   pill: "9999px"
 spacing:
   control-gap: "8px"
@@ -79,14 +78,14 @@ spacing:
   page-stack: "32px"
 components:
   button-primary:
-    backgroundColor: "{colors.signal-blue}"
-    textColor: "{colors.canvas}"
+    backgroundColor: "{colors.petrol}"
+    textColor: "{colors.sheet}"
     typography: "{typography.interface}"
     rounded: "{rounded.control}"
     padding: "2px 8px"
     height: "28px"
   button-primary-hover:
-    backgroundColor: "{colors.signal-blue-deep}"
+    backgroundColor: "{colors.petrol-deep}"
   button-secondary:
     backgroundColor: "{colors.panel}"
     textColor: "{colors.ink-secondary}"
@@ -97,21 +96,21 @@ components:
   button-secondary-hover:
     backgroundColor: "{colors.border}"
   button-outline:
-    backgroundColor: "{colors.canvas}"
+    backgroundColor: "{colors.sheet}"
     textColor: "{colors.ink-secondary}"
     typography: "{typography.interface}"
     rounded: "{rounded.control}"
     padding: "2px 8px"
     height: "28px"
   field:
-    backgroundColor: "{colors.canvas}"
+    backgroundColor: "{colors.sheet}"
     textColor: "{colors.ink}"
     typography: "{typography.interface}"
     rounded: "{rounded.control}"
     padding: "2px 8px"
     height: "28px"
   card:
-    backgroundColor: "{colors.canvas}"
+    backgroundColor: "{colors.sheet}"
     textColor: "{colors.ink}"
     rounded: "{rounded.card}"
     padding: "12px"
@@ -123,7 +122,7 @@ components:
     padding: "1px 6px"
     height: "20px"
   overlay:
-    backgroundColor: "{colors.canvas}"
+    backgroundColor: "{colors.sheet}"
     textColor: "{colors.ink}"
     rounded: "{rounded.overlay}"
     padding: "16px"
@@ -131,9 +130,9 @@ components:
     backgroundColor: "{colors.canvas}"
     textColor: "{colors.ink-secondary}"
     typography: "{typography.interface}"
-    rounded: "{rounded.card}"
+    rounded: "{rounded.control}"
     padding: "0 8px"
-    height: "32px"
+    height: "28px"
 ---
 
 # Design System: newui
@@ -145,17 +144,18 @@ components:
 newui is a working surface, not a showcase. It is built for people who spend
 the day inside business software — ledgers, queues, dashboards, settings — and
 it assumes the screen is a tool they operate rather than a page they admire.
-Density is the default: controls are 28px, interface text is 14px, captions are
-12px, every gap lands on a 4px rhythm, and a table row earns its height from
-its content rather than from air. Structure is drawn with 1px borders and type.
+Density is the default: controls are 28px, interface text is 13px, captions are
+12px, every gap lands on a 4px rhythm, and a table row is 28px — about 26 rows
+on a 900px screen. Structure is drawn with 1px borders and type.
 Colour is a signal, not an atmosphere.
 
 The mood is compact and workmanlike. Nothing is decorative for its own sake:
 there are no gradient meshes, no glass panels, no illustration holding up a
-product claim. Cool Paper neutrals keep the canvas distinct from white cards
-without turning the page beige. Signal Blue marks action and selection and
-almost nothing else; a reader should be able to find the one thing they can do
-on a screen by following the blue. Headings tighten as they grow, numbers are
+product claim. The application sits in a cool Mist frame, and data lives on
+white sheets inside it, so the eye goes to the records rather than the chrome.
+Petrol marks action, selection, focus and the row being worked on, and almost
+nothing else; a reader should be able to find the one thing they can do on a
+screen by following the Petrol. Headings tighten as they grow, numbers are
 tabular, and motion is a state change rather than an entrance.
 
 The same system runs the library and the documentation site that demonstrates
@@ -166,14 +166,17 @@ same semantic tokens a consumer uses.
 
 **Key Characteristics:**
 
-- **Density as the default.** 28px controls, 32px navigation rows, 14/20
-  interface text; compact is the normal setting, not a "small" variant.
-- **One working accent.** Signal Blue is reserved for action, selection and
-  focus; status has its own three colours and data can borrow violet.
+- **Density as the default.** 28px controls, 28px navigation and table rows,
+  13/18 interface text; compact is the normal setting, `comfortable` the
+  opt-out.
+- **Frame and sheets.** The Mist canvas holds navigation and page chrome;
+  white sheets hold data. KPIs share one ruled strip instead of a card each.
+- **One working accent.** Petrol is reserved for action, selection, focus and
+  the active row; status has its own three colours and data can borrow violet.
 - **Border-first depth.** Cards are flat with a 1px outline; only genuinely
   floating surfaces carry a shadow.
-- **Inter at 420.** Body text sits a hair above regular; hierarchy comes from
-  size, weight and tracking, never from a second typeface.
+- **IBM Plex Sans at 420.** One variable family: tabular figures by default,
+  a semi-condensed width for table headers, hierarchy from weight before size.
 - **States are visible without colour alone.** Error carries a message,
   selection carries `aria-current` or `data-state`, focus carries an outline.
 - **Documentation chrome equals product chrome.** The site is built from the
@@ -181,19 +184,22 @@ same semantic tokens a consumer uses.
 
 ## Colors
 
-A cool neutral field with one working blue and three status accents.
+A cool Mist frame, white data sheets, one Petrol accent and three status
+accents. The values live in `packages/tokens/src/tokens/instrument.js`, a
+hand-authored layer over the Figma export (ADR-0016); the `blue` theme name is
+kept and resolves to Petrol.
 
 ### Primary
 
-- **Signal Blue** (oklch(0.561 0.168 252.355)): the action and selection
+- **Petrol** (oklch(0.443 0.079 224.9), `#0E5C74`): the action and selection
   colour. Solid primary buttons, current links, selected rows, checked
-  controls, and the blue focus ring. It never appears as decoration, and a
-  screen should rarely carry more than one blue-filled control.
-- **Signal Blue Deep** (oklch(0.477 0.149 253.403)): the hover and pressed step
-  under a solid blue surface, and the text colour for inline links. One ramp
-  step, never a new hue.
-- **Signal Blue Wash** (oklch(0.96 0.021 241.348)): soft selected and
-  informational fills — subtle blue buttons, selected chips, inline notices.
+  controls, the focus ring and the active row's leading edge. It never appears
+  as decoration, and a screen should rarely carry more than one Petrol-filled
+  control.
+- **Petrol Deep** (oklch(0.389 0.069 224.6)): the hover and pressed step under a
+  solid Petrol surface, and the text colour for inline links.
+- **Petrol Wash** (oklch(0.968 0.009 214.3)): selected rows, the active row,
+  subtle accent buttons and selected chips.
 
 ### Secondary
 
@@ -211,34 +217,31 @@ ramp:
 
 ### Neutral
 
-- **Canvas White** (oklch(1 0 0)): page canvas, card surface, dialog surface,
-  input background. The lightest plane in the system.
-- **Cool Paper** (oklch(0.979 0.006 255)): the recessed plane — sidebar, page
-  gutter, quiet section background. A gray with a faint blue cast, so it reads
-  cool next to white rather than dirty.
-- **Panel Gray** (oklch(0.964 0.006 255)): the subtle fill — default button,
-  hovered row, code chip, badge. One step darker than Cool Paper.
-- **Ink** (oklch(0.168 0.006 255)): primary text and headings, near-black
-  without being pure black.
-- **Ink Secondary** (oklch(0.341 0.006 255)): body copy, navigation labels,
-  table cells — the working text colour.
-- **Ink Muted** (oklch(0.439 0.006 255)): captions, placeholders, metadata,
-  timestamps and card descriptions.
-- **Ink Faint** (oklch(0.586 0.006 255)): disabled labels, quiet icons and the
-  least important metadata. Never the only colour carrying meaning.
-- **Border** (oklch(0.946 0.006 255)): the 1px outline on cards, dividers, table
-  rules and fields. Structure is a line, not a shadow.
+- **Mist** (oklch(0.954 0.005 247.9), `#EDF0F3`, `surface-canvas`): the frame —
+  the app shell's background and the sidebar. Navigation and page chrome live
+  here.
+- **Sheet** (oklch(1 0 0)): where data lives — tables, the stat strip, filter
+  bars, forms, dialogs, the current navigation item.
+- **Panel Gray** (oklch(0.976 0.003 264.5)): the subtle fill — table headers,
+  hovered rows, code chips.
+- **Graphite** (oklch(0.241 0.024 256.4), `#18202B`): primary text and headings.
+- **Pewter** (oklch(0.489 0.028 256.2), `#566170`): secondary text — column
+  headers, captions, descriptions, metadata.
+- **Ink Faint** (oklch(0.612 0.025 254.5)): placeholders and quiet icons. It is
+  deliberately below AA on white; text that must be read uses Pewter.
+- **Rule** (oklch(0.883 0.012 252.1), `#D3D9E0`) and the lighter outline step:
+  the 1px lines on sheets, dividers, table rules and fields.
 
-Dark mode keeps the same semantic names and inverts the planes rather than
-tinting the light values: canvas becomes `oklch(0.205 0.006 255)`, an elevated
-surface `oklch(0.26 0.006 255)`, primary ink `oklch(0.979 0.006 255)`, and the
-border `oklch(0.341 0.006 255)`. A solid blue surface also inverts its text:
+Dark mode keeps the same semantic names and its own tuned palette rather than
+an inversion: the canvas `oklch(0.171 0.012 254.2)` sits below the sheet
+`oklch(0.203 0.016 256.8)`, and Petrol lifts to `oklch(0.732 0.087 216.9)` so it
+stays legible. A solid blue surface also inverts its text:
 `ink-base` is white in light mode and near-black in dark mode, so contrast holds
 without a second set of button classes.
 
 ### Named Rules
 
-**The One Signal Rule.** Signal Blue is for action and selection. If a blue
+**The One Signal Rule.** Petrol is for action and selection. If a Petrol
 element cannot be clicked, cannot be selected, or does not indicate where the
 reader is, it is the wrong colour. Status uses green, amber or red; category
 uses violet.
@@ -253,30 +256,32 @@ legibility bug, not a taste call.
 
 ## Typography
 
-**Display Font:** Inter Variable (with Inter, ui-sans-serif, system-ui,
-sans-serif)
-**Body Font:** Inter Variable (same stack)
+**Display Font:** IBM Plex Sans (variable, self-hosted; ui-sans-serif,
+system-ui, sans-serif fallback)
+**Body Font:** IBM Plex Sans (same stack)
 **Label/Mono Font:** the same family for labels; code uses the platform mono
 stack, not a second brand face.
 
-**Character:** one family, four working weights, and a default weight of 420.
-The system is quiet enough that a 24px semibold heading and a 36px hero can do
-all the announcing; there is no display face waiting behind the interface.
-Negative tracking is saved for large text, and numbers in metrics are tabular
-so columns of figures line up.
+**Character:** one family, two widths, four working weights, and a default
+weight of 420. Plex's figures are tabular by default, so money, counts and dates
+line up in a column without a feature flag; its width axis gives table headers
+a semi-condensed face (`font-stretch-semi-condensed`) that fits more columns
+without dropping size. Headings lean on weight rather than size: a 20px
+semibold page title is the loudest thing in the product.
 
 ### Hierarchy
 
-- **Hero** (600, 36/40, -0.035em): the home page statement and an application's
+- **Hero** (600, 32/38, -0.025em): the home page statement and an application's
   marketing panel. One per page; it never appears inside a card.
-- **Heading** (600, 24/30, -0.025em): page titles, dialog titles, the largest
+- **Heading** (600, 20/26, -0.015em): page titles, dialog titles, the largest
   in-product heading.
-- **Section** (600, 18/24, -0.015em): card titles and section headings; the
+- **Section** (600, 15/20, -0.005em): card titles and section headings; the
   workhorse heading of a dense screen.
-- **Metric** (600, 28/32, -0.025em, tabular numerals): a single KPI value.
+- **Metric** (600, 22/28, -0.02em): a single KPI value in the stat strip.
   Always paired with a caption naming the measure.
-- **Interface** (420, 14/20, 0): body copy, controls, navigation, table cells —
+- **Interface** (420, 13/18, 0): body copy, controls, navigation, table cells —
   the default for almost everything a person reads or clicks.
+- **Column header** (500, 12/16, semi-condensed, Pewter): table headers.
 - **Caption** (420, 12/16, 0): metadata, helper text, badges, timestamps. This
   is the floor; nothing informative ships below 12px.
 
@@ -286,13 +291,14 @@ so columns of figures line up.
 Do not fake weight with `text-shadow` or synthetic bolding; the variable font
 already carries the steps.
 
-**The Tight Heading Rule.** Negative tracking belongs to 18px and above. Body
+**The Tight Heading Rule.** Negative tracking belongs to 15px and above. Body
 and caption text stay at 0; shrinking a small label with negative tracking is
 how dense interfaces become unreadable.
 
 **The Tabular Metric Rule.** Any number that can sit in a column — money,
-counts, percentages, durations — uses tabular numerals. Proportional figures are
-for prose, not for a table or a KPI.
+counts, percentages, durations — must line up. Plex's default figures are
+tabular; keep `tabular-nums` on metric and table cells anyway, so a fallback
+face behaves the same.
 
 ## Layout
 
@@ -311,8 +317,10 @@ rendered at exact 390×844, 768×900 and 1440×900 documents, without scaling, a
 the site is reviewed at 390, 768 and 1440 in both themes.
 
 Dense does not mean cramped: a card's padding is a role, not a leftover, and a
-table's row height comes from its 14/20 text plus 12px of vertical padding
-(44px). The first thing to check on a narrow screen is not whether it fits, but
+table's row height comes from its 13/18 text plus 4px of vertical padding each
+side (about 28px; `density="comfortable"` gives about 36px). Application pages
+fold their header into one band — trail, then title with its description and
+the actions — so data starts about 60px from the top. The first thing to check on a narrow screen is not whether it fits, but
 whether the primary action is still reachable without horizontal scrolling.
 
 Long-form prose is the exception to the full column: body copy holds a 30rem
@@ -336,7 +344,7 @@ or the reading order.
 
 ## Elevation & Depth
 
-Border-first. A resting card is flat: 1px Border outline, Canvas White surface,
+Border-first. A resting card is flat: 1px Border outline, Sheet surface,
 no shadow. Depth is reserved for surfaces that genuinely float above the page —
 dialogs, popovers, menus, the mobile drawer — and it is always paired with an
 opaque surface and a border, so the panel still reads in forced-colours mode.
@@ -370,8 +378,8 @@ button.
 
 ## Shapes
 
-Controls are nearly square: 6px radius on a 28px control, 8px on a card, 12px on
-an overlay, and a full pill only for badges. The restricted scale is the point —
+Controls are nearly square: 4px radius on a 28px control, 6px on a sheet or
+card, 8px on an overlay, and a full pill only for badges. The restricted scale is the point —
 a reader should be able to tell a control from a card from a dialog by silhouette
 alone. Borders are 1px and always semantic; there are no 2px decorative frames.
 
@@ -383,7 +391,7 @@ the text baseline. Avatars and status dots are the only perfect circles.
 
 ### Named Rules
 
-**The Three-Radius Rule.** 6, 8, 12 — control, card, overlay. A fourth radius is
+**The Three-Radius Rule.** 4, 6, 8 — control, card, overlay. A fourth radius is
 specialized geometry (a chart mark, an avatar), not a surface decision. When in
 doubt, use the role name rather than a number.
 
@@ -397,15 +405,15 @@ alone.
 
 ### Buttons
 
-- **Shape:** 6px radius, 28px default height, 8px horizontal padding, 2px
-  vertical padding, 14px interface text at 500.
-- **Primary:** Signal Blue solid with Canvas White text; hover and press move one
-  ramp step to Signal Blue Deep. Used once per region for the action the screen
+- **Shape:** 4px radius, 28px default height, 8px horizontal padding, 2px
+  vertical padding, 13px interface text at 500.
+- **Primary:** Petrol solid with white text; hover and press move one ramp step
+  to Petrol Deep. Used once per region for the action the screen
   exists for.
 - **Secondary:** Panel Gray fill with Ink Secondary text; hover steps to Border.
   This is the default button (`variant="subtle"`, `theme="gray"`), not the blue
   one — most actions should not compete with the primary.
-- **Outline / Ghost:** Canvas White with a Border outline, or transparent with a
+- **Outline / Ghost:** Sheet with a Border outline, or transparent with a
   hover wash. Both keep the same geometry and text colour.
 - **Hover / Focus:** a background or border step over `transition-colors`;
   focus-visible draws the outline and nothing else. Disabled keeps its label,
@@ -415,12 +423,11 @@ alone.
 
 ### Fields
 
-- **Style:** 28px default height, 6px radius, 1px Border (or Panel Gray for the
-  subtle variant), Canvas White background, 14px text. The outline variant is
+- **Style:** 28px default height, 4px radius, 1px Border (or Panel Gray for the
+  subtle variant), Sheet background, 13px text. The outline variant is
   the default for text entry.
 - **Focus:** border steps to the darker gray and a `shadow-sm` lift appears; the
-  focus outline follows the control's theme. The caret and selection use Signal
-  Blue.
+  focus outline is solid Petrol. The caret and selection use Petrol.
 - **Label / Error:** labels sit above the control with a 12px gap; helper text
   is 12px Ink Muted. An invalid field gets a red border and a red message, and
   `aria-invalid` — colour never carries the error alone. Disabled fields keep
@@ -430,15 +437,18 @@ alone.
 
 ### Cards / Containers
 
-- **Corner Style:** 8px radius.
-- **Background:** Canvas White (or the elevated surface in dark mode).
+- **Corner Style:** 6px radius.
+- **Background:** Sheet (or the elevated surface in dark mode), on the Mist
+  canvas.
 - **Shadow Strategy:** none at rest. Elevation is opt-in per card and follows
   the shadow vocabulary above.
 - **Border:** 1px Border, always. A card without a border must earn it with a
   tonal surface, and most do not.
-- **Internal Padding:** 12px compact, 16px standard, 20px wide; data cards
-  (StatGrid stats, chart cards) use the same three roles and do not invent
-  their own.
+- **Internal Padding:** 12px compact, 16px standard, 20px wide; chart cards
+  use the same three roles and do not invent their own.
+- **Stat strip:** KPIs share one sheet divided by 1px rules (the sheet's
+  outline through a 1px grid gap), not a card per number. Deltas are toned
+  text, not pills.
 
 ### Badges
 
@@ -452,23 +462,24 @@ alone.
 
 ### Overlays
 
-- **Style:** 12px radius, Canvas White, 1px Border, `shadow-xl`, 16px padding;
+- **Style:** 8px radius, Sheet, 1px Border, `shadow-xl`, 16px padding;
   the backdrop is a black overlay at 27% in light mode and 72% in dark, and the
   panel itself is opaque.
 - **Behaviour:** focus is trapped, Escape closes, the trigger regains focus on
   dismissal, and the panel is portalled above the page. Mobile bottom sheets use
   the same surface and radius, anchored to the bottom edge.
-- **Density:** dialog titles are Heading (24/30); body copy is 14/20; the footer
+- **Density:** dialog titles are Heading (20/26); body copy is 13/18; the footer
   is a right-aligned button row with an 8px control gap.
 
 ### Navigation
 
-- **Masthead:** 48px sticky header, 1px bottom border, Canvas White; the product
+- **Masthead:** 48px sticky header, 1px bottom border, white; the product
   mark is 24px and sits beside a 14px semibold wordmark. Primary links are 14px
   Ink Secondary; current is Ink and a Panel Gray wash.
-- **Sidebar:** 224px wide, Cool Paper or Canvas White depending on the surface,
-  32px rows, 8px radius, 14px text, 8px horizontal padding. Current rows use a
-  Panel Gray wash and Ink; hover uses the same wash one step lighter. Section
+- **Application sidebar:** on the Mist frame, 28px rows, 4px radius, 13px
+  text, 8px horizontal padding. The current destination is a piece of Sheet
+  with a Petrol icon and Graphite text; hover is one gray step darker than
+  Mist. Counts are plain right-aligned figures. Section
   headings are sentence case — never tracked uppercase.
 - **Mobile:** below 1024px the sidebar becomes a 288px modal drawer with 40px
   touch targets; the same navigation model, breadcrumbs and reading order.
@@ -494,7 +505,7 @@ alone.
   `border-outline-gray-1` — for every colour.
 - **Do** use the named rhythm roles (`p-card-pad`, `gap-section-gap`,
   `gap-control-gap`) instead of arbitrary spacing utilities.
-- **Do** keep Signal Blue for the action, the selection and the current
+- **Do** keep Petrol for the action, the selection, focus and the current
   location; let everything else be neutral.
 - **Do** pair every error with a message and `aria-invalid`, and every status
   with a label or icon.
@@ -513,7 +524,7 @@ alone.
 - **Don't** use `theme` to mean light/dark. `theme` is the colour axis;
   `colorScheme` owns the mode.
 - **Don't** put a shadow on a resting card or use elevation as decoration.
-- **Don't** add a second accent for visual interest, or use blue for a
+- **Don't** add a second accent for visual interest, or use Petrol for a
   non-interactive label.
 - **Don't** use glassmorphism, gradient meshes, glow, or hero illustration as
   product chrome.

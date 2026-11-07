@@ -294,4 +294,4 @@ export const overlaySeparator = 'my-1 h-px bg-outline-elevation-1'
  * exported to consumers (P10: they style through the parts).
  */
 export const tableHeadClass =
-  'border-y border-outline-gray-1 bg-surface-gray-1 text-caption text-ink-gray-7'
+  'border-y border-outline-gray-1 bg-surface-gray-1 text-sm-medium font-stretch-semi-condensed text-ink-gray-6'

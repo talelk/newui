@@ -5,7 +5,7 @@
  * file is what the sidebar can afford to import on every route.
  */
 export const LADDER_COUNTS = {
-  "foundations": 385,
+  "foundations": 386,
   "atoms": 29,
   "molecules": 57,
   "organisms": 31,

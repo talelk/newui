@@ -397,6 +397,38 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
         </>
       }
     >
+      <StatGrid
+        compact
+        loading={query.isPending()}
+        stats={[
+          {
+            label: 'Total tasks',
+            value: all().length.toLocaleString('en-US'),
+            hint: 'Across the workspace',
+            icon: 'lucide-list-checks',
+          },
+          {
+            label: 'In progress',
+            value: all().filter((row) => row.status === 'In Progress').length,
+            hint: 'Work moving forward',
+            icon: 'lucide-clock',
+          },
+          {
+            label: 'Completed',
+            value: done(),
+            hint: `${all().length ? Math.round((done() / all().length) * 100) : 0}% of all tasks`,
+            icon: 'lucide-circle-check',
+          },
+          {
+            label: 'High priority',
+            value: all().filter(
+              (row) => row.priority === 'High' && row.status !== 'Done',
+            ).length,
+            hint: 'Open and needs your attention',
+            icon: 'lucide-flag',
+          },
+        ]}
+      />
       <FilterBar
         query={{
           placeholder: 'Find tasks',
@@ -493,38 +525,6 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
           />
         </div>
       </FilterBar>
-      <StatGrid
-        compact
-        loading={query.isPending()}
-        stats={[
-          {
-            label: 'Total tasks',
-            value: all().length.toLocaleString('en-US'),
-            hint: 'Across the workspace',
-            icon: 'lucide-list-checks',
-          },
-          {
-            label: 'In progress',
-            value: all().filter((row) => row.status === 'In Progress').length,
-            hint: 'Work moving forward',
-            icon: 'lucide-clock',
-          },
-          {
-            label: 'Completed',
-            value: done(),
-            hint: `${all().length ? Math.round((done() / all().length) * 100) : 0}% of all tasks`,
-            icon: 'lucide-circle-check',
-          },
-          {
-            label: 'High priority',
-            value: all().filter(
-              (row) => row.priority === 'High' && row.status !== 'Done',
-            ).length,
-            hint: 'Open and needs your attention',
-            icon: 'lucide-flag',
-          },
-        ]}
-      />
       <Notice text={notice()} tone="green" onDismiss={() => setNotice('')} />
       <Show
         when={view() === 'table'}
@@ -557,7 +557,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
             title="Tasks"
             hideSearch
             cardBreakpoint="lg"
-            pageSize={10}
+            pageSize={25}
             recordsLabel="tasks"
             rows={filtered()}
             columns={columns}

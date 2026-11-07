@@ -193,6 +193,14 @@ export type DataTableMobileRole =
   | 'meta'
 
 /** The library reads `meta.align`, `meta.mobile` and `meta.editable`; all optional. */
+
+/**
+ * The accent rule on the leading edge of the row that holds keyboard focus:
+ * an inset shadow, so it adds no width and survives the sticky first column.
+ */
+const ACTIVE_ROW_EDGE =
+  'group-focus-within/row:shadow-[inset_2px_0_0_0_var(--outline-blue-6)]'
+
 export interface DataTableColumnMeta {
   align?: 'end'
   mobile?: DataTableMobileRole
@@ -229,7 +237,10 @@ export interface DataTableProps<T extends { id: string }> {
   /** Error state; the table is replaced by the shared DataState. */
   error?: JSX.Element
   onRetry?: () => void
-  /** `compact` uses 36px rows instead of 44px. */
+  /**
+   * Row height: `compact` (the default, about 28px rows) or `comfortable`
+   * (about 36px) for touch-first or reading-heavy screens.
+   */
   density?: 'comfortable' | 'compact'
   /** Width at which the table becomes cards. Default `sm` (640px). */
   cardBreakpoint?: 'sm' | 'md' | 'lg'
@@ -633,9 +644,9 @@ export function DataTable<T extends { id: string }>(
   /** Sticky cell chrome: opaque card surface over the scrolling columns. */
   const pinClass = (edge: 'start' | 'end' | undefined) =>
     edge === 'start'
-      ? 'sticky start-0 z-raised bg-surface-elevation-1 group-hover/row:bg-surface-gray-1 data-[selected]:bg-surface-blue-1 data-[selected]:group-hover/row:bg-surface-blue-2 border-e border-outline-gray-1'
+      ? 'sticky start-0 z-raised bg-surface-elevation-1 group-hover/row:bg-surface-gray-1 group-focus-within/row:bg-surface-blue-1 data-[selected]:bg-surface-blue-1 data-[selected]:group-hover/row:bg-surface-blue-2 border-e border-outline-gray-1'
       : edge === 'end'
-        ? 'sticky end-0 z-raised bg-surface-elevation-1 group-hover/row:bg-surface-gray-1 data-[selected]:bg-surface-blue-1 data-[selected]:group-hover/row:bg-surface-blue-2 border-s border-outline-gray-1'
+        ? 'sticky end-0 z-raised bg-surface-elevation-1 group-hover/row:bg-surface-gray-1 group-focus-within/row:bg-surface-blue-1 data-[selected]:bg-surface-blue-1 data-[selected]:group-hover/row:bg-surface-blue-2 border-s border-outline-gray-1'
         : ''
   const table = createTable<Features, T>({
     features: createFeatures(),
@@ -776,9 +787,9 @@ export function DataTable<T extends { id: string }>(
     table.resetRowSelection()
   }
   const cellPad = () =>
-    props.density === 'compact'
-      ? 'px-table-cell-x py-table-cell-y'
-      : 'px-table-cell-x py-3'
+    props.density === 'comfortable'
+      ? 'px-table-cell-x py-2'
+      : 'px-table-cell-x py-table-cell-y'
   const cardHiddenClass = () =>
     props.cardBreakpoint === 'lg'
       ? 'lg:hidden'
@@ -997,7 +1008,7 @@ export function DataTable<T extends { id: string }>(
     >
       <div
         data-slot="data-table-toolbar"
-        class="flex flex-wrap items-center justify-between gap-control-gap p-card-pad-compact"
+        class="flex flex-wrap items-center justify-between gap-control-gap px-3 py-1.5"
       >
         <Show when={!props.hideSearch}>
           <div class="w-full sm:w-72">
@@ -1017,7 +1028,7 @@ export function DataTable<T extends { id: string }>(
           <p class="min-w-0 text-caption text-ink-gray-7">{props.caption}</p>
         </Show>
         <Show when={props.hideSearch && !props.caption}>
-          <span class="min-w-0 text-interface font-medium text-ink-gray-8">
+          <span class="min-w-0 text-interface-medium text-ink-gray-9">
             {props.title}
           </span>
         </Show>
@@ -1231,7 +1242,7 @@ export function DataTable<T extends { id: string }>(
                                   >
                                     <button
                                       type="button"
-                                      class="inline-flex items-center gap-2 rounded-3 focus-visible:focus-ring"
+                                      class="group/sort inline-flex items-center gap-1 rounded-3 focus-visible:focus-ring"
                                       onClick={header.column.getToggleSortingHandler()}
                                     >
                                       {flexRender(
@@ -1242,14 +1253,14 @@ export function DataTable<T extends { id: string }>(
                                         <span
                                           aria-hidden="true"
                                           class={cn(
-                                            'inline-block size-4 align-middle',
+                                            'inline-block size-3.5 align-middle',
                                             header.column.getIsSorted() ===
                                               'asc'
-                                              ? 'lucide-arrow-up'
+                                              ? 'lucide-arrow-up text-ink-gray-9'
                                               : header.column.getIsSorted() ===
                                                   'desc'
-                                                ? 'lucide-arrow-down'
-                                                : 'lucide-arrow-up-down',
+                                                ? 'lucide-arrow-down text-ink-gray-9'
+                                                : 'lucide-arrow-up-down text-ink-gray-4 group-hover/sort:text-ink-gray-7',
                                           )}
                                         />
                                       </span>
@@ -1271,7 +1282,8 @@ export function DataTable<T extends { id: string }>(
                         <Show when={isGroupRow(row)}>{groupRow(row)}</Show>
                         <Show when={!isGroupRow(row)}>
                           <tr
-                            class="group/row border-b border-outline-gray-1 hover:bg-surface-gray-1 data-[selected]:bg-surface-blue-1 data-[selected]:hover:bg-surface-blue-2"
+                            data-slot="data-table-row"
+                            class="group/row border-b border-outline-gray-1 hover:bg-surface-gray-1 focus-within:bg-surface-blue-1 data-[selected]:bg-surface-blue-1 data-[selected]:hover:bg-surface-blue-2"
                             data-selected={row.getIsSelected() ? '' : undefined}
                           >
                             <For each={row.getVisibleCells()}>
@@ -1290,6 +1302,10 @@ export function DataTable<T extends { id: string }>(
                                         ? `${cellPad()} text-end text-interface`
                                         : `${cellPad()} text-interface`,
                                       pinClass(edge),
+                                      // The active row — the one holding
+                                      // keyboard focus — carries the accent
+                                      // rule on its leading edge.
+                                      index() === 0 && ACTIVE_ROW_EDGE,
                                     )}
                                     data-selected={
                                       row.getIsSelected() ? '' : undefined
@@ -1375,7 +1391,7 @@ export function DataTable<T extends { id: string }>(
           />
         </Show>
         <Show when={table.getFilteredRowModel().rows.length > 0}>
-          <div class="flex flex-wrap items-center justify-between gap-control-gap border-t border-outline-gray-1 p-card-pad-compact">
+          <div class="flex flex-wrap items-center justify-between gap-control-gap border-t border-outline-gray-1 px-3 py-1.5">
             <span class="text-caption text-ink-gray-7" role="status">
               <Show when={selectable()}>{selected().length} selected · </Show>
               <Show when={!serverMode() || totalKnown()}>

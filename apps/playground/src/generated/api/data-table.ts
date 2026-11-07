@@ -74,7 +74,7 @@ export const API = {
       "name": "density",
       "type": "'comfortable' | 'compact'",
       "optional": true,
-      "description": "`compact` uses 36px rows instead of 44px."
+      "description": "Row height: `compact` (the default, about 28px rows) or `comfortable`\n(about 36px) for touch-first or reading-heavy screens."
     },
     {
       "name": "cardBreakpoint",
