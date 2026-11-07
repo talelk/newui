@@ -432,7 +432,8 @@ export function Wizard<TValues extends object = Record<string, unknown>>(
     for (const entry of steps()) {
       if (entry.isReview) continue
       const rows = fieldsOf(entry)
-        .filter((field) => !field.when || field.when(document))
+        // Step fields are top-level entries: their scope is the document.
+        .filter((field) => !field.when || field.when(document, document))
         .map((field) => ({
           label: typeof field.label === 'string' ? field.label : field.name,
           value: formatValue(readPath(document, field.name)),
