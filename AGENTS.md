@@ -377,12 +377,13 @@ packages.
 - **Measured checkpoint** (2026-11-07; `pnpm size`, gzip with `solid-js`
   external): `cn()` 6.83 kB · `Button` 9.96 kB · `Button + Dialog` 31.22 kB ·
   atoms 14.19 kB · molecules 74.73 kB · organisms 160.62 kB · templates
-  45.56 kB · full atomic barrel 309.78 kB. Routes (`pnpm budget`): home 60.7 kB,
-  analytics fullscreen 458.3 kB, tasks fullscreen 275.0 kB, accounting
-  fullscreen 388.4 kB. The application routes are **over** their budgets: the
-  site bundler merges organisms into one shared chunk, so pages that render no
-  table still load DataTable (the library itself tree-shakes — the
-  `Organisms page chrome` size entry guards that). These are checkpoints, not
+  45.56 kB · full atomic barrel 309.78 kB. Routes (`pnpm budget`): every
+  route within budget; Discussions fullscreen 159.0 kB, Tasks fullscreen
+  251.0 kB, Accounting fullscreen 388.2 kB, the starter 183.3 kB. Import an
+  organism by name, even behind `lazy()`: `import('@talelk/newui-organisms')`
+  pulls the whole barrel into one chunk every route then shares (it cost
+  ~70 kB on Discussions). The `Organisms page chrome` size entry guards the
+  barrel's own tree-shaking. These are checkpoints, not
   substitutes for running `pnpm size` and `pnpm budget`.
 - **Removed `tailwind-variants`** (it bundled its own merge integration) in
   favour of an in-house `tv`/`cn`/`cx` in `lib/tv.ts`: `Button` went 34.3 →

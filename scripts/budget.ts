@@ -69,7 +69,9 @@ const ROUTES: RouteBudget[] = [
     unless: 'the responsive AppShell drawer at mobile width',
   },
   ...[
-    ['tasks', 260],
+    // 260 → 265 (2026-11-07): DataTable column operations and virtualisation
+    // (#20, #21) measured 260.6 after the barrel-import and lazy-filter fixes.
+    ['tasks', 265],
     ['mail', 210],
     ['files', 230],
     ['deals', 240],
@@ -190,13 +192,17 @@ const ROUTES: RouteBudget[] = [
 
   {
     route: '/pages/tickets/fullscreen',
-    budget: 195,
+    // 195 → 200: DataTable column operations and virtualisation (#20, #21),
+    // 196.2 measured once the shared-chunk leak was fixed (2026-11-07).
+    budget: 200,
     unless: 'interactive tickets workspace',
   },
 
   {
     route: '/pages/deals/fullscreen',
-    budget: 220,
+    // 220 → 228: the DataTable list view's column operations and
+    // virtualisation (#20, #21), 223.6 measured (2026-11-07).
+    budget: 228,
     unless: 'interactive deals workspace in the shared AppShell frame',
   },
 
@@ -229,7 +235,9 @@ const ROUTES: RouteBudget[] = [
   },
   {
     route: '/pages/tasks/fullscreen',
-    budget: 250,
+    // 250 → 256: DataTable column operations and virtualisation (#20, #21),
+    // 251.0 measured (2026-11-07).
+    budget: 256,
     unless: 'TanStack task workspace with typed table, forms and virtual feed',
   },
 
@@ -376,9 +384,11 @@ try {
       routes: [
         {
           route: '/',
-          // 142.3 measured: the whole app — frame, router, data client, table
-          // and form. There is no route splitting to hide behind at this size.
-          budget: 170,
+          // The whole app — frame, router, data client, table and form; no
+          // route splitting to hide behind. 142.3 at first, 183.3 on 2026-11-07
+          // after DataTable column operations and virtualisation (#20, #21)
+          // and the instrument-panel restyle (ADR-0016).
+          budget: 188,
           unless: 'the complete starter on one page',
         },
       ],

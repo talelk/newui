@@ -421,7 +421,9 @@ describe('DataTable column operations', () => {
         />
       ))
       const user = userEvent.setup()
-      const filter = screen.getByRole('button', { name: 'Filter by Name' })
+      const filter = await screen.findByRole('button', {
+        name: 'Filter by Name',
+      })
       await user.click(filter)
       const dialog = await screen.findByRole('dialog')
       const input = dialog.querySelector('input') as HTMLInputElement
@@ -454,7 +456,9 @@ describe('DataTable column operations', () => {
         />
       ))
       const user = userEvent.setup()
-      await user.click(screen.getByRole('button', { name: 'Filter by Status' }))
+      await user.click(
+        await screen.findByRole('button', { name: 'Filter by Status' }),
+      )
       const facet = await screen.findByRole('button', { name: /Paused/ })
       expect(facet.textContent).toContain('1')
       await user.click(facet)
@@ -473,7 +477,9 @@ describe('DataTable column operations', () => {
         />
       ))
       const user = userEvent.setup()
-      await user.click(screen.getByRole('button', { name: 'Filter by Name' }))
+      await user.click(
+        await screen.findByRole('button', { name: 'Filter by Name' }),
+      )
       const dialog = await screen.findByRole('dialog')
       const input = dialog.querySelector('input') as HTMLInputElement
       commitFilter(input, 'Alpha')
@@ -502,7 +508,9 @@ describe('DataTable column operations', () => {
         />
       ))
       const user = userEvent.setup()
-      await user.click(screen.getByRole('button', { name: 'Filter by Amount' }))
+      await user.click(
+        await screen.findByRole('button', { name: 'Filter by Amount' }),
+      )
       await screen.findByRole('dialog')
       const low = screen.getByRole('spinbutton', { name: 'Amount minimum' })
       const high = screen.getByRole('spinbutton', { name: 'Amount maximum' })
@@ -525,7 +533,9 @@ describe('DataTable column operations', () => {
       const search = screen.getByRole('searchbox')
       await user.type(search, 'Gamma')
       await waitFor(() => expect(dataRows(container)).toHaveLength(1))
-      await user.click(screen.getByRole('button', { name: 'Filter by Name' }))
+      await user.click(
+        await screen.findByRole('button', { name: 'Filter by Name' }),
+      )
       const dialog = await screen.findByRole('dialog')
       const input = dialog.querySelector('input') as HTMLInputElement
       commitFilter(input, 'Alpha')

@@ -13,6 +13,7 @@
     "pages/accounting/PeriodBar.tsx",
     "pages/accounting/AccountingDialogs.tsx",
     "examples/CreateDialog.tsx",
+    "pages/accounting/AccountingTable.tsx",
     "pages/accounting/ExpenseRanking.tsx"
   ],
   "packages": [

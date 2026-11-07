@@ -82,6 +82,7 @@ import {
   createSignal,
   For,
   type JSX,
+  lazy,
   on,
   onCleanup,
   Show,
@@ -91,7 +92,6 @@ import { DataState } from '../DataState'
 import { SelectionBar } from '../SelectionBar'
 import { ColumnMenu } from './ColumnMenu'
 import {
-  ColumnFilter,
   type ColumnOps,
   ColumnResizeHandle,
   createHeaderDrag,
@@ -101,6 +101,13 @@ import {
   orderedLeafIds,
   SizedCol,
 } from './column-ops'
+
+/** Loaded on first use: only tables with filterable columns pay for it. */
+const ColumnFilter = lazy(() =>
+  import('./column-filter').then((module) => ({
+    default: module.ColumnFilter,
+  })),
+)
 
 /**
  * The eleven aggregations a column can ask for by name. They are TanStack's
