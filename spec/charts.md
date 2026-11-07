@@ -30,6 +30,8 @@ copyable source and generated props.
   `aria-hidden` and the values ride in a visually-hidden summary. NumberCard
   draws its trend with the same component.
 - NumberCard displays title/value, optional target, delta and sparkline.
+  `bare` drops the card's border and radius so a page can set several in one
+  ruled KPI strip (the container draws the rules, as `StatGrid` does).
   negativeIsBetter reverses delta colour for costs.
 - Dashboard arranges children, automatically fitting columns unless columns is
   supplied. ChartCard is the bordered surface; ChartContainer adds title,
@@ -63,9 +65,9 @@ properties, so it follows the light/dark axis without a second recipe.
 - ChartTooltip is a bordered card: a header row (the label, over a bottom
   hairline), then one row per reading — dash and category on the left, the
   tabular value on the right. Context rows keep their rule and carry no dash.
-- NumberCard follows the KPI anatomy: a header row (title + delta pill toned
-  by `negativeIsBetter`, at the contrast contract's `ink-*-8` on
-  `surface-*-2`), the value, a progress bar toward a numeric `target`
+- NumberCard follows the KPI anatomy: a header row (title + delta, toned text
+  by `negativeIsBetter` at the contrast contract's `ink-*-8` on the card — no
+  pill), the value, a progress bar toward a numeric `target`
   (`role="progressbar"`; string targets print ` / target` only), the
   `deltaCaption` as the baseline line, and a sparkline whose last point carries
   an end dot. The target wraps as a whole unit on narrow cards, the sparkline

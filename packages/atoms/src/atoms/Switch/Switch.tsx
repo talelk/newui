@@ -18,7 +18,7 @@ const switchControl = tv({
   base: [
     'relative inline-flex shrink-0 items-center rounded-pill border-transparent bg-surface-gray-4 transition-colors duration-fast ease-in-out motion-reduce:transition-none',
     'hover:bg-surface-gray-5 active:bg-surface-gray-6 group-hover:bg-surface-gray-5',
-    'data-[state=checked]:bg-surface-gray-10 data-[state=checked]:hover:bg-surface-gray-9 data-[state=checked]:active:bg-surface-gray-8 data-[state=checked]:group-hover:bg-surface-gray-9',
+    'data-[state=checked]:bg-surface-blue-8 data-[state=checked]:hover:bg-surface-blue-9 data-[state=checked]:active:bg-surface-blue-9 data-[state=checked]:group-hover:bg-surface-blue-9',
     'data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-gray-3 data-[disabled]:hover:bg-surface-gray-3 data-[disabled]:group-hover:bg-surface-gray-3',
   ],
   variants: {

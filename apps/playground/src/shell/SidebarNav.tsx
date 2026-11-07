@@ -151,7 +151,7 @@ export function SidebarNav(props: {
                       ? 'true'
                       : undefined
                   }
-                  class={`${NAV_ROW} w-full text-start data-[active]:bg-surface-gray-2 data-[active]:text-ink-gray-9`}
+                  class={`${NAV_ROW} w-full text-start data-[active]:bg-surface-elevation-1 data-[active]:text-ink-gray-9 data-[active]:shadow-sm`}
                   classList={{
                     'justify-center px-0': props.collapsed === true,
                   }}
@@ -222,7 +222,7 @@ function NavLink(props: {
       <span class="min-w-0 flex-1 truncate">{props.item.title}</span>
       <Show when={props.item.status}>
         {(status) => (
-          <span class="shrink-0 rounded-control bg-surface-gray-3 px-1 text-xs text-ink-gray-7">
+          <span class="shrink-0 text-xs tabular-nums text-ink-gray-6">
             {status()}
           </span>
         )}

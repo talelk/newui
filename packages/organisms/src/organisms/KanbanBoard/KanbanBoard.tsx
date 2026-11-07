@@ -383,7 +383,7 @@ export function KanbanBoard<T extends { id: string }>(
               // screen reader walks. The drag is invisible to it, which is exactly
               // why the card menu exists.
               class={cn(
-                'flex h-full min-w-max items-stretch gap-card-gap p-card-pad',
+                'flex h-full min-w-max items-stretch gap-3 p-card-pad-compact',
                 // Below `lg` the board is a phone-width panner, and there the
                 // reference snaps: a column that lands half-off the edge is a
                 // column you cannot read. Wide, it is a drag surface, and snapping

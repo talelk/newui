@@ -620,10 +620,11 @@ export function Mail(): JSX.Element {
                   <For each={rows()}>
                     {(message) => (
                       <li
-                        class="flex gap-2 border-b border-outline-gray-1 p-3 transition-colors last:border-b-0 hover:bg-surface-gray-1"
+                        class="flex gap-2 border-b border-outline-gray-1 px-3 py-2 transition-colors last:border-b-0 hover:bg-surface-gray-1"
                         classList={{
-                          'bg-surface-blue-1': active() === message.id,
-                          'bg-surface-gray-2':
+                          'bg-surface-blue-1 shadow-[inset_2px_0_0_0_var(--outline-blue-6)]':
+                            active() === message.id,
+                          'bg-surface-blue-1':
                             selectedVisible().includes(message.id) &&
                             active() !== message.id,
                         }}
@@ -678,24 +679,27 @@ export function Mail(): JSX.Element {
                               </time>
                             </span>
                           </span>
-                          <span class="mt-0.5 flex items-center gap-2">
-                            <span
-                              class="truncate"
-                              classList={{
-                                'font-semibold': message.unread,
-                              }}
-                            >
-                              {message.subject}
+                          {/* Subject and snippet share one line: a dense
+                              inbox reads two lines per conversation. */}
+                          <span class="mt-0.5 flex min-w-0 items-center gap-2">
+                            <span class="min-w-0 flex-1 truncate">
+                              <span
+                                classList={{
+                                  'font-semibold text-ink-gray-9':
+                                    message.unread,
+                                }}
+                              >
+                                {message.subject}
+                              </span>
+                              <span class="text-ink-gray-6">
+                                {' — '}
+                                {message.body.split('\n\n')[1] ?? message.body}
+                              </span>
                             </span>
                             <Badge class="hidden shrink-0 sm:inline-flex">
                               {message.category}
                             </Badge>
-                          </span>
-                          <span class="mt-0.5 flex items-center gap-2">
-                            <span class="min-w-0 flex-1 truncate text-caption text-ink-gray-7">
-                              {message.body.split('\n\n')[1] ?? message.body}
-                            </span>
-                            <span class="hidden shrink-0 text-caption text-ink-gray-7 sm:inline">
+                            <span class="hidden shrink-0 text-caption text-ink-gray-6 sm:inline">
                               {message.label}
                             </span>
                           </span>

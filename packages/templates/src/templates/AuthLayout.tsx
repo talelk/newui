@@ -18,7 +18,7 @@ export function AuthLayout(props: AuthLayoutProps): JSX.Element {
   return (
     <div
       data-slot="auth-layout"
-      class="grid min-h-dvh bg-surface-gray-1 text-interface text-ink-gray-9"
+      class="grid min-h-dvh bg-surface-canvas text-interface text-ink-gray-9"
       classList={{ 'lg:grid-cols-2': Boolean(props.aside) }}
     >
       <Show when={props.aside}>

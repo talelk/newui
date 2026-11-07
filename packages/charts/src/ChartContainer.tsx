@@ -76,8 +76,7 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
             'align-items': 'flex-start',
             'justify-content': 'space-between',
             gap: '0.75rem',
-            'padding-bottom': '0.625rem',
-            'margin-bottom': '0.25rem',
+            'padding-bottom': '0.5rem',
             'border-bottom': '1px solid var(--outline-gray-1)',
           }}
         >
@@ -86,9 +85,10 @@ export function ChartContainer(props: ChartContainerProps): JSX.Element {
               <div
                 data-slot="chart-title"
                 style={{
-                  'font-size': '1rem',
+                  'font-size': 'var(--text-section, 0.9375rem)',
                   'font-weight': '600',
-                  'line-height': '1.375',
+                  'line-height': 'var(--text-section--line-height, 1.25rem)',
+                  'letter-spacing': 'var(--text-section--letter-spacing)',
                   color: 'var(--ink-gray-9)',
                   overflow: 'hidden',
                   'text-overflow': 'ellipsis',

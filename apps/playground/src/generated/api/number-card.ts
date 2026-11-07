@@ -101,6 +101,12 @@ export const API = {
       "description": "Switches the card into its error state and prints this message."
     },
     {
+      "name": "bare",
+      "type": "boolean",
+      "optional": true,
+      "description": "Drops the card's own border, radius and fill so it can sit in a ruled\nKPI strip whose container draws the rules (see `StatGrid`)."
+    },
+    {
       "name": "class",
       "type": "string",
       "optional": true,

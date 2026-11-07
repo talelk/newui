@@ -411,6 +411,11 @@ export type NumberCardProps = {
   loading?: boolean
   /** Switches the card into its error state and prints this message. */
   error?: string | null
+  /**
+   * Drops the card's own border, radius and fill so it can sit in a ruled
+   * KPI strip whose container draws the rules (see `StatGrid`).
+   */
+  bare?: boolean
   /** Root class fallthrough, merged last (P10). */
   class?: string
   /** Accessible name for the card. */

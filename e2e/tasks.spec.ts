@@ -9,7 +9,7 @@ test('mobile task lists paginate the scale fixture, sort and open the final reco
   const cards = page.locator('[data-slot="data-table-cards"]')
   await expect(cards).toContainText('TASK-1001')
   await page.getByRole('button', { name: 'Next page', exact: true }).click()
-  await expect(cards).toContainText('TASK-1011')
+  await expect(cards).toContainText('TASK-1026')
   await page.getByRole('combobox', { name: 'Sort task list' }).click()
   await page.getByRole('option', { name: 'Title', exact: true }).click()
   await page
@@ -25,7 +25,7 @@ test('task table filters, sorts, paginates, hides columns and completes selected
 }) => {
   await page.goto('/pages/tasks/fullscreen')
   const rows = page.locator('[data-slot="data-table"] tbody tr')
-  await expect(rows).toHaveCount(10)
+  await expect(rows).toHaveCount(25)
   const first = await rows.first().innerText()
   await page.getByRole('button', { name: 'Next page', exact: true }).click()
   await expect(rows.first()).not.toHaveText(first)
@@ -55,7 +55,7 @@ test('task creation validates before saving and survives query reloads', async (
   page,
 }) => {
   await page.goto('/pages/tasks/fullscreen')
-  await expect(page.locator('tbody tr')).toHaveCount(10)
+  await expect(page.locator('tbody tr')).toHaveCount(25)
   await page.getByRole('button', { name: 'New task', exact: true }).click()
   const dialog = page.getByRole('dialog')
   await dialog.getByRole('button', { name: 'Create task', exact: true }).click()
@@ -89,7 +89,7 @@ test('the activity stream keeps a bounded DOM while reaching all 1000 tasks', as
   page,
 }) => {
   await page.goto('/pages/tasks/fullscreen')
-  await expect(page.locator('tbody tr')).toHaveCount(10)
+  await expect(page.locator('tbody tr')).toHaveCount(25)
   await page.getByRole('radio', { name: 'Activity', exact: true }).click()
   const feed = page.locator('[data-slot="virtual-list"]')
   await expect(feed.locator('li').first()).toBeVisible()
@@ -107,7 +107,7 @@ for (const theme of ['light', 'dark']) {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.setViewportSize({ width: 390, height: 900 })
     await page.goto('/pages/tasks/fullscreen')
-    await expect(page.locator('tbody tr')).toHaveCount(10)
+    await expect(page.locator('tbody tr')).toHaveCount(25)
     await page.evaluate(
       (value) => document.documentElement.setAttribute('data-theme', value),
       theme,

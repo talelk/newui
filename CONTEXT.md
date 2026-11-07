@@ -56,7 +56,8 @@ widget layout, saved views, persisted preferences. Distinct from config form:
 one is authored, the other is edited. _Avoid_: using "configuration" for both.
 
 **bare** — a prop that suppresses default chrome so content fills the shell.
-Currently only Dialog (`bare?: boolean` drops the body padding).
+Dialog (`bare?: boolean` drops the body padding) and NumberCard (drops its
+border and radius so several share one ruled KPI strip).
 
 **fluid** — a prop that makes items stretch to fill the container.
 _Avoid_: fullWidth, block, grow.

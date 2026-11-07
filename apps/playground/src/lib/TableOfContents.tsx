@@ -1,5 +1,5 @@
 import { createEffect, createSignal, For, type JSX, onCleanup } from 'solid-js'
-import { NAV_ROW } from './site-ui'
+import { NAV_ROW_ON_SHEET } from './site-ui'
 
 /**
  * The "On this page" column's contents (H15, spec/history/examples-refresh.md §1).
@@ -66,7 +66,7 @@ export function TableOfContents(props: { entries: TocEntry[] }): JSX.Element {
               <a
                 href={`#${entry.id}`}
                 aria-current={active() === entry.id ? 'true' : undefined}
-                class={`${NAV_ROW} aria-[current=true]:font-medium`}
+                class={`${NAV_ROW_ON_SHEET} aria-[current=true]:font-medium`}
               >
                 <span class="min-w-0 flex-1 truncate">{entry.label}</span>
               </a>

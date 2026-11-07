@@ -104,7 +104,7 @@ export function Chrome(
   }
   return (
     <TocContext.Provider value={tocChannel}>
-      <div class="min-h-screen bg-surface-base text-ink-gray-9">
+      <div class="min-h-screen bg-surface-canvas text-ink-gray-9">
         <a href="#site-content" class="sr-only focus:not-sr-only">
           Skip to content
         </a>
@@ -123,7 +123,7 @@ export function Chrome(
           <aside
             data-slot="site-sidebar"
             data-collapsed={collapsed()}
-            class="sticky top-12 hidden h-[calc(100dvh-3rem)] shrink-0 flex-col overflow-hidden border-e border-outline-gray-1 lg:flex"
+            class="sticky top-12 hidden h-[calc(100dvh-3rem)] shrink-0 flex-col overflow-hidden lg:flex"
             classList={{ 'w-56': !collapsed(), 'w-12': collapsed() }}
           >
             <div class="flex h-9 shrink-0 items-center justify-between gap-1 ps-3 pe-1">
@@ -137,7 +137,7 @@ export function Chrome(
                 aria-label={collapsed() ? 'Expand sidebar' : 'Collapse sidebar'}
                 aria-expanded={!collapsed()}
                 onClick={() => persist(!collapsed())}
-                class="ms-auto grid size-7 shrink-0 place-items-center rounded-control text-ink-gray-6 hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
+                class="ms-auto grid size-7 shrink-0 place-items-center rounded-control text-ink-gray-6 hover:bg-surface-gray-3 hover:text-ink-gray-9 focus-visible:focus-ring"
               >
                 <span
                   aria-hidden="true"
@@ -153,33 +153,40 @@ export function Chrome(
               <SidebarNav collapsed={collapsed()} context={props.sidebar} />
             </div>
           </aside>
-          <main
-            id="site-content"
-            class="mx-auto min-w-0 max-w-[1440px] flex-1 px-4 py-6 lg:px-6"
+          {/* The reading surface: content and its index share one sheet on
+              the Mist frame, as an application's data does. */}
+          <div
+            data-slot="site-sheet"
+            class="flex min-w-0 flex-1 bg-surface-elevation-1 lg:m-2 lg:ms-0 lg:rounded-card lg:border lg:border-outline-gray-1"
           >
+            <main
+              id="site-content"
+              class="mx-auto min-w-0 max-w-[1440px] flex-1 px-4 py-6 lg:px-6"
+            >
+              <Show when={toc()}>
+                {(activeToc) => (
+                  <details class="mb-6 rounded-card border border-outline-gray-1 bg-surface-elevation-1 px-3 py-2 xl:hidden">
+                    <summary class="flex min-h-10 cursor-pointer items-center rounded-control text-interface font-medium text-ink-gray-8 focus-visible:focus-ring">
+                      On this page
+                    </summary>
+                    <div class="pb-2">{activeToc()()}</div>
+                  </details>
+                )}
+              </Show>
+              {props.children}
+              <PrevNext items={props.siblings} />
+            </main>
             <Show when={toc()}>
               {(activeToc) => (
-                <details class="mb-6 rounded-card border border-outline-gray-1 bg-surface-elevation-1 px-3 py-2 xl:hidden">
-                  <summary class="flex min-h-10 cursor-pointer items-center rounded-control text-interface font-medium text-ink-gray-8 focus-visible:focus-ring">
-                    On this page
-                  </summary>
-                  <div class="pb-2">{activeToc()()}</div>
-                </details>
+                <aside
+                  aria-label="On this page"
+                  class="sticky top-12 hidden h-[calc(100dvh-3rem)] w-56 shrink-0 overflow-y-auto px-4 py-6 xl:block"
+                >
+                  {activeToc()()}
+                </aside>
               )}
             </Show>
-            {props.children}
-            <PrevNext items={props.siblings} />
-          </main>
-          <Show when={toc()}>
-            {(activeToc) => (
-              <aside
-                aria-label="On this page"
-                class="sticky top-12 hidden h-[calc(100dvh-3rem)] w-56 shrink-0 overflow-y-auto px-4 py-6 xl:block"
-              >
-                {activeToc()()}
-              </aside>
-            )}
-          </Show>
+          </div>
         </div>
         <dialog
           onKeyDown={modalKeyDown}
@@ -193,7 +200,7 @@ export function Chrome(
             )
               drawer?.close()
           }}
-          class="site-drawer fixed inset-y-0 start-0 m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-2rem)] overflow-y-auto border-e border-outline-gray-1 bg-surface-base p-3 text-ink-gray-9 backdrop:bg-surface-gray-7/50"
+          class="site-drawer fixed inset-y-0 start-0 m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-2rem)] overflow-y-auto border-e border-outline-gray-1 bg-surface-canvas p-3 text-ink-gray-9 backdrop:bg-surface-gray-7/50"
         >
           <button
             type="button"

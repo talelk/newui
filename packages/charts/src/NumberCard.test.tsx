@@ -39,7 +39,7 @@ describe('NumberCard', () => {
     ).toBeNull()
   })
 
-  it('puts the delta in a pill and its baseline underneath the reading', () => {
+  it('tones the delta as text and puts its baseline underneath the reading', () => {
     const { container } = render(() => (
       <NumberCard
         title="Revenue"
@@ -49,14 +49,26 @@ describe('NumberCard', () => {
         deltaCaption="from $77.6k last month"
       />
     ))
-    const pill = container.querySelector(
+    const delta = container.querySelector(
       '[data-slot="number-card-delta"]',
     ) as HTMLElement
-    expect(pill.style.backgroundColor).toBe('var(--surface-green-2)')
-    expect(pill.style.borderRadius).toBe('var(--radius-pill)')
+    // Toned text, no pill: the contrast contract's ink-*-8 on the card.
+    expect(delta.style.color).toBe('var(--ink-green-8)')
+    expect(delta.style.backgroundColor).toBe('')
     expect(
       container.querySelector('[data-slot="number-card-caption"]')?.textContent,
     ).toBe('from $77.6k last month')
+  })
+
+  it('drops its own border and radius when bare, for a ruled strip', () => {
+    const { container } = render(() => (
+      <NumberCard title="Revenue" value={80} bare />
+    ))
+    const card = container.querySelector(
+      '[data-slot="number-card"]',
+    ) as HTMLElement
+    expect(card.style.borderStyle).not.toBe('solid')
+    expect(card.style.borderRadius).toBe('0px')
   })
 
   it('renders the delta unsigned with a direction arrow', () => {

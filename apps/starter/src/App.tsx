@@ -25,7 +25,7 @@ import { SignIn } from './pages/SignIn'
  */
 function NotFound(): JSX.Element {
   return (
-    <main class="grid min-h-dvh place-items-center bg-surface-gray-1 p-6 text-center text-interface text-ink-gray-9">
+    <main class="grid min-h-dvh place-items-center bg-surface-canvas p-6 text-center text-interface text-ink-gray-9">
       <div class="flex flex-col items-center gap-3">
         <p class="text-caption text-ink-gray-7">404</p>
         <h1 class="text-heading">Nothing here</h1>

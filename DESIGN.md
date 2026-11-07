@@ -473,11 +473,15 @@ alone.
 
 ### Navigation
 
-- **Masthead:** 48px sticky header, 1px bottom border, white; the product
-  mark is 24px and sits beside a 14px semibold wordmark. Primary links are 14px
-  Ink Secondary; current is Ink and a Panel Gray wash.
-- **Application sidebar:** on the Mist frame, 28px rows, 4px radius, 13px
-  text, 8px horizontal padding. The current destination is a piece of Sheet
+- **Masthead:** 48px sticky header on the Mist frame, 1px bottom border; the
+  product mark is 24px beside a semibold wordmark. Primary links are 13px Ink
+  Secondary; the current one is a piece of Sheet, as in the sidebar.
+- **Documentation sheet:** the docs read like an application — masthead and
+  sidebar on the Mist frame, the page and its "On this page" index on one
+  white sheet. On the sheet, the current index entry carries the Petrol
+  leading rule (white on white cannot mark a place).
+- **Sidebar (application and docs):** on the Mist frame, 28px rows, 4px
+  radius, 13px text, 8px horizontal padding. The current destination is a piece of Sheet
   with a Petrol icon and Graphite text; hover is one gray step darker than
   Mist. Counts are plain right-aligned figures. Section
   headings are sentence case — never tracked uppercase.

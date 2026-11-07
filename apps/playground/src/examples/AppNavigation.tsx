@@ -72,7 +72,7 @@ export function AppNavigation(props: {
             onClick={() => props.onChange(item.label)}
             suffix={
               item.count ? (
-                <span class="rounded-pill bg-surface-gray-2 px-1.5 py-px text-caption tabular-nums text-ink-gray-7 group-data-[active]:bg-surface-blue-2 group-data-[active]:text-ink-blue-8">
+                <span class="text-caption tabular-nums text-ink-gray-6 group-data-[active]:text-ink-gray-9">
                   {item.count}
                 </span>
               ) : undefined
