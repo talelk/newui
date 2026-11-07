@@ -57,6 +57,11 @@ wrap charts in `DataState`.
 (`normalize.ts`, palette tokens, format helpers) — prefer them over raw
 ECharts option objects so the theme stays token-driven.
 
+**KPIs share one ruled strip.** Set several `NumberCard`s with `bare` inside a
+container that draws the rules (`grid gap-px overflow-hidden rounded-card
+border border-outline-gray-1 bg-outline-gray-1`), as `StatGrid` does; deltas
+are toned text, never pills.
+
 **Interaction state is a signal, not an echarts side-channel.** On
 LineChart/AreaChart/BarChart, `zoom`/`defaultZoom` + `onZoomChange` and
 `brush` + `onBrushChange` round-trip through the option builder, so an

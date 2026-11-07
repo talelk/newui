@@ -67,6 +67,13 @@ need their full prop surface.
 `open`/`onOpenChange` on the Root (P1/P2). A closed trigger shows nothing —
 check the `Open` state story before assuming a rendering bug.
 
+**Open a record as a side sheet, not a centred modal.**
+`Dialog.Content position="end"` is a full-height sheet on the inline-end edge:
+the list behind it stays in view, the content scrolls as one region and
+`Dialog.Footer` pins to the bottom edge. Use `size="xl"` for a two-column
+property grid of the record's fields; keep a centred dialog for short
+confirmations and create forms.
+
 **Date and time ranges report tuples.** `DateRangePicker` reports
 `[from, to]` of `YYYY-MM-DD` or `[]`; `TimeRangePicker` reports `[from, to]`
 of `HH:mm` or `[]`. Picking the start holds a half-open range internally —

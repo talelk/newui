@@ -77,6 +77,9 @@ skills:
       - Aggregate grouped metrics and build time-bucketed chart series with
         aggregate, timeBucket and rollup
       - Invalidate query keys from realtime socket events with connectRealtime
+      - Build a config form from a static field map, with row-scoped when,
+        pruned hidden fields and an autosave that writes the pruned document
+      - Keep and restore a local draft without trusting its shape
   - name: newui-molecules
     slug: newui-molecules
     domain: ui
@@ -108,6 +111,7 @@ skills:
       - Raise toasts through a mounted createToaster host
       - Transfer checked rows between available and picked lists
       - Render unread and selected list rows without colour-only state
+      - Open a record as a side sheet beside its list with Dialog position end
   - name: newui-organisms
     slug: newui-organisms
     domain: ui
@@ -132,6 +136,8 @@ skills:
       - Edit cells in place through onCellChange with app-owned rows
       - Feed selection through onRowsAction and the SelectionBar
       - Show loading, empty and error through DataState
+      - Keep compact table density and assert the in-table empty state
+      - Lay KPIs out as one ruled StatGrid strip
   - name: newui-templates
     slug: newui-templates
     domain: ui

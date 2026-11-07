@@ -9,9 +9,9 @@ describe('DetailHeader (browser, real CSS)', () => {
     ))
     const title = container.querySelector('h1') as HTMLElement
     const subtitle = container.querySelector('p') as HTMLElement
-    // `text-heading` is 24px — the h1 scale PageToolbar and AppShell also
+    // `text-heading` is 20px (ADR-0016) — the h1 scale PageToolbar and AppShell also
     // use; `text-metric` (28px) is the numbers scale, not a prose title.
-    expect(Number.parseFloat(getComputedStyle(title).fontSize)).toBe(24)
+    expect(Number.parseFloat(getComputedStyle(title).fontSize)).toBe(20)
     expect(Number.parseFloat(getComputedStyle(subtitle).fontSize)).toBeLessThan(
       Number.parseFloat(getComputedStyle(title).fontSize),
     )

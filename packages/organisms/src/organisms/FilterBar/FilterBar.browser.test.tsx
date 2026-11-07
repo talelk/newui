@@ -38,7 +38,7 @@ describe('FilterBar (browser, real CSS)', () => {
   it('states the result count in tabular figures', () => {
     const { container } = render(() => <FilterBar resultCount={24} />)
     const count = container.querySelector(
-      '[data-slot="filter-bar-meta"] span',
+      '[data-slot="filter-bar-count"]',
     ) as HTMLElement
     // `tabular-nums` keeps 24 and 8 aligned as filters change the number.
     expect(getComputedStyle(count).fontVariantNumeric).toContain('tabular-nums')

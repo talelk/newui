@@ -163,6 +163,15 @@ const ENTRIES: Entry[] = [
     forbid: ['"dialog"', '"combobox"', '"chart"', '"editor"'],
   },
   {
+    // Page chrome without a table: the Discussions route's organisms. Guards
+    // the barrel's tree-shaking — none of DataTable reaches a page that does
+    // not render one.
+    name: 'Organisms page chrome',
+    file: 'scripts/fixtures/organisms-page-chrome.ts',
+    budget: 70,
+    forbid: ['data-table-row', 'cursor-col-resize', 'observeElementRect'],
+  },
+  {
     name: 'Atomic barrel',
     file: 'scripts/fixtures/all.ts',
     // The full core is an upper bound; regular consumers import only the levels

@@ -57,7 +57,7 @@ describe('Section (browser, real CSS)', () => {
     // `text-section` — a dropped scale utility drops the heading into body text.
     expect(
       Number.parseFloat(getComputedStyle(heading).fontSize),
-    ).toBeGreaterThan(16)
+    ).toBeGreaterThan(13) // above the 13px interface text
     expect(heading.getBoundingClientRect().height).toBeGreaterThan(0)
   })
 })

@@ -121,6 +121,24 @@ const { form, submitting } = createAppForm({
 - Pass the same message to `onChange` and `onSubmit` when the field should
   validate on both; `fieldError` will not print it twice.
 
+### Config forms: the field map, pruning and autosave
+
+- `createAppForm({ schema, ui, pruneHidden })` takes a Standard Schema and a
+  **field map** (`ui`) keyed by *static* paths (`smtp.host`, never `items[1]`
+  — that throws; a repeater's row fields go under its `fields`). Pass the same
+  object to the `ConfigForm` organism's `fields`.
+- `when(scope, values)` hides a field: `scope` is the form values for a
+  top-level entry and **the row** for a repeater's row field. Hidden fields
+  are pruned from the submitted document (`pruneHidden` defaults to `true`),
+  and schema issues under them never block submit.
+- `app.document(values)` is that submitted document. Give
+  `createAutoSave(app, { save, id })` the `createAppForm` result, not
+  `app.form`, so autosave writes the same pruned document submit sends.
+- With `id`, autosave keeps a local, unpruned **draft**; a successful autosave
+  or submit drops it. `restoreDraft()` is untrusted input (it may predate the
+  schema) — reset the form with it and let validation report what no longer
+  fits.
+
 ## URL state, saved views and transforms
 
 ```ts

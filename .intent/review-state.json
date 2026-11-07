@@ -3,113 +3,118 @@
   "baseline": "f97ad727e68fa8bdf2a52cbb3c2231bb3856fa84",
   "items": {
     "skill:packages/atoms/skills/newui/SKILL.md": {
-      "fingerprint": "692dced624d4da2d031753c1931623fe05cc6eade52ba1368625a21161f22643",
+      "fingerprint": "08d973967b009bae54cf3ca3a641c2a5f0dfd2c17620255d5bc379be3d712765",
       "snapshot": {
-        "AGENTS.md": "dbadcf8ee7a6aebe0bfd8691f2158e86fc2775195719259855157d959208d2e7",
-        "CONTEXT.md": "d47a8b20fdfa3a66735ad1eab4d6e56738c2c68409388c308f80bfdb13f2b5b2",
+        "AGENTS.md": "29194fb74f7093993ef2d69c27a4d4fbea487014bc7237eac43c7446274fed1b",
+        "CONTEXT.md": "36547423474d7cadb91b14d789dcc9777aa9861b6cf7dbf024e44d10ee514b99",
         "PRINCIPLES.md": "a5d2a8c78aa35abd8d271f6ab0de2fac35d7c7138a7033bc8d95e24c72e634c9",
-        "packages/atoms/skills/newui/SKILL.md": "7e98c34bab8a5c619116a4a39b0ae004d183a31353e896a2b7e91d2bf37ae0ad",
+        "packages/atoms/skills/newui/SKILL.md": "bc90820cb308251d2f8c55538063ea84d5b4e5e0847d0497bfac9043b6856af2",
         "packages/atoms/src/atoms/Button/Button.tsx": "30eb0f65bd027a05fd37f90a99ec6d9c46985f442143df4768e64c4a94e24ad7",
         "packages/atoms/src/lib/color-scheme.ts": "796e2c8f84dc12be6c6a343d0342c14902c4a2d4e84ee89b2c0278843b9847db",
         "packages/atoms/src/lib/field.tsx": "2522b4eed8e98543169ec27bc58d0246946e4e97c4ac9be15fedda08857fd284",
         "packages/molecules/src/molecules/Combobox/Combobox.tsx": "379d28f7e71aad41d690e1fb26b6c564057c34b2fd7af406d20356461ac2e6f7",
-        "packages/molecules/src/molecules/Dialog/Dialog.tsx": "71a884cb229e760e3d345561be1b44c2b739642b3d115311b5b51414a7612344",
+        "packages/molecules/src/molecules/Dialog/Dialog.tsx": "19094ad6a743ea8269dbfa10e46c507fe7cac55b81a94ae78d1850ac13322850",
         "packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx": "2730e2b659088b8aab3724239d7512a4e18843af693b708eb1d0f36f08acacd4",
-        "packages/tailwind/src/style.css": "e92e204d9120e8d2c1672e108ed2efd67efa246f54c84ee63bdb2727c3a80beb",
+        "packages/tailwind/src/style.css": "37641404642f11800bd484e1907405edea7703d08c9a9678de903654b9b868be",
         "skills/README.md": "38ff76029f9dffe3e6025102577c139f601a237532af2fa29401f079c2613d5c",
         "spec/adr/0001-solid-no-v-model.md": "382711862fd907c2a30d4e141b26013396fac7f598a2f802e169a3016258ea96",
         "spec/inputs.md": "c4bc011628cf4b6ceedfc5b6100a452317592ce1a88de8ce42ca3460c47fdde1"
       },
-      "head": "c17c4e8215ce9988755af1bdcffd2963ac57d51b",
+      "head": "f8d832cc853c50f42ef7dfe19071ec0d6e85ad71",
       "outcome": "no-change",
-      "reason": "Fix round for the four red gates after the polish sweep: overlay layer authority moved to positioners (overlayPanel carries no z; overlayLayers consumed by all Zag positioners), additive data hooks (data-variant padded/plain, data-icon-only, checkbox-control data-state/data-disabled, editor-toolbar data-disabled), KeyboardShortcut root ink + Checkbox root type ownership, Spinner gray theme in Combobox/MultiSelect loading rows, coherence peer-key gains theme/icon-only/native-disabled dimensions, role-drift baseline shrunk 96->62, visual snapshots regenerated, three route budgets re-measured. Evidence: grep packages/*/skills + _artifacts for overlayLayers/z-floating/overlayPanel/data-theme/padded/icon-only/role-drift = 0 hits; no public prop/variant/spec surface changed in this round (api:check + specs:check green in pnpm verify, all 27 steps pass). Skill guidance unaffected.",
+      "reason": "Rules and token vocabulary unchanged: ADR-0016 retunes token values (blue -> Petrol, Plex, 13px) not names; theme/variant axes, Field contract, semantic tokens and data-slot rules still hold. Dialog gained position='end', covered in newui-molecules.",
       "evidence": [
-        "Changed: packages/atoms/src/atoms/Button/Button.tsx, packages/molecules/src/molecules/Combobox/Combobox.tsx, packages/molecules/src/molecules/Dialog/Dialog.tsx, packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx at c17c4e8215ce9988755af1bdcffd2963ac57d51b"
+        "intent validate: 6 skills passed; pnpm test 1808/1808; test:browser 170/170; chrome e2e harness green except route budgets (reported); source diff f97ad727..HEAD reviewed"
       ]
     },
     "skill:packages/data/skills/newui-data/SKILL.md": {
-      "fingerprint": "69c4353340fd9e2bf9976de97aba0737e7f00f5406cc55b91a35d926e2e0d592",
+      "fingerprint": "74020203bc5fdcfe0176cfa5e14999f4da031b65f77884a0f806cbd4c6c3b02d",
       "snapshot": {
-        "packages/data/README.md": "3d2ac81c788d18adbe75ece7c266b2d0b898349c8dc2ac37b99441b1e97976fb",
-        "packages/data/skills/newui-data/SKILL.md": "34e24a651906c27ec87a52b223bb4d5aa5c1c2c7781bae8848975d9e53d60b91",
-        "packages/data/src/form/form.tsx": "4b39b6d7197883fcab9ee6f930e42d1db6e5a0d77f6f7aab14a1e7a85593927b",
+        "packages/data/README.md": "dc1568088f1abf9005abeeb471a6201ce9be748475d302a4961d2058a7af05e9",
+        "packages/data/skills/newui-data/SKILL.md": "401ab4f29d700ed4a29d00447b1969021a715ce128f70101a8bcca99bfcb1b74",
+        "packages/data/src/aggregate.ts": "5699160a17ab3637acb23ffe86501f7382bb722f46fc2951b0428c249a03261e",
+        "packages/data/src/config-store.ts": "73a8faa1e41e69af6369f32529b1c435383baff2655d5ca50d8df397d2761f7d",
+        "packages/data/src/form/form.tsx": "3327c1f7509cfe4faaa60e6a0ee910eff20ef4f454ca3bca26e0a88966748b84",
         "packages/data/src/query/client.tsx": "0b1ca717361318d037e67478cf239371bf0ca234a546fb4a40a8db55ac21b1cf",
-        "packages/data/src/query/collection.ts": "e6ee06565af3384b09e9ac9e0e895e97749bef3d8631253f3460a0a294248329",
+        "packages/data/src/query/collection.ts": "f499033b65debcdcba5b743292b190882ea5d38df3881ec34ef3690318591607",
         "packages/data/src/query/repository.ts": "70dfb4734db19f52e6f3efe193f5c94aeae04b28f175e9f36ac8b56836a2b73b",
+        "packages/data/src/resource/connect-realtime.ts": "bbf9910b6e68c499e296bf845bc52bc3630ea8ef732e313ede461905725a573d",
+        "packages/data/src/url-state.ts": "0500297e29bc4dffad8bc46436b38ff7779d9e4b5c07f665473c5ef361911032",
         "skills/README.md": "38ff76029f9dffe3e6025102577c139f601a237532af2fa29401f079c2613d5c",
-        "spec/data.md": "739992c4550f49280495877df0bb2990bb27de769a17bf10a297a521b506c27a"
+        "spec/data.md": "81473749afc2f712756cec8825a1cb892e5c4a18c50be0613257c88d2ce0484d"
       },
-      "head": "3c203bff12ae7e3c346d905264bb3b074ba1fb10",
-      "outcome": "no-change",
-      "reason": "The changed sources are renames (@newui/data -> @talelk/newui-data) and unchanged contracts: DataProvider, createCollection with four mutations, createAppForm/Form/fieldError. spec/data.md changed only import paths and package names; no mutation, cache or form-lifecycle sentence moved. The 2.0.0 changesets touch molecules/organisms (TabButtons, FilterBar, DataTable), not the headless data package, which stays 1.0.0.",
+      "head": "f8d832cc853c50f42ef7dfe19071ec0d6e85ad71",
+      "outcome": "updated",
+      "reason": "createAppForm gained schema/ui field map/pruneHidden/document, row-scoped when(scope, values), static-path keys; createAutoSave saves the pruned document from the app form and keeps unpruned drafts. Added a config-form section; collection/URL/config-store guidance unchanged.",
       "evidence": [
-        "git diff f97ad72..HEAD spec/data.md: import paths and package names only",
-        "packages/data/src/query/* and src/form/form.tsx unchanged since baseline",
-        "no .changeset entry names @talelk/newui-data",
-        "intent validate and pnpm test green at 3c203bff12ae7e3c346d905264bb3b074ba1fb10"
+        "intent validate: 6 skills passed; pnpm test 1808/1808; test:browser 170/170; chrome e2e harness green except route budgets (reported); source diff f97ad727..HEAD reviewed"
       ]
     },
     "planning:_artifacts": {
-      "fingerprint": "799cbc855b8e29cd1ce4752d1d7b5c60c6568f78cc7fc312838372909ba951b9",
+      "fingerprint": "49a750d9775a64b6c3e6fb4421fe8e0eedc82e6358d1bc1fdb97fa4893ad7d4b",
       "snapshot": {
-        "AGENTS.md": "dbadcf8ee7a6aebe0bfd8691f2158e86fc2775195719259855157d959208d2e7",
-        "CONTEXT.md": "d47a8b20fdfa3a66735ad1eab4d6e56738c2c68409388c308f80bfdb13f2b5b2",
+        "AGENTS.md": "29194fb74f7093993ef2d69c27a4d4fbea487014bc7237eac43c7446274fed1b",
+        "CONTEXT.md": "36547423474d7cadb91b14d789dcc9777aa9861b6cf7dbf024e44d10ee514b99",
         "PRINCIPLES.md": "a5d2a8c78aa35abd8d271f6ab0de2fac35d7c7138a7033bc8d95e24c72e634c9",
-        "_artifacts/domain_map.yaml": "f4790bc383157edb944eb15cd54dd75dbfe83452ed25d8c67e1c41e1718b9f40",
-        "_artifacts/skill_spec.md": "03a4a1633c3a0b79c6867ded4cae950def11f05e16a53fc6015226460131ced4",
-        "_artifacts/skill_tree.yaml": "7ef408e282ebd920582fc6e289e0e33be3b8f348a435b6cd1bbbf2778391ed55",
-        "packages/atoms/skills/newui/SKILL.md": "7e98c34bab8a5c619116a4a39b0ae004d183a31353e896a2b7e91d2bf37ae0ad",
+        "_artifacts/domain_map.yaml": "e0fef3baba5ee6bd3a5b560b16a36e1f31d8de9c361c88efb2140de91efbe267",
+        "_artifacts/skill_spec.md": "54a23870541326865377b41fecbbbe03d2a367283d09e7fe4e9b12bd4957cec5",
+        "_artifacts/skill_tree.yaml": "92a17750393505c7502bb2d518e3577eda65175469d2fcb7e6ea7d1676aee2a1",
+        "packages/atoms/skills/newui/SKILL.md": "bc90820cb308251d2f8c55538063ea84d5b4e5e0847d0497bfac9043b6856af2",
         "packages/atoms/src/atoms/Button/Button.tsx": "30eb0f65bd027a05fd37f90a99ec6d9c46985f442143df4768e64c4a94e24ad7",
         "packages/atoms/src/lib/color-scheme.ts": "796e2c8f84dc12be6c6a343d0342c14902c4a2d4e84ee89b2c0278843b9847db",
         "packages/atoms/src/lib/field.tsx": "2522b4eed8e98543169ec27bc58d0246946e4e97c4ac9be15fedda08857fd284",
-        "packages/charts/skills/newui-charts/SKILL.md": "0ec9f361d940232b1a752a9d9b9f0131cd66d455770e63c10e9574143e690391",
-        "packages/charts/src/ChartContainer.tsx": "6bd1aff2549f7378ba895b046b053107367339bd99215fc1724611257b63b1d6",
+        "packages/charts/skills/newui-charts/SKILL.md": "cbcafe1a6bb9b392a2a10e2209e95e0668d02ce18ca1ca740affbc6566d5d477",
+        "packages/charts/src/ChartContainer.tsx": "b84d014d6eba7f90e59dd8b9dad295a18ff466a450c093bb11b5b1527ce340a7",
         "packages/charts/src/format.ts": "ccc8c95835fd6651a267f47f32f884c08a9b9b51b28d1971e4177800b2358ecf",
-        "packages/charts/src/index.ts": "b1dc68f6db3948ab9acb80c8176da02527a69fa9dbc5ebe0ee61290d862c10c4",
-        "packages/data/README.md": "3d2ac81c788d18adbe75ece7c266b2d0b898349c8dc2ac37b99441b1e97976fb",
-        "packages/data/skills/newui-data/SKILL.md": "34e24a651906c27ec87a52b223bb4d5aa5c1c2c7781bae8848975d9e53d60b91",
-        "packages/data/src/form/form.tsx": "4b39b6d7197883fcab9ee6f930e42d1db6e5a0d77f6f7aab14a1e7a85593927b",
+        "packages/charts/src/index.ts": "efa2f146329a52eaa845ac6f0bb1b49ea364545d447e98a5fa23fd40426e4a91",
+        "packages/data/README.md": "dc1568088f1abf9005abeeb471a6201ce9be748475d302a4961d2058a7af05e9",
+        "packages/data/skills/newui-data/SKILL.md": "401ab4f29d700ed4a29d00447b1969021a715ce128f70101a8bcca99bfcb1b74",
+        "packages/data/src/aggregate.ts": "5699160a17ab3637acb23ffe86501f7382bb722f46fc2951b0428c249a03261e",
+        "packages/data/src/config-store.ts": "73a8faa1e41e69af6369f32529b1c435383baff2655d5ca50d8df397d2761f7d",
+        "packages/data/src/form/form.tsx": "3327c1f7509cfe4faaa60e6a0ee910eff20ef4f454ca3bca26e0a88966748b84",
         "packages/data/src/query/client.tsx": "0b1ca717361318d037e67478cf239371bf0ca234a546fb4a40a8db55ac21b1cf",
-        "packages/data/src/query/collection.ts": "e6ee06565af3384b09e9ac9e0e895e97749bef3d8631253f3460a0a294248329",
+        "packages/data/src/query/collection.ts": "f499033b65debcdcba5b743292b190882ea5d38df3881ec34ef3690318591607",
         "packages/data/src/query/repository.ts": "70dfb4734db19f52e6f3efe193f5c94aeae04b28f175e9f36ac8b56836a2b73b",
-        "packages/molecules/skills/newui-molecules/SKILL.md": "3959b578c71e4caf7536d86881d241105e9f703c09f469de378dc42d781f06bd",
+        "packages/data/src/resource/connect-realtime.ts": "bbf9910b6e68c499e296bf845bc52bc3630ea8ef732e313ede461905725a573d",
+        "packages/data/src/url-state.ts": "0500297e29bc4dffad8bc46436b38ff7779d9e4b5c07f665473c5ef361911032",
+        "packages/molecules/skills/newui-molecules/SKILL.md": "5c8109c16eedd469dd4211ac0d04385e7d33e5818c61d6e5d33f641fd96becaf",
         "packages/molecules/src/molecules/Combobox/Combobox.tsx": "379d28f7e71aad41d690e1fb26b6c564057c34b2fd7af406d20356461ac2e6f7",
         "packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx": "2842c19b3b389d497576855d4a46675f7a119f98da752f6db3d6c47c3649baf5",
-        "packages/molecules/src/molecules/Dialog/Dialog.tsx": "71a884cb229e760e3d345561be1b44c2b739642b3d115311b5b51414a7612344",
-        "packages/molecules/src/molecules/FormControl/FormControl.tsx": "a684ac76c09c6da14a248f5a132e274ee983f22df178b5c7d23d753fbc26f0ed",
+        "packages/molecules/src/molecules/Dialog/Dialog.tsx": "19094ad6a743ea8269dbfa10e46c507fe7cac55b81a94ae78d1850ac13322850",
+        "packages/molecules/src/molecules/FormControl/FormControl.tsx": "6866293a5d4bf0d0b66a45cd5cf98f57f248ec5a4bb14c2a0a4a22a29ff9f844",
         "packages/molecules/src/molecules/List/List.tsx": "f7e2e3545c9ccac1b86229494161ca9c3b33b417c7247e1d344e0375d98a26e5",
         "packages/molecules/src/molecules/MessageListItem/MessageListItem.tsx": "4946cd621431815c0bfacde717433a0b3f319c980983fff32dbe39494575cbc0",
         "packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx": "2730e2b659088b8aab3724239d7512a4e18843af693b708eb1d0f36f08acacd4",
         "packages/molecules/src/molecules/Select/Select.tsx": "e61d956fc467ea49eb181c9b2df35e5cfbc9eae8aded570404a1462ac73ecf15",
         "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx": "6863b41b41ea35d769c8429d4ccd93fc1c34bf2a628deb08f41d4e0ac6771e41",
-        "packages/organisms/skills/newui-organisms/SKILL.md": "53c7d0dbfb0e1f0e43690a1832a36a8c54609ac7de06ef580dcd0ae89911ce93",
-        "packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx": "4d309bcd15c982f841309ef0eb6a803598d788295da0dd29f65b753b3d13b91e",
+        "packages/organisms/skills/newui-organisms/SKILL.md": "a27cb43266a2d6f8faab9f189d7a5cccc9e60fdfc8ec35ce28cfb27959d94591",
+        "packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx": "6bcb57095dfda85cf4e757dedd931a2a3d12fb1bc4a3a82efc1a4522bbf16c0f",
         "packages/organisms/src/organisms/DataState/DataState.tsx": "30b806f142ba8296b7fa71d75e6bb1d4e2d156cfcb409b8a1195e394127e0c00",
-        "packages/organisms/src/organisms/DataTable/DataTable.tsx": "6885ca893c3e21731d37ee35242c51989eb60035a9f3a93f6c26650afc20e79f",
+        "packages/organisms/src/organisms/DataTable/DataTable.tsx": "6fa1a9fbe87cca0e8cf0a2b2c7dc80e2d834483145f49acf9dcf924591724b73",
         "packages/organisms/src/organisms/SelectionBar/SelectionBar.tsx": "e6b5e0ae17358761c4e3082862e854acf0f112516276b321a87aee689b874e5f",
-        "packages/tailwind/src/style.css": "e92e204d9120e8d2c1672e108ed2efd67efa246f54c84ee63bdb2727c3a80beb",
-        "packages/templates/skills/newui-templates/SKILL.md": "25bc0c412bc08920c5a09be399874842d9f5e57949c2ee00b8f1f3812d15229b",
-        "packages/templates/src/templates/AppShell.tsx": "52c47b23661c04bf31746d6922d1212a1483f969b3c932c916b942de00fbf332",
-        "packages/templates/src/templates/AuthLayout.tsx": "d8f6d91bb0cc4c382e8a1128ddc05997f9238e708fb25533e79d383bc10aa31a",
-        "packages/templates/src/templates/PaneLayout/PaneLayout.tsx": "6fe6ebc719b8bd06103712197ce5c29ff3186710fa9341ddfa872a089f0893db",
+        "packages/tailwind/src/style.css": "37641404642f11800bd484e1907405edea7703d08c9a9678de903654b9b868be",
+        "packages/templates/skills/newui-templates/SKILL.md": "dba286fe935cce55a021f9c009686a383ce8fc3a40d5f6783e8783a90a986ef8",
+        "packages/templates/src/templates/AppShell.tsx": "ea6d87c5c658f7ff6a5a1ef7ad8ee3f42a36c81fec7bb61c7647fc4d665a477d",
+        "packages/templates/src/templates/AuthLayout.tsx": "46d6581a771942db796ae1adb0b8154dee1eeb25034d4403dc7c53f47860c992",
+        "packages/templates/src/templates/PaneLayout/PaneLayout.tsx": "2e1025216f5c9acae07cbffbd8666e23ccbf473224910b0fb4d84cfe9f30bb40",
         "skills/README.md": "38ff76029f9dffe3e6025102577c139f601a237532af2fa29401f079c2613d5c",
         "spec/adr/0001-solid-no-v-model.md": "382711862fd907c2a30d4e141b26013396fac7f598a2f802e169a3016258ea96",
         "spec/adr/0013-atomic-packages-and-app-shell.md": "9b00e5a4eef17a55d3b8bcd3d35477a8faa0f4a4eddbf37bf96daf3c14eb83c5",
-        "spec/app-shell.md": "0a41b0fc81391aea1313dce45e58774096f9e9ae8e80e771176437112fc0e2d4",
+        "spec/app-shell.md": "803701142909f7345f3dced4f421b6aeb58762ee8691a6de710bfc6ade4cef9a",
         "spec/auth-layout.md": "6d526afd73da49c2603271aa2a0428dd5e0f6cc43acb93cbec5d06c7bb864059",
-        "spec/charts.md": "7c5f44634022b578b668d196b1037e28a10426318867f098f41d5485a5f9891c",
-        "spec/data-table.md": "b3029eceeed2cb4635e273cf22963fd0f66db581c2aa855462ccd777bd22afe4",
-        "spec/data.md": "739992c4550f49280495877df0bb2990bb27de769a17bf10a297a521b506c27a",
-        "spec/form.md": "3298955343be0fbf9961396c8acb668ae3db6e25e146cb4e9256a6daea8c8f92",
+        "spec/charts.md": "ae1be3cc9822cb7a4ead53547d131354a8af6fc742a711b561140b0fbbc91fe0",
+        "spec/data-table.md": "c49024c05c89dcc078f925e645a6e047a7e4bae8ff2c30886e0ff09393fbbf5e",
+        "spec/data.md": "81473749afc2f712756cec8825a1cb892e5c4a18c50be0613257c88d2ce0484d",
+        "spec/form.md": "0a46e3f954c8ddf42c62088fb9967ca952936a6b431e605c76dc2a982bbb46bc",
         "spec/inputs.md": "c4bc011628cf4b6ceedfc5b6100a452317592ce1a88de8ce42ca3460c47fdde1",
-        "spec/pane-layout.md": "255ad7ae7e3fd4973abb902321d3764cf07b1434e7561239f39940fc93eb4e49",
+        "spec/pane-layout.md": "9ec69e595d9babc91a776845fdee1f9101fe8d05e6abcc84cd3a57d93852a11e",
         "spec/sidebar.md": "6223b8aed15ae25df389e4da402e4321e389fe08822ba184f8acac364bd4000f"
       },
-      "head": "c17c4e8215ce9988755af1bdcffd2963ac57d51b",
-      "outcome": "no-change",
-      "reason": "Fix round for the four red gates after the polish sweep: overlay layer authority moved to positioners (overlayPanel carries no z; overlayLayers consumed by all Zag positioners), additive data hooks (data-variant padded/plain, data-icon-only, checkbox-control data-state/data-disabled, editor-toolbar data-disabled), KeyboardShortcut root ink + Checkbox root type ownership, Spinner gray theme in Combobox/MultiSelect loading rows, coherence peer-key gains theme/icon-only/native-disabled dimensions, role-drift baseline shrunk 96->62, visual snapshots regenerated, three route budgets re-measured. Evidence: grep packages/*/skills + _artifacts for overlayLayers/z-floating/overlayPanel/data-theme/padded/icon-only/role-drift = 0 hits; no public prop/variant/spec surface changed in this round (api:check + specs:check green in pnpm verify, all 27 steps pass). Skill guidance unaffected.",
+      "head": "f8d832cc853c50f42ef7dfe19071ec0d6e85ad71",
+      "outcome": "updated",
+      "reason": "domain_map tasks added (config forms/drafts, record side sheets, compact density/empty state, KPI strip); skill_spec inventory rows for all six skills plus a 2026-11-07 review section and the no-new-skills decision; skill_tree.yaml re-synced via intent maintainer sync.",
       "evidence": [
-        "Changed: packages/atoms/src/atoms/Button/Button.tsx, packages/molecules/src/molecules/Combobox/Combobox.tsx, packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx, packages/molecules/src/molecules/Dialog/Dialog.tsx, packages/molecules/src/molecules/MultiSelect/MultiSelect.tsx, packages/molecules/src/molecules/Select/Select.tsx at c17c4e8215ce9988755af1bdcffd2963ac57d51b"
+        "intent validate: 6 skills passed; pnpm test 1808/1808; test:browser 170/170; chrome e2e harness green except route budgets (reported); source diff f97ad727..HEAD reviewed"
       ]
     },
     "source:README.md": {
@@ -8945,77 +8950,77 @@
       ]
     },
     "skill:packages/charts/skills/newui-charts/SKILL.md": {
-      "fingerprint": "2e3e5a30a0442a6b30bee85110f1eae1f9810b57ef4c587dcad0b41295c9448f",
+      "fingerprint": "81a2b10d17635ea92d72c86b568019a1a85548b39d7e4a649ad058684f263ad8",
       "snapshot": {
-        "packages/charts/skills/newui-charts/SKILL.md": "0ec9f361d940232b1a752a9d9b9f0131cd66d455770e63c10e9574143e690391",
-        "packages/charts/src/ChartContainer.tsx": "6bd1aff2549f7378ba895b046b053107367339bd99215fc1724611257b63b1d6",
+        "packages/charts/skills/newui-charts/SKILL.md": "cbcafe1a6bb9b392a2a10e2209e95e0668d02ce18ca1ca740affbc6566d5d477",
+        "packages/charts/src/ChartContainer.tsx": "b84d014d6eba7f90e59dd8b9dad295a18ff466a450c093bb11b5b1527ce340a7",
         "packages/charts/src/format.ts": "ccc8c95835fd6651a267f47f32f884c08a9b9b51b28d1971e4177800b2358ecf",
-        "packages/charts/src/index.ts": "b1dc68f6db3948ab9acb80c8176da02527a69fa9dbc5ebe0ee61290d862c10c4",
-        "spec/charts.md": "7c5f44634022b578b668d196b1037e28a10426318867f098f41d5485a5f9891c"
+        "packages/charts/src/index.ts": "efa2f146329a52eaa845ac6f0bb1b49ea364545d447e98a5fa23fd40426e4a91",
+        "spec/charts.md": "ae1be3cc9822cb7a4ead53547d131354a8af6fc742a711b561140b0fbbc91fe0"
       },
-      "head": "c17c4e8215ce9988755af1bdcffd2963ac57d51b",
-      "outcome": "no-change",
-      "reason": "Polish sweep buckets A-E: styling internals consolidated into shared control-styles/token recipes; public API additions (NumberInput/PinInput size+variant, Dropdown disabled, IconButton loading) documented in spec/*.md, the source of truth skills reference. Grep of packages/*/skills + _artifacts for removed terms (data-color, violet/KanbanTone, cellClass) returned no hits, so skill guidance needs no change.",
+      "head": "f8d832cc853c50f42ef7dfe19071ec0d6e85ad71",
+      "outcome": "updated",
+      "reason": "NumberCard gained `bare` and toned-text deltas; ChartContainer header type/padding changed. Added the ruled KPI-strip pattern; existing accessibility/state/builder/interaction guidance still accurate.",
       "evidence": [
-        "Changed: packages/charts/skills/newui-charts/SKILL.md, packages/charts/src/ChartContainer.tsx at c17c4e8215ce9988755af1bdcffd2963ac57d51b"
+        "intent validate: 6 skills passed; pnpm test 1808/1808; test:browser 170/170; chrome e2e harness green except route budgets (reported); source diff f97ad727..HEAD reviewed"
       ]
     },
     "skill:packages/molecules/skills/newui-molecules/SKILL.md": {
-      "fingerprint": "45bbfb84fdadc5c21dde2cb166ae1c5c48477815e9c1b13e1fbfe8b6b2ecb7a1",
+      "fingerprint": "404b3ad519fd8ebdaa2461ba6e49553e21f4655f70413bb2ccc24c18b0f703f2",
       "snapshot": {
-        "packages/molecules/skills/newui-molecules/SKILL.md": "3959b578c71e4caf7536d86881d241105e9f703c09f469de378dc42d781f06bd",
+        "packages/molecules/skills/newui-molecules/SKILL.md": "5c8109c16eedd469dd4211ac0d04385e7d33e5818c61d6e5d33f641fd96becaf",
         "packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx": "2842c19b3b389d497576855d4a46675f7a119f98da752f6db3d6c47c3649baf5",
-        "packages/molecules/src/molecules/Dialog/Dialog.tsx": "71a884cb229e760e3d345561be1b44c2b739642b3d115311b5b51414a7612344",
-        "packages/molecules/src/molecules/FormControl/FormControl.tsx": "a684ac76c09c6da14a248f5a132e274ee983f22df178b5c7d23d753fbc26f0ed",
+        "packages/molecules/src/molecules/Dialog/Dialog.tsx": "19094ad6a743ea8269dbfa10e46c507fe7cac55b81a94ae78d1850ac13322850",
+        "packages/molecules/src/molecules/FormControl/FormControl.tsx": "6866293a5d4bf0d0b66a45cd5cf98f57f248ec5a4bb14c2a0a4a22a29ff9f844",
         "packages/molecules/src/molecules/List/List.tsx": "f7e2e3545c9ccac1b86229494161ca9c3b33b417c7247e1d344e0375d98a26e5",
         "packages/molecules/src/molecules/MessageListItem/MessageListItem.tsx": "4946cd621431815c0bfacde717433a0b3f319c980983fff32dbe39494575cbc0",
         "packages/molecules/src/molecules/Select/Select.tsx": "e61d956fc467ea49eb181c9b2df35e5cfbc9eae8aded570404a1462ac73ecf15",
         "packages/molecules/src/molecules/TimeRangePicker/TimeRangePicker.tsx": "6863b41b41ea35d769c8429d4ccd93fc1c34bf2a628deb08f41d4e0ac6771e41",
-        "spec/form.md": "3298955343be0fbf9961396c8acb668ae3db6e25e146cb4e9256a6daea8c8f92",
+        "spec/form.md": "0a46e3f954c8ddf42c62088fb9967ca952936a6b431e605c76dc2a982bbb46bc",
         "spec/inputs.md": "c4bc011628cf4b6ceedfc5b6100a452317592ce1a88de8ce42ca3460c47fdde1"
       },
-      "head": "c17c4e8215ce9988755af1bdcffd2963ac57d51b",
-      "outcome": "no-change",
-      "reason": "Fix round for the four red gates after the polish sweep: overlay layer authority moved to positioners (overlayPanel carries no z; overlayLayers consumed by all Zag positioners), additive data hooks (data-variant padded/plain, data-icon-only, checkbox-control data-state/data-disabled, editor-toolbar data-disabled), KeyboardShortcut root ink + Checkbox root type ownership, Spinner gray theme in Combobox/MultiSelect loading rows, coherence peer-key gains theme/icon-only/native-disabled dimensions, role-drift baseline shrunk 96->62, visual snapshots regenerated, three route budgets re-measured. Evidence: grep packages/*/skills + _artifacts for overlayLayers/z-floating/overlayPanel/data-theme/padded/icon-only/role-drift = 0 hits; no public prop/variant/spec surface changed in this round (api:check + specs:check green in pnpm verify, all 27 steps pass). Skill guidance unaffected.",
+      "head": "f8d832cc853c50f42ef7dfe19071ec0d6e85ad71",
+      "outcome": "updated",
+      "reason": "Dialog.Content gained position='end' (side sheet, pinned footer); FormControl gained onBlur. Added the record side-sheet pattern; other molecule guidance unchanged.",
       "evidence": [
-        "Changed: packages/molecules/src/molecules/DateRangePicker/DateRangePicker.tsx, packages/molecules/src/molecules/Dialog/Dialog.tsx, packages/molecules/src/molecules/Select/Select.tsx at c17c4e8215ce9988755af1bdcffd2963ac57d51b"
+        "intent validate: 6 skills passed; pnpm test 1808/1808; test:browser 170/170; chrome e2e harness green except route budgets (reported); source diff f97ad727..HEAD reviewed"
       ]
     },
     "skill:packages/organisms/skills/newui-organisms/SKILL.md": {
-      "fingerprint": "ea756d9e9e7696baf0ebfe5b6317919a22805161e6a5612cc26b54b29f724464",
+      "fingerprint": "ab2ad47e1b841c93c78ae4ed8d6d708c43dda0571ef2c6cf6ab8136cb469eec7",
       "snapshot": {
-        "packages/organisms/skills/newui-organisms/SKILL.md": "53c7d0dbfb0e1f0e43690a1832a36a8c54609ac7de06ef580dcd0ae89911ce93",
-        "packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx": "4d309bcd15c982f841309ef0eb6a803598d788295da0dd29f65b753b3d13b91e",
+        "packages/organisms/skills/newui-organisms/SKILL.md": "a27cb43266a2d6f8faab9f189d7a5cccc9e60fdfc8ec35ce28cfb27959d94591",
+        "packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx": "6bcb57095dfda85cf4e757dedd931a2a3d12fb1bc4a3a82efc1a4522bbf16c0f",
         "packages/organisms/src/organisms/DataState/DataState.tsx": "30b806f142ba8296b7fa71d75e6bb1d4e2d156cfcb409b8a1195e394127e0c00",
-        "packages/organisms/src/organisms/DataTable/DataTable.tsx": "6885ca893c3e21731d37ee35242c51989eb60035a9f3a93f6c26650afc20e79f",
+        "packages/organisms/src/organisms/DataTable/DataTable.tsx": "6fa1a9fbe87cca0e8cf0a2b2c7dc80e2d834483145f49acf9dcf924591724b73",
         "packages/organisms/src/organisms/SelectionBar/SelectionBar.tsx": "e6b5e0ae17358761c4e3082862e854acf0f112516276b321a87aee689b874e5f",
-        "spec/data-table.md": "b3029eceeed2cb4635e273cf22963fd0f66db581c2aa855462ccd777bd22afe4",
+        "spec/data-table.md": "c49024c05c89dcc078f925e645a6e047a7e4bae8ff2c30886e0ff09393fbbf5e",
         "spec/sidebar.md": "6223b8aed15ae25df389e4da402e4321e389fe08822ba184f8acac364bd4000f"
       },
-      "head": "c17c4e8215ce9988755af1bdcffd2963ac57d51b",
-      "outcome": "no-change",
-      "reason": "Polish sweep buckets A-E: styling internals consolidated into shared control-styles/token recipes; public API additions (NumberInput/PinInput size+variant, Dropdown disabled, IconButton loading) documented in spec/*.md, the source of truth skills reference. Grep of packages/*/skills + _artifacts for removed terms (data-color, violet/KanbanTone, cellClass) returned no hits, so skill guidance needs no change.",
+      "head": "f8d832cc853c50f42ef7dfe19071ec0d6e85ad71",
+      "outcome": "updated",
+      "reason": "DataTable defaults to compact density, keeps an in-table empty state (and a card-column one), active-row edge; StatGrid is a ruled strip; AppSidebar settings accepts a function. Added these patterns; pinning/editing/DataState guidance unchanged.",
       "evidence": [
-        "Changed: packages/organisms/skills/newui-organisms/SKILL.md, packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx, packages/organisms/src/organisms/DataTable/DataTable.tsx, packages/organisms/src/organisms/SelectionBar/SelectionBar.tsx at c17c4e8215ce9988755af1bdcffd2963ac57d51b"
+        "intent validate: 6 skills passed; pnpm test 1808/1808; test:browser 170/170; chrome e2e harness green except route budgets (reported); source diff f97ad727..HEAD reviewed"
       ]
     },
     "skill:packages/templates/skills/newui-templates/SKILL.md": {
-      "fingerprint": "f83abd5ceaf2e7f63b4f0d7d641a4ccf1a504a60995cfd13a22787eb82bce000",
+      "fingerprint": "e0dee71615aa88703dc9d00bb8c83f091788341346952221760cc79a192d6461",
       "snapshot": {
-        "packages/templates/skills/newui-templates/SKILL.md": "25bc0c412bc08920c5a09be399874842d9f5e57949c2ee00b8f1f3812d15229b",
-        "packages/templates/src/templates/AppShell.tsx": "52c47b23661c04bf31746d6922d1212a1483f969b3c932c916b942de00fbf332",
-        "packages/templates/src/templates/AuthLayout.tsx": "d8f6d91bb0cc4c382e8a1128ddc05997f9238e708fb25533e79d383bc10aa31a",
-        "packages/templates/src/templates/PaneLayout/PaneLayout.tsx": "6fe6ebc719b8bd06103712197ce5c29ff3186710fa9341ddfa872a089f0893db",
+        "packages/templates/skills/newui-templates/SKILL.md": "dba286fe935cce55a021f9c009686a383ce8fc3a40d5f6783e8783a90a986ef8",
+        "packages/templates/src/templates/AppShell.tsx": "ea6d87c5c658f7ff6a5a1ef7ad8ee3f42a36c81fec7bb61c7647fc4d665a477d",
+        "packages/templates/src/templates/AuthLayout.tsx": "46d6581a771942db796ae1adb0b8154dee1eeb25034d4403dc7c53f47860c992",
+        "packages/templates/src/templates/PaneLayout/PaneLayout.tsx": "2e1025216f5c9acae07cbffbd8666e23ccbf473224910b0fb4d84cfe9f30bb40",
         "spec/adr/0013-atomic-packages-and-app-shell.md": "9b00e5a4eef17a55d3b8bcd3d35477a8faa0f4a4eddbf37bf96daf3c14eb83c5",
-        "spec/app-shell.md": "0a41b0fc81391aea1313dce45e58774096f9e9ae8e80e771176437112fc0e2d4",
+        "spec/app-shell.md": "803701142909f7345f3dced4f421b6aeb58762ee8691a6de710bfc6ade4cef9a",
         "spec/auth-layout.md": "6d526afd73da49c2603271aa2a0428dd5e0f6cc43acb93cbec5d06c7bb864059",
-        "spec/pane-layout.md": "255ad7ae7e3fd4973abb902321d3764cf07b1434e7561239f39940fc93eb4e49"
+        "spec/pane-layout.md": "9ec69e595d9babc91a776845fdee1f9101fe8d05e6abcc84cd3a57d93852a11e"
       },
-      "head": "c17c4e8215ce9988755af1bdcffd2963ac57d51b",
-      "outcome": "no-change",
-      "reason": "Bucket F fallout fixes only: Avatar 3xl rounded-overlay (radii rule), Checkbox xs size-3.25 (13px box contract), TextInput adornment shrink-0 (24px target), squareFieldSizes density export + PinInput square cells, Sidebar owns border-e (56px rail contract), tw-merge harness ease-standard registration, visual snapshot regeneration. No public API or guidance change beyond the already-recorded sweep; specs remain source of truth.",
+      "head": "f8d832cc853c50f42ef7dfe19071ec0d6e85ad71",
+      "outcome": "updated",
+      "reason": "AppShell header folded into one band; settings render function; rail expand control in footer; AuthLayout canvas. Updated setup example to settings={() => ...} and added the header-band and settings patterns.",
       "evidence": [
-        "Changed: packages/templates/src/templates/AppShell.tsx at c17c4e8215ce9988755af1bdcffd2963ac57d51b"
+        "intent validate: 6 skills passed; pnpm test 1808/1808; test:browser 170/170; chrome e2e harness green except route budgets (reported); source diff f97ad727..HEAD reviewed"
       ]
     },
     "source:.changeset/calendar-new.md": {
