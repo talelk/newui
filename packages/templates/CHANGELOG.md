@@ -1,5 +1,83 @@
 # @talelk/newui-templates
 
+## 1.2.0
+
+### Minor Changes
+
+- 1f9dd81: The instrument-panel look (ADR-0016): the kit retuned for people who work
+  inside records all day. This is a visible change for every consumer.
+  
+  - **Tokens.** A hand-authored layer over the Figma export: a cool gray family
+    (a Mist frame, white sheets for data, Graphite ink), the `blue` theme retuned
+    to Petrol as the single accent, a solid Petrol focus ring, radius by role
+    (4px controls, 6px sheets, 8px overlays) and one new semantic token,
+    `surface-canvas`.
+  - **Type.** IBM Plex Sans replaces Inter (self-hosted, SIL OFL), with 13px
+    interface text. Its figures are tabular by default; table headers use its
+    semi-condensed width. `font-stretch-*` joins the merge vocabulary.
+  - **Density.** `DataTable` defaults to `density="compact"` (about 28px rows;
+    `comfortable` is about 36px), and table cell spacing tightens everywhere,
+    including the `Table` molecule.
+  - **AppShell** paints the Mist frame and folds the page header into one compact
+    band: the trail, then the title with its description and the actions.
+  - **StatGrid** is one ruled strip instead of a row of cards; deltas are toned
+    text.
+  - **FilterBar** keeps a lone result count on the control row.
+  - **Sidebar** items are 28px; the current destination is a white sheet with a
+    Petrol icon; counts are plain figures.
+  - **DataTable** marks the row holding keyboard focus with a Petrol edge.
+  - **Checked controls are Petrol.** Switch, Checkbox, RadioGroup and Tree
+    checkboxes fill with the accent when checked, instead of near-black.
+  - **Menus and listboxes** use 26px rows (`listboxRow`).
+  - **Charts.** `NumberCard` deltas are toned text, its title is 12px, and a new
+    `bare` prop drops its border and radius so several share one ruled KPI strip.
+    `ChartCard` and `NumberCard` use the compact card pad; chart titles use the
+    section type.
+  - **KanbanBoard** columns sit closer (12px gaps, compact board padding).
+  - **AuthLayout** paints the Mist canvas.
+- 8b29c02: `PaneLayout` grows into multi-panel layouts — the decision from issue #26, with
+  ADR-0013's three templates intact:
+  
+  - **Controllable size.** `size`/`onSizeChange` (percent, the shared
+    `createControllableSignal` pattern) plus `defaultSize`; `startSize` stays as a
+    deprecated alias. Nothing is stored in the layout — "remember this split" is
+    one config-store line in the app, which keeps SSR and tests clean.
+  - **Collapse.** `collapsible?: 'start' | 'end' | 'both'` with
+    `collapsed`/`defaultCollapsed`/`onCollapseChange`, persisted like size.
+    `Enter`/`Space` on the divider folds the nearer pane and unfolds it again;
+    arrows, `Home`/`End` and a drag across the edge unfold, and the split returns
+    to the remembered size. A folded pane leaves the accessibility tree, the
+    divider moves to the edge with widened bounds, and collapsing the detail pane
+    is the single-pane state below `compactAt`.
+  - **Three panes by composition.** A `PaneLayout` inside either pane gives a
+    three-panel workspace with independent separators — no fourth template, the
+    `ThreePaneWorkspace` story is the recipe.
+- d1ad3e2: Sidebar and AppShell polish.
+  
+  - **Rail:** the Expand control heads the footer instead of taking a ruled row
+    under the tenant, so the collapsed rail reads as one column of identity and
+    destinations above one column of square controls.
+  - **Footer:** while expanded, `settings` and `utilities` share one row.
+  - **`settings` accepts a render function** (`settings={() => <SidebarItem …/>}`)
+    so a `SidebarItem` renders inside the sidebar and follows the collapsed rail;
+    a caller-created element kept its expanded padding and sat off-centre.
+  - **Mobile drawer:** the brand row is the header, with Close at its end; the
+    separate "Navigation" bar is gone and the drawer is 288px wide.
+  - **Top bar (below lg):** sits on the Mist frame with a ghost menu button.
+
+### Patch Changes
+
+- Updated dependencies [73f9b95]
+- Updated dependencies [1f9dd81]
+- Updated dependencies [08ff107]
+- Updated dependencies [d1ad3e2]
+- Updated dependencies [660a374]
+- Updated dependencies [d376d92]
+- Updated dependencies [45e2721]
+  - @talelk/newui-molecules@2.4.0
+  - @talelk/newui-organisms@2.3.0
+  - @talelk/newui-atoms@1.4.0
+
 ## 1.1.5
 
 ### Patch Changes

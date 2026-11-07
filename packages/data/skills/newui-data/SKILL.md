@@ -4,14 +4,14 @@ description: Use the headless newui data layer for SolidJS collections,
   repository queries, optimistic mutations, TanStack Query caching, form submit
   lifecycles, URL-synced state, saved-view/dashboard-config storage and
   aggregation/rollup transforms. Use when a page needs to load a list,
-  create/update/delete records, share a cache, sync filters or views to the
-  URL, persist saved views, build chart series, or wire TanStack Form through
-  the kit's Form and field-error contract.
+  create/update/delete records, share a cache, sync filters or views to the URL,
+  persist saved views, build chart series, or wire TanStack Form through the
+  kit's Form and field-error contract.
 metadata:
   type: core
   domain: data
   library: '@talelk/newui-data'
-  library_version: '1.0.0'
+  library_version: '1.1.0'
 sources:
   - talelk/newui:spec/data.md
   - talelk/newui:skills/README.md

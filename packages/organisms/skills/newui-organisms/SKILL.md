@@ -11,7 +11,7 @@ metadata:
   type: core
   domain: ui
   library: '@talelk/newui-organisms'
-  library_version: '2.2.0'
+  library_version: '2.3.0'
 sources:
   - talelk/newui:packages/organisms/src/organisms/DataTable/DataTable.tsx
   - talelk/newui:packages/organisms/src/organisms/AppSidebar/AppSidebar.tsx
