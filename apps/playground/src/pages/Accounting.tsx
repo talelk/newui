@@ -74,13 +74,13 @@ type Dataset = {
 const AccountingDialogs = lazy(() => import('./accounting/AccountingDialogs'))
 
 const TransactionTable = lazy(() =>
-  import('@talelk/newui-organisms').then((module) => ({
-    default: module.DataTable<Transaction>,
+  import('./accounting/AccountingTable').then((module) => ({
+    default: module.default<Transaction>,
   })),
 )
 const EmployeeTable = lazy(() =>
-  import('@talelk/newui-organisms').then((module) => ({
-    default: module.DataTable<Employee>,
+  import('./accounting/AccountingTable').then((module) => ({
+    default: module.default<Employee>,
   })),
 )
 const ExpenseRanking = lazy(() => import('./accounting/ExpenseRanking'))

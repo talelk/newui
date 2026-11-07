@@ -180,7 +180,11 @@ const ENTRIES: Entry[] = [
     // (#31) landed beside the instrument-panel restyle; 310 with DataTable's
     // column operations (the header parts and the column menu) in the organisms
     // barrel. Consumers importing only what they use pay nothing extra.
-    budget: 310,
+    // 310 → 314 (2026-11-07): the lazily loaded column-filter chunk is
+    // summed here as its own gzip stream (no cross-chunk compression), +2.9
+    // kB on paper while every route that renders a table without filters
+    // downloads less.
+    budget: 314,
   },
 ]
 
