@@ -1,15 +1,9 @@
-import {
-  Button,
-  cn,
-  Icon,
-  Portal,
-  VisuallyHidden,
-} from '@talelk/newui-atoms'
+import { Button, cn, Icon, Portal, VisuallyHidden } from '@talelk/newui-atoms'
 import { createControllableSignal } from '@talelk/newui-atoms/internal'
 import {
+  createContext,
   createEffect,
   createMemo,
-  createContext,
   createSignal,
   type JSX,
   onCleanup,
@@ -21,8 +15,8 @@ import {
   moveWidgetGrid,
   removeWidgetGrid,
   resetWidgetGridConfig,
-  resolveLayout,
   resizeWidgetGrid,
+  resolveLayout,
   WIDGET_GRID_COLUMNS,
   type WidgetDeclaration,
   type WidgetGridConfig,
@@ -65,7 +59,8 @@ const WidgetGridContext = createContext<WidgetGridApi>()
 
 function useWidgetGrid(): WidgetGridApi {
   const api = useContext(WidgetGridContext)
-  if (!api) throw new Error('WidgetGrid.Widget must be used within <WidgetGrid>')
+  if (!api)
+    throw new Error('WidgetGrid.Widget must be used within <WidgetGrid>')
   return api
 }
 
@@ -192,9 +187,7 @@ export function WidgetGrid(props: WidgetGridProps): JSX.Element {
 
   const nameOf = (id: string) => {
     const title = registrationOf(id)?.title()
-    return typeof title === 'string' && title.trim()
-      ? title.trim()
-      : id
+    return typeof title === 'string' && title.trim() ? title.trim() : id
   }
 
   /** Column/row pitch, in px, read from the live grid. */
@@ -215,9 +208,9 @@ export function WidgetGrid(props: WidgetGridProps): JSX.Element {
   }
 
   const itemOf = (id: string): HTMLElement | undefined =>
-    [...(gridRoot?.querySelectorAll<HTMLElement>('[data-widget-id]') ?? [])].find(
-      (element) => element.dataset['widgetId'] === id,
-    )
+    [
+      ...(gridRoot?.querySelectorAll<HTMLElement>('[data-widget-id]') ?? []),
+    ].find((element) => element.dataset['widgetId'] === id)
 
   function listen(handlers: Record<string, (event: Event) => void>) {
     for (const [type, handler] of Object.entries(handlers)) {
@@ -321,10 +314,16 @@ export function WidgetGrid(props: WidgetGridProps): JSX.Element {
           active = true
         }
         span = Math.min(
-          Math.max(1, start.span + Math.round((move.clientX - originX) / colStep)),
+          Math.max(
+            1,
+            start.span + Math.round((move.clientX - originX) / colStep),
+          ),
           columns() - start.x,
         )
-        rows = Math.max(1, start.rows + Math.round((move.clientY - originY) / rowStep))
+        rows = Math.max(
+          1,
+          start.rows + Math.round((move.clientY - originY) / rowStep),
+        )
         setResize({ id, span, rows })
       },
       pointerup: () => {
@@ -379,20 +378,15 @@ export function WidgetGrid(props: WidgetGridProps): JSX.Element {
   }
 
   function commitMove(id: string, x: number, y: number): void {
-    setConfig(
-      moveWidgetGrid(declarations(), config(), columns(), id, { x, y }),
-    )
+    setConfig(moveWidgetGrid(declarations(), config(), columns(), id, { x, y }))
     setAnnouncement(`${nameOf(id)} moved to column ${x + 1}, row ${y + 1}`)
   }
 
   function commitResize(id: string, span: number, rows: number): void {
-    const next = resizeWidgetGrid(
-      declarations(),
-      config(),
-      columns(),
-      id,
-      { span, rows },
-    )
+    const next = resizeWidgetGrid(declarations(), config(), columns(), id, {
+      span,
+      rows,
+    })
     const entry = next.widgets[id]
     setConfig(next)
     setAnnouncement(
@@ -468,6 +462,7 @@ export function WidgetGrid(props: WidgetGridProps): JSX.Element {
         <div
           ref={gridRoot}
           data-slot="widget-grid-layout"
+          // biome-ignore lint/a11y/useSemanticElements: a live layout region has no native equivalent.
           role="group"
           aria-label={props.label ?? 'Widgets'}
           class="grid min-w-0 gap-card-gap"
@@ -498,7 +493,10 @@ export function WidgetGrid(props: WidgetGridProps): JSX.Element {
             >
               <div class="flex h-full flex-col rounded-card border border-outline-gray-1 bg-surface-gray-1 shadow-drag">
                 <div class="flex items-center gap-2 border-b border-outline-gray-1 px-3 py-2">
-                  <Icon icon="lucide-grip-vertical" class="size-4 text-ink-gray-6" />
+                  <Icon
+                    icon="lucide-grip-vertical"
+                    class="size-4 text-ink-gray-6"
+                  />
                   <span class="min-w-0 flex-1 truncate text-sm-medium text-ink-gray-9">
                     {registrationOf(state().id)?.title()}
                   </span>
@@ -541,11 +539,12 @@ export interface WidgetGridWidgetProps {
  * In edit mode the header grows a grip and a remove button, and the bottom-right
  * corner grows the resize handle.
  */
-export function WidgetGridWidget(
-  props: WidgetGridWidgetProps,
-): JSX.Element {
+export function WidgetGridWidget(props: WidgetGridWidgetProps): JSX.Element {
   const api = useWidgetGrid()
   api.register({
+    // `id` is a stable identity by contract — renaming it loses the widget's
+    // position — so it is keyed once at registration, unlike the live options.
+    // eslint-disable-next-line solid/reactivity
     id: props.id,
     span: () => props.span ?? 12,
     rows: () => props.rows ?? 1,
@@ -602,7 +601,10 @@ export function WidgetGridWidget(
             </Show>
           </div>
         </Show>
-        <div data-slot="widget-grid-body" class="min-h-0 flex-1 overflow-auto p-3">
+        <div
+          data-slot="widget-grid-body"
+          class="min-h-0 flex-1 overflow-auto p-3"
+        >
           {props.children}
         </div>
         <Show when={api.editable() && !api.narrow()}>
@@ -634,6 +636,12 @@ export function WidgetGridWidget(
 
 WidgetGrid.Widget = WidgetGridWidget
 
+export type {
+  WidgetDeclaration,
+  WidgetGridConfig,
+  WidgetGridEntry,
+  WidgetPlacement,
+} from './layout'
 export {
   emptyWidgetGridConfig,
   materializeWidgetGridConfig,
@@ -641,15 +649,9 @@ export {
   normalizeWidgetGridConfig,
   removeWidgetGrid,
   resetWidgetGridConfig,
+  resizeWidgetGrid,
   resolveLayout,
   restoreWidgetGrid,
-  resizeWidgetGrid,
   WIDGET_GRID_COLUMNS,
   WIDGET_GRID_SCHEMA_VERSION,
-} from './layout'
-export type {
-  WidgetDeclaration,
-  WidgetGridConfig,
-  WidgetGridEntry,
-  WidgetPlacement,
 } from './layout'

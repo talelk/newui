@@ -7883,7 +7883,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -7900,7 +7901,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8001,7 +8003,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8018,7 +8021,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8035,7 +8039,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8052,7 +8057,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8069,7 +8075,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8086,7 +8093,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8103,7 +8111,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8340,7 +8349,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8357,7 +8367,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8374,7 +8385,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8391,7 +8403,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8408,7 +8421,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8425,7 +8439,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8442,7 +8457,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8459,7 +8475,8 @@
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
-      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.virtual.test.tsx"
     ],
     "acceptance": "pending"
   },

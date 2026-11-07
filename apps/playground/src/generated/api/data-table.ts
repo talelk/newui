@@ -183,6 +183,12 @@ export const API = {
       "description": "Total or scope shown beside the count in the mobile selection bar."
     },
     {
+      "name": "virtual",
+      "type": "boolean",
+      "optional": true,
+      "description": "Window the body: only the rows near the viewport stay mounted, measured\nas they render so variable heights stay honest. The toolbar stays put and\nthe header stays sticky — the scroll region is the body. Off by default;\nbelow the card breakpoint the card layout owns the surface and ignores\nit. In server mode the page size stays the page size: the virtualiser\nwindows the current page's rows, nothing more."
+    },
+    {
       "name": "pageSize",
       "type": "number",
       "optional": true

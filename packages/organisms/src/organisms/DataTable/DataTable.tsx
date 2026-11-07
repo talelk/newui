@@ -75,6 +75,7 @@ import {
   tableFeatures,
   type Updater,
 } from '@tanstack/solid-table'
+import { createVirtualizer } from '@tanstack/solid-virtual'
 import {
   createEffect,
   createMemo,
@@ -82,6 +83,7 @@ import {
   For,
   type JSX,
   on,
+  onCleanup,
   Show,
   untrack,
 } from 'solid-js'
@@ -326,6 +328,15 @@ export interface DataTableProps<T extends { id: string }> {
   cardBreakpoint?: 'sm' | 'md' | 'lg'
   /** Total or scope shown beside the count in the mobile selection bar. */
   selectionSummary?: (ids: string[]) => JSX.Element
+  /**
+   * Window the body: only the rows near the viewport stay mounted, measured
+   * as they render so variable heights stay honest. The toolbar stays put and
+   * the header stays sticky — the scroll region is the body. Off by default;
+   * below the card breakpoint the card layout owns the surface and ignores
+   * it. In server mode the page size stays the page size: the virtualiser
+   * windows the current page's rows, nothing more.
+   */
+  virtual?: boolean
   pageSize?: number
   /** Footer noun: "32 transactions". Defaults to "records". */
   recordsLabel?: string
@@ -643,12 +654,21 @@ export function DataTable<T extends { id: string }>(
       defaultValue: '',
       onChange: (next) => props.onGlobalFilterChange?.(next),
     })
+  /**
+   * The page size the table starts on. A virtualised body defaults to one
+   * page of the whole result — the window, not pagination, is what bounds the
+   * DOM — while an explicit `pageSize` still wins and server mode keeps the
+   * page size the backend was queried with.
+   */
+  const defaultPageSize = () =>
+    untrack(() => props.pageSize) ??
+    (props.virtual === true ? Number.MAX_SAFE_INTEGER : 10)
   const [paginationSlice, setPaginationSlice] =
     createControllableSignal<PaginationState>({
       value: () => props.pagination,
       defaultValue: {
         pageIndex: 0,
-        pageSize: untrack(() => props.pageSize) ?? 10,
+        pageSize: defaultPageSize(),
       },
       onChange: (next) => props.onPaginationChange?.(next),
     })
@@ -846,7 +866,7 @@ export function DataTable<T extends { id: string }>(
       // Initial only: later pageSize changes do not repaginate the table.
       pagination: {
         pageIndex: 0,
-        pageSize: untrack(() => props.pageSize) ?? 10,
+        pageSize: defaultPageSize(),
       },
     },
     // Server mode (issue #18): the `manual*` flags are TanStack's own
@@ -1209,13 +1229,133 @@ export function DataTable<T extends { id: string }>(
   const spanCells = () =>
     table.getVisibleLeafColumns().filter((column) => column.id !== 'select')
       .length
+  // ── virtualized body (issue #21) ───────────────────────────────────────
+  // The windowing virtualiser measures what it mounts, so a wrapped title and
+  // a one-liner cost what they actually take. What it windows is `bodyUnits`
+  // — one item per `<tr>` the body renders — so groups, expanded children
+  // and detail panels are all accounted for without the virtualiser learning
+  // about any of them.
+  const virtualOn = () => props.virtual === true
+  /**
+   * The body's row model: every entry is one `<tr>`. Group rows and records
+   * come from the flattened page model — expanded children included — and a
+   * detail panel is the row under the one it describes.
+   */
+  type BodyUnit = {
+    index: number
+    key: string
+    row: Row<Features, T>
+    kind: 'group' | 'record' | 'detail'
+  }
+  const bodyUnits = createMemo((): BodyUnit[] => {
+    const units: BodyUnit[] = []
+    for (const row of pageRows()) {
+      const grouped = isGroupRow(row)
+      units.push({
+        index: units.length,
+        key: row.id,
+        row,
+        kind: grouped ? 'group' : 'record',
+      })
+      if (props.renderDetail !== undefined && row.getIsExpanded() && !grouped)
+        units.push({
+          index: units.length,
+          key: `${row.id}:detail`,
+          row,
+          kind: 'detail',
+        })
+    }
+    return units
+  })
+  const [scrollEl, setScrollEl] = createSignal<HTMLElement | undefined>()
+  const [headerSize, setHeaderSize] = createSignal(0)
+  /**
+   * The scroll region owns a header that eats part of it. `scrollMargin` is
+   * that header's height: without it the window sits a header above what is
+   * actually on screen, and the first rows blank out at the top edge.
+   */
+  createEffect(() => {
+    const el = scrollEl()
+    if (!el) return
+    const head = el.querySelector('thead')
+    setHeaderSize(head ? head.getBoundingClientRect().height : 0)
+    const observer = new ResizeObserver(() => {
+      const current = el.querySelector('thead')
+      setHeaderSize(current ? current.getBoundingClientRect().height : 0)
+    })
+    if (head) observer.observe(head)
+    onCleanup(() => observer.disconnect())
+  })
+  const virtualizer = createVirtualizer<HTMLElement, HTMLTableRowElement>({
+    get count() {
+      return virtualOn() ? bodyUnits().length : 0
+    },
+    getScrollElement: () =>
+      scrollEl()?.isConnected ? (scrollEl() ?? null) : null,
+    estimateSize: () => (props.density === 'comfortable' ? 38 : 30),
+    overscan: 8,
+    get scrollMargin() {
+      return headerSize()
+    },
+    getItemKey: (index) => bodyUnits()[index]?.key ?? String(index),
+  })
+  /** The rows inside the window, in order. Off, the whole page is "windowed". */
+  const renderedUnits = createMemo((): BodyUnit[] => {
+    const units = bodyUnits()
+    if (!virtualOn()) return units
+    return virtualizer
+      .getVirtualItems()
+      .map((item) => units[item.index])
+      .filter((unit): unit is BodyUnit => unit !== undefined)
+  })
+  /**
+   * The gap the window leaves above and below itself, as spacer rows. Item
+   * starts include `scrollMargin`; the header is already in the DOM, so the
+   * spacer subtracts it back out.
+   */
+  const topSpacer = () => {
+    const first = virtualizer.getVirtualItems()[0]
+    return first ? Math.max(0, first.start - headerSize()) : 0
+  }
+  const bottomSpacer = () => {
+    const items = virtualizer.getVirtualItems()
+    const last = items[items.length - 1]
+    if (!last) return 0
+    return Math.max(0, virtualizer.getTotalSize() + headerSize() - last.end)
+  }
+  /**
+   * A body row's ref: the virtualiser measures what it mounts, and
+   * `data-index` is how the element finds its item again.
+   */
+  const measureRow = (
+    unit: BodyUnit,
+    el: HTMLTableRowElement | undefined,
+  ): void => {
+    if (!el || !virtualOn()) return
+    el.setAttribute('data-index', String(unit.index))
+    virtualizer.measureElement(el)
+  }
+  /** The gap the window leaves at either edge — a row, not a positioned div. */
+  const SpacerRow = (spacerProps: { height: number }): JSX.Element => (
+    <tr data-slot="data-table-spacer">
+      <td
+        colspan={spanCells()}
+        class="border-0 p-0"
+        style={{ height: `${spacerProps.height}px` }}
+      />
+    </tr>
+  )
   /**
    * A group row reads as a drawer pulled out from behind the records: the
    * recessed surface, the expander as the keyboard affordance, and the count
    * the group exists to summarize.
    */
-  const groupRow = (row: Row<Features, T>) => (
+  const groupRow = (
+    row: Row<Features, T>,
+    ref?: (el: HTMLTableRowElement | undefined) => void,
+  ) => (
     <tr
+      ref={ref}
       data-slot="data-table-group-row"
       class="group/row border-b border-outline-gray-1 bg-surface-gray-1 hover:bg-surface-gray-2"
     >
@@ -1246,14 +1386,91 @@ export function DataTable<T extends { id: string }>(
     </tr>
   )
   /** The detail panel, spanning the record's own columns. */
-  const detailRow = (row: Row<Features, T>) => (
-    <tr data-slot="data-table-detail">
+  const detailRow = (
+    row: Row<Features, T>,
+    ref?: (el: HTMLTableRowElement | undefined) => void,
+  ) => (
+    <tr ref={ref} data-slot="data-table-detail">
       <td
         colspan={spanCells()}
         class={cn(cellPad(), 'bg-surface-gray-1 text-interface')}
       >
         {props.renderDetail?.(row.original)}
       </td>
+    </tr>
+  )
+  /** A record row: its cells, the expander when it opens, the pin chrome. */
+  const recordRow = (
+    row: Row<Features, T>,
+    ref?: (el: HTMLTableRowElement | undefined) => void,
+  ): JSX.Element => (
+    <tr
+      ref={ref}
+      data-slot="data-table-row"
+      class="group/row border-b border-outline-gray-1 hover:bg-surface-gray-1 focus-within:bg-surface-blue-1 data-[selected]:bg-surface-blue-1 data-[selected]:hover:bg-surface-blue-2"
+      data-selected={row.getIsSelected() ? '' : undefined}
+    >
+      <For each={row.getVisibleCells()}>
+        {(cell, index) => {
+          const edge = pinOf(cell.column.id)
+          const editingMeta = editable()
+            ? editMeta(cell.column.columnDef.meta)
+            : undefined
+          const raw = (row.original as Record<string, unknown>)[cell.column.id]
+          return (
+            <td
+              ref={(el) => trackCell(cell.column.id, el)}
+              class={cn(
+                alignEnd(cell.column.columnDef.meta)
+                  ? `${cellPad()} text-end text-interface`
+                  : `${cellPad()} text-interface`,
+                pinClass(edge),
+                // The active row — the one holding keyboard focus — carries
+                // the accent rule on its leading edge.
+                index() === 0 && ACTIVE_ROW_EDGE,
+              )}
+              data-selected={row.getIsSelected() ? '' : undefined}
+              data-column={cell.column.id}
+              data-pin-edge={edge}
+            >
+              {/* The first cell of a row that opens carries the expander, so
+                  keyboard users reach it. */}
+              <Show
+                when={
+                  index() === 0 &&
+                  (row.subRows.length > 0 || props.renderDetail !== undefined)
+                }
+              >
+                <span class="me-1 inline-flex align-middle">
+                  <Expander row={row} />
+                </span>
+              </Show>
+              <Show
+                when={editingMeta}
+                fallback={flexRender(
+                  cell.column.columnDef.cell,
+                  cell.getContext(),
+                )}
+              >
+                <EditableCell
+                  id={row.original.id}
+                  columnId={cell.column.id}
+                  value={raw == null ? '' : String(raw)}
+                  label={columnLabel(
+                    cell.column as unknown as {
+                      id: string
+                      columnDef: { header?: unknown }
+                    },
+                  )}
+                  type={editingMeta?.input === 'number' ? 'number' : 'text'}
+                  alignEnd={alignEnd(cell.column.columnDef.meta)}
+                  onCommit={props.onCellChange ?? (() => {})}
+                />
+              </Show>
+            </td>
+          )
+        }}
+      </For>
     </tr>
   )
   /**
@@ -1498,7 +1715,14 @@ export function DataTable<T extends { id: string }>(
             where the filter lives, and unmounting it would close the popover
             the reader is still typing into. The empty state is a row. */}
         <div class={hasMobileCards() ? tableHiddenClass() : ''}>
-          <ScrollTable label={`${props.title} table`} stickyHeader>
+          {/* Virtual mode gives the body its own viewport: the toolbar stays
+              above it and the header stays sticky inside it. */}
+          <ScrollTable
+            label={`${props.title} table`}
+            stickyHeader
+            height={virtualOn() ? '24rem' : undefined}
+            ref={(el) => setScrollEl(el)}
+          >
             <table
               class={cn(
                 'w-full min-w-[720px] border-collapse text-start',
@@ -1715,107 +1939,33 @@ export function DataTable<T extends { id: string }>(
                     </tr>
                   }
                 >
-                  <For each={pageRows()}>
-                    {(row) => (
-                      <>
-                        <Show when={isGroupRow(row)}>{groupRow(row)}</Show>
-                        <Show when={!isGroupRow(row)}>
-                          <tr
-                            data-slot="data-table-row"
-                            class="group/row border-b border-outline-gray-1 hover:bg-surface-gray-1 focus-within:bg-surface-blue-1 data-[selected]:bg-surface-blue-1 data-[selected]:hover:bg-surface-blue-2"
-                            data-selected={row.getIsSelected() ? '' : undefined}
+                  {/* The window: spacer rows stand in for the rows above and
+                      below it, so the scrollbar lies about the right amount. */}
+                  <Show when={virtualOn() && topSpacer() > 0}>
+                    <SpacerRow height={topSpacer()} />
+                  </Show>
+                  <For each={renderedUnits()}>
+                    {(unit) => (
+                      <Show
+                        when={unit.kind === 'group'}
+                        fallback={
+                          <Show
+                            when={unit.kind === 'record'}
+                            fallback={detailRow(unit.row, (el) =>
+                              measureRow(unit, el),
+                            )}
                           >
-                            <For each={row.getVisibleCells()}>
-                              {(cell, index) => {
-                                const edge = pinOf(cell.column.id)
-                                const editingMeta = editable()
-                                  ? editMeta(cell.column.columnDef.meta)
-                                  : undefined
-                                const raw = (
-                                  row.original as Record<string, unknown>
-                                )[cell.column.id]
-                                return (
-                                  <td
-                                    ref={(el) => trackCell(cell.column.id, el)}
-                                    class={cn(
-                                      alignEnd(cell.column.columnDef.meta)
-                                        ? `${cellPad()} text-end text-interface`
-                                        : `${cellPad()} text-interface`,
-                                      pinClass(edge),
-                                      // The active row — the one holding
-                                      // keyboard focus — carries the accent
-                                      // rule on its leading edge.
-                                      index() === 0 && ACTIVE_ROW_EDGE,
-                                    )}
-                                    data-selected={
-                                      row.getIsSelected() ? '' : undefined
-                                    }
-                                    data-column={cell.column.id}
-                                    data-pin-edge={edge}
-                                  >
-                                    {/* The first cell of a row that opens carries
-                                        the expander, so keyboard users reach it. */}
-                                    <Show
-                                      when={
-                                        index() === 0 &&
-                                        (row.subRows.length > 0 ||
-                                          props.renderDetail !== undefined)
-                                      }
-                                    >
-                                      <span class="me-1 inline-flex align-middle">
-                                        <Expander row={row} />
-                                      </span>
-                                    </Show>
-                                    <Show
-                                      when={editingMeta}
-                                      fallback={flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext(),
-                                      )}
-                                    >
-                                      <EditableCell
-                                        id={row.original.id}
-                                        columnId={cell.column.id}
-                                        value={raw == null ? '' : String(raw)}
-                                        label={columnLabel(
-                                          cell.column as unknown as {
-                                            id: string
-                                            columnDef: { header?: unknown }
-                                          },
-                                        )}
-                                        type={
-                                          editingMeta?.input === 'number'
-                                            ? 'number'
-                                            : 'text'
-                                        }
-                                        alignEnd={alignEnd(
-                                          cell.column.columnDef.meta,
-                                        )}
-                                        onCommit={
-                                          props.onCellChange ?? (() => {})
-                                        }
-                                      />
-                                    </Show>
-                                  </td>
-                                )
-                              }}
-                            </For>
-                          </tr>
-                        </Show>
-                        {/* A detail panel belongs to the row it describes, so
-                            it opens directly beneath it. */}
-                        <Show
-                          when={
-                            props.renderDetail !== undefined &&
-                            row.getIsExpanded() &&
-                            !isGroupRow(row)
-                          }
-                        >
-                          {detailRow(row)}
-                        </Show>
-                      </>
+                            {recordRow(unit.row, (el) => measureRow(unit, el))}
+                          </Show>
+                        }
+                      >
+                        {groupRow(unit.row, (el) => measureRow(unit, el))}
+                      </Show>
                     )}
                   </For>
+                  <Show when={virtualOn() && bottomSpacer() > 0}>
+                    <SpacerRow height={bottomSpacer()} />
+                  </Show>
                 </Show>
               </tbody>
               <Show when={hasSummary()}>{summaryRow()}</Show>

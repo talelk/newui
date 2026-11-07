@@ -217,6 +217,32 @@ export const ColumnOps: Story = {
 }
 
 /**
+ * Virtualization: ten thousand rows, and the body keeps about a viewport's
+ * worth mounted. The header sticks inside the scroll region; the toolbar
+ * stays outside it, and the rows the window does not reach are spacers.
+ */
+export const Virtual: Story = {
+  render: () => {
+    const rows = seedTasks(10000)
+    return (
+      <DataTable
+        title="Tasks"
+        rows={rows}
+        columns={[
+          { accessorKey: 'id', header: 'Task' },
+          { accessorKey: 'title', header: 'Title' },
+          { accessorKey: 'status', header: 'Status' },
+          { accessorKey: 'priority', header: 'Priority' },
+          { accessorKey: 'owner', header: 'Owner' },
+          { accessorKey: 'project', header: 'Project' },
+        ]}
+        virtual
+      />
+    )
+  },
+}
+
+/**
  * Server mode: `createServerTableState` owns the slices and a local fake
  * stands in for the backend — sort, slice, hand the page over. A real app
  * swaps the fake for `createCollection` keyed by `state.key(...)`.

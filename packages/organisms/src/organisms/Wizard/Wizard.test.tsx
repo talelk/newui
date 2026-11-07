@@ -12,6 +12,7 @@ interface Values {
 }
 
 function makeForm<T>(values: T) {
+  // biome-ignore lint/suspicious/noExplicitAny: fixtures shared across documents of different shapes.
   let form: any
   createRoot(() => {
     form = createForm(() => ({ defaultValues: values }))

@@ -20,6 +20,7 @@ interface Values {
 }
 
 function Harness(props: { review?: boolean }): JSX.Element {
+  // biome-ignore lint/suspicious/noExplicitAny: fixtures shared across documents of different shapes.
   let form: any
   createRoot(() => {
     form = createForm(() => ({

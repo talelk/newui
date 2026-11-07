@@ -7907,6 +7907,18 @@
         "description": "Keep the header row visible while the region scrolls vertically."
       },
       {
+        "name": "height",
+        "type": "string",
+        "optional": true,
+        "description": "Bound the region to a fixed viewport height (a CSS length) and let the\ncontent scroll vertically. This is the hook a virtualised body needs:\nthe windowing scroller wants a viewport, not a page-sized box."
+      },
+      {
+        "name": "ref",
+        "type": "(el: HTMLElement) => void",
+        "optional": true,
+        "description": "Receives the scroll-region element — the virtualiser's scroll element."
+      },
+      {
         "name": "children",
         "type": "JSX.Element",
         "optional": false
@@ -9847,6 +9859,12 @@
         "type": "(ids: string[]) => JSX.Element",
         "optional": true,
         "description": "Total or scope shown beside the count in the mobile selection bar."
+      },
+      {
+        "name": "virtual",
+        "type": "boolean",
+        "optional": true,
+        "description": "Window the body: only the rows near the viewport stay mounted, measured\nas they render so variable heights stay honest. The toolbar stays put and\nthe header stays sticky — the scroll region is the body. Off by default;\nbelow the card breakpoint the card layout owns the surface and ignores\nit. In server mode the page size stays the page size: the virtualiser\nwindows the current page's rows, nothing more."
       },
       {
         "name": "pageSize",

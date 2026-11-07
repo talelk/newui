@@ -1,7 +1,6 @@
 import { fireEvent, render, screen } from '@solidjs/testing-library'
 import { createSignal } from 'solid-js'
 import { describe, expect, it, vi } from 'vitest'
-import { WidgetGrid } from './WidgetGrid'
 import {
   emptyWidgetGridConfig,
   materializeWidgetGridConfig,
@@ -9,11 +8,12 @@ import {
   normalizeWidgetGridConfig,
   removeWidgetGrid,
   resetWidgetGridConfig,
+  resizeWidgetGrid,
   resolveLayout,
   restoreWidgetGrid,
-  resizeWidgetGrid,
   type WidgetGridConfig,
 } from './layout'
+import { WidgetGrid } from './WidgetGrid'
 
 const declared = [
   { id: 'kpi', span: 12, rows: 1 },
@@ -47,7 +47,10 @@ describe('widget grid layout', () => {
       widgets: { trend: { x: 0, y: 1, span: 8, rows: 4, hidden: true } },
     }
     const layout = resolveLayout(declared, config, 12)
-    expect(layout.map((placement) => placement.id)).toEqual(['kpi', 'breakdown'])
+    expect(layout.map((placement) => placement.id)).toEqual([
+      'kpi',
+      'breakdown',
+    ])
   })
 
   it('pushes overlapping widgets down on a move, never overlapping', () => {
@@ -65,7 +68,7 @@ describe('widget grid layout', () => {
       placements.map((placement) => [placement.id, placement]),
     )
     expect(byId['kpi']).toMatchObject({ y: 1 })
-    expect(byId['trend']!.y).toBeGreaterThanOrEqual(2)
+    expect(byId['trend']?.y).toBeGreaterThanOrEqual(2)
     // Nothing overlaps anything.
     for (const a of placements) {
       for (const b of placements) {
@@ -93,7 +96,7 @@ describe('widget grid layout', () => {
       rows: 4,
     })
     expect(next.widgets['trend']).toMatchObject({ span: 10 })
-    expect(next.widgets['breakdown']!.y).toBe(4)
+    expect(next.widgets['breakdown']?.y).toBe(4)
   })
 
   it('clamps a resize to the grid edge and to one row', () => {
@@ -129,7 +132,12 @@ describe('widget grid layout', () => {
       resolveLayout(declared, config, 12),
       config,
     )
-    expect(materialized.widgets['ghost']).toEqual({ x: 3, y: 3, span: 2, rows: 2 })
+    expect(materialized.widgets['ghost']).toEqual({
+      x: 3,
+      y: 3,
+      span: 2,
+      rows: 2,
+    })
   })
 
   it('tombstones removals and restores them with one flag', () => {
@@ -140,12 +148,17 @@ describe('widget grid layout', () => {
     const removed = removeWidgetGrid(declared, config, 12, 'trend')
     expect(removed.widgets['trend']).toMatchObject({ hidden: true, span: 8 })
     const restored = restoreWidgetGrid(removed, 'trend')
-    expect(restored.widgets['trend']!.hidden).toBe(false)
-    expect(restored.widgets['trend']!.span).toBe(8)
+    expect(restored.widgets['trend']?.hidden).toBe(false)
+    expect(restored.widgets['trend']?.span).toBe(8)
   })
 
   it('removes a widget that had no entry yet, keeping its geometry', () => {
-    const removed = removeWidgetGrid(declared, emptyWidgetGridConfig(), 12, 'trend')
+    const removed = removeWidgetGrid(
+      declared,
+      emptyWidgetGridConfig(),
+      12,
+      'trend',
+    )
     expect(removed.widgets['trend']).toMatchObject({
       hidden: true,
       span: 8,
@@ -270,14 +283,16 @@ describe('WidgetGrid', () => {
         </WidgetGrid.Widget>
       </WidgetGrid>
     ))
-    const handle = screen.getByRole('separator', { name: 'Resize Trend widget' })
+    const handle = screen.getByRole('separator', {
+      name: 'Resize Trend widget',
+    })
     fireEvent.keyDown(handle, { key: 'ArrowRight' })
     fireEvent.keyDown(handle, { key: 'ArrowDown' })
     expect(onConfigChange).toHaveBeenCalledTimes(2)
     const last = onConfigChange.mock.calls.at(-1)?.[0]
     expect(last?.widgets['trend']).toMatchObject({ span: 9, rows: 5 })
     // Growing trend over breakdown pushes breakdown down, twice.
-    expect(last?.widgets['breakdown']!.y).toBe(5)
+    expect(last?.widgets['breakdown']?.y).toBe(5)
   })
 
   it('keyboard bounds: Home shrinks to minSpan, End spans the grid', () => {
@@ -287,11 +302,15 @@ describe('WidgetGrid', () => {
       config: { v: 1, widgets: { trend: { x: 0, y: 0, span: 8, rows: 2 } } },
       onConfigChange,
     })
-    const handle = screen.getByRole('separator', { name: 'Resize Trend widget' })
+    const handle = screen.getByRole('separator', {
+      name: 'Resize Trend widget',
+    })
     fireEvent.keyDown(handle, { key: 'Home' })
     expect(onConfigChange.mock.calls.at(-1)?.[0].widgets['trend']?.span).toBe(1)
     fireEvent.keyDown(handle, { key: 'End' })
-    expect(onConfigChange.mock.calls.at(-1)?.[0].widgets['trend']?.span).toBe(12)
+    expect(onConfigChange.mock.calls.at(-1)?.[0].widgets['trend']?.span).toBe(
+      12,
+    )
   })
 
   it('emits a tombstone when a widget is removed', () => {
@@ -340,7 +359,9 @@ describe('WidgetGrid', () => {
   it('keeps working uncontrolled: changes land in the grid, not just on you', () => {
     const onConfigChange = vi.fn()
     grid({ editable: true, onConfigChange })
-    const handle = screen.getByRole('separator', { name: 'Resize Trend widget' })
+    const handle = screen.getByRole('separator', {
+      name: 'Resize Trend widget',
+    })
     fireEvent.keyDown(handle, { key: 'ArrowRight' })
     // The DOM follows the internal document: 9 columns wide now.
     expect(placed('trend')?.style.gridColumn).toBe('1 / span 9')

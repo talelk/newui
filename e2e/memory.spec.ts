@@ -146,6 +146,11 @@ const BUDGETS: Array<[string, number]> = [
   ['/atoms/button', 15 * 1024 * 1024],
   ['/organisms/stat-grid', 15 * 1024 * 1024],
   ['/pages/tasks/fullscreen', 30 * 1024 * 1024],
+  // The virtualized table: twenty thousand records exist as data and row
+  // models, but only a window is mounted. The budget pays for the retained
+  // rows, not the DOM — a leak that keeps every rendered row alive would
+  // blow past it.
+  ['/spec?virtual=20000', 40 * 1024 * 1024],
 ]
 
 for (const [route, budget] of BUDGETS) {

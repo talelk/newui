@@ -15,7 +15,8 @@ function memoryStorage() {
 }
 
 function harness() {
-  let form: AnyFormApi
+  // `createRoot` runs its callback synchronously, so `form` is set by return.
+  let form!: AnyFormApi
   createRoot((dispose) => {
     form = createForm(() => ({
       defaultValues: { name: '' } satisfies { name: string },
@@ -27,7 +28,7 @@ function harness() {
     // Keep the root alive for the duration of the test.
     void dispose
   })
-  return form!
+  return form
 }
 
 beforeEach(() => vi.useFakeTimers())

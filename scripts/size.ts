@@ -167,7 +167,6 @@ const ENTRIES: Entry[] = [
     file: 'scripts/fixtures/all.ts',
     // The full core is an upper bound; regular consumers import only the levels
     // they use. The per-level entries above guard those costs, and `Button only`
-<<<<<<< HEAD
     // is the leaf tree-shaking assertion. 300 → 306 when the Wizard organism
     // (#31) landed beside the instrument-panel restyle; 310 with DataTable's
     // column operations (the header parts and the column menu) in the organisms

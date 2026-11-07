@@ -57,6 +57,7 @@ export interface FieldConfig<
    * For `type: 'repeater'`: the row's fields, keyed by subfield name. Their
    * `when` receives the row first.
    */
+  // biome-ignore lint/suspicious/noExplicitAny: row fields erase their scope type.
   fields?: Record<string, FieldConfig<TValues, any>>
   /** For `type: 'repeater'`: the ceiling on rows. */
   maxItems?: number
@@ -78,6 +79,7 @@ export interface FieldControlProps {
 
 /** The slice of a field-map entry the engine reads for visibility. */
 interface VisibilityEntry {
+  // biome-ignore lint/suspicious/noExplicitAny: the erased mirror of FieldConfig.
   when?: (scope: any, values: any) => boolean
   fields?: Record<string, VisibilityEntry>
 }

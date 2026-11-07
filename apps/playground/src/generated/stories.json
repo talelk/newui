@@ -2535,6 +2535,18 @@
       ]
     },
     {
+      "id": "organisms-datatable--virtual",
+      "title": "Organisms/DataTable",
+      "name": "Virtual",
+      "exportName": "Virtual",
+      "importPath": "src/stories/data-table.stories.tsx",
+      "tags": [
+        "dev",
+        "test",
+        "manifest"
+      ]
+    },
+    {
       "id": "organisms-detailheader--default",
       "title": "Organisms/DetailHeader",
       "name": "Default",

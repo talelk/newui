@@ -17,6 +17,18 @@ export const API = {
       "description": "Keep the header row visible while the region scrolls vertically."
     },
     {
+      "name": "height",
+      "type": "string",
+      "optional": true,
+      "description": "Bound the region to a fixed viewport height (a CSS length) and let the\ncontent scroll vertically. This is the hook a virtualised body needs:\nthe windowing scroller wants a viewport, not a page-sized box."
+    },
+    {
+      "name": "ref",
+      "type": "(el: HTMLElement) => void",
+      "optional": true,
+      "description": "Receives the scroll-region element — the virtualiser's scroll element."
+    },
+    {
       "name": "children",
       "type": "JSX.Element",
       "optional": false

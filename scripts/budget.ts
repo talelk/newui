@@ -138,7 +138,8 @@ const ROUTES: RouteBudget[] = [
   {
     route: '/kit/recipes/forms',
     budget: 185,
-    unless: 'the multi-step recipe is a Wizard over the form engine, so it pays for TanStack Form',
+    unless:
+      'the multi-step recipe is a Wizard over the form engine, so it pays for TanStack Form',
   },
   { route: '/kit/recipes/overlays', budget: 130 },
   {

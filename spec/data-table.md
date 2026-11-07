@@ -39,7 +39,8 @@ a whole data region.
 | `selectionSummary` | `(ids) => JSX.Element` | total or scope in the mobile selection bar |
 | `selectable` | `boolean` | show selection and bulk actions; defaults to `true`, but selection only renders when `onRowsAction` exists |
 | `rowSelectable` | `(row: T) => boolean` | per-row eligibility; ineligible checkboxes are disabled and select-all skips them |
-| `pageSize` | `number` | initial page size; defaults to `10` |
+| `pageSize` | `number` | initial page size; defaults to `10` — with `virtual`, one page of the whole result unless set |
+| `virtual` | `boolean` | window the body so only the rows near the viewport stay mounted, measured as they render; off by default |
 | `recordsLabel` | `string` | noun in the footer; defaults to “records” |
 | `emptyTitle` | `string` | empty-state title |
 | `emptyHint` | `string` | empty-state supporting text |

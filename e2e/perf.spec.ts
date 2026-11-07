@@ -68,6 +68,77 @@ test('a 2000-row list renders within budget', async ({ page }) => {
   expect(ms, `list render = ${ms}ms`).toBeLessThan(2500)
 })
 
+/**
+ * The virtualized table (issue #21): twenty thousand rows, and the DOM stays
+ * a viewport wide. The mount budget covers building the row model plus the
+ * first window; the scroll budget covers re-windowing, which is the half a
+ * regression would show up in first (an unwindowed body would render 20k
+ * rows and blow both).
+ */
+test('a 20k-row virtualized table mounts and scrolls within budget', async ({
+  page,
+}) => {
+  await page.goto('/spec?virtual=20000')
+  const region = page.locator(
+    '[data-slot="virtual-table"] [data-slot="scroll-table"]',
+  )
+  await expect(
+    region.locator('tbody tr[data-slot="data-table-row"]').first(),
+  ).toBeVisible()
+
+  const mountMs = await page.evaluate(
+    () =>
+      (window as unknown as { __virtualTableMs?: number }).__virtualTableMs ??
+      -1,
+  )
+  expect(mountMs, `virtual table mount = ${mountMs}ms`).toBeGreaterThanOrEqual(
+    0,
+  )
+  expect(mountMs, `virtual table mount = ${mountMs}ms`).toBeLessThan(1500)
+
+  // A bounded DOM: a window plus overscan, never the twenty thousand.
+  const mounted = await region
+    .locator('tbody tr[data-slot="data-table-row"]')
+    .count()
+  expect(mounted, `mounted rows = ${mounted}`).toBeGreaterThan(0)
+  expect(mounted, `mounted rows = ${mounted}`).toBeLessThan(100)
+
+  // Scrolling one page down must re-window the body within a frame budget.
+  const scroll = await page.evaluate(async () => {
+    const el = document.querySelector(
+      '[data-slot="virtual-table"] [data-slot="scroll-table"]',
+    ) as HTMLElement
+    const first = (
+      el.querySelector('tbody tr td[data-column="id"]')?.textContent ?? ''
+    ).trim()
+    const start = performance.now()
+    el.scrollTop += 600
+    el.dispatchEvent(new Event('scroll'))
+    await new Promise<void>((resolve) =>
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+    )
+    const after = (
+      el.querySelector('tbody tr td[data-column="id"]')?.textContent ?? ''
+    ).trim()
+    return {
+      ms: performance.now() - start,
+      moved: after !== '' && after !== first,
+    }
+  })
+  expect(scroll.moved, 'the virtual window did not move on scroll').toBe(true)
+  expect(scroll.ms, `scroll latency = ${scroll.ms}ms`).toBeLessThan(300)
+
+  // The header stays pinned inside the region while the body scrolls.
+  const sticky = await region.evaluate((el) => {
+    const head = el.querySelector('thead')
+    if (!head) return false
+    return getComputedStyle(head).position === 'sticky'
+  })
+  expect(sticky, 'the header is not sticky inside the virtual region').toBe(
+    true,
+  )
+})
+
 test('theme toggle does not cause a layout shift', async ({ page }) => {
   await page.goto('/spec?theme=dark')
   await expect(page.getByRole('button', { name: 'Save' })).toBeVisible()

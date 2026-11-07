@@ -43,18 +43,32 @@ import {
   ToggleGroup,
   toast,
 } from '@talelk/newui-molecules'
-import { Sidebar, SidebarItem } from '@talelk/newui-organisms'
-import { createEffect, For, type JSX, onMount } from 'solid-js'
+import { DataTable, Sidebar, SidebarItem } from '@talelk/newui-organisms'
+import { createEffect, For, type JSX, onMount, Show } from 'solid-js'
 
 /**
  * The deterministic page the browser harness drives. Fixed content, no
  * avatars/network, so axe and the perf budgets are stable. `?theme=dark` flips
- * the theme; `?rows=N` renders a large list for the render benchmark.
+ * the theme; `?rows=N` renders a large list for the render benchmark;
+ * `?virtual=N` renders a virtualized `DataTable` for the windowing budget.
  */
 export function Spec(): JSX.Element {
   const params = new URLSearchParams(location.search)
   const theme = params.get('theme') ?? 'light'
   const rows = Number(params.get('rows') ?? '0')
+  const virtualRows = Number(params.get('virtual') ?? '0')
+  /**
+   * Hoisted so `rows` is one stable array, not a fresh `Array.from` on every
+   * read — the same contract every page passes the table.
+   */
+  const virtualData =
+    virtualRows > 0
+      ? Array.from({ length: virtualRows }, (_, index) => ({
+          id: `VROW-${index + 1}`,
+          name: `Row ${index + 1}`,
+          amount: index % 100,
+        }))
+      : []
 
   onMount(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -67,6 +81,22 @@ export function Spec(): JSX.Element {
       requestAnimationFrame(() => {
         ;(window as unknown as { __listMs: number }).__listMs =
           performance.now() - start
+      })
+    }
+  })
+
+  /**
+   * The virtualized-table mount cost, measured from the start of the page
+   * setup to the first painted frame with a row on screen — the row model
+   * build is part of what the budget pays for. Reported for the windowing
+   * budget in `e2e/perf.spec.ts`, which drives the scroll half.
+   */
+  const virtualStart = virtualRows > 0 ? performance.now() : 0
+  createEffect(() => {
+    if (virtualRows > 0) {
+      requestAnimationFrame(() => {
+        ;(window as unknown as { __virtualTableMs: number }).__virtualTableMs =
+          performance.now() - virtualStart
       })
     }
   })
@@ -265,6 +295,29 @@ export function Spec(): JSX.Element {
           </For>
         </List>
       </section>
+
+      {/* Only mounted for the windowing budget (`?virtual=N`); the default
+          spec page stays lean so axe and the coherence sweep are stable. The
+          rows are hoisted so the prop is a stable reference, not a getter
+          that rebuilds the array on every read. */}
+      <Show when={virtualRows > 0}>
+        <section data-slot="virtual-table">
+          <DataTable
+            title="Ledger"
+            rows={virtualData}
+            columns={[
+              { accessorKey: 'id', header: 'Id' },
+              { accessorKey: 'name', header: 'Name' },
+              {
+                accessorKey: 'amount',
+                header: 'Amount',
+                meta: { align: 'end' },
+              },
+            ]}
+            virtual
+          />
+        </section>
+      </Show>
 
       <section class="flex flex-col gap-4">
         <Accordion.Root defaultValue={['one']}>

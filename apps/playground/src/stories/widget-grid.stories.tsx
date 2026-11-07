@@ -1,6 +1,6 @@
 import { Switch } from '@talelk/newui-atoms'
 import { WidgetGrid, type WidgetGridConfig } from '@talelk/newui-organisms'
-import { createSignal, type JSX } from 'solid-js'
+import { createSignal, For, type JSX } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
 import { DemoFrame } from './demo-frame'
 
@@ -47,12 +47,14 @@ export function Demo(): JSX.Element {
           </WidgetGrid.Widget>
           <WidgetGrid.Widget id="trend" span={8} rows={4} title="Revenue trend">
             <div class="flex h-full items-end gap-1.5">
-              {[34, 52, 41, 68, 59, 77, 63, 88, 71, 92].map((value) => (
-                <div
-                  class="flex-1 rounded-t bg-surface-blue-4"
-                  style={{ height: `${value}%` }}
-                />
-              ))}
+              <For each={[34, 52, 41, 68, 59, 77, 63, 88, 71, 92]}>
+                {(value) => (
+                  <div
+                    class="flex-1 rounded-t bg-surface-blue-4"
+                    style={{ height: `${value}%` }}
+                  />
+                )}
+              </For>
             </div>
           </WidgetGrid.Widget>
           <WidgetGrid.Widget
@@ -113,16 +115,20 @@ export const ReadOnly: Story = {
         </WidgetGrid.Widget>
         <WidgetGrid.Widget id="trend" span={8} rows={4} title="Revenue trend">
           <div class="flex h-full items-end gap-1.5">
-            {[34, 52, 41, 68, 59, 77, 63, 88].map((value) => (
-              <div
-                class="flex-1 rounded-t bg-surface-blue-4"
-                style={{ height: `${value}%` }}
-              />
-            ))}
+            <For each={[34, 52, 41, 68, 59, 77, 63, 88]}>
+              {(value) => (
+                <div
+                  class="flex-1 rounded-t bg-surface-blue-4"
+                  style={{ height: `${value}%` }}
+                />
+              )}
+            </For>
           </div>
         </WidgetGrid.Widget>
         <WidgetGrid.Widget id="breakdown" span={4} rows={4} title="By channel">
-          <span class="text-sm text-ink-gray-7">Organic 46% · Referral 28%</span>
+          <span class="text-sm text-ink-gray-7">
+            Organic 46% · Referral 28%
+          </span>
         </WidgetGrid.Widget>
       </WidgetGrid>
     </DemoFrame>
