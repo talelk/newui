@@ -50,7 +50,11 @@ test('analytics filters, sorts, paginates and exports the selected report', asyn
   await page
     .getByRole('searchbox', { name: 'Search transactions' })
     .fill('no-such-customer')
-  await expect(page.getByText('No transactions found')).toBeVisible()
+  await expect(
+    page
+      .getByRole('region', { name: 'Transactions table' })
+      .getByText('No transactions found'),
+  ).toBeVisible()
   await expect(
     page.getByRole('button', { name: 'Export report' }),
   ).toBeDisabled()

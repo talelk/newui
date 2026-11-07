@@ -64,12 +64,26 @@ one column per scroll edge; pinning changes go through
 edits commit through the callback and the table shows whatever the next
 `rows` carry. The table never mutates data itself.
 
+**Tables are compact by default.** `density` defaults to `compact` (about
+28px rows); pass `density="comfortable"` (about 36px) only for touch-first or
+reading-heavy screens. The row holding keyboard focus carries the accent edge
+— don't add your own row highlight.
+
+**An emptied table keeps its header.** When filters empty it, the table stays
+mounted and the empty state is its single body row (the header is where the
+column filters live); below the card breakpoint the same empty state shows in
+the card column. Test for the empty-state text, not for zero `tbody tr`.
+
 **Loading, empty and error come from `DataState`, not ad-hoc markup.** Pass
 `loading`, `error` + `onRetry` to `DataTable` (or wrap custom regions in
 `DataState`); the shared surfaces keep the sweep's contracts.
 
+**KPIs are one strip.** `StatGrid` renders its stats as one ruled sheet, not a
+card each; don't wrap stats in `Card`s to "match" it.
+
 **One sidebar model.** `AppShell` (templates) renders `AppSidebar` for you —
-do not mount `Sidebar` beside it. Compose `Sidebar` directly only in pages
+do not mount `Sidebar` beside it. Its `settings` slot takes a function when it
+is a `SidebarItem`, so the item follows the collapsed rail. Compose `Sidebar` directly only in pages
 that are not `AppShell`-shaped.
 
 ## Common mistakes

@@ -45,7 +45,7 @@ export function Frame() {
           ],
         },
       ]}
-      settings={<SidebarItem label="Settings" icon="lucide-settings" />}
+      settings={() => <SidebarItem label="Settings" icon="lucide-settings" />}
       account={<SidebarItem label="Rhea Kapoor" icon="lucide-user-round" />}
     >
       <p>Page content — the template owns the h1 from `title`.</p>
@@ -63,6 +63,18 @@ and no rail — never mount `Sidebar` or `MobileNav` inside it.
 **Collapse is controllable.** Pass `collapsed` + `onCollapsedChange` when the
 app owns persistence (P2); without them the shell owns the state. The fold
 lives in the sidebar's identity row (`⌘B`/`Ctrl+B` also toggles).
+
+**Pass `settings` as a function when it is a `SidebarItem`.** The item reads
+the collapse state from the sidebar; an element created by the caller cannot,
+and keeps its expanded padding in the 56px rail (it sits off the icon column).
+`settings={() => <SidebarItem …/>}` renders it inside the sidebar, as the
+`navigationContent` function form does.
+
+**The page header is one compact band.** AppShell renders the trail, then the
+`title` (the page's `h1`) with `description` beside it and `actions` at the
+end, on the Mist frame. Keep `description` to one line and put page-level
+controls (an account picker, a pane toggle) in `actions`, not in a row of
+their own above the content.
 
 **Split content with PaneLayout inside AppShell.** Mail-style records need
 `PaneLayout`'s resizable start/end panes; `active` collapses to one pane on

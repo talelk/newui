@@ -24,3 +24,14 @@ minimumReleaseAgeExclude:
   - '@tanstack/solid-query@5.104.3'
   - '@tanstack/solid-virtual@3.13.47'
   - '@tanstack/virtual-core@3.19.5'
+
+# Security floors for transitive dependencies (pnpm audit, 2026-11-07). Each
+# override only lifts the vulnerable range to its patched release; remove an
+# entry once every dependent requires the patched version itself.
+overrides:
+  'undici@>=8.0.0 <8.12.2': ^8.12.2
+  'fast-uri@>=3.0.0 <3.1.9': ^3.1.9
+  'seroval@<1.6.11': ~1.6.11
+  'seroval-plugins@<1.6.11': ~1.6.11
+  'postcss-selector-parser@<6.1.5': ^6.1.5
+  'minimatch@>=7.0.0 <11.0.1': ^11.0.1

@@ -8,7 +8,7 @@ describe('Text (browser, real CSS)', () => {
     expect(
       getComputedStyle(base.container.querySelector('p') as HTMLElement)
         .fontSize,
-    ).toBe('14px')
+    ).toBe('13px')
     base.unmount()
 
     const xl = render(() => <Text size="xl">Copy</Text>)

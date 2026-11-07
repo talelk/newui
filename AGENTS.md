@@ -374,13 +374,16 @@ packages.
   (`inlineCss` in `apps/playground/vite.config.ts`, removing a render-blocking
   round trip) and code-splits every route with dynamic imports. A library must
   not do either — consumers own their asset pipeline.
-- **Measured checkpoint** (`pnpm size`, gzip with `solid-js` external): `cn()`
-  6.58 kB · `Button` 8.86 kB · `Button + Dialog` 29.92 kB · atoms 12.92 kB ·
-  molecules 73.59 kB · organisms 119.27 kB · templates 43.61 kB · full atomic
-  barrel 269.97 kB. Current route measurements (`pnpm budget`): home 57.6 kB,
-  analytics fullscreen 388.3 kB, tasks fullscreen 231.7 kB and accounting
-  fullscreen 354.2 kB; all are within the measured route budgets. These are
-  checkpoints, not substitutes for running `pnpm size` and `pnpm budget`.
+- **Measured checkpoint** (2026-11-07; `pnpm size`, gzip with `solid-js`
+  external): `cn()` 6.83 kB · `Button` 9.96 kB · `Button + Dialog` 31.22 kB ·
+  atoms 14.19 kB · molecules 74.73 kB · organisms 160.62 kB · templates
+  45.56 kB · full atomic barrel 309.78 kB. Routes (`pnpm budget`): home 60.7 kB,
+  analytics fullscreen 458.3 kB, tasks fullscreen 275.0 kB, accounting
+  fullscreen 388.4 kB. The application routes are **over** their budgets: the
+  site bundler merges organisms into one shared chunk, so pages that render no
+  table still load DataTable (the library itself tree-shakes — the
+  `Organisms page chrome` size entry guards that). These are checkpoints, not
+  substitutes for running `pnpm size` and `pnpm budget`.
 - **Removed `tailwind-variants`** (it bundled its own merge integration) in
   favour of an in-house `tv`/`cn`/`cx` in `lib/tv.ts`: `Button` went 34.3 →
   16.3 kB. The resolver is typed (`VariantProps<typeof recipe>` recovers the
