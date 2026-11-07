@@ -340,6 +340,24 @@ export const twMergeConfig = {
     // ---- typography ----
     'font-size': [{ text: [isFontSize] }],
     'font-weight': [{ font: [isFontWeight] }],
+    // Width axis (Plex's condensed face for table headers and narrow
+    // columns). Declared before `font-family`, whose catch-all would otherwise
+    // swallow `font-stretch-*` and drop the family it sits beside.
+    'font-stretch': [
+      {
+        'font-stretch': [
+          'ultra-condensed',
+          'extra-condensed',
+          'condensed',
+          'semi-condensed',
+          'normal',
+          'semi-expanded',
+          'expanded',
+          'extra-expanded',
+          'ultra-expanded',
+        ],
+      },
+    ],
     'font-family': [{ font: [() => true] }],
     leading: [{ leading: [isLeading] }],
     // `tracking-<length>` is our vocabulary, but Tailwind's *named* steps

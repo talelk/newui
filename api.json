@@ -1096,6 +1096,12 @@
         "description": "Switches the card into its error state and prints this message."
       },
       {
+        "name": "bare",
+        "type": "boolean",
+        "optional": true,
+        "description": "Drops the card's own border, radius and fill so it can sit in a ruled\nKPI strip whose container draws the rules (see `StatGrid`)."
+      },
+      {
         "name": "class",
         "type": "string",
         "optional": true,
@@ -9731,7 +9737,7 @@
         "name": "density",
         "type": "'comfortable' | 'compact'",
         "optional": true,
-        "description": "`compact` uses 36px rows instead of 44px."
+        "description": "Row height: `compact` (the default, about 28px rows) or `comfortable`\n(about 36px) for touch-first or reading-heavy screens."
       },
       {
         "name": "cardBreakpoint",

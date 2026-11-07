@@ -40,7 +40,7 @@ export const DEFAULT_LINE_WIDTH = 2
 export const DEFAULT_FILL_OPACITY = 0.16
 
 export const CHART_FONT_FAMILY =
-  "'InterVar', ui-sans-serif, system-ui, sans-serif"
+  "'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif"
 
 const BAR_MAX_WIDTH = 32
 /** Slim bars with an airy gap between categories. */

@@ -42,10 +42,10 @@ export interface CheckboxProps {
 const checkboxBox = tv({
   base: [
     'shrink-0 rounded-1 border-outline-gray-4 bg-surface-base text-ink-gray-9 transition',
-    'checked:bg-ink-gray-9 checked:[background-image:none] indeterminate:bg-ink-gray-9 indeterminate:[background-image:none]',
+    'checked:border-surface-blue-8 checked:bg-surface-blue-8 checked:[background-image:none] indeterminate:border-surface-blue-8 indeterminate:bg-surface-blue-8 indeterminate:[background-image:none]',
     'hover:border-outline-gray-5 active:border-outline-gray-6',
     'disabled:cursor-not-allowed disabled:border-outline-gray-3 disabled:text-ink-gray-5',
-    'disabled:checked:bg-ink-gray-5 disabled:indeterminate:bg-ink-gray-5 disabled:hover:border-outline-gray-3',
+    'disabled:checked:border-transparent disabled:checked:bg-ink-gray-5 disabled:indeterminate:border-transparent disabled:indeterminate:bg-ink-gray-5 disabled:hover:border-outline-gray-3',
     'focus:ring-0 focus:ring-offset-0',
   ],
   variants: {

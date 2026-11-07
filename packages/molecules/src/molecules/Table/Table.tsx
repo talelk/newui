@@ -55,7 +55,7 @@ export function TableRow(props: TableRowProps): JSX.Element {
       data-selected={props.selected ? '' : undefined}
       class={cn(
         'border-b border-outline-gray-1 hover:bg-surface-gray-1',
-        'data-[selected]:bg-surface-gray-2',
+        'data-[selected]:bg-surface-blue-1',
         props.class,
       )}
     >
@@ -72,7 +72,7 @@ export const TableColumnHeader: ParentComponent<{
   <th
     scope={props.scope ?? 'col'}
     data-slot="table-column-header"
-    class={cn('p-3 font-medium', props.class)}
+    class={cn('px-table-cell-x py-table-cell-y font-medium', props.class)}
   >
     {props.children}
   </th>
@@ -80,7 +80,10 @@ export const TableColumnHeader: ParentComponent<{
 
 /** A body cell. */
 export const TableCell: ParentComponent<{ class?: string }> = (props) => (
-  <td data-slot="table-cell" class={cn('p-3', props.class)}>
+  <td
+    data-slot="table-cell"
+    class={cn('px-table-cell-x py-table-cell-y', props.class)}
+  >
     {props.children}
   </td>
 )

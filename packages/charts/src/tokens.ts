@@ -51,7 +51,8 @@ export const CARD_SURFACE: JSX.CSSProperties = {
   'border-color': 'var(--outline-gray-1)',
   'background-color': 'var(--surface-elevation-1)',
   'border-radius': 'var(--radius-card)',
-  padding: 'var(--spacing-card-pad)',
+  // Dense surfaces: the compact pad is the default chart chrome.
+  padding: 'var(--spacing-card-pad-compact)',
 }
 
 export function readChartTokens(el?: Element | null): ChartTokens {

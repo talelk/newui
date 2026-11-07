@@ -279,7 +279,7 @@ export type OverlayPanelVariants = VariantProps<typeof overlayPanel>
  * the highlighted row in both themes.
  */
 export const listboxRow =
-  'flex cursor-pointer items-center justify-between gap-2 rounded-control px-2 py-1.5 text-base text-ink-gray-8 outline-none transition-colors data-[highlighted]:bg-surface-gray-3 data-[state=checked]:text-ink-blue-8 data-[disabled]:cursor-not-allowed data-[disabled]:text-ink-gray-4'
+  'flex cursor-pointer items-center justify-between gap-2 rounded-control px-2 py-1 text-base text-ink-gray-8 outline-none transition-colors data-[highlighted]:bg-surface-gray-3 data-[state=checked]:text-ink-blue-8 data-[disabled]:cursor-not-allowed data-[disabled]:text-ink-gray-4'
 
 /** The one group label inside a menu or listbox panel. */
 export const listboxLabel =
@@ -294,4 +294,4 @@ export const overlaySeparator = 'my-1 h-px bg-outline-elevation-1'
  * exported to consumers (P10: they style through the parts).
  */
 export const tableHeadClass =
-  'border-y border-outline-gray-1 bg-surface-gray-1 text-caption text-ink-gray-7'
+  'border-y border-outline-gray-1 bg-surface-gray-1 text-sm-medium font-stretch-semi-condensed text-ink-gray-6'

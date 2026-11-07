@@ -778,16 +778,28 @@ export function Accounting(): JSX.Element {
                   <table class="w-full min-w-[480px] text-interface">
                     <ScrollTableHead>
                       <tr>
-                        <th scope="col" class="px-4 py-3 text-start">
+                        <th
+                          scope="col"
+                          class="px-table-cell-x py-table-cell-y text-start"
+                        >
                           Account
                         </th>
-                        <th scope="col" class="px-4 py-3 text-end">
+                        <th
+                          scope="col"
+                          class="px-table-cell-x py-table-cell-y text-end"
+                        >
                           Opening
                         </th>
-                        <th scope="col" class="px-4 py-3 text-end">
+                        <th
+                          scope="col"
+                          class="px-table-cell-x py-table-cell-y text-end"
+                        >
                           Movement
                         </th>
-                        <th scope="col" class="px-4 py-3 text-end">
+                        <th
+                          scope="col"
+                          class="px-table-cell-x py-table-cell-y text-end"
+                        >
                           Closing
                         </th>
                       </tr>
@@ -798,18 +810,18 @@ export function Accounting(): JSX.Element {
                           <tr class="border-b border-outline-gray-1 last:border-b-0">
                             <th
                               scope="row"
-                              class="px-4 py-3 text-start font-normal"
+                              class="px-table-cell-x py-table-cell-y text-start font-normal"
                             >
                               {account.account}
                             </th>
-                            <td class="px-4 py-3 text-end tabular-nums">
+                            <td class="px-table-cell-x py-table-cell-y text-end tabular-nums">
                               {currency(account.opening)}
                             </td>
-                            <td class="px-4 py-3 text-end tabular-nums">
+                            <td class="px-table-cell-x py-table-cell-y text-end tabular-nums">
                               {account.movement >= 0 ? '+' : ''}
                               {currency(account.movement)}
                             </td>
-                            <td class="px-4 py-3 text-end font-medium tabular-nums">
+                            <td class="px-table-cell-x py-table-cell-y text-end font-medium tabular-nums">
                               {currency(account.closing)}
                             </td>
                           </tr>
@@ -818,10 +830,13 @@ export function Accounting(): JSX.Element {
                     </tbody>
                     <tfoot>
                       <tr class="border-t border-outline-gray-1 bg-surface-gray-1">
-                        <th scope="row" class="px-4 py-3 text-start">
+                        <th
+                          scope="row"
+                          class="px-table-cell-x py-table-cell-y text-start"
+                        >
                           Total cash
                         </th>
-                        <td class="px-4 py-3 text-end font-medium tabular-nums">
+                        <td class="px-table-cell-x py-table-cell-y text-end font-medium tabular-nums">
                           {currency(
                             accountBalances().reduce(
                               (sum, account) => sum + account.opening,
@@ -829,7 +844,7 @@ export function Accounting(): JSX.Element {
                             ),
                           )}
                         </td>
-                        <td class="px-4 py-3 text-end font-medium tabular-nums">
+                        <td class="px-table-cell-x py-table-cell-y text-end font-medium tabular-nums">
                           {currency(
                             accountBalances().reduce(
                               (sum, account) => sum + account.movement,
@@ -837,7 +852,7 @@ export function Accounting(): JSX.Element {
                             ),
                           )}
                         </td>
-                        <td class="px-4 py-3 text-end font-semibold tabular-nums">
+                        <td class="px-table-cell-x py-table-cell-y text-end font-semibold tabular-nums">
                           {currency(cashTotal())}
                         </td>
                       </tr>
@@ -982,7 +997,7 @@ export function Accounting(): JSX.Element {
                           {(title) => (
                             <th
                               scope="col"
-                              class={`px-4 py-3 ${title === 'Amount' ? 'text-end' : 'text-start'}`}
+                              class={`px-table-cell-x py-table-cell-y ${title === 'Amount' ? 'text-end' : 'text-start'}`}
                             >
                               {title}
                             </th>
@@ -994,13 +1009,19 @@ export function Accounting(): JSX.Element {
                       <For each={flowRows()}>
                         {(transaction) => (
                           <tr class="border-b border-outline-gray-1 last:border-b-0">
-                            <td class="px-4 py-3">{transaction.description}</td>
-                            <td class="px-4 py-3">{transaction.category}</td>
-                            <td class="px-4 py-3">{transaction.date}</td>
-                            <td class="px-4 py-3 text-end tabular-nums">
+                            <td class="px-table-cell-x py-table-cell-y">
+                              {transaction.description}
+                            </td>
+                            <td class="px-table-cell-x py-table-cell-y">
+                              {transaction.category}
+                            </td>
+                            <td class="px-table-cell-x py-table-cell-y">
+                              {transaction.date}
+                            </td>
+                            <td class="px-table-cell-x py-table-cell-y text-end tabular-nums">
                               {currency(transaction.amount)}
                             </td>
-                            <td class="px-4 py-3">
+                            <td class="px-table-cell-x py-table-cell-y">
                               <Badge
                                 theme={
                                   transaction.status === 'Posted'
@@ -1160,14 +1181,23 @@ export function Accounting(): JSX.Element {
               <table class="w-full text-interface">
                 <thead class="border-b border-outline-gray-1 text-caption text-ink-gray-7">
                   <tr>
-                    <th class="p-3 text-start" scope="col">
+                    <th
+                      class="px-table-cell-x py-table-cell-y text-start"
+                      scope="col"
+                    >
                       Category
                     </th>
-                    <th class="p-3 text-end" scope="col">
+                    <th
+                      class="px-table-cell-x py-table-cell-y text-end"
+                      scope="col"
+                    >
                       Selected period
                     </th>
                     <Show when={compare()}>
-                      <th class="p-3 text-end" scope="col">
+                      <th
+                        class="px-table-cell-x py-table-cell-y text-end"
+                        scope="col"
+                      >
                         Illustrative prior
                       </th>
                     </Show>
@@ -1177,14 +1207,17 @@ export function Accounting(): JSX.Element {
                   <For each={totals()}>
                     {(item) => (
                       <tr class="border-b border-outline-gray-1">
-                        <th class="p-3 text-start font-normal" scope="row">
+                        <th
+                          class="px-table-cell-x py-table-cell-y text-start font-normal"
+                          scope="row"
+                        >
                           {item.name}
                         </th>
-                        <td class="p-3 text-end tabular-nums">
+                        <td class="px-table-cell-x py-table-cell-y text-end tabular-nums">
                           {currency(item.total)}
                         </td>
                         <Show when={compare()}>
-                          <td class="p-3 text-end tabular-nums text-ink-gray-7">
+                          <td class="px-table-cell-x py-table-cell-y text-end tabular-nums text-ink-gray-7">
                             {currency(item.total * 0.9)}
                           </td>
                         </Show>
@@ -1192,14 +1225,17 @@ export function Accounting(): JSX.Element {
                     )}
                   </For>
                   <tr class="bg-surface-gray-2 font-semibold text-ink-gray-9">
-                    <th class="p-3 text-start" scope="row">
+                    <th
+                      class="px-table-cell-x py-table-cell-y text-start"
+                      scope="row"
+                    >
                       Net profit
                     </th>
-                    <td class="p-3 text-end tabular-nums">
+                    <td class="px-table-cell-x py-table-cell-y text-end tabular-nums">
                       {currency(income() - expenses())}
                     </td>
                     <Show when={compare()}>
-                      <td class="p-3 text-end tabular-nums">
+                      <td class="px-table-cell-x py-table-cell-y text-end tabular-nums">
                         {currency((income() - expenses()) * 0.9)}
                       </td>
                     </Show>

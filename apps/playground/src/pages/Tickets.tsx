@@ -145,14 +145,17 @@ export function Tickets(): JSX.Element {
       cell: (context) => (
         <button
           type="button"
-          class="max-w-72 rounded-control text-start font-medium text-ink-blue-link focus-visible:focus-ring"
+          class="flex min-w-0 max-w-[28rem] items-baseline gap-2 rounded-control text-start focus-visible:focus-ring"
           onClick={() => {
             setActive(context.row.original.id)
             setReply('')
           }}
         >
-          {context.row.original.subject}
-          <span class="mt-1 block text-caption font-normal text-ink-gray-7">
+          {/* One line per ticket: the customer rides beside the subject. */}
+          <span class="truncate font-medium text-ink-blue-link">
+            {context.row.original.subject}
+          </span>
+          <span class="shrink-0 text-caption text-ink-gray-6">
             {context.row.original.customer}
           </span>
         </button>
@@ -165,18 +168,18 @@ export function Tickets(): JSX.Element {
       cell: (context) => {
         const breached = context.row.original.response.startsWith('Breached')
         return (
-          <div class="whitespace-nowrap text-caption">
-            <p
+          <div class="flex items-baseline gap-2 whitespace-nowrap text-caption tabular-nums">
+            <span
               classList={{
                 'font-medium text-ink-red-7': breached,
                 'text-ink-gray-8': !breached,
               }}
             >
               {context.row.original.response}
-            </p>
-            <p class="mt-1 text-ink-gray-7">
+            </span>
+            <span class="text-ink-gray-6">
               {context.row.original.resolution}
-            </p>
+            </span>
           </div>
         )
       },

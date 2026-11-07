@@ -16,6 +16,7 @@ import {
   cssVariables,
   duration,
   easing,
+  fontFamily,
   fontSize,
   fontWeight,
   layoutSpacing,
@@ -141,7 +142,10 @@ for (const [key, style] of Object.entries(fontSize)) {
 }
 
 comment('fonts')
-decl('--font-sans', "'InterVar', ui-sans-serif, system-ui, sans-serif")
+decl(
+  '--font-sans',
+  `'${fontFamily['text']}', ui-sans-serif, system-ui, sans-serif`,
+)
 decl(
   '--font-mono',
   "ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace",

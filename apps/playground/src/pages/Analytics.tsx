@@ -530,7 +530,11 @@ export function Analytics(): JSX.Element {
                 </div>
               }
             >
-              <For each={kpis()}>{(kpi) => <NumberCard {...kpi} />}</For>
+              {/* One ruled strip: the container's outline shows through a
+                  1px gap as the rules between bare cards (as in StatGrid). */}
+              <div class="grid gap-px overflow-hidden rounded-card border border-outline-gray-1 bg-outline-gray-1 min-[360px]:col-span-2 min-[360px]:grid-cols-2 xl:col-span-4 xl:grid-cols-4">
+                <For each={kpis()}>{(kpi) => <NumberCard {...kpi} bare />}</For>
+              </div>
             </Show>
           </Show>
         </section>

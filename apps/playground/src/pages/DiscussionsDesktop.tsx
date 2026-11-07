@@ -518,18 +518,17 @@ export function DiscussionsDesktop(props: {
               </Button>
             }
           >
-            {/* `-mx-3` lets the row hover surface bleed past the text edge, so the
-                content stays aligned with the container. */}
-            <List class="-mx-3">
+            {/* The feed is data, so it sits on a sheet inside the frame. */}
+            <List class="rounded-card border border-outline-gray-1 bg-surface-elevation-1 p-1">
               <For each={visibleDiscussions()}>
                 {(discussion) => (
                   <ListRow
-                    height="h-15"
+                    height="h-13"
                     onClick={() => discussions.open(discussion)}
                   >
                     <ListCell>
                       <div aria-hidden="true">
-                        <Avatar label={discussion.author} size="2xl" />
+                        <Avatar label={discussion.author} size="lg" />
                       </div>
                     </ListCell>
                     <ListCell>
@@ -607,7 +606,7 @@ export function DiscussionsDesktop(props: {
                             </span>
                           </span>
                           <Show when={unreadCount(discussion) > 0}>
-                            <Badge theme="amber" variant="solid" size="sm">
+                            <Badge theme="blue" variant="solid" size="sm">
                               <span aria-hidden="true">
                                 {unreadCount(discussion)}
                               </span>

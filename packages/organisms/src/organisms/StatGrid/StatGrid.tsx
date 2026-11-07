@@ -26,7 +26,10 @@ export interface StatGridProps {
 }
 
 /**
- * A row of KPI cards.
+ * A row of KPIs, read as one instrument strip: a single sheet whose cells are
+ * divided by hairline rules, not a row of separate cards. The rules are the
+ * sheet's outline showing through a 1px grid gap, so they stay correct at any
+ * column count and wrap.
  *
  * The delta is deliberately not coloured by direction but by *whether it is
  * good*: churn going down is good, revenue going down is not, and a grid that
@@ -40,8 +43,8 @@ export interface StatGridProps {
  */
 const COLUMNS: Record<2 | 3 | 4, string> = {
   2: 'min-[360px]:grid-cols-2',
-  3: 'min-[360px]:grid-cols-2 xl:grid-cols-3',
-  4: 'min-[360px]:grid-cols-2 xl:grid-cols-4',
+  3: 'min-[360px]:grid-cols-2 lg:grid-cols-3',
+  4: 'min-[360px]:grid-cols-2 lg:grid-cols-4',
 }
 
 /** Compact table-led screens earn a four-up row on tablets. */
@@ -62,21 +65,22 @@ export function StatGrid(props: StatGridProps): JSX.Element {
         <div
           data-slot="stat-grid"
           data-loading
-          class={`grid gap-card-gap ${props.compact ? COMPACT_COLUMNS[columns()] : COLUMNS[columns()]} ${props.class ?? ''}`}
+          class={cn(
+            STRIP,
+            props.compact ? COMPACT_COLUMNS[columns()] : COLUMNS[columns()],
+            props.class,
+          )}
         >
           <For each={Array.from({ length: columns() })}>
             {() => (
               <div
                 data-slot="stat"
                 aria-hidden="true"
-                class={cn(
-                  card({ padding: 'none' }),
-                  props.compact ? 'gap-1 p-2.5' : 'gap-control-gap p-card-pad',
-                )}
+                class={cn(CELL, props.compact ? 'px-3 py-2' : 'px-4 py-3')}
               >
-                <Skeleton lines={1} class="h-5 w-24" />
-                <Skeleton lines={1} class="h-8 w-20" />
-                <Skeleton lines={1} class="h-4 w-28" />
+                <Skeleton lines={1} class="h-4 w-24" />
+                <Skeleton lines={1} class="h-7 w-20" />
+                <Skeleton lines={1} class="h-3.5 w-28" />
               </div>
             )}
           </For>
@@ -85,7 +89,11 @@ export function StatGrid(props: StatGridProps): JSX.Element {
     >
       <div
         data-slot="stat-grid"
-        class={`grid gap-card-gap ${props.compact ? COMPACT_COLUMNS[columns()] : COLUMNS[columns()]} ${props.class ?? ''}`}
+        class={cn(
+          STRIP,
+          props.compact ? COMPACT_COLUMNS[columns()] : COLUMNS[columns()],
+          props.class,
+        )}
       >
         <For each={props.stats}>
           {(stat) => (
@@ -97,35 +105,35 @@ export function StatGrid(props: StatGridProps): JSX.Element {
               data-slot="stat"
               onClick={stat.onClick}
               class={cn(
-                card({ padding: 'none' }),
+                CELL,
                 'text-start',
-                props.compact ? 'gap-1 p-2.5' : 'gap-control-gap p-card-pad',
+                props.compact ? 'px-3 py-2' : 'px-4 py-3',
                 stat.onClick &&
-                  'cursor-pointer transition-[border-color] hover:border-outline-gray-3 focus-visible:focus-ring motion-reduce:transition-none',
+                  'cursor-pointer transition-colors hover:bg-surface-gray-1 focus-visible:focus-ring focus-visible:-outline-offset-2 motion-reduce:transition-none',
               )}
             >
               <div class="flex flex-wrap items-start gap-2">
                 <Show when={props.compact ? undefined : stat.icon}>
                   {(icon) => (
-                    <span class="hidden size-8 shrink-0 place-items-center rounded-card bg-surface-gray-2 sm:grid">
-                      <Icon icon={icon()} class="size-4 text-ink-gray-7" />
-                    </span>
+                    <Icon
+                      icon={icon()}
+                      class="mt-px hidden size-3.5 shrink-0 text-ink-gray-6 sm:block"
+                    />
                   )}
                 </Show>
-                <span class="min-w-0 flex-1 basis-20 break-words text-sm-medium text-ink-gray-7">
+                <span class="min-w-0 flex-1 basis-20 break-words text-sm text-ink-gray-7">
                   {stat.label}
                 </span>
                 <Show when={stat.delta}>
                   {(delta) => (
                     <span
-                      class="ms-auto inline-flex shrink-0 items-center gap-0.5 rounded-pill px-1.5 py-0.5 text-xs-medium tabular-nums"
+                      class="ms-auto inline-flex shrink-0 items-center gap-0.5 text-xs-medium tabular-nums"
                       classList={{
-                        'bg-surface-green-2 text-ink-green-8':
+                        'text-ink-green-8':
                           delta().direction !== 'flat' && isGood(delta()),
-                        'bg-surface-red-2 text-ink-red-8':
+                        'text-ink-red-8':
                           delta().direction !== 'flat' && !isGood(delta()),
-                        'bg-surface-gray-2 text-ink-gray-7':
-                          delta().direction === 'flat',
+                        'text-ink-gray-7': delta().direction === 'flat',
                       }}
                     >
                       <Icon
@@ -143,11 +151,16 @@ export function StatGrid(props: StatGridProps): JSX.Element {
                   )}
                 </Show>
               </div>
-              <span class="text-metric tabular-nums [overflow-wrap:anywhere] text-ink-gray-9">
+              <span
+                class={cn(
+                  'tabular-nums [overflow-wrap:anywhere] text-ink-gray-9',
+                  props.compact ? 'text-2xl-semibold' : 'text-metric',
+                )}
+              >
                 {stat.value}
               </span>
               <Show when={stat.hint}>
-                <span class="text-xs [overflow-wrap:anywhere] text-ink-gray-7">
+                <span class="text-xs [overflow-wrap:anywhere] text-ink-gray-6">
                   {stat.hint}
                 </span>
               </Show>
@@ -158,6 +171,18 @@ export function StatGrid(props: StatGridProps): JSX.Element {
     </Show>
   )
 }
+
+/**
+ * The strip: one sheet; its outline shows through the 1px gap as the rules
+ * between cells. `overflow-hidden` clips the cells to the sheet's radius.
+ */
+const STRIP = cn(
+  card({ padding: 'none' }),
+  'grid gap-px overflow-hidden bg-outline-gray-1',
+)
+
+/** One cell of the strip, painted back onto the sheet colour. */
+const CELL = 'flex min-w-0 flex-col gap-0.5 bg-surface-elevation-1'
 
 /** A flat delta is neutral; otherwise the direction is good unless overridden. */
 function isGood(delta: NonNullable<Stat['delta']>): boolean {

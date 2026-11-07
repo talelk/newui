@@ -51,7 +51,7 @@ function Example(props: {
                 onClick={() => setActive(item.label)}
                 suffix={
                   item.count ? (
-                    <span class="rounded-pill bg-surface-gray-2 px-1.5 py-px text-caption tabular-nums text-ink-gray-7">
+                    <span class="text-caption tabular-nums text-ink-gray-6">
                       {item.count}
                     </span>
                   ) : undefined

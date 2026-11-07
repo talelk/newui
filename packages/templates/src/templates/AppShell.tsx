@@ -134,7 +134,7 @@ export function AppShell(props: AppShellProps): JSX.Element {
   return (
     <div
       data-slot="app-shell"
-      class={`flex h-dvh min-h-0 overflow-hidden bg-surface-gray-1 text-interface text-ink-gray-9 ${props.class ?? ''}`}
+      class={`flex h-dvh min-h-0 overflow-hidden bg-surface-canvas text-interface text-ink-gray-9 ${props.class ?? ''}`}
     >
       <Show when={desktop()}>
         <div
@@ -184,16 +184,19 @@ export function AppShell(props: AppShellProps): JSX.Element {
           <a href="#app-shell-content" class="sr-only focus:not-sr-only">
             Skip to workspace
           </a>
-          <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-4 p-page-gutter-compact pb-8 md:p-page-gutter">
-            <div class="flex flex-col gap-2">
+          <div class="mx-auto flex w-full max-w-[1600px] flex-col gap-3 px-page-gutter-compact pt-3 pb-8 md:px-5">
+            {/* One compact band: the trail, then the title with its one-line
+                description beside it and the page actions at the end — the
+                data starts about 60px down instead of 110. */}
+            <div data-slot="app-shell-page-header" class="flex flex-col gap-1">
               <Show when={props.breadcrumbs}>
                 {(items) => <Breadcrumbs items={items()} />}
               </Show>
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="min-w-0">
-                  <h1 class="mt-1 text-heading">{props.title}</h1>
+              <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                <div class="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-0.5">
+                  <h1 class="text-heading">{props.title}</h1>
                   <Show when={props.description}>
-                    <p class="mt-1 max-w-[30rem] text-ink-gray-7">
+                    <p class="max-w-[42rem] text-sm text-ink-gray-6">
                       {props.description}
                     </p>
                   </Show>

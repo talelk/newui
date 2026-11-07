@@ -402,8 +402,8 @@ const NodeCheckbox: ParentComponent<TreeNodeProps> = (props) => {
       data-slot="tree-node-checkbox"
       class={cn(
         'grid size-4 shrink-0 place-items-center rounded-2 border border-outline-gray-3 text-ink-base outline-none',
-        'data-[state=checked]:border-surface-gray-10 data-[state=checked]:bg-surface-gray-10',
-        'data-[state=indeterminate]:border-surface-gray-10 data-[state=indeterminate]:bg-surface-gray-10',
+        'data-[state=checked]:border-surface-blue-8 data-[state=checked]:bg-surface-blue-8',
+        'data-[state=indeterminate]:border-surface-blue-8 data-[state=indeterminate]:bg-surface-blue-8',
         'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-60',
         props.class,
       )}

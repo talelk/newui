@@ -34,7 +34,7 @@ a whole data region.
 | `loading` | `boolean` | replaces the data region with the shared loading skeleton |
 | `error` | `JSX.Element` | replaces the data region with the shared error state |
 | `onRetry` | `() => void` | retry action in the error state |
-| `density` | `'comfortable' \| 'compact'` | 44px or 36px rows |
+| `density` | `'comfortable' \| 'compact'` | `compact` (the default) is about 28px rows; `comfortable` about 36px, for touch-first or reading-heavy screens |
 | `cardBreakpoint` | `'sm' \| 'md'` | width at which the table becomes cards; `sm` (640px), `md` (768px) or `lg` (1024px); default `sm` |
 | `selectionSummary` | `(ids) => JSX.Element` | total or scope in the mobile selection bar |
 | `selectable` | `boolean` | show selection and bulk actions; defaults to `true`, but selection only renders when `onRowsAction` exists |

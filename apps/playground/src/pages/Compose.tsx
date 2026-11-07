@@ -514,38 +514,40 @@ export function Compose(): JSX.Element {
             surface="card"
             class="gap-4 p-card-pad-compact"
           >
-            <Select
-              label="Audience"
-              value={audience()}
-              options={AUDIENCE_OPTIONS}
-              onValueChange={updateAudience}
-            />
-            <div
-              ref={(el) => {
-                dateField = el
-              }}
-            >
-              <DatePicker
-                label="Publication date"
-                value={date()}
-                required
-                error={dateError() || undefined}
-                onValueChange={updateDate}
+            <div class="flex flex-col gap-field-gap">
+              <Select
+                label="Audience"
+                value={audience()}
+                options={AUDIENCE_OPTIONS}
+                onValueChange={updateAudience}
+              />
+              <div
+                ref={(el) => {
+                  dateField = el
+                }}
+              >
+                <DatePicker
+                  label="Publication date"
+                  value={date()}
+                  required
+                  error={dateError() || undefined}
+                  onValueChange={updateDate}
+                />
+              </div>
+              <MultiSelect
+                label="Post labels"
+                value={tags()}
+                onValueChange={updateTags}
+                options={TAG_OPTIONS}
+              />
+              <Textarea
+                label="Short description"
+                description="A short introduction shown in the feed."
+                rows={4}
+                value={excerpt()}
+                onInput={(event) => updateExcerpt(event.currentTarget.value)}
               />
             </div>
-            <MultiSelect
-              label="Post labels"
-              value={tags()}
-              onValueChange={updateTags}
-              options={TAG_OPTIONS}
-            />
-            <Textarea
-              label="Short description"
-              description="A short introduction shown in the feed."
-              rows={4}
-              value={excerpt()}
-              onInput={(event) => updateExcerpt(event.currentTarget.value)}
-            />
           </Section>
           <Alert
             theme="blue"

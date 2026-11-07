@@ -141,7 +141,7 @@ for (const width of [320, 768]) {
     })
     await expect(
       page.getByRole('heading', { name: 'Atoms', exact: true }),
-    ).toHaveCSS('font-size', '48px')
+    ).toHaveCSS('font-size', '40px')
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth - innerWidth,

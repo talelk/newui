@@ -34,12 +34,11 @@ describe('StatGrid', () => {
         ]}
       />
     ))
-    // The pill pairing is the contrast contract's ink-*-8 on surface-*-2.
+    // Toned text straight on the cell — the contrast contract's ink-*-8 on
+    // surface-elevation-1. A pill would be a second shape competing with the
+    // figure it qualifies.
     expect(screen.getByText('0.4 pts').className).toContain('text-ink-green-8')
-    expect(screen.getByText('0.4 pts').className).toContain(
-      'bg-surface-green-2',
-    )
-    expect(screen.getByText('0.4 pts').className).toContain('rounded-pill')
+    expect(screen.getByText('0.4 pts').className).not.toContain('rounded-pill')
     down.unmount()
 
     render(() => (
@@ -54,7 +53,6 @@ describe('StatGrid', () => {
       />
     ))
     expect(screen.getByText('2%').className).toContain('text-ink-red-8')
-    expect(screen.getByText('2%').className).toContain('bg-surface-red-2')
   })
 
   it('is a button when it navigates, a card when it does not', async () => {
@@ -78,19 +76,42 @@ describe('StatGrid', () => {
       '[data-slot="stat-grid"]',
     )?.className
     expect(className).toContain('min-[360px]:grid-cols-2')
-    expect(className).toContain('xl:grid-cols-3')
+    expect(className).toContain('lg:grid-cols-3')
   })
 
-  it('compact cards use the tight padding and omit the icon tile', () => {
+  it('reads as one ruled strip, not a row of cards', () => {
+    const { container } = render(() => (
+      <StatGrid
+        stats={[
+          { label: 'One', value: '1' },
+          { label: 'Two', value: '2' },
+        ]}
+      />
+    ))
+    const strip = container.querySelector('[data-slot="stat-grid"]')
+    // The sheet's outline shows through a 1px gap as the rules between cells.
+    expect(strip?.className).toContain('gap-px')
+    expect(strip?.className).toContain('bg-outline-gray-1')
+    expect(strip?.className).toContain('rounded-card')
+    const cells = container.querySelectorAll('[data-slot="stat"]')
+    expect(cells).toHaveLength(2)
+    for (const cell of cells) {
+      expect(cell.className).toContain('bg-surface-elevation-1')
+      expect(cell.className).not.toContain('rounded-card')
+    }
+  })
+
+  it('compact cells use the tight padding and omit the icon', () => {
     const { container } = render(() => (
       <StatGrid
         compact
         stats={[{ label: 'One', value: '1', icon: 'lucide-house' }]}
       />
     ))
-    const card = container.querySelector('[data-slot="stat"]')
-    expect(card?.className).toContain('p-2.5')
-    expect(card?.querySelector('.bg-surface-gray-2')).toBeNull()
+    const cell = container.querySelector('[data-slot="stat"]')
+    expect(cell?.className).toContain('px-3')
+    expect(cell?.className).toContain('py-2')
+    expect(cell?.querySelector('.lucide-house')).toBeNull()
   })
 
   it('leaves room for whole words in regular mobile labels', () => {
@@ -101,10 +122,10 @@ describe('StatGrid', () => {
         ]}
       />
     ))
-    const icon = container.querySelector('.bg-surface-gray-2')
+    const icon = container.querySelector('.lucide-house')
     const label = screen.getByText('Average order value')
-    expect(icon?.className).toContain('hidden')
-    expect(icon?.className).toContain('sm:grid')
+    expect(icon?.getAttribute('class')).toContain('hidden')
+    expect(icon?.getAttribute('class')).toContain('sm:block')
     expect(label.className).toContain('break-words')
     expect(label.className).not.toContain('[overflow-wrap:anywhere]')
   })

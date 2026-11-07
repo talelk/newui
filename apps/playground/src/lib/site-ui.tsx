@@ -15,12 +15,25 @@ import type { JSX } from 'solid-js'
  * current. Both `aria-current` spellings are covered — the masthead marks
  * a section `true`, the sidebars mark a page `page`.
  */
-export const NAV_ROW =
-  'flex h-8 items-center gap-2 rounded-control px-2 text-interface text-ink-gray-7 transition-colors duration-base ease-standard hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none aria-[current=page]:bg-surface-gray-2 aria-[current=page]:text-ink-gray-9 aria-[current=true]:bg-surface-gray-2 aria-[current=true]:text-ink-gray-9'
+const NAV_BASE =
+  'flex h-7 items-center gap-2 px-2 text-interface text-ink-gray-7 transition-colors duration-base ease-standard hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none'
+
+/**
+ * A navigation row on the Mist frame (masthead, sidebar, drawer). The current
+ * destination is a piece of sheet lifted out of the frame — the same white the
+ * content sits on, as in the application sidebar.
+ */
+export const NAV_ROW = `${NAV_BASE} rounded-control hover:bg-surface-gray-3 aria-[current=page]:bg-surface-elevation-1 aria-[current=page]:text-ink-gray-9 aria-[current=page]:shadow-sm aria-[current=true]:bg-surface-elevation-1 aria-[current=true]:text-ink-gray-9 aria-[current=true]:shadow-sm`
+
+/**
+ * A navigation row on a sheet (the "On this page" index). White on white
+ * cannot mark a place, so the current entry carries the Petrol leading rule.
+ */
+export const NAV_ROW_ON_SHEET = `${NAV_BASE} border-s-2 border-transparent hover:bg-surface-gray-1 aria-[current=true]:border-outline-blue-6 aria-[current=true]:text-ink-gray-9`
 
 /** The tray a segmented switch sits in (colour scheme, preview width). */
 export const SEGMENTED =
-  'm-0 flex w-fit shrink-0 items-center gap-0.5 rounded-control border-0 bg-surface-gray-2 p-0.5'
+  'm-0 flex w-fit shrink-0 items-center gap-0.5 rounded-control border-0 bg-surface-gray-3 p-0.5'
 
 /** One segment of a segmented switch: pressed reads as raised. */
 export const SEGMENTED_BTN =

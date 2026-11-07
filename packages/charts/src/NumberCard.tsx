@@ -25,12 +25,6 @@ const TONE_COLOR: Record<DeltaTone, string> = {
   neutral: 'var(--ink-gray-7)',
 }
 
-const TONE_SURFACE: Record<DeltaTone, string> = {
-  positive: 'var(--surface-green-2)',
-  negative: 'var(--surface-red-2)',
-  neutral: 'var(--surface-gray-2)',
-}
-
 export function NumberCard(props: NumberCardProps): JSX.Element {
   const tokens = useChartTokens()
 
@@ -76,6 +70,7 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
         'flex-direction': 'column',
         margin: '0',
         ...CARD_SURFACE,
+        ...(props.bare ? { border: 'none', 'border-radius': '0' } : undefined),
         color: 'var(--ink-gray-9)',
       }}
     >
@@ -93,9 +88,9 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
           style={{
             flex: '1 1 auto',
             'min-width': '0',
-            'font-size': 'var(--text-interface)',
-            'line-height': '1.25rem',
-            'font-weight': '500',
+            'font-size': 'var(--text-sm)',
+            'line-height': 'var(--text-sm--line-height)',
+            'font-weight': '420',
             color: 'var(--ink-gray-7)',
             'overflow-wrap': 'break-word',
           }}
@@ -110,9 +105,6 @@ export function NumberCard(props: NumberCardProps): JSX.Element {
               'align-items': 'center',
               gap: '4px',
               'flex-shrink': '0',
-              padding: '2px 6px',
-              'border-radius': 'var(--radius-pill)',
-              'background-color': TONE_SURFACE[tone()],
               color: TONE_COLOR[tone()],
               'font-size': 'var(--text-caption)',
               'line-height': '1rem',

@@ -157,9 +157,9 @@ function RadioGroupControl(props: RadioGroupProps): JSX.Element {
       // matching Checkbox. Checked hover/active combine the row's `data-state`
       // and hover in one group selector so they outrank the unchecked hover.
       'group-hover:border-outline-gray-5 group-active:border-outline-gray-6',
-      'data-[state=checked]:border-surface-gray-10',
-      'group-[[data-state=checked]:hover]:border-surface-gray-9',
-      'group-[[data-state=checked]:active]:border-surface-gray-8',
+      'data-[state=checked]:border-surface-blue-8',
+      'group-[[data-state=checked]:hover]:border-surface-blue-9',
+      'group-[[data-state=checked]:active]:border-surface-blue-9',
       // One focus rule (control-styles): discrete controls ring neutral,
       // invalid rings red — the row above already rings neutral.
       field?.hasError()

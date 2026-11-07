@@ -31,7 +31,7 @@ export const LADDER: LadderLevel[] = [
     "question": "What does it look like?",
     "unit": "token",
     "package": "@talelk/newui-tokens",
-    "count": 385,
+    "count": 386,
     "href": "/foundations",
     "blurb": "Colour, type, radius, elevation, focus and motion — the vocabulary every class is spelled in."
   },
