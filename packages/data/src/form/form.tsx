@@ -35,10 +35,11 @@ export interface AppFormOptions<T extends object> {
    */
   schema?: StandardSchemaV1<T, T>
   /**
-   * The sidecar that says how to render, keyed by field path. The engine reads
-   * `when` (for pruning and for dropping issues on hidden paths) and
-   * `dependsOn` (for revalidation); the rest is renderer vocabulary that the
-   * `ConfigForm` organism consumes from the same object.
+   * The field map: how each field renders, keyed by static path (`smtp.host`,
+   * never `items[1]` — a repeater's row fields go under its `fields`). The
+   * engine reads `when` (for pruning and for dropping issues on hidden paths)
+   * and `dependsOn` (for revalidation); the rest is renderer vocabulary that
+   * the `ConfigForm` organism consumes from the same object.
    */
   ui?: Record<string, FieldConfig<T>>
   /**
@@ -67,8 +68,28 @@ export function fieldError(field: {
   return [...new Set(messages)].join(' ')
 }
 
+/**
+ * Throws on a field-map key that names an array position (`items[1]`). Keys
+ * are static paths; positions only arise when a repeater expands its rows.
+ */
+function assertStaticPaths(
+  ui: Record<string, { fields?: Record<string, unknown> }>,
+): void {
+  for (const [key, config] of Object.entries(ui)) {
+    if (key.includes('['))
+      throw new Error(
+        `newui form: field-map key "${key}" must be a static path — declare row fields under a repeater's \`fields\` instead of indexing.`,
+      )
+    if (config.fields)
+      assertStaticPaths(
+        config.fields as Record<string, { fields?: Record<string, unknown> }>,
+      )
+  }
+}
+
 export function createAppForm<T extends object>(options: AppFormOptions<T>) {
   const ui = options.ui ?? {}
+  assertStaticPaths(ui)
   const prune = options.pruneHidden !== false
   const hasDeps = Object.values(ui).some((config) => config.dependsOn?.length)
 
@@ -92,13 +113,23 @@ export function createAppForm<T extends object>(options: AppFormOptions<T>) {
         if (!issues?.fields) return issues
         const hidden = hiddenPaths(values, ui)
         if (hidden.length === 0) return issues
-        return {
-          ...issues,
-          fields: Object.fromEntries(
-            Object.entries(issues.fields).filter(
+        // The adapter reports every issue twice — per field and form-wide —
+        // so both maps are filtered, or a hidden issue still blocks submit.
+        const visible = (map: Record<string, unknown>) =>
+          Object.fromEntries(
+            Object.entries(map).filter(
               ([path]) => !isUnderHidden(path, hidden),
             ),
-          ),
+          )
+        const fields = visible(issues.fields)
+        if (Object.keys(fields).length === 0) return undefined
+        return {
+          ...issues,
+          form:
+            issues.form && typeof issues.form === 'object'
+              ? visible(issues.form as Record<string, unknown>)
+              : issues.form,
+          fields,
         }
       }
     : undefined
@@ -133,8 +164,13 @@ export function createAppForm<T extends object>(options: AppFormOptions<T>) {
     form,
     /** True while the submit handler's promise is pending. */
     submitting: submitting as Accessor<boolean>,
-    /** The sidecar, resolved to a map. Pass it to `ConfigForm`'s `fields`. */
+    /** The field map, resolved. Pass it to `ConfigForm`'s `fields`. */
     ui,
+    /**
+     * The document the backend sees for these values: hidden fields pruned
+     * unless `pruneHidden` is off. Submit sends it; so does `createAutoSave`.
+     */
+    document: submitted,
   }
 }
 

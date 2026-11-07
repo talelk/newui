@@ -512,4 +512,8 @@ export const STORIES: Record<string, StoryEntry> = {
     id: 'organisms-widgetgrid--default',
     load: () => import('../stories/widget-grid.stories'),
   },
+  "Wizard": {
+    id: 'organisms-patterns-wizard--default',
+    load: () => import('../stories/wizard.stories'),
+  },
 }

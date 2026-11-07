@@ -195,7 +195,7 @@ TanStack Form stays the engine — validators, field state, reset. This surface
 adds the three things every page was writing by hand:
 
 - **`createAppForm({ defaultValues, onSubmit, schema?, ui?, pruneHidden? })`**
-  returns `{ form, submitting, ui }`. `submitting()` is true while the submit
+  returns `{ form, submitting, ui, document }`. `submitting()` is true while the submit
   handler's promise is pending, which is exactly what a submit button's
   `loading` reads. `onSubmit` receives `(value, api)`; `api.reset()` clears the
   form after a successful submit.
@@ -215,27 +215,49 @@ shape is `value` / `error={fieldError(field())}` / `handleChange`.
 
 ### The config-form engine
 
-The same `createAppForm` grows a declarative layer, driven by a `ui` sidecar
-(`FieldConfig`, keyed by field path) that says *how* each field behaves. The
-engine reads only `when` and `dependsOn`; the rest is renderer vocabulary the
-`ConfigForm` organism consumes from the same object.
+The same `createAppForm` grows a declarative layer, driven by the **field
+map** (`ui`: `FieldConfig` entries keyed by *static* field path) that says
+*how* each field behaves. The engine reads only `when` and `dependsOn`; the
+rest is renderer vocabulary the `ConfigForm` organism consumes from the same
+object. A key that names an array position (`items[1]`) throws: a repeater's
+row fields are declared once under its `fields` and apply to every row.
 
 - **`schema`** is a Standard Schema (Zod, Valibot, Ark), validated on change and
   on submit with issues mapped onto fields. It validates the *submitted*
   document: hidden fields are pruned before the check, and issues under hidden
   paths are dropped, so a field the user cannot see never blocks the submit.
-- **`ui`** is the sidecar. Each `FieldConfig` carries `when` (a predicate over
-  the form values) and `dependsOn` (paths that revalidate this field, compiled
-  onto a TanStack `onChange` listener with the `dynamic` cause). Visibility
-  itself needs no wiring — `when` reads the form's reactive values.
+- **`ui`** is the field map. Each `FieldConfig` carries `when(scope, values)`
+  and `dependsOn` (paths that revalidate this field, compiled onto a TanStack
+  `onChange` listener with the `dynamic` cause). `scope` is the form's values
+  for a top-level entry and **the row** for a repeater's row field; `values`
+  is always the whole form. Row fields are expanded per row (`items[1].url`)
+  for pruning and for dropping issues, so the prune rule holds inside
+  repeaters. Visibility itself needs no wiring — `when` reads the form's
+  reactive values.
 - **`pruneHidden`** (default `true`) drops fields hidden by `when` from the
-  document handed to `onSubmit`, so a hidden setting is not required of it.
-- **`createAutoSave(form, { save, debounce = 800, filter? })`** is
-  isDirty-driven, debounced persistence: it waits for the form to settle, runs
-  `validateAllFields('submit')` and only calls `save` when the document is
-  valid, drafting to `createConfigStore` under `newui.form-draft` per change and
-  clearing the draft after a successful write. It returns `{ saving, saved,
-  flush, dispose }` for the `ConfigForm` autosave chrome.
+  document handed to `onSubmit`, so a hidden setting is not required of it. A
+  hidden row field leaves its row; the row stays.
+- **`document(values)`** is that submitted document for any values — what
+  submit sends, and what autosave sends.
+- **`createAutoSave(source, { save, debounce = 800, filter?, id?, storage? })`**
+  runs two stores (see *autosave* and *draft* in `CONTEXT.md`):
+  - the **autosave** — debounced; when the timer fires it runs
+    `validateAllFields('submit')` and calls `save` only when the document is
+    valid. Pass the `createAppForm` result as `source` and `save` receives
+    `document(values)`, the same pruned document submit sends; a bare TanStack
+    form has no field map and saves its values as they are. An autosave is not
+    a submit: `isSubmitting` and `submissionAttempts` do not move.
+  - the **draft** — with `id`, every change writes the *unpruned* values to
+    `createConfigStore` under `newui.form-draft`, so a closed tab loses nothing
+    and re-showing a hidden field gives back what was typed. A successful
+    autosave or a successful submit drops it.
+
+  It returns `{ saving, saved, dirty, flush, hasDraft, restoreDraft,
+  discardDraft }`; every accessor, `hasDraft` included, is reactive. Cleanup
+  runs with the owner (`onCleanup`), so there is no `dispose`. `restoreDraft()`
+  returns the stored values as they are: a draft may predate the current
+  schema or field map, so treat it as untrusted input — `form.reset(draft)`
+  and let validation report what no longer fits.
 
 The rendered face of this layer is the `ConfigForm` organism and the `Repeater`
 molecule — see `spec/config-form.md` and `spec/repeater.md`.

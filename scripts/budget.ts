@@ -135,7 +135,11 @@ const ROUTES: RouteBudget[] = [
     budget: 100,
     unless: 'the recipe index and source examples directory',
   },
-  { route: '/kit/recipes/forms', budget: 120 },
+  {
+    route: '/kit/recipes/forms',
+    budget: 185,
+    unless: 'the multi-step recipe is a Wizard over the form engine, so it pays for TanStack Form',
+  },
   { route: '/kit/recipes/overlays', budget: 130 },
   {
     route: '/kit/recipes/carousel',

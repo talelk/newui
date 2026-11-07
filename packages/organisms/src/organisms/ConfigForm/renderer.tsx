@@ -59,13 +59,20 @@ export type ConfigFormControlComponent = (
 ) => JSX.Element
 
 /**
- * The renderer's view of a field. Structurally identical to `FieldConfig` in
- * `@talelk/newui-data/form` — the same object is passed to `createAppForm`'s
- * `ui` (where only `when`/`dependsOn` are read) and here, where everything
- * else decides what renders. The mirror is forced by the layering rule that
- * visual packages never import the data layer.
+ * The renderer's view of a field-map entry. Structurally identical to
+ * `FieldConfig` in `@talelk/newui-data/form` — the same object is passed to
+ * `createAppForm`'s `ui` (where only `when`/`dependsOn` are read) and here,
+ * where everything else decides what renders. The mirror is forced by the
+ * layering rule that visual packages never import the data layer; the
+ * playground's `config-form-parity.test.ts` pins the two in both directions.
+ *
+ * `TScope` is what `when` sees first: the form's values for a top-level
+ * entry, the row for a repeater's row field.
  */
-export interface ConfigFormField<TValues = Record<string, unknown>> {
+export interface ConfigFormField<
+  TValues = Record<string, unknown>,
+  TScope = TValues,
+> {
   /** Control vocabulary: the `FormControl` types, plus `repeater`. */
   type?: string
   label?: JSX.Element
@@ -81,10 +88,14 @@ export interface ConfigFormField<TValues = Record<string, unknown>> {
   component?: ConfigFormControlComponent
   /** Read by the engine only; the renderer ignores it. */
   dependsOn?: readonly string[]
-  /** Returning `false` hides the field. */
-  when?: (values: TValues) => boolean
-  /** For `type: 'repeater'`: the row's fields. */
-  fields?: Record<string, ConfigFormField<any>>
+  /**
+   * Returning `false` hides the field. `scope` is the form's values for a
+   * top-level entry and the row for a repeater's row field; `values` is
+   * always the whole form.
+   */
+  when?: (scope: TScope, values: TValues) => boolean
+  /** For `type: 'repeater'`: the row's fields; their `when` sees the row first. */
+  fields?: Record<string, ConfigFormField<TValues, any>>
   /** For `type: 'repeater'`: the ceiling on rows. */
   maxItems?: number
 }
@@ -93,9 +104,11 @@ export interface ConfigFormField<TValues = Record<string, unknown>> {
 export interface ConfigFieldProps<TValues extends object> {
   form: ConfigFormApi
   name: string
-  field: ConfigFormField<TValues>
+  field: ConfigFormField<TValues, any>
   /** The form's values, reactive — `when` is evaluated against these. */
   values: Accessor<TValues>
+  /** The row, reactive, for a repeater's row field; `when` sees it first. */
+  scope?: Accessor<unknown>
 }
 
 const TEXT_TYPES = new Set([
@@ -379,7 +392,12 @@ export function createFormRenderer(
         ? components[props.field.type ?? '']
         : undefined
     /* eslint-enable solid/reactivity */
-    const visible = () => !props.field.when || props.field.when(props.values())
+    const visible = () =>
+      !props.field.when ||
+      props.field.when(
+        props.scope ? props.scope() : props.values(),
+        props.values(),
+      )
     return (
       <Show when={visible()}>
         <props.form.Field name={props.name}>
@@ -407,6 +425,7 @@ export function createFormRenderer(
                   <FieldList
                     form={props.form}
                     prefix={row.name}
+                    scope={row.value}
                     fields={props.field.fields ?? {}}
                     values={props.values}
                     components={components}
@@ -427,7 +446,9 @@ export function createFormRenderer(
 export function FieldList<TValues extends object>(props: {
   form: ConfigFormApi
   prefix: Accessor<string>
-  fields: Record<string, ConfigFormField<TValues>>
+  /** The row, reactive; row fields' `when` sees it first. */
+  scope: Accessor<unknown>
+  fields: Record<string, ConfigFormField<TValues, any>>
   values: Accessor<TValues>
   components?: Record<string, ConfigFormControlComponent>
 }): JSX.Element {
@@ -442,8 +463,9 @@ export function FieldList<TValues extends object>(props: {
           <ConfigField
             form={props.form}
             name={`${props.prefix()}.${key}`}
-            field={field as ConfigFormField<TValues>}
+            field={field}
             values={props.values}
+            scope={props.scope}
           />
         </div>
       )}

@@ -28,7 +28,7 @@ export interface ConfigFormProps<
 
 /**
  * The config-form organism: a schema-driven `<form>` that renders every field
- * from its `ui` sidecar entry — the `FormControl` vocabulary for plain fields,
+ * from its field-map entry — the `FormControl` vocabulary for plain fields,
  * `Repeater` for arrays, and the `when` predicates for visibility, all bound
  * to the live form state. The engine's half (pruning, schema validation,
  * `dependsOn`) lives in `@talelk/newui-data/form`; this is the rendered face.

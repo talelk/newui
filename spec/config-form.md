@@ -1,7 +1,7 @@
 # ConfigForm
 
 The config-form organism: a schema-driven `<form>` that renders every field
-from its `ui` sidecar entry — the `FormControl` vocabulary for plain fields,
+from its field-map entry — the `FormControl` vocabulary for plain fields,
 `Repeater` for arrays, and the `when` predicates for visibility — all bound to
 the live form state.
 
@@ -25,7 +25,9 @@ same object is passed to `createAppForm`'s `ui` and to `ConfigForm`'s `fields`.
 
 ## The field map
 
-`fields` is keyed by field path. Each entry decides what renders:
+`fields` is the field map, keyed by static field path (never an array
+position — a repeater's row fields go under its `fields`). Each entry decides
+what renders:
 
 | key | meaning |
 | --- | --- |
@@ -35,13 +37,18 @@ same object is passed to `createAppForm`'s `ui` and to `ConfigForm`'s `fields`.
 | `props` | extra props passed through to the resolved control |
 | `component` | rendered instead of the `type` mapping — where an app's own pickers join the vocabulary without forking the renderer |
 | `dependsOn` | read by the engine only (revalidation); the renderer ignores it |
-| `when` | `(values) => boolean`; returning `false` hides the field |
+| `when` | `(scope, values) => boolean`; returning `false` hides the field. `scope` is the form's values for a top-level entry and the row for a repeater's row field |
 | `fields` | for `type: 'repeater'`: the row's fields |
 | `maxItems` | for `type: 'repeater'`: the ceiling on rows |
 
 Visibility is conditional JSX over the form's reactive values: `when` is
-evaluated against `form.useSelector((state) => state.values)`, so flipping a
-sibling field reveals or hides the field with no wiring.
+evaluated against `form.useSelector((state) => state.values)` — and, for a row
+field, against the row's own reactive value first — so flipping a sibling
+field reveals or hides the field with no wiring.
+
+`ConfigFormField` mirrors `FieldConfig` because visual packages never import
+the data layer; `apps/playground/src/lib/config-form-parity.test.ts` pins the
+two as structurally identical, so `pnpm typecheck` fails on drift.
 
 ```tsx
 const ui = {

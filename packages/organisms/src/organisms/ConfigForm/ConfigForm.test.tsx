@@ -84,4 +84,31 @@ describe('ConfigForm', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Add' }))
     expect(screen.getAllByLabelText('Title')).toHaveLength(2)
   })
+
+  it("evaluates a row field's when against its own row", () => {
+    type Row = { kind: string; url: string }
+    type Values = { items: Row[] }
+    const form = makeForm<Values>({
+      items: [
+        { kind: 'file', url: '' },
+        { kind: 'link', url: 'https://a' },
+      ],
+    })
+    const fields: Record<string, ConfigFormField<Values>> = {
+      items: {
+        type: 'repeater',
+        fields: {
+          url: {
+            type: 'text',
+            label: 'URL',
+            when: (row: Row) => row.kind === 'link',
+          },
+        },
+      },
+    }
+    render(() => <ConfigForm form={form} fields={fields} />)
+    const urls = screen.getAllByLabelText('URL')
+    expect(urls).toHaveLength(1)
+    expect(urls[0]).toHaveValue('https://a')
+  })
 })

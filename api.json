@@ -9582,7 +9582,7 @@
       },
       {
         "name": "field",
-        "type": "ConfigFormField<TValues>",
+        "type": "ConfigFormField<TValues, any>",
         "optional": false
       },
       {
@@ -9590,6 +9590,12 @@
         "type": "Accessor<TValues>",
         "optional": false,
         "description": "The form's values, reactive — `when` is evaluated against these."
+      },
+      {
+        "name": "scope",
+        "type": "Accessor<unknown>",
+        "optional": true,
+        "description": "The row, reactive, for a repeater's row field; `when` sees it first."
       }
     ]
   },
@@ -11159,6 +11165,82 @@
         "name": "children",
         "type": "JSX.Element",
         "optional": false
+      }
+    ]
+  },
+  "packages/organisms/src/organisms/Wizard/Wizard.tsx": {
+    "WizardProps": [
+      {
+        "name": "label",
+        "type": "string",
+        "optional": false,
+        "description": "Accessible name for the step navigation (the stepper's landmark)."
+      },
+      {
+        "name": "steps",
+        "type": "WizardStep<TValues>[]",
+        "optional": false,
+        "description": "The steps, in order."
+      },
+      {
+        "name": "form",
+        "type": "WizardFormApi",
+        "optional": false,
+        "description": "The form the field steps bind to — pass `appForm.form`."
+      },
+      {
+        "name": "onSubmit",
+        "type": "(\n    values: TValues,\n    api: { reset: () => void },\n  ) => void | Promise<void>",
+        "optional": true,
+        "description": "The save path: called once, on the last step, after that step's gate.\nOmit it to hand the document to the form's own `handleSubmit`."
+      },
+      {
+        "name": "currentStep",
+        "type": "string",
+        "optional": true,
+        "description": "The current step's `id` (controlled)."
+      },
+      {
+        "name": "defaultStep",
+        "type": "string",
+        "optional": true,
+        "description": "The step that opens first, when nothing is controlled or remembered."
+      },
+      {
+        "name": "onCurrentStepChange",
+        "type": "(id: string) => void",
+        "optional": true,
+        "description": "Reports every step change the user makes."
+      },
+      {
+        "name": "review",
+        "type": "boolean",
+        "optional": true,
+        "description": "Append the generated read-only summary as the last step."
+      },
+      {
+        "name": "resume",
+        "type": "WizardResume",
+        "optional": true,
+        "description": "Remember the step and the values, and come back to them."
+      },
+      {
+        "name": "components",
+        "type": "Record<string, ConfigFormControlComponent>",
+        "optional": true,
+        "description": "Custom controls for a step's `type`s, joined onto the vocabulary."
+      },
+      {
+        "name": "submitLabel",
+        "type": "string",
+        "optional": true,
+        "description": "The label of the final button.",
+        "default": "\"Submit\""
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "optional": true
       }
     ]
   },
