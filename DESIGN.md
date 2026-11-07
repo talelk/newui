@@ -470,6 +470,12 @@ alone.
   the same surface and radius, anchored to the bottom edge.
 - **Density:** dialog titles are Heading (20/26); body copy is 13/18; the footer
   is a right-aligned button row with an 8px control gap.
+- **Record sheets:** a record opens as a side sheet (`Dialog.Content
+  position="end"`), not a centred modal, so the list stays in view. Its
+  attributes sit in a two-column property grid (long text spans both), related
+  activity sits below a 1px rule, and the actions are pinned to the bottom edge.
+- **Settings rows:** title and description left, controls in a fixed right
+  track that text fields fill; rows ruled with hairlines.
 
 ### Navigation
 

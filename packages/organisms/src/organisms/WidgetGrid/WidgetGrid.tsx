@@ -556,6 +556,24 @@ export function WidgetGridWidget(props: WidgetGridWidgetProps): JSX.Element {
   onCleanup(() => api.unregister(props.id))
 
   const name = () => api.nameOf(props.id)
+  // A body whose content overflows is a scroll container, and a scroll
+  // container must be reachable by keyboard (axe: scrollable-region-
+  // focusable). Only an overflowing body becomes a tab stop, so a grid of
+  // short widgets does not grow a stop per widget.
+  const [scrollable, setScrollable] = createSignal(false)
+  const watchOverflow = (el: HTMLDivElement) => {
+    const measure = () =>
+      setScrollable(
+        el.scrollHeight > el.clientHeight + 1 ||
+          el.scrollWidth > el.clientWidth + 1,
+      )
+    queueMicrotask(measure)
+    if (typeof ResizeObserver === 'undefined') return
+    const observer = new ResizeObserver(measure)
+    observer.observe(el)
+    if (el.firstElementChild) observer.observe(el.firstElementChild)
+    onCleanup(() => observer.disconnect())
+  }
   const placement = () => api.placement(props.id)
 
   return (
@@ -602,8 +620,12 @@ export function WidgetGridWidget(props: WidgetGridWidgetProps): JSX.Element {
           </div>
         </Show>
         <div
+          ref={watchOverflow}
           data-slot="widget-grid-body"
-          class="min-h-0 flex-1 overflow-auto p-3"
+          {...(scrollable()
+            ? { tabindex: 0, role: 'region', 'aria-label': `${name()} content` }
+            : {})}
+          class="min-h-0 flex-1 overflow-auto p-3 focus-visible:focus-ring focus-visible:-outline-offset-2"
         >
           {props.children}
         </div>

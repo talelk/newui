@@ -492,9 +492,16 @@ const Row: ParentComponent<SettingsRowProps> = (props) => {
   return (
     <div
       data-slot="settings-row"
-      class={cn('flex flex-wrap items-center gap-3 py-3 sm:gap-6', local.class)}
+      // Two columns with a fixed control track: a text field fills it, a
+      // switch sits at its end, and every control starts on the same line —
+      // no input stranded at the far edge of a wide panel. Rows are ruled so
+      // the eye carries from a setting to its control.
+      class={cn(
+        'grid gap-2 border-b border-outline-gray-1 py-3 last:border-b-0 sm:grid-cols-[minmax(0,1fr)_minmax(12rem,18rem)] sm:items-center sm:gap-6',
+        local.class,
+      )}
     >
-      <div class="min-w-0 flex-1">
+      <div class="min-w-0">
         <Dynamic
           component={resolvedFor() ? 'label' : 'div'}
           {...(resolvedFor() ? { for: resolvedFor() } : {})}
@@ -509,7 +516,7 @@ const Row: ParentComponent<SettingsRowProps> = (props) => {
         <Show when={local.description}>
           <div
             data-slot="settings-row-description"
-            class="mt-1 text-base leading-5 text-ink-gray-6"
+            class="mt-0.5 text-sm text-ink-gray-6"
           >
             {local.description}
           </div>
@@ -520,7 +527,7 @@ const Row: ParentComponent<SettingsRowProps> = (props) => {
           control = el
         }}
         data-slot="settings-row-control"
-        class="flex min-w-0 max-w-full items-start justify-end"
+        class="flex min-w-0 max-w-full items-start sm:justify-end [&>[data-slot=field]]:w-full"
       >
         {local.children}
       </div>

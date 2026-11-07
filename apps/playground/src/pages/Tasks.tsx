@@ -679,17 +679,22 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
           if (!value) closeDetail()
         }}
       >
-        <Dialog.Content class="flex max-h-[calc(100dvh-2rem)] flex-col p-0 max-sm:fixed max-sm:inset-0 max-sm:max-h-none max-sm:w-full max-sm:max-w-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none">
+        {/* A record opens as a side sheet: the list stays in view, the body
+            scrolls, the actions stay pinned. */}
+        <Dialog.Content position="end" size="xl" bare>
           <Show when={current()}>
             {(row) => (
               <>
-                <div class="flex shrink-0 items-center justify-between gap-2 border-b border-outline-gray-1 p-card-pad-compact">
-                  <Dialog.Close class="inline-flex min-h-10 items-center rounded-control px-2 text-interface font-medium text-ink-gray-7 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring">
-                    Back to tasks
-                  </Dialog.Close>
-                  <span class="text-caption tabular-nums text-ink-gray-7">
-                    {row().id}
+                <div class="flex h-12 shrink-0 items-center justify-between gap-2 border-b border-outline-gray-1 ps-card-pad pe-2">
+                  <span class="text-caption tabular-nums text-ink-gray-6">
+                    Tasks / {row().id}
                   </span>
+                  <Dialog.Close
+                    aria-label="Back to tasks"
+                    class="grid size-8 place-items-center rounded-control text-ink-gray-6 transition-colors hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring"
+                  >
+                    <span aria-hidden="true" class="lucide-x size-4" />
+                  </Dialog.Close>
                 </div>
                 <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain p-card-pad">
                   <Dialog.Header>
@@ -700,20 +705,24 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
                   </Dialog.Header>
                   <form
                     id="task-detail-form"
-                    class="mt-4 flex flex-col gap-3"
+                    class="mt-4 grid gap-x-4 gap-y-field-gap sm:grid-cols-2"
                     noValidate
                     onSubmit={saveDetails}
                   >
-                    <TextInput
-                      label="Task title"
-                      value={detailTitle()}
-                      error={detailTitleError()}
-                      required
-                      onInput={(event) => {
-                        setDetailTitle(event.currentTarget.value)
-                        if (detailTitleError()) setDetailTitleError('')
-                      }}
-                    />
+                    {/* A property grid: the title spans, the attributes pair
+                        up, so the record reads in three rows, not six. */}
+                    <div class="sm:col-span-2">
+                      <TextInput
+                        label="Task title"
+                        value={detailTitle()}
+                        error={detailTitleError()}
+                        required
+                        onInput={(event) => {
+                          setDetailTitle(event.currentTarget.value)
+                          if (detailTitleError()) setDetailTitleError('')
+                        }}
+                      />
+                    </div>
                     <DatePicker
                       label="Due date"
                       value={detailDue()}
@@ -773,9 +782,9 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
                   </form>
                   <section
                     aria-label="Task comments"
-                    class="mt-4 flex flex-col gap-3"
+                    class="mt-6 flex flex-col gap-3 border-t border-outline-gray-1 pt-4"
                   >
-                    <h3 class="text-base-medium">Comments</h3>
+                    <h3 class="text-section">Comments</h3>
                     <For each={row().comments}>
                       {(text) => (
                         <p class="rounded-control bg-surface-gray-1 p-3">
@@ -789,6 +798,8 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
                       onInput={(event) => setComment(event.currentTarget.value)}
                     />
                     <Button
+                      variant="outline"
+                      class="self-end"
                       disabled={!comment().trim()}
                       onClick={() => {
                         tasks.update.mutate({
@@ -804,7 +815,7 @@ function TasksWorkspace(props: { repository: TaskRepository }): JSX.Element {
                     </Button>
                   </section>
                 </div>
-                <footer class="flex shrink-0 flex-wrap items-center justify-end gap-2 border-t border-outline-gray-1 p-card-pad">
+                <footer class="flex shrink-0 flex-wrap items-center justify-end gap-2 border-t border-outline-gray-1 px-card-pad py-3">
                   <Button variant="outline" onClick={closeDetail}>
                     Cancel
                   </Button>

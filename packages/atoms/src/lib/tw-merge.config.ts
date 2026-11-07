@@ -63,7 +63,14 @@ const DURATIONS = new Set([
 const SHADOW_ROLES = new Set('card raised popover dialog toast drag'.split(' '))
 
 /** The `--animate-*` token names (`animate-overlay-in`, …). */
-const ANIMATES = new Set(['overlay-in', 'drawer-in', 'shimmer', 'progress'])
+const ANIMATES = new Set([
+  'overlay-in',
+  'drawer-in',
+  'sheet-in',
+  'sheet-in-rtl',
+  'shimmer',
+  'progress',
+])
 
 /** Named easings beyond the stock set (`ease-standard`, …). */
 const EASINGS = new Set(['standard'])
@@ -502,21 +509,24 @@ export const twMergeConfig = {
     'border-r-color': [{ 'border-r': [() => true] }],
     'border-b-color': [{ 'border-b': [() => true] }],
     'border-l-color': [{ 'border-l': [() => true] }],
+    // Each side and corner takes its bare form too (`rounded-t` is the default
+    // radius on that side), exactly as `rounded` does — without it,
+    // `cn('rounded-t', 'rounded-t-4')` kept both.
     rounded: ['rounded', { rounded: [isRadius] }],
-    'rounded-s': [{ 'rounded-s': [isRadius] }],
-    'rounded-e': [{ 'rounded-e': [isRadius] }],
-    'rounded-t': [{ 'rounded-t': [isRadius] }],
-    'rounded-r': [{ 'rounded-r': [isRadius] }],
-    'rounded-b': [{ 'rounded-b': [isRadius] }],
-    'rounded-l': [{ 'rounded-l': [isRadius] }],
-    'rounded-ss': [{ 'rounded-ss': [isRadius] }],
-    'rounded-se': [{ 'rounded-se': [isRadius] }],
-    'rounded-ee': [{ 'rounded-ee': [isRadius] }],
-    'rounded-es': [{ 'rounded-es': [isRadius] }],
-    'rounded-tl': [{ 'rounded-tl': [isRadius] }],
-    'rounded-tr': [{ 'rounded-tr': [isRadius] }],
-    'rounded-br': [{ 'rounded-br': [isRadius] }],
-    'rounded-bl': [{ 'rounded-bl': [isRadius] }],
+    'rounded-s': ['rounded-s', { 'rounded-s': [isRadius] }],
+    'rounded-e': ['rounded-e', { 'rounded-e': [isRadius] }],
+    'rounded-t': ['rounded-t', { 'rounded-t': [isRadius] }],
+    'rounded-r': ['rounded-r', { 'rounded-r': [isRadius] }],
+    'rounded-b': ['rounded-b', { 'rounded-b': [isRadius] }],
+    'rounded-l': ['rounded-l', { 'rounded-l': [isRadius] }],
+    'rounded-ss': ['rounded-ss', { 'rounded-ss': [isRadius] }],
+    'rounded-se': ['rounded-se', { 'rounded-se': [isRadius] }],
+    'rounded-ee': ['rounded-ee', { 'rounded-ee': [isRadius] }],
+    'rounded-es': ['rounded-es', { 'rounded-es': [isRadius] }],
+    'rounded-tl': ['rounded-tl', { 'rounded-tl': [isRadius] }],
+    'rounded-tr': ['rounded-tr', { 'rounded-tr': [isRadius] }],
+    'rounded-br': ['rounded-br', { 'rounded-br': [isRadius] }],
+    'rounded-bl': ['rounded-bl', { 'rounded-bl': [isRadius] }],
     'divide-x': ['divide-x', { 'divide-x': [isBorderWidth] }],
     'divide-y': ['divide-y', { 'divide-y': [isBorderWidth] }],
     'divide-style': [

@@ -64,6 +64,36 @@ describe('Dialog', () => {
     expect(positioner.className).toContain('pt-[20vh]')
   })
 
+  it('opens as a full-height side sheet at position end', () => {
+    render(() => (
+      <Dialog.Root defaultOpen>
+        <Dialog.Content position="end" size="xl">
+          <Dialog.Title>Record</Dialog.Title>
+          <Dialog.Footer>
+            <button type="button">Save</button>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog.Root>
+    ))
+    const positioner = document.querySelector(
+      '[data-slot="dialog-positioner"]',
+    ) as HTMLElement
+    expect(positioner.className).toContain('justify-end')
+    const content = document.querySelector(
+      '[data-slot="dialog-content"]',
+    ) as HTMLElement
+    expect(content.getAttribute('data-position')).toBe('end')
+    expect(content.className).toContain('h-dvh')
+    expect(content.className).toContain('animate-sheet-in')
+    // The footer pins itself to the sheet's bottom edge.
+    const footer = document.querySelector(
+      '[data-slot="dialog-footer"]',
+    ) as HTMLElement
+    expect(footer.className).toContain(
+      'group-data-[position=end]/dialog:sticky',
+    )
+  })
+
   it('drops the default padding when bare', () => {
     render(() => (
       <Dialog.Root defaultOpen>

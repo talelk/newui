@@ -1,5 +1,6 @@
 import { render, screen, waitFor, within } from '@solidjs/testing-library'
 import userEvent from '@testing-library/user-event'
+import { createSignal } from 'solid-js'
 import { describe, expect, it, vi } from 'vitest'
 import { DataTable, type DataTableColumn } from './DataTable'
 
@@ -157,5 +158,50 @@ describe('DataTable', () => {
   it('can be a read-only table with no selection column', () => {
     table({ selectable: false })
     expect(screen.queryByRole('checkbox', { name: /Select/ })).toBeNull()
+  })
+})
+
+describe('DataTable data updates', () => {
+  it('re-renders its body when the rows change (a resolved record leaves the view)', async () => {
+    const [rows, setRows] = createSignal<Row[]>(ROWS)
+    const { container } = render(() => (
+      <DataTable title="Live" columns={COLUMNS} rows={rows()} />
+    ))
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(3)
+    setRows(ROWS.filter((row) => row.id !== '2'))
+    await waitFor(() =>
+      expect(container.querySelectorAll('tbody tr')).toHaveLength(2),
+    )
+    expect(container.querySelector('tbody')?.textContent).not.toContain('Beta')
+  })
+  it('swaps the last record for the empty state when every row is gone', async () => {
+    const [rows, setRows] = createSignal<Row[]>([ROWS[0] as Row])
+    render(() => (
+      <DataTable
+        title="Live"
+        columns={COLUMNS}
+        rows={rows()}
+        emptyTitle="Nothing left"
+      />
+    ))
+    expect(screen.getByText('Alpha')).toBeTruthy()
+    setRows([])
+    await waitFor(() => expect(screen.queryByText('Alpha')).toBeNull())
+    expect(screen.getAllByText('Nothing left').length).toBeGreaterThan(0)
+  })
+
+  it('shows the empty state in the card column too, where phones read it', async () => {
+    const { container } = render(() => (
+      <DataTable
+        title="Cards"
+        columns={MOBILE_COLUMNS}
+        rows={[]}
+        emptyTitle="No cards here"
+      />
+    ))
+    const cardsEmpty = container.querySelector(
+      '[data-slot="data-table-cards-empty"]',
+    )
+    expect(cardsEmpty?.textContent).toContain('No cards here')
   })
 })
