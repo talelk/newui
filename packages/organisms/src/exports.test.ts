@@ -4,6 +4,7 @@ import * as organisms from './index'
 const PUBLIC = [
   'AppSidebar',
   'AuthCard',
+  'ColumnMenu',
   'CommandPalette',
   'ConfigForm',
   'DataState',

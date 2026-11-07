@@ -11,7 +11,16 @@ import { defineConfig } from 'vitest/config'
  * server build.
  */
 export default defineConfig({
-  plugins: [solid()],
+  plugins: [
+    solid({
+      // The HMR wrapper `@solid-refresh` runs a component's body inside a
+      // `createMemo`, so any reactive read in that body re-runs the whole
+      // component — a mounted table tears down and re-mounts mid-test, and an
+      // open header popover goes with it. Tests have no module graph to hot-
+      // swap, so the wrapper buys nothing here and costs a class of flakes.
+      hot: false,
+    }),
+  ],
   resolve: {
     conditions: ['development', 'browser'],
   },

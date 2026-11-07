@@ -1,8 +1,8 @@
 import { createServerTableState } from '@talelk/newui-data/query'
-import { DataTable } from '@talelk/newui-organisms'
+import { DataTable, type DataTableProps } from '@talelk/newui-organisms'
 import { createMemo, createSignal } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs-vite'
-import { seedTasks } from '../examples/tasks-data'
+import { seedTasks, type TaskRecord } from '../examples/tasks-data'
 
 /**
  * The demo the stories render, and the site's inline embed
@@ -159,6 +159,58 @@ export const Grouping: Story = {
             {row.id} — {row.title} · {row.status}
           </p>
         )}
+      />
+    )
+  },
+}
+
+/**
+ * Column operations: drag or keyboard-resize the header edges, drag headers
+ * (or use the column menu) to reorder, pin from the menu, and filter per
+ * column with a control that matches the filter — the Status facet comes from
+ * the data, the rest are typed.
+ */
+export const ColumnOps: Story = {
+  render: () => {
+    const [order, setOrder] = createSignal<string[] | undefined>()
+    const [filters, setFilters] = createSignal<
+      NonNullable<DataTableProps<TaskRecord>['columnFilters']>
+    >([])
+    // The seed is static here, so the facet counts are computed once rather
+    // than tracked: a real app gets them from the backend, not from the page.
+    const seed = seedTasks(120)
+    const facets = {
+      status: ['Backlog', 'Todo', 'In Progress', 'Done', 'Canceled'].map(
+        (value) => ({
+          value,
+          count: seed.filter((row) => row.status === value).length,
+        }),
+      ),
+    }
+    return (
+      <DataTable
+        title="Tasks"
+        rows={seed}
+        columns={[
+          { accessorKey: 'id', header: 'Task', size: 140 },
+          { accessorKey: 'title', header: 'Title' },
+          {
+            accessorKey: 'status',
+            header: 'Status',
+            filterable: true,
+            size: 130,
+          },
+          { accessorKey: 'priority', header: 'Priority', filterable: true },
+          { accessorKey: 'owner', header: 'Owner', filterable: true },
+          { accessorKey: 'project', header: 'Project', filterable: true },
+        ]}
+        columnOps={{ resizable: true, reorderable: true }}
+        facets={facets}
+        columnOrder={order()}
+        onColumnOrderChange={setOrder}
+        columnFilters={filters()}
+        onColumnFiltersChange={setFilters}
+        pinnedStart="id"
       />
     )
   },

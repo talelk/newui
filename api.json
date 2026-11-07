@@ -9666,6 +9666,102 @@
       }
     ]
   },
+  "packages/organisms/src/organisms/DataTable/ColumnMenu.tsx": {
+    "ColumnMenuRootProps": [
+      {
+        "name": "columnId",
+        "type": "string",
+        "optional": false,
+        "description": "The column whose operations this menu exposes."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "optional": false,
+        "description": "The column's visible header text — the trigger's accessible name."
+      },
+      {
+        "name": "pinnedStart",
+        "type": "string[]",
+        "optional": true,
+        "description": "The edges this column is frozen to, so the menu offers `Unpin`."
+      },
+      {
+        "name": "pinnedEnd",
+        "type": "string[]",
+        "optional": true
+      },
+      {
+        "name": "resizable",
+        "type": "boolean",
+        "optional": true,
+        "description": "A resize handle and its keyboard twin exist for this column."
+      },
+      {
+        "name": "reorderable",
+        "type": "boolean",
+        "optional": true,
+        "description": "Move left / Move right operate on this column."
+      },
+      {
+        "name": "canSort",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "canHide",
+        "type": "boolean",
+        "optional": true
+      },
+      {
+        "name": "canMoveLeft",
+        "type": "boolean",
+        "optional": true,
+        "description": "`Move left` is available; false at the first column."
+      },
+      {
+        "name": "canMoveRight",
+        "type": "boolean",
+        "optional": true,
+        "description": "`Move right` is available; false at the last column."
+      },
+      {
+        "name": "onSort",
+        "type": "(columnId: string, desc: boolean) => void",
+        "optional": true,
+        "description": "Sort this column; `desc` is the requested direction."
+      },
+      {
+        "name": "onPin",
+        "type": "(columnId: string, edge: ColumnMenuPinEdge) => void",
+        "optional": true,
+        "description": "Freeze the column to an edge, or unfreeze it with `undefined`."
+      },
+      {
+        "name": "onMove",
+        "type": "(columnId: string, direction: -1 | 1) => void",
+        "optional": true,
+        "description": "Move the column one slot; `-1` toward the start, `1` toward the end."
+      },
+      {
+        "name": "onResetSize",
+        "type": "(columnId: string) => void",
+        "optional": true,
+        "description": "Return the column to its declared size."
+      },
+      {
+        "name": "onHide",
+        "type": "(columnId: string) => void",
+        "optional": true,
+        "description": "Hide the column."
+      },
+      {
+        "name": "children",
+        "type": "JSX.Element",
+        "optional": false
+      }
+    ]
+  },
   "packages/organisms/src/organisms/DataTable/DataTable.tsx": {
     "DataTableProps": [
       {
@@ -9781,29 +9877,63 @@
       },
       {
         "name": "pinnedStart",
-        "type": "string",
+        "type": "DataTablePinValue",
         "optional": true,
-        "description": "Freeze one column to the start edge of the horizontal scroll — the\nidentifier that must stay visible while the rest move. Controlled:\nchanges go through `onPinnedColumnsChange`."
+        "description": "Freeze columns to the start edge of the horizontal scroll — the\nidentifiers that must stay visible while the rest move. One id or many;\ncontrolled: changes go through `onPinnedColumnsChange`."
       },
       {
         "name": "pinnedEnd",
-        "type": "string",
+        "type": "DataTablePinValue",
         "optional": true,
-        "description": "Freeze one column to the end edge — typically the row actions."
+        "description": "Freeze columns to the end edge — typically the row actions."
       },
       {
         "name": "defaultPinnedStart",
-        "type": "string",
+        "type": "DataTablePinValue",
         "optional": true
       },
       {
         "name": "defaultPinnedEnd",
-        "type": "string",
+        "type": "DataTablePinValue",
         "optional": true
       },
       {
         "name": "onPinnedColumnsChange",
         "type": "(pinned: DataTablePinned) => void",
+        "optional": true
+      },
+      {
+        "name": "columnOps",
+        "type": "ColumnOps",
+        "optional": true,
+        "description": "Header operations: resize, reorder and the per-column menu. The state\nthey change is app-owned — `columnOrder`, `columnSizing` and the pin\nprops carry it out, and persistence belongs to `createTablePersist`."
+      },
+      {
+        "name": "facets",
+        "type": "Record<string, DataTableFilterFacet[]>",
+        "optional": true,
+        "description": "Server-provided facet counts for the filter popovers, keyed by column\nid. No client faceting engine: counting over unknown-size data is a lie."
+      },
+      {
+        "name": "columnOrder",
+        "type": "ColumnOrderState",
+        "optional": true,
+        "description": "Controlled column order (leaf ids); changes report through the handler."
+      },
+      {
+        "name": "onColumnOrderChange",
+        "type": "(order: ColumnOrderState) => void",
+        "optional": true
+      },
+      {
+        "name": "columnSizing",
+        "type": "ColumnSizingState",
+        "optional": true,
+        "description": "User-resized widths keyed by column id, in pixels."
+      },
+      {
+        "name": "onColumnSizingChange",
+        "type": "(sizing: ColumnSizingState) => void",
         "optional": true
       },
       {

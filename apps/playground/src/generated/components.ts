@@ -441,6 +441,7 @@ export const COMPONENTS: ComponentEntry[] = [
     "source": "packages/organisms/src/organisms/DataTable",
     "atomic": "organism",
     "parts": [
+      "ColumnMenuRootProps",
       "DataTableProps"
     ],
     "spec": "data-table",

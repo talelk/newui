@@ -22,9 +22,14 @@ import {
   aggregationFn_uniqueCount,
   type ColumnDef,
   type ColumnFiltersState,
+  type ColumnOrderState,
+  type ColumnSizingState,
   columnFilteringFeature,
   columnGroupingFeature,
+  columnOrderingFeature,
   columnPinningFeature,
+  columnResizingFeature,
+  columnSizingFeature,
   columnVisibilityFeature,
   createExpandedRowModel,
   createFilteredRowModel,
@@ -34,9 +39,28 @@ import {
   createTable,
   type ExpandedState,
   type ExpandedStateList,
+  filterFn_arrHas,
+  filterFn_arrIncludes,
+  filterFn_arrIncludesAll,
+  filterFn_arrIncludesSome,
+  filterFn_between,
+  filterFn_betweenInclusive,
+  filterFn_empty,
+  filterFn_endsWith,
+  filterFn_equals,
+  filterFn_equalsString,
+  filterFn_equalsStringSensitive,
+  filterFn_includesString,
+  filterFn_includesStringSensitive,
+  filterFn_inDateRange,
+  filterFn_inNumberRange,
+  filterFn_notEmpty,
+  filterFn_startsWith,
+  filterFn_weakEquals,
   flexRender,
   type GroupingState,
   globalFilteringFeature,
+  type Header,
   type PaginationState,
   type Row,
   rowAggregationFeature,
@@ -63,6 +87,18 @@ import {
 } from 'solid-js'
 import { DataState } from '../DataState'
 import { SelectionBar } from '../SelectionBar'
+import { ColumnMenu } from './ColumnMenu'
+import {
+  ColumnFilter,
+  type ColumnOps,
+  ColumnResizeHandle,
+  createHeaderDrag,
+  type DataTableFilterFacet,
+  moveColumnBy,
+  moveColumnTo,
+  orderedLeafIds,
+  SizedCol,
+} from './column-ops'
 
 /**
  * The eleven aggregations a column can ask for by name. They are TanStack's
@@ -94,7 +130,10 @@ function createFeatures() {
   return tableFeatures({
     columnFilteringFeature,
     columnGroupingFeature,
+    columnOrderingFeature,
     columnPinningFeature,
+    columnResizingFeature,
+    columnSizingFeature,
     columnVisibilityFeature,
     globalFilteringFeature,
     rowAggregationFeature,
@@ -112,6 +151,29 @@ function createFeatures() {
       alphanumeric: sortFn_alphanumeric,
       datetime: sortFn_datetime,
       text: sortFn_text,
+    },
+    // The eighteen built-ins, named the way TanStack names them: a column's
+    // `filterFn` string resolves here. Global search never needed this map —
+    // it uses core's own import — so the search box is unaffected.
+    filterFns: {
+      arrHas: filterFn_arrHas,
+      arrIncludes: filterFn_arrIncludes,
+      arrIncludesAll: filterFn_arrIncludesAll,
+      arrIncludesSome: filterFn_arrIncludesSome,
+      between: filterFn_between,
+      betweenInclusive: filterFn_betweenInclusive,
+      empty: filterFn_empty,
+      endsWith: filterFn_endsWith,
+      equals: filterFn_equals,
+      equalsString: filterFn_equalsString,
+      equalsStringSensitive: filterFn_equalsStringSensitive,
+      inDateRange: filterFn_inDateRange,
+      inNumberRange: filterFn_inNumberRange,
+      includesString: filterFn_includesString,
+      includesStringSensitive: filterFn_includesStringSensitive,
+      notEmpty: filterFn_notEmpty,
+      startsWith: filterFn_startsWith,
+      weakEquals: filterFn_weakEquals,
     },
   })
 }
@@ -148,6 +210,12 @@ export type DataTableColumn<T extends object> = ColumnDef<Features, T> & {
   aggregate?: AggregationFnName | AggregationFn<T>
   /** Allow this column in `grouping`. Defaults to `true`. */
   groupable?: boolean
+  /**
+   * Render a filter button in the header that opens the control matching
+   * this column's `filterFn`. The state is TanStack's `columnFilters` — the
+   * same array server mode sends to the backend.
+   */
+  filterable?: boolean
 }
 
 /** Maps `aggregate` onto TanStack's `aggregationFn` option. */
@@ -212,10 +280,22 @@ export interface DataTableColumnMeta {
   editInput?: 'text' | 'number'
 }
 
-/** Which column is frozen to each edge of the horizontal scroll. */
+/** Which columns are frozen to each edge of the horizontal scroll. */
 export interface DataTablePinned {
-  start?: string
-  end?: string
+  start?: string[]
+  end?: string[]
+}
+
+/** A column may be a single id or a list; the table normalizes to a list. */
+export type DataTablePinValue = string | string[]
+
+/**
+ * Normalize one pin prop into a list of column ids. A bare `string` is the
+ * single-pin form the table shipped before issue #20.
+ */
+function pinIds(value: DataTablePinValue | undefined): string[] {
+  if (value === undefined) return []
+  return Array.isArray(value) ? [...value] : [value]
 }
 
 export interface DataTableProps<T extends { id: string }> {
@@ -254,16 +334,33 @@ export interface DataTableProps<T extends { id: string }> {
   /** Empty-state reset for externally filtered pages (beats Clear search). */
   onClearFilters?: () => void
   /**
-   * Freeze one column to the start edge of the horizontal scroll — the
-   * identifier that must stay visible while the rest move. Controlled:
-   * changes go through `onPinnedColumnsChange`.
+   * Freeze columns to the start edge of the horizontal scroll — the
+   * identifiers that must stay visible while the rest move. One id or many;
+   * controlled: changes go through `onPinnedColumnsChange`.
    */
-  pinnedStart?: string
-  /** Freeze one column to the end edge — typically the row actions. */
-  pinnedEnd?: string
-  defaultPinnedStart?: string
-  defaultPinnedEnd?: string
+  pinnedStart?: DataTablePinValue
+  /** Freeze columns to the end edge — typically the row actions. */
+  pinnedEnd?: DataTablePinValue
+  defaultPinnedStart?: DataTablePinValue
+  defaultPinnedEnd?: DataTablePinValue
   onPinnedColumnsChange?: (pinned: DataTablePinned) => void
+  /**
+   * Header operations: resize, reorder and the per-column menu. The state
+   * they change is app-owned — `columnOrder`, `columnSizing` and the pin
+   * props carry it out, and persistence belongs to `createTablePersist`.
+   */
+  columnOps?: ColumnOps
+  /**
+   * Server-provided facet counts for the filter popovers, keyed by column
+   * id. No client faceting engine: counting over unknown-size data is a lie.
+   */
+  facets?: Record<string, DataTableFilterFacet[]>
+  /** Controlled column order (leaf ids); changes report through the handler. */
+  columnOrder?: ColumnOrderState
+  onColumnOrderChange?: (order: ColumnOrderState) => void
+  /** User-resized widths keyed by column id, in pixels. */
+  columnSizing?: ColumnSizingState
+  onColumnSizingChange?: (sizing: ColumnSizingState) => void
   /**
    * Turn on inline editing: columns whose `meta.editable` is set render a
    * click-to-edit cell. Values are app-owned — edits arrive through
@@ -462,6 +559,12 @@ export function DataTable<T extends { id: string }>(
     id: 'select',
     enableHiding: false,
     enableSorting: false,
+    // The checkbox column is chrome, not data: it keeps a fixed width when the
+    // table sizes its columns, and it is never resized or reordered.
+    size: 44,
+    minSize: 44,
+    maxSize: 44,
+    enableResizing: false,
     header: (context) => (
       <Checkbox
         aria-label="Select all rows on this page"
@@ -486,16 +589,33 @@ export function DataTable<T extends { id: string }>(
       selectable() ? [selection, ...props.columns] : props.columns,
     ),
   )
-  const [pinned] = createControllableSignal<DataTablePinned>({
-    value: () => ({
-      start: props.pinnedStart,
-      end: props.pinnedEnd,
-    }),
+  const [pinned, setPinned] = createControllableSignal<DataTablePinned>({
+    value: () =>
+      props.pinnedStart === undefined && props.pinnedEnd === undefined
+        ? undefined
+        : {
+            start: pinIds(props.pinnedStart),
+            end: pinIds(props.pinnedEnd),
+          },
     defaultValue: {
-      start: props.defaultPinnedStart,
-      end: props.defaultPinnedEnd,
+      start: pinIds(props.defaultPinnedStart),
+      end: pinIds(props.defaultPinnedEnd),
     },
     onChange: (next) => props.onPinnedColumnsChange?.(next),
+  })
+  /**
+   * The pinning slice, kept reference-stable. The state getter is read on
+   * every unrelated state change (TanStack syncs each slice back into its
+   * atom), and a fresh `{start, end}` object each time would rewrite the
+   * pinning atom and rebuild the header groups — which throws away the
+   * resize handle's focus mid-keyboard-resize.
+   */
+  const columnPinningState = createMemo(() => {
+    const pinnedValue = pinned()
+    return {
+      start: pinnedValue.start ?? [],
+      end: pinnedValue.end ?? [],
+    }
   })
   // ── server mode ────────────────────────────────────────────────────────
   // `server` presence is the switch: the table mirrors the slices the app
@@ -541,6 +661,23 @@ export function DataTable<T extends { id: string }>(
       value: () => props.grouping,
       defaultValue: [],
       onChange: (next) => props.onGroupingChange?.(next),
+    })
+  /**
+   * Column order and user-resized widths: the two pieces of layout a reader
+   * owns. Both stay app state — the table reports, the app (or the config
+   * store behind `createTablePersist`) decides.
+   */
+  const [columnOrderSlice, setColumnOrderSlice] =
+    createControllableSignal<ColumnOrderState>({
+      value: () => props.columnOrder,
+      defaultValue: [],
+      onChange: (next) => props.onColumnOrderChange?.(next),
+    })
+  const [columnSizingSlice, setColumnSizingSlice] =
+    createControllableSignal<ColumnSizingState>({
+      value: () => props.columnSizing,
+      defaultValue: {},
+      onChange: (next) => props.onColumnSizingChange?.(next),
     })
   /**
    * Expanded rows live here so the expander can fire `onRowExpand` before the
@@ -637,9 +774,21 @@ export function DataTable<T extends { id: string }>(
   }
   /** Which edge (if any) a column id is frozen to. */
   const pinOf = (columnId: string): 'start' | 'end' | undefined => {
-    if (pinned().start === columnId) return 'start'
-    if (pinned().end === columnId) return 'end'
+    if (pinned().start?.includes(columnId)) return 'start'
+    if (pinned().end?.includes(columnId)) return 'end'
     return undefined
+  }
+  /** Move one column's pin, keeping each edge a list and the other edge as-is. */
+  const pinColumn = (
+    columnId: string,
+    edge: 'start' | 'end' | 'unpin',
+  ): void => {
+    const current = pinned()
+    const start = (current.start ?? []).filter((id) => id !== columnId)
+    const end = (current.end ?? []).filter((id) => id !== columnId)
+    if (edge === 'start') start.push(columnId)
+    if (edge === 'end') end.push(columnId)
+    setPinned({ start, end })
   }
   /** Sticky cell chrome: opaque card surface over the scrolling columns. */
   const pinClass = (edge: 'start' | 'end' | undefined) =>
@@ -657,13 +806,15 @@ export function DataTable<T extends { id: string }>(
       return resolvedColumns()
     },
     get state() {
-      const pinnedValue = pinned()
-      const columnPinning = {
-        start: pinnedValue.start ? [pinnedValue.start] : [],
-        end: pinnedValue.end ? [pinnedValue.end] : [],
-      }
       const shared = {
-        columnPinning,
+        columnPinning: columnPinningState(),
+        columnOrder: columnOrderSlice(),
+        columnSizing: columnSizingSlice(),
+        // The per-column filters live in this slice in both modes: TanStack's
+        // `setStateSlice` writes nothing itself once the app supplies the
+        // handler, so owning it here is what makes the header control filter
+        // in client mode and mirror the app in server mode.
+        columnFilters: columnFiltersSlice(),
         grouping: groupingSlice(),
         expanded: expandedSlice() ?? {},
       }
@@ -671,7 +822,6 @@ export function DataTable<T extends { id: string }>(
       return {
         ...shared,
         sorting: sortingSlice(),
-        columnFilters: columnFiltersSlice(),
         globalFilter: globalFilterSlice(),
         pagination: paginationSlice(),
       }
@@ -742,11 +892,22 @@ export function DataTable<T extends { id: string }>(
     onGroupingChange: (updater) => {
       if (applySlice(groupingSlice, setGroupingSlice, updater)) resetPageIndex()
     },
+    // Layout axes: reported like every other slice, but a reorder or a resize
+    // changes no rows, so it never resets the page.
+    onColumnOrderChange: (updater) => {
+      applySlice(columnOrderSlice, setColumnOrderSlice, updater)
+    },
+    onColumnSizingChange: (updater) => {
+      applySlice(columnSizingSlice, setColumnSizingSlice, updater)
+    },
     onExpandedChange: handleExpandedChange,
+    // The per-column filters are reported in both modes: the header control
+    // writes them in client mode, the app owns them in server mode. Either way
+    // the slice above is the source, so a filter change always starts over.
+    onColumnFiltersChange: handleColumnFiltersChange,
     ...(serverMode()
       ? {
           onSortingChange: handleSortingChange,
-          onColumnFiltersChange: handleColumnFiltersChange,
           onGlobalFilterChange: handleGlobalFilterChange,
           onPaginationChange: handlePaginationChange,
         }
@@ -765,6 +926,114 @@ export function DataTable<T extends { id: string }>(
       { defer: true },
     ),
   )
+  /**
+   * The page's rows. The filter atom is read here as well as through the row
+   * model: the model caches, so a `columnFilters` change that no JSX reads
+   * would leave the body showing the previous result.
+   */
+  const pageRows = createMemo(() => {
+    table.atoms.columnFilters.get()
+    return table.getRowModel().rows
+  })
+  const opsActive = () => props.columnOps !== undefined
+  /** A column opts into a header filter button with `filterable`. */
+  const filterableOf = (column: { columnDef: unknown }): boolean =>
+    (column.columnDef as DataTableColumn<T>).filterable === true
+  const resizable = () => props.columnOps?.resizable === true
+  const reorderable = () => props.columnOps?.reorderable === true
+  const menuEnabled = () =>
+    props.columnOps !== undefined && props.columnOps.menu !== false
+  /**
+   * Header pointer-drag: drop before the header whose midpoint the pointer
+   * crosses. The order is TanStack's `columnOrder` — the same vocabulary the
+   * menu's Move entries write.
+   */
+  const drag = createHeaderDrag({
+    enabled: reorderable,
+    order: () => orderedLeafIds(table),
+    move: (id, targetId) => moveColumnTo(table, id, targetId),
+  })
+  /**
+   * Sticky cells that need a pin inset. One pin per edge sits at the edge —
+   * the class does that. Two or more need the measured offset, so cells are
+   * tracked and written imperatively (the `style` prop is not the idiom).
+   */
+  const stickyCells = new Map<string, Set<HTMLElement>>()
+  const stickyHeaders = new Map<string, HTMLElement>()
+  const insetApplied = new Set<string>()
+  const trackCell = (columnId: string, el: HTMLElement | undefined): void => {
+    if (!el) return
+    let cells = stickyCells.get(columnId)
+    if (!cells) {
+      cells = new Set()
+      stickyCells.set(columnId, cells)
+    }
+    cells.add(el)
+  }
+  const widthOf = (columnId: string): number => {
+    const rect = stickyHeaders.get(columnId)?.getBoundingClientRect()
+    if (rect && rect.width > 0) return rect.width
+    const column = table.getColumn(columnId)
+    return column ? column.getSize() : 150
+  }
+  const setInset = (
+    columnId: string,
+    edge: 'start' | 'end',
+    px: number | undefined,
+  ): void => {
+    const property =
+      edge === 'start' ? 'inset-inline-start' : 'inset-inline-end'
+    const cells = stickyCells.get(columnId)
+    if (!cells) return
+    for (const cell of cells) {
+      if (!cell.isConnected) cells.delete(cell)
+      else if (px === undefined) cell.style.removeProperty(property)
+      else cell.style.setProperty(property, `${px}px`)
+    }
+  }
+  createEffect(() => {
+    const pin = pinned()
+    columnSizingSlice()
+    const visible = table.getVisibleLeafColumns().map((column) => column.id)
+    const union = new Set([...(pin.start ?? []), ...(pin.end ?? [])])
+    for (const id of [...insetApplied]) {
+      if (union.has(id)) continue
+      setInset(id, 'start', undefined)
+      setInset(id, 'end', undefined)
+      insetApplied.delete(id)
+    }
+    const applyEdge = (edge: 'start' | 'end', pinnedIds: string[]): void => {
+      const ordered = pinnedIds
+        .filter((id) => visible.includes(id))
+        .sort((a, b) => visible.indexOf(a) - visible.indexOf(b))
+      if (ordered.length < 2) {
+        // Single pin: the class pins it to the edge; drop any stale inset.
+        for (const id of ordered) {
+          setInset(id, edge, undefined)
+          insetApplied.delete(id)
+        }
+        return
+      }
+      if (edge === 'start') {
+        let offset = 0
+        for (const id of ordered) {
+          setInset(id, 'start', offset)
+          insetApplied.add(id)
+          offset += widthOf(id)
+        }
+        return
+      }
+      let offset = 0
+      for (let index = ordered.length - 1; index >= 0; index -= 1) {
+        const id = ordered[index] as string
+        setInset(id, 'end', offset)
+        insetApplied.add(id)
+        offset += widthOf(id)
+      }
+    }
+    applyEdge('start', pin.start ?? [])
+    applyEdge('end', pin.end ?? [])
+  })
   const alignEnd = (meta: unknown): boolean =>
     (meta as DataTableColumnMeta | undefined)?.align === 'end'
   const mobileRole = (meta: unknown) =>
@@ -772,6 +1041,9 @@ export function DataTable<T extends { id: string }>(
   const hasMobileCards = createMemo(() =>
     props.columns.some((column) => mobileRole(column.meta)),
   )
+  /** The empty row spans every cell the page renders, checkbox included. */
+  const emptyColSpan = () =>
+    table.getVisibleLeafColumns().length + (selectable() ? 1 : 0)
   // `flatRows`, not `rows`: a tree row can be selected under a parent that is
   // not, and the bulk action must still see it.
   const selected = () =>
@@ -848,6 +1120,37 @@ export function DataTable<T extends { id: string }>(
     typeof column.columnDef.header === 'string'
       ? column.columnDef.header
       : column.id
+  /**
+   * The header's own content: the sort button, or the definition's header
+   * verbatim. Column operations wrap around it; they never replace it.
+   */
+  const headerContent = (header: Header<Features, T>): JSX.Element => (
+    <Show
+      when={header.column.getCanSort()}
+      fallback={flexRender(header.column.columnDef.header, header.getContext())}
+    >
+      <button
+        type="button"
+        class="group/sort inline-flex items-center gap-1 rounded-3 focus-visible:focus-ring"
+        onClick={header.column.getToggleSortingHandler()}
+      >
+        {flexRender(header.column.columnDef.header, header.getContext())}
+        <span aria-hidden="true">
+          <span
+            aria-hidden="true"
+            class={cn(
+              'inline-block size-3.5 align-middle',
+              header.column.getIsSorted() === 'asc'
+                ? 'lucide-arrow-up text-ink-gray-9'
+                : header.column.getIsSorted() === 'desc'
+                  ? 'lucide-arrow-down text-ink-gray-9'
+                  : 'lucide-arrow-up-down text-ink-gray-4 group-hover/sort:text-ink-gray-7',
+            )}
+          />
+        </span>
+      </button>
+    </Show>
+  )
   const columnMenu = () => (
     <div data-slot="data-table-columns" class="max-sm:hidden">
       <Popover.Root>
@@ -1191,92 +1494,228 @@ export function DataTable<T extends { id: string }>(
             </For>
           </div>
         </Show>
-        <Show when={table.getFilteredRowModel().rows.length > 0}>
-          <div class={hasMobileCards() ? tableHiddenClass() : ''}>
-            <ScrollTable label={`${props.title} table`} stickyHeader>
-              <table class="w-full min-w-[720px] border-collapse text-start">
-                <ScrollTableHead>
-                  {/* Nested column definitions stack into as many header rows
+        {/* The table stays mounted when a filter empties it: the header is
+            where the filter lives, and unmounting it would close the popover
+            the reader is still typing into. The empty state is a row. */}
+        <div class={hasMobileCards() ? tableHiddenClass() : ''}>
+          <ScrollTable label={`${props.title} table`} stickyHeader>
+            <table
+              class={cn(
+                'w-full min-w-[720px] border-collapse text-start',
+                resizable() && 'table-fixed',
+              )}
+            >
+              {/* A sized table lays its columns out from the colgroup: the
+                    header is `table-fixed`, so the `<col>` widths are what the
+                    browser honours and a resize reaches the whole column. */}
+              <Show when={resizable()}>
+                <colgroup>
+                  <For each={table.getVisibleLeafColumns()}>
+                    {(column) => <SizedCol size={column.getSize()} />}
+                  </For>
+                </colgroup>
+              </Show>
+              <ScrollTableHead>
+                {/* Nested column definitions stack into as many header rows
                       as the tree is deep. A placeholder is the empty cell that
                       keeps the row aligned; a `rowSpan` of 0 means a cell above
                       already covers this one, so it is not rendered at all. */}
-                  <For each={table.getHeaderGroups()}>
-                    {(group) => (
-                      <tr>
-                        <For each={group.headers}>
-                          {(header) => (
-                            <Show when={header.rowSpan !== 0}>
-                              <th
-                                scope="col"
-                                colspan={
-                                  header.colSpan > 1
-                                    ? header.colSpan
+                <For each={table.getHeaderGroups()}>
+                  {(group) => (
+                    <tr>
+                      <For each={group.headers}>
+                        {(header) => (
+                          <Show when={header.rowSpan !== 0}>
+                            <th
+                              scope="col"
+                              colspan={
+                                header.colSpan > 1 ? header.colSpan : undefined
+                              }
+                              rowspan={
+                                header.rowSpan > 1 ? header.rowSpan : undefined
+                              }
+                              class={cn(
+                                alignEnd(header.column.columnDef.meta)
+                                  ? `${cellPad()} text-end`
+                                  : `${cellPad()} text-start`,
+                                pinClass(pinOf(header.column.id)),
+                                resizable() && 'relative',
+                                reorderable() &&
+                                  'data-[dragging]:cursor-col-resize data-[dragging]:select-none',
+                              )}
+                              data-column={header.column.id}
+                              data-pin-edge={pinOf(header.column.id)}
+                              aria-sort={
+                                header.column.getIsSorted() === 'asc'
+                                  ? 'ascending'
+                                  : header.column.getIsSorted() === 'desc'
+                                    ? 'descending'
                                     : undefined
-                                }
-                                rowspan={
-                                  header.rowSpan > 1
-                                    ? header.rowSpan
-                                    : undefined
-                                }
-                                class={cn(
-                                  alignEnd(header.column.columnDef.meta)
-                                    ? `${cellPad()} text-end`
-                                    : `${cellPad()} text-start`,
-                                  pinClass(pinOf(header.column.id)),
-                                )}
-                                aria-sort={
-                                  header.column.getIsSorted() === 'asc'
-                                    ? 'ascending'
-                                    : header.column.getIsSorted() === 'desc'
-                                      ? 'descending'
-                                      : undefined
-                                }
-                              >
-                                <Show when={!header.isPlaceholder}>
-                                  <Show
-                                    when={header.column.getCanSort()}
-                                    fallback={flexRender(
-                                      header.column.columnDef.header,
-                                      header.getContext(),
-                                    )}
-                                  >
-                                    <button
-                                      type="button"
-                                      class="group/sort inline-flex items-center gap-1 rounded-3 focus-visible:focus-ring"
-                                      onClick={header.column.getToggleSortingHandler()}
-                                    >
-                                      {flexRender(
-                                        header.column.columnDef.header,
-                                        header.getContext(),
-                                      )}
-                                      <span aria-hidden="true">
-                                        <span
-                                          aria-hidden="true"
-                                          class={cn(
-                                            'inline-block size-3.5 align-middle',
-                                            header.column.getIsSorted() ===
-                                              'asc'
-                                              ? 'lucide-arrow-up text-ink-gray-9'
-                                              : header.column.getIsSorted() ===
-                                                  'desc'
-                                                ? 'lucide-arrow-down text-ink-gray-9'
-                                                : 'lucide-arrow-up-down text-ink-gray-4 group-hover/sort:text-ink-gray-7',
-                                          )}
+                              }
+                              ref={(el) => {
+                                if (!el) return
+                                if (header.column.columns.length > 0) return
+                                drag.register(header.column.id, el)
+                                stickyHeaders.set(header.column.id, el)
+                                trackCell(header.column.id, el)
+                              }}
+                              onPointerDown={(event) => {
+                                if (header.column.columns.length === 0)
+                                  drag.begin(header.column.id, event)
+                              }}
+                              onPointerMove={(event) => {
+                                if (header.column.columns.length === 0)
+                                  drag.move(header.column.id, event)
+                              }}
+                              onPointerUp={(event) => {
+                                if (header.column.columns.length === 0)
+                                  drag.end(header.column.id, event)
+                              }}
+                              onPointerCancel={(event) => {
+                                if (header.column.columns.length === 0)
+                                  drag.end(header.column.id, event)
+                              }}
+                            >
+                              <Show when={!header.isPlaceholder}>
+                                <Show
+                                  when={
+                                    opsActive() || filterableOf(header.column)
+                                  }
+                                  fallback={headerContent(header)}
+                                >
+                                  <div class="flex items-center justify-between gap-1">
+                                    <div class="min-w-0">
+                                      {headerContent(header)}
+                                    </div>
+                                    <div class="flex shrink-0 items-center gap-0.5">
+                                      <Show when={filterableOf(header.column)}>
+                                        <ColumnFilter
+                                          column={header.column}
+                                          label={columnLabel(header.column)}
+                                          facets={
+                                            props.facets?.[header.column.id]
+                                          }
                                         />
-                                      </span>
-                                    </button>
+                                      </Show>
+                                      <Show when={menuEnabled()}>
+                                        <ColumnMenu.Root
+                                          columnId={header.column.id}
+                                          label={columnLabel(header.column)}
+                                          pinnedStart={pinned().start ?? []}
+                                          pinnedEnd={pinned().end ?? []}
+                                          resizable={
+                                            resizable() &&
+                                            header.column.getCanResize()
+                                          }
+                                          reorderable={reorderable()}
+                                          canSort={header.column.getCanSort()}
+                                          canHide={header.column.getCanHide()}
+                                          canMoveLeft={
+                                            orderedLeafIds(table).indexOf(
+                                              header.column.id,
+                                            ) > 0
+                                          }
+                                          canMoveRight={
+                                            orderedLeafIds(table).indexOf(
+                                              header.column.id,
+                                            ) <
+                                            orderedLeafIds(table).length - 1
+                                          }
+                                          onSort={(id, desc) =>
+                                            table
+                                              .getColumn(id)
+                                              ?.toggleSorting(desc)
+                                          }
+                                          onPin={(id, edge) =>
+                                            pinColumn(id, edge ?? 'unpin')
+                                          }
+                                          onMove={(id, direction) =>
+                                            moveColumnBy(table, id, direction)
+                                          }
+                                          onResetSize={(id) =>
+                                            table.setColumnSizing((old) => {
+                                              const next = { ...old }
+                                              delete next[id]
+                                              return next
+                                            })
+                                          }
+                                          onHide={(id) =>
+                                            table
+                                              .getColumn(id)
+                                              ?.toggleVisibility(false)
+                                          }
+                                        >
+                                          <ColumnMenu.Trigger />
+                                          <ColumnMenu.Content>
+                                            <ColumnMenu.Items />
+                                          </ColumnMenu.Content>
+                                        </ColumnMenu.Root>
+                                      </Show>
+                                    </div>
+                                  </div>
+                                  <Show
+                                    when={
+                                      resizable() &&
+                                      header.column.columns.length === 0 &&
+                                      header.column.getCanResize()
+                                    }
+                                  >
+                                    <ColumnResizeHandle
+                                      label={columnLabel(header.column)}
+                                      size={header.column.getSize()}
+                                      min={
+                                        header.column.columnDef.minSize ?? 50
+                                      }
+                                      max={Math.min(
+                                        header.column.columnDef.maxSize ??
+                                          10000,
+                                        10000,
+                                      )}
+                                      onResize={(size) =>
+                                        table.setColumnSizing((old) => ({
+                                          ...old,
+                                          [header.column.id]: size,
+                                        }))
+                                      }
+                                      onReset={() =>
+                                        table.setColumnSizing((old) => {
+                                          const next = { ...old }
+                                          delete next[header.column.id]
+                                          return next
+                                        })
+                                      }
+                                    />
                                   </Show>
                                 </Show>
-                              </th>
-                            </Show>
-                          )}
-                        </For>
-                      </tr>
-                    )}
-                  </For>
-                </ScrollTableHead>
-                <tbody>
-                  <For each={table.getRowModel().rows}>
+                              </Show>
+                            </th>
+                          </Show>
+                        )}
+                      </For>
+                    </tr>
+                  )}
+                </For>
+              </ScrollTableHead>
+              <tbody>
+                <Show
+                  when={pageRows().length > 0}
+                  fallback={
+                    <tr>
+                      <td colspan={emptyColSpan()} class="p-card-pad">
+                        <DataState
+                          status="empty"
+                          title={props.emptyTitle ?? 'No matching records'}
+                          description={
+                            props.emptyHint ??
+                            'Try a different search or clear your filters.'
+                          }
+                          action={emptyAction()}
+                        />
+                      </td>
+                    </tr>
+                  }
+                >
+                  <For each={pageRows()}>
                     {(row) => (
                       <>
                         <Show when={isGroupRow(row)}>{groupRow(row)}</Show>
@@ -1297,6 +1736,7 @@ export function DataTable<T extends { id: string }>(
                                 )[cell.column.id]
                                 return (
                                   <td
+                                    ref={(el) => trackCell(cell.column.id, el)}
                                     class={cn(
                                       alignEnd(cell.column.columnDef.meta)
                                         ? `${cellPad()} text-end text-interface`
@@ -1310,6 +1750,8 @@ export function DataTable<T extends { id: string }>(
                                     data-selected={
                                       row.getIsSelected() ? '' : undefined
                                     }
+                                    data-column={cell.column.id}
+                                    data-pin-edge={edge}
                                   >
                                     {/* The first cell of a row that opens carries
                                         the expander, so keyboard users reach it. */}
@@ -1374,22 +1816,12 @@ export function DataTable<T extends { id: string }>(
                       </>
                     )}
                   </For>
-                </tbody>
-                <Show when={hasSummary()}>{summaryRow()}</Show>
-              </table>
-            </ScrollTable>
-          </div>
-        </Show>
-        <Show when={table.getFilteredRowModel().rows.length === 0}>
-          <DataState
-            status="empty"
-            title={props.emptyTitle ?? 'No matching records'}
-            description={
-              props.emptyHint ?? 'Try a different search or clear your filters.'
-            }
-            action={emptyAction()}
-          />
-        </Show>
+                </Show>
+              </tbody>
+              <Show when={hasSummary()}>{summaryRow()}</Show>
+            </table>
+          </ScrollTable>
+        </div>
         <Show when={table.getFilteredRowModel().rows.length > 0}>
           <div class="flex flex-wrap items-center justify-between gap-control-gap border-t border-outline-gray-1 px-3 py-1.5">
             <span class="text-caption text-ink-gray-7" role="status">

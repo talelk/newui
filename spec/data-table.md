@@ -44,9 +44,13 @@ a whole data region.
 | `emptyTitle` | `string` | empty-state title |
 | `emptyHint` | `string` | empty-state supporting text |
 | `onClearFilters` | `() => void` | clears external filters before internal search |
-| `pinnedStart` / `pinnedEnd` | `string` | freeze one column to each edge of the horizontal scroll; controlled via `onPinnedColumnsChange` |
-| `defaultPinnedStart` / `defaultPinnedEnd` | `string` | uncontrolled initial pins |
+| `pinnedStart` / `pinnedEnd` | `string \| string[]` | freeze one column or several to each edge of the horizontal scroll; controlled via `onPinnedColumnsChange` |
+| `defaultPinnedStart` / `defaultPinnedEnd` | `string \| string[]` | uncontrolled initial pins |
 | `onPinnedColumnsChange` | `(pinned: DataTablePinned) => void` | pinning is app-owned state; the table renders, never mutates it |
+| `columnOps` | `ColumnOps` | header operations: `resizable`, `reorderable`, `menu` (default `true` when `columnOps` is set) |
+| `columnOrder` / `onColumnOrderChange` | `ColumnOrderState` / `(order) => void` | leaf ids in display order; controlled, reported on every move |
+| `columnSizing` / `onColumnSizingChange` | `ColumnSizingState` / `(sizing) => void` | user-resized widths in pixels, keyed by column id |
+| `facets` | `Record<string, { value: string; count: number }[]>` | server-provided facet counts per column, offered inside that column's filter popover |
 | `editable` | `boolean` | turn on inline editing for columns with `meta.editable` |
 | `onCellChange` | `(id: string, columnId: string, value: string) => void` | committed cell edits; values are app-owned through `rows` |
 | `server` | `{ total: number }` | server mode: the backend owns sorting, filtering and pagination; `total` is the only count the table trusts, `-1` means unknown |
@@ -157,5 +161,49 @@ a whole data region.
   select-all skips what is ineligible. Selecting a parent selects its eligible
   descendants; the bulk action receives the record ids, including a tree row
   selected under a parent that is not itself selectable.
+- **Column operations.** `columnOps` turns on the header operations; each is a
+  separate switch so an app can offer resizing without reordering.
+  - **Resize.** `resizable` puts a `role="separator"` handle on each leaf
+    header's edge — a pointer drag with the keyboard twin: arrows nudge 8px,
+    Shift 32px, Home and End jump to the column's `minSize`/`maxSize`, double
+    click resets. Widths land in `columnSizing`, reported through
+    `onColumnSizingChange`; a resize changes no rows, so it never resets the
+    page. The selection column is chrome and is never resized.
+  - **Reorder.** `reorderable` makes the header itself draggable (a 4px
+    threshold keeps a click a click) and adds Move left/right to the column
+    menu. Order is `columnOrder`, TanStack's own vocabulary, so a persisted
+    order is just an id list.
+  - **Pin.** `pinnedStart`/`pinnedEnd` take one id or several; with two or more
+    pins on an edge each cell's sticky offset is composed, so they stack
+    instead of overlapping. The menu's Pin entries toggle the column's edge.
+  - **Filter.** A column with `filterable: true` gets a funnel button that
+    opens the control its `filterFn` needs — a text box for substring matching,
+    a `Select` for equality and array filters, two number fields for a range,
+    date fields for a date range. The control writes TanStack's `columnFilters`,
+    the same array server mode sends to the backend, so client and server
+    filtering stay one vocabulary and the column filter composes with the
+    global search. `facets` supplies `{ value, count }` per column; a select
+    filter renders them as its options and any other filter offers them as a
+    list under the control. There is no client faceting engine — counting over
+    unknown data is the backend's job.
+  - **Menu.** `menu` (default `true` with `columnOps` set) adds the per-column
+    button. Set `columnOps={{}}` with `menu: false` for drag-only operations.
 - `ScrollTable` is a separate molecule at `@talelk/newui-molecules`; importing it does
   not import the table engine into a route that renders its own semantic table.
+
+### Props (ColumnMenu.Root)
+
+| prop | type | notes |
+| --- | --- | --- |
+| `columnId` | `string` | the column the items act on |
+| `label` | `string` | the column's visible header text, used in the accessible names |
+| `pinnedStart` / `pinnedEnd` | `string[]` | the current pins, so the Pin items read as pressed |
+| `resizable` | `boolean` | show Reset size |
+| `reorderable` | `boolean` | show Move left/right |
+| `canSort` / `canHide` | `boolean` | show the sort items / Hide |
+| `canMoveLeft` / `canMoveRight` | `boolean` | disabled rather than hidden at the ends of the order |
+| `onSort` | `(columnId, desc) => void` | sort direction chosen in the menu |
+| `onPin` | `(columnId, edge) => void` | `edge` is `start`, `end` or `unpin` |
+| `onMove` | `(columnId, direction) => void` | `-1` left, `1` right |
+| `onResetSize` | `(columnId) => void` | clear one column's resized width |
+| `onHide` | `(columnId) => void` | hide the column |

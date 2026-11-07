@@ -96,8 +96,12 @@
       // A window splitter is a *widget* separator: WAI-ARIA's `separator` with
       // `aria-valuenow`, a tab stop and arrow keys. `useSemanticElements`
       // suggests `<hr>`, which is a static rule — it carries no value, takes no
-      // focus and has no keyboard handler, so there is nothing to suggest.
-      "includes": ["packages/templates/src/templates/PaneLayout/**"],
+      // focus and has no keyboard handler, so there is nothing to suggest. The
+      // DataTable column edge is the same widget, so it gets the same carve-out.
+      "includes": [
+        "packages/templates/src/templates/PaneLayout/**",
+        "packages/organisms/src/organisms/DataTable/column-ops.tsx"
+      ],
       "linter": {
         "rules": { "a11y": { "useSemanticElements": "off" } }
       }

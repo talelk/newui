@@ -7878,6 +7878,8 @@
     "contract": "spec/data-table.md",
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
@@ -7893,6 +7895,8 @@
     "contract": "spec/data-table.md",
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
@@ -7981,6 +7985,125 @@
     "tests": [
       "packages/organisms/src/organisms/AuthCard/AuthCard.a11y.test.tsx",
       "packages/organisms/src/organisms/AuthCard/AuthCard.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ColumnMenu",
+    "implementation": "packages/organisms/src/organisms/DataTable/ColumnMenu.tsx",
+    "documentation": "/organisms/data-table",
+    "contract": "spec/data-table.md",
+    "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ColumnMenu.Content",
+    "implementation": "packages/organisms/src/organisms/DataTable/ColumnMenu.tsx",
+    "documentation": "/organisms/data-table",
+    "contract": "spec/data-table.md",
+    "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ColumnMenu.Items",
+    "implementation": "packages/organisms/src/organisms/DataTable/ColumnMenu.tsx",
+    "documentation": "/organisms/data-table",
+    "contract": "spec/data-table.md",
+    "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ColumnMenu.Root",
+    "implementation": "packages/organisms/src/organisms/DataTable/ColumnMenu.tsx",
+    "documentation": "/organisms/data-table",
+    "contract": "spec/data-table.md",
+    "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ColumnMenu.Trigger",
+    "implementation": "packages/organisms/src/organisms/DataTable/ColumnMenu.tsx",
+    "documentation": "/organisms/data-table",
+    "contract": "spec/data-table.md",
+    "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ColumnMenuPinEdge",
+    "implementation": "packages/organisms/src/organisms/DataTable/ColumnMenu.tsx",
+    "documentation": "/organisms/data-table",
+    "contract": "spec/data-table.md",
+    "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "ColumnMenuRootProps",
+    "implementation": "packages/organisms/src/organisms/DataTable/ColumnMenu.tsx",
+    "documentation": "/organisms/data-table",
+    "contract": "spec/data-table.md",
+    "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
     ],
     "acceptance": "pending"
   },
@@ -8212,6 +8335,8 @@
     "contract": "spec/data-table.md",
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
@@ -8227,6 +8352,8 @@
     "contract": "spec/data-table.md",
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
@@ -8242,6 +8369,8 @@
     "contract": "spec/data-table.md",
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
@@ -8257,6 +8386,8 @@
     "contract": "spec/data-table.md",
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
@@ -8272,6 +8403,25 @@
     "contract": "spec/data-table.md",
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.test.tsx"
+    ],
+    "acceptance": "pending"
+  },
+  {
+    "package": "@talelk/newui-organisms",
+    "name": "DataTablePinValue",
+    "implementation": "packages/organisms/src/organisms/DataTable/DataTable.tsx",
+    "documentation": "/organisms/data-table",
+    "contract": "spec/data-table.md",
+    "tests": [
+      "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
@@ -8287,6 +8437,8 @@
     "contract": "spec/data-table.md",
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",
@@ -8302,6 +8454,8 @@
     "contract": "spec/data-table.md",
     "tests": [
       "packages/organisms/src/organisms/DataTable/DataTable.a11y.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.browser.test.tsx",
+      "packages/organisms/src/organisms/DataTable/DataTable.column-ops.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.features.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.grouping.test.tsx",
       "packages/organisms/src/organisms/DataTable/DataTable.server.test.tsx",

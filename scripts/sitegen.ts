@@ -92,6 +92,8 @@ const FAMILIES: Record<string, string> = {
   TooltipTrigger: 'Tooltip',
   EditorToolbar: 'Editor',
   ChartTooltipSlot: 'ChartTooltip',
+  // The column menu is a part of the table, not a component of its own.
+  ColumnMenuRoot: 'DataTable',
   HoverCardRoot: 'HoverCard',
   HoverCardTrigger: 'HoverCard',
   ContextMenuRoot: 'ContextMenu',
