@@ -114,7 +114,7 @@ export function Shell(props: {
           <span aria-hidden="true" class="lucide-building-2 size-4" />
         </button>
       }
-      settings={
+      settings={() => (
         <SidebarItem
           label="Settings"
           icon="lucide-settings"
@@ -123,7 +123,7 @@ export function Shell(props: {
         >
           Settings
         </SidebarItem>
-      }
+      )}
       account={
         <Dropdown
           options={accountOptions}

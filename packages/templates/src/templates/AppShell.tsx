@@ -42,12 +42,16 @@ export interface AppShellProps {
   navigation?: AppSidebarGroup[]
   /** Advanced navigation content, rendered inside the same sidebar. */
   navigationContent?: JSX.Element | (() => JSX.Element)
-  /** Global utilities pinned above Settings while the sidebar is expanded. */
+  /** Global utilities pinned beside Settings while the sidebar is expanded. */
   utilities?: JSX.Element
   /** Compact icon form of `utilities`, shown while the sidebar is collapsed. */
   utilitiesCollapsed?: JSX.Element
-  /** Settings action pinned to the bottom of the sidebar. */
-  settings?: JSX.Element
+  /**
+   * Settings action pinned to the bottom of the sidebar. Pass a function when
+   * it is a `SidebarItem`, so it renders inside the sidebar and follows the
+   * collapsed rail.
+   */
+  settings?: JSX.Element | (() => JSX.Element)
   /** User/account control pinned below settings. */
   account?: JSX.Element
   /** Compact account icon control, shown while collapsed. */
@@ -153,7 +157,7 @@ export function AppShell(props: AppShellProps): JSX.Element {
         <Show when={!desktop() || props.headerActions}>
           <header
             data-slot="app-shell-header"
-            class="flex min-h-12 shrink-0 items-center justify-between gap-control-gap border-b border-outline-gray-1 bg-surface-elevation-1 px-page-gutter-compact"
+            class="flex min-h-12 shrink-0 items-center justify-between gap-control-gap border-b border-outline-gray-1 bg-surface-canvas px-page-gutter-compact"
           >
             <div class="flex min-w-0 items-center gap-2">
               <Show when={!desktop()}>
@@ -162,12 +166,15 @@ export function AppShell(props: AppShellProps): JSX.Element {
                   label="Open application navigation"
                   icon="lucide-menu"
                   size="lg"
+                  variant="ghost"
                   aria-haspopup="dialog"
                   aria-expanded={drawerOpen()}
                   onClick={openDrawer}
                   class="shrink-0"
                 />
-                <span class="min-w-0 truncate font-medium">{title()}</span>
+                <span class="min-w-0 truncate text-interface-medium">
+                  {title()}
+                </span>
               </Show>
             </div>
             <div class="flex shrink-0 items-center gap-2">
@@ -228,20 +235,19 @@ export function AppShell(props: AppShellProps): JSX.Element {
           const control = target.closest('a, button, [data-navigates]')
           if (control && !control.closest('[data-keep-drawer]')) closeDrawer()
         }}
-        class="open:flex m-0 h-dvh max-h-none w-64 max-w-[calc(100vw-2rem)] flex-col overflow-hidden border-e border-outline-gray-1 bg-surface-sidebar p-0 text-ink-gray-9 shadow-dialog backdrop:bg-surface-scrim"
+        class="open:flex relative m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-2rem)] flex-col overflow-hidden border-e border-outline-gray-1 bg-surface-sidebar p-0 text-ink-gray-9 shadow-dialog backdrop:bg-surface-scrim"
       >
-        <div class="flex h-12 shrink-0 items-center justify-between border-b border-outline-gray-1 ps-3 pe-2">
-          <span class="text-sm-medium leading-tighter text-ink-gray-6">
-            Navigation
-          </span>
-          <IconButton
-            label="Close navigation"
-            icon="lucide-x"
-            size="lg"
-            onClick={closeDrawer}
-            class="shrink-0"
-          />
-        </div>
+        {/* The brand row is the drawer's header: close sits at its end, where
+            the desktop sidebar keeps its fold control, so the drawer does not
+            stack a second title bar over the same identity. */}
+        <IconButton
+          label="Close navigation"
+          icon="lucide-x"
+          size="lg"
+          variant="ghost"
+          onClick={closeDrawer}
+          class="absolute end-1 top-1 z-raised"
+        />
         <UIProvider dir={ui?.dir()} portalTarget={drawerPortal}>
           <div class="flex min-h-0 flex-1 flex-col">
             <AppSidebar

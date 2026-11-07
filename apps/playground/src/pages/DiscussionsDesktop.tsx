@@ -424,7 +424,7 @@ export function DiscussionsDesktop(props: {
             })),
           },
         ]}
-        settings={
+        settings={() => (
           <SidebarItem
             label="Settings"
             icon="lucide-settings"
@@ -432,7 +432,7 @@ export function DiscussionsDesktop(props: {
           >
             Settings
           </SidebarItem>
-        }
+        )}
         account={
           <AccountMenu
             onOpenSettings={() => setSettingsOpen(true)}

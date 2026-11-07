@@ -1,9 +1,9 @@
 import { A } from '@solidjs/router'
-import { Avatar } from '@talelk/newui-atoms'
-import { Dropdown } from '@talelk/newui-molecules'
+import { Avatar, Icon } from '@talelk/newui-atoms'
+import { Dropdown, Menu } from '@talelk/newui-molecules'
 import { SidebarItem } from '@talelk/newui-organisms'
 import { AppShell } from '@talelk/newui-templates'
-import { createMemo, createSignal, type JSX } from 'solid-js'
+import { createMemo, createSignal, For, type JSX } from 'solid-js'
 import { assetUrl, sitePath } from '../lib/base'
 import { EXAMPLES } from '../lib/examples'
 import { ThemeMenu, ThemeMenuCompact } from '../shell/ThemeMenu'
@@ -119,16 +119,17 @@ export function AppPage(props: {
         </Dropdown>
       }
       tenantCollapsed={
-        <Dropdown options={tenantOptions} onSelect={setTenant}>
-          <span class="grid size-8 place-items-center">
-            <span class="sr-only">Choose tenant</span>
-            <span class="lucide-building-2 size-4" aria-hidden="true" />
-          </span>
-        </Dropdown>
+        <RailMenu
+          label="Choose tenant"
+          options={tenantOptions}
+          onSelect={setTenant}
+        >
+          <Icon icon="lucide-building-2" class="size-4" />
+        </RailMenu>
       }
       navigation={props.navigation ? undefined : applicationNavigation()}
       navigationContent={props.navigation}
-      settings={
+      settings={() => (
         <SidebarItem
           label="Settings"
           icon="lucide-settings"
@@ -137,7 +138,7 @@ export function AppPage(props: {
         >
           Settings
         </SidebarItem>
-      }
+      )}
       account={
         <Dropdown options={accountOptions} class="w-full justify-start">
           <span class="flex min-w-0 flex-1 items-center gap-2">
@@ -147,9 +148,9 @@ export function AppPage(props: {
         </Dropdown>
       }
       accountCollapsed={
-        <Dropdown options={accountOptions}>
+        <RailMenu label="Rhea Kapoor, account" options={accountOptions}>
           <Avatar size="xs" theme="blue" label="Rhea Kapoor" />
-        </Dropdown>
+        </RailMenu>
       }
       utilities={<ThemeMenu />}
       utilitiesCollapsed={<ThemeMenuCompact />}
@@ -157,5 +158,42 @@ export function AppPage(props: {
     >
       {props.children}
     </AppShell>
+  )
+}
+
+/**
+ * A menu whose trigger is one square rail control: no chevron (it would not
+ * fit a 56px rail beside the glyph) and a name, since the glyph alone carries
+ * none.
+ */
+function RailMenu(props: {
+  label: string
+  options: { label: string; value: string; icon?: string }[]
+  onSelect?: (value: string) => void
+  children: JSX.Element
+}): JSX.Element {
+  return (
+    <Menu.Root onSelect={props.onSelect}>
+      <Menu.Trigger
+        aria-label={props.label}
+        title={props.label}
+        class="grid size-8 place-items-center rounded-control text-ink-gray-7 transition-colors hover:bg-surface-gray-3 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none"
+      >
+        {props.children}
+      </Menu.Trigger>
+      <Menu.Content>
+        <For each={props.options}>
+          {(option) => (
+            <Menu.Item value={option.value}>
+              <Icon
+                icon={option.icon}
+                class="size-4 shrink-0 text-ink-gray-6"
+              />
+              <span>{option.label}</span>
+            </Menu.Item>
+          )}
+        </For>
+      </Menu.Content>
+    </Menu.Root>
   )
 }

@@ -45,7 +45,7 @@ export const API = {
       "name": "utilities",
       "type": "JSX.Element",
       "optional": true,
-      "description": "Global utilities rendered above Settings while the sidebar is expanded."
+      "description": "Global utilities rendered beside Settings while the sidebar is expanded."
     },
     {
       "name": "utilitiesCollapsed",
@@ -55,8 +55,9 @@ export const API = {
     },
     {
       "name": "settings",
-      "type": "JSX.Element",
-      "optional": true
+      "type": "JSX.Element | (() => JSX.Element)",
+      "optional": true,
+      "description": "The Settings row. Pass a function when it is a `SidebarItem`: the item\nreads the collapse state from the sidebar, which a caller-created element\ncannot see (it would keep its expanded padding in the rail)."
     },
     {
       "name": "account",

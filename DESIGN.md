@@ -485,8 +485,16 @@ alone.
   with a Petrol icon and Graphite text; hover is one gray step darker than
   Mist. Counts are plain right-aligned figures. Section
   headings are sentence case — never tracked uppercase.
+- **Rail:** collapsed to 56px, the sidebar is two columns of square 32px
+  controls — brand, tenant and destinations above; Expand, preferences,
+  Settings and the account avatar in the footer. Menus in the rail open from
+  the glyph alone (no chevron) and carry a name and a tooltip.
+- **Footer:** expanded, Settings and the theme switch share one row; the
+  account takes the row below.
 - **Mobile:** below 1024px the sidebar becomes a 288px modal drawer with 40px
-  touch targets; the same navigation model, breadcrumbs and reading order.
+  touch targets; its brand row is the header, with Close at the end. The top
+  bar sits on the Mist frame with a ghost menu button; the same navigation
+  model, breadcrumbs and reading order.
 - **Footer:** a compact previous/next row, 8px radius, separated by a 1px top
   border and 24px of space.
 

@@ -14,7 +14,7 @@ import { SidebarItem } from '@talelk/newui-organisms'
   brand={<Brand />}
   tenant={<Dropdown options={tenants}>Acme · Production</Dropdown>}
   groups={[{ label: 'Workspace', items }]}
-  settings={<SidebarItem label="Settings" icon="lucide-settings">Settings</SidebarItem>}
+  settings={() => <SidebarItem label="Settings" icon="lucide-settings">Settings</SidebarItem>}
   account={<AccountMenu />}
 />
 ```
@@ -30,12 +30,12 @@ does not create a separate app rail.
 | `brandCollapsed` | `JSX.Element` | optional compact brand mark |
 | `tenant` | `JSX.Element` | tenant/workspace switcher |
 | `tenantCollapsed` | `JSX.Element` | optional compact tenant action |
-| `utilities` | `JSX.Element` | global utilities above the settings action; hidden while collapsed |
+| `utilities` | `JSX.Element` | global utilities beside the settings action, on one row; hidden while collapsed |
 | `utilitiesCollapsed` | `JSX.Element` | compact form of `utilities`, shown in the rail |
 | `search` | `JSX.Element` | optional fixed control above the scrolling groups |
 | `groups` | `AppSidebarGroup[]` | grouped headings/actions and icon rows |
 | `children` | `JSX.Element \| (() => JSX.Element)` | advanced custom menu within the same sidebar; use the function form when it reads `useSidebar()` |
-| `settings` | `JSX.Element` | pinned utility slot |
+| `settings` | `JSX.Element \| (() => JSX.Element)` | pinned utility slot; pass a function for a `SidebarItem` — a caller-created element cannot read the collapse state and keeps its expanded padding in the rail |
 | `account` | `JSX.Element` | pinned user/account slot |
 | `accountCollapsed` | `JSX.Element` | compact user control |
 | `width` | `string` | expanded width; defaults to `16rem` |
@@ -56,8 +56,12 @@ controls with tooltips in collapsed mode; the app owns active-route state.
 - `utilities` is hidden while collapsed; pass `utilitiesCollapsed` to keep the
   same control reachable as an icon (the theme switch does this).
 - The fold is chrome, not a destination: `Collapse` sits at the end of the
-  identity row and the rail repeats an `Expand` control under the tenant, above
-  a divider. The footer never spends a row on it.
+  identity row. In the rail, `Expand` heads the footer, so the rail reads as
+  two quiet columns — identity and destinations above, square controls below —
+  with no extra ruled row breaking the identity. The expanded footer never
+  spends a row on it.
+- Expanded, `settings` and `utilities` share one footer row (the settings row
+  grows, the utilities sit at its end); the account takes the row below.
 - Multiple labeled groups and group-level actions are supported. Group labels
   are 12px Ink Muted so rows, not headings, carry the menu.
 - The sidebar has no app-rail sibling. App identity and all destinations live in

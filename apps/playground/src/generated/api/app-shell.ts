@@ -50,7 +50,7 @@ export const API = {
       "name": "utilities",
       "type": "JSX.Element",
       "optional": true,
-      "description": "Global utilities pinned above Settings while the sidebar is expanded."
+      "description": "Global utilities pinned beside Settings while the sidebar is expanded."
     },
     {
       "name": "utilitiesCollapsed",
@@ -60,9 +60,9 @@ export const API = {
     },
     {
       "name": "settings",
-      "type": "JSX.Element",
+      "type": "JSX.Element | (() => JSX.Element)",
       "optional": true,
-      "description": "Settings action pinned to the bottom of the sidebar."
+      "description": "Settings action pinned to the bottom of the sidebar. Pass a function when\nit is a `SidebarItem`, so it renders inside the sidebar and follows the\ncollapsed rail."
     },
     {
       "name": "account",
