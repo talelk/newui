@@ -65,11 +65,11 @@ function Example(props: {
             ],
           },
         ]}
-        settings={
+        settings={() => (
           <SidebarItem label="Settings" icon="lucide-settings">
             Settings
           </SidebarItem>
-        }
+        )}
         utilities={
           <SidebarItem label="Appearance" icon="lucide-sun">
             Appearance

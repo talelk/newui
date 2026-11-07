@@ -21,7 +21,7 @@ import { Dropdown } from '@talelk/newui-molecules'
       { label: 'Revenue', icon: 'lucide-chart-no-axes-combined', route: '/reports' },
     ] },
   ]}
-  settings={<SidebarItem label="Settings" icon="lucide-settings" route="/settings">Settings</SidebarItem>}
+  settings={() => <SidebarItem label="Settings" icon="lucide-settings" route="/settings">Settings</SidebarItem>}
   account={<AccountMenu />}
 >
   <PageContent />
@@ -45,7 +45,7 @@ one sidebar model: no separately supplied rail, desktop sidebar or mobile nav.
 | `sidebarSearch` | `JSX.Element` | optional fixed filter above the scrolling groups |
 | `utilities` | `JSX.Element` | global utilities above Settings while the sidebar is expanded |
 | `utilitiesCollapsed` | `JSX.Element` | compact form of `utilities`, shown in the rail |
-| `settings` | `JSX.Element` | pinned utility action above the account |
+| `settings` | `JSX.Element \| (() => JSX.Element)` | pinned action above the account, sharing its row with `utilities` while expanded; pass a function for a `SidebarItem` so it follows the collapsed rail |
 | `account` | `JSX.Element` | pinned user/account control |
 | `accountCollapsed` | `JSX.Element` | compact account control while collapsed |
 | `collapsed` | `boolean` | controlled desktop icon-collapse state |

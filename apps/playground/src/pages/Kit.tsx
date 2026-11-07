@@ -194,7 +194,7 @@ export function Kit(): JSX.Element {
   brand={<Brand />}
   tenant={<TenantSwitcher />}
   navigation={groups}
-  settings={<SettingsAction />}
+  settings={() => <SettingsAction />}
   account={<AccountMenu />}
 >
   {props.children}

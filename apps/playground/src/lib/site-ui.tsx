@@ -41,7 +41,7 @@ export const SEGMENTED_BTN =
 
 /** One square icon button in shell chrome (masthead, rails, toolbars). */
 export const ICON_BTN =
-  'grid size-8 place-items-center rounded-control text-ink-gray-6 transition-colors duration-base ease-standard hover:bg-surface-gray-2 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none'
+  'grid size-8 place-items-center rounded-control text-ink-gray-6 transition-colors duration-base ease-standard hover:bg-surface-gray-3 hover:text-ink-gray-9 focus-visible:focus-ring motion-reduce:transition-none'
 
 /** The inline-code chip used by long-form pages and rendered markdown. */
 export const INLINE_CODE =

@@ -113,11 +113,11 @@ export function Demo(): JSX.Element {
           Acme · Production
         </Dropdown>
       }
-      settings={
+      settings={() => (
         <SidebarItem label="Settings" icon="lucide-settings">
           Settings
         </SidebarItem>
-      }
+      )}
       account={
         <SidebarItem label="Rhea Kapoor" icon="lucide-user-round">
           Rhea Kapoor

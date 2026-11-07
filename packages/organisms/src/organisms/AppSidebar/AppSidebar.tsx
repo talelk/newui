@@ -44,11 +44,16 @@ export interface AppSidebarProps {
   groups?: AppSidebarGroup[]
   /** Advanced navigation composition, still inside this single sidebar. */
   children?: JSX.Element | (() => JSX.Element)
-  /** Global utilities rendered above Settings while the sidebar is expanded. */
+  /** Global utilities rendered beside Settings while the sidebar is expanded. */
   utilities?: JSX.Element
   /** Compact icon form of `utilities`, shown while the sidebar is collapsed. */
   utilitiesCollapsed?: JSX.Element
-  settings?: JSX.Element
+  /**
+   * The Settings row. Pass a function when it is a `SidebarItem`: the item
+   * reads the collapse state from the sidebar, which a caller-created element
+   * cannot see (it would keep its expanded padding in the rail).
+   */
+  settings?: JSX.Element | (() => JSX.Element)
   account?: JSX.Element
   accountCollapsed?: JSX.Element
   width?: SidebarProps['width']
@@ -102,7 +107,7 @@ function AppSidebarIdentity(props: {
         </div>
         {/* The fold is chrome, not a destination: keeping it in the identity
             row keeps it out of the menu in the expanded state; the rail
-            repeats the same control under the tenant. */}
+            carries the same control at the head of its footer. */}
         <Show when={!collapsed() && props.collapsible}>
           <SidebarTrigger />
         </Show>
@@ -119,14 +124,6 @@ function AppSidebarIdentity(props: {
           </Show>
         </div>
       </Show>
-      <Show when={collapsed() && props.collapsible}>
-        <div
-          data-slot="app-sidebar-expand"
-          class="flex shrink-0 justify-center border-b border-outline-gray-1 px-2 pt-1 pb-2"
-        >
-          <SidebarTrigger />
-        </div>
-      </Show>
     </>
   )
 }
@@ -134,30 +131,42 @@ function AppSidebarIdentity(props: {
 function AppSidebarFooter(props: {
   utilities?: JSX.Element
   utilitiesCollapsed?: JSX.Element
-  settings?: JSX.Element
+  settings?: JSX.Element | (() => JSX.Element)
   account?: JSX.Element
   accountCollapsed?: JSX.Element
+  collapsible: boolean
 }): JSX.Element {
+  const settings = () => <AppSidebarContent content={props.settings} />
   const { collapsed } = useSidebar()
   return (
     <div
       data-slot="app-sidebar-footer"
-      class="mt-auto flex shrink-0 flex-col gap-1 border-t border-outline-gray-1 px-2 pt-2 pb-2"
+      class="mt-auto flex shrink-0 flex-col gap-0.5 border-t border-outline-gray-1 p-2"
+      classList={{ 'items-center': collapsed() }}
     >
-      <Show when={!collapsed() && props.utilities}>
-        <div data-slot="app-sidebar-utilities" class="pb-1">
-          {props.utilities}
+      {/* The rail's expand control heads the footer: one column of square
+          controls, no ruled row of its own under the tenant. */}
+      <Show when={collapsed() && props.collapsible}>
+        <div data-slot="app-sidebar-expand" class="flex justify-center">
+          <SidebarTrigger />
         </div>
       </Show>
       <Show when={collapsed() && props.utilitiesCollapsed}>
-        <div
-          data-slot="app-sidebar-utilities"
-          class="flex justify-center pb-0.5"
-        >
+        <div data-slot="app-sidebar-utilities" class="flex justify-center">
           {props.utilitiesCollapsed}
         </div>
       </Show>
-      <Show when={props.settings}>{props.settings}</Show>
+      {/* Expanded, Settings and the utilities share one row: a preference
+          switch does not earn a row of its own in a dense frame. */}
+      <Show
+        when={!collapsed() && props.utilities}
+        fallback={<Show when={props.settings}>{settings()}</Show>}
+      >
+        <div data-slot="app-sidebar-utilities" class="flex items-center gap-1">
+          <div class="min-w-0 flex-1">{settings()}</div>
+          <div class="shrink-0">{props.utilities}</div>
+        </div>
+      </Show>
       <Show
         when={collapsed() && props.accountCollapsed}
         fallback={props.account}
@@ -253,6 +262,7 @@ export function AppSidebar(props: AppSidebarProps): JSX.Element {
         settings={props.settings}
         account={props.account}
         accountCollapsed={props.accountCollapsed}
+        collapsible={props.collapsible !== false}
       />
     </Sidebar>
   )

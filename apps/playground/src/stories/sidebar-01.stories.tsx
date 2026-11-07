@@ -102,11 +102,11 @@ export function Demo() {
         />
       }
       navigation={groups()}
-      settings={
+      settings={() => (
         <SidebarItem label="Settings" icon="lucide-settings">
           Settings
         </SidebarItem>
-      }
+      )}
       account={
         <SidebarItem label="Documentation profile" icon="lucide-user-round">
           Documentation profile

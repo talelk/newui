@@ -87,6 +87,54 @@ describe('AppSidebar', () => {
     ).toBeNull()
   })
 
+  it('heads the rail footer with the expand control', () => {
+    const { container } = render(() => (
+      <AppSidebar
+        brand={<span>Acme</span>}
+        collapsed
+        groups={[{ items: [] }]}
+      />
+    ))
+    const footer = container.querySelector('[data-slot="app-sidebar-footer"]')
+    expect(
+      footer?.querySelector('[data-slot="app-sidebar-expand"]'),
+    ).toBeTruthy()
+  })
+
+  it('renders a settings function inside the sidebar, so it follows the rail', () => {
+    const { container } = render(() => (
+      <AppSidebar
+        brand={<span>Acme</span>}
+        collapsed
+        groups={[{ items: [] }]}
+        settings={() => (
+          <SidebarItem label="Settings" icon="lucide-settings">
+            Settings
+          </SidebarItem>
+        )}
+      />
+    ))
+    const footer = container.querySelector('[data-slot="app-sidebar-footer"]')
+    // Collapsed, the item hides its label for screen readers only.
+    expect(
+      footer?.querySelector('[data-slot="sidebar-item"] .sr-only')?.textContent,
+    ).toBe('Settings')
+  })
+
+  it('puts settings and utilities on one footer row while expanded', () => {
+    const { container } = render(() => (
+      <AppSidebar
+        brand={<span>Acme</span>}
+        groups={[{ items: [] }]}
+        utilities={<span>Theme switch</span>}
+        settings={<span>Settings row</span>}
+      />
+    ))
+    const row = container.querySelector('[data-slot="app-sidebar-utilities"]')
+    expect(row?.textContent).toContain('Settings row')
+    expect(row?.textContent).toContain('Theme switch')
+  })
+
   it('has no fold or compact utilities when it cannot collapse', () => {
     render(() => (
       <AppSidebar
