@@ -6,6 +6,8 @@ import { TanStackDevtools } from '@tanstack/solid-devtools'
 import { SolidQueryDevtoolsPanel } from '@tanstack/solid-query-devtools'
 import type { JSX } from 'solid-js'
 import { StarterDevtoolsPanel } from './devtools/StarterDevtoolsPanel'
+import { dataClient } from './data/client'
+import { Analytics } from './pages/Analytics'
 import { Records } from './pages/Records'
 import { Settings } from './pages/Settings'
 import { SignIn } from './pages/SignIn'
@@ -15,8 +17,9 @@ import { SignIn } from './pages/SignIn'
  *
  * 1. **One data provider** at the root: every screen shares a cache, and the
  *    provider clears it when the app unmounts.
- * 2. **The router owns the screen**: `/`, `/settings` and `/sign-in`. The
- *    starter keeps them eager because there are three and they share the frame;
+ * 2. **The router owns the screen**: `/`, `/analytics`, `/settings` and
+ *    `/sign-in`. The
+ *    starter keeps them eager because there are four and they share the frame;
  *    a large app splits them (the playground's `routes.tsx` shows how).
  * 3. **The toast host** is mounted once, beside the router, so a mutation can
  *    report from anywhere.
@@ -30,7 +33,8 @@ function NotFound(): JSX.Element {
         <p class="text-caption text-ink-gray-7">404</p>
         <h1 class="text-heading">Nothing here</h1>
         <p class="text-ink-gray-7">
-          The starter has three screens: projects, settings and sign-in.
+          The starter has four screens: projects, analytics, settings and
+          sign-in.
         </p>
         <Button route="/" variant="solid" theme="blue">
           Back to projects
@@ -42,9 +46,10 @@ function NotFound(): JSX.Element {
 
 export function App(): JSX.Element {
   return (
-    <DataProvider>
+    <DataProvider client={dataClient}>
       <Router>
         <Route path="/" component={Records} />
+        <Route path="/analytics" component={Analytics} />
         <Route path="/settings" component={Settings} />
         <Route path="/sign-in" component={SignIn} />
         <Route path="*" component={NotFound} />

@@ -349,6 +349,9 @@ importers:
       '@talelk/newui-atoms':
         specifier: workspace:*
         version: link:../../packages/atoms
+      '@talelk/newui-charts':
+        specifier: workspace:*
+        version: link:../../packages/charts
       '@talelk/newui-data':
         specifier: workspace:*
         version: link:../../packages/data

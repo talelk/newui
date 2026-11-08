@@ -31,6 +31,11 @@ export type StarterDevtoolsEvents = {
     weeklyDigest: boolean
     mentions: boolean
   }
+  'analytics:range': { preset: string }
+  'analytics:cross': { column: string; value: string }
+  'analytics:view': { name: string; action: 'save' | 'apply' | 'remove' }
+  'analytics:export': { rows: number }
+  'analytics:realtime': { type: string; doctype: string }
 }
 
 export type StarterDevtoolsEntry = {
