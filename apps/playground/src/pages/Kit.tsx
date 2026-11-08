@@ -75,10 +75,20 @@ const FILES = [
   ],
   ['src/shell/theme.ts', 'The single light/dark controller.'],
   ['src/data/records.ts', 'The repository: four methods, in memory.'],
+  [
+    'src/data/analytics.ts',
+    'The seeded demo backend: window, cross-filter, sort, page, total.',
+  ],
+  ['src/data/client.ts', 'The one query client, shared with the socket.'],
+  ['src/lib/url-bridge.ts', 'The router adapter behind every URL state.'],
   ['src/data/session.ts', 'The demo session — the shape of auth, not auth.'],
   [
     'src/pages/Records.tsx',
     'Collection, filters, stats, table, create + detail.',
+  ],
+  [
+    'src/pages/Analytics.tsx',
+    'The analytics recipe: dashboard state, widget grid, server table, saved views.',
   ],
   ['src/pages/Settings.tsx', 'The form surface at page scale.'],
   ['src/pages/SignIn.tsx', 'AuthCard + a validated sign-in.'],
@@ -92,6 +102,7 @@ export function Kit(): JSX.Element {
         { id: 'compose', label: 'Compose a page' },
         { id: 'data', label: 'Wire data' },
         { id: 'start', label: 'Start an app' },
+        { id: 'analytics', label: 'Analytics recipe' },
         { id: 'recipes', label: 'Recipes and examples' },
       ]}
     />
@@ -406,8 +417,128 @@ pnpm build:starter   # 138 kB gzip: frame, router, data layer, table, forms
       </PageSection>
 
       <PageSection
+        id="analytics"
+        title="5 · The analytics recipe"
+        description="apps/starter/src/pages/Analytics.tsx is the dashboard half of the skeleton — the copyable answer to build me a dashboard."
+      >
+        <p class="text-base text-ink-gray-7">
+          Where <InlineCode>Records.tsx</InlineCode> is the CRUD recipe (a
+          client-mode collection, one typed table, optimistic edits),{' '}
+          <InlineCode>Analytics.tsx</InlineCode> is its analytics twin. Same
+          levels, opposite ends: the table is server-mode, the state is shared,
+          and the page is reproducible by link.
+        </p>
+        <div class="overflow-x-auto rounded-card border border-outline-gray-1">
+          <table class="w-full border-collapse text-start text-sm">
+            <thead class="bg-surface-gray-1 text-caption text-ink-gray-7">
+              <tr>
+                <th class="p-2 text-start font-medium">On the page</th>
+                <th class="p-2 text-start font-medium">
+                  The surface that owns it
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <For
+                each={[
+                  [
+                    'One time range, one filter record, one cross-filter',
+                    'createDashboardState + DashboardProvider — @talelk/newui-data',
+                  ],
+                  [
+                    'The preset row and the chips that write it back',
+                    'FilterBar + ToggleGroup, fed by the dashboard state',
+                  ],
+                  [
+                    'The KPI row: four stats and the shape behind them',
+                    'StatGrid + Sparkline — @talelk/newui-organisms, @talelk/newui-charts',
+                  ],
+                  [
+                    'The tiled charts, draggable as one document',
+                    'WidgetGrid + AreaChart / BarChart / DonutChart',
+                  ],
+                  [
+                    'The big tab: sorting, paging and search on the backend',
+                    'DataTable in server mode, virtual, with createServerTableState',
+                  ],
+                  [
+                    'The link that reproduces the page',
+                    'createUrlState through one router adapter — @solidjs/router',
+                  ],
+                  [
+                    'Saved views and the kept layout',
+                    'createConfigStore — named, versioned documents',
+                  ],
+                  [
+                    'The export, and the undo behind it',
+                    'exportCsv + downloadBlob + createUndo',
+                  ],
+                  [
+                    'The cache the socket invalidates',
+                    'createCollection + connectRealtime — @talelk/newui-data/resource',
+                  ],
+                ]}
+              >
+                {([what, who]) => (
+                  <tr class="border-t border-outline-gray-1">
+                    <td class="p-2 text-ink-gray-8">{what}</td>
+                    <td class="p-2 font-mono text-xs text-ink-gray-7">{who}</td>
+                  </tr>
+                )}
+              </For>
+            </tbody>
+          </table>
+        </div>
+        <Code title="src/pages/Analytics.tsx — the shared state, once">
+          {`
+const adapter = createUrlStateBridge() // one bridge for every surface
+
+const dashboard = createDashboardState({
+  timeRange: { preset: '30d' },
+  filters: { region: 'all', channel: 'all' },
+  adapter,
+})
+
+const table = createServerTableState({
+  initial: { pagination: { pageSize: 50 } },
+  sync: { adapter, namespace: 'table' },
+})
+
+const collection = createCollection<Transaction>(() => ({
+  key: table.key(['transactions']), // the slices ride along in the key
+  repository: createTransactionRepository(buildQuery),
+  keepPreviousData: true, // a page change never blanks the table
+  refetchInterval: 30_000, // the belt to the socket's braces
+}))
+          `}
+        </Code>
+        <p class="text-base text-ink-gray-7">
+          The data story is <InlineCode>src/data/analytics.ts</InlineCode>: a
+          seeded, deterministic demo backend that answers the same queries a
+          real one would — window, cross-filter, sort, page, total. The realtime
+          socket is the same factory seam a consumer uses for socket.io; the
+          demo plugs an in-memory transport into{' '}
+          <InlineCode>createRealtime</InlineCode>, so a tick lands on the cache
+          exactly the way a server event would.
+        </p>
+        <p class="text-base text-ink-gray-7">
+          The playground's{' '}
+          <A
+            href="/pages/analytics"
+            class="text-ink-blue-link underline decoration-dotted"
+          >
+            Analytics page
+          </A>{' '}
+          is the same recipe told as an application workflow — the mapping
+          between the two is pinned in{' '}
+          <InlineCode>spec/reference-examples.md</InlineCode> so neither can
+          drift from the other.
+        </p>
+      </PageSection>
+
+      <PageSection
         id="recipes"
-        title="5 · Recipes and examples"
+        title="6 · Recipes and examples"
         description="Small compositions are guides, not application pages or new public APIs by default."
       >
         <p class="text-base text-ink-gray-7">

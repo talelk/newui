@@ -27,6 +27,24 @@ responds to viewport width on either destination.
 | Discussions | Community switcher, grouped space feeds, local creation/replies, search, read state and settings | `e2e/discussions-settings.spec.ts` |
 | Settings | Workspace settings landing and grouped profile, notification and member dialog | `e2e/discussions-settings.spec.ts` |
 
+## Starter recipes and their playground twins
+
+`apps/starter` is the copyable application skeleton; its pages are recipes, not
+workflows, so they live outside the `/pages` catalog. Each starter recipe has a
+playground twin that tells the same story as a complete application, and the two
+must not drift: the recipe composes the surfaces the page demonstrates.
+
+| Starter recipe | Playground twin | Shared surfaces |
+| --- | --- | --- |
+| `src/pages/Records.tsx` | Tasks (`/pages/tasks`) | `createCollection`, `FilterBar`, `StatGrid`, `DataTable` |
+| `src/pages/Analytics.tsx` | Analytics (`/pages/analytics`) | `createDashboardState`, `StatGrid` + `Sparkline`, `WidgetGrid` with Area/Bar/Donut, server-mode `DataTable`, `exportCsv` + undo |
+
+Both analytics surfaces read one shared state and export the same way; the
+starter's recipe is the copyable answer to "build me a dashboard" and the
+playground page is the same composition told as an application workflow. The
+`/kit` guide mirrors the starter page. The starter's browser evidence is
+`e2e/starter.spec.ts`; the playground page's is `e2e/analytics.spec.ts`.
+
 The eight card compositions cover account creation, payments, team membership,
 sharing, notifications, support reports, project information and cookie
 preferences.
