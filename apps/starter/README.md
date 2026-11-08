@@ -1,7 +1,8 @@
 # Starter
 
 An application skeleton assembled only from public `newui` surfaces: the app
-frame, a collection, a typed table, two forms, a demo session and settings.
+frame, a collection, a typed table, two forms, an analytics dashboard, a demo
+session and settings.
 
 ```sh
 pnpm dev:starter     # http://localhost:4183
@@ -20,12 +21,16 @@ emission, accessibility (axe) and a smoke suite in a real browser run against it
 | `src/shell/Shell.tsx` | `AppShell`: one responsive sidebar with brand, tenant, grouped navigation, settings and account |
 | `src/shell/theme.ts` | the single light/dark controller |
 | `src/data/records.ts` | `Repository<Project, NewProject>` — four methods, in memory |
+| `src/data/analytics.ts` | the seeded demo backend: window, cross-filter, sort, page, total, plus the demo socket |
+| `src/data/client.ts` | the one query client, shared with `connectRealtime` |
+| `src/lib/url-bridge.ts` | the `@solidjs/router` adapter behind every URL state |
 | `src/data/session.ts` | the demo session: the shape of auth, not auth |
 | `src/devtools/events.ts` | typed product events and the in-app event log |
 | `src/devtools/StarterDevtoolsPanel.tsx` | the product panel beside the TanStack Query panel |
 | `AGENTS.md` | consumer skill-loading guidance and the source policy |
 | `scripts/intent.mjs` | stable Intent CLI invocation (avoids the duplicate `intent` bin) |
 | `src/pages/Records.tsx` | collection, filters, stats, table, create + detail |
+| `src/pages/Analytics.tsx` | the analytics recipe: dashboard state, widget grid, server-mode table, saved views, export + undo |
 | `src/pages/Settings.tsx` | the form surface at page scale |
 | `src/pages/SignIn.tsx` | `AuthCard` + a validated sign-in |
 

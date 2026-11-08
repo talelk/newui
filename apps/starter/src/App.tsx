@@ -4,20 +4,51 @@ import { DataProvider } from '@talelk/newui-data/query'
 import { Toaster } from '@talelk/newui-molecules'
 import { TanStackDevtools } from '@tanstack/solid-devtools'
 import { SolidQueryDevtoolsPanel } from '@tanstack/solid-query-devtools'
-import type { JSX } from 'solid-js'
+import { type JSX, lazy, Suspense } from 'solid-js'
+import { dataClient } from './data/client'
 import { StarterDevtoolsPanel } from './devtools/StarterDevtoolsPanel'
 import { Records } from './pages/Records'
 import { Settings } from './pages/Settings'
 import { SignIn } from './pages/SignIn'
 
 /**
+ * The analytics screen is the starter's first lazy route. The other three
+ * share the frame and cost the same bytes, so they stay eager; this one
+ * carries the widget grid, the server-mode table and — behind a `lazy()` of
+ * its own — the chart engine, and a screen you reach from the sidebar
+ * should not be paid for by every other page.
+ */
+const Analytics = lazy(() =>
+  import('./pages/Analytics').then((module) => ({
+    default: module.Analytics,
+  })),
+)
+
+/** The frame the analytics chunk slides into while it loads. */
+function RouteSkeleton(): JSX.Element {
+  return (
+    <main class="flex flex-col gap-4 p-6" aria-busy="true">
+      <span class="sr-only">Loading screen</span>
+      <div class="h-8 w-64 animate-pulse rounded-control bg-surface-gray-2" />
+      <div class="grid gap-4 min-[360px]:grid-cols-2 lg:grid-cols-4">
+        <div class="h-20 animate-pulse rounded-card bg-surface-gray-2" />
+        <div class="h-20 animate-pulse rounded-card bg-surface-gray-2" />
+        <div class="h-20 animate-pulse rounded-card bg-surface-gray-2" />
+        <div class="h-20 animate-pulse rounded-card bg-surface-gray-2" />
+      </div>
+      <div class="h-64 animate-pulse rounded-card bg-surface-gray-2" />
+    </main>
+  )
+}
+
+/**
  * The app, and the four decisions that make it one.
  *
  * 1. **One data provider** at the root: every screen shares a cache, and the
  *    provider clears it when the app unmounts.
- * 2. **The router owns the screen**: `/`, `/settings` and `/sign-in`. The
- *    starter keeps them eager because there are three and they share the frame;
- *    a large app splits them (the playground's `routes.tsx` shows how).
+ * 2. **The router owns the screen**: `/`, `/analytics`, `/settings` and
+ *    `/sign-in`. The light screens stay eager; the analytics screen splits,
+ *    the way the playground's `routes.tsx` splits every route.
  * 3. **The toast host** is mounted once, beside the router, so a mutation can
  *    report from anywhere.
  * 4. **Devtools mount once**, beside them, in development only: the library
@@ -30,7 +61,8 @@ function NotFound(): JSX.Element {
         <p class="text-caption text-ink-gray-7">404</p>
         <h1 class="text-heading">Nothing here</h1>
         <p class="text-ink-gray-7">
-          The starter has three screens: projects, settings and sign-in.
+          The starter has four screens: projects, analytics, settings and
+          sign-in.
         </p>
         <Button route="/" variant="solid" theme="blue">
           Back to projects
@@ -42,9 +74,17 @@ function NotFound(): JSX.Element {
 
 export function App(): JSX.Element {
   return (
-    <DataProvider>
+    <DataProvider client={dataClient}>
       <Router>
         <Route path="/" component={Records} />
+        <Route
+          path="/analytics"
+          component={() => (
+            <Suspense fallback={<RouteSkeleton />}>
+              <Analytics />
+            </Suspense>
+          )}
+        />
         <Route path="/settings" component={Settings} />
         <Route path="/sign-in" component={SignIn} />
         <Route path="*" component={NotFound} />

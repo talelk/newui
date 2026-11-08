@@ -41,6 +41,12 @@ export function Shell(props: {
           route: '/',
           active: location.pathname === '/',
         },
+        {
+          label: 'Analytics',
+          icon: 'lucide-chart-no-axes-combined',
+          route: '/analytics',
+          active: location.pathname === '/analytics',
+        },
       ],
     },
   ]

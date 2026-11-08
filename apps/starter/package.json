@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@talelk/newui-atoms": "workspace:*",
+    "@talelk/newui-charts": "workspace:*",
     "@talelk/newui-data": "workspace:*",
     "@talelk/newui-molecules": "workspace:*",
     "@talelk/newui-organisms": "workspace:*",

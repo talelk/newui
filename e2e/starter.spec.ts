@@ -190,6 +190,40 @@ test('saves the settings form', async ({ page }) => {
   await expect(page.getByText('Settings saved.')).toBeVisible()
 })
 
+test('the analytics recipe composes a dashboard behind the same session', async ({
+  page,
+}) => {
+  await page.goto(`${STARTER}/`)
+  await page
+    .getByRole('navigation', { name: 'Starter navigation' })
+    .getByRole('link', { name: 'Analytics' })
+    .click()
+  await expect(page.getByRole('heading', { name: 'Analytics' })).toBeVisible()
+
+  // The KPI row and the widget grid: both halves of the recipe's layout.
+  const kpis = page.getByRole('region', {
+    name: 'Key performance indicators',
+  })
+  await expect(kpis).toBeVisible()
+  await expect(kpis.getByText('Revenue', { exact: true })).toBeVisible()
+  await expect(
+    page.getByRole('group', { name: 'Analytics widgets' }),
+  ).toBeVisible()
+
+  // The time-range presets round-trip through the URL.
+  await page.getByRole('radio', { name: '7d', exact: true }).click()
+  await expect(page).toHaveURL(/range=7d/)
+
+  // The server-mode tab pages against the demo backend, not the page.
+  await page.getByRole('tab', { name: /Transactions/ }).click()
+  await expect(page.locator('[data-slot="data-table"]')).toBeVisible()
+  const firstPage = await rows(page).first().textContent()
+  await expect(rows(page).first()).toBeVisible()
+  await page.getByRole('button', { name: 'Next page' }).click()
+  // A new page arrived: the leading row is a different record.
+  await expect(rows(page).first()).not.toHaveText(firstPage ?? '')
+})
+
 test('the production starter ships no devtools UI or source annotations', async ({
   page,
 }) => {
