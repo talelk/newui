@@ -4,13 +4,42 @@ import { DataProvider } from '@talelk/newui-data/query'
 import { Toaster } from '@talelk/newui-molecules'
 import { TanStackDevtools } from '@tanstack/solid-devtools'
 import { SolidQueryDevtoolsPanel } from '@tanstack/solid-query-devtools'
-import type { JSX } from 'solid-js'
+import { lazy, type JSX, Suspense } from 'solid-js'
 import { StarterDevtoolsPanel } from './devtools/StarterDevtoolsPanel'
 import { dataClient } from './data/client'
-import { Analytics } from './pages/Analytics'
 import { Records } from './pages/Records'
 import { Settings } from './pages/Settings'
 import { SignIn } from './pages/SignIn'
+
+/**
+ * The analytics screen is the starter's first lazy route. The other three
+ * share the frame and cost the same bytes, so they stay eager; this one
+ * carries the widget grid, the server-mode table and — behind a `lazy()` of
+ * its own — the chart engine, and a screen you reach from the sidebar
+ * should not be paid for by every other page.
+ */
+const Analytics = lazy(() =>
+  import('./pages/Analytics').then((module) => ({
+    default: module.Analytics,
+  })),
+)
+
+/** The frame the analytics chunk slides into while it loads. */
+function RouteSkeleton(): JSX.Element {
+  return (
+    <main class="flex flex-col gap-4 p-6" aria-busy="true">
+      <span class="sr-only">Loading screen</span>
+      <div class="h-8 w-64 animate-pulse rounded-control bg-surface-gray-2" />
+      <div class="grid gap-4 min-[360px]:grid-cols-2 lg:grid-cols-4">
+        <div class="h-20 animate-pulse rounded-card bg-surface-gray-2" />
+        <div class="h-20 animate-pulse rounded-card bg-surface-gray-2" />
+        <div class="h-20 animate-pulse rounded-card bg-surface-gray-2" />
+        <div class="h-20 animate-pulse rounded-card bg-surface-gray-2" />
+      </div>
+      <div class="h-64 animate-pulse rounded-card bg-surface-gray-2" />
+    </main>
+  )
+}
 
 /**
  * The app, and the four decisions that make it one.
@@ -18,9 +47,8 @@ import { SignIn } from './pages/SignIn'
  * 1. **One data provider** at the root: every screen shares a cache, and the
  *    provider clears it when the app unmounts.
  * 2. **The router owns the screen**: `/`, `/analytics`, `/settings` and
- *    `/sign-in`. The
- *    starter keeps them eager because there are four and they share the frame;
- *    a large app splits them (the playground's `routes.tsx` shows how).
+ *    `/sign-in`. The light screens stay eager; the analytics screen splits,
+ *    the way the playground's `routes.tsx` splits every route.
  * 3. **The toast host** is mounted once, beside the router, so a mutation can
  *    report from anywhere.
  * 4. **Devtools mount once**, beside them, in development only: the library
@@ -49,7 +77,14 @@ export function App(): JSX.Element {
     <DataProvider client={dataClient}>
       <Router>
         <Route path="/" component={Records} />
-        <Route path="/analytics" component={Analytics} />
+        <Route
+          path="/analytics"
+          component={() => (
+            <Suspense fallback={<RouteSkeleton />}>
+              <Analytics />
+            </Suspense>
+          )}
+        />
         <Route path="/settings" component={Settings} />
         <Route path="/sign-in" component={SignIn} />
         <Route path="*" component={NotFound} />
