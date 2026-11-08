@@ -462,7 +462,6 @@ export function WidgetGrid(props: WidgetGridProps): JSX.Element {
         <div
           ref={gridRoot}
           data-slot="widget-grid-layout"
-          // biome-ignore lint/a11y/useSemanticElements: a live layout region has no native equivalent.
           role="group"
           aria-label={props.label ?? 'Widgets'}
           class="grid min-w-0 gap-card-gap"

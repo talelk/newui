@@ -19,7 +19,9 @@ function summarize(results: AxeResults) {
 }
 
 describe('Calendar accessibility', () => {
-  it('has no axe violations single and dual pane', async () => {
+  // axe over 24 rendered months is the suite's heaviest scan; the default
+  // 5 s budget only holds when the machine is idle, so it flakes under load.
+  it('has no axe violations single and dual pane', { timeout: 20000 }, async () => {
     const single = render(() => (
       <Calendar aria-label="Booking date" defaultValue="2026-10-26" />
     ))
