@@ -1,7 +1,14 @@
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { expect, test } from '@playwright/test'
-import { type CoherenceRule, inspectCoherence, settle } from './_lib/coherence'
+import {
+  type CoherenceRule,
+  collectStateBoxes,
+  inspectCoherence,
+  inspectToolbar,
+  settle,
+  stateShiftViolations,
+} from './_lib/coherence'
 
 /**
  * Calibration — the harness tests its own eyes.
@@ -61,4 +68,73 @@ test('the sweep sees unreachable truncated text', async ({ page }) => {
 
 test('the sweep sees an occluded control', async ({ page }) => {
   await assertFlags(page, 'occluded', 'occluded-control')
+})
+
+/* --------------------------------------------------------------------------
+ * Rubric detectors — the two [T] lines `spec/visual-quality.md` enforcement
+ * added to the PR sweep. Same discipline as the four rules above: a planted
+ * defect must be named, a planted clean page must be silence.
+ * -------------------------------------------------------------------------- */
+
+async function openWith(
+  page: import('@playwright/test').Page,
+  name: string,
+  inspect: (
+    page: import('@playwright/test').Page,
+  ) => Promise<{ rule: string; target: string; details: string }[]>,
+) {
+  await page.setViewportSize({ width: 1280, height: 900 })
+  await page.goto(fixture(name))
+  await settle(page)
+  return inspect(page)
+}
+
+test('the state sweep sees a transition that jumps the layout', async ({
+  page,
+}) => {
+  const violations = await openWith(page, 'state-shift-broken', async (p) =>
+    stateShiftViolations(await collectStateBoxes(p)),
+  )
+  expect(
+    violations.map((v) => `${v.rule} — ${v.target}: ${v.details}`),
+    'state-shift-broken.html plants a skeleton that is shorter than its ready content; nothing flagged it',
+  ).toContainEqual(expect.stringContaining('state-layout-shift'))
+})
+
+test('the state sweep stays silent when states keep the shape', async ({
+  page,
+}) => {
+  const violations = await openWith(page, 'state-shift-clean', async (p) =>
+    stateShiftViolations(await collectStateBoxes(p)),
+  )
+  expect(
+    violations.map((v) => `${v.rule} — ${v.target}: ${v.details}`),
+    'state-shift-clean.html plants zero defects — any report is a false positive',
+  ).toEqual([])
+})
+
+test('the toolbar sweep sees clipped actions', async ({ page }) => {
+  const violations = await openWith(
+    page,
+    'toolbar-overflow-broken',
+    inspectToolbar,
+  )
+  expect(
+    violations.map((v) => `${v.rule} — ${v.target}: ${v.details}`),
+    'toolbar-overflow-broken.html plants actions painted past the toolbar edge; nothing flagged it',
+  ).toContainEqual(expect.stringContaining('toolbar-clipping'))
+})
+
+test('the toolbar sweep stays silent when actions collapse into a menu', async ({
+  page,
+}) => {
+  const violations = await openWith(
+    page,
+    'toolbar-overflow-clean',
+    inspectToolbar,
+  )
+  expect(
+    violations.map((v) => `${v.rule} — ${v.target}: ${v.details}`),
+    'toolbar-overflow-clean.html plants zero defects — any report is a false positive',
+  ).toEqual([])
 })

@@ -301,6 +301,16 @@ packages.
   in-between widths the fixed breakpoints miss (360/501/769/1025), and seeded
   full-unicode fuzz (`fast-check`) into every text input — each asserts the
   invariants that must survive, not a particular rendering.
+- **Rubric detectors** (`e2e/state-transition.spec.ts`, `e2e/toolbar-overflow.spec.ts`,
+  engines in `e2e/_lib/coherence.ts`): the two [T] lines of
+  [`spec/visual-quality.md`](spec/visual-quality.md) no generic sweep covers.
+  A surface's state stories (`Default`/`Loading`/`Empty`/`Error`) must keep the
+  page shape — a skeleton that changes the layout is a jump the user feels, and
+  today's measured drift is pinned in `e2e/state-shift.baseline.json` and
+  shrinks via `UPDATE_STATE_SHIFT=1`, the same ratchet as role drift. And a
+  `PageToolbar` at 320/768px must collapse its actions into a menu rather than
+  clip or wrap. Both run in the chrome project, cost roughly one extra sweep
+  pass, and are calibrated by planted fixtures like every other detector.
 - **Calibration** (`e2e/calibration.spec.ts` + `e2e/fixtures/`): the harness
   tests its own eyes. Every generic detector must flag a deliberately broken
   fixture page, and must stay silent on a clean one — a green sweep that

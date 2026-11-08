@@ -50,6 +50,17 @@ export type CoherenceRule =
   | 'clipped-content'
   | 'truncated-text'
   | 'occluded-control'
+  /**
+   * The two rubric detectors added by `spec/visual-quality.md` enforcement.
+   * They are *not* emitted by `inspectCoherence` — the state-shift rule needs
+   * one measurement per story (the sweep navigates), the toolbar rule is
+   * width-sensitive — but they share the `Violation` shape so the calibration
+   * fixtures, the sweep and the review crop loop all speak the same language.
+   */
+  | 'state-layout-shift'
+  | 'toolbar-clipping'
+  | 'toolbar-wrap'
+  | 'toolbar-overflow-menu'
 
 export interface Violation {
   rule: CoherenceRule
@@ -547,4 +558,158 @@ export function divergingRoles(
     }
   }
   return report
+}
+
+/* --------------------------------------------------------------------------
+ * Rubric detectors — the [T] lines of `spec/visual-quality.md` that the four
+ * generic coherence rules do not cover, and that no per-family spec caught.
+ * Both speak the same `Violation` shape as `inspectCoherence`, so the planted
+ * fixtures in `e2e/fixtures/` calibrate them exactly the same way: a detector
+ * that never fires on a known-broken page is decoration, not an inspector.
+ * -------------------------------------------------------------------------- */
+
+/**
+ * One rendering of one state of one surface. `label` names the state
+ * (`Default`, `Loading`, … or a fixture's `data-state-label`); `height` is
+ * what the transition must not change.
+ */
+export interface StateBox {
+  label: string
+  height: number
+}
+
+/**
+ * Measure the state surface(s) of the current page.
+ *
+ * A fixture plants the whole transition in one page: several
+ * `[data-slot="state-surface"]` boxes, one per state. A real story renders
+ * one state per page, so the sweep measures the demo frame once per story and
+ * compares across navigations — the same comparison, fed from two sources.
+ */
+export async function collectStateBoxes(page: Page): Promise<StateBox[]> {
+  return page.evaluate(() => {
+    const surfaces = [
+      ...document.querySelectorAll<HTMLElement>('[data-slot="state-surface"]'),
+    ]
+    if (surfaces.length > 0)
+      return surfaces.map((el, index) => ({
+        label: el.getAttribute('data-state-label') ?? `state-${index}`,
+        height: el.getBoundingClientRect().height,
+      }))
+    const frame =
+      document.querySelector('main [data-story-frame]') ??
+      document.querySelector('#storybook-root')
+    if (!frame) return []
+    return [{ label: 'surface', height: frame.getBoundingClientRect().height }]
+  })
+}
+
+/** The numeric half: each state's height delta from the first box, in px. */
+export function stateShiftDrift(
+  boxes: StateBox[],
+): { state: string; delta: number }[] {
+  if (boxes.length < 2) return []
+  const [baseline] = boxes
+  const drift: { state: string; delta: number }[] = []
+  for (const box of boxes.slice(1)) {
+    const delta = box.height - baseline.height
+    if (Math.abs(delta) <= 1) continue
+    drift.push({ state: box.label, delta: Math.round(delta) })
+  }
+  return drift
+}
+
+/**
+ * `state-layout-shift`: the page shape must not change when a surface swaps
+ * empty ↔ loading ↔ ready. A skeleton that is shorter than what it replaces
+ * is a jump the user feels — the rubric's dimension 4, expressed as geometry.
+ */
+export function stateShiftViolations(boxes: StateBox[]): Violation[] {
+  return stateShiftDrift(boxes).map(({ state, delta }) => ({
+    rule: 'state-layout-shift' as const,
+    target: state,
+    details: `the surface changes height by ${delta}px between states (${delta > 0 ? 'the state is taller' : 'the state is shorter'} — the transition jumps the layout)`,
+  }))
+}
+
+/**
+ * `toolbar-clipping` / `toolbar-wrap` / `toolbar-overflow-menu`: a toolbar
+ * that runs out of width must collapse actions into a menu. Actions that are
+ * painted past their container are clipped; actions folded away without a
+ * visible menu trigger are unreachable; a header that wraps has traded
+ * collapse for reflow. One `page.evaluate`, so all three read the same frame.
+ */
+export async function inspectToolbar(page: Page): Promise<Violation[]> {
+  return page.evaluate(() => {
+    const issues: Violation[] = []
+    const header = document.querySelector('header')
+    if (!header) return issues
+    const name = (el: Element): string =>
+      (el.textContent ?? '').trim().replace(/\s+/g, ' ').slice(0, 40) ||
+      el.getAttribute('aria-label') ||
+      el.tagName.toLowerCase()
+
+    const box = header.getBoundingClientRect()
+    // One row is the contract (the header is `min-h-12`); a second row means
+    // the actions wrapped instead of collapsing.
+    if (box.height > 64)
+      issues.push({
+        rule: 'toolbar-wrap',
+        target: name(header),
+        details: `the toolbar is ${Math.round(box.height)}px tall — actions wrapped instead of collapsing into a menu`,
+      })
+
+    const isTrigger = (el: Element): boolean =>
+      el.getAttribute('data-slot') === 'menu-trigger' ||
+      el.getAttribute('aria-haspopup') !== null ||
+      /more|actions|overflow|ellipsis/i.test(
+        el.getAttribute('aria-label') ?? '',
+      )
+
+    const buttons = [...header.querySelectorAll<HTMLElement>('button')]
+    // Two passes: the trigger may sit before or after the actions it folds,
+    // so a hidden action is judged against every trigger, not just the ones
+    // that happen to precede it in the DOM.
+    const triggerVisible = buttons.some((el) => {
+      if (!isTrigger(el)) return false
+      const rect = el.getBoundingClientRect()
+      return (
+        rect.width > 0 &&
+        rect.height > 0 &&
+        el.checkVisibility({ visibilityProperty: true, opacityProperty: true })
+      )
+    })
+
+    for (const el of buttons) {
+      if (isTrigger(el)) continue
+      const rect = el.getBoundingClientRect()
+      const hidden =
+        rect.width === 0 ||
+        rect.height === 0 ||
+        !el.checkVisibility({ visibilityProperty: true, opacityProperty: true })
+      if (hidden) {
+        // A folded action is only honest when a menu can reach it.
+        if (!triggerVisible)
+          issues.push({
+            rule: 'toolbar-overflow-menu',
+            target: name(el),
+            details:
+              'the action is hidden but no overflow menu trigger is visible to reach it',
+          })
+        continue
+      }
+      if (
+        rect.left < box.left - 1 ||
+        rect.right > box.right + 1 ||
+        rect.right > window.innerWidth + 1 ||
+        rect.left < -1
+      )
+        issues.push({
+          rule: 'toolbar-clipping',
+          target: name(el),
+          details: `the action is painted past the toolbar edge (toolbar ${Math.round(box.left)}–${Math.round(box.right)}, action ${Math.round(rect.left)}–${Math.round(rect.right)})`,
+        })
+    }
+    return issues
+  })
 }
