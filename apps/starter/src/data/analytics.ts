@@ -1,12 +1,8 @@
-import { createSignal } from 'solid-js'
-import type { CsvExportTable } from '@talelk/newui-data'
+import type { CrossFilter, CsvExportTable, TimeRange } from '@talelk/newui-data'
+import type { Repository } from '@talelk/newui-data/query'
 import type { Realtime, RealtimeSocket } from '@talelk/newui-data/resource'
 import { createRealtime } from '@talelk/newui-data/resource'
-import type { Repository } from '@talelk/newui-data/query'
-import type {
-  CrossFilter,
-  TimeRange,
-} from '@talelk/newui-data'
+import { createSignal } from 'solid-js'
 
 /**
  * The analytics data seam — the same shape as `records.ts`, seen from the
@@ -139,14 +135,11 @@ function seedTransactions(): Transaction[] {
               : channelPick < 0.85
                 ? 'Referral'
                 : 'Social'
-      const region =
-        REGIONS[Math.floor(rand() * REGIONS.length)] ?? 'Europe'
+      const region = REGIONS[Math.floor(rand() * REGIONS.length)] ?? 'Europe'
       const statusPick = rand()
       const status: Transaction['status'] =
         statusPick < 0.7 ? 'Paid' : statusPick < 0.9 ? 'Pending' : 'Refunded'
-      const amount = Math.round(
-        (120 + rand() * 3_800) * weekendFactor * drift,
-      )
+      const amount = Math.round((120 + rand() * 3_800) * weekendFactor * drift)
       rows.push({
         id: `TX-${String(index).padStart(5, '0')}`,
         customer: `${FIRST_NAMES[Math.floor(rand() * FIRST_NAMES.length)]} ${
@@ -196,9 +189,12 @@ export function restoreTransactions(rows: Transaction[]): void {
 export function advanceDemoData(tick: number): string {
   const row = store[tick % store.length]
   if (!row) return ''
-  const status: Transaction['status'] = row.status === 'Paid' ? 'Pending' : 'Paid'
+  const status: Transaction['status'] =
+    row.status === 'Paid' ? 'Pending' : 'Paid'
   mutate((rows) =>
-    rows.map((candidate) => (candidate.id === row.id ? { ...candidate, status } : candidate)),
+    rows.map((candidate) =>
+      candidate.id === row.id ? { ...candidate, status } : candidate,
+    ),
   )
   return row.id
 }
@@ -249,7 +245,8 @@ export function filterTransactions(
       return false
     if (query.cross && !crossMatches(row, query.cross)) return false
     if (search) {
-      const haystack = `${row.id} ${row.customer} ${row.channel} ${row.region} ${row.status}`.toLowerCase()
+      const haystack =
+        `${row.id} ${row.customer} ${row.channel} ${row.region} ${row.status}`.toLowerCase()
       if (!haystack.includes(search)) return false
     }
     return true
@@ -269,9 +266,10 @@ export function filterTransactions(
 }
 
 /** The page the backend hands back, and the count behind it. */
-export function queryTransactions(
-  query: TransactionQuery,
-): { rows: Transaction[]; total: number } {
+export function queryTransactions(query: TransactionQuery): {
+  rows: Transaction[]
+  total: number
+} {
   const filtered = filterTransactions(query)
   const start = query.pageIndex * query.pageSize
   return {
@@ -291,10 +289,12 @@ export function countTransactions(
  * The repository the collection reads. `list` runs the query the page is in
  * right now — the same shape a paged HTTP endpoint would have.
  */
+// `Partial<Transaction>` is the honest `New` here: the demo backend fills the
+// fields a caller leaves out, the same way a server default would.
 export function createTransactionRepository(
   query: () => TransactionQuery,
   options: { latency?: number } = {},
-): Repository<Transaction> {
+): Repository<Transaction, Partial<Transaction>> {
   const latency = options.latency ?? 120
   const wait = (signal?: AbortSignal) =>
     new Promise<void>((resolve, reject) => {
@@ -333,7 +333,9 @@ export function createTransactionRepository(
       const current = store.find((row) => row.id === id)
       if (!current) throw new Error(`No transaction with the id ${id}.`)
       const row: Transaction = { ...current, ...patch, id: current.id }
-      mutate((rows) => rows.map((candidate) => (candidate.id === id ? row : candidate)))
+      mutate((rows) =>
+        rows.map((candidate) => (candidate.id === id ? row : candidate)),
+      )
       return { ...row }
     },
     async remove(ids, { signal } = {}) {
@@ -374,30 +376,6 @@ export function previousWindow(range: TimeRange): { from: Date; to: Date } {
     from: new Date(range.from.getTime() - length),
     to: new Date(range.from.getTime() - DAY_MS),
   }
-}
-
-/** One point per day in the window, oldest first. Gaps read as zero. */
-export function dailySeries(
-  from: Date,
-  to: Date,
-  value: (row: Transaction) => number,
-): { date: string; value: number }[] {
-  const points: { date: string; value: number }[] = []
-  const start = startOfDay(from)
-  for (
-    let day = start.getTime();
-    day <= to.getTime();
-    day += DAY_MS
-  ) {
-    const date = new Date(day)
-    points.push({ date: isoDay(date), value: 0 })
-  }
-  const byDay = new Map(points.map((point) => [point.date, 0]))
-  for (const row of filterTransactions({ from, to })) {
-    if (byDay.has(row.day)) byDay.set(row.day, (byDay.get(row.day) ?? 0) + value(row))
-  }
-  for (const point of points) point.value = byDay.get(point.date) ?? 0
-  return points
 }
 
 /**

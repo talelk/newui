@@ -1,34 +1,32 @@
 import { Badge, Button, Skeleton, Switch, TextInput } from '@talelk/newui-atoms'
 import {
+  type ConfigStore,
+  type CrossFilter,
   count,
   createConfigStore,
   createDashboardState,
   createUndo,
   downloadBlob,
   exportCsv,
-  usd,
-  type ConfigStore,
   type TimeRangePreset,
-  type CrossFilter,
+  usd,
 } from '@talelk/newui-data'
-import { createCollection, createServerTableState } from '@talelk/newui-data/query'
-import { connectRealtime } from '@talelk/newui-data/resource'
 import {
-  Alert,
-  Dialog,
-  Tabs,
-  ToggleGroup,
-} from '@talelk/newui-molecules'
+  createCollection,
+  createServerTableState,
+} from '@talelk/newui-data/query'
+import { connectRealtime } from '@talelk/newui-data/resource'
+import { Alert, Dialog, Tabs, ToggleGroup } from '@talelk/newui-molecules'
 import {
   DataTable,
   type DataTableColumn,
+  emptyWidgetGridConfig,
   FilterBar,
-  StatGrid,
+  normalizeWidgetGridConfig,
   type Stat,
+  StatGrid,
   WidgetGrid,
   type WidgetGridConfig,
-  emptyWidgetGridConfig,
-  normalizeWidgetGridConfig,
 } from '@talelk/newui-organisms'
 import {
   createEffect,
@@ -50,9 +48,9 @@ import {
   filterTransactions,
   previousWindow,
   REGIONS,
+  restoreTransactions,
   revenueSeries,
   snapshotTransactions,
-  restoreTransactions,
   statusSeries,
   summarize,
   type Transaction,
@@ -193,7 +191,9 @@ export function Analytics(): JSX.Element {
   const views = createConfigStore({ key: 'starter.analytics' })
   const storedLayout = views.load<WidgetGridConfig>(LAYOUT_DOCUMENT)
   const [layout, setLayout] = createSignal<WidgetGridConfig>(
-    storedLayout ? normalizeWidgetGridConfig(storedLayout.doc) : emptyWidgetGridConfig(),
+    storedLayout
+      ? normalizeWidgetGridConfig(storedLayout.doc)
+      : emptyWidgetGridConfig(),
   )
   const [customize, setCustomize] = createSignal(false)
   const [tab, setTab] = createSignal('overview')
@@ -230,19 +230,21 @@ export function Analytics(): JSX.Element {
 
   const transactionRepository = createTransactionRepository(buildQuery)
 
-  const collection = createCollection<Transaction>(() => ({
-    key: table.key(['transactions']),
-    repository: transactionRepository,
-    // A page change keeps the old page on screen while the next arrives.
-    keepPreviousData: true,
-    // The demo data moves on its own (the realtime tick); the interval is
-    // the belt to the socket's braces.
-    refetchInterval: 30_000,
-    onError: (error) => {
-      setNotice(error.message)
-      emitStarterEvent('query:error', { message: error.message })
-    },
-  }))
+  const collection = createCollection<Transaction, Partial<Transaction>>(
+    () => ({
+      key: table.key(['transactions']),
+      repository: transactionRepository,
+      // A page change keeps the old page on screen while the next arrives.
+      keepPreviousData: true,
+      // The demo data moves on its own (the realtime tick); the interval is
+      // the belt to the socket's braces.
+      refetchInterval: 30_000,
+      onError: (error) => {
+        setNotice(error.message)
+        emitStarterEvent('query:error', { message: error.message })
+      },
+    }),
+  )
 
   // The socket's `list_update` events invalidate `['transactions']`, which is
   // where this collection's key starts.
@@ -327,7 +329,11 @@ export function Analytics(): JSX.Element {
 
   const setCross = (next: CrossFilter | null) => {
     dashboard.setCross(next)
-    if (next) emitStarterEvent('analytics:cross', { column: next.column, value: String(next.value) })
+    if (next)
+      emitStarterEvent('analytics:cross', {
+        column: next.column,
+        value: String(next.value),
+      })
   }
 
   const clearFilters = () => {
@@ -403,7 +409,11 @@ export function Analytics(): JSX.Element {
     { id: 'channel', header: 'Channel' },
     { id: 'region', header: 'Region' },
     { id: 'day', header: 'Date' },
-    { id: 'amount', header: 'Amount', format: (value: unknown) => usd(Number(value)) },
+    {
+      id: 'amount',
+      header: 'Amount',
+      format: (value: unknown) => usd(Number(value)),
+    },
   ]
   const csvTable = createCsvTable(
     exportColumns,
@@ -477,7 +487,9 @@ export function Analytics(): JSX.Element {
       sortFn: 'alphanumeric',
       meta: { mobile: 'subtitle' },
       cell: (context) => (
-        <span class="text-ink-gray-7">{dayLabel(context.row.original.day)}</span>
+        <span class="text-ink-gray-7">
+          {dayLabel(context.row.original.day)}
+        </span>
       ),
     },
     {
@@ -574,9 +586,13 @@ export function Analytics(): JSX.Element {
               value: windowFilters().channel,
               options: [
                 { label: 'All channels', value: 'all' },
-                ...['Direct', 'Organic', 'Paid search', 'Referral', 'Social'].map(
-                  (channel) => ({ value: channel, label: channel }),
-                ),
+                ...[
+                  'Direct',
+                  'Organic',
+                  'Paid search',
+                  'Referral',
+                  'Social',
+                ].map((channel) => ({ value: channel, label: channel })),
               ],
               onValueChange: (value) =>
                 dashboard.setFilter('channel', value ?? 'all'),
@@ -640,8 +656,8 @@ export function Analytics(): JSX.Element {
           class="flex flex-col gap-1 rounded-card border border-outline-gray-1 bg-surface-elevation-1 px-4 py-3"
         >
           <p class="text-caption text-ink-gray-7">
-            Paid revenue, {trend().length} readings — the shape behind the
-            first stat
+            Paid revenue, {trend().length} readings — the shape behind the first
+            stat
           </p>
           <Suspense fallback={<Skeleton lines={2} />}>
             <Sparkline data={sparklineData()} height="3rem" />
