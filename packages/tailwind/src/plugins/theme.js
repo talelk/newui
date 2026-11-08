@@ -42,7 +42,11 @@ export default plugin(({ addBase }) => {
       'line-height': 'var(--text-interface--line-height)',
     },
     html: {
-      'font-family': 'InterVar, ui-sans-serif, system-ui, sans-serif',
+      // IBM Plex Sans is the library face (self-hosted via style.css); the
+      // stack must name it first or every page renders on whatever system-ui
+      // the host machine happens to have — which is how CI pixels stopped
+      // matching every baseline.
+      'font-family': "'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif",
       'font-optical-sizing': 'auto',
     },
     'html, body, button, p, span, div': {

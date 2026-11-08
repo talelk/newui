@@ -6,7 +6,8 @@ No new runtime framework is introduced.
 
 ## Typography and density
 
-Inter remains the font. Interface text is 14px/20px; supporting text 12px/16px.
+IBM Plex Sans is the font (ADR-0016); the stack falls back to `system-ui`.
+Interface text is 14px/20px; supporting text 12px/16px.
 Role utilities are `text-interface`, `text-caption`, `text-heading` (24/30),
 `text-section` (18/24), `text-metric` (28/32), and `text-hero` (36/40).
 Existing numbered utilities remain available. Metrics use tabular numerals.
