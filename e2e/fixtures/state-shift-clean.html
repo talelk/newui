@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { margin: 0; font: 14px system-ui; color: #111; }
+      [data-slot="state-surface"] { border: 1px solid #ddd; padding: 8px; }
+    </style>
+  </head>
+  <body>
+    <!-- The same transition done right: the skeleton keeps the surface's
+         shape, so swapping states changes nothing a user could feel. Any
+         report from the detector here is a false positive. -->
+    <div data-slot="state-surface" data-state-label="ready" style="height: 200px">
+      Ready content.
+    </div>
+    <div data-slot="state-surface" data-state-label="loading" style="height: 200px">
+      A skeleton that fills the same shape the ready content will fill.
+    </div>
+  </body>
+</html>

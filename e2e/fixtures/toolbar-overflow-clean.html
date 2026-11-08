@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { margin: 0; font: 14px system-ui; color: #111; }
+      /* The same toolbar done right: the actions that no longer fit are
+         folded out of the row, and a visible menu trigger reaches them.
+         Nothing is clipped, nothing wraps, every action is still reachable. */
+      header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 48px;
+        border-bottom: 1px solid #ddd;
+        padding: 0 16px;
+      }
+      header span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      button { padding: 8px 16px; white-space: nowrap; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span>Tickets</span>
+      <button type="button" aria-label="More actions" aria-haspopup="menu">···</button>
+      <button type="button">New ticket</button>
+      <button type="button" style="display: none">Bulk archive</button>
+    </header>
+  </body>
+</html>

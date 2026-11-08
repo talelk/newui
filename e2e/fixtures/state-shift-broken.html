@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { margin: 0; font: 14px system-ui; color: #111; }
+      [data-slot="state-surface"] { border: 1px solid #ddd; padding: 8px; }
+    </style>
+  </head>
+  <body>
+    <!-- One surface, two states, planted side by side: the loading skeleton
+         is 60px shorter than the ready content it replaces, so swapping the
+         state jumps the layout. The state-transition sweep measures one box
+         per story page; the fixture plants the whole transition in one page. -->
+    <div data-slot="state-surface" data-state-label="ready" style="height: 200px">
+      Ready content.
+    </div>
+    <div data-slot="state-surface" data-state-label="loading" style="height: 140px">
+      Loading skeleton.
+    </div>
+  </body>
+</html>

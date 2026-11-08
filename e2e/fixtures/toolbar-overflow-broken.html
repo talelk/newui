@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { margin: 0; font: 14px system-ui; color: #111; }
+      /* A toolbar squeezed to phone width whose actions keep their intrinsic
+         size: `overflow: hidden` paints them past the edge instead of
+         collapsing them into a menu — the clip the rubric forbids. */
+      header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 300px;
+        height: 48px;
+        overflow: hidden;
+        border-bottom: 1px solid #ddd;
+        padding: 0 16px;
+      }
+      header span { flex: 1; min-width: 0; white-space: nowrap; }
+      header .actions { display: flex; flex: none; gap: 8px; }
+      button { padding: 8px 16px; white-space: nowrap; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span>Tickets</span>
+      <div class="actions">
+        <button type="button">Export CSV</button>
+        <button type="button">Mark all read</button>
+        <button type="button">Bulk archive</button>
+        <button type="button">New ticket</button>
+      </div>
+    </header>
+  </body>
+</html>
