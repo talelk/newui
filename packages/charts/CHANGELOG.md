@@ -1,5 +1,43 @@
 # @talelk/newui-charts
 
+## 1.1.0
+
+### Minor Changes
+
+- 33cf51d: Chart catalog per decision #29: `Sparkline` (plain-SVG trend, `aria-hidden` with a visually-hidden summary, `tone`/`palette` props, now used internally by `NumberCard`), `CalendarHeatmapChart` (echarts heatmap on the calendar coordinate system, blue or amber token ramp, cross-aware `onPointClick`), and `GaugeChart` (house-style dial: 1px track, single blue progress arc, metric typography centered, palette locked to tokens). Radar and map stay out of scope.
+- e3b041a: Chart interactions per issue #28: `zoom`/`defaultZoom` + `onZoomChange` and `brush` + `onBrushChange` on LineChart, AreaChart and BarChart, driven as controlled signals so a `setOption(…, { notMerge: true })` rebuild restores the window and selection instead of erasing them; payloads are translated to data values at the wrapper boundary, never echarts indices or percents. `onPointDblClick` emits the datum behind a double-click (navigation stays app-side — the `route` vocabulary). `useChartGroup(name)` owns namespaced `newui.<name>.<id>` ids for echarts connect-style linked highlighting, with `group` on charts and `ChartCard`; cross-filtering remains `createDashboardState`'s `cross`. Keyboard twins make the pointer gestures operable without a pointer: zoom `+`/`-`/arrows on the focused plot, brush-range entry as two number inputs in the container toolbar, and a fallback table that tracks the current window with a caption.
+- 1f9dd81: The instrument-panel look (ADR-0016): the kit retuned for people who work
+  inside records all day. This is a visible change for every consumer.
+  
+  - **Tokens.** A hand-authored layer over the Figma export: a cool gray family
+    (a Mist frame, white sheets for data, Graphite ink), the `blue` theme retuned
+    to Petrol as the single accent, a solid Petrol focus ring, radius by role
+    (4px controls, 6px sheets, 8px overlays) and one new semantic token,
+    `surface-canvas`.
+  - **Type.** IBM Plex Sans replaces Inter (self-hosted, SIL OFL), with 13px
+    interface text. Its figures are tabular by default; table headers use its
+    semi-condensed width. `font-stretch-*` joins the merge vocabulary.
+  - **Density.** `DataTable` defaults to `density="compact"` (about 28px rows;
+    `comfortable` is about 36px), and table cell spacing tightens everywhere,
+    including the `Table` molecule.
+  - **AppShell** paints the Mist frame and folds the page header into one compact
+    band: the trail, then the title with its description and the actions.
+  - **StatGrid** is one ruled strip instead of a row of cards; deltas are toned
+    text.
+  - **FilterBar** keeps a lone result count on the control row.
+  - **Sidebar** items are 28px; the current destination is a white sheet with a
+    Petrol icon; counts are plain figures.
+  - **DataTable** marks the row holding keyboard focus with a Petrol edge.
+  - **Checked controls are Petrol.** Switch, Checkbox, RadioGroup and Tree
+    checkboxes fill with the accent when checked, instead of near-black.
+  - **Menus and listboxes** use 26px rows (`listboxRow`).
+  - **Charts.** `NumberCard` deltas are toned text, its title is 12px, and a new
+    `bare` prop drops its border and radius so several share one ruled KPI strip.
+    `ChartCard` and `NumberCard` use the compact card pad; chart titles use the
+    section type.
+  - **KanbanBoard** columns sit closer (12px gaps, compact board padding).
+  - **AuthLayout** paints the Mist canvas.
+
 ## 1.0.3
 
 ### Patch Changes
