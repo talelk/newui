@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process'
-import { readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 
 /**
@@ -16,36 +16,27 @@ import path from 'node:path'
  *   pnpm trust:publishers --no-enable   # do not flip NPM_PUBLISH
  */
 const root = process.cwd()
-const packages = [
-  'atoms',
-  'molecules',
-  'organisms',
-  'templates',
-  'tokens',
-  'tailwind',
-  'icons',
-  'data',
-  'charts',
-  'editor',
-  'code-editor',
-  'vite',
-]
-  .map((name) => `packages/${name}/package.json`)
+// Every public workspace package, discovered rather than listed: a package
+// added later must not be silently left without a Trusted Publisher, which is
+// how a release ends half-published with a 404.
+const packages = readdirSync(path.join(root, 'packages'))
+  .map((dir) => path.join(root, 'packages', dir, 'package.json'))
+  .filter((file) => existsSync(file))
   .map(
     (file) =>
-      JSON.parse(readFileSync(path.join(root, file), 'utf8')) as {
+      JSON.parse(readFileSync(file, 'utf8')) as {
         name: string
         private?: boolean
       },
   )
   .filter((pkg) => !pkg.private)
   .map((pkg) => pkg.name)
+  .sort()
 
 const enable = !process.argv.includes('--no-enable')
 const npm = ['--yes', 'npm@11.15.0', 'trust', 'github']
 const configured: string[] = []
-const existing: string[] = []
-const failed: string[] = []
+const needsReview: string[] = []
 
 const tokenEnv = ['NPM_TOKEN', 'NODE_AUTH_TOKEN'].filter(
   (key) => process.env[key],
@@ -58,8 +49,10 @@ if (tokenEnv.length > 0) {
 
 for (const [index, name] of packages.entries()) {
   process.stdout.write(`\n[trust] ${name} (${index + 1}/${packages.length})\n`)
-  // stdin stays inherited so npm's 2FA prompt can read Enter; the output is
-  // captured only so a 409 can be told apart from a real failure.
+  // Fully inherited: npm only offers its browser 2FA prompt on a real terminal.
+  // With piped output it fails with EOTP instead, so the output cannot be
+  // inspected here. A non-zero exit is therefore ambiguous: npm prints
+  // "409 Conflict" when a publisher is already configured, which is fine.
   const result = spawnSync(
     'npx',
     [
@@ -72,40 +65,21 @@ for (const [index, name] of packages.entries()) {
       '--allow-publish',
       '--yes',
     ],
-    { stdio: ['inherit', 'pipe', 'pipe'], encoding: 'utf8' },
+    { stdio: 'inherit' },
   )
-  const output = `${result.stdout ?? ''}${result.stderr ?? ''}`
-  process.stdout.write(result.stdout ?? '')
-  process.stderr.write(result.stderr ?? '')
-  if (result.status === 0) {
-    configured.push(name)
-  } else if (/E409|already exists for this package/i.test(output)) {
-    // `npm trust` refuses to write a second configuration; the one already
-    // there is the one publishing uses, so this is the idempotent case.
-    existing.push(name)
-    process.stdout.write(
-      `[trust] ${name} already has a Trusted Publisher; left as is.\n`,
-    )
-  } else {
-    failed.push(name)
-    if (/E401|must be logged in/i.test(output)) {
-      process.stderr.write(
-        `\n[trust] ${name} was not configured: not logged in. Run \`npm login --auth-type=web\`, then retry.\n`,
-      )
-      break
-    }
-    process.stderr.write(
-      `\n[trust] ${name} was not configured. Run \`npm trust list ${name}\` to inspect the existing configuration.\n`,
-    )
-    break
-  }
+  if (result.status === 0) configured.push(name)
+  else needsReview.push(name)
   await new Promise((resolve) => setTimeout(resolve, 2_000))
 }
 
 process.stdout.write(
-  `\n[trust] configured ${configured.length}, already configured ${existing.length}${failed.length ? `, failed ${failed.join(', ')}` : ''}.\n`,
+  `\n[trust] configured ${configured.length}: ${configured.join(', ') || 'none'}.\n`,
 )
-if (failed.length > 0) process.exit(1)
+if (needsReview.length > 0) {
+  process.stdout.write(
+    `[trust] non-zero exit for ${needsReview.join(', ')}. A "409 Conflict" above means it was already configured; anything else needs a look (\`npm trust list <name>\`).\n`,
+  )
+}
 
 if (enable) {
   const result = spawnSync(

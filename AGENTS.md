@@ -361,6 +361,14 @@ packages.
   published through OIDC (npm/cli#8678), even with a correct publisher: publish
   one version from an authenticated `npm publish` session first, then the next
   release goes through OIDC and carries provenance.
+- **Keeping releases green.** `pnpm trust:publishers` discovers every public
+  workspace package, so run it after adding one (it needs an interactive
+  `npm login --auth-type=web`; a 409 means already configured). A publish is
+  resumable: re-run the failed Changesets run and only missing versions go out.
+  Remote Trusted Publisher state cannot be checked in CI (`npm trust list` needs
+  2FA). Merge the Version Packages PR only with every check green. Baselines
+  (`e2e/*-snapshots`, `state-shift.baseline.json`) are regenerated on the runner
+  with the `Update e2e baselines` workflow, not on a developer machine.
 - `pnpm verify` (all) · `pnpm verify:checks` (fast gates) · `pnpm verify:e2e`
   (browser harness) · `pnpm verify:affected` (only the gates the diff can
   dirty — the agent loop: change → affected → full `verify` before pushing)
