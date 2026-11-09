@@ -61,6 +61,7 @@ jobs:
 
       - name: Advisory visual review
         if: ${{ !cancelled() }}
+        timeout-minutes: 15
         env:
           NEWUI_VLM_ENDPOINT: ${{ secrets.NEWUI_VLM_ENDPOINT }}
         run: |

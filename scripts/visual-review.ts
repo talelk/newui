@@ -25,7 +25,7 @@
  */
 import { mkdirSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
-import { chromium } from 'playwright'
+import { type Browser, chromium } from 'playwright'
 import { inspectCoherence, type Violation } from '../e2e/_lib/coherence'
 import { startPreview } from './preview-server'
 
@@ -65,10 +65,11 @@ mkdirSync(path.join(outDir, 'crops'), { recursive: true })
 const preview = startPreview(PORT)
 const findings: Finding[] = []
 const started = Date.now()
+let browser: Browser | undefined
 
 try {
   await preview.ready
-  const browser = await chromium.launch({
+  browser = await chromium.launch({
     channel: process.env['NEWUI_SHOTS_CHROME'] ? 'chrome' : undefined,
   })
   const context = await browser.newContext({
@@ -253,5 +254,8 @@ try {
   if (requireClean && blockable.length > 0) process.exitCode = 1
 } finally {
   console.warn(`(${Math.round((Date.now() - started) / 1000)}s)`)
+  // An open Chromium keeps the event loop alive: without this the review prints
+  // its verdict and then hangs until the nightly job's own timeout kills it.
+  await browser?.close()
   await Promise.resolve(preview.stop())
 }
