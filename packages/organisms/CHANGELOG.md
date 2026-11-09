@@ -1,5 +1,219 @@
 # @talelk/newui-organisms
 
+## 2.3.0
+
+### Minor Changes
+
+- 73f9b95: The config-form engine (issue #30): a schema-driven form that renders itself.
+  
+  - **`createAppForm` grows a declarative layer** in `@talelk/newui-data/form`.
+    A field map (`ui`: `FieldConfig` entries keyed by static field path) and a Standard `schema`
+    drive the whole document: the schema validates the *submitted* document, so
+    fields hidden by `when` are pruned before validation and issues under hidden
+    paths are dropped — a field the user cannot see never blocks the submit.
+    `dependsOn` compiles onto a TanStack `onChange` listener that revalidates the
+    dependent field with the `dynamic` cause; `pruneHidden` (default `true`) drops
+    hidden fields from the document handed to `onSubmit` — including a repeater's
+    row fields, whose `when(row, values)` sees the row first. `document(values)`
+    exposes that submitted document.
+  - **`createAutoSave(source, { save, debounce = 800, filter?, id?, storage? })`**
+    is debounced backend persistence that validates before writing. Given the
+    `createAppForm` result it saves the same pruned document submit sends. With
+    `id` it also keeps a local, unpruned draft under `newui.form-draft`, dropped
+    after a successful autosave or submit; `hasDraft` is reactive.
+  - **`Repeater`** (molecules) is a dynamic array over a `mode="array"` field —
+    add/remove/copy with `maxItems`/`minItems` bounds and an optional collapse per
+    row. Rows iterate with `Index`, so a removal never takes the wrong row's
+    values, and structural changes revalidate from the changed index onward.
+  - **`ConfigForm`** (organisms) is the rendered face: a `<form>` that renders
+    every field from its field-map entry — the `FormControl` vocabulary for plain
+    fields, `Repeater` for arrays, and `when` predicates for visibility, bound to
+    the live form state.
+  - **`FormControl`** now forwards `onBlur` on the text-like and `textarea` types,
+    so a config field can mark itself touched.
+- cd5e324: DataTable column operations (issue #20): the header stops being read-only chrome.
+  
+  - **`columnOps`** switches each operation on separately — `resizable`,
+    `reorderable`, and `menu` (default `true` whenever `columnOps` is set), so an
+    app can offer resizing without reordering or a menu.
+  - **Resize.** `resizable` puts a `role="separator"` handle on each leaf header's
+    edge with a keyboard twin: arrows nudge 8px, Shift 32px, Home/End jump to the
+    column's `minSize`/`maxSize`, double click resets. Widths live in
+    `columnSizing` and report through `onColumnSizingChange`; because a resize
+    changes no rows it never resets the page. Per-column `size`/`minSize`/`maxSize`
+    are honoured, and the selection column is chrome — fixed and not resizable.
+  - **Reorder.** `reorderable` makes the header draggable (4px threshold, so a
+    click stays a click) and adds Move left/right to the column menu. Order is
+    TanStack's `columnOrder`, controlled through `columnOrder`/`onColumnOrderChange`.
+  - **Multi-pin.** `pinnedStart`/`pinnedEnd` widen from `string` to
+    `string | string[]`. With two or more pins on an edge each cell's sticky
+    offset is composed, so pinned columns stack instead of overlapping.
+  - **Per-column filters.** A column with `filterable: true` gets a funnel button
+    opening the control its `filterFn` needs — text box, `Select`, a min/max pair,
+    or date fields. The control writes TanStack's `columnFilters`, the same array
+    server mode sends to the backend, so client and server filtering stay one
+    vocabulary and the column filter composes with the global search. `facets`
+    supplies `{ value, count }` per column for the popover.
+  - **`ColumnMenu`** is the compound part behind the button (`Root`/`Trigger`/
+    `Content`/`Items`): sort, pin, move, reset size and hide, keyboard-complete,
+    with Move disabled rather than hidden at the ends of the order.
+  
+  Two test-environment fixes came out of making the suite deterministic: the unit
+  config now runs `vite-plugin-solid` with `hot: false` (the `@solid-refresh`
+  wrapper re-ran component bodies inside a `createMemo`, tearing down a mounted
+  table mid-test), and keystroke coverage for the popover filter moved to the
+  browser project, where `userEvent.type` is reliable through a portal — the
+  jsdom suite drives the same control with one committed `input` event per value.
+- dc948bf: Virtualized `DataTable` body per issue #21: `virtual` windows the body rows with `@tanstack/solid-virtual` while the toolbar and search stay sticky outside the scroll region and the header sticky inside it. One item per rendered row — group row, record row or detail panel — so grouping, expansion and detail rows compose without the virtualizer knowing about them; off-window rows are spacer `<tr>`s, keeping table semantics, the sticky header and pinned-column stickiness intact. `pageSize` defaults to the whole result when `virtual` is on (the window bounds the DOM, not the page); server mode keeps its page size. The scroll region is the fixed `24rem` `VirtualList` convention, passed through a new `height` prop on `ScrollTable`, and the surface is inert in card mode below `cardBreakpoint`.
+- 1f9dd81: The instrument-panel look (ADR-0016): the kit retuned for people who work
+  inside records all day. This is a visible change for every consumer.
+  
+  - **Tokens.** A hand-authored layer over the Figma export: a cool gray family
+    (a Mist frame, white sheets for data, Graphite ink), the `blue` theme retuned
+    to Petrol as the single accent, a solid Petrol focus ring, radius by role
+    (4px controls, 6px sheets, 8px overlays) and one new semantic token,
+    `surface-canvas`.
+  - **Type.** IBM Plex Sans replaces Inter (self-hosted, SIL OFL), with 13px
+    interface text. Its figures are tabular by default; table headers use its
+    semi-condensed width. `font-stretch-*` joins the merge vocabulary.
+  - **Density.** `DataTable` defaults to `density="compact"` (about 28px rows;
+    `comfortable` is about 36px), and table cell spacing tightens everywhere,
+    including the `Table` molecule.
+  - **AppShell** paints the Mist frame and folds the page header into one compact
+    band: the trail, then the title with its description and the actions.
+  - **StatGrid** is one ruled strip instead of a row of cards; deltas are toned
+    text.
+  - **FilterBar** keeps a lone result count on the control row.
+  - **Sidebar** items are 28px; the current destination is a white sheet with a
+    Petrol icon; counts are plain figures.
+  - **DataTable** marks the row holding keyboard focus with a Petrol edge.
+  - **Checked controls are Petrol.** Switch, Checkbox, RadioGroup and Tree
+    checkboxes fill with the accent when checked, instead of near-black.
+  - **Menus and listboxes** use 26px rows (`listboxRow`).
+  - **Charts.** `NumberCard` deltas are toned text, its title is 12px, and a new
+    `bare` prop drops its border and radius so several share one ruled KPI strip.
+    `ChartCard` and `NumberCard` use the compact card pad; chart titles use the
+    section type.
+  - **KanbanBoard** columns sit closer (12px gaps, compact board padding).
+  - **AuthLayout** paints the Mist canvas.
+- 08ff107: Server-mode tables, end to end (issue #18):
+  
+  - **Store.** `createServerTableState({ initial?, sync? })` in
+    `@talelk/newui-data/query` owns the four table slices — `sorting`,
+    `columnFilters`, `globalFilter`, `pagination` — as controllable signals.
+    Sorting, filtering and searching reset `pageIndex` to 0; changing
+    `pageSize` keeps the top row in view. `sync: true` mirrors every slice
+    through `createUrlState`, so a sorted, filtered, paged table survives a
+    reload and a shared link. `key(base?)` serializes the slices into a query
+    key for `createCollection`.
+  - **DataTable.** `server={{ total }}` switches the table from owning the
+    data to trusting the app: it never sorts, filters or slices rows, hands
+    the four slices through `sorting`/`columnFilters`/`globalFilter`/
+    `pagination` props with `on*Change` callbacks, and keeps `getRowId` for
+    stable identity. `total: -1` means unknown — Next stays enabled and the
+    pager drops "of N" and page numbers. `createCollection` gained
+    `keepPreviousData?: boolean` so paging does not flash an empty table.
+- d1ad3e2: Sidebar and AppShell polish.
+  
+  - **Rail:** the Expand control heads the footer instead of taking a ruled row
+    under the tenant, so the collapsed rail reads as one column of identity and
+    destinations above one column of square controls.
+  - **Footer:** while expanded, `settings` and `utilities` share one row.
+  - **`settings` accepts a render function** (`settings={() => <SidebarItem …/>}`)
+    so a `SidebarItem` renders inside the sidebar and follows the collapsed rail;
+    a caller-created element kept its expanded padding and sat off-centre.
+  - **Mobile drawer:** the brand row is the header, with Close at its end; the
+    separate "Navigation" bar is gone and the drawer is 288px wide.
+  - **Top bar (below lg):** sits on the Mist frame with a ghost menu button.
+- 660a374: Table superpowers (issue #19): header groups, row grouping, aggregation and
+  tree/detail rows in `DataTable`.
+  
+  - **Header groups.** A column definition may carry `columns`, and the header
+    stacks into as many rows as the tree is deep. No new prop — the column tree
+    is the API. Placeholders keep the grid aligned and are never interactive.
+  - **Row grouping.** `grouping` (column ids, in order) is controllable through
+    `onGroupingChange`; `groupingMode` decides whether a grouped column keeps its
+    own column (`reorder`, the default) or leaves the list (`remove`), and
+    `groupable: false` opts a column out. A group row is the recessed surface
+    spanning the record columns: expander, the column's name, the shared value,
+    the count, and the aggregated values. `renderGroupedCell` overrides it. In
+    server mode `grouping` is echoed and rows arrive with `subRows` populated —
+    server grouping is real rows, not synthetic ones.
+  - **Aggregation.** A column declares `aggregate` as one of the eleven built-ins
+    (`sum`, `count`, `min`, `max`, `extent`, `mean`, `median`, `unique`,
+    `uniqueCount`, `first`, `last`) or a function over the group's records.
+    `summary: 'page' | 'all'` renders the footer row over the visible page or the
+    whole filtered result; `aggregates` carries server-computed totals instead.
+  - **Tree and detail.** `getSubRows` gives a row children of the same shape,
+    `renderDetail` gives any row a panel beneath it, and `onRowExpand` fires the
+    moment a row opens — where a server page fetches children it has not sent.
+    `filterFromLeafRows` filters a tree from its leaves, so a parent survives on
+    a descendant's match.
+  - **Interactions.** Grouped and detail rows follow the active `density`; below
+    the card breakpoint a group becomes a section header and its records stay
+    flat cards (cards never nest). `rowSelectable` gates parents, select-all
+    skips what is ineligible, and the bulk action receives record ids even for a
+    tree row selected under a parent that is not itself selectable.
+- d376d92: New `WidgetGrid` organism: a tiling dashboard with header drag, corner resize,
+  12-column snap and push-down reflow. The layout is one JSON document
+  (`{ v: 1, widgets: { [id]: { x, y, span, rows, hidden? } } }`) that the grid
+  emits through `config`/`onConfigChange` and never stores — persist it with
+  `createConfigStore`. Tombstones keep undo-remove, `editable` gates every
+  affordance, the resize handle is a keyboard-operable `role="separator"`, and
+  below `md` the grid stacks without clobbering desktop geometry.
+- 45e2721: New `Wizard` organism (issue #31): a multi-step flow over a form.
+  
+  - **`Wizard`** composes `Stepper` for progress and `ConfigForm`'s renderer for
+    the fields, and adds the three things every multi-step page was writing by
+    hand: the gate between steps, the review that closes the flow, and the state
+    that survives a closed tab. A step is `{ id, label, description?, validate?, content }`,
+    where `content` is the step's own JSX or an array of named `FieldConfig`
+    entries — so the same `ui` map feeds `createAppForm` and the steps, and a step
+    takes the slice it owns by name.
+  - **The gate is per step.** `validate` runs when the user tries to leave a step
+    forward, never while they type and never for a step they have not reached. It
+    returns messages for the step, or a map from field path to message that lands
+    on that field's own `error` — the wizard never runs the form's own validators,
+    because running them would mark every field in the document and arrive at an
+    unreached step already red. Back is never gated, and the stepper stays
+    `linear`, so the only way forward is through the gate.
+  - **`review`** appends a generated read-only summary of every declared field,
+    grouped by step and skipping anything hidden by `when`.
+  - **`resume`** remembers `{ step, values }` in a `createConfigStore` document
+    under `newui.wizard`, restoring both on the next visit and deleting the
+    document when `onSubmit` lands. This is not autosave: `onSubmit` stays the
+    save path.
+  - `currentStep` / `onCurrentStepChange` make the step controllable, and
+    `spec/stepper.md` now points here for flows that have a form behind the steps.
+
+### Patch Changes
+
+- 0e03e74: `DataTable` loads its per-column filter popover (and the `NumberInput`,
+  `Popover` and `Select` it renders) lazily, the first time a filterable header
+  renders: tables without filterable columns no longer bundle it.
+- 36329f4: Record sheets, settings rows and open fixes.
+  
+  - **`Dialog.Content position="end"`** — a full-height side sheet on the
+    inline-end edge: it scrolls as one region, `Dialog.Footer` pins to its bottom
+    edge, and it slides in from that edge (`animate-sheet-in`, mirrored for RTL).
+    For reading or editing a record beside the list it came from.
+  - **SettingsDialog rows** are a ruled two-column grid with a fixed control
+    track that text fields fill; switches keep their size at its end.
+  - **WidgetGrid** bodies that overflow become focusable regions, named for their
+    widget (axe `scrollable-region-focusable`); short bodies add no tab stop.
+  - **Merge:** bare side and corner radii (`rounded-t`, `rounded-ss`, …) now
+    override their numbered steps in `cn()`, as `rounded` already did.
+  - **DataTable** shows its empty state in the card column below the card
+    breakpoint, where the table is hidden — an emptied view on a phone showed
+    nothing. Its inline edit, sort, column-menu and expander controls (and the
+    Password reveal toggle) use the control radius.
+- Updated dependencies [73f9b95]
+- Updated dependencies [dc948bf]
+- Updated dependencies [1f9dd81]
+- Updated dependencies [36329f4]
+  - @talelk/newui-molecules@2.4.0
+  - @talelk/newui-atoms@1.4.0
+
 ## 2.2.0
 
 ### Minor Changes
