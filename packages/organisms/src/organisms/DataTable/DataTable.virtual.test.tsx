@@ -102,7 +102,9 @@ function bigRows(count: number): BigRow[] {
 describe('DataTable virtualization', () => {
   // 1000-row renders are this file's heavy cases; the default 5 s budget
   // only holds on an idle machine and flakes under suite-wide load.
-  it('windows a large page: a bounded DOM with spacer rows standing in', { timeout: 20000 }, async () => {
+  it('windows a large page: a bounded DOM with spacer rows standing in', {
+    timeout: 20000,
+  }, async () => {
     withLayout()
     const rows = bigRows(1000)
     const { container } = render(() => (
@@ -138,7 +140,9 @@ describe('DataTable virtualization', () => {
     })
   })
 
-  it('renders the whole page when virtual is off (the default)', { timeout: 20000 }, () => {
+  it('renders the whole page when virtual is off (the default)', {
+    timeout: 20000,
+  }, () => {
     const rows = bigRows(1000)
     const { container } = render(() => (
       <DataTable
